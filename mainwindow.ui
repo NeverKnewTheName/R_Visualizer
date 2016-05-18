@@ -21,7 +21,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_sysOvrView">
        <attribute name="title">
@@ -217,13 +217,6 @@
             </widget>
            </item>
           </layout>
-          <zorder>lineEdit_3</zorder>
-          <zorder>label</zorder>
-          <zorder>layoutWidget</zorder>
-          <zorder>layoutWidget_2</zorder>
-          <zorder>layoutWidget_3</zorder>
-          <zorder>lineEdit_6</zorder>
-          <zorder>pushButton_7</zorder>
          </widget>
         </item>
         <item>
@@ -452,6 +445,12 @@
    <property name="text">
     <string>New</string>
    </property>
+   <property name="toolTip">
+    <string>Create a new file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionOpen">
    <property name="icon">
@@ -461,6 +460,12 @@
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="toolTip">
+    <string>Open an existing file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -469,6 +474,12 @@
    </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save current data to a file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionConnect">

@@ -4,6 +4,7 @@
 #include "r_vis_timer.h"
 
 #include <QMainWindow>
+#include <QFile>
 
 namespace Ui {
 class MainWindow;
@@ -26,9 +27,21 @@ private slots:
     void timerOverflowed();
     void timerCompareMatch();
 
+    void on_actionNew_triggered();
+
+    void on_actionOpen_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_actionConnect_triggered();
+
+    void on_actionStart_triggered();
+
+    void on_actionStop_triggered();
+
 private:
     Ui::MainWindow *ui;
-    R_Vis_Timer *tpmTimer_0;
+    QString currentFileName;
 };
 
 #endif // MAINWINDOW_H
