@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     r_vis_mcu.cpp \
     r_vis_timer.cpp \
     r_vis_lifetimer.cpp \
-    r_vis_intcontroller.cpp
+    r_vis_intcontroller.cpp \
+    mysquare.cpp
 
 HEADERS  += mainwindow.h \
     r_vis_mcu.h \
     r_vis_timer.h \
     r_vis_lifetimer.h \
-    r_vis_intcontroller.h
+    r_vis_intcontroller.h \
+    mysquare.h
 
 FORMS    += mainwindow.ui
 

@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "r_vis_timer.h"
+#include "mysquare.h"
 
 #include <QMainWindow>
-#include <QFile>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsItem>
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +43,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    QGraphicsEllipseItem *ellipse;
+    QGraphicsRectItem *rect;
+    MySquare *square;
     QString currentFileName;
 };
 

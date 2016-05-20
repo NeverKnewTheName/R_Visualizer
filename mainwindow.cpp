@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFile>
 #include <QFileDialog>
 
 #define __DEBUG__
@@ -14,6 +15,25 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //create a new scene
+    scene = new QGraphicsScene(this);
+    //set the graphicsview to the newly created scene
+    ui->graphicsView->setScene(scene);
+
+    QBrush redBrush(Qt::red);
+    QBrush blueBrush(Qt::blue);
+    QPen blackPen(Qt::black);
+    blackPen.setWidth(6);
+
+    ellipse = scene->addEllipse(10,10,100,100,blackPen,redBrush);
+    rect = scene->addRect(-100,-100,50,50,blackPen,blueBrush);
+
+    rect->setFlag(QGraphicsItem::ItemIsMovable);
+
+    square = new MySquare();
+    scene->addItem(square);
+
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +102,7 @@ void MainWindow::on_actionSave_triggered()
     // write to file
     jsonSaveFile.write("TEST"); //ToDO check for error (-1)
     // close file
+    jsonSaveFile.flush(); //always flush after write!
     jsonSaveFile.close();
 }
 
