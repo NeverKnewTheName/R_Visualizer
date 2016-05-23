@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include "mysquare.h"
+#include "msgmodel.h"
 
 #include <QMainWindow>
+
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
@@ -21,14 +23,8 @@ public:
     ~MainWindow();
 
 signals:
-    void setChckBoxCheckedOVF(bool);
-    void setChckBoxCheckedCMP(bool);
-
 
 private slots:
-    void timerOverflowed();
-    void timerCompareMatch();
-
     void on_actionNew_triggered();
 
     void on_actionOpen_triggered();
@@ -42,12 +38,19 @@ private slots:
     void on_actionStop_triggered();
 
 private:
+
+    void initMsgsTableView();
+    void initVisualizerGraphicsView();
+
     Ui::MainWindow *ui;
+    QString currentFileName;
+    MsgModel *msgModel;
+
     QGraphicsScene *scene;
     QGraphicsEllipseItem *ellipse;
     QGraphicsRectItem *rect;
     MySquare *square;
-    QString currentFileName;
+
 };
 
 #endif // MAINWINDOW_H

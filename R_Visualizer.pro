@@ -14,18 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    r_vis_mcu.cpp \
-    r_vis_timer.cpp \
-    r_vis_lifetimer.cpp \
-    r_vis_intcontroller.cpp \
-    mysquare.cpp
+    mysquare.cpp \
+    msgmodel.cpp \
+    msgdelegate.cpp \
+    msg.cpp
 
 HEADERS  += mainwindow.h \
-    r_vis_mcu.h \
-    r_vis_timer.h \
-    r_vis_lifetimer.h \
-    r_vis_intcontroller.h \
-    mysquare.h
+    mysquare.h \
+    msgmodel.h \
+    msgdelegate.h \
+    msg.h
 
 FORMS    += mainwindow.ui
 
