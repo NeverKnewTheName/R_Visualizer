@@ -1,6 +1,6 @@
 #include "msgdelegate.h"
 
-MsgDelegate::MsgDelegate()
+MsgDelegate::MsgDelegate(QWidget *parent)// : QAbstractItemDelegate(parent)
 {
 
 }

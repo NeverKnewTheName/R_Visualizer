@@ -21,7 +21,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_sysOvrView">
        <attribute name="title">
@@ -45,17 +45,17 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="sndMsgMsgLineEdit"/>
            </item>
            <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="sndMsgSendBtn">
              <property name="text">
               <string>Send</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLineEdit" name="lineEdit_2"/>
+            <widget class="QLineEdit" name="sndMsgIDLineEdit"/>
            </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_5">
@@ -81,19 +81,19 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="1" column="0">
-            <widget class="QTableView" name="tableView_2"/>
+            <widget class="QTableView" name="sndPcktTableView"/>
            </item>
            <item row="2" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="sndPcktAddBtn">
                <property name="text">
                 <string>Add</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="sndPcktRmvBtn">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -113,21 +113,21 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="sndPcktLoadBtn">
                <property name="text">
                 <string>Load</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_5">
+              <widget class="QPushButton" name="sndPcktStoreBtn">
                <property name="text">
                 <string>Store</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_6">
+              <widget class="QPushButton" name="sndPcktSendBtn">
                <property name="text">
                 <string>Send</string>
                </property>
@@ -168,7 +168,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_3"/>
+              <widget class="QLineEdit" name="filterIDLineEdit"/>
              </item>
             </layout>
            </item>
@@ -182,7 +182,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_5"/>
+              <widget class="QLineEdit" name="filterTimestampBeginLineEdit"/>
              </item>
             </layout>
            </item>
@@ -196,7 +196,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_4"/>
+              <widget class="QLineEdit" name="filterMsgTypeLineEdit"/>
              </item>
             </layout>
            </item>
@@ -210,7 +210,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_6"/>
+              <widget class="QLineEdit" name="filterTimestampEndLineEdit"/>
              </item>
             </layout>
            </item>
@@ -259,38 +259,38 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="1" column="1">
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="idStoreBtn">
              <property name="text">
               <string>Store</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QPushButton" name="pushButton_11">
+            <widget class="QPushButton" name="idRmvBtn">
              <property name="text">
               <string>Remove</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="6">
-            <widget class="QTableView" name="tableView_3"/>
+            <widget class="QTableView" name="idTableView"/>
            </item>
            <item row="0" column="1">
-            <widget class="QPushButton" name="pushButton_8">
+            <widget class="QPushButton" name="idLoadBtn">
              <property name="text">
               <string>Load</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_10">
+            <widget class="QPushButton" name="idAddBtn">
              <property name="text">
               <string>Add</string>
              </property>
             </widget>
            </item>
            <item row="5" column="1">
-            <widget class="QPushButton" name="pushButton_12">
+            <widget class="QPushButton" name="idApplyBtn">
              <property name="text">
               <string>Apply</string>
              </property>
@@ -322,42 +322,42 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="1" column="1">
-            <widget class="QPushButton" name="pushButton_17">
+            <widget class="QPushButton" name="msgTypeSoreBtn">
              <property name="text">
               <string>Store</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_14">
+            <widget class="QPushButton" name="msgTypeAddBtn">
              <property name="text">
               <string>Add</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QPushButton" name="pushButton_16">
+            <widget class="QPushButton" name="msgTypeLoadBtn">
              <property name="text">
               <string>Load</string>
              </property>
             </widget>
            </item>
            <item row="6" column="1">
-            <widget class="QPushButton" name="pushButton_13">
+            <widget class="QPushButton" name="msgTypeApplyBtn">
              <property name="text">
               <string>Apply</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QPushButton" name="pushButton_15">
+            <widget class="QPushButton" name="msgTypeRmvBtn">
              <property name="text">
               <string>Remove</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="7">
-            <widget class="QTableView" name="tableView_4"/>
+            <widget class="QTableView" name="msgTypeTableView"/>
            </item>
            <item row="5" column="1">
             <spacer name="verticalSpacer_2">
@@ -376,7 +376,7 @@
             </spacer>
            </item>
            <item row="4" column="1">
-            <widget class="QPushButton" name="pushButton_18">
+            <widget class="QPushButton" name="msgTypeDetailsBtn">
              <property name="text">
               <string>Details</string>
              </property>

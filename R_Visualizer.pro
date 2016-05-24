@@ -17,13 +17,21 @@ SOURCES += main.cpp\
     mysquare.cpp \
     msgmodel.cpp \
     msgdelegate.cpp \
-    msg.cpp
+    msg.cpp \
+    idmodel.cpp \
+    msgtypemodel.cpp \
+    idrep.cpp \
+    msgtyperep.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
     msgmodel.h \
     msgdelegate.h \
-    msg.h
+    msg.h \
+    idmodel.h \
+    msgtypemodel.h \
+    idrep.h \
+    msgtyperep.h
 
 FORMS    += mainwindow.ui
 

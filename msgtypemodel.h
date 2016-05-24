@@ -1,19 +1,17 @@
-#ifndef MSGMODEL_H
-#define MSGMODEL_H
+#ifndef MSGTYPEMODEL_H
+#define MSGTYPEMODEL_H
 
-#include "msg.h"
+#include "msgtyperep.h"
 
 #include <QAbstractTableModel>
-#include <QString>
 #include <QVector>
 
-class MsgModel : public QAbstractTableModel
+class MsgTypeModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    MsgModel(QObject *parent = Q_NULLPTR);
-    ~MsgModel();
+    MsgTypeModel(QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -21,28 +19,21 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    void addMsg(Msg *msg);
+    void add(MsgTypeRep *msgTypeRep);
     void clear();
-
-    QVector<Msg *> getMsgs() const;
-    void setMsgs(const QVector<Msg *> &value);
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
 
 private:
-    QVector<Msg *> msgs;
-
     enum HeaderCols
     {
-        COL_TIMESTAMP,
-        COL_NAME,
+        COL_CODE,
         COL_MESSAGE,
+        COL_COLOR,
         COL_NR_OF_COLS
     };
-
-signals:
-    //void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
+    QVector<MsgTypeRep *> msgTypeStore;
 };
 
-#endif // MSGMODEL_H
+#endif // MSGTYPEMODEL_H

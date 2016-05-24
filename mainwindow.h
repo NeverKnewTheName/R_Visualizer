@@ -3,6 +3,8 @@
 
 #include "mysquare.h"
 #include "msgmodel.h"
+#include "idmodel.h"
+#include "msgtypemodel.h"
 
 #include <QMainWindow>
 
@@ -26,25 +28,31 @@ signals:
 
 private slots:
     void on_actionNew_triggered();
-
     void on_actionOpen_triggered();
-
     void on_actionSave_triggered();
-
     void on_actionConnect_triggered();
-
     void on_actionStart_triggered();
-
     void on_actionStop_triggered();
 
-private:
+    void on_idStoreBtn_clicked();
 
+    void on_idLoadBtn_clicked();
+
+    void on_msgTypeSoreBtn_clicked();
+
+    void on_msgTypeLoadBtn_clicked();
+
+private:
     void initMsgsTableView();
+    void initIDTableView();
+    void initMsgTypeTableView();
     void initVisualizerGraphicsView();
 
     Ui::MainWindow *ui;
     QString currentFileName;
     MsgModel *msgModel;
+    IDModel *idModel;
+    MsgTypeModel *msgTypeModel;
 
     QGraphicsScene *scene;
     QGraphicsEllipseItem *ellipse;

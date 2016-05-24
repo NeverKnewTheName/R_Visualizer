@@ -1,5 +1,7 @@
 #include "msgmodel.h"
 
+#include <QDebug>
+
 #include <QJsonDocument>
 #include <QJsonArray>
 
@@ -12,8 +14,7 @@ MsgModel::MsgModel(QObject *parent) : QAbstractTableModel(parent)
 
 MsgModel::~MsgModel()
 {
-    qDeleteAll(msgs);
-    msgs.clear();
+    this->clear();
 }
 
 int MsgModel::rowCount(const QModelIndex &parent) const
@@ -23,7 +24,7 @@ int MsgModel::rowCount(const QModelIndex &parent) const
 
 int MsgModel::columnCount(const QModelIndex &parent) const
 {
-    return 3;
+    return COL_NR_OF_COLS;
 }
 
 QVariant MsgModel::data(const QModelIndex &index, int role) const
@@ -34,36 +35,36 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
-        if(col == 0) return msgs[row]->getTimestamp();
-        if(col == 1) return msgs[row]->getId();
-        if(col == 2) return msgs[row]->getMessage();
+        if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp();
+        if(col == COL_NAME) return msgs[row]->getId();
+        if(col == COL_MESSAGE) return msgs[row]->getMessage();
         break;
     case Qt::FontRole:
-//        if(row == 0 && col == 0)
-//        {
-//            QFont boldFont;
-//            boldFont.setBold(true);
-//            return boldFont;
-//        }
+        //        if(row == 0 && col == 0)
+        //        {
+        //            QFont boldFont;
+        //            boldFont.setBold(true);
+        //            return boldFont;
+        //        }
         break;
     case Qt::BackgroundRole:
-//        if(row == 1 && col == 2)
-//        {
-//            QBrush redBackground(Qt::red);
-//            return redBackground;
-//        }
+        //        if(row == 1 && col == 2)
+        //        {
+        //            QBrush redBackground(Qt::red);
+        //            return redBackground;
+        //        }
         break;
     case Qt::TextAlignmentRole:
-//        if(row == 1 && col == 1)
-//        {
-//            return Qt::AlignRight + Qt::AlignVCenter;
-//        }
+        //        if(row == 1 && col == 1)
+        //        {
+        //            return Qt::AlignRight + Qt::AlignVCenter;
+        //        }
         break;
     case Qt::CheckStateRole:
-//        if(row == 1 && col == 0)
-//        {
-//            return Qt::Checked;
-//        }
+        //        if(row == 1 && col == 0)
+        //        {
+        //            return Qt::Checked;
+        //        }
         break;
     }
 
@@ -74,32 +75,35 @@ bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role
 {
     //ToDO
     if (role == Qt::EditRole)
-        {
-            //save value from editor to member m_gridData
-            //msgs[index.row()] = value.toString();
-            //for presentation purposes only: build and emit a joined string
+    {
+        //save value from editor to member m_gridData
+        //msgs[index.row()] = value.toString();
+        //for presentation purposes only: build and emit a joined string
 
-            //emit editCompleted( result );
-        }
-        return true;
+        //emit editCompleted( result );
+    }
+    return true;
 }
 
 QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
-        {
-            if (orientation == Qt::Horizontal) {
-                switch (section)
-                {
-                case 0:
-                    return QString("Timestamp");
-                case 1:
-                    return QString("Name");
-                case 2:
-                    return QString("Message");
-                }
+    {
+        if (orientation == Qt::Horizontal) {
+            switch (section)
+            {
+            case COL_TIMESTAMP:
+                return QString("Timestamp");
+                break;
+            case COL_NAME:
+                return QString("Name");
+                break;
+            case COL_MESSAGE:
+                return QString("Message");
+                break;
             }
         }
+    }
     return QVariant();
 }
 
@@ -109,6 +113,18 @@ void MsgModel::addMsg(Msg *msg)
     beginInsertRows(QModelIndex(),newRow,newRow);
     this->msgs.append(msg);
     endInsertRows();
+}
+
+void MsgModel::clear()
+{
+    // clearing all data is a reset of the model
+    // In order to ease the processing, do not call begin/endRemoveRows
+    // call begin/endResetModel instead, which ultimately forces all attached
+    // views to reload the model
+    beginResetModel();
+    qDeleteAll(msgs);
+    msgs.clear();
+    endResetModel();
 }
 
 QVector<Msg *> MsgModel::getMsgs() const
@@ -129,14 +145,14 @@ QByteArray MsgModel::parseToJSON()
         Msg *msg = this->msgs.at(i);
         jsonMsgsArr.append(msg->parseOUT());
     }
-    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
+    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Compact);
 }
 
 void MsgModel::parseFromJSON(QByteArray jsonFile)
 {
-    qDeleteAll(msgs);
-    msgs.clear();
-    QJsonArray jsonMsgsArr = QJsonDocument::fromBinaryData(jsonFile).array();
+    this->clear();
+    //    QJsonDocument jsonMsgs = QJsonDocument::fromBinaryData(jsonFile);
+    QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto&& item : jsonMsgsArr)
     {
         Msg *newMsg = new Msg();

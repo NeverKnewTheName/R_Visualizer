@@ -1,48 +1,44 @@
-#ifndef MSGMODEL_H
-#define MSGMODEL_H
+#ifndef IDMODEL_H
+#define IDMODEL_H
 
-#include "msg.h"
+#include "idrep.h"
 
 #include <QAbstractTableModel>
-#include <QString>
 #include <QVector>
+#include <QColor>
 
-class MsgModel : public QAbstractTableModel
+class IDModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    MsgModel(QObject *parent = Q_NULLPTR);
-    ~MsgModel();
-
+    IDModel(QObject *parent = 0);
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    void addMsg(Msg *msg);
+    void add(IDRep *idRep);
     void clear();
 
-    QVector<Msg *> getMsgs() const;
-    void setMsgs(const QVector<Msg *> &value);
+    QString getNameToID(int id);
+    QColor getColorToID(int id);
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
 
 private:
-    QVector<Msg *> msgs;
-
     enum HeaderCols
     {
-        COL_TIMESTAMP,
+        COL_ID,
         COL_NAME,
-        COL_MESSAGE,
+        COL_COLOR,
         COL_NR_OF_COLS
     };
 
-signals:
-    //void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
+    QVector<IDRep *> idStore;
+
 };
 
-#endif // MSGMODEL_H
+#endif // IDMODEL_H
