@@ -5,6 +5,7 @@
 
 #include <QAbstractTableModel>
 #include <QVector>
+#include <QHash>
 #include <QColor>
 
 class IDModel : public QAbstractTableModel
@@ -19,7 +20,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    void add(IDRep *idRep);
+    void add(int id, IDRep *idRep);
     void clear();
 
     QString getNameToID(int id);
@@ -37,7 +38,8 @@ private:
         COL_NR_OF_COLS
     };
 
-    QVector<IDRep *> idStore;
+    QVector<int> idStore;
+    QHash<int, IDRep *> idPropStore;
 
 };
 

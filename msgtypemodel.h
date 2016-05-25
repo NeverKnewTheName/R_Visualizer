@@ -19,8 +19,12 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    void add(MsgTypeRep *msgTypeRep);
+    void add(unsigned int code, MsgTypeRep *msgTypeRep);
     void clear();
+
+    QString getNameToCode(unsigned int code) const;
+    QString getMessageToCode(unsigned int code) const;
+    QColor getColorToCode(unsigned int code) const;
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
@@ -33,7 +37,10 @@ private:
         COL_COLOR,
         COL_NR_OF_COLS
     };
-    QVector<MsgTypeRep *> msgTypeStore;
+    //QVector<MsgTypeRep *> msgTypeStore;
+
+    QVector<unsigned int> codeStore;
+    QHash<unsigned int, MsgTypeRep *> msgTypePropStore;
 };
 
 #endif // MSGTYPEMODEL_H

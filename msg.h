@@ -2,34 +2,54 @@
 #define MSG_H
 
 #include <QJsonObject>
+#include <QDateTime>
+
+typedef struct msgDataT
+{
+    quint8 code;
+    quint8 data0;
+    quint8 data1;
+    quint8 data2;
+    quint8 data3;
+    quint8 data4;
+    quint8 data5;
+    quint8 data6;
+}MsgDataT;
 
 class Msg
 {
 public:
     Msg();
-    Msg(int timestamp, int id, int message);
+    Msg(QDateTime timestamp, unsigned int id, MsgDataT &data);
+    Msg(QDateTime timestamp, unsigned int id, quint8 code, quint8 data0 = 0,quint8 data1 = 0,quint8 data2 = 0,quint8 data3 = 0,quint8 data4 = 0,quint8 data5 = 0,quint8 data6 = 0);
 
-    int getTimestamp() const;
-    void setTimestamp(int value);
+    QDateTime getTimestamp() const;
+    void setTimestamp(QDateTime value);
 
-    int getId() const;
-    void setId(int value);
+    unsigned int getId() const;
+    void setId(unsigned int value);
 
-    int getCode() const;
-    void setCode(int value);
+    MsgDataT getData() const;
+    void setData(const MsgDataT &value);
+    void setData(quint8 code, quint8 data0 = 0, quint8 data1 = 0, quint8 data2 = 0, quint8 data3 = 0, quint8 data4 = 0, quint8 data5 = 0, quint8 data6 = 0);
 
-    int getMessage() const;
-    void setMessage(int value);
+    quint8 getCode() const;
+    void setCode(quint8 value);
+
+    //unsigned int getMessage() const;
+    void setMessage(quint8 data0 = 0, quint8 data1 = 0, quint8 data2 = 0, quint8 data3 = 0, quint8 data4 = 0, quint8 data5 = 0, quint8 data6 = 0);
+
+    QString getMessageAsString() const;
+    QString getDataAsString() const;
 
     void parseIN(QJsonObject jsonMsg);
-    QJsonObject parseOUT();
+    QJsonObject parseOUT() const;
 
 
 private:
-    int timestamp;
-    int id;
-    int code;
-    int message;
+    QDateTime timestamp;
+    unsigned int id;
+    MsgDataT data;
 };
 
 #endif // MSG_H

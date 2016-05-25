@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QFileDialog>
 
+#include <QDateTime>
+
 #define __DEBUG__
 
 #ifdef __DEBUG__
@@ -17,9 +19,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->currentFileName = "";
 
-    this->initMsgsTableView();
     this->initIDTableView();
     this->initMsgTypeTableView();
+    this->initMsgsTableView();
+    this->msgModel->setIDModel(this->idModel);
+    this->msgModel->setMsgTypeModel(this->msgTypeModel);
     this->initVisualizerGraphicsView();
 
 }
@@ -38,7 +42,8 @@ void MainWindow::on_actionNew_triggered()
 #endif //__DEBUG__
     //TESTING ONLY
     static int cntr = 0;
-    msgModel->addMsg(new Msg(cntr++,0x120,0xFF55));
+    MsgDataT msgData = { 0x2, cntr, 0x0,cntr,0x0,cntr,0x0,cntr};
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xFF,msgData));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -125,6 +130,7 @@ void MainWindow::initMsgsTableView()
     ui->msgTableView->resizeColumnsToContents();
     ui->msgTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
     connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
@@ -143,8 +149,8 @@ void MainWindow::initIDTableView()
     connect(idModel, &IDModel::rowsInserted, ui->idTableView, &QTableView::scrollToBottom);
 
     //DEBUG//
-//    idModel->add(new IDRep(0xFF, QString("Master"), QColor(Qt::blue)));
-//    idModel->add(new IDRep(0xF0, QString("PC"), QColor(Qt::green)));
+//    idModel->add(0xFF, new IDRep(0xFF00, QString("Master"), QColor(Qt::blue)));
+//    idModel->add(0xF0, new IDRep(0xF000, QString("PC"), QColor(Qt::green)));
     //DEBUG//
 }
 

@@ -5,20 +5,20 @@ IDRep::IDRep()
 
 }
 
-IDRep::IDRep(int id, QString name, QColor color) : id(id), name(name), color(color)
+IDRep::IDRep(/*int id, */QString name, QColor color) : /*id(id), */name(name), color(color)
 {
 
 }
 
-int IDRep::getId() const
-{
-    return id;
-}
+//int IDRep::getId() const
+//{
+//    return id;
+//}
 
-void IDRep::setId(int value)
-{
-    id = value;
-}
+//void IDRep::setId(int value)
+//{
+//    id = value;
+//}
 
 QString IDRep::getName() const
 {
@@ -42,7 +42,7 @@ void IDRep::setColor(const QColor &value)
 
 void IDRep::parseIN(QJsonObject jsonMsg)
 {
-    this->id = jsonMsg["id"].toInt();
+    //this->id = jsonMsg["id"].toInt();
     this->name = jsonMsg["name"].toString();
     this->color = QColor(jsonMsg["color"].toString());
 }
@@ -50,7 +50,7 @@ void IDRep::parseIN(QJsonObject jsonMsg)
 QJsonObject IDRep::parseOUT()
 {
     QJsonObject jsonMsg;
-    jsonMsg["id"] = this->id;
+    //jsonMsg["id"] = this->id;
     jsonMsg["name"] = this->name;
     jsonMsg["color"] = this->color.name();
     return jsonMsg;
