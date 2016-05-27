@@ -35,43 +35,14 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
-        if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp();
+        if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
         if(col == COL_NAME)
         {
-            int id = this->msgs.at(row)->getId();
-            QString name = this->idModel->getNameToID(id);
-            if(name.isEmpty())
-            {
-                // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-                return QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
-            } else
-            {
-                return name;
-            }
+            return this->msgs.at(row)->getId();
         }
         if(col == COL_MESSAGE)
         {
-            // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-            //return QString("0x%1").arg(msgs[row]->getData()/*decimal*/, 16/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
-            QString message;
-            unsigned int code = msgs[row]->getCode();
-            QString codeName = this->msgTypeModel->getMessageToCode(code);
-            if(codeName.isEmpty())
-            {
-                message.append(QString("Code:\t"));
-                message.append(QString("0x%1").arg(code/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/) );
-            }
-            else
-            {
-                message.append(QString("Code:\t"));
-                message.append(codeName);
-            }
-            message.append(QString("\n"));
-            message.append(QString("Message:\t"));
-            message.append(msgs[row]->getMessageAsString());
-            return message;
-            //return msgs[row]->getDataAsString();
-            //return msgs[row]->getData();
+            return msgs[row]->getDataAsString();
         }
         break;
     case Qt::FontRole:
@@ -86,15 +57,10 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         if(col == COL_NAME )
         {
             return QBrush(this->idModel->getColorToID(this->msgs.at(row)->getId()));
-        } else if( col == COL_MESSAGE)
+        } /*else if( col == COL_MESSAGE)
         {
             return QBrush(this->msgTypeModel->getColorToCode(this->msgs.at(row)->getCode()));
-        }
-        //        if(row == 1 && col == 2)
-        //        {
-        //            QBrush redBackground(Qt::red);
-        //            return redBackground;
-        //        }
+        }*/
         break;
     case Qt::TextAlignmentRole:
         return Qt::TextWordWrap;
@@ -108,6 +74,15 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         //        {
         //            return Qt::Checked;
         //        }
+        break;
+    case Qt::UserRole +1:  // return Data
+    {
+        return QVariant::fromValue(this->msgs.at(row)->getData());
+        //return var;
+    }
+        break;
+    case Qt::UserRole +2:  // return number of lines
+        return 2;
         break;
     }
 

@@ -4,6 +4,8 @@
 #include <QJsonObject>
 #include <QDateTime>
 
+#include <QMetaType>
+
 typedef struct msgDataT
 {
     quint8 code;
@@ -15,6 +17,8 @@ typedef struct msgDataT
     quint8 data5;
     quint8 data6;
 }MsgDataT;
+
+Q_DECLARE_METATYPE(MsgDataT)
 
 class Msg
 {

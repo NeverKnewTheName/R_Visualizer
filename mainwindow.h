@@ -33,14 +33,16 @@ private slots:
     void on_actionConnect_triggered();
     void on_actionStart_triggered();
     void on_actionStop_triggered();
-
     void on_idStoreBtn_clicked();
-
     void on_idLoadBtn_clicked();
-
     void on_msgTypeSoreBtn_clicked();
-
     void on_msgTypeLoadBtn_clicked();
+    void on_idAddBtn_clicked();
+
+    void idAddFinished(const int id, const QString name, const QColor color);
+    void msgTypeAddFinished(const int code, const QString message, const QColor color);
+
+    void on_msgTypeAddBtn_clicked();
 
 private:
     void initMsgsTableView();

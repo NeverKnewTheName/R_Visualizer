@@ -19,6 +19,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
+    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+
     void add(unsigned int code, MsgTypeRep *msgTypeRep);
     void clear();
 
@@ -29,7 +31,6 @@ public:
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
 
-private:
     enum HeaderCols
     {
         COL_CODE,
@@ -37,10 +38,15 @@ private:
         COL_COLOR,
         COL_NR_OF_COLS
     };
+private:
     //QVector<MsgTypeRep *> msgTypeStore;
 
     QVector<unsigned int> codeStore;
     QHash<unsigned int, MsgTypeRep *> msgTypePropStore;
+
+
+signals:
+    void internalModelChanged();
 };
 
 #endif // MSGTYPEMODEL_H

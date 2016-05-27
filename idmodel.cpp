@@ -64,7 +64,18 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
 
 bool IDModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-
+    int row = index.row();
+    int col = index.column();
+    switch(role)
+    {
+    case Qt::EditRole:
+        if(col == COL_ID) ;
+        if(col == COL_NAME) idPropStore.value(idStore[row])->setName(value.value<QString>());
+        if(col == COL_COLOR) idPropStore.value(idStore[row])->setColor(value.value<QColor>());
+        emit internalModelChanged();
+        return true;
+        break;
+    }
 }
 
 QVariant IDModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -87,6 +98,11 @@ QVariant IDModel::headerData(int section, Qt::Orientation orientation, int role)
         }
     }
     return QVariant();
+}
+
+Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
+{
+    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 

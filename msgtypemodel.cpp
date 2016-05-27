@@ -64,7 +64,18 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
 
 bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-
+    int row = index.row();
+    int col = index.column();
+    switch(role)
+    {
+    case Qt::EditRole:
+        if(col == COL_CODE) ;
+        if(col == COL_MESSAGE) msgTypePropStore.value(codeStore[row])->setMessage(value.value<QString>());
+        if(col == COL_COLOR) msgTypePropStore.value(codeStore[row])->setColor(value.value<QColor>());
+        emit internalModelChanged();
+        return true;
+        break;
+    }
 }
 
 QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -87,6 +98,11 @@ QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int 
         }
     }
     return QVariant();
+}
+
+Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
+{
+    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 void MsgTypeModel::add(unsigned int code, MsgTypeRep *msgTypeRep)

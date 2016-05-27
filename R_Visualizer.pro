@@ -21,7 +21,13 @@ SOURCES += main.cpp\
     idmodel.cpp \
     msgtypemodel.cpp \
     idrep.cpp \
-    msgtyperep.cpp
+    msgtyperep.cpp \
+    msgiddelegate.cpp \
+    ideditordelegate.cpp \
+    msgtypeeditordelegate.cpp \
+    idadddialog.cpp \
+    msgtypeadddialog.cpp \
+    csvhandler.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -31,9 +37,17 @@ HEADERS  += mainwindow.h \
     idmodel.h \
     msgtypemodel.h \
     idrep.h \
-    msgtyperep.h
+    msgtyperep.h \
+    msgiddelegate.h \
+    ideditordelegate.h \
+    msgtypeeditordelegate.h \
+    idadddialog.h \
+    msgtypeadddialog.h \
+    csvhandler.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    idadddialog.ui \
+    msgtypeadddialog.ui
 
 RESOURCES += \
     ressources.qrc

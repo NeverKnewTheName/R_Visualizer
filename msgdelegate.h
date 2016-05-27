@@ -1,17 +1,35 @@
 #ifndef MSGDELEGATE_H
 #define MSGDELEGATE_H
 
-#include <QAbstractItemDelegate>
+#include "msgtypemodel.h"
 
-class MsgDelegate// : public QAbstractItemDelegate
+#include <QStyledItemDelegate>
+
+
+class MsgDelegate : public QStyledItemDelegate
 {
-public:
-    MsgDelegate(QWidget *parent = 0);
+    Q_OBJECT
 
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void setEditorData(QWidget *editor, const QModelIndex &index);
-    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index);
-    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index);
+public:
+    MsgDelegate(MsgTypeModel *msgTypeModel, QWidget *parent = 0);
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option,
+               const QModelIndex &index) const Q_DECL_OVERRIDE;
+    QSize sizeHint(const QStyleOptionViewItem &option,
+                   const QModelIndex &index) const Q_DECL_OVERRIDE;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void setModelData(QWidget *editor, QAbstractItemModel *model,
+                      const QModelIndex &index) const Q_DECL_OVERRIDE;
+
+    void setMsgTypeModel(MsgTypeModel *msgTypeModel);
+
+private:
+    MsgTypeModel *msgTypeModel;
+
+private slots:
+    void commitAndCloseEditor();
 
 };
 
