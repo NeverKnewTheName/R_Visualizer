@@ -44,15 +44,25 @@ private slots:
 
     void on_msgTypeAddBtn_clicked();
 
+    void on_idRmvBtn_clicked();
+
+    void on_msgTypeRmvBtn_clicked();
+
+    void on_sndPcktLoadBtn_clicked();
+
+    void on_sndPcktStoreBtn_clicked();
+
 private:
     void initMsgsTableView();
     void initIDTableView();
     void initMsgTypeTableView();
+    void initMsgPacketTableView();
     void initVisualizerGraphicsView();
 
     Ui::MainWindow *ui;
     QString currentFileName;
     MsgModel *msgModel;
+    MsgModel *msgPcktModel;
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;
 

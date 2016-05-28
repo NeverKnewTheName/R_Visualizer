@@ -100,9 +100,24 @@ QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
+void MsgTypeModel::removeRow(int row, const QModelIndex &parent)
+{
+    beginRemoveRows(QModelIndex(), row, row);
+    delete msgTypePropStore.value(codeStore.at(row));
+    msgTypePropStore.remove(codeStore.at(row));
+    codeStore.remove(row);
+    endRemoveRows();
+    emit internalModelChanged();
+}
+
 Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
 {
-    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    int col = index.column();
+
+    if(col == COL_CODE) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if((col == COL_MESSAGE) || (col == COL_COLOR) ) return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+
+    return Qt::NoItemFlags;
 }
 
 void MsgTypeModel::add(unsigned int code, MsgTypeRep *msgTypeRep)
@@ -112,6 +127,7 @@ void MsgTypeModel::add(unsigned int code, MsgTypeRep *msgTypeRep)
     this->codeStore.append(code);
     this->msgTypePropStore[code] = msgTypeRep;
     endInsertRows();
+    emit internalModelChanged();
 }
 
 void MsgTypeModel::clear()
@@ -125,6 +141,7 @@ void MsgTypeModel::clear()
     msgTypePropStore.clear();
     codeStore.clear();
     endResetModel();
+    emit internalModelChanged();
 }
 
 QString MsgTypeModel::getNameToCode(unsigned int code) const
@@ -165,7 +182,7 @@ QByteArray MsgTypeModel::parseToJSON()
         MsgTypeRep *newMsgTypeRep = this->msgTypePropStore.value(this->codeStore.at(i));
         jsonMsgsArr.append(newMsgTypeRep->parseOUT());
     }
-    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Compact);
+    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
 void MsgTypeModel::parseFromJSON(QByteArray jsonFile)

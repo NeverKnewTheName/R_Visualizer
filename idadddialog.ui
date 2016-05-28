@@ -14,32 +14,21 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="idLabel">
-     <property name="text">
-      <string>ID</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="hexPrefixLabel">
-       <property name="text">
-        <string>0x</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLineEdit" name="idLineEdit">
        <property name="inputMask">
-        <string>hhhh</string>
+        <string>\0\xhhhh</string>
+       </property>
+       <property name="text">
+        <string>0x</string>
        </property>
        <property name="frame">
         <bool>true</bool>
        </property>
        <property name="placeholderText">
-        <string/>
+        <string>0000</string>
        </property>
        <property name="cursorMoveStyle">
         <enum>Qt::LogicalMoveStyle</enum>
@@ -51,27 +40,34 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="nameLabel">
-     <property name="text">
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="nameLineEdit">
+     <property name="placeholderText">
       <string>Name</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="nameLineEdit"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="colorLabel">
-     <property name="text">
-      <string>Color</string>
+   <item row="3" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
    <item row="2" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="colorLineEdit"/>
+      <widget class="QLineEdit" name="colorLineEdit">
+       <property name="inputMask">
+        <string>\#hhhhhh</string>
+       </property>
+       <property name="placeholderText">
+        <string>#000000</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
@@ -88,13 +84,24 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="0" column="0">
+    <widget class="QLabel" name="idLabel">
+     <property name="text">
+      <string>ID</string>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="nameLabel">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="colorLabel">
+     <property name="text">
+      <string>Color</string>
      </property>
     </widget>
    </item>

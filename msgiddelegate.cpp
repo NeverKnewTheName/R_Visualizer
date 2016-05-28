@@ -1,5 +1,10 @@
 #include "msgiddelegate.h"
 
+
+/*
+ * DEPRECATED
+ */
+
 #include <QPainter>
 
 msgIDDelegate::msgIDDelegate(IDModel *idModel, QWidget *parent)
@@ -16,7 +21,7 @@ void msgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
     if(option.state & QStyle::State_Selected)
     {
-        background.darker();
+        background = background.darker();
     }
     painter->fillRect(option.rect, background);
 

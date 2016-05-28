@@ -160,9 +160,15 @@ QVector<Msg *> MsgModel::getMsgs() const
     return msgs;
 }
 
-void MsgModel::setMsgs(const QVector<Msg *> &value)
+void MsgModel::setMsgs(const QVector<Msg *> value)
 {
-    msgs = value;
+    this->clear();
+    beginInsertRows(QModelIndex(),0,value.size());
+    for( auto &msg : value)
+    {
+        msgs.append(msg);
+    }
+    endInsertRows();
 }
 
 QByteArray MsgModel::parseToJSON()
@@ -173,7 +179,7 @@ QByteArray MsgModel::parseToJSON()
         Msg *msg = this->msgs.at(i);
         jsonMsgsArr.append(msg->parseOUT());
     }
-    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Compact);
+    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
 void MsgModel::parseFromJSON(QByteArray jsonFile)

@@ -1,6 +1,11 @@
 #ifndef MSGIDDELEGATE_H
 #define MSGIDDELEGATE_H
 
+/*
+ * DEPRECATED
+ */
+
+
 #include "idmodel.h"
 #include <QStyledItemDelegate>
 

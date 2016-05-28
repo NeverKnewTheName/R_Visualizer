@@ -100,9 +100,24 @@ QVariant IDModel::headerData(int section, Qt::Orientation orientation, int role)
     return QVariant();
 }
 
+void IDModel::removeRow(int row, const QModelIndex &parent)
+{
+    beginRemoveRows(QModelIndex(), row, row);
+    delete idPropStore.value(idStore.at(row));
+    idPropStore.remove(idStore.at(row));
+    idStore.remove(row);
+    endRemoveRows();
+    emit internalModelChanged();
+}
+
 Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
 {
-    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    int col = index.column();
+
+    if(col == COL_ID) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if((col == COL_NAME) || (col == COL_COLOR) ) return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+
+    return Qt::NoItemFlags;
 }
 
 
@@ -117,6 +132,7 @@ void IDModel::clear()
     idPropStore.clear();
     idStore.clear();
     endResetModel();
+    emit internalModelChanged();
 }
 
 void IDModel::add(int id, IDRep *idRep)
@@ -126,6 +142,7 @@ void IDModel::add(int id, IDRep *idRep)
     this->idStore.append(id);
     this->idPropStore[id] = idRep;
     endInsertRows();
+    emit internalModelChanged();
 }
 
 QString IDModel::getNameToID(int id)
@@ -159,7 +176,7 @@ QByteArray IDModel::parseToJSON()
         //jsonMsgsArr.append(QJsonObject(this->idStore.at(i),idRep->parseOUT()));
         jsonMsgsArr.append(jsonSveObj);
     }
-    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Compact);
+    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
 void IDModel::parseFromJSON(QByteArray jsonFile)

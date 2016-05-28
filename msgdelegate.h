@@ -2,6 +2,7 @@
 #define MSGDELEGATE_H
 
 #include "msgtypemodel.h"
+#include "idmodel.h"
 
 #include <QStyledItemDelegate>
 
@@ -11,7 +12,7 @@ class MsgDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    MsgDelegate(MsgTypeModel *msgTypeModel, QWidget *parent = 0);
+    MsgDelegate(MsgTypeModel *msgTypeModel, IDModel *idModel, QWidget *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
                const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -27,6 +28,7 @@ public:
 
 private:
     MsgTypeModel *msgTypeModel;
+    IDModel *idModel;
 
 private slots:
     void commitAndCloseEditor();

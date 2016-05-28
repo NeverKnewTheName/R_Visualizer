@@ -30,15 +30,10 @@ public:
     void clear();
 
     QVector<Msg *> getMsgs() const;
-    void setMsgs(const QVector<Msg *> &value);
+    void setMsgs(const QVector<Msg *> value);
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
-
-private:
-    QVector<Msg *> msgs;
-    IDModel *idModel;
-    MsgTypeModel *msgTypeModel;
 
     enum HeaderCols
     {
@@ -47,6 +42,11 @@ private:
         COL_MESSAGE,
         COL_NR_OF_COLS
     };
+private:
+    QVector<Msg *> msgs;
+    IDModel *idModel;
+    MsgTypeModel *msgTypeModel;
+
 
 signals:
     //void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
