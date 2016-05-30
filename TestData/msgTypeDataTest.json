@@ -1,0 +1,26 @@
+[
+    {
+        "code": 2,
+        "codeName": "Start",
+        "color": "#ffaa00",
+        "messageFormat": "Data0: #Data0#\nData1: #Data1#\nData2: #Data2#\nData3: #Data3#\nData4: #Data4#\nData5: #Data5#\nData6: #Data6#"
+    },
+    {
+        "code": 3,
+        "codeName": "Stop",
+        "color": "#ff5500",
+        "messageFormat": "Data0(#Data0#) + Data2(#Data2#): #OP#(#Data0##+##Data2#)#/OP#\nData0(#Data0#) + Data0(#Data0#)  + Data2(#Data2#) : #OP#(#Data0##+##OP#(#Data0##+##Data2#)#/OP#)#/OP#\nData2(#Data2#) / Data4(#Data4#): #OP#(#Data2##/##Data4#)#/OP#\nData1 + Data2 << Data4:\n#HEX#(#OP#(#Data1##+##OP#(#Data2##<<##Data4#)#/OP#)#/OP#)#/HEX#"
+    },
+    {
+        "code": 10,
+        "codeName": "NewMatrix",
+        "color": "#d86365",
+        "messageFormat": "NoData"
+    },
+    {
+        "code": 11,
+        "codeName": "MatrixCode",
+        "color": "#ffaa7f",
+        "messageFormat": "Receiver:\t#HEX#(#OP#(#OP#(#Data0##<<#8)#/OP##+##Data0#)#/OP#)#/HEX#\nData:\t#BIN#(#OP#(#OP#(#Data2##<<#5)#/OP##+##Data3#)#/OP#)#/BIN#"
+    }
+]

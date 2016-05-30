@@ -2,7 +2,6 @@
 #define MSGTYPEMODEL_H
 
 #include "msgtyperep.h"
-#include "msg.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
@@ -28,7 +27,7 @@ public:
     void clear();
 
     QString getNameToCode(unsigned int code) const;
-    QString getMessageToCode(unsigned int code, MsgDataT &msg) const;
+    QString getMessageToCode(unsigned int code) const;
     QColor getColorToCode(unsigned int code) const;
     int getNrLinesToCode(unsigned int code);
 
@@ -44,8 +43,6 @@ public:
         COL_NR_OF_COLS
     };
 private:
-    //QVector<MsgTypeRep *> msgTypeStore;
-
     QVector<unsigned int> codeStore;
     QHash<unsigned int, MsgTypeRep *> msgTypePropStore;
 

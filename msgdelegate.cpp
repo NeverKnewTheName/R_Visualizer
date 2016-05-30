@@ -66,7 +66,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         dataPrint.append(codeName);
         // end code line
         //dataPrint.append(QString("\n"));
-        QString msgString = this->msgTypeModel->getMessageToCode(msgData.code, msgData);
+        QString msgString = this->msgTypeModel->getMessageToCode(msgData.code);
         if(msgString.isEmpty())
         {
             // Craft a standard Message
@@ -82,9 +82,111 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         }
         else
         {
-            // Print the retrieved formatted message
-            //qDebug() << "Formatted message: " << msgString;
-            dataPrint.append(msgString.split("\n"));
+            // format the message according to the retrieved format string
+            QString formatString = msgString;
+            QString formattedMessage = formatString;
+            formattedMessage.replace("#Data0#", QString::number(msgData.data0));
+            formattedMessage.replace("#Data1#", QString::number(msgData.data1));
+            formattedMessage.replace("#Data2#", QString::number(msgData.data2));
+            formattedMessage.replace("#Data3#", QString::number(msgData.data3));
+            formattedMessage.replace("#Data4#", QString::number(msgData.data4));
+            formattedMessage.replace("#Data5#", QString::number(msgData.data5));
+            formattedMessage.replace("#Data6#", QString::number(msgData.data6));
+            // parse operations form string
+            //QRegularExpression opParse(QString("#OP#\\((\\d\\.?\\d*)#.*#(\\d\\.?\\d*)\\)#\\/OP#"));
+            QRegularExpression opParse(QString("#OP#\\((\\d\\.?\\d*)#([+-/*%&|^]|(>>)|(<<))#(\\d\\.?\\d*)\\)#\\/OP#"));
+            opParse.setPatternOptions(QRegularExpression::DontCaptureOption); // only capture the whole operation
+            //QStringList opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts(); // build a string list from the operations
+            QString opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            while(!opString.isEmpty())
+            {
+                QString parsedOperation = opString;
+                QVariant opResult;
+                parsedOperation.replace("#OP#(","").replace(")#/OP#","");
+                QStringList operands = parsedOperation.split("#");
+                if(!operands.at(1).compare("+"))
+                {
+                    opResult.setValue(operands.at(0).toInt() + operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("-"))
+                {
+                    opResult.setValue(operands.at(0).toInt() - operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("*"))
+                {
+                    opResult.setValue(operands.at(0).toInt() * operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("/"))
+                {
+                    opResult.setValue(operands.at(0).toInt() / operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("%"))
+                {
+                    opResult.setValue(operands.at(0).toInt() % operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare(">>"))
+                {
+                    opResult.setValue(operands.at(0).toInt() >> operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("<<"))
+                {
+                    opResult.setValue(operands.at(0).toInt() << operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("&"))
+                {
+                    opResult.setValue(operands.at(0).toInt() & operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("|"))
+                {
+                    opResult.setValue(operands.at(0).toInt() | operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("^"))
+                {
+                    opResult.setValue(operands.at(0).toInt() ^ operands.at(2).toInt());
+                }
+
+                formattedMessage.replace(opString,QString::number(opResult.value<int>())); //replace operation tokens with the result
+                qDebug() << parsedOperation;
+                //opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
+                opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+
+            }
+            // Parse HEX conversions
+            opParse.setPattern(QString("#HEX#\\(\\d+\\)#\\/HEX#"));
+            opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            while(!opString.isEmpty())
+            {
+                QString parsedNumber = opString;
+                parsedNumber.replace(QString("#HEX#("),QString("")).replace(QString(")#/HEX#"),QString(""));
+                formattedMessage.replace(opString,QString("0x%1").arg(parsedNumber.toInt(),0,16)); //replace operation tokens with the result
+                //opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
+                opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            }
+            // Parse OCT conversions
+            opParse.setPattern(QString("#OCT#\\(\\d+\\)#\\/OCT#"));
+            opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            while(!opString.isEmpty())
+            {
+                QString parsedNumber = opString;
+                parsedNumber.replace(QString("#OCT#("),QString("")).replace(QString(")#/OCT#"),QString(""));
+                formattedMessage.replace(opString,QString("0%1").arg(parsedNumber.toInt(),0,8)); //replace operation tokens with the result
+                //opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
+                opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            }
+            // Parse BIN conversions
+            opParse.setPattern(QString("#BIN#\\(\\d+\\)#\\/BIN#"));
+            opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            while(!opString.isEmpty())
+            {
+                QString parsedNumber = opString;
+                parsedNumber.replace(QString("#BIN#("),QString("")).replace(QString(")#/BIN#"),QString(""));
+                formattedMessage.replace(opString,QString("%1").arg(parsedNumber.toInt(),0,2)); //replace operation tokens with the result
+                //opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
+                opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
+            }
+
+
+            dataPrint.append(formattedMessage.split("\n"));
         }
     }
 

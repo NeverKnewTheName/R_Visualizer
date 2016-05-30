@@ -162,80 +162,14 @@ QString MsgTypeModel::getNameToCode(unsigned int code) const
         return QString("");
 }
 
-QString MsgTypeModel::getMessageToCode(unsigned int code, MsgDataT &msg) const
+QString MsgTypeModel::getMessageToCode(unsigned int code) const
 {
     MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
 
     if(msgTypeRep != Q_NULLPTR)
     {
-        QString formatString = msgTypeRep->getMessageFormat();
-        QString formattedMessage = formatString;
-        formattedMessage.replace("#Data0#", QString::number(msg.data0));
-        formattedMessage.replace("#Data1#", QString::number(msg.data1));
-        formattedMessage.replace("#Data2#", QString::number(msg.data2));
-        formattedMessage.replace("#Data3#", QString::number(msg.data3));
-        formattedMessage.replace("#Data4#", QString::number(msg.data4));
-        formattedMessage.replace("#Data5#", QString::number(msg.data5));
-        formattedMessage.replace("#Data6#", QString::number(msg.data6));
-        // parse operations form string
-        QRegularExpression opParse(QString("#OP#\\((\\d\\.?\\d*)#.*#(\\d\\.?\\d*)\\)#\\/OP#"));
-        opParse.setPatternOptions(QRegularExpression::DontCaptureOption); // only capture the whole operation
-        QStringList opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts(); // build a string list from the operations
-        while(!opList.isEmpty())
-        {
-            for( auto &operation : opList )
-            {
-                QString parsedOperation = operation;
-                QVariant opResult;
-                parsedOperation.replace("#OP#(","").replace(")#/OP#",""); //remove operation tokens
-                QStringList operands = parsedOperation.split("#");
-                if(!operands.at(1).compare("+"))
-                {
-                    opResult.setValue(operands.at(0).toInt() + operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("-"))
-                {
-                    opResult.setValue(operands.at(0).toInt() - operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("*"))
-                {
-                    opResult.setValue(operands.at(0).toInt() * operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("/"))
-                {
-                    opResult.setValue(operands.at(0).toInt() / operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("%"))
-                {
-                    opResult.setValue(operands.at(0).toInt() % operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare(">>"))
-                {
-                    opResult.setValue(operands.at(0).toInt() >> operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("<<"))
-                {
-                    opResult.setValue(operands.at(0).toInt() << operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("&"))
-                {
-                    opResult.setValue(operands.at(0).toInt() & operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("|"))
-                {
-                    opResult.setValue(operands.at(0).toInt() | operands.at(2).toInt());
-                }
-                else if(!operands.at(1).compare("^"))
-                {
-                    opResult.setValue(operands.at(0).toInt() ^ operands.at(2).toInt());
-                }
 
-                formattedMessage.replace(operation,QString::number(opResult.value<int>())); //replace operation tokens with the result
-                qDebug() << parsedOperation;
-                opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
-            }
-        }
-        return formattedMessage;
+        return msgTypeRep->getMessageFormat();
     }
     else
         return QString("");
