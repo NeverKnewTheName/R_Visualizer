@@ -357,7 +357,8 @@ void MainWindow::on_msgTypeRmvBtn_clicked()
 
 void MainWindow::on_sndPcktLoadBtn_clicked()
 {
-    QString openLoc = QFileDialog::getOpenFileName(this, QString("Open"), QString(), "CSV File (*.csv)");
+    QString fileFormat;
+    QString openLoc = QFileDialog::getOpenFileName(this, QString("Open"), QString(), QString("CSV File (*.csv);;JSON File (*.json)"),&fileFormat);
     qDebug() << openLoc;
     QFile csvOpenFile(openLoc);
     if(!csvOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -365,15 +366,21 @@ void MainWindow::on_sndPcktLoadBtn_clicked()
     }
     //ToDO
     // read file content
-    CsvMsgPacketHandler csvMsgPacketParser;
-    QString msgPacket = QString(csvOpenFile.readAll());
-    this->msgPcktModel->setMsgs(csvMsgPacketParser.parseCsvMsgPacket(msgPacket));
+    if(!fileFormat.compare(QString("CSV File (*.csv)")))
+    {
+        CsvMsgPacketHandler csvMsgPacketParser;
+        QString msgPacket = QString(csvOpenFile.readAll());
+        this->msgPcktModel->setMsgs(csvMsgPacketParser.parseCsvMsgPacket(msgPacket));
+    } else if(!fileFormat.compare(QString("JSON File (*.json)")))
+    {
+        this->msgPcktModel->parseFromJSON(csvOpenFile.readAll());
+    }
     csvOpenFile.close();
-//    for( Msg *msg : csvMsgPacketParser.getMsgs())
-//    {
-//        qDebug() << msg->getDataAsString();
-//    }
-//    ui->sndPcktTableView->reset();
+    //    for( Msg *msg : csvMsgPacketParser.getMsgs())
+    //    {
+    //        qDebug() << msg->getDataAsString();
+    //    }
+    //    ui->sndPcktTableView->reset();
     // parse file
     // populate ui
     // close file
@@ -381,7 +388,8 @@ void MainWindow::on_sndPcktLoadBtn_clicked()
 
 void MainWindow::on_sndPcktStoreBtn_clicked()
 {
-    QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save as"), QString(), QString("CSV File (*.csv)"));
+    QString fileFormat;
+    QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save as"), QString(), QString("CSV File (*.csv);;JSON File (*.json)"),&fileFormat);
     qDebug() << saveLoc;
     QFile csvSaveFile(saveLoc);
     if(!csvSaveFile.open(QIODevice::WriteOnly)) {
@@ -391,9 +399,15 @@ void MainWindow::on_sndPcktStoreBtn_clicked()
     // extract ui content
     // parse content to file format
     // write to file
-    CsvMsgPacketHandler csvMsgPacketParser;
-    csvSaveFile.write(csvMsgPacketParser.parseToString(this->msgPcktModel->getMsgs()).toUtf8()); //ToDO check for error (-1)
-    // close file
+    if(!fileFormat.compare(QString("CSV File (*.csv)")))
+    {
+        CsvMsgPacketHandler csvMsgPacketParser;
+        csvSaveFile.write(csvMsgPacketParser.parseToString(this->msgPcktModel->getMsgs()).toUtf8()); //ToDO check for error (-1)
+        // close file
+    } else if(!fileFormat.compare(QString("JSON File (*.json)")))
+    {
+        csvSaveFile.write(this->msgPcktModel->parseToJSON());
+    }
     csvSaveFile.flush(); //always flush after write!
     csvSaveFile.close();
 }
