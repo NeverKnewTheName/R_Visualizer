@@ -4,6 +4,9 @@
 #include <QJsonArray>
 
 #include <QBrush>
+#include <QRegularExpression>
+
+#include <QDebug>
 
 MsgTypeModel::MsgTypeModel(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -29,7 +32,8 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
         if(col == COL_CODE) return QString("0x%1").arg(codeStore[row]/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        if(col == COL_MESSAGE) return msgTypePropStore.value(codeStore[row])->getMessage();
+        if(col == COL_CODENAME) return msgTypePropStore.value(codeStore[row])->getCodeName();
+        if(col == COL_MESSAGEFORMAT) return msgTypePropStore.value(codeStore[row])->getMessageFormat();
         if(col == COL_COLOR) return msgTypePropStore.value(codeStore[row])->getColor().name();
         break;
     case Qt::FontRole:
@@ -70,7 +74,8 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
     {
     case Qt::EditRole:
         if(col == COL_CODE) ;
-        if(col == COL_MESSAGE) msgTypePropStore.value(codeStore[row])->setMessage(value.value<QString>());
+        if(col == COL_CODENAME) msgTypePropStore.value(codeStore[row])->setCodeName(value.value<QString>());
+        if(col == COL_MESSAGEFORMAT ) msgTypePropStore.value(codeStore[row])->setMessageFormat(value.value<QString>());
         if(col == COL_COLOR) msgTypePropStore.value(codeStore[row])->setColor(value.value<QColor>());
         emit internalModelChanged();
         return true;
@@ -88,8 +93,11 @@ QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int 
             case COL_CODE:
                 return QString("Code");
                 break;
-            case COL_MESSAGE:
-                return QString("Message");
+            case COL_CODENAME:
+                return QString("Name");
+                break;
+            case COL_MESSAGEFORMAT:
+                return QString("Message Format");
                 break;
             case COL_COLOR:
                 return QString("Color");
@@ -115,7 +123,7 @@ Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
     int col = index.column();
 
     if(col == COL_CODE) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-    if((col == COL_MESSAGE) || (col == COL_COLOR) ) return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if((col == COL_CODENAME) || ( col == COL_MESSAGEFORMAT ) || (col == COL_COLOR) ) return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
     return Qt::NoItemFlags;
 }
@@ -149,17 +157,86 @@ QString MsgTypeModel::getNameToCode(unsigned int code) const
     MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
 
     if(msgTypeRep != Q_NULLPTR)
-        return QString(msgTypeRep->getCode());
+        return msgTypeRep->getCodeName();
     else
         return QString("");
 }
 
-QString MsgTypeModel::getMessageToCode(unsigned int code) const
+QString MsgTypeModel::getMessageToCode(unsigned int code, MsgDataT &msg) const
 {
     MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
 
     if(msgTypeRep != Q_NULLPTR)
-        return msgTypeRep->getMessage();
+    {
+        QString formatString = msgTypeRep->getMessageFormat();
+        QString formattedMessage = formatString;
+        formattedMessage.replace("#Data0#", QString::number(msg.data0));
+        formattedMessage.replace("#Data1#", QString::number(msg.data1));
+        formattedMessage.replace("#Data2#", QString::number(msg.data2));
+        formattedMessage.replace("#Data3#", QString::number(msg.data3));
+        formattedMessage.replace("#Data4#", QString::number(msg.data4));
+        formattedMessage.replace("#Data5#", QString::number(msg.data5));
+        formattedMessage.replace("#Data6#", QString::number(msg.data6));
+        // parse operations form string
+        QRegularExpression opParse(QString("#OP#\\((\\d\\.?\\d*)#.*#(\\d\\.?\\d*)\\)#\\/OP#"));
+        opParse.setPatternOptions(QRegularExpression::DontCaptureOption); // only capture the whole operation
+        QStringList opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts(); // build a string list from the operations
+        while(!opList.isEmpty())
+        {
+            for( auto &operation : opList )
+            {
+                QString parsedOperation = operation;
+                QVariant opResult;
+                parsedOperation.replace("#OP#(","").replace(")#/OP#",""); //remove operation tokens
+                QStringList operands = parsedOperation.split("#");
+                if(!operands.at(1).compare("+"))
+                {
+                    opResult.setValue(operands.at(0).toInt() + operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("-"))
+                {
+                    opResult.setValue(operands.at(0).toInt() - operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("*"))
+                {
+                    opResult.setValue(operands.at(0).toInt() * operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("/"))
+                {
+                    opResult.setValue(operands.at(0).toInt() / operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("%"))
+                {
+                    opResult.setValue(operands.at(0).toInt() % operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare(">>"))
+                {
+                    opResult.setValue(operands.at(0).toInt() >> operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("<<"))
+                {
+                    opResult.setValue(operands.at(0).toInt() << operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("&"))
+                {
+                    opResult.setValue(operands.at(0).toInt() & operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("|"))
+                {
+                    opResult.setValue(operands.at(0).toInt() | operands.at(2).toInt());
+                }
+                else if(!operands.at(1).compare("^"))
+                {
+                    opResult.setValue(operands.at(0).toInt() ^ operands.at(2).toInt());
+                }
+
+                formattedMessage.replace(operation,QString::number(opResult.value<int>())); //replace operation tokens with the result
+                qDebug() << parsedOperation;
+                opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
+            }
+        }
+        return formattedMessage;
+    }
     else
         return QString("");
 }
@@ -172,6 +249,21 @@ QColor MsgTypeModel::getColorToCode(unsigned int code) const
         return msgTypeRep->getColor();
     else
         return QColor(Qt::white);
+}
+
+int MsgTypeModel::getNrLinesToCode(unsigned int code)
+{
+    //qDebug() << __FUNCTION__;
+    MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
+
+    if(msgTypeRep != Q_NULLPTR)
+    {
+        return msgTypeRep->getMessageFormat().count("\n");
+    }
+    else
+    {
+        return 1;
+    }
 }
 
 QByteArray MsgTypeModel::parseToJSON()

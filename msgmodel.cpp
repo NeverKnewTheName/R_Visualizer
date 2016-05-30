@@ -35,15 +35,10 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
+        // returns only displayable data
         if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
-        if(col == COL_NAME)
-        {
-            return this->msgs.at(row)->getId();
-        }
-        if(col == COL_MESSAGE)
-        {
-            return msgs[row]->getDataAsString();
-        }
+        if(col == COL_NAME) return this->msgs.at(row)->getId();
+        if(col == COL_MESSAGE) return msgs[row]->getDataAsString();
         break;
     case Qt::FontRole:
         //        if(row == 0 && col == 0)
@@ -54,10 +49,12 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
+        //Background is drawn by delegate
+        /*
         if(col == COL_NAME )
         {
-            return QBrush(this->idModel->getColorToID(this->msgs.at(row)->getId()));
-        } /*else if( col == COL_MESSAGE)
+            //return QBrush(this->idModel->getColorToID(this->msgs.at(row)->getId()));
+        } else if( col == COL_MESSAGE)
         {
             return QBrush(this->msgTypeModel->getColorToCode(this->msgs.at(row)->getCode()));
         }*/
@@ -81,8 +78,8 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         //return var;
     }
         break;
-    case Qt::UserRole +2:  // return number of lines
-        return 2;
+    case Qt::UserRole +2:  // return Code of the line
+        return this->msgs.at(row)->getCode();
         break;
     }
 
@@ -125,15 +122,15 @@ QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role
     return QVariant();
 }
 
-void MsgModel::setIDModel(IDModel *idModel)
-{
-    this->idModel = idModel;
-}
+//void MsgModel::setIDModel(IDModel *idModel)
+//{
+//    this->idModel = idModel;
+//}
 
-void MsgModel::setMsgTypeModel(MsgTypeModel *msgTypeModel)
-{
-    this->msgTypeModel = msgTypeModel;
-}
+//void MsgModel::setMsgTypeModel(MsgTypeModel *msgTypeModel)
+//{
+//    this->msgTypeModel = msgTypeModel;
+//}
 
 void MsgModel::addMsg(Msg *msg)
 {

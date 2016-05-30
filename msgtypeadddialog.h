@@ -20,12 +20,15 @@ private:
 
 private slots:
     void colorSelected(const QColor &color);
+    void formatSelected(const QString &formatString);
     void readyToCommit();
 
     void on_colorPickerPushButton_clicked();
 
+    void on_formatterPushButton_clicked();
+
 signals:
-    void commit(const int code, const QString message, const QColor color);
+    void commit(const int code, const QString codeName, const QString messageFormat, const QColor color);
 };
 
 #endif // MSGTYPEADDDIALOG_H

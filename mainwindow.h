@@ -40,7 +40,7 @@ private slots:
     void on_idAddBtn_clicked();
 
     void idAddFinished(const int id, const QString name, const QColor color);
-    void msgTypeAddFinished(const int code, const QString message, const QColor color);
+    void msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color);
 
     void on_msgTypeAddBtn_clicked();
 

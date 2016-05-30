@@ -1,6 +1,7 @@
 #include "msgtypeeditordelegate.h"
 
 #include "msgtypemodel.h"
+#include "msgtypeformatterdialog.h"
 
 #include <QColorDialog>
 #include <QLineEdit>
@@ -24,13 +25,21 @@ QSize MsgTypeEditorDelegate::sizeHint(const QStyleOptionViewItem &option, const 
 QWidget *MsgTypeEditorDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     int col = index.column();
-    if (col == MsgTypeModel::COL_MESSAGE)
+    if (col == MsgTypeModel::COL_CODENAME)
     {
         //NAME
         QLineEdit *textEdit = new QLineEdit(parent);
         connect(textEdit, &QLineEdit::editingFinished,
                 this, &MsgTypeEditorDelegate::commitAndCloseEditor);
         return textEdit;
+    }
+    else if (col == MsgTypeModel::COL_MESSAGEFORMAT )
+    {
+        //QLineEdit *textEdit = new QLineEdit(parent);
+        MsgTypeFormatterDialog *formatEdit = new MsgTypeFormatterDialog(parent);
+        connect(formatEdit, &MsgTypeFormatterDialog::finished,
+                this, &MsgTypeEditorDelegate::commitAndCloseEditor);
+        return formatEdit;
     }
     else if (col == MsgTypeModel::COL_COLOR) {
         //COLOR
@@ -46,9 +55,14 @@ QWidget *MsgTypeEditorDelegate::createEditor(QWidget *parent, const QStyleOption
 void MsgTypeEditorDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     int col = index.column();
-    if (col == MsgTypeModel::COL_MESSAGE) {
+    if (col == MsgTypeModel::COL_CODENAME) {
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
         textEdit->setText(index.model()->data(index, Qt::DisplayRole).value<QString>());
+    }
+    if (col == MsgTypeModel::COL_MESSAGEFORMAT) {
+        //QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
+        MsgTypeFormatterDialog *formatEdit = qobject_cast<MsgTypeFormatterDialog *>(editor);
+        formatEdit->setFormatString(index.model()->data(index, Qt::DisplayRole).value<QString>());
     }
     else if (col == MsgTypeModel::COL_COLOR)
     {
@@ -64,10 +78,16 @@ void MsgTypeEditorDelegate::setEditorData(QWidget *editor, const QModelIndex &in
 void MsgTypeEditorDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     int col = index.column();
-    if (col == MsgTypeModel::COL_MESSAGE) {
+    if (col == MsgTypeModel::COL_CODENAME) {
         //NAME
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
         model->setData(index, textEdit->text());
+    }
+    else if (col == MsgTypeModel::COL_MESSAGEFORMAT)
+    {
+        //QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
+        MsgTypeFormatterDialog *formatEdit = qobject_cast<MsgTypeFormatterDialog *>(editor);
+        model->setData(index, formatEdit->getFormatString());
     }
     else if (col == MsgTypeModel::COL_COLOR)
     {
@@ -82,7 +102,7 @@ void MsgTypeEditorDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 
 void MsgTypeEditorDelegate::commitAndCloseEditor()
 {
-    QColorDialog *editor = qobject_cast<QColorDialog *>(sender());
+    QWidget *editor = qobject_cast<QWidget *>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
 }

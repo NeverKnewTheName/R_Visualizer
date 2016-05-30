@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initMsgTypeTableView();
     this->initMsgsTableView();
     this->initMsgPacketTableView();
-    this->msgModel->setIDModel(this->idModel);
-    this->msgModel->setMsgTypeModel(this->msgTypeModel);
+//    this->msgModel->setIDModel(this->idModel);
+//    this->msgModel->setMsgTypeModel(this->msgTypeModel);
     this->initVisualizerGraphicsView();
 
 }
@@ -149,6 +149,8 @@ void MainWindow::initMsgsTableView()
 
     ui->msgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    ui->msgTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
     //ui->msgTableView->setItemDelegate(new MsgDelegate(ui->msgTableView));
     ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
     //ui->msgTableView->setItemDelegateForColumn(1, new msgIDDelegate(this->idModel, ui->msgTableView));
@@ -210,6 +212,9 @@ void MainWindow::initMsgPacketTableView()
     ui->sndPcktTableView->verticalHeader()->hide();
     ui->sndPcktTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->sndPcktTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    ui->sndPcktTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
     //ui->msgTableView->setItemDelegate(new MsgDelegate(ui->msgTableView));
     ui->sndPcktTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
     //ui->sndPcktTableView->setItemDelegateForColumn(1, new msgIDDelegate(this->idModel, ui->msgTableView));
@@ -329,9 +334,9 @@ void MainWindow::on_msgTypeAddBtn_clicked()
     msgTypeAddDialogg->exec();
 }
 
-void MainWindow::msgTypeAddFinished(const int code, const QString message, const QColor color)
+void MainWindow::msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color)
 {
-    msgTypeModel->add(code, new MsgTypeRep(code, message, color));
+    msgTypeModel->add(code, new MsgTypeRep(code, codeName, messageFormat, color));
 }
 
 

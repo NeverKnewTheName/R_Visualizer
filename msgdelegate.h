@@ -25,6 +25,7 @@ public:
                       const QModelIndex &index) const Q_DECL_OVERRIDE;
 
     void setMsgTypeModel(MsgTypeModel *msgTypeModel);
+    void setIDModel(IDModel *idModel);
 
 private:
     MsgTypeModel *msgTypeModel;

@@ -9,13 +9,16 @@ class MsgTypeRep
 {
 public:
     MsgTypeRep();
-    MsgTypeRep(int code, QString message, QColor color = QColor(Qt::white));
+    MsgTypeRep(int code, QString codeName, QString messageFormat, QColor color = QColor(Qt::white));
 
     int getCode() const;
     void setCode(int value);
 
-    QString getMessage() const;
-    void setMessage(const QString &value);
+    QString getCodeName() const;
+    void setCodeName(const QString &value);
+
+    QString getMessageFormat() const;
+    void setMessageFormat(const QString &value);
 
     QColor getColor() const;
     void setColor(const QColor &value);
@@ -25,7 +28,8 @@ public:
 
 private:
     int code;
-    QString message;
+    QString codeName;
+    QString messageFormat;
     QColor color;
 };
 

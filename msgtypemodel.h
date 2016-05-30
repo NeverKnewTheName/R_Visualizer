@@ -2,6 +2,7 @@
 #define MSGTYPEMODEL_H
 
 #include "msgtyperep.h"
+#include "msg.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
@@ -27,8 +28,9 @@ public:
     void clear();
 
     QString getNameToCode(unsigned int code) const;
-    QString getMessageToCode(unsigned int code) const;
+    QString getMessageToCode(unsigned int code, MsgDataT &msg) const;
     QColor getColorToCode(unsigned int code) const;
+    int getNrLinesToCode(unsigned int code);
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
@@ -36,7 +38,8 @@ public:
     enum HeaderCols
     {
         COL_CODE,
-        COL_MESSAGE,
+        COL_CODENAME,
+        COL_MESSAGEFORMAT,
         COL_COLOR,
         COL_NR_OF_COLS
     };

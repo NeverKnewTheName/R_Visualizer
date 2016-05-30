@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     msgtypeeditordelegate.cpp \
     idadddialog.cpp \
     msgtypeadddialog.cpp \
-    csvmsgpackethandler.cpp
+    csvmsgpackethandler.cpp \
+    msgtypeformatterdialog.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -43,11 +44,13 @@ HEADERS  += mainwindow.h \
     msgtypeeditordelegate.h \
     idadddialog.h \
     msgtypeadddialog.h \
-    csvmsgpackethandler.h
+    csvmsgpackethandler.h \
+    msgtypeformatterdialog.h
 
 FORMS    += mainwindow.ui \
     idadddialog.ui \
-    msgtypeadddialog.ui
+    msgtypeadddialog.ui \
+    msgtypeformatterdialog.ui
 
 RESOURCES += \
     ressources.qrc
