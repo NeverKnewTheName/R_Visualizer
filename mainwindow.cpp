@@ -54,15 +54,16 @@ void MainWindow::on_actionNew_triggered()
 #endif //__DEBUG__
     //TESTING ONLY
     static int cntr = 0;
-    MsgDataT msgData = { 0x2, cntr, 0x0,cntr,0x0,cntr,0x0,cntr};
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xF0,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xF0,msgData));
-    msgData = { 0x3, cntr, 0x0,cntr,0x0,cntr,0x0,cntr};
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xF0,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr++),0xFF,msgData));
+    ++cntr;
+    MsgDataT msgData = { 0x2, cntr, 0x0,cntr*2,0x0,cntr,0x4*cntr,cntr};
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
+    msgData = { 0x3, cntr, 0x0,cntr*2,0x0,cntr,0x4*cntr,cntr};
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -157,6 +158,7 @@ void MainWindow::initMsgsTableView()
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
     connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
+    connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::resizeRowsToContents);
 }
 
 void MainWindow::initIDTableView()
@@ -174,6 +176,8 @@ void MainWindow::initIDTableView()
     connect(idModel, &IDModel::rowsInserted, ui->idTableView, &QTableView::scrollToBottom);
     connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
     connect(idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
+    connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
+    connect(idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
     //DEBUG//
     //    idModel->add(0xFF, new IDRep(0xFF00, QString("Master"), QColor(Qt::blue)));
     //    idModel->add(0xF0, new IDRep(0xF000, QString("PC"), QColor(Qt::green)));
@@ -196,6 +200,8 @@ void MainWindow::initMsgTypeTableView()
     connect(msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
     connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
     connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
+    connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
+    connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
     //DEBUG//
     //    msgTypeModel->add(new MsgTypeRep(0x02, QString("Start"), QColor(Qt::green)));
     //    msgTypeModel->add(new MsgTypeRep(0x03, QString("Stop"), QColor(Qt::red)));
@@ -221,6 +227,7 @@ void MainWindow::initMsgPacketTableView()
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
     connect(msgModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::scrollToBottom);
+    connect(msgModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
 }
 
 void MainWindow::initVisualizerGraphicsView()

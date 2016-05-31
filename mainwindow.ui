@@ -16,16 +16,35 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QTableView" name="msgTableView"/>
+     <widget class="QTableView" name="msgTableView">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all incoming messages chronologically.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_sysOvrView">
+       <property name="toolTip">
+        <string>Visual overview of the current system</string>
+       </property>
        <attribute name="title">
         <string>System Overview</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Overview of the current system</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
@@ -34,8 +53,14 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tab_sndMsg">
+       <property name="toolTip">
+        <string>Send a message or a packet of messages</string>
+       </property>
        <attribute name="title">
         <string>Send Message</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Send a message or a packet</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -81,12 +106,19 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="1" column="0">
-            <widget class="QTableView" name="sndPcktTableView"/>
+            <widget class="QTableView" name="sndPcktTableView">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all messages from the loaded or created packet.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QPushButton" name="sndPcktAddBtn">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add an entry to the current message packet after the current selction.&lt;/p&gt;&lt;p&gt;If no entry is selcted the new message will be appended to the package&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>Add</string>
                </property>
@@ -94,6 +126,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="sndPcktRmvBtn">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remvoe the selected entry from the current message packet.&lt;/p&gt;&lt;p&gt;If no message is selected nothing will happen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -114,6 +149,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="sndPcktLoadBtn">
+               <property name="toolTip">
+                <string>Load a message packet (*.json or *.csv)</string>
+               </property>
                <property name="text">
                 <string>Load</string>
                </property>
@@ -121,6 +159,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="sndPcktStoreBtn">
+               <property name="toolTip">
+                <string>Save the current message packet (*.json or *.csv)</string>
+               </property>
                <property name="text">
                 <string>Store</string>
                </property>
@@ -128,6 +169,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="sndPcktSendBtn">
+               <property name="toolTip">
+                <string>Send the current message packet</string>
+               </property>
                <property name="text">
                 <string>Send</string>
                </property>
@@ -148,8 +192,14 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tab_msgConfig">
+       <property name="toolTip">
+        <string>Configure messaging</string>
+       </property>
        <attribute name="title">
         <string>Messages config</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Configure the messages</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -241,8 +291,14 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tab_sysConfig">
+       <property name="toolTip">
+        <string>Configure the System</string>
+       </property>
        <attribute name="title">
         <string>System config</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Configure the system</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
@@ -260,6 +316,9 @@
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="1" column="1">
             <widget class="QPushButton" name="idStoreBtn">
+             <property name="toolTip">
+              <string>Save the current ID configuration (*.json) to a file</string>
+             </property>
              <property name="text">
               <string>Store</string>
              </property>
@@ -267,16 +326,26 @@
            </item>
            <item row="3" column="1">
             <widget class="QPushButton" name="idRmvBtn">
+             <property name="toolTip">
+              <string>Remove the selected entry from the current ID configuration.</string>
+             </property>
              <property name="text">
               <string>Remove</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="6">
-            <widget class="QTableView" name="idTableView"/>
+            <widget class="QTableView" name="idTableView">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ID configuration browser which shows all currently available IDs and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole ID configuration with the Load button or Add/Remove  IDs to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="idLoadBtn">
+             <property name="toolTip">
+              <string>Load an ID configuration (*.json)</string>
+             </property>
              <property name="text">
               <string>Load</string>
              </property>
@@ -284,19 +353,15 @@
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="idAddBtn">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new ID configuration entry to the current ID configuration. The ID configuration tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="text">
               <string>Add</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QPushButton" name="idApplyBtn">
-             <property name="text">
-              <string>Apply</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
+           <item row="4" column="1" rowspan="2">
             <spacer name="verticalSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -323,6 +388,9 @@
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="1" column="1">
             <widget class="QPushButton" name="msgTypeSoreBtn">
+             <property name="toolTip">
+              <string>Save the current Message Type configuration (*.json) to a file</string>
+             </property>
              <property name="text">
               <string>Store</string>
              </property>
@@ -330,6 +398,9 @@
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="msgTypeAddBtn">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new Message Type configuration entry to the current Message Type configuration. The Message Type configuration tool is called&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="text">
               <string>Add</string>
              </property>
@@ -337,29 +408,32 @@
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="msgTypeLoadBtn">
+             <property name="toolTip">
+              <string>Load an Message Type configuration (*.json)</string>
+             </property>
              <property name="text">
               <string>Load</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="1">
-            <widget class="QPushButton" name="msgTypeApplyBtn">
-             <property name="text">
-              <string>Apply</string>
-             </property>
-            </widget>
-           </item>
            <item row="3" column="1">
             <widget class="QPushButton" name="msgTypeRmvBtn">
+             <property name="toolTip">
+              <string>Remove the selected entry from the current Message Type configuration.</string>
+             </property>
              <property name="text">
               <string>Remove</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="0" rowspan="7">
-            <widget class="QTableView" name="msgTypeTableView"/>
+           <item row="0" column="0" rowspan="6">
+            <widget class="QTableView" name="msgTypeTableView">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message Type configuration browser which shows all currently available Message Types and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole Message Type configuration with the Load button or Add/Remove Message Types to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
            </item>
-           <item row="5" column="1">
+           <item row="4" column="1" rowspan="2">
             <spacer name="verticalSpacer_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -375,13 +449,6 @@
              </property>
             </spacer>
            </item>
-           <item row="4" column="1">
-            <widget class="QPushButton" name="msgTypeDetailsBtn">
-             <property name="text">
-              <string>Details</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
@@ -393,6 +460,9 @@
        </property>
        <attribute name="title">
         <string>Tool config</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Configure the tool itself</string>
        </attribute>
       </widget>
      </widget>

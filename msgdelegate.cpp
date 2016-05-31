@@ -146,10 +146,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
                 }
 
                 formattedMessage.replace(opString,QString::number(opResult.value<int>())); //replace operation tokens with the result
-                qDebug() << parsedOperation;
-                //opList = QRegularExpressionMatch(opParse.match(formattedMessage)).capturedTexts();
                 opString = QRegularExpressionMatch(opParse.match(formattedMessage)).captured();
-
             }
             // Parse HEX conversions
             opParse.setPattern(QString("#HEX#\\(\\d+\\)#\\/HEX#"));
@@ -197,8 +194,8 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     }
     // draw background
     painter->fillRect(option.rect, background);
+    //painter->drawRect(option.rect.);
     int nrLines = dataPrint.size();
-    //qDebug() << "Lines to print: " << nrLines;
     int linesPrinted = 0;
     int left = option.rect.left();
     int top = option.rect.top();
@@ -224,12 +221,9 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 QSize MsgDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QSize result = QStyledItemDelegate::sizeHint(option, index);
-    qDebug() << "RESIZE HINT";
-    qDebug() << result.height();
     int nrOfLines = this->msgTypeModel->getNrLinesToCode(index.model()->data(index, Qt::UserRole + 2).value<int>());
     result.setHeight(result.height() + option.fontMetrics.height()*((nrOfLines>1) ? nrOfLines : 1 ));
     //result.setHeight(result.height() * ((nrOfLines>1) ? nrOfLines : 1 ));
-    qDebug() << result.height();
     return result;
     //return QStyledItemDelegate::sizeHint(option, index);
 }

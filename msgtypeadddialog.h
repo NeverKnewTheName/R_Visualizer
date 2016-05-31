@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::MsgTypeAddDialog *ui;
+    QStringList inputMasks;
+
+    int parseToNumber(QString numericalString);
+    QString parseToString(int number);
 
 private slots:
     void colorSelected(const QColor &color);
@@ -26,6 +30,8 @@ private slots:
     void on_colorPickerPushButton_clicked();
 
     void on_formatterPushButton_clicked();
+
+    void on_numericallFormatComboBox_currentIndexChanged(int index);
 
 signals:
     void commit(const int code, const QString codeName, const QString messageFormat, const QColor color);

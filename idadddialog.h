@@ -17,11 +17,17 @@ public:
 
 private:
     Ui::IDAddDialog *ui;
+    QStringList inputMasks;
+
+    int parseToNumber(QString numericalString);
+    QString parseToString(int number);
 
 private slots:
     void colorSelected(const QColor &color);
     void on_pushButton_clicked();
     void readyToCommit();
+
+    void on_numericallFormatComboBox_currentIndexChanged(int index);
 
 signals:
     void commit(const int id, const QString name, const QColor color);

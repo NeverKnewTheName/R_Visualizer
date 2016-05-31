@@ -24,10 +24,23 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QComboBox" name="fieldComboBox"/>
+      <widget class="QComboBox" name="fieldComboBox">
+       <property name="toolTip">
+        <string>Select a field to add</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="addFieldPushButton">
+       <property name="toolTip">
+        <string>Add the selected field at the cursor position</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
         <string>Add Data field</string>
        </property>
@@ -59,16 +72,43 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QComboBox" name="operand1_ComboBox"/>
+      <widget class="QComboBox" name="operand1_ComboBox">
+       <property name="toolTip">
+        <string>Select the first operand of the operation</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="operationComboBox"/>
+      <widget class="QComboBox" name="operationComboBox">
+       <property name="toolTip">
+        <string>Select an operation which shall be applied to the operands</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QComboBox" name="operand2_ComboBox"/>
+      <widget class="QComboBox" name="operand2_ComboBox">
+       <property name="toolTip">
+        <string>Select the second operand of the operation</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
+      </widget>
      </item>
      <item row="1" column="3">
       <widget class="QPushButton" name="addOperationPushButton">
+       <property name="toolTip">
+        <string>Add the specified operation at the cursor position</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
         <string>Add Operation</string>
        </property>
@@ -87,6 +127,12 @@
      </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="AddNewLinepushButton">
+       <property name="toolTip">
+        <string>Adds a new line at the cursor position</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
         <string>Add new line</string>
        </property>
@@ -94,6 +140,12 @@
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="addTabPushButton">
+       <property name="toolTip">
+        <string>Adds a tabulator at the cursor position</string>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
         <string>Add Tab</string>
        </property>
@@ -115,10 +167,27 @@
     </layout>
    </item>
    <item row="3" column="0">
-    <widget class="QPlainTextEdit" name="formatPlainTextEdit"/>
+    <widget class="QPlainTextEdit" name="formatPlainTextEdit">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Input the formatting which shall be applied to the messages.&lt;/p&gt;&lt;p&gt;Use the buttons and fields below to insert specific fields at the cursor position.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLineEdit" name="formatStringLineEdit"/>
+    <widget class="QLineEdit" name="formatStringLineEdit">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the format string resulting from the input below&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="7" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -146,6 +215,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>formatPlainTextEdit</tabstop>
+  <tabstop>AddNewLinepushButton</tabstop>
+  <tabstop>addTabPushButton</tabstop>
+  <tabstop>fieldComboBox</tabstop>
+  <tabstop>addFieldPushButton</tabstop>
+  <tabstop>operand1_ComboBox</tabstop>
+  <tabstop>operationComboBox</tabstop>
+  <tabstop>operand2_ComboBox</tabstop>
+  <tabstop>addOperationPushButton</tabstop>
+  <tabstop>formatStringLineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
