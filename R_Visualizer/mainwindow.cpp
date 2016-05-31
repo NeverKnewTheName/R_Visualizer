@@ -38,11 +38,18 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initMsgTypeTableView();
     this->initMsgsTableView();
     this->initMsgPacketTableView();
-//    this->msgModel->setIDModel(this->idModel);
-//    this->msgModel->setMsgTypeModel(this->msgTypeModel);
+    //    this->msgModel->setIDModel(this->idModel);
+    //    this->msgModel->setMsgTypeModel(this->msgTypeModel);
     this->initVisualizerGraphicsView();
 
+    this->userRoleMngr = new UserRoleMngr(this);
+    ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
+    ui->actionSwitch_User_Role->setToolTip(QString("Switch to Admin Role"));
+    ui->actionSwitch_User_Role->setText(QString("Switch to Admin Role"));
+    connect(this, &MainWindow::switchUserRoles, this->userRoleMngr, &UserRoleMngr::switchRoles);
+    connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
 
+    emit switchUserRoles(UserRoleMngr::NormalUserRole);
 
     m_deviceHandler = new DeviceHandler();
     connect(this, &MainWindow::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket);
@@ -374,6 +381,40 @@ void MainWindow::msgTypeAddFinished(const int code, const QString codeName, cons
     msgTypeModel->add(code, new MsgTypeRep(code, codeName, messageFormat, color));
 }
 
+void MainWindow::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
+{
+    if(roleToSwitchTo == UserRoleMngr::NormalUserRole)
+    {
+        ui->idAddBtn->setVisible(false);
+        ui->idRmvBtn->setVisible(false);
+        ui->idStoreBtn->setVisible(false);
+        ui->idTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->msgTypeAddBtn->setVisible(false);
+        ui->msgTypeRmvBtn->setVisible(false);
+        ui->msgTypeSoreBtn->setVisible(false);
+        ui->msgTypeTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->sndPcktAddBtn->setVisible(false);
+        ui->sndPcktRmvBtn->setVisible(false);
+        ui->sndPcktStoreBtn->setVisible(false);
+        ui->sndPcktTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    }
+    else if(roleToSwitchTo == UserRoleMngr::AdminRole)
+    {
+        ui->idAddBtn->setVisible(true);
+        ui->idRmvBtn->setVisible(true);
+        ui->idStoreBtn->setVisible(true);
+        ui->idTableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
+        ui->msgTypeAddBtn->setVisible(true);
+        ui->msgTypeRmvBtn->setVisible(true);
+        ui->msgTypeSoreBtn->setVisible(true);
+        ui->msgTypeTableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
+        ui->sndPcktAddBtn->setVisible(true);
+        ui->sndPcktRmvBtn->setVisible(true);
+        ui->sndPcktStoreBtn->setVisible(true);
+    }
+}
+
 
 void MainWindow::on_idRmvBtn_clicked()
 {
@@ -456,18 +497,18 @@ void MainWindow::on_sndMsgSendBtn_clicked()
 {
     Data_Packet::Frame frame;
     frame.ID_Standard = 0xF0;
-//    if (ui->cbIDE->isChecked())
-//    {
-//        frame.IDE = 1;
-//        frame.SRR = 1;
-//        frame.ID_Extended = ui->sbIDExt->value();
-//    }
-//    else
-//    {
-        frame.IDE = 0;
-        frame.SRR = 0;
-        frame.ID_Extended = 0;
-//    }
+    //    if (ui->cbIDE->isChecked())
+    //    {
+    //        frame.IDE = 1;
+    //        frame.SRR = 1;
+    //        frame.ID_Extended = ui->sbIDExt->value();
+    //    }
+    //    else
+    //    {
+    frame.IDE = 0;
+    frame.SRR = 0;
+    frame.ID_Extended = 0;
+    //    }
 
     frame.RTR = 0;
 
@@ -479,4 +520,26 @@ void MainWindow::on_sndMsgSendBtn_clicked()
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
     //this->m_deviceHandler->sltSendPacket(packet);
     emit sigSendCANPacket(packet);
+}
+
+
+void MainWindow::on_actionSwitch_User_Role_triggered()
+{
+    UserRoleMngr::UserRole role = this->userRoleMngr->getCurrentRole();
+    if( role == UserRoleMngr::NormalUserRole )
+    {
+        role = UserRoleMngr::AdminRole;
+        ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserNormal-32.png"));
+        ui->actionSwitch_User_Role->setToolTip(QString("Switch to User Role"));
+        ui->actionSwitch_User_Role->setText(QString("Switch to User Role"));
+    }
+    else if( role == UserRoleMngr::AdminRole )
+    {
+        role = UserRoleMngr::NormalUserRole;
+        ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
+        ui->actionSwitch_User_Role->setToolTip(QString("Switch to Admin Role"));
+        ui->actionSwitch_User_Role->setText(QString("Switch to Admin Role"));
+    }
+
+    emit this->switchUserRoles(role);
 }

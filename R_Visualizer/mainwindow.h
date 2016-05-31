@@ -9,6 +9,7 @@
 #include "msgmodel.h"
 #include "idmodel.h"
 #include "msgtypemodel.h"
+#include "userrolemngr.h"
 
 #include <QMainWindow>
 
@@ -32,6 +33,7 @@ public:
 
 signals:
     void sigSendCANPacket(CAN_PacketPtr);
+    void switchUserRoles(UserRoleMngr::UserRole roleToSwitchTo);
 
 private slots:
     void on_actionNew_triggered();
@@ -49,6 +51,8 @@ private slots:
     void idAddFinished(const int id, const QString name, const QColor color);
     void msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color);
 
+    void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
+
     void on_msgTypeAddBtn_clicked();
 
     void on_idRmvBtn_clicked();
@@ -60,6 +64,9 @@ private slots:
     void on_sndPcktStoreBtn_clicked();
 
     void on_sndMsgSendBtn_clicked();
+
+
+    void on_actionSwitch_User_Role_triggered();
 
 private:
     void initMsgsTableView();
@@ -74,6 +81,8 @@ private:
     MsgModel *msgPcktModel;
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;
+
+    UserRoleMngr *userRoleMngr;
 
     QGraphicsScene *scene;
     QGraphicsEllipseItem *ellipse;

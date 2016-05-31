@@ -494,8 +494,15 @@
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
    </widget>
+   <widget class="QMenu" name="menuUser">
+    <property name="title">
+     <string>User</string>
+    </property>
+    <addaction name="actionSwitch_User_Role"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTrace"/>
+   <addaction name="menuUser"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -507,9 +514,12 @@
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="separator"/>
    <addaction name="actionConnect"/>
    <addaction name="actionStart"/>
    <addaction name="actionStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionSwitch_User_Role"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -582,6 +592,19 @@
    </property>
    <property name="text">
     <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionSwitch_User_Role">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/GUI/Icons/Icons/UserNormal-32.png</normaloff>
+     <normalon>:/GUI/Icons/Icons/UserAdmin-32.png</normalon>:/GUI/Icons/Icons/UserNormal-32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Switch to Admin Role</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch the Role of the user</string>
    </property>
   </action>
  </widget>

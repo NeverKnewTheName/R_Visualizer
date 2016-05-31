@@ -8,5 +8,7 @@
         <file>Icons/Save-32.png</file>
         <file>Icons/Check-32.png</file>
         <file>Icons/Delete-32.png</file>
+        <file>Icons/UserNormal-32.png</file>
+        <file>Icons/UserAdmin-32.png</file>
     </qresource>
 </RCC>

@@ -17,7 +17,7 @@ DEFINES += USB_DRIVER_LIBRARY
 
 INCLUDEPATH += ./hidapi/.
 
-LIBS += -LC:\LabWrk\RelatedProjects\K20_CAN2USB_SS2015\Sourcen\Applikation\Applikation\usb_driver\hidapi -lhidapi
+LIBS += -L../../CAN_Analyser_USB_Driver/hidapi -lhidapi
 
 SOURCES += devicedriver.cpp \
     can_packet.cpp \
