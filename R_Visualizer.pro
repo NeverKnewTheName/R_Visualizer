@@ -11,6 +11,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = R_Visualizer
 TEMPLATE = app
 
+INCLUDEPATH += .
+INCLUDEPATH += ../CAN_Analyser_USB_Driver/.
+INCLUDEPATH += ../CAN_Analyser_USB_Driver/hidapi/.
+
+LIBS += -lusb_driver -L../../CAN_Analyser_USB_Driver/
+LIBS += -lhidapi -L../../CAN_Analyser_USB_Driver/hidapi/
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -28,7 +34,8 @@ SOURCES += main.cpp\
     idadddialog.cpp \
     msgtypeadddialog.cpp \
     csvmsgpackethandler.cpp \
-    msgtypeformatterdialog.cpp
+    msgtypeformatterdialog.cpp \
+    devicehandler.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -45,7 +52,8 @@ HEADERS  += mainwindow.h \
     idadddialog.h \
     msgtypeadddialog.h \
     csvmsgpackethandler.h \
-    msgtypeformatterdialog.h
+    msgtypeformatterdialog.h \
+    devicehandler.h
 
 FORMS    += mainwindow.ui \
     idadddialog.ui \

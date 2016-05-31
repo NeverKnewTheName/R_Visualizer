@@ -12,10 +12,14 @@
 
 #include "csvmsgpackethandler.h"
 
+#include "devicehandler.h"
+
 #include <QFile>
 #include <QFileDialog>
 
 #include <QDateTime>
+#include <QMessageBox>
+
 
 #define __DEBUG__
 
@@ -38,12 +42,17 @@ MainWindow::MainWindow(QWidget *parent) :
 //    this->msgModel->setMsgTypeModel(this->msgTypeModel);
     this->initVisualizerGraphicsView();
 
+
+
+    m_deviceHandler = new DeviceHandler();
+    connect(this, &MainWindow::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete square;
+    delete m_deviceHandler;
 }
 
 
@@ -119,7 +128,26 @@ void MainWindow::on_actionConnect_triggered()
 #ifdef __DEBUG__
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
+    if (m_deviceHandler->devices().isEmpty())
+    {
+        QMessageBox::information(this, tr("Kein Gerät gefunden"), tr("Bitte schließen Sie ein Gerät an!"), QMessageBox::Cancel);
+        return;
+    }
 
+    HID_Device device = m_deviceHandler->devices()[0];
+    if (m_deviceHandler->connectTo(device))
+    {
+        qDebug() << "COnnected";
+        m_deviceHandler->sltStartCapture();
+        //m_state = Connected;
+        //updateActionStates();
+        //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 wurde hergestellt. Die Analyse kann nun gestartet werden.").arg(device.product));
+    }
+    else
+    {
+        qDebug() << "Connection failed";
+        //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 konnte nicht hergestellt werden. Das Gerät ist nicht betriebsbereit.").arg(device.product));
+    }
 }
 
 void MainWindow::on_actionStart_triggered()
@@ -422,4 +450,33 @@ void MainWindow::on_sndPcktStoreBtn_clicked()
     }
     csvSaveFile.flush(); //always flush after write!
     csvSaveFile.close();
+}
+
+void MainWindow::on_sndMsgSendBtn_clicked()
+{
+    Data_Packet::Frame frame;
+    frame.ID_Standard = 0xF0;
+//    if (ui->cbIDE->isChecked())
+//    {
+//        frame.IDE = 1;
+//        frame.SRR = 1;
+//        frame.ID_Extended = ui->sbIDExt->value();
+//    }
+//    else
+//    {
+        frame.IDE = 0;
+        frame.SRR = 0;
+        frame.ID_Extended = 0;
+//    }
+
+    frame.RTR = 0;
+
+    frame.DLC = 4;
+
+    frame.data = QByteArray::fromHex("0xF1234F");
+
+    CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
+    qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
+    //this->m_deviceHandler->sltSendPacket(packet);
+    emit sigSendCANPacket(packet);
 }

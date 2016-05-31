@@ -1,6 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+#include <can_packet.h>
+
+
 #include "mysquare.h"
 #include "msgmodel.h"
 #include "idmodel.h"
@@ -11,6 +15,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
+
+class DeviceHandler;
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +31,7 @@ public:
     ~MainWindow();
 
 signals:
+    void sigSendCANPacket(CAN_PacketPtr);
 
 private slots:
     void on_actionNew_triggered();
@@ -52,6 +59,8 @@ private slots:
 
     void on_sndPcktStoreBtn_clicked();
 
+    void on_sndMsgSendBtn_clicked();
+
 private:
     void initMsgsTableView();
     void initIDTableView();
@@ -70,6 +79,8 @@ private:
     QGraphicsEllipseItem *ellipse;
     QGraphicsRectItem *rect;
     MySquare *square;
+
+    DeviceHandler *m_deviceHandler; /**< Pointer to the \ref DeviceHandler */
 
 };
 
