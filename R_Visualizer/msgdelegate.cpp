@@ -230,17 +230,17 @@ QSize MsgDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInde
 
 QWidget *MsgDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    return QStyledItemDelegate::createEditor(parent,option,index);
 }
 
 void MsgDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-
+    return QStyledItemDelegate::setEditorData(editor, index);
 }
 
 void MsgDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-
+    return QStyledItemDelegate::setModelData(editor, model, index);
 }
 
 void MsgDelegate::setMsgTypeModel(MsgTypeModel *msgTypeModel)

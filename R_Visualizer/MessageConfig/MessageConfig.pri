@@ -5,8 +5,21 @@
 #-------------------------------------------------
 DEPENDPATH += $$PWD
 
-SOURCES += $$PWD//messageconfig.cpp
+SOURCES += $$PWD//messageconfig.cpp \
+    $$PWD//ideditordelegate.cpp \
+    $$PWD//msgtypeeditordelegate.cpp \
+    $$PWD//msgtypeformatterdialog.cpp \
+    $$PWD//idadddialog.cpp \
+    $$PWD//msgtypeadddialog.cpp \
 
-HEADERS  += $$PWD//messageconfig.h
+HEADERS  += $$PWD//messageconfig.h \
+    $$PWD//ideditordelegate.h \
+    $$PWD//msgtypeeditordelegate.h \
+    $$PWD//msgtypeformatterdialog.h \
+    $$PWD//idadddialog.h \
+    $$PWD//msgtypeadddialog.h \
 
-FORMS    += $$PWD//messageconfig.ui
+FORMS    += $$PWD//messageconfig.ui \
+    $$PWD//idadddialog.ui \
+    $$PWD//msgtypeadddialog.ui \
+    $$PWD//msgtypeformatterdialog.ui

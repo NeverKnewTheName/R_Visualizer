@@ -28,7 +28,7 @@ private:
     IDModel *idModel;
 
 private slots:
-    void commitAndClsoeEditor();
+    void commitAndCloseEditor();
 };
 
 #endif // MSGIDDELEGATE_H

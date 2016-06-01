@@ -8,7 +8,7 @@
 #include <QPainter>
 
 msgIDDelegate::msgIDDelegate(IDModel *idModel, QWidget *parent)
-    : idModel(idModel), QStyledItemDelegate(parent)
+    : QStyledItemDelegate(parent),idModel(idModel)
 {
 
 }
@@ -43,17 +43,17 @@ QSize msgIDDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIn
 
 QWidget *msgIDDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    return QStyledItemDelegate::createEditor(parent,option,index);
 }
 
 void msgIDDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-
+    return QStyledItemDelegate::setEditorData(editor, index);
 }
 
 void msgIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-
+    return QStyledItemDelegate::setModelData(editor, model, index);
 }
 
 void msgIDDelegate::setIDModel(IDModel *idModel)
@@ -61,7 +61,7 @@ void msgIDDelegate::setIDModel(IDModel *idModel)
     this->idModel = idModel;
 }
 
-void msgIDDelegate::commitAndClsoeEditor()
+void msgIDDelegate::commitAndCloseEditor()
 {
 
 }

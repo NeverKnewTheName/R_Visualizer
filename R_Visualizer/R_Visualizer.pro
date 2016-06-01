@@ -30,12 +30,7 @@ SOURCES += main.cpp\
     idrep.cpp \
     msgtyperep.cpp \
     msgiddelegate.cpp \
-    ideditordelegate.cpp \
-    msgtypeeditordelegate.cpp \
-    idadddialog.cpp \
-    msgtypeadddialog.cpp \
     csvmsgpackethandler.cpp \
-    msgtypeformatterdialog.cpp \
     devicehandler.cpp \
     userrolemngr.cpp
 
@@ -49,22 +44,16 @@ HEADERS  += mainwindow.h \
     idrep.h \
     msgtyperep.h \
     msgiddelegate.h \
-    ideditordelegate.h \
-    msgtypeeditordelegate.h \
-    idadddialog.h \
-    msgtypeadddialog.h \
     csvmsgpackethandler.h \
-    msgtypeformatterdialog.h \
     devicehandler.h \
     userrolemngr.h
 
 FORMS    += mainwindow.ui \
-    idadddialog.ui \
-    msgtypeadddialog.ui \
-    msgtypeformatterdialog.ui
 
 RESOURCES += \
     ressources.qrc
 
 
+include(SystemOverview/SystemOverview.pri)
+include(SendMessages/SendMessages.pri)
 include(MessageConfig/MessageConfig.pri)

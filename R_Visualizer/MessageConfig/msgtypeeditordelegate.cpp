@@ -6,6 +6,8 @@
 #include <QColorDialog>
 #include <QLineEdit>
 
+#include <QDebug>
+
 MsgTypeEditorDelegate::MsgTypeEditorDelegate( QWidget *parent)
     : QStyledItemDelegate(parent)
 {
@@ -85,7 +87,6 @@ void MsgTypeEditorDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
     }
     else if (col == MsgTypeModel::COL_MESSAGEFORMAT)
     {
-        //QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
         MsgTypeFormatterDialog *formatEdit = qobject_cast<MsgTypeFormatterDialog *>(editor);
         model->setData(index, formatEdit->getFormatString());
     }
