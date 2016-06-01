@@ -151,5 +151,6 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
     //this->m_deviceHandler->sltSendPacket(packet);
+    qDebug() << "Send CAN message";
     emit sigSendCANPacket(packet);
 }

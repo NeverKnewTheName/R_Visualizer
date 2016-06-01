@@ -3,24 +3,102 @@
         "code": 2,
         "codeName": "Start",
         "color": "#ffaa00",
-        "messageFormat": "Data0: #Data0#\nData1: #Data1#\nData2: #Data2#\nData3: #Data3#\nData4: #Data4#\nData5: #Data5#\nData6: #Data6#"
+        "messageFormat": ""
     },
     {
         "code": 3,
         "codeName": "Stop",
         "color": "#ff5500",
-        "messageFormat": "Data0(#Data0#) + Data2(#Data2#): #OP#(#Data0##+##Data2#)#/OP#\nData0(#Data0#) + Data0(#Data0#)  + Data2(#Data2#) : #OP#(#Data0##+##OP#(#Data0##+##Data2#)#/OP#)#/OP#\nData2(#Data2#) / Data4(#Data4#): #OP#(#Data2##/##Data4#)#/OP#\nData1 + Data2 << Data4:\n#HEX#(#OP#(#Data1##+##OP#(#Data2##<<##Data4#)#/OP#)#/OP#)#/HEX#"
+        "messageFormat": ""
     },
     {
         "code": 10,
-        "codeName": "NewMatrix",
+        "codeName": "MatrixHeader",
         "color": "#d86365",
-        "messageFormat": "NoData"
+        "messageFormat": ""
     },
     {
         "code": 11,
         "codeName": "MatrixCode",
         "color": "#ffaa7f",
         "messageFormat": "Receiver:\t#HEX#(#OP#(#OP#(#Data0##<<#8)#/OP##+##Data0#)#/OP#)#/HEX#\nData:\t#BIN#(#OP#(#OP#(#Data2##<<#5)#/OP##+##Data3#)#/OP#)#/BIN#"
+    },
+    {
+        "code": 79,
+        "codeName": "OK",
+        "color": "#b3f5b0",
+        "messageFormat": "OK CODE"
+    },
+    {
+        "code": 9,
+        "codeName": "NewMatrix",
+        "color": "#fff9b3",
+        "messageFormat": ""
+    },
+    {
+        "code": 64,
+        "codeName": "SyncCode",
+        "color": "#aaaaff",
+        "messageFormat": "#HEX#(#Data0#)#/HEX# #HEX#(#Data1#)#/HEX# #HEX#(#Data2#)#/HEX# #HEX#(#Data3#)#/HEX# #HEX#(#Data4#)#/HEX# #HEX#(#Data5#)#/HEX# #HEX#(#Data6#)#/HEX#"
+    },
+    {
+        "code": 144,
+        "codeName": "StartUpCode",
+        "color": "#5daa48",
+        "messageFormat": ""
+    },
+    {
+        "code": 16,
+        "codeName": "SysTickCode",
+        "color": "#74aa23",
+        "messageFormat": "Tick: #Data0#"
+    },
+    {
+        "code": 153,
+        "codeName": "PumpStatOn",
+        "color": "#aaff00",
+        "messageFormat": ""
+    },
+    {
+        "code": 152,
+        "codeName": "PumpStatOff",
+        "color": "#ff5500",
+        "messageFormat": ""
+    },
+    {
+        "code": 159,
+        "codeName": "ERROR",
+        "color": "#ff0000",
+        "messageFormat": ""
+    },
+    {
+        "code": 146,
+        "codeName": "StartOK",
+        "color": "#75ff6b",
+        "messageFormat": ""
+    },
+    {
+        "code": 147,
+        "codeName": "StopOK",
+        "color": "#ffaa00",
+        "messageFormat": ""
+    },
+    {
+        "code": 148,
+        "codeName": "StopReq",
+        "color": "#ffaa7f",
+        "messageFormat": ""
+    },
+    {
+        "code": 149,
+        "codeName": "MatrixRecOK",
+        "color": "#b3ff74",
+        "messageFormat": ""
+    },
+    {
+        "code": 112,
+        "codeName": "TempCode",
+        "color": "#ffa1ab",
+        "messageFormat": "Temp: #Data0#°C"
     }
 ]

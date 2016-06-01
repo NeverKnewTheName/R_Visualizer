@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "msgdelegate.h"
+#include "msgproxymodel.h"
 
 #include "csvmsgpackethandler.h"
 
@@ -70,7 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     emit switchUserRoles(UserRoleMngr::NormalUserRole);
 
     m_deviceHandler = new DeviceHandler();
-    connect(this, &MainWindow::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket);
+    connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket);
+    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived);
 }
 
 MainWindow::~MainWindow()
@@ -192,9 +194,12 @@ void MainWindow::on_actionStop_triggered()
 
 void MainWindow::initMsgsTableView()
 {
-    msgModel = new MsgModel(this);
+    this->msgModel = new MsgModel(this);
+    MsgProxyModel *msgProxyModel = new MsgProxyModel(this);
+    msgProxyModel->setSourceModel(this->msgModel);
+    connect(this->msgModel, &MsgModel::rowsInserted, msgProxyModel, &MsgProxyModel::newEntryInSourceModel);
 
-    ui->msgTableView->setModel(msgModel);
+    ui->msgTableView->setModel(msgProxyModel);
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //ui->msgTableView->horizontalHeader()->setStretchLastSection(true);
     ui->msgTableView->verticalHeader()->hide();

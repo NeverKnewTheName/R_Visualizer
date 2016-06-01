@@ -21,6 +21,8 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     QColor background;
     QStringList dataPrint;
 
+    QStyledItemDelegate::paint(painter, option, index);
+
     if( col == MsgModel::COL_TIMESTAMP)
     {
         QStyledItemDelegate::paint(painter, option, index);

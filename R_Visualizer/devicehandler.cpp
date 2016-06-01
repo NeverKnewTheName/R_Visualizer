@@ -7,9 +7,11 @@
 
 DeviceHandler::DeviceHandler()
 {
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(sltScan()));
-    connect(this, SIGNAL(started()),  &m_timer, SLOT(stop()));
-    connect(this, SIGNAL(finished()), &m_timer, SLOT(start()));
+    connect(&m_timer, &QTimer::timeout, this, &DeviceHandler::sltScan);
+    //connect(this, &DeviceHandler::started, &m_timer, &QTimer::stop);
+    //connect(this, &DeviceHandler::finished, &m_timer, &QTimer::start);
+//    connect(this, SIGNAL(started()),  &m_timer, SLOT(stop()));
+//    connect(this, SIGNAL(finished()), &m_timer, SLOT(start()));
     m_timer.setInterval(TIMER_INTERVAL);
     m_timer.start();
     m_stop = true;

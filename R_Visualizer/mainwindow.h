@@ -18,7 +18,7 @@
 #include "userrolemngr.h"
 
 #include <QMainWindow>
-
+#include <QSortFilterProxyModel>
 
 class DeviceHandler;
 
@@ -51,7 +51,6 @@ private slots:
 
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
 
-
     void on_actionSwitch_User_Role_triggered();
 
 private:
@@ -60,6 +59,7 @@ private:
     Ui::MainWindow *ui;
     QString currentFileName;
     MsgModel *msgModel;
+    QSortFilterProxyModel *proxyModel;
     MsgModel *msgPcktModel;
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;
@@ -69,7 +69,6 @@ private:
     SystemOverview *sysOvrvwWidget;
 
     UserRoleMngr *userRoleMngr;
-
 
     DeviceHandler *m_deviceHandler; /**< Pointer to the \ref DeviceHandler */
 

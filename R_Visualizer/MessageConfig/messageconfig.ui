@@ -165,7 +165,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="1" column="1">
-       <widget class="QPushButton" name="msgTypeSoreBtn">
+       <widget class="QPushButton" name="msgTypeStoreBtn">
         <property name="toolTip">
          <string>Save the current Message Type configuration (*.json) to a file</string>
         </property>

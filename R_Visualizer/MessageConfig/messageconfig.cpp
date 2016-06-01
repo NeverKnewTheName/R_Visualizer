@@ -13,6 +13,8 @@
 
 #include <QDebug>
 
+#include <QSortFilterProxyModel>
+
 MessageConfig::MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MessageConfig),
@@ -32,12 +34,17 @@ MessageConfig::~MessageConfig()
 
 void MessageConfig::initIDTableView()
 {
-    ui->idTableView->setModel(idModel);
+    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+    proxy->setSourceModel(idModel);
+    ui->idTableView->setSortingEnabled(true);
+    ui->idTableView->setModel(proxy);
     ui->idTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->idTableView->verticalHeader()->hide();
     ui->idTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->idTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->idTableView->setItemDelegate(new IDEditorDelegate(ui->idTableView));
+
+
 
     //ToDO scrollToBottom might not be the best slot to address....
     connect(idModel, &IDModel::rowsInserted, ui->idTableView, &QTableView::scrollToBottom);
@@ -49,7 +56,10 @@ void MessageConfig::initIDTableView()
 
 void MessageConfig::initMsgTypeTableView()
 {
-    ui->msgTypeTableView->setModel(msgTypeModel);
+    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+    proxy->setSourceModel(msgTypeModel);
+    ui->msgTypeTableView->setSortingEnabled(true);
+    ui->msgTypeTableView->setModel(proxy);
     ui->msgTypeTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->msgTypeTableView->verticalHeader()->hide();
     ui->msgTypeTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -85,7 +95,7 @@ void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
         ui->idTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->msgTypeAddBtn->setVisible(false);
         ui->msgTypeRmvBtn->setVisible(false);
-        ui->msgTypeSoreBtn->setVisible(false);
+        ui->msgTypeStoreBtn->setVisible(false);
         ui->msgTypeTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     }
@@ -97,7 +107,7 @@ void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
         ui->idTableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
         ui->msgTypeAddBtn->setVisible(true);
         ui->msgTypeRmvBtn->setVisible(true);
-        ui->msgTypeSoreBtn->setVisible(true);
+        ui->msgTypeStoreBtn->setVisible(true);
         ui->msgTypeTableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
     }
 }
@@ -208,3 +218,4 @@ void MessageConfig::on_msgTypeRmvBtn_clicked()
         this->msgTypeModel->removeRow(selectedItem.row(), QModelIndex());
     }
 }
+

@@ -14,6 +14,42 @@ Msg::Msg(QDateTime timestamp, unsigned int id, MsgDataT &data) : timestamp(times
 
 }
 
+Msg::Msg(QDateTime timestamp, unsigned int id, QByteArray &data) : timestamp(timestamp), id(id)
+{
+    this->data = {
+         data.at(0),0,0,0,0,0,0,0
+    };
+    if(data.length() > 1 )
+    {
+        this->data.data0 = data.at(1);
+    }
+    if(data.length() > 2 )
+    {
+        this->data.data1 = data.at(2);
+    }
+    if(data.length() > 3 )
+    {
+        this->data.data2 = data.at(3);
+    }
+    if(data.length() > 4 )
+    {
+        this->data.data3 = data.at(4);
+    }
+    if(data.length() > 5 )
+    {
+        this->data.data4 = data.at(5);
+    }
+    if(data.length() > 6 )
+    {
+        this->data.data5 = data.at(6);
+    }
+    if(data.length() > 7 )
+    {
+        this->data.data6 = data.at(7);
+    }
+
+}
+
 Msg::Msg(QDateTime timestamp, unsigned int id, quint8 code, quint8 data0, quint8 data1, quint8 data2, quint8 data3, quint8 data4, quint8 data5, quint8 data6)
     : timestamp(timestamp), id(id), data({code, data0, data1, data2, data3, data4, data5, data6})
 {

@@ -192,3 +192,15 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
     }
 }
 
+void MsgModel::messageReceived(CAN_PacketPtr ptr)
+{
+    //qDebug() << "Message Received";
+    Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
+    QDateTime timeStamp = ptr->timestamp();
+    unsigned int id = packet->frame().ID_Standard;
+    QByteArray canData = packet->frame().data;
+    //qDebug() << "Data:" << canData;
+    Msg *newMsg = new Msg(timeStamp, id, canData);
+    this->addMsg(newMsg);
+}
+

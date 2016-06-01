@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     msgiddelegate.cpp \
     csvmsgpackethandler.cpp \
     devicehandler.cpp \
-    userrolemngr.cpp
+    userrolemngr.cpp \
+    msgproxymodel.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     msgiddelegate.h \
     csvmsgpackethandler.h \
     devicehandler.h \
-    userrolemngr.h
+    userrolemngr.h \
+    msgproxymodel.h
 
 FORMS    += mainwindow.ui \
 

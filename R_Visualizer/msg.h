@@ -25,6 +25,7 @@ class Msg
 public:
     Msg();
     Msg(QDateTime timestamp, unsigned int id, MsgDataT &data);
+    Msg(QDateTime timestamp, unsigned int id, QByteArray &data);
     Msg(QDateTime timestamp, unsigned int id, quint8 code, quint8 data0 = 0,quint8 data1 = 0,quint8 data2 = 0,quint8 data3 = 0,quint8 data4 = 0,quint8 data5 = 0,quint8 data6 = 0);
 
     QDateTime getTimestamp() const;

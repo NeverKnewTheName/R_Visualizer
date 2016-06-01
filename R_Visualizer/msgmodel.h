@@ -1,6 +1,7 @@
 #ifndef MSGMODEL_H
 #define MSGMODEL_H
 
+#include "can_packet.h"
 #include "msg.h"
 #include "idmodel.h"
 #include "msgtypemodel.h"
@@ -8,6 +9,8 @@
 #include <QAbstractTableModel>
 #include <QString>
 #include <QVector>
+
+class MainWindow;
 
 class MsgModel : public QAbstractTableModel
 {
@@ -46,6 +49,10 @@ private:
     QVector<Msg *> msgs;
 //    IDModel *idModel;
 //    MsgTypeModel *msgTypeModel;
+    friend class MainWindow;
+
+private slots:
+    void messageReceived(CAN_PacketPtr ptr);
 
 
 signals:
