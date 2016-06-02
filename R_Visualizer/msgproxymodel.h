@@ -5,7 +5,7 @@
 
 #include <QAbstractProxyModel>
 
-#define VISIBLEROWS 10u
+#define VISIBLEROWS 100u
 
 class MainWindow;
 

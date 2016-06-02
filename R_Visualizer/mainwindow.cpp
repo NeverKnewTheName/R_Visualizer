@@ -213,7 +213,7 @@ void MainWindow::initMsgsTableView()
 
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
-    //connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
+    connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
     //connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::resizeRowsToContents);
 }
 

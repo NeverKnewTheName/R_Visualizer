@@ -69,7 +69,10 @@ QModelIndex MsgProxyModel::mapToSource(const QModelIndex &proxyIndex) const
     if (/*!pModel ||*/ !proxyIndex.isValid()) return QModelIndex();
     QModelIndex mappedIndex = buffer.at(proxyIndex.row());
     //return pModel->createIndex(mappedIndex.row(), proxyIndex.column(), mappedIndex.internalId());
-    return pModel->createIndex((proxyIndex.row() + sourceModel()->rowCount() / VISIBLEROWS), proxyIndex.column());
+    int rowOffset = sourceModel()->rowCount();
+    rowOffset = ( rowOffset > VISIBLEROWS ) ? rowOffset - VISIBLEROWS : 0;
+
+    return pModel->createIndex((proxyIndex.row() + rowOffset), proxyIndex.column());
 }
 
 void MsgProxyModel::newEntryInSourceModel()
