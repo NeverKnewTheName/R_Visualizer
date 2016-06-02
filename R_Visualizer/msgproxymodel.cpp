@@ -4,12 +4,12 @@
 
 #include <QDebug>
 
-#define VISIBLEROWS 10u
 
-MsgProxyModel::MsgProxyModel(QObject *parent) : QAbstractProxyModel(parent)
+MsgProxyModel::MsgProxyModel(QObject *parent) : QAbstractProxyModel(parent), buffer(VISIBLEROWS)
 {
     this->rowCntr = 0;
     this->visRowCntr = 0;
+    //this->buffer = R_RingBuffer<QPersistentModelIndex>(VISIBLEROWS);
 }
 
 MsgProxyModel::~MsgProxyModel()
@@ -19,6 +19,8 @@ MsgProxyModel::~MsgProxyModel()
 
 QModelIndex MsgProxyModel::index(int row, int column, const QModelIndex &parent) const
 {
+    if (!hasIndex(row, column, parent))
+            return QModelIndex() ;
     return createIndex(row, column);
 }
 
@@ -37,12 +39,25 @@ int MsgProxyModel::columnCount(const QModelIndex &parent) const
     return sourceModel()->columnCount(parent);
 }
 
+QVariant MsgProxyModel::data(const QModelIndex &index, int role) const
+{
+    if(!index.isValid()) return QVariant();
+    QModelIndex mappedIndex = mapToSource(index);
+    if(!mappedIndex.isValid()) return QVariant();
+    return sourceModel()->data(mappedIndex,role);
+}
+
+QVariant MsgProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    return sourceModel()->headerData(section, orientation, role);
+}
+
 QModelIndex MsgProxyModel::mapFromSource(const QModelIndex &sourceIndex) const
 {
     if(sourceIndex.isValid())
     {
-        //QModelIndex proxyIndex = QAbstractItemModel::createIndex(, sourceIndex.internalPointer());
-        return sourceModel()->index(sourceIndex.row()/*-visRowCntr*/, sourceIndex.column());
+        QModelIndex proxyIndex = sourceModel()->index(sourceIndex.row()/*-visRowCntr*/, sourceIndex.column());
+        return proxyIndex;
     }
     else
         return QModelIndex();
@@ -50,23 +65,27 @@ QModelIndex MsgProxyModel::mapFromSource(const QModelIndex &sourceIndex) const
 
 QModelIndex MsgProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 {
-    if(proxyIndex.isValid())
-    {
-        //QModelIndex sourceIndex = QAbstractItemModel::createIndex(proxyIndex.row()+visRowCntr, proxyIndex.column(), proxyIndex.internalPointer());
-        return sourceModel()->index(proxyIndex.row()/*+visRowCntr*/, proxyIndex.column());
-    }
-    else
-        return QModelIndex();
+    MsgModel* pModel = qobject_cast<MsgModel*>(sourceModel());
+    if (/*!pModel ||*/ !proxyIndex.isValid()) return QModelIndex();
+    QModelIndex mappedIndex = buffer.at(proxyIndex.row());
+    //return pModel->createIndex(mappedIndex.row(), proxyIndex.column(), mappedIndex.internalId());
+    return pModel->createIndex((proxyIndex.row() + sourceModel()->rowCount() / VISIBLEROWS), proxyIndex.column());
 }
 
 void MsgProxyModel::newEntryInSourceModel()
 {
     qDebug() << "new Entries!" << rowCntr;
-    if(rowCntr > VISIBLEROWS)
+
+}
+
+void MsgProxyModel::newEntryAppendedInSourceModel(QModelIndex &index)
+{
+    if(rowCntr < VISIBLEROWS)
     {
-        visRowCntr++;
-    } else
-    {
-        rowCntr++;
+        ++rowCntr;
     }
+    beginResetModel();
+
+    buffer.push(QPersistentModelIndex(index));
+    endResetModel();
 }

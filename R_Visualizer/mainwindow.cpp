@@ -197,7 +197,7 @@ void MainWindow::initMsgsTableView()
     this->msgModel = new MsgModel(this);
     MsgProxyModel *msgProxyModel = new MsgProxyModel(this);
     msgProxyModel->setSourceModel(this->msgModel);
-    connect(this->msgModel, &MsgModel::rowsInserted, msgProxyModel, &MsgProxyModel::newEntryInSourceModel);
+    connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
 
     ui->msgTableView->setModel(msgProxyModel);
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -209,13 +209,12 @@ void MainWindow::initMsgsTableView()
 
     ui->msgTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    //ui->msgTableView->setItemDelegate(new MsgDelegate(ui->msgTableView));
     ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
-    //ui->msgTableView->setItemDelegateForColumn(1, new msgIDDelegate(this->idModel, ui->msgTableView));
+
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
-    connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
-    connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::resizeRowsToContents);
+    //connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
+    //connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::resizeRowsToContents);
 }
 
 

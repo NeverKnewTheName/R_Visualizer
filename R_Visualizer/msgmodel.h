@@ -11,6 +11,7 @@
 #include <QVector>
 
 class MainWindow;
+class MsgProxyModel;
 
 class MsgModel : public QAbstractTableModel
 {
@@ -50,12 +51,14 @@ private:
 //    IDModel *idModel;
 //    MsgTypeModel *msgTypeModel;
     friend class MainWindow;
+    friend class MsgProxyModel;
 
 private slots:
     void messageReceived(CAN_PacketPtr ptr);
 
 
 signals:
+    void rowAppended(QModelIndex &index);
     //void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
 };
 

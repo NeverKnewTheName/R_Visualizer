@@ -48,7 +48,8 @@ HEADERS  += mainwindow.h \
     csvmsgpackethandler.h \
     devicehandler.h \
     userrolemngr.h \
-    msgproxymodel.h
+    msgproxymodel.h \
+    r_ringbuffer.h
 
 FORMS    += mainwindow.ui \
 
