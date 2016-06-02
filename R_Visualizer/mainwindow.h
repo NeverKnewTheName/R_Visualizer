@@ -12,13 +12,13 @@
 #include "SystemOverview/systemoverview.h"
 
 #include "msgmodel.h"
+#include "msgproxymodel.h"
 #include "idmodel.h"
 #include "msgtypemodel.h"
 
 #include "userrolemngr.h"
 
 #include <QMainWindow>
-#include <QSortFilterProxyModel>
 
 class DeviceHandler;
 
@@ -37,6 +37,8 @@ public:
 signals:
     void sigSendCANPacket(CAN_PacketPtr);
     void switchUserRoles(UserRoleMngr::UserRole roleToSwitchTo);
+    void changedDataAcquisitionMode(bool state);
+    void queryFetchRow(int direction);
 
 private slots:
     void on_actionNew_triggered();
@@ -52,6 +54,10 @@ private slots:
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
 
     void on_actionSwitch_User_Role_triggered();
+    void scrollBarMsgTableViewMoved(int position);
+
+    void autoScroll();
+    void updateSlider(int direction);
 
 private:
     void initMsgsTableView();
@@ -59,7 +65,7 @@ private:
     Ui::MainWindow *ui;
     QString currentFileName;
     MsgModel *msgModel;
-    QSortFilterProxyModel *proxyModel;
+    MsgProxyModel *msgProxyModel;
     MsgModel *msgPcktModel;
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;

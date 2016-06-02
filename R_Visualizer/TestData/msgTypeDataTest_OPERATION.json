@@ -3,7 +3,7 @@
         "code": 2,
         "codeName": "Start",
         "color": "#ffaa00",
-        "messageFormat": ""
+        "messageFormat": "#HEX#(#OP#(#Data0##+##Data1#)#/OP#)#/HEX#\n#OP#(#Data2##*##Data3#)#/OP#\n#OP#(#Data5##&##Data6#)#/OP#\n#BIN#(#OP#(#Data6##<<#5)#/OP#)#/BIN#"
     },
     {
         "code": 3,

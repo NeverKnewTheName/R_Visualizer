@@ -13,7 +13,7 @@
 
 #include <QDateTime>
 #include <QMessageBox>
-
+#include <QScrollBar>
 
 #define __DEBUG__
 
@@ -194,10 +194,14 @@ void MainWindow::on_actionStop_triggered()
 
 void MainWindow::initMsgsTableView()
 {
+    QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
-    MsgProxyModel *msgProxyModel = new MsgProxyModel(this);
+    msgProxyModel = new MsgProxyModel(this);
     msgProxyModel->setSourceModel(this->msgModel);
     connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
+    connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
+    connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
+    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
 
     ui->msgTableView->setModel(msgProxyModel);
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -211,9 +215,16 @@ void MainWindow::initMsgsTableView()
 
     ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
 
+    //connect(vertScrollBar, &QScrollBar::sliderMoved, this, &MainWindow::scrollBarMsgTableViewMoved);
+    connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+
     // scroll to the bottom as soon as a new row is inserted by
-    // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
-    connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::scrollToBottom);
+    // since the rowsInserted signal might be fired before the view actually inserted the new rows,
+    // set up a timer to instantly fire an event which triggers the scrollToBottom
+    // with this approach it is guaranteed that all events in the meantime are carried out and thus the row is already inserted
+    //connect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
+    connect(msgProxyModel, &MsgProxyModel::rowAppended, this, &MainWindow::autoScroll);
+
     //connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::resizeRowsToContents);
 }
 
@@ -263,4 +274,53 @@ void MainWindow::on_actionSwitch_User_Role_triggered()
     }
 
     emit this->switchUserRoles(role);
+}
+
+void MainWindow::scrollBarMsgTableViewMoved(int position)
+{
+    static bool scrollToBottomConnected = false;
+    QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
+    qDebug() << "Scrollbar moved to position:" << position;
+    if(position == vertScrollBar->maximum())
+    {
+        qDebug() << "Scrollbar is at max pos";
+        if(!scrollToBottomConnected)
+        {
+            qDebug() << "ScrollToBottom Connect!";
+            //connect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
+            scrollToBottomConnected = true;
+            emit changedDataAcquisitionMode(true);
+        }
+        emit queryFetchRow(1);
+        //ToDO reload newer model indices
+    }
+    else
+    {
+        if( position == vertScrollBar->minimum())
+        {
+            emit queryFetchRow(-1);
+            qDebug() << "Scrollbar is at min pos";
+        }
+        else
+            qDebug() << "Scrollbar is in the middle somewhere";
+        if(scrollToBottomConnected)
+        {
+            qDebug() << "ScrollToBottom Disconnect!";
+            //disconnect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
+            scrollToBottomConnected = false;
+            emit changedDataAcquisitionMode(false);
+        }
+        //ToDO reload older model indices
+    }
+}
+
+void MainWindow::autoScroll()
+{
+    QTimer::singleShot(0,ui->msgTableView, &QTableView::scrollToBottom);
+}
+
+void MainWindow::updateSlider(int direction)
+{
+    QScrollBar *vertScrollbar = ui->msgTableView->verticalScrollBar();
+    vertScrollbar->setSliderPosition(vertScrollbar->sliderPosition()+direction);
 }

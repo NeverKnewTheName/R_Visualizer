@@ -1,8 +1,6 @@
 #ifndef MSGPROXYMODEL_H
 #define MSGPROXYMODEL_H
 
-#include "r_ringbuffer.h"
-
 #include <QAbstractProxyModel>
 
 #define VISIBLEROWS 100u
@@ -15,6 +13,7 @@ class MsgProxyModel : public QAbstractProxyModel
 
 public:
     MsgProxyModel(QObject *parent = 0);
+    MsgProxyModel(unsigned int visibleRows, QObject *parent = 0);
     ~MsgProxyModel();
 
     QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
@@ -26,16 +25,24 @@ public:
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const Q_DECL_OVERRIDE;
     QModelIndex mapToSource(const QModelIndex &proxyIndex) const Q_DECL_OVERRIDE;
 
+signals:
+    void rowFetched(int direction);
+    void rowAppended();
+
 private slots:
     void newEntryInSourceModel();
     void newEntryAppendedInSourceModel(QModelIndex &index);
+    void continuousChange(bool state);
+    void fetchRowsFromSource(int direction);
 
 private:
     friend class MainWindow;
 
+    bool continuous;
     unsigned int rowCntr;
-    unsigned int visRowCntr;
-    R_RingBuffer<QPersistentModelIndex> buffer;
+    unsigned int visibleRows;
+    unsigned int rowOffset;
+    unsigned int scrollOffset;
 };
 
 #endif // MSGPROXYMODEL_H

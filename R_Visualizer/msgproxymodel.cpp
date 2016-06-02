@@ -5,11 +5,25 @@
 #include <QDebug>
 
 
-MsgProxyModel::MsgProxyModel(QObject *parent) : QAbstractProxyModel(parent), buffer(VISIBLEROWS)
+MsgProxyModel::MsgProxyModel(QObject *parent) :
+    QAbstractProxyModel(parent),
+    scrollOffset(0),
+    rowOffset(0),
+    rowCntr(0),
+    visibleRows(VISIBLEROWS),
+    continuous(true)
 {
-    this->rowCntr = 0;
-    this->visRowCntr = 0;
-    //this->buffer = R_RingBuffer<QPersistentModelIndex>(VISIBLEROWS);
+
+}
+
+MsgProxyModel::MsgProxyModel(unsigned int visibleRows, QObject *parent) :
+    QAbstractProxyModel(parent),
+    scrollOffset(0),
+    rowOffset(0),
+    rowCntr(0),
+    visibleRows(visibleRows),
+    continuous(true)
+{
 }
 
 MsgProxyModel::~MsgProxyModel()
@@ -54,23 +68,15 @@ QVariant MsgProxyModel::headerData(int section, Qt::Orientation orientation, int
 
 QModelIndex MsgProxyModel::mapFromSource(const QModelIndex &sourceIndex) const
 {
-    if(sourceIndex.isValid())
-    {
-        QModelIndex proxyIndex = sourceModel()->index(sourceIndex.row()/*-visRowCntr*/, sourceIndex.column());
-        return proxyIndex;
-    }
-    else
-        return QModelIndex();
+    if(!sourceIndex.isValid()) return QModelIndex();
+
+    return createIndex(sourceIndex.row() - rowOffset, sourceIndex.column());
 }
 
 QModelIndex MsgProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 {
     MsgModel* pModel = qobject_cast<MsgModel*>(sourceModel());
-    if (/*!pModel ||*/ !proxyIndex.isValid()) return QModelIndex();
-    QModelIndex mappedIndex = buffer.at(proxyIndex.row());
-    //return pModel->createIndex(mappedIndex.row(), proxyIndex.column(), mappedIndex.internalId());
-    int rowOffset = sourceModel()->rowCount();
-    rowOffset = ( rowOffset > VISIBLEROWS ) ? rowOffset - VISIBLEROWS : 0;
+    if (!pModel || !proxyIndex.isValid()) return QModelIndex();
 
     return pModel->createIndex((proxyIndex.row() + rowOffset), proxyIndex.column());
 }
@@ -78,17 +84,45 @@ QModelIndex MsgProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 void MsgProxyModel::newEntryInSourceModel()
 {
     qDebug() << "new Entries!" << rowCntr;
-
 }
 
 void MsgProxyModel::newEntryAppendedInSourceModel(QModelIndex &index)
 {
-    if(rowCntr < VISIBLEROWS)
-    {
-        ++rowCntr;
-    }
     beginResetModel();
+    if(rowCntr < visibleRows) rowCntr++;
 
-    buffer.push(QPersistentModelIndex(index));
+    qDebug() << "ROW INSERT";
+    if( continuous )
+    {
+        rowOffset = sourceModel()->rowCount();
+        rowOffset = ( rowOffset > visibleRows ) ? rowOffset - visibleRows : 0;
+        emit rowAppended();
+    }
+    qDebug() << rowOffset;
     endResetModel();
+}
+
+void MsgProxyModel::continuousChange(bool state)
+{
+    qDebug() << "Continuous state changed: " << state;
+    continuous = state;
+}
+
+void MsgProxyModel::fetchRowsFromSource(int direction)
+{
+    qDebug() << "fetchRows in direction" << direction;
+    if((direction < 0) && rowOffset)
+    {
+        beginResetModel();
+        rowOffset--;
+        endResetModel();
+        emit rowFetched(+2);
+    }
+    else if((direction > 0) && ((rowOffset + visibleRows) < sourceModel()->rowCount()) )
+    {
+        beginResetModel();
+        rowOffset++;
+        endResetModel();
+        emit rowFetched(-2);
+    }
 }
