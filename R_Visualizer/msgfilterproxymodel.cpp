@@ -35,6 +35,8 @@ bool MsgFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &r
 
 void MsgFilterProxyModel::changeIDFilterEnabled(bool enabled)
 {
+    beginResetModel();
     idFilterEnabled = enabled;
     invalidateFilter();
+    endResetModel();
 }

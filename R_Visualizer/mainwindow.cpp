@@ -209,7 +209,7 @@ void MainWindow::initMsgsTableView()
     connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
     connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
     connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
-
+    connect(msgFilterProxy, &MsgFilterProxyModel::modelReset, msgProxyModel, &MsgProxyModel::resetInternalData);
     ui->msgTableView->setModel(msgProxyModel);
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //ui->msgTableView->horizontalHeader()->setStretchLastSection(true);
