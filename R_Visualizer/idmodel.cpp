@@ -135,6 +135,16 @@ void IDModel::clear()
     emit internalModelChanged();
 }
 
+unsigned int IDModel::getIDToName(QString &name) const
+{
+    for( auto &idProp : idPropStore )
+    {
+        if(!name.compare(idProp->getName()))
+            return idPropStore.key(idProp);
+    }
+    return 0;
+}
+
 void IDModel::add(int id, IDRep *idRep)
 {
     int newRow = idStore.size();
@@ -165,7 +175,7 @@ QColor IDModel::getColorToID(int id)
         return QColor(Qt::white);
 }
 
-QByteArray IDModel::parseToJSON()
+QByteArray IDModel::parseToJSON() const
 {
     QJsonArray jsonMsgsArr;
     for(int i = 0; i < idStore.size();++i)

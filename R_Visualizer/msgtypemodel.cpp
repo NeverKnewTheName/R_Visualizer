@@ -162,6 +162,16 @@ QString MsgTypeModel::getNameToCode(unsigned int code) const
         return QString("");
 }
 
+unsigned int MsgTypeModel::getCodeToName(QString &name) const
+{
+    for( auto &msgTR : msgTypePropStore )
+    {
+        if(!name.compare(msgTR->getCodeName()))
+            return msgTR->getCode();
+    }
+    return 0;
+}
+
 QString MsgTypeModel::getMessageToCode(unsigned int code) const
 {
     MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);

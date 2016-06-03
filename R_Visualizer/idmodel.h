@@ -28,9 +28,10 @@ public:
     void clear();
 
     QString getNameToID(int id);
+    unsigned int getIDToName(QString &name) const;
     QColor getColorToID(int id);
 
-    QByteArray parseToJSON();
+    QByteArray parseToJSON() const;
     void parseFromJSON(QByteArray jsonFile);
 
     enum HeaderCols

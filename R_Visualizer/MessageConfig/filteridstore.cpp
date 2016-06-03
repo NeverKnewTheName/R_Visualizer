@@ -80,7 +80,17 @@ bool FilterIDStore::setData(const QModelIndex &index, const QVariant &value, int
     switch(role)
     {
     case Qt::EditRole:
-        idStore[row] = value.value<unsigned int>();
+        QString editorContent = value.value<QString>();
+        qDebug() << "FilterCodeStore::setData --- editor content:" << editorContent;
+        bool conversionOK;
+        unsigned int retrievedID = editorContent.toInt(&conversionOK, (editorContent.startsWith("0x")) ? 16 : 0);
+
+        if(!conversionOK)
+        {
+            qDebug() << "conversion failed; attempt to retrieve code via name";
+            retrievedID = idModel->getIDToName(editorContent);
+        }
+        idStore[row] = retrievedID;
         emit internalModelChanged();
         return true;
         break;
@@ -112,7 +122,7 @@ void FilterIDStore::addID(QString &idString)
     emit rowAdded(tempIndex);
 }
 
-void FilterIDStore::removeID(QModelIndex index)
+void FilterIDStore::removeID(QModelIndex &index)
 {
     beginRemoveRows(QModelIndex(),index.row(), index.row());
     idStore.remove(index.row());

@@ -199,18 +199,27 @@ void MainWindow::initMsgsTableView()
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
     FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
-    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, this);
+    FilterCodeStore *filterCodeModel = this->msgConfigWidget->getFilterCodeModel();
+    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, filterCodeModel, this);
     connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
     connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
+    connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, msgFilterProxy, &MsgFilterProxyModel::changeCodeFilterEnabled);
+    connect(filterCodeModel, &FilterCodeStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
     msgFilterProxy->setSourceModel(this->msgModel);
+
     msgProxyModel = new MsgProxyModel(this);
     msgProxyModel->setSourceModel(msgFilterProxy);
+//    msgProxyModel->setSourceModel(this->msgModel);
+//    msgFilterProxy->setSourceModel(msgProxyModel);
+    msgProxyModel->setSourceModel(msgModel);
     connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
     connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
     connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
     connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
-    connect(msgFilterProxy, &MsgFilterProxyModel::modelReset, msgProxyModel, &MsgProxyModel::resetInternalData);
-    ui->msgTableView->setModel(msgProxyModel);
+    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
+
+//    ui->msgTableView->setModel(msgProxyModel);
+    ui->msgTableView->setModel(msgFilterProxy);
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //ui->msgTableView->horizontalHeader()->setStretchLastSection(true);
     ui->msgTableView->verticalHeader()->hide();

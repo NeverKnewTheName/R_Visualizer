@@ -23,6 +23,7 @@ public:
     explicit MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent = 0);
     ~MessageConfig();
     FilterIDStore *getFilterIDModel() const;
+    FilterCodeStore *getFilterCodeModel() const;
 
 private:
     Ui::MessageConfig *ui;
@@ -39,11 +40,19 @@ private:
     FilterCodeStore *filterCodeModel;
     FilterTimestampStore *filterTimestampStore;
 
+    bool idFilterEnabled;
+    bool codeFilterEnabled;
+    bool timeStampFilterFromEnabled;
+    bool timeStampFilterToEnabled;
+
 signals:
     void sgnlIdAddFinished(const int id, const QString name, const QColor color);
     void sgnlMsgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color);
     void startEditFilterID(QModelIndex &);
     void filterIDstateChange(bool enabled);
+    void filterCodestateChange(bool enabled);
+    void filterTimestampFromStateChange(bool enabled);
+    void filterTimestampToStateChange(bool enabled);
 
 private slots:
     void idAddFinished(const int id, const QString name, const QColor color);

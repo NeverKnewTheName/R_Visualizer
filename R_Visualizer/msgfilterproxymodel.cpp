@@ -3,24 +3,34 @@
 #include "msgmodel.h"
 
 #include <QDateTime>
+#include <QDebug>
 
-MsgFilterProxyModel::MsgFilterProxyModel(FilterIDStore *filterIDModel, QObject *parent) :
+MsgFilterProxyModel::MsgFilterProxyModel(FilterIDStore *filterIDModel, FilterCodeStore *filterCodeModel, QObject *parent) :
     QSortFilterProxyModel(parent),
     filterIDModel(filterIDModel),
-    idFilterEnabled(false)
+    filterCodeModel(filterCodeModel),
+    idFilterEnabled(false),
+    codeFilterEnabled(false),
+    timeStampFromFilterEnabled(false),
+    timeStampToFilterEnabled(false)
 {
 }
 
 bool MsgFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+//    qDebug() << __PRETTY_FUNCTION__;
+    bool accepted = true;
     QModelIndex indexTimeStamp = sourceModel()->index(sourceRow, 0, sourceParent);
     QModelIndex indexID = sourceModel()->index(sourceRow, 1, sourceParent);
     QModelIndex indexMessage = sourceModel()->index(sourceRow, 2, sourceParent);
 
     if(idFilterEnabled)
-        return filterIDModel->containsID(indexID.data(Qt::UserRole+3).value<unsigned int>());
+        accepted = accepted && filterIDModel->containsID(indexID.data(Qt::UserRole+3).value<unsigned int>());
+    if(codeFilterEnabled)
+        accepted = accepted && filterCodeModel->containsCode(indexMessage.data(Qt::UserRole+3).value<unsigned int>());
 
-    return true;
+//    qDebug() << accepted;
+    return accepted;
 }
 
 bool MsgFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
@@ -35,8 +45,32 @@ bool MsgFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &r
 
 void MsgFilterProxyModel::changeIDFilterEnabled(bool enabled)
 {
-    beginResetModel();
+//    beginResetModel();
     idFilterEnabled = enabled;
+    invalidateFilter();
+//    endResetModel();
+}
+
+void MsgFilterProxyModel::changeCodeFilterEnabled(bool enabled)
+{
+//    beginResetModel();
+    codeFilterEnabled = enabled;
+    invalidateFilter();
+//    endResetModel();
+}
+
+void MsgFilterProxyModel::changeTimestampFromFilterEnabled(bool enabled)
+{
+    beginResetModel();
+    timeStampFromFilterEnabled = enabled;
+    invalidateFilter();
+    endResetModel();
+}
+
+void MsgFilterProxyModel::changeTimestampToFilterEnabled(bool enabled)
+{
+    beginResetModel();
+    timeStampToFilterEnabled = enabled;
     invalidateFilter();
     endResetModel();
 }

@@ -22,7 +22,7 @@ public:
 
     void addID(unsigned int id);
     void addID(QString &idString);
-    void removeID(QModelIndex index);
+    void removeID(QModelIndex &index);
 
     bool containsID(unsigned int id);
 signals:
