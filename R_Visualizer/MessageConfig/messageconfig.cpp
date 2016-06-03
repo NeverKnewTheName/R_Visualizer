@@ -20,15 +20,26 @@ MessageConfig::MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidg
     ui(new Ui::MessageConfig),
     idModel(idModel),
     msgTypeModel(msgTypeModel)
+    //filterTimestampStore(this)//ToDO
 {
     ui->setupUi(this);
+
+    filterIDModel = new FilterIDStore(idModel, this);
+    filterCodeModel = new FilterCodeStore(msgTypeModel, this);
     this->initIDTableView();
     this->initMsgTypeTableView();
+    this->initFilterIDListView();
+    this->initFilterCodeListView();
 }
 
 MessageConfig::~MessageConfig()
 {
     delete ui;
+}
+
+FilterIDStore *MessageConfig::getFilterIDModel() const
+{
+    return this->filterIDModel;
 }
 
 
@@ -75,6 +86,27 @@ void MessageConfig::initMsgTypeTableView()
     //DEBUG//
 }
 
+void MessageConfig::initFilterIDListView()
+{
+//    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+//    proxy->setSourceModel(&filterIDModel);
+    ui->idFilterlistView->setModel(filterIDModel);
+    ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->idFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
+
+    //connect(filterIDModel, &FilterIDStore::rowAdded, this, &MessageConfig::filterIDAdded);
+    connect(filterIDModel, &FilterIDStore::rowAdded, ui->idFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
+}
+
+void MessageConfig::initFilterCodeListView()
+{
+//    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+//    proxy->setSourceModel(&filterCodeModel);
+    ui->codeFilterlistView->setModel(filterCodeModel);
+    ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->codeFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
+}
+
 void MessageConfig::idAddFinished(const int id, const QString name, const QColor color)
 {
     emit sgnlIdAddFinished(id,name,color);
@@ -83,6 +115,14 @@ void MessageConfig::idAddFinished(const int id, const QString name, const QColor
 void MessageConfig::msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color)
 {
     emit sgnlMsgTypeAddFinished(code, codeName, messageFormat, color);
+}
+
+void MessageConfig::filterIDAdded(unsigned int pos)
+{
+    QModelIndex index = filterIDModel->index(pos);
+    qDebug() << "index row: " << index;
+    ui->idFilterlistView->edit(index);
+    //emit startEditFilterID(filterIDModel->index(pos));
 }
 
 void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -219,3 +259,43 @@ void MessageConfig::on_msgTypeRmvBtn_clicked()
     }
 }
 
+
+void MessageConfig::on_enableIDFilterPushButton_clicked()
+{
+    emit filterIDstateChange(true);
+}
+
+void MessageConfig::on_addFilterIDPushButton_clicked()
+{
+    this->filterIDModel->addID(0x0);
+}
+
+void MessageConfig::on_rmvFilterIDPushButton_clicked()
+{
+    this->filterIDModel->removeID(ui->idFilterlistView->selectionModel()->currentIndex());
+}
+
+void MessageConfig::on_enableCodeFilterPushButton_clicked()
+{
+
+}
+
+void MessageConfig::on_addFilterCodePushButton_clicked()
+{
+
+}
+
+void MessageConfig::on_rmvFilterCodePushButton_clicked()
+{
+
+}
+
+void MessageConfig::on_enableTimestampFromFilterPushButton_clicked()
+{
+
+}
+
+void MessageConfig::on_enableTimestampToFilterPushButton_clicked()
+{
+
+}

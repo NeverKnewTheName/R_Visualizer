@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     csvmsgpackethandler.cpp \
     devicehandler.cpp \
     userrolemngr.cpp \
-    msgproxymodel.cpp
+    msgproxymodel.cpp \
+    msgfilterproxymodel.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     devicehandler.h \
     userrolemngr.h \
     msgproxymodel.h \
-    r_ringbuffer.h
+    r_ringbuffer.h \
+    msgfilterproxymodel.h
 
 FORMS    += mainwindow.ui \
 

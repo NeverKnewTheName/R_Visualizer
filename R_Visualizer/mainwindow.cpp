@@ -3,6 +3,8 @@
 
 #include "msgdelegate.h"
 #include "msgproxymodel.h"
+#include "msgfilterproxymodel.h"
+#include "MessageConfig/filteridstore.h"
 
 #include "csvmsgpackethandler.h"
 
@@ -196,8 +198,13 @@ void MainWindow::initMsgsTableView()
 {
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
+    FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
+    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, this);
+    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
+    connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
+    msgFilterProxy->setSourceModel(this->msgModel);
     msgProxyModel = new MsgProxyModel(this);
-    msgProxyModel->setSourceModel(this->msgModel);
+    msgProxyModel->setSourceModel(msgFilterProxy);
     connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
     connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
     connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);

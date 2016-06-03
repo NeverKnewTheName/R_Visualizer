@@ -81,6 +81,11 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     case Qt::UserRole +2:  // return Code of the line
         return this->msgs.at(row)->getCode();
         break;
+    case Qt::UserRole +3: // return raw data
+        if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp();
+        if(col == COL_NAME) return this->msgs.at(row)->getId();
+        if(col == COL_MESSAGE) return QVariant::fromValue(this->msgs.at(row)->getData());
+        break;
     }
 
     return QVariant();

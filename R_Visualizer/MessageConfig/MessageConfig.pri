@@ -11,6 +11,9 @@ SOURCES += $$PWD//messageconfig.cpp \
     $$PWD//msgtypeformatterdialog.cpp \
     $$PWD//idadddialog.cpp \
     $$PWD//msgtypeadddialog.cpp \
+    $$PWD/filteridstore.cpp \
+    $$PWD/filtercodestore.cpp \
+    $$PWD/filtertimestampstore.cpp
 
 HEADERS  += $$PWD//messageconfig.h \
     $$PWD//ideditordelegate.h \
@@ -18,6 +21,9 @@ HEADERS  += $$PWD//messageconfig.h \
     $$PWD//msgtypeformatterdialog.h \
     $$PWD//idadddialog.h \
     $$PWD//msgtypeadddialog.h \
+    $$PWD/filteridstore.h \
+    $$PWD/filtercodestore.h \
+    $$PWD/filtertimestampstore.h
 
 FORMS    += $$PWD//messageconfig.ui \
     $$PWD//idadddialog.ui \

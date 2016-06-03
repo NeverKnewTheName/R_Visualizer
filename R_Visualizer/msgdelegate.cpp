@@ -203,7 +203,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     int top = option.rect.top();
     int width = option.rect.width();
     int height = option.rect.height()/nrLines;
-    for( auto &line : dataPrint)
+    for( const auto &line : dataPrint)
     {
         // print text
         painter->drawText(

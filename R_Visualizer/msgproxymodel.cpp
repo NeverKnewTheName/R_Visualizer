@@ -1,6 +1,7 @@
 #include "msgproxymodel.h"
 
 #include "msgmodel.h"
+#include "msgfilterproxymodel.h"
 
 #include <QDebug>
 
@@ -34,7 +35,7 @@ MsgProxyModel::~MsgProxyModel()
 QModelIndex MsgProxyModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
-            return QModelIndex() ;
+        return QModelIndex() ;
     return createIndex(row, column);
 }
 
@@ -75,10 +76,15 @@ QModelIndex MsgProxyModel::mapFromSource(const QModelIndex &sourceIndex) const
 
 QModelIndex MsgProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 {
-    MsgModel* pModel = qobject_cast<MsgModel*>(sourceModel());
+    //    MsgModel* pModel = qobject_cast<MsgModel*>(sourceModel());
+    //    if (!pModel || !proxyIndex.isValid()) return QModelIndex();
+
+    //    return pModel->createIndex((proxyIndex.row() + rowOffset), proxyIndex.column());//
+    MsgFilterProxyModel* pModel = qobject_cast<MsgFilterProxyModel*>(sourceModel());
     if (!pModel || !proxyIndex.isValid()) return QModelIndex();
 
-    return pModel->createIndex((proxyIndex.row() + rowOffset), proxyIndex.column());
+    return pModel->index((proxyIndex.row() + rowOffset), proxyIndex.column());
+//    return sourceModel->createIndex((proxyIndex.row() + rowOffset), proxyIndex.column());
 }
 
 void MsgProxyModel::newEntryInSourceModel()
