@@ -58,7 +58,8 @@ private slots:
 
 
 signals:
-    void rowAppended(QModelIndex &index);
+    void rowAppended(unsigned int rowNr);
+    void rowsAdded(unsigned int nrOfRowsAdded);
     //void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
 };
 

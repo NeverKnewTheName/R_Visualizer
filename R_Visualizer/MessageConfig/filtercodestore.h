@@ -19,14 +19,18 @@ public:
 
     void addCode(unsigned int code);
     void addCode(QString &codeString);
-    void removeCode(unsigned int code);
+    void removeCode(QModelIndex &index);
+
+    bool containsCode(unsigned int code);
 
 private:
+    QModelIndex tempIndex;
     QVector<unsigned int> codeStore;
     MsgTypeModel *msgTypeModel;
 
 signals:
     void internalModelChanged();
+    void rowAdded(QModelIndex &index);
 
 public slots:
 };

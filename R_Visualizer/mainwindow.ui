@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QTableView" name="msgTableView">
+     <widget class="MsgTableView" name="msgTableView">
       <property name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all incoming messages chronologically.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
@@ -191,6 +191,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MsgTableView</class>
+   <extends>QTableView</extends>
+   <header>msgtableview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="ressources.qrc"/>
  </resources>

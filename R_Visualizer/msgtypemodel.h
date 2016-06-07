@@ -27,6 +27,7 @@ public:
     void clear();
 
     QString getNameToCode(unsigned int code) const;
+    unsigned int getCodeToName(QString &name) const;
     QString getMessageToCode(unsigned int code) const;
     QColor getColorToCode(unsigned int code) const;
     int getNrLinesToCode(unsigned int code);

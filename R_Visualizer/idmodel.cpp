@@ -72,7 +72,7 @@ bool IDModel::setData(const QModelIndex &index, const QVariant &value, int role)
         if(col == COL_ID) ;
         if(col == COL_NAME) idPropStore.value(idStore[row])->setName(value.value<QString>());
         if(col == COL_COLOR) idPropStore.value(idStore[row])->setColor(value.value<QColor>());
-        emit internalModelChanged();
+        emit dataChanged(index, index);
         return true;
         break;
     }
@@ -107,7 +107,7 @@ void IDModel::removeRow(int row, const QModelIndex &parent)
     idPropStore.remove(idStore.at(row));
     idStore.remove(row);
     endRemoveRows();
-    emit internalModelChanged();
+//    emit internalModelChanged();
 }
 
 Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
@@ -132,7 +132,17 @@ void IDModel::clear()
     idPropStore.clear();
     idStore.clear();
     endResetModel();
-    emit internalModelChanged();
+//    emit internalModelChanged();
+}
+
+unsigned int IDModel::getIDToName(QString &name) const
+{
+    for( auto &idProp : idPropStore )
+    {
+        if(!name.compare(idProp->getName()))
+            return idPropStore.key(idProp);
+    }
+    return 0;
 }
 
 void IDModel::add(int id, IDRep *idRep)
@@ -142,7 +152,7 @@ void IDModel::add(int id, IDRep *idRep)
     this->idStore.append(id);
     this->idPropStore[id] = idRep;
     endInsertRows();
-    emit internalModelChanged();
+//    emit internalModelChanged();
 }
 
 QString IDModel::getNameToID(int id)
@@ -165,7 +175,7 @@ QColor IDModel::getColorToID(int id)
         return QColor(Qt::white);
 }
 
-QByteArray IDModel::parseToJSON()
+QByteArray IDModel::parseToJSON() const
 {
     QJsonArray jsonMsgsArr;
     for(int i = 0; i < idStore.size();++i)

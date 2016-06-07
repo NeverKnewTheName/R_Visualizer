@@ -77,7 +77,18 @@ bool FilterCodeStore::setData(const QModelIndex &index, const QVariant &value, i
     switch(role)
     {
     case Qt::EditRole:
-        codeStore[row] = value.value<unsigned int>();
+        QString editorContent = value.value<QString>();
+        qDebug() << "FilterCodeStore::setData --- editor content:" << editorContent;
+        bool conversionOK;
+        unsigned int retrievedCode = editorContent.toInt(&conversionOK, (editorContent.startsWith("0x")) ? 16 : 0);
+
+        if(!conversionOK)
+        {
+            qDebug() << "conversion failed; attempt to retrieve code via name";
+            retrievedCode = msgTypeModel->getCodeToName(editorContent);
+        }
+        codeStore[row] = retrievedCode;
+
         emit internalModelChanged();
         return true;
         break;
@@ -92,15 +103,33 @@ Qt::ItemFlags FilterCodeStore::flags(const QModelIndex &index) const
 
 void FilterCodeStore::addCode(unsigned int code)
 {
+    beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(code);
+    endInsertRows();
+    tempIndex = this->index(codeStore.size()-1);
+    qDebug() << "Code:" << tempIndex.row();
+    emit rowAdded(tempIndex);
 }
 
 void FilterCodeStore::addCode(QString &codeString)
 {
+    beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(codeString.toUInt());
+    endInsertRows();
+    tempIndex = this->index(codeStore.size()-1);
+    qDebug() << "Code:" << tempIndex.row();
+    emit rowAdded(tempIndex);
 }
 
-void FilterCodeStore::removeCode(unsigned int code)
+void FilterCodeStore::removeCode(QModelIndex &index)
 {
-    codeStore.removeOne(code);
+    beginRemoveRows(QModelIndex(),index.row(), index.row());
+    codeStore.remove(index.row());
+    endRemoveRows();
+    emit internalModelChanged();
+}
+
+bool FilterCodeStore::containsCode(unsigned int code)
+{
+    return codeStore.contains(code);
 }
