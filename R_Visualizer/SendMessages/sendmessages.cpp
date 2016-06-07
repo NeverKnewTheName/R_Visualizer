@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QJsonDocument>
 
+#include <QTimer>
 #include <QDebug>
 
 SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent) :
@@ -48,6 +49,11 @@ void SendMessages::initMsgPacketTableView()
     ui->sndPcktTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     ui->sndPcktTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->sndPcktTableView));
+}
+
+void SendMessages::emitSendMsg()
+{
+    emit sigSendCANPacket(packet);
 }
 
 void SendMessages::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -128,7 +134,7 @@ void SendMessages::on_sndPcktStoreBtn_clicked()
 void SendMessages::on_sndMsgSendBtn_clicked()
 {
     Data_Packet::Frame frame;
-    frame.ID_Standard = 0xF0;
+    frame.ID_Standard = ui->sndMsgIDLineEdit->text().toInt(0,16);
     //    if (ui->cbIDE->isChecked())
     //    {
     //        frame.IDE = 1;
@@ -146,11 +152,54 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
     frame.DLC = 4;
 
-    frame.data = QByteArray::fromHex("0xF1234F");
+    QByteArray dataToSend;
+    dataToSend.append((ui->sndMsgCodeLineEdit->text().toInt(0,16)));
+    dataToSend.append(ui->sndMsgMsgLineEdit->text().toInt(0,16));
+
+    qDebug() << dataToSend;
+    frame.data = dataToSend;
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
     //this->m_deviceHandler->sltSendPacket(packet);
     qDebug() << "Send CAN message";
-    emit sigSendCANPacket(packet);
+    //emit sigSendCANPacket(packet);
+    QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
+}
+
+void SendMessages::on_sndPcktSendBtn_clicked()
+{
+    QVector<Msg*> msgsToSend = this->msgPcktModel->getMsgs();
+    for(Msg *msg : msgsToSend)
+    {
+        Data_Packet::Frame frame;
+        frame.ID_Standard = msg->getId();
+        //    if (ui->cbIDE->isChecked())
+        //    {
+        //        frame.IDE = 1;
+        //        frame.SRR = 1;
+        //        frame.ID_Extended = ui->sbIDExt->value();
+        //    }
+        //    else
+        //    {
+        frame.IDE = 0;
+        frame.SRR = 0;
+        frame.ID_Extended = 0;
+        //    }
+
+        frame.RTR = 0;
+
+        frame.DLC = 8;
+
+        QByteArray dataToSend = msg->getDataAsByteArray();
+        frame.data = dataToSend;
+
+        CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
+        qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
+        //this->m_deviceHandler->sltSendPacket(packet);
+        qDebug() << "Send CAN message";
+        //emit sigSendCANPacket(packet);
+        QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
+
+    }
 }

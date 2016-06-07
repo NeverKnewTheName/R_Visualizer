@@ -24,6 +24,7 @@ public:
 
 private:
     void initMsgPacketTableView();
+    void emitSendMsg();
 
     Ui::SendMessages *ui;
     friend class MainWindow;
@@ -39,6 +40,7 @@ private slots:
     void on_sndPcktLoadBtn_clicked();
     void on_sndPcktStoreBtn_clicked();
     void on_sndMsgSendBtn_clicked();
+    void on_sndPcktSendBtn_clicked();
 };
 
 #endif // SENDMESSAGES_H

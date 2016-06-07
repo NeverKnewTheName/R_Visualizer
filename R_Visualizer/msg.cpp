@@ -157,6 +157,21 @@ MsgDataT Msg::getData() const
     return this->data;
 }
 
+QByteArray Msg::getDataAsByteArray() const
+{
+    QByteArray data;
+    data.append( this->data.code);
+    data.append( this->data.data0);
+    data.append( this->data.data1);
+    data.append( this->data.data2);
+    data.append( this->data.data3);
+    data.append( this->data.data4);
+    data.append( this->data.data5);
+    data.append( this->data.data6);
+
+    return data;
+}
+
 void Msg::setData(const MsgDataT &value)
 {
     this->data = value;

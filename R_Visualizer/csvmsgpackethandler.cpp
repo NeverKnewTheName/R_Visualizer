@@ -29,8 +29,8 @@ QVector<Msg *> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStrin
     QString code = codeLine.split(";").at(0);
 
     qDebug() << "RegEx extracted CODE: " << code.toInt(0, 16);;
-    MsgDataT msgData = { code.toInt(0, 16), 0, 0, 0, 0, 0, 0, 0 };
-    msgs.append(new Msg(QDateTime(), 0xF0, msgData));
+    MsgDataT msgData = { code.toInt(0, 16), 0xd, 0x84, 0, 0, 0, 0, 0 };
+    msgs.append(new Msg(QDateTime(), 0xFF, msgData));
     for(auto &msg : msgsFromPacket )
     {
         // first line is code;
@@ -49,7 +49,10 @@ QVector<Msg *> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStrin
         QString dataLow = msgAsString.at(9) + msgAsString.at(10) + msgAsString.at(11) + msgAsString.at(12) + msgAsString.at(13);
         qDebug() << "Data Low: " << dataLow << " - " << dataLow.toInt(0,2);
         msgData = { 0x0B, ((recvrID >> 8) & 0xFFu ), (recvrID & 0xFFu), dataHigh.toInt(0,2), dataLow.toInt(0,2), 0, 0, 0 };
-        msgs.append(new Msg(QDateTime(), 0xF0, msgData));
+        qDebug() << "MsgData";
+        qDebug() << "RecvID LOW:" << msgData.data0;
+        qDebug() << "RecvID HIGH:" << msgData.data1;
+        msgs.append(new Msg(QDateTime(), 0xFFu, msgData));
     }
     return msgs;
 }

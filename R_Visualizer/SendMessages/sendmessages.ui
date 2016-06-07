@@ -20,18 +20,41 @@
       <string>Send Single Message</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_6">
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="sndMsgMsgLineEdit"/>
+      <item row="1" column="2">
+       <widget class="QLineEdit" name="sndMsgMsgLineEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>5</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="inputMask">
+         <string>\0\xhhhhhhhhhhhhhh</string>
+        </property>
+        <property name="text">
+         <string>0x</string>
+        </property>
+       </widget>
       </item>
-      <item row="2" column="1">
+      <item row="2" column="2">
        <widget class="QPushButton" name="sndMsgSendBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Send</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLineEdit" name="sndMsgIDLineEdit"/>
+       <widget class="QLineEdit" name="sndMsgIDLineEdit">
+        <property name="inputMask">
+         <string>\0\xHhhh</string>
+        </property>
+       </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_5">
@@ -40,10 +63,33 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="2">
        <widget class="QLabel" name="label_6">
         <property name="text">
          <string>Message</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="sndMsgCodeLineEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="inputMask">
+         <string>\0\xHh</string>
+        </property>
+        <property name="text">
+         <string>0x</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Code</string>
         </property>
        </widget>
       </item>

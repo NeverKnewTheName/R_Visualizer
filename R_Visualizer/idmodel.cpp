@@ -145,16 +145,6 @@ unsigned int IDModel::getIDToName(QString &name) const
     return 0;
 }
 
-unsigned int IDModel::getIDToName(QString &name) const
-{
-    for( auto &idProp : idPropStore )
-    {
-        if(!name.compare(idProp->getName()))
-            return idPropStore.key(idProp);
-    }
-    return 0;
-}
-
 void IDModel::add(int id, IDRep *idRep)
 {
     int newRow = idStore.size();

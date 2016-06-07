@@ -203,11 +203,32 @@ void MainWindow::initMsgsTableView()
 
     FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
     FilterCodeStore *filterCodeModel = this->msgConfigWidget->getFilterCodeModel();
+<<<<<<< HEAD
+    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, filterCodeModel, this);
+    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
+    connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
+    connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, msgFilterProxy, &MsgFilterProxyModel::changeCodeFilterEnabled);
+    connect(filterCodeModel, &FilterCodeStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
+    msgFilterProxy->setSourceModel(this->msgModel);
+
+    msgProxyModel = new MsgProxyModel(this);
+    msgProxyModel->setSourceModel(msgFilterProxy);
+//    msgProxyModel->setSourceModel(this->msgModel);
+//    msgFilterProxy->setSourceModel(msgProxyModel);
+    msgProxyModel->setSourceModel(msgModel);
+    connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
+    connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
+    connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
+    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
+    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
+
+//    ui->msgTableView->setModel(msgProxyModel);
+    ui->msgTableView->setModel(msgFilterProxy);
+=======
     FilterTimestampStore *filterTimestampModel = this->msgConfigWidget->getFilterTimestampModel();
     ui->msgTableView->setFilterIDModel(filterIDModel);
     ui->msgTableView->setFilterCodeModel(filterCodeModel);
     ui->msgTableView->setFilterTimestampModel(filterTimestampModel);
-
     connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, ui->msgTableView, &MsgTableView::changeIDFilterEnabled);
     connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, ui->msgTableView, &MsgTableView::changeCodeFilterEnabled);
     connect(this->msgConfigWidget, &MessageConfig::filterTimestampFromStateChange, ui->msgTableView, &MsgTableView::changeTimestampFromFilterEnabled);
@@ -217,11 +238,6 @@ void MainWindow::initMsgsTableView()
     connect(filterCodeModel, &FilterCodeStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
     connect(filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
 
-    //connect(this, &MainWindow::queryFetchRow, ui->msgTableView, &MsgTableView::scrollFetchRows);
-    //connect(ui->msgTableView, &MsgTableView::scrollRowsFetched, this, &MainWindow::updateSlider);
-    //connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-
-    connect(ui->msgTableView, &MsgTableView::invisibleRows, this, &MainWindow::scrollToGetMoreContent);
 //    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, filterCodeModel, this);
 //    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
 //    connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
@@ -248,6 +264,7 @@ void MainWindow::initMsgsTableView()
 //    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
 //    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
 
+>>>>>>> 620026a84d195b5fdaea76ee2b3b31ff9e64a40d
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->msgTableView->verticalHeader()->hide();
     ui->msgTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -260,6 +277,7 @@ void MainWindow::initMsgsTableView()
     ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
 
     //connect(vertScrollBar, &QScrollBar::sliderMoved, this, &MainWindow::scrollBarMsgTableViewMoved);
+//    connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
 
     // scroll to the bottom as soon as a new row is inserted by
     // since the rowsInserted signal might be fired before the view actually inserted the new rows,
@@ -322,8 +340,7 @@ void MainWindow::scrollBarMsgTableViewMoved(int position)
     static bool scrollToBottomConnected = false;
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     qDebug() << "Scrollbar moved to position:" << position;
-
-    if((position >= (vertScrollBar->maximum())) && (!ui->msgTableView->isAtTopEnd()))
+    if(position == vertScrollBar->maximum())
     {
         qDebug() << "Scrollbar is at max pos";
         if(!scrollToBottomConnected)
@@ -333,24 +350,14 @@ void MainWindow::scrollBarMsgTableViewMoved(int position)
             scrollToBottomConnected = true;
             emit changedDataAcquisitionMode(true);
         }
-        disconnect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-        ui->msgTableView->scrollFetchRows(+1);
-        if(!ui->msgTableView->isAtTopEnd())
-            vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()-2);
-        connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-        qDebug() << "Scrollbar moved to position:" << position;
+        emit queryFetchRow(1);
+        //ToDO reload newer model indices
     }
     else
     {
-        if( (position <= (vertScrollBar->minimum())) && (!ui->msgTableView->isAtBottomEnd()) )
+        if( position == vertScrollBar->minimum())
         {
-            disconnect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-//            emit queryFetchRow(-1);
-            qDebug() << "Scrollbar moved to position:" << position;
-            ui->msgTableView->scrollFetchRows(-1);
-            if(!ui->msgTableView->isAtBottomEnd())
-                vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()+2);
-            connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+            emit queryFetchRow(-1);
             qDebug() << "Scrollbar is at min pos";
         }
         else
@@ -373,16 +380,6 @@ void MainWindow::autoScroll()
 
 void MainWindow::updateSlider(int direction)
 {
-    qDebug() << __PRETTY_FUNCTION__;
-    QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
-    vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()+direction);
-
-}
-
-void MainWindow::scrollToGetMoreContent(bool enabled)
-{
-    if(enabled)
-        connect(ui->msgTableView->verticalScrollBar(), &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-    else
-        disconnect(ui->msgTableView->verticalScrollBar(), &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+    QScrollBar *vertScrollbar = ui->msgTableView->verticalScrollBar();
+    vertScrollbar->setSliderPosition(vertScrollbar->sliderPosition()+direction);
 }

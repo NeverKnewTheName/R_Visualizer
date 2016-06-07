@@ -27,12 +27,16 @@ public:
     FilterTimestampStore *getFilterTimestampModel() const;
     void setFilterTimestampModel(FilterTimestampStore *value);
 
+    bool isAtBottomEnd();
+    bool isAtTopEnd();
+
 private:
     bool isLegit(unsigned int rowNr) const;
 
     unsigned int visibleRows;
     unsigned int visibleRowCntr;
     unsigned int visibleRowOffset;
+    unsigned int visibleRowOffsetHIGH;
     bool continuousScrolling;
     FilterIDStore *filterIDModel;
     FilterCodeStore *filterCodeModel;
@@ -44,6 +48,7 @@ private:
 
 signals:
     void scrollRowsFetched(int direction);
+    void invisibleRows(bool areThereInvisibleRows);
 
 public slots:
     void reset();

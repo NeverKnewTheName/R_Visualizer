@@ -21,7 +21,7 @@
         "code": 11,
         "codeName": "MatrixCode",
         "color": "#ffaa7f",
-        "messageFormat": "Receiver:\t#HEX#(#OP#(#OP#(#Data0##<<#8)#/OP##+##Data0#)#/OP#)#/HEX#\nData:\t#BIN#(#OP#(#OP#(#Data2##<<#5)#/OP##+##Data3#)#/OP#)#/BIN#"
+        "messageFormat": "Receiver:\t#HEX#(#OP#(#OP#(#Data0##<<#8)#/OP##+##Data1#)#/OP#)#/HEX#\nData:\t#BIN#(#OP#(#OP#(#Data2##<<#5)#/OP##+##Data3#)#/OP#)#/BIN#"
     },
     {
         "code": 79,

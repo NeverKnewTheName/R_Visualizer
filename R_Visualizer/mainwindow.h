@@ -58,6 +58,7 @@ private slots:
 
     void autoScroll();
     void updateSlider(int direction);
+    void scrollToGetMoreContent(bool enabled);
 
 private:
     void initMsgsTableView();
