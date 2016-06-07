@@ -143,8 +143,9 @@ void MsgModel::addMsg(Msg *msg)
     beginInsertRows(QModelIndex(),newRow,newRow);
     this->msgs.append(msg);
     endInsertRows();
-    QModelIndex newIndex = this->createIndex(newRow, newRow);
-    emit rowAppended(newIndex);
+    emit rowsAdded(1);
+//    QModelIndex newIndex = ;
+    emit rowAppended(newRow);
 }
 
 void MsgModel::clear()

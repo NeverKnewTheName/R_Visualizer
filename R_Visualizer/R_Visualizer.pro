@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     userrolemngr.cpp \
     msgproxymodel.cpp \
     msgfilterproxymodel.cpp \
-    msglimitfilterproxy.cpp
+    msglimitfilterproxy.cpp \
+    msgtableview.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -53,7 +54,8 @@ HEADERS  += mainwindow.h \
     msgproxymodel.h \
     r_ringbuffer.h \
     msgfilterproxymodel.h \
-    msglimitfilterproxy.h
+    msglimitfilterproxy.h \
+    msgtableview.h
 
 FORMS    += mainwindow.ui \
 

@@ -24,16 +24,21 @@ MessageConfig::MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidg
     codeFilterEnabled(false),
     timeStampFilterFromEnabled(false),
     timeStampFilterToEnabled(false)
-    //filterTimestampStore(this)//ToDO
+  //filterTimestampStore(this)//ToDO
 {
     ui->setupUi(this);
 
     filterIDModel = new FilterIDStore(idModel, this);
     filterCodeModel = new FilterCodeStore(msgTypeModel, this);
+    filterTimestampStore = new FilterTimestampStore(this);
     this->initIDTableView();
     this->initMsgTypeTableView();
     this->initFilterIDListView();
     this->initFilterCodeListView();
+    connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampFromChanged);
+    connect(this, &MessageConfig::sgnl_timestampFromChanged, filterTimestampStore, &FilterTimestampStore::timestampFromChanged);
+    connect(ui->filterTimeStampToDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampToChanged);
+    connect(this, &MessageConfig::sgnl_timestampToChanged, filterTimestampStore, &FilterTimestampStore::timestampToChanged);
 }
 
 MessageConfig::~MessageConfig()
@@ -49,6 +54,11 @@ FilterIDStore *MessageConfig::getFilterIDModel() const
 FilterCodeStore *MessageConfig::getFilterCodeModel() const
 {
     return this->filterCodeModel;
+}
+
+FilterTimestampStore *MessageConfig::getFilterTimestampModel() const
+{
+    return this->filterTimestampStore;
 }
 
 void MessageConfig::initIDTableView()
@@ -96,11 +106,11 @@ void MessageConfig::initMsgTypeTableView()
 
 void MessageConfig::initFilterIDListView()
 {
-//    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
-//    proxy->setSourceModel(&filterIDModel);
+    //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+    //    proxy->setSourceModel(&filterIDModel);
     ui->idFilterlistView->setModel(filterIDModel);
     ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-//    ui->idFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
+    //    ui->idFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
     ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     //connect(filterIDModel, &FilterIDStore::rowAdded, this, &MessageConfig::filterIDAdded);
@@ -109,8 +119,8 @@ void MessageConfig::initFilterIDListView()
 
 void MessageConfig::initFilterCodeListView()
 {
-//    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
-//    proxy->setSourceModel(&filterCodeModel);
+    //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+    //    proxy->setSourceModel(&filterCodeModel);
     ui->codeFilterlistView->setModel(filterCodeModel);
     ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -133,6 +143,18 @@ void MessageConfig::filterIDAdded(unsigned int pos)
     qDebug() << "index row: " << index;
     ui->idFilterlistView->edit(index);
     //emit startEditFilterID(filterIDModel->index(pos));
+}
+
+void MessageConfig::slt_timestampFromChanged()
+{
+    qDebug() << ui->filterTimeStampFromDateTimeEdit->dateTime();
+    emit sgnl_timestampFromChanged(ui->filterTimeStampFromDateTimeEdit->dateTime());
+}
+
+void MessageConfig::slt_timestampToChanged()
+{
+    qDebug() << ui->filterTimeStampToDateTimeEdit->dateTime();
+    emit sgnl_timestampToChanged(ui->filterTimeStampToDateTimeEdit->dateTime());
 }
 
 void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)

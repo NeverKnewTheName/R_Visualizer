@@ -127,6 +127,7 @@ void FilterIDStore::removeID(QModelIndex &index)
     beginRemoveRows(QModelIndex(),index.row(), index.row());
     idStore.remove(index.row());
     endRemoveRows();
+    emit internalModelChanged();
 }
 
 bool FilterIDStore::containsID(unsigned int id)

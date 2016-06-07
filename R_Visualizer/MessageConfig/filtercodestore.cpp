@@ -126,6 +126,7 @@ void FilterCodeStore::removeCode(QModelIndex &index)
     beginRemoveRows(QModelIndex(),index.row(), index.row());
     codeStore.remove(index.row());
     endRemoveRows();
+    emit internalModelChanged();
 }
 
 bool FilterCodeStore::containsCode(unsigned int code)

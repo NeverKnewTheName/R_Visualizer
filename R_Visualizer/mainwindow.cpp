@@ -35,11 +35,11 @@ MainWindow::MainWindow(QWidget *parent) :
      */
 
     msgTypeModel = new MsgTypeModel(this);
-    connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
+    //connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
     connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
     idModel = new IDModel(this);
-    connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
+    //connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
     connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
     this->sysOvrvwWidget = new SystemOverview(this);
@@ -194,54 +194,74 @@ void MainWindow::on_actionStop_triggered()
 
 }
 
+#define FILTER_PROXY_VIEW
 void MainWindow::initMsgsTableView()
 {
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
+//    connect(MsgModel, &MsgModel::rowAppended, ui->msgTableView, &QTableView::resizeRowToContents);
+
     FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
     FilterCodeStore *filterCodeModel = this->msgConfigWidget->getFilterCodeModel();
-    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, filterCodeModel, this);
-    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
-    connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
-    connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, msgFilterProxy, &MsgFilterProxyModel::changeCodeFilterEnabled);
-    connect(filterCodeModel, &FilterCodeStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
-    msgFilterProxy->setSourceModel(this->msgModel);
+    FilterTimestampStore *filterTimestampModel = this->msgConfigWidget->getFilterTimestampModel();
+    ui->msgTableView->setFilterIDModel(filterIDModel);
+    ui->msgTableView->setFilterCodeModel(filterCodeModel);
+    ui->msgTableView->setFilterTimestampModel(filterTimestampModel);
+    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, ui->msgTableView, &MsgTableView::changeIDFilterEnabled);
+    connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, ui->msgTableView, &MsgTableView::changeCodeFilterEnabled);
+    connect(this->msgConfigWidget, &MessageConfig::filterTimestampFromStateChange, ui->msgTableView, &MsgTableView::changeTimestampFromFilterEnabled);
+    connect(this->msgConfigWidget, &MessageConfig::filterTimestampToStateChange, ui->msgTableView, &MsgTableView::changeTimestampToFilterEnabled);
 
-    msgProxyModel = new MsgProxyModel(this);
-    msgProxyModel->setSourceModel(msgFilterProxy);
+    connect(filterIDModel, &FilterIDStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(filterCodeModel, &FilterCodeStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+
+//    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, filterCodeModel, this);
+//    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
+//    connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
+//    connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, msgFilterProxy, &MsgFilterProxyModel::changeCodeFilterEnabled);
+//    connect(filterCodeModel, &FilterCodeStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
+
+//    msgProxyModel = new MsgProxyModel(this);
+//#ifdef FILTER_PROXY_VIEW
+//    msgFilterProxy->setSourceModel(this->msgModel);
+////    msgProxyModel->setSourceModel(msgFilterProxy);
+////    ui->msgTableView->setModel(msgProxyModel);
+//#else
 //    msgProxyModel->setSourceModel(this->msgModel);
 //    msgFilterProxy->setSourceModel(msgProxyModel);
-    msgProxyModel->setSourceModel(msgModel);
-    connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
-    connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
-    connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
-    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
-    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
+////    ui->msgTableView->setModel(msgFilterProxy);
+//#endif
+    connect(this->msgModel, &MsgModel::rowAppended, /*msgFilterProxy, &MsgFilterProxyModel::slt_RowsAdded);
+    connect(msgFilterProxy, &MsgFilterProxyModel::sgnl_RowsAdded,*/ ui->msgTableView, &MsgTableView::rowAdded);
+    //connect(this->msgModel, &MsgModel::rowsRemoved, ui->msgTableView, &MsgTableView::customRowCountChanged);
+    ui->msgTableView->setModel(this->msgModel);
+//    connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
+//    connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
+//    connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
+//    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
+//    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
 
-//    ui->msgTableView->setModel(msgProxyModel);
-    ui->msgTableView->setModel(msgFilterProxy);
     ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    //ui->msgTableView->horizontalHeader()->setStretchLastSection(true);
     ui->msgTableView->verticalHeader()->hide();
     ui->msgTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     ui->msgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    ui->msgTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    //TOO HEAVY ON PERFORMANCE...NEEDS A WORKAROUND
+    //ui->msgTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
 
     //connect(vertScrollBar, &QScrollBar::sliderMoved, this, &MainWindow::scrollBarMsgTableViewMoved);
-    connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+//    connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
 
     // scroll to the bottom as soon as a new row is inserted by
     // since the rowsInserted signal might be fired before the view actually inserted the new rows,
     // set up a timer to instantly fire an event which triggers the scrollToBottom
     // with this approach it is guaranteed that all events in the meantime are carried out and thus the row is already inserted
     //connect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
-    connect(msgProxyModel, &MsgProxyModel::rowAppended, this, &MainWindow::autoScroll);
-
-    //connect(msgModel, &MsgModel::rowsInserted, ui->msgTableView, &QTableView::resizeRowsToContents);
+//    connect(msgProxyModel, &MsgProxyModel::rowAppended, this, &MainWindow::autoScroll);
 }
 
 

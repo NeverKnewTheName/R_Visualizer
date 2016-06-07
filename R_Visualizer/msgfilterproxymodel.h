@@ -28,8 +28,13 @@ protected:
     bool timeStampToFilterEnabled;
 
 signals:
+    void sgnl_RowsAdded(unsigned int nrOfRowsAdded);
+    void sgnl_RowsDismissed(unsigned int nrOfRowsDismissed);
 
 public slots:
+    void slt_RowsAdded(unsigned int nrOfRowsAdded);
+    void slt_RowsRemoved(unsigned int nrOfRowsRemoved);
+
     void changeIDFilterEnabled(bool enabled);
     void changeCodeFilterEnabled(bool enabled);
     void changeTimestampFromFilterEnabled(bool enabled);

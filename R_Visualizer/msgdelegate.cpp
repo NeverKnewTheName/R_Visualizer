@@ -217,7 +217,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
                     line);
         linesPrinted++;
     }
-    //QStyledItemDelegate::paint(painter, option, index);
+    //emit sizeHintChanged(index);
 }
 
 QSize MsgDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

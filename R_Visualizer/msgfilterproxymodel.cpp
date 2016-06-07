@@ -43,6 +43,16 @@ bool MsgFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &r
     return false;
 }
 
+void MsgFilterProxyModel::slt_RowsAdded(unsigned int nrOfRowsAdded)
+{
+    emit sgnl_RowsAdded(nrOfRowsAdded);
+}
+
+void MsgFilterProxyModel::slt_RowsRemoved(unsigned int nrOfRowsRemoved)
+{
+    emit sgnl_RowsDismissed(nrOfRowsRemoved);
+}
+
 void MsgFilterProxyModel::changeIDFilterEnabled(bool enabled)
 {
 //    beginResetModel();

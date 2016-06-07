@@ -77,6 +77,7 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
         if(col == COL_CODENAME) msgTypePropStore.value(codeStore[row])->setCodeName(value.value<QString>());
         if(col == COL_MESSAGEFORMAT ) msgTypePropStore.value(codeStore[row])->setMessageFormat(value.value<QString>());
         if(col == COL_COLOR) msgTypePropStore.value(codeStore[row])->setColor(value.value<QColor>());
+        emit dataChanged(index, index);
         emit internalModelChanged();
         return true;
         break;
