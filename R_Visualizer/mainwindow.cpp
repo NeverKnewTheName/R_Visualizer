@@ -73,8 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
     emit switchUserRoles(UserRoleMngr::NormalUserRole);
 
     m_deviceHandler = new DeviceHandler();
-    connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket);
-    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived);
+    connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
+    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow()

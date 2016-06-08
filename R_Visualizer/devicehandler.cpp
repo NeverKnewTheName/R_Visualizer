@@ -130,12 +130,14 @@ void DeviceHandler::sltSendPacket(CAN_PacketPtr packet)
     qDebug() << __PRETTY_FUNCTION__;
     if (!m_connected) return;
 #ifndef DUMMY_TRANSCEIVE
+    QThread::msleep(1);
     QMutexLocker locker(&m_mutex);
     qDebug() << "Mutex aquired";
-    if (!m_driver.writeCANMessage(packet) && m_driver.error())
+    // CHANGED && TO ||
+    if (!m_driver.writeCANMessage(packet) || m_driver.error())
     {
         qDebug() << "ERROR SENDING";
-        //emit sigError(m_driver.getErrorString());
+        emit sigError(m_driver.getErrorString());
     }
 #endif
 }
@@ -147,6 +149,7 @@ void DeviceHandler::sltSetFilterID(const quint32 filterID)
     QMutexLocker locker(&m_mutex);
     if (!m_driver.setIDFilter(filterID) && m_driver.error())
     {
+        qDebug() << "ERROR SETTING FILTER ID";
         emit sigError(m_driver.getErrorString());
     }
 }
@@ -158,6 +161,7 @@ void DeviceHandler::sltSetFilterMask(const quint32 filterMask)
     QMutexLocker locker(&m_mutex);
     if (!m_driver.setIDFilterMask(filterMask) && m_driver.error())
     {
+        qDebug() << "ERROR SETTING FILTER MASK";
         emit sigError(m_driver.getErrorString());
     }
 }
@@ -169,6 +173,7 @@ void DeviceHandler::sltChangeCANTiming(const int index)
     QMutexLocker locker(&m_mutex);
     if (!m_driver.changeCANTiming(index) && m_driver.error())
     {
+        qDebug() << "ERROR CHANGING TIMING";
         emit sigError(m_driver.getErrorString());
     }
 }

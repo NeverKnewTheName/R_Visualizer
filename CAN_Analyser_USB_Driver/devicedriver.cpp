@@ -267,6 +267,8 @@ bool DeviceDriver::writeCANMessage(CAN_PacketPtr msg)
     QByteArray buffer = msg->serializeToUSB();
     buffer.prepend(CAN_DATA_FRAME_REPORT);
     int res = hid_write(m_handle, (const unsigned char *)buffer.constData(), buffer.size());
+    qDebug() << "After HID Write - res:" << res;
+    qDebug() << "HID error log" << hid_error(m_handle);
     if (res < 0 ) {
         m_error = true;
         qDebug() << QString("Error at writeCANMessage: %1\n").arg(QString::fromWCharArray(hid_error(m_handle)));

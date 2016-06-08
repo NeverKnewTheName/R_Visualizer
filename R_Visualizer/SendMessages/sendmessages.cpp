@@ -9,6 +9,7 @@
 #include <QJsonDocument>
 
 #include <QTimer>
+#include <QThread>
 #include <QDebug>
 
 SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent) :
@@ -53,7 +54,7 @@ void SendMessages::initMsgPacketTableView()
 
 void SendMessages::emitSendMsg()
 {
-    emit sigSendCANPacket(packet);
+//    emit sigSendCANPacket(packet);
 }
 
 void SendMessages::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -163,8 +164,8 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
     //this->m_deviceHandler->sltSendPacket(packet);
     qDebug() << "Send CAN message";
-    //emit sigSendCANPacket(packet);
-    QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
+    emit sigSendCANPacket(packet);
+    //QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
 }
 
 void SendMessages::on_sndPcktSendBtn_clicked()
@@ -198,8 +199,8 @@ void SendMessages::on_sndPcktSendBtn_clicked()
         qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
         //this->m_deviceHandler->sltSendPacket(packet);
         qDebug() << "Send CAN message";
-        //emit sigSendCANPacket(packet);
-        QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
+        emit sigSendCANPacket(packet);
+        //QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
 
     }
 }
