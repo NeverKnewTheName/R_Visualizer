@@ -22,12 +22,13 @@ QVariant FilterCodeStore::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
     {
-        unsigned int code = codeStore.at(row);
-        QString codeName = msgTypeModel->getNameToCode(code);
-        if(codeName.isEmpty())
-            return QString("0x%1").arg(code/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        else
-            return codeName;
+        return codeStore.at(row);
+//        unsigned int code = codeStore.at(row);
+//        QString codeName = msgTypeModel->getNameToCode(code);
+//        if(codeName.isEmpty())
+//            return QString("0x%1").arg(code/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
+//        else
+//            return codeName;
     }
         break;
     case Qt::FontRole:
@@ -39,10 +40,10 @@ QVariant FilterCodeStore::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-    {
-        QBrush bgBrush(msgTypeModel->getColorToCode(codeStore.at(row)));
-        return bgBrush;
-    }
+//    {
+//        QBrush bgBrush(msgTypeModel->getColorToCode(codeStore.at(row)));
+//        return bgBrush;
+//    }
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -77,18 +78,19 @@ bool FilterCodeStore::setData(const QModelIndex &index, const QVariant &value, i
     switch(role)
     {
     case Qt::EditRole:
-        QString editorContent = value.value<QString>();
-        qDebug() << "FilterCodeStore::setData --- editor content:" << editorContent;
-        bool conversionOK;
-        unsigned int retrievedCode = editorContent.toInt(&conversionOK, (editorContent.startsWith("0x")) ? 16 : 0);
+//        QString editorContent = value.value<QString>();
+//        qDebug() << "FilterCodeStore::setData --- editor content:" << editorContent;
+//        bool conversionOK;
+//        unsigned int retrievedCode = editorContent.toInt(&conversionOK, (editorContent.startsWith("0x")) ? 16 : 0);
 
-        if(!conversionOK)
-        {
-            qDebug() << "conversion failed; attempt to retrieve code via name";
-            retrievedCode = msgTypeModel->getCodeToName(editorContent);
-        }
-        codeStore[row] = retrievedCode;
+//        if(!conversionOK)
+//        {
+//            qDebug() << "conversion failed; attempt to retrieve code via name";
+//            retrievedCode = msgTypeModel->getCodeToName(editorContent);
+//        }
+//        codeStore[row] = retrievedCode;
 
+        codeStore[row] = value.value<unsigned int>();
         emit internalModelChanged();
         return true;
         break;

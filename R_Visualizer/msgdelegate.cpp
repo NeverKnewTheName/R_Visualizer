@@ -18,37 +18,60 @@ MsgDelegate::MsgDelegate(MsgTypeModel *msgTypeModel, IDModel *idModel, QWidget *
 void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     int col = index.column();
-    QColor background;
+    QColor background = option.palette.color(
+                option.palette.currentColorGroup(),
+                (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
     QStringList dataPrint;
+    qDebug() << option.text;
 
     QStyledItemDelegate::paint(painter, option, index);
 
     if( col == MsgModel::COL_TIMESTAMP)
     {
-        QStyledItemDelegate::paint(painter, option, index);
-        return;
+        dataPrint.append(index.model()->data(index, Qt::DisplayRole).value<QString>());
     }
     else if (col == MsgModel::COL_NAME)
     {
         int id = index.model()->data(index, Qt::DisplayRole).value<int>();
-        background = (this->idModel->getColorToID(id));
+        QColor itemBackground = this->idModel->getColorToID(id);
+        if(itemBackground.isValid())
+        {
+            if(option.features & QStyleOptionViewItem::Alternate)
+            {
+                background = itemBackground.darker(110);
+            }
+            else
+            {
+                background = itemBackground;
+            }
+        }
 
-        QString codeName = this->idModel->getNameToID(id);
+        QString idName = this->idModel->getNameToID(id);
 
-        if(codeName.isEmpty())
+        if(idName.isEmpty())
         {
             // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-            codeName =  QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+            idName =  QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
         }
-        dataPrint.append(codeName);
+        dataPrint.append(idName);
     }
     else if (col == MsgModel::COL_MESSAGE)
     {
         // Retrieve MsgData structure from the message
         MsgDataT msgData = index.model()->data(index, Qt::UserRole + 1).value<MsgDataT>();
         // Get color for the background
-        background = this->msgTypeModel->getColorToCode(msgData.code);
-
+        QColor itemBackground = this->msgTypeModel->getColorToCode(msgData.code);
+        if(itemBackground.isValid())
+        {
+            if(option.features & QStyleOptionViewItem::Alternate)
+            {
+                background = itemBackground.darker(110);
+            }
+            else
+            {
+                background = itemBackground;
+            }
+        }
         // Get the name of the code included in the message
         // returns an empty string if no name is specified or if there is no netry in the MsgType model
         QString codeName = this->msgTypeModel->getNameToCode(msgData.code);
@@ -192,14 +215,14 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     // check if the row containing the item is selected and adapt the background accordingly
     if(option.state & QStyle::State_Selected)
     {
-        background = background.darker();
+        background = option.palette.color(option.palette.currentColorGroup(), QPalette::Highlight);
     }
     // draw background
     painter->fillRect(option.rect, background);
     //painter->drawRect(option.rect.);
     int nrLines = dataPrint.size();
     int linesPrinted = 0;
-    int left = option.rect.left();
+    int left = option.rect.left() + 2;
     int top = option.rect.top();
     int width = option.rect.width();
     int height = option.rect.height()/nrLines;

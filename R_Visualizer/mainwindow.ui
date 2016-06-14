@@ -16,36 +16,45 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="MsgTableView" name="msgTableView">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all incoming messages chronologically.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
-      <property name="locale">
-       <locale language="English" country="UnitedStates"/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="locale">
-       <locale language="English" country="UnitedStates"/>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="tab_toolConfig">
-       <property name="toolTipDuration">
-        <number>-1</number>
+      <widget class="MsgTableView" name="msgTableView">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all incoming messages chronologically.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
-       <attribute name="title">
-        <string>Tool config</string>
-       </attribute>
-       <attribute name="toolTip">
-        <string>Configure the tool itself</string>
-       </attribute>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_toolConfig">
+        <property name="toolTipDuration">
+         <number>-1</number>
+        </property>
+        <attribute name="title">
+         <string>Tool config</string>
+        </attribute>
+        <attribute name="toolTip">
+         <string>Configure the tool itself</string>
+        </attribute>
+       </widget>
       </widget>
      </widget>
     </item>

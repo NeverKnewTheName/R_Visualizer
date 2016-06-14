@@ -21,16 +21,17 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
     {
-        unsigned int id = idStore.at(row);
-        QString idName = idModel->getNameToID(id);
-        if(idName.isEmpty())
-        {
-            return QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        }
-        else
-        {
-            return idName;
-        }
+        return idStore.at(row);
+//        unsigned int id = idStore.at(row);
+//        QString idName = idModel->getNameToID(id);
+//        if(idName.isEmpty())
+//        {
+//            return QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
+//        }
+//        else
+//        {
+//            return idName;
+//        }
     }
         break;
     case Qt::FontRole:
@@ -43,8 +44,8 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
         break;
     case Qt::BackgroundRole:
     {
-        QBrush bgBrush(idModel->getColorToID(idStore.at(row)));
-                return bgBrush;
+//        QBrush bgBrush(idModel->getColorToID(idStore.at(row)));
+//                return bgBrush;
     }
         break;
     case Qt::TextAlignmentRole:
@@ -80,17 +81,7 @@ bool FilterIDStore::setData(const QModelIndex &index, const QVariant &value, int
     switch(role)
     {
     case Qt::EditRole:
-        QString editorContent = value.value<QString>();
-        qDebug() << "FilterCodeStore::setData --- editor content:" << editorContent;
-        bool conversionOK;
-        unsigned int retrievedID = editorContent.toInt(&conversionOK, (editorContent.startsWith("0x")) ? 16 : 0);
-
-        if(!conversionOK)
-        {
-            qDebug() << "conversion failed; attempt to retrieve code via name";
-            retrievedID = idModel->getIDToName(editorContent);
-        }
-        idStore[row] = retrievedID;
+        idStore[row] = value.value<int>();
         emit internalModelChanged();
         return true;
         break;

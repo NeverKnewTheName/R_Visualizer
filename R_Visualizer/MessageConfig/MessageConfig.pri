@@ -13,7 +13,9 @@ SOURCES += $$PWD//messageconfig.cpp \
     $$PWD//msgtypeadddialog.cpp \
     $$PWD/filteridstore.cpp \
     $$PWD/filtercodestore.cpp \
-    $$PWD/filtertimestampstore.cpp
+    $$PWD/filtertimestampstore.cpp \
+    $$PWD/filteriddelegate.cpp \
+    $$PWD/filtermsgtypedelegate.cpp
 
 HEADERS  += $$PWD//messageconfig.h \
     $$PWD//ideditordelegate.h \
@@ -23,7 +25,9 @@ HEADERS  += $$PWD//messageconfig.h \
     $$PWD//msgtypeadddialog.h \
     $$PWD/filteridstore.h \
     $$PWD/filtercodestore.h \
-    $$PWD/filtertimestampstore.h
+    $$PWD/filtertimestampstore.h \
+    $$PWD/filteriddelegate.h \
+    $$PWD/filtermsgtypedelegate.h
 
 FORMS    += $$PWD//messageconfig.ui \
     $$PWD//idadddialog.ui \

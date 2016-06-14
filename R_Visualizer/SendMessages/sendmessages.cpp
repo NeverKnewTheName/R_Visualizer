@@ -3,6 +3,7 @@
 
 #include "msgdelegate.h"
 #include "csvmsgpackethandler.h"
+#include "idcompleter.h"
 
 #include <QFile>
 #include <QFileDialog>
@@ -10,6 +11,9 @@
 
 #include <QTimer>
 #include <QThread>
+
+#include <QCompleter>
+
 #include <QDebug>
 
 SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent) :
@@ -31,6 +35,26 @@ SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget
     connect(this->msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
     connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
     connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
+
+//    IDCompleter *idCompleter = new IDCompleter(this);
+//    ui->sndMsgIDLineEdit->setCompleter(idCompleter->getCompleter());
+    QCompleter *idCompleter = new QCompleter(this);
+    idCompleter->setModel(this->idModel);
+    idCompleter->setCompletionColumn(1);
+    idCompleter->setCompletionRole(Qt::DisplayRole);
+    idCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->sndMsgIDLineEdit->setCompleter(idCompleter);
+    connect(ui->sndMsgIDLineEdit, &QLineEdit::textChanged, this, &SendMessages::idChanged);
+
+
+    QCompleter *codeCompleter = new QCompleter(this);
+    codeCompleter->setModel(this->msgTypeModel);
+    codeCompleter->setCompletionColumn(1);
+    codeCompleter->setCompletionRole(Qt::DisplayRole);
+    codeCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->sndMsgCodeLineEdit->setCompleter(codeCompleter);
+    connect(ui->sndMsgCodeLineEdit, &QLineEdit::textChanged, this, &SendMessages::codeChanged);
+
 }
 
 SendMessages::~SendMessages()
@@ -203,4 +227,22 @@ void SendMessages::on_sndPcktSendBtn_clicked()
         //QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
 
     }
+}
+
+void SendMessages::idChanged(const QString &newIDName)
+{
+    QColor newBackground = idModel->getColorToID(idModel->getIDToName(newIDName));
+    if(!newBackground.isValid())
+        newBackground = QColor(Qt::white);
+
+    ui->sndMsgIDLineEdit->setStyleSheet(QString("QLineEdit { background : %1;}").arg(newBackground.name()));
+}
+
+void SendMessages::codeChanged(const QString &newCodeName)
+{
+    QColor newBackground = msgTypeModel->getColorToCode(msgTypeModel->getCodeToName(newCodeName));
+    if(!newBackground.isValid())
+        newBackground = QColor(Qt::white);
+
+    ui->sndMsgCodeLineEdit->setStyleSheet(QString("QLineEdit { background : %1;}").arg(newBackground.name()));
 }

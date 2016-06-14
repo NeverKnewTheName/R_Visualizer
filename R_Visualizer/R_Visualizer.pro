@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     msgproxymodel.cpp \
     msgfilterproxymodel.cpp \
     msglimitfilterproxy.cpp \
-    msgtableview.cpp
+    msgtableview.cpp \
+    idcompleter.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     r_ringbuffer.h \
     msgfilterproxymodel.h \
     msglimitfilterproxy.h \
-    msgtableview.h
+    msgtableview.h \
+    idcompleter.h
 
 FORMS    += mainwindow.ui \
 

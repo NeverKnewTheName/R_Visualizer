@@ -5,7 +5,8 @@
 #include "ideditordelegate.h"
 #include "msgtypeadddialog.h"
 #include "msgtypeeditordelegate.h"
-
+#include "filteriddelegate.h"
+#include "filtermsgtypedelegate.h"
 #include <QFile>
 #include <QFileDialog>
 
@@ -35,9 +36,10 @@ MessageConfig::MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidg
     this->initMsgTypeTableView();
     this->initFilterIDListView();
     this->initFilterCodeListView();
-    connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampFromChanged);
+    //connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampFromChanged);
+    connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &MessageConfig::slt_timestampFromChanged);
     connect(this, &MessageConfig::sgnl_timestampFromChanged, filterTimestampStore, &FilterTimestampStore::timestampFromChanged);
-    connect(ui->filterTimeStampToDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampToChanged);
+    connect(ui->filterTimeStampToDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &MessageConfig::slt_timestampToChanged);
     connect(this, &MessageConfig::sgnl_timestampToChanged, filterTimestampStore, &FilterTimestampStore::timestampToChanged);
 }
 
@@ -112,6 +114,8 @@ void MessageConfig::initFilterIDListView()
     ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     //    ui->idFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
     ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->idFilterlistView->setAlternatingRowColors(true);
+    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(idModel, ui->idFilterlistView));
 
     //connect(filterIDModel, &FilterIDStore::rowAdded, this, &MessageConfig::filterIDAdded);
     connect(filterIDModel, &FilterIDStore::rowAdded, ui->idFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
@@ -124,6 +128,8 @@ void MessageConfig::initFilterCodeListView()
     ui->codeFilterlistView->setModel(filterCodeModel);
     ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->codeFilterlistView->setAlternatingRowColors(true);
+    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(msgTypeModel, ui->codeFilterlistView));
     connect(filterCodeModel, &FilterCodeStore::rowAdded, ui->codeFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
 }
 
@@ -148,12 +154,20 @@ void MessageConfig::filterIDAdded(unsigned int pos)
 void MessageConfig::slt_timestampFromChanged()
 {
     qDebug() << ui->filterTimeStampFromDateTimeEdit->dateTime();
+    if(ui->filterTimeStampToDateTimeEdit->dateTime() < ui->filterTimeStampFromDateTimeEdit->dateTime())
+    {
+        ui->filterTimeStampToDateTimeEdit->setDateTime(ui->filterTimeStampFromDateTimeEdit->dateTime());
+    }
     emit sgnl_timestampFromChanged(ui->filterTimeStampFromDateTimeEdit->dateTime());
 }
 
 void MessageConfig::slt_timestampToChanged()
 {
     qDebug() << ui->filterTimeStampToDateTimeEdit->dateTime();
+    if(ui->filterTimeStampToDateTimeEdit->dateTime() < ui->filterTimeStampFromDateTimeEdit->dateTime())
+    {
+        ui->filterTimeStampFromDateTimeEdit->setDateTime(ui->filterTimeStampToDateTimeEdit->dateTime());
+    }
     emit sgnl_timestampToChanged(ui->filterTimeStampToDateTimeEdit->dateTime());
 }
 
@@ -334,6 +348,7 @@ void MessageConfig::on_enableTimestampFromFilterPushButton_clicked()
 {
     timeStampFilterFromEnabled = !timeStampFilterFromEnabled;
     ui->enableTimestampFromFilterPushButton->setText((timeStampFilterFromEnabled) ? QString("Disable") : QString("Enable"));
+
     emit filterTimestampFromStateChange(timeStampFilterFromEnabled);
 }
 
@@ -341,5 +356,6 @@ void MessageConfig::on_enableTimestampToFilterPushButton_clicked()
 {
     timeStampFilterToEnabled = !timeStampFilterToEnabled;
     ui->enableTimestampToFilterPushButton->setText((timeStampFilterToEnabled) ? QString("Disable") : QString("Enable"));
+
     emit filterTimestampToStateChange(timeStampFilterToEnabled);
 }

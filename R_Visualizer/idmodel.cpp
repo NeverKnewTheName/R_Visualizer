@@ -135,11 +135,11 @@ void IDModel::clear()
 //    emit internalModelChanged();
 }
 
-unsigned int IDModel::getIDToName(QString &name) const
+unsigned int IDModel::getIDToName(const QString &name) const
 {
     for( auto &idProp : idPropStore )
     {
-        if(!name.compare(idProp->getName()))
+        if(!name.compare(idProp->getName(),Qt::CaseInsensitive))
             return idPropStore.key(idProp);
     }
     return 0;
@@ -172,7 +172,7 @@ QColor IDModel::getColorToID(int id)
     if(idRep != Q_NULLPTR)
         return idRep->getColor();
     else
-        return QColor(Qt::white);
+        return QColor();
 }
 
 QByteArray IDModel::parseToJSON() const
@@ -202,4 +202,24 @@ void IDModel::parseFromJSON(QByteArray jsonFile)
         newIDRep->parseIN(itemObj[id].toObject());
         this->add(id.toInt(),newIDRep);
     }
+}
+
+QHash<int, IDRep *> IDModel::getIdPropStore() const
+{
+    return idPropStore;
+}
+
+void IDModel::setIdPropStore(const QHash<int, IDRep *> &value)
+{
+    idPropStore = value;
+}
+
+QStringList IDModel::getAllIDNames() const
+{
+    QStringList names;
+    for(auto idRep : idPropStore)
+    {
+        names.append(idRep->getName());
+    }
+    return names;
 }

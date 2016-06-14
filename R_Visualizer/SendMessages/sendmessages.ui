@@ -52,7 +52,7 @@
       <item row="1" column="0">
        <widget class="QLineEdit" name="sndMsgIDLineEdit">
         <property name="inputMask">
-         <string>\0\xHhhh</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -79,10 +79,10 @@
          </sizepolicy>
         </property>
         <property name="inputMask">
-         <string>\0\xHh</string>
+         <string/>
         </property>
         <property name="text">
-         <string>0x</string>
+         <string/>
         </property>
        </widget>
       </item>

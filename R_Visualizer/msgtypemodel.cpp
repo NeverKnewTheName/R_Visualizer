@@ -163,11 +163,11 @@ QString MsgTypeModel::getNameToCode(unsigned int code) const
         return QString("");
 }
 
-unsigned int MsgTypeModel::getCodeToName(QString &name) const
+unsigned int MsgTypeModel::getCodeToName(const QString &name) const
 {
     for( auto &msgTR : msgTypePropStore )
     {
-        if(!name.compare(msgTR->getCodeName()))
+        if(!name.compare(msgTR->getCodeName(),Qt::CaseInsensitive))
             return msgTR->getCode();
     }
     return 0;
@@ -193,7 +193,7 @@ QColor MsgTypeModel::getColorToCode(unsigned int code) const
     if(msgTypeRep != Q_NULLPTR)
         return msgTypeRep->getColor();
     else
-        return QColor(Qt::white);
+        return QColor();
 }
 
 int MsgTypeModel::getNrLinesToCode(unsigned int code)
@@ -209,6 +209,16 @@ int MsgTypeModel::getNrLinesToCode(unsigned int code)
     {
         return 1;
     }
+}
+
+QStringList MsgTypeModel::getAllCodeNames() const
+{
+    QStringList names;
+    for(auto msgTypeRep : this->msgTypePropStore )
+    {
+        names.append(msgTypeRep->getCodeName());
+    }
+    return names;
 }
 
 QByteArray MsgTypeModel::parseToJSON()

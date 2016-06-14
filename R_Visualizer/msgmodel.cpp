@@ -41,12 +41,12 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         if(col == COL_MESSAGE) return msgs[row]->getDataAsString();
         break;
     case Qt::FontRole:
-        //        if(row == 0 && col == 0)
-        //        {
-        //            QFont boldFont;
-        //            boldFont.setBold(true);
-        //            return boldFont;
-        //        }
+//        if(col == 0)
+//        {
+//            QFont boldFont;
+//            boldFont.setBold(true);
+//            return boldFont;
+//        }
         break;
     case Qt::BackgroundRole:
         //Background is drawn by delegate
@@ -144,7 +144,7 @@ void MsgModel::addMsg(Msg *msg)
     this->msgs.append(msg);
     endInsertRows();
     emit rowsAdded(1);
-//    QModelIndex newIndex = ;
+    //    QModelIndex newIndex = ;
     emit rowAppended(newRow);
 }
 

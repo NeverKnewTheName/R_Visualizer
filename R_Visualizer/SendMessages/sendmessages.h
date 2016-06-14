@@ -41,6 +41,9 @@ private slots:
     void on_sndPcktStoreBtn_clicked();
     void on_sndMsgSendBtn_clicked();
     void on_sndPcktSendBtn_clicked();
+
+    void idChanged(const QString &newIDName);
+    void codeChanged(const QString &newCodeName);
 };
 
 #endif // SENDMESSAGES_H

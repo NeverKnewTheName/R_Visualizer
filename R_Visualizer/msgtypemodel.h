@@ -27,10 +27,12 @@ public:
     void clear();
 
     QString getNameToCode(unsigned int code) const;
-    unsigned int getCodeToName(QString &name) const;
+    unsigned int getCodeToName(const QString &name) const;
     QString getMessageToCode(unsigned int code) const;
     QColor getColorToCode(unsigned int code) const;
     int getNrLinesToCode(unsigned int code);
+
+    QStringList getAllCodeNames() const;
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);

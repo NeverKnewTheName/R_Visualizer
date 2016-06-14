@@ -28,8 +28,13 @@ public:
     void clear();
 
     QString getNameToID(int id);
-    unsigned int getIDToName(QString &name) const;
+    unsigned int getIDToName(const QString &name) const;
     QColor getColorToID(int id);
+
+    QHash<int, IDRep *> getIdPropStore() const;
+    void setIdPropStore(const QHash<int, IDRep *> &value);
+
+    QStringList getAllIDNames() const;
 
     QByteArray parseToJSON() const;
     void parseFromJSON(QByteArray jsonFile);
@@ -41,6 +46,7 @@ public:
         COL_COLOR,
         COL_NR_OF_COLS
     };
+
 private:
 
     QVector<int> idStore;

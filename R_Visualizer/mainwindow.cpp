@@ -16,6 +16,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QHeaderView>
 
 #define __DEBUG__
 
@@ -248,8 +249,15 @@ void MainWindow::initMsgsTableView()
 //    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
 //    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
 
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    QHeaderView *horzHeader = ui->msgTableView->horizontalHeader();
+//    horzHeader->setSectionResizeMode(QHeaderView::Stretch);
+    horzHeader->setSectionResizeMode(0, QHeaderView::Fixed);
+    horzHeader->resizeSection(0, 150);
+    horzHeader->setSectionResizeMode(1, QHeaderView::Interactive);
+    horzHeader->setSectionResizeMode(2, QHeaderView::Stretch);
     ui->msgTableView->verticalHeader()->hide();
+
+    ui->msgTableView->setAlternatingRowColors(true);
     ui->msgTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     ui->msgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
