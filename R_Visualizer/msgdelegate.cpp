@@ -22,7 +22,6 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
                 option.palette.currentColorGroup(),
                 (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
     QStringList dataPrint;
-    qDebug() << option.text;
 
     QStyledItemDelegate::paint(painter, option, index);
 

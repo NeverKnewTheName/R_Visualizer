@@ -36,19 +36,6 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="sndMsgSendBtn">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Send</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLineEdit" name="sndMsgIDLineEdit">
         <property name="inputMask">
@@ -90,6 +77,29 @@
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Code</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="msgDataFormatComboBox"/>
+      </item>
+      <item row="2" column="3">
+       <widget class="QPushButton" name="sndMsgSendBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Send</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Format</string>
         </property>
        </widget>
       </item>
@@ -189,6 +199,17 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>sndMsgIDLineEdit</tabstop>
+  <tabstop>sndMsgCodeLineEdit</tabstop>
+  <tabstop>sndMsgMsgLineEdit</tabstop>
+  <tabstop>sndPcktTableView</tabstop>
+  <tabstop>sndPcktSendBtn</tabstop>
+  <tabstop>sndPcktLoadBtn</tabstop>
+  <tabstop>sndPcktStoreBtn</tabstop>
+  <tabstop>sndPcktAddBtn</tabstop>
+  <tabstop>sndPcktRmvBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -166,7 +166,7 @@ void MainWindow::on_actionConnect_triggered()
     HID_Device device = m_deviceHandler->devices()[0];
     if (m_deviceHandler->connectTo(device))
     {
-        qDebug() << "COnnected";
+        qDebug() << "Connected";
         m_deviceHandler->sltStartCapture();
         //m_state = Connected;
         //updateActionStates();

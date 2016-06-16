@@ -26,11 +26,15 @@ private:
     void initMsgPacketTableView();
     void emitSendMsg();
 
+    qulonglong parseToNumber(QString numericalString);
+    QString parseToString(qulonglong number);
+
     Ui::SendMessages *ui;
     friend class MainWindow;
     MsgModel *msgPcktModel;
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;
+    QStringList inputMasks;
 
 signals:
     void sigSendCANPacket(CAN_PacketPtr);
@@ -44,6 +48,7 @@ private slots:
 
     void idChanged(const QString &newIDName);
     void codeChanged(const QString &newCodeName);
+    void on_msgDataFormatComboBox_currentIndexChanged(int index);
 };
 
 #endif // SENDMESSAGES_H

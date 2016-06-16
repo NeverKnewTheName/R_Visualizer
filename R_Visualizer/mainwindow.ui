@@ -21,6 +21,12 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="MsgTableView" name="msgTableView">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all incoming messages chronologically.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
@@ -30,9 +36,9 @@
       </widget>
       <widget class="QTabWidget" name="tabWidget">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
        </property>
        <property name="toolTip">

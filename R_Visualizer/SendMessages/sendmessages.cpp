@@ -23,6 +23,14 @@ SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget
     msgTypeModel(msgTypeModel)
 {
     ui->setupUi(this);
+    inputMasks << "\\0\\xhh hh hh hh hh hh hh"/*HEX*/
+               << "00000000000000000"/*DEC*/
+               << "\\0\\bbbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb"/*BIN*/;
+
+    QStringList items;
+    items << "Hex" << "Dec" << "Bin";
+    ui->msgDataFormatComboBox->addItems(items);
+
     this->msgPcktModel = new MsgModel(this);
 
     this->initMsgPacketTableView();
@@ -36,8 +44,8 @@ SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget
     connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
     connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
 
-//    IDCompleter *idCompleter = new IDCompleter(this);
-//    ui->sndMsgIDLineEdit->setCompleter(idCompleter->getCompleter());
+    //    IDCompleter *idCompleter = new IDCompleter(this);
+    //    ui->sndMsgIDLineEdit->setCompleter(idCompleter->getCompleter());
     QCompleter *idCompleter = new QCompleter(this);
     idCompleter->setModel(this->idModel);
     idCompleter->setCompletionColumn(1);
@@ -78,7 +86,45 @@ void SendMessages::initMsgPacketTableView()
 
 void SendMessages::emitSendMsg()
 {
-//    emit sigSendCANPacket(packet);
+    //    emit sigSendCANPacket(packet);
+}
+
+QString SendMessages::parseToString(qulonglong number)
+{
+    int idNumericalBase = ui->msgDataFormatComboBox->currentIndex();
+    if(idNumericalBase == 0)
+    {
+        idNumericalBase = 16;
+    }
+    else if(idNumericalBase == 1)
+    {
+        idNumericalBase = 10;
+    }
+    else if(idNumericalBase == 2)
+    {
+        idNumericalBase = 2;
+    }
+    return QString::number(number, idNumericalBase);
+}
+
+qulonglong SendMessages::parseToNumber(QString numericalString)
+{
+    int idNumericalBase;
+    if(numericalString.contains("0x"))
+    {
+        idNumericalBase = 16;
+    }
+    else if(numericalString.contains("0b"))
+    {
+        idNumericalBase = 2;
+        numericalString.replace(" ","").replace("0b","");
+        qDebug() << numericalString;
+    }
+    else
+    {
+        idNumericalBase = 10;
+    }
+    return numericalString.toULongLong(0, idNumericalBase);
 }
 
 void SendMessages::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -159,7 +205,19 @@ void SendMessages::on_sndPcktStoreBtn_clicked()
 void SendMessages::on_sndMsgSendBtn_clicked()
 {
     Data_Packet::Frame frame;
-    frame.ID_Standard = ui->sndMsgIDLineEdit->text().toInt(0,16);
+    QString lineEditContent = ui->sndMsgIDLineEdit->text();
+    bool conversionOK;
+    quint16 msgID;
+    quint8 msgCode;
+    quint64 msgData;
+
+    msgID = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
+    if(!conversionOK)
+    {
+        msgID = idModel->getIDToName(lineEditContent);
+    }
+
+    frame.ID_Standard = msgID;
     //    if (ui->cbIDE->isChecked())
     //    {
     //        frame.IDE = 1;
@@ -175,13 +233,56 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
     frame.RTR = 0;
 
-    frame.DLC = 4;
-
     QByteArray dataToSend;
-    dataToSend.append((ui->sndMsgCodeLineEdit->text().toInt(0,16)));
-    dataToSend.append(ui->sndMsgMsgLineEdit->text().toInt(0,16));
 
-    qDebug() << dataToSend;
+    lineEditContent = ui->sndMsgCodeLineEdit->text();
+    msgCode = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
+    if(!conversionOK)
+    {
+        msgCode = msgTypeModel->getCodeToName(lineEditContent);
+    }
+
+    qDebug() << "Msg Code: " << msgCode;
+    dataToSend.append(msgCode);
+
+    lineEditContent = ui->sndMsgMsgLineEdit->text();
+    QStringList dataBytes;
+    switch(ui->msgDataFormatComboBox->currentIndex())
+    {
+    case 0/*HEX*/:
+        lineEditContent.replace(QString("0x"),"");
+        dataBytes = lineEditContent.split(" ");
+        for( QString &byte : dataBytes )
+        {
+            dataToSend.append(byte.toInt(0,16));
+        }
+        break;
+    case 1/*DEC*/:
+    {
+        QByteArray extractedBytes = QString::number(lineEditContent.toULongLong(), 16).toLatin1();
+        for( auto &byte : extractedBytes )
+        {
+            dataToSend.append(byte);
+        }
+    }
+        break;
+    case 2/*BIN*/:
+        lineEditContent.replace(QString("0b"),"");
+        dataBytes = lineEditContent.split(" ");
+        for( QString &byte : dataBytes )
+        {
+            dataToSend.append(byte.toInt(0,2));
+        }
+        break;
+    }
+
+    //dataToSend.append(QByteArray::number(msgData, 10));
+    qDebug() << "Data to send" << dataToSend.at(0);
+    qDebug() << "Data to send size" << dataToSend.size();
+    qDebug() << "Data to send" << dataToSend;
+
+    frame.DLC = dataToSend.size();
+
     frame.data = dataToSend;
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
@@ -245,4 +346,14 @@ void SendMessages::codeChanged(const QString &newCodeName)
         newBackground = QColor(Qt::white);
 
     ui->sndMsgCodeLineEdit->setStyleSheet(QString("QLineEdit { background : %1;}").arg(newBackground.name()));
+}
+
+void SendMessages::on_msgDataFormatComboBox_currentIndexChanged(int index)
+{
+    int enteredNumber = this->parseToNumber(ui->sndMsgMsgLineEdit->text());
+    ui->sndMsgMsgLineEdit->setInputMask(inputMasks.at(index));
+    ui->sndMsgMsgLineEdit->setText(this->parseToString(enteredNumber));
+    ui->sndMsgMsgLineEdit->setFocus();
+    ui->sndMsgMsgLineEdit->setCursorPosition(0);
+    ui->sndMsgMsgLineEdit->selectAll();
 }

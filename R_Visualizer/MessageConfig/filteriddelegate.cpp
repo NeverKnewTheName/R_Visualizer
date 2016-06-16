@@ -97,13 +97,11 @@ void FilterIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
         //NAME
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
         QString editorContent = textEdit->text();
-        qDebug() << "FilterCodeStore::setData --- editor content:" << editorContent;
         bool conversionOK;
         unsigned int retrievedID = editorContent.toInt(&conversionOK, (editorContent.startsWith("0x")) ? 16 : 0);
 
         if(!conversionOK)
         {
-            qDebug() << "conversion failed; attempt to retrieve code via name";
             retrievedID = idModel->getIDToName(editorContent);
         }
         model->setData(index, retrievedID);
