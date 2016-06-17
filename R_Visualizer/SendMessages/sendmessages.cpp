@@ -24,12 +24,15 @@ SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget
 {
     ui->setupUi(this);
     inputMasks << "\\0\\xhh hh hh hh hh hh hh"/*HEX*/
-               << "00000000000000000"/*DEC*/
+               << "000 000 000 000 000 000 000 000"/*DEC Data*/
+               << "00000000000000000"/*DEC Value*/
                << "\\0\\bbbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb\\ bbbbbbbb"/*BIN*/;
 
     QStringList items;
-    items << "Hex" << "Dec" << "Bin";
+    items << "Hex" << "Dec Data" << "Dec Value" << "Bin";
     ui->msgDataFormatComboBox->addItems(items);
+
+    currentDataFormatIndex = ui->msgDataFormatComboBox->currentIndex();
 
     this->msgPcktModel = new MsgModel(this);
 
@@ -70,6 +73,151 @@ SendMessages::~SendMessages()
     delete ui;
 }
 
+QByteArray SendMessages::extractMsgData(QString msgDataString, int formatIndex)
+{
+    QByteArray extractedDataBytes;
+    QStringList dataBytes;
+    msgDataString = msgDataString.simplified();
+
+    switch(formatIndex)
+    {
+    case 0/*HEX*/:
+        msgDataString.replace(QString("0x"),"");
+        if(msgDataString.isEmpty())
+            break;
+        dataBytes = msgDataString.split(" ");
+        for( QString &byte : dataBytes )
+        {
+            extractedDataBytes.append(byte.toInt(0,16));
+        }
+        break;
+    case 1/*DEC Data*/:
+    {
+        if(msgDataString.isEmpty())
+            break;
+        dataBytes = msgDataString.split(" ");
+        for( auto &byte : dataBytes )
+        {
+            quint8 byteVal = byte.toInt(0,10);
+            extractedDataBytes.append(byteVal);
+        }
+    }
+        break;
+    case 2/*DEC Value*/:
+    {
+        qulonglong extractedNumber = msgDataString.toULongLong(0,10);
+
+        if(!extractedNumber)
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x00000000000000FF)>>0x00);
+
+        if(!(extractedNumber & 0xFFFFFFFFFFFFFF00))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x000000000000FF00)>>0x08);
+
+        if(!(extractedNumber & 0xFFFFFFFFFFFF0000))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x0000000000FF0000)>>0x10);
+
+        if(!(extractedNumber & 0xFFFFFFFFFF000000))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x00000000FF000000)>>0x18);
+
+        if(!(extractedNumber & 0xFFFFFFFF00000000))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x000000FF00000000)>>0x20);
+
+        if(!(extractedNumber & 0xFFFFFF0000000000))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x0000FF0000000000)>>0x28);
+
+        if(!(extractedNumber & 0xFFFF000000000000))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0x00FF000000000000)>>0x30);
+
+        if(!(extractedNumber & 0xFF00000000000000))
+            break;
+        extractedDataBytes.prepend((extractedNumber & 0xFF00000000000000)>>0x38);
+    }
+        break;
+    case 3/*BIN*/:
+        msgDataString.replace(QString("0b"),"");
+        if(msgDataString.isEmpty())
+            break;
+        dataBytes = msgDataString.split(" ");
+        for( QString &byte : dataBytes )
+        {
+            extractedDataBytes.append(byte.toInt(0,2));
+        }
+        break;
+    }
+    qDebug() << "Extracted Data:";
+    for(auto byte : extractedDataBytes)
+        qDebug() << byte;
+
+    return extractedDataBytes;
+}
+
+QString SendMessages::createMsgData(QByteArray msgDataBytes, int formatIndex)
+{
+    QString newMsgDataString;
+
+    switch(formatIndex)
+    {
+    case 0/*HEX*/:
+        newMsgDataString.append("0x");
+        for( auto &byte : msgDataBytes )
+        {
+            quint8 _8bitByte = byte;
+            newMsgDataString.append(QString("%1").arg((uint)_8bitByte,2,16,QLatin1Char('0')));
+            newMsgDataString.append(" ");
+        }
+        break;
+    case 1/*DEC Data*/:
+    {
+        for( auto &byte : msgDataBytes )
+        {
+            quint8 _8bitByte = byte;
+            newMsgDataString.append(QString("%1").arg((uint)_8bitByte,3,10));
+            newMsgDataString.append(" ");
+        }
+    }
+        break;
+    case 2/*DEC Value*/:
+    {
+        qulonglong value = 0;
+        unsigned int cntr = 0;
+        unsigned int maxSize = msgDataBytes.size();
+        while(cntr < maxSize)
+        {
+            int shift = (((maxSize-1) - cntr)*0x8u);
+            qulonglong data = ((quint8)msgDataBytes.at(cntr));
+            value += (data << shift);
+            qDebug() << "Value" << value << "Counter" << cntr << "Shift" << shift << "Data Byte" << data;
+            cntr++;
+        }
+        newMsgDataString.append(QString("%1").arg(value));
+    }
+        break;
+    case 3/*BIN*/:
+        newMsgDataString.append("0b");
+        for( auto &byte : msgDataBytes )
+        {
+            quint8 _8bitByte = byte;
+            newMsgDataString.append(QString("%1").arg((uint)_8bitByte,8,2,QLatin1Char('0')));
+            newMsgDataString.append(" ");
+        }
+        break;
+    }
+
+    return newMsgDataString;
+}
+
+void SendMessages::convertMsgData(QString &msgDataString, int oldIndex, int newIndex)
+{
+    ui->sndMsgMsgLineEdit->setText(this->createMsgData(this->extractMsgData(msgDataString, oldIndex), newIndex));
+}
+
 void SendMessages::initMsgPacketTableView()
 {
     ui->sndPcktTableView->setModel(this->msgPcktModel);
@@ -82,6 +230,8 @@ void SendMessages::initMsgPacketTableView()
     ui->sndPcktTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     ui->sndPcktTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->sndPcktTableView));
+
+    ui->sndPcktTableView->hideColumn(0);
 }
 
 void SendMessages::emitSendMsg()
@@ -96,11 +246,11 @@ QString SendMessages::parseToString(qulonglong number)
     {
         idNumericalBase = 16;
     }
-    else if(idNumericalBase == 1)
+    else if((idNumericalBase == 1) || (idNumericalBase == 2))
     {
         idNumericalBase = 10;
     }
-    else if(idNumericalBase == 2)
+    else if(idNumericalBase == 3)
     {
         idNumericalBase = 2;
     }
@@ -209,7 +359,6 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     bool conversionOK;
     quint16 msgID;
     quint8 msgCode;
-    quint64 msgData;
 
     msgID = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
@@ -235,6 +384,9 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
     QByteArray dataToSend;
 
+    lineEditContent = ui->sndMsgMsgLineEdit->text().simplified();
+    dataToSend = this->extractMsgData(lineEditContent, this->currentDataFormatIndex);
+
     lineEditContent = ui->sndMsgCodeLineEdit->text();
     msgCode = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
@@ -243,38 +395,7 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     }
 
     qDebug() << "Msg Code: " << msgCode;
-    dataToSend.append(msgCode);
-
-    lineEditContent = ui->sndMsgMsgLineEdit->text();
-    QStringList dataBytes;
-    switch(ui->msgDataFormatComboBox->currentIndex())
-    {
-    case 0/*HEX*/:
-        lineEditContent.replace(QString("0x"),"");
-        dataBytes = lineEditContent.split(" ");
-        for( QString &byte : dataBytes )
-        {
-            dataToSend.append(byte.toInt(0,16));
-        }
-        break;
-    case 1/*DEC*/:
-    {
-        QByteArray extractedBytes = QString::number(lineEditContent.toULongLong(), 16).toLatin1();
-        for( auto &byte : extractedBytes )
-        {
-            dataToSend.append(byte);
-        }
-    }
-        break;
-    case 2/*BIN*/:
-        lineEditContent.replace(QString("0b"),"");
-        dataBytes = lineEditContent.split(" ");
-        for( QString &byte : dataBytes )
-        {
-            dataToSend.append(byte.toInt(0,2));
-        }
-        break;
-    }
+    dataToSend.prepend(msgCode);
 
     //dataToSend.append(QByteArray::number(msgData, 10));
     qDebug() << "Data to send" << dataToSend.at(0);
@@ -350,10 +471,52 @@ void SendMessages::codeChanged(const QString &newCodeName)
 
 void SendMessages::on_msgDataFormatComboBox_currentIndexChanged(int index)
 {
-    int enteredNumber = this->parseToNumber(ui->sndMsgMsgLineEdit->text());
+    QString msgData = ui->sndMsgMsgLineEdit->text();
+    ui->sndMsgMsgLineEdit->setInputMask("");
+    convertMsgData(msgData, currentDataFormatIndex, index);
     ui->sndMsgMsgLineEdit->setInputMask(inputMasks.at(index));
-    ui->sndMsgMsgLineEdit->setText(this->parseToString(enteredNumber));
     ui->sndMsgMsgLineEdit->setFocus();
     ui->sndMsgMsgLineEdit->setCursorPosition(0);
     ui->sndMsgMsgLineEdit->selectAll();
+    currentDataFormatIndex = index;
+}
+
+void SendMessages::on_sndPcktClrBtn_clicked()
+{
+    this->msgPcktModel->clear();
+}
+
+void SendMessages::on_sndMsgAddToPacketBtn_clicked()
+{
+    quint16 msgID;
+    quint8 msgCode;
+    QByteArray data;
+    QString lineEditContent;
+    bool conversionOK;
+
+    lineEditContent = ui->sndMsgIDLineEdit->text();
+    msgID = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
+    if(!conversionOK)
+    {
+        msgID = idModel->getIDToName(lineEditContent);
+    }
+
+    lineEditContent = ui->sndMsgMsgLineEdit->text().simplified();
+    data = this->extractMsgData(lineEditContent, this->currentDataFormatIndex);
+
+    lineEditContent = ui->sndMsgCodeLineEdit->text();
+    msgCode = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
+    if(!conversionOK)
+    {
+        msgCode = msgTypeModel->getCodeToName(lineEditContent);
+    }
+
+    data.prepend(msgCode);
+
+    this->msgPcktModel->addMsg(new Msg(QDateTime(),msgID,data));
+}
+
+void SendMessages::on_sndMsgMsgLineEdit_returnPressed()
+{
+    emit ui->sndMsgSendBtn->clicked();
 }

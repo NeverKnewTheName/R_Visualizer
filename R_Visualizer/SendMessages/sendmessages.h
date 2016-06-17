@@ -23,8 +23,12 @@ public:
     ~SendMessages();
 
 private:
+    void convertMsgData(QString &msgDataString, int oldIndex, int newIndex);
     void initMsgPacketTableView();
     void emitSendMsg();
+
+    QByteArray extractMsgData(QString msgDataString, int formatIndex);
+    QString createMsgData(QByteArray msgDataBytes, int formatIndex);
 
     qulonglong parseToNumber(QString numericalString);
     QString parseToString(qulonglong number);
@@ -35,6 +39,8 @@ private:
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;
     QStringList inputMasks;
+
+    int currentDataFormatIndex;
 
 signals:
     void sigSendCANPacket(CAN_PacketPtr);
@@ -49,6 +55,9 @@ private slots:
     void idChanged(const QString &newIDName);
     void codeChanged(const QString &newCodeName);
     void on_msgDataFormatComboBox_currentIndexChanged(int index);
+    void on_sndPcktClrBtn_clicked();
+    void on_sndMsgAddToPacketBtn_clicked();
+    void on_sndMsgMsgLineEdit_returnPressed();
 };
 
 #endif // SENDMESSAGES_H

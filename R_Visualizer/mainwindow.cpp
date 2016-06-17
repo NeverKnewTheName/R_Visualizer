@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_deviceHandler = new DeviceHandler();
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
+    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow()

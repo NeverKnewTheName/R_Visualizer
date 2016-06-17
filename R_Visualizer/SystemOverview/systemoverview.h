@@ -2,6 +2,8 @@
 #define SYSTEMOVERVIEW_H
 
 #include "userrolemngr.h"
+#include "can_packet.h"
+#include "msg.h"
 
 #include <QWidget>
 
@@ -37,6 +39,7 @@ private:
 
 private slots:
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
+    void newMessage(CAN_PacketPtr ptr);
 };
 
 #endif // SYSTEMOVERVIEW_H

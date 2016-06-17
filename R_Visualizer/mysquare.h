@@ -16,6 +16,12 @@ public:
 
     bool pressed;
 
+    QColor getMyColor() const;
+    void setMyColor(const QColor &value);
+
+private:
+    QColor myColor;
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

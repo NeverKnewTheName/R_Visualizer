@@ -40,3 +40,25 @@ void SystemOverview::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 {
 
 }
+
+void SystemOverview::newMessage(CAN_PacketPtr ptr)
+{
+    //qDebug() << "Message Received";
+    Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
+    QDateTime timeStamp = ptr->timestamp();
+    quint16 id = packet->frame().ID_Standard;
+    QByteArray canData = packet->frame().data;
+
+    quint8 code = canData.at(0);
+    qDebug() << "Received code: " << code;
+
+    if(code == 0x10u)
+    {
+        if(!this->square->getMyColor().name().compare( QColor(Qt::green).name()))
+            this->square->setMyColor(QColor(Qt::blue));
+        else
+            this->square->setMyColor(QColor(Qt::green));
+        this->square->update();
+    }
+    //SystemOverview::repaint();
+}
