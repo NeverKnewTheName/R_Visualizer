@@ -73,7 +73,7 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
     switch(role)
     {
     case Qt::EditRole:
-        if(col == COL_CODE) ;
+        if(col == COL_CODE) {};
         if(col == COL_CODENAME) msgTypePropStore.value(codeStore[row])->setCodeName(value.value<QString>());
         if(col == COL_MESSAGEFORMAT ) msgTypePropStore.value(codeStore[row])->setMessageFormat(value.value<QString>());
         if(col == COL_COLOR) msgTypePropStore.value(codeStore[row])->setColor(value.value<QColor>());
@@ -82,6 +82,7 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
         return true;
         break;
     }
+    return false;
 }
 
 QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int role) const

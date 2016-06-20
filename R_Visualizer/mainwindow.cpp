@@ -26,7 +26,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_IsConnectedToDevice(false)
 {
     ui->setupUi(this);
     this->currentFileName = "";
@@ -77,6 +78,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
+
+//    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
+//    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
+    ui->actionStop->setDisabled(true);
+    ui->actionStart->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -158,25 +164,51 @@ void MainWindow::on_actionConnect_triggered()
 #ifdef __DEBUG__
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
-    if (m_deviceHandler->devices().isEmpty())
-    {
-        QMessageBox::information(this, tr("Kein Gerät gefunden"), tr("Bitte schließen Sie ein Gerät an!"), QMessageBox::Cancel);
-        return;
-    }
 
-    HID_Device device = m_deviceHandler->devices()[0];
-    if (m_deviceHandler->connectTo(device))
+    if(m_IsConnectedToDevice)
     {
-        qDebug() << "Connected";
-        m_deviceHandler->sltStartCapture();
-        //m_state = Connected;
-        //updateActionStates();
-        //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 wurde hergestellt. Die Analyse kann nun gestartet werden.").arg(device.product));
+        //Disconnect
+        ui->actionStart->setDisabled(true);
+        ui->actionStop->setDisabled(true);
+        m_deviceHandler->disconnect();
+        qDebug() << "Disconnected";
+        m_IsConnectedToDevice = false;
+        ui->actionConnect->setIcon(QIcon(":/GUI/Icons/Icons/Network-01-32.png"));
+        ui->actionConnect->setText(QString("Connect"));
+        ui->actionConnect->setToolTip(QString("Connect to a device"));
     }
     else
     {
-        qDebug() << "Connection failed";
-        //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 konnte nicht hergestellt werden. Das Gerät ist nicht betriebsbereit.").arg(device.product));
+        //        connect
+
+        if (m_deviceHandler->devices().isEmpty())
+        {
+            QMessageBox::information(this, tr("Kein Gerät gefunden"), tr("Bitte schließen Sie ein Gerät an!"), QMessageBox::Cancel);
+            return;
+        }
+
+        HID_Device device = m_deviceHandler->devices()[0];
+        if (m_deviceHandler->connectTo(device))
+        {
+            qDebug() << "Connected";
+            ui->actionStart->setDisabled(false);
+            ui->actionStop->setDisabled(true);
+            m_IsConnectedToDevice = true;
+            ui->actionConnect->setIcon(QIcon(":/GUI/Icons/Icons/Network_Disconnected-32.png"));
+            ui->actionConnect->setText(QString("Disconnect"));
+            ui->actionConnect->setToolTip(QString("Disconnect form connected device"));
+            //m_deviceHandler->sltStartCapture();
+            //m_state = Connected;
+            //updateActionStates();
+            ui->statusBar->showMessage(QString("Connected to device: %1").arg(device.product));
+            //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 wurde hergestellt. Die Analyse kann nun gestartet werden.").arg(device.product));
+        }
+        else
+        {
+            qDebug() << "Connection failed";
+            ui->statusBar->showMessage(QString("Connection failed"));
+            //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 konnte nicht hergestellt werden. Das Gerät ist nicht betriebsbereit.").arg(device.product));
+        }
     }
 }
 
@@ -186,6 +218,9 @@ void MainWindow::on_actionStart_triggered()
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
 
+    ui->actionStart->setDisabled(true);
+    ui->actionStop->setDisabled(false);
+    m_deviceHandler->sltStartCapture();
 }
 
 void MainWindow::on_actionStop_triggered()
@@ -194,6 +229,10 @@ void MainWindow::on_actionStop_triggered()
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
 
+    ui->actionStart->setDisabled(false);
+    ui->actionStop->setDisabled(true);
+    m_deviceHandler->sltStopCapture();
+    emit ui->actionConnect->triggered();
 }
 
 #define FILTER_PROXY_VIEW
@@ -201,7 +240,6 @@ void MainWindow::initMsgsTableView()
 {
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
-//    connect(MsgModel, &MsgModel::rowAppended, ui->msgTableView, &QTableView::resizeRowToContents);
 
     FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
     FilterCodeStore *filterCodeModel = this->msgConfigWidget->getFilterCodeModel();
@@ -219,39 +257,11 @@ void MainWindow::initMsgsTableView()
     connect(filterCodeModel, &FilterCodeStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
     connect(filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
 
-    //connect(this, &MainWindow::queryFetchRow, ui->msgTableView, &MsgTableView::scrollFetchRows);
-    //connect(ui->msgTableView, &MsgTableView::scrollRowsFetched, this, &MainWindow::updateSlider);
-    //connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-
     connect(ui->msgTableView, &MsgTableView::invisibleRows, this, &MainWindow::scrollToGetMoreContent);
-//    MsgFilterProxyModel *msgFilterProxy = new MsgFilterProxyModel(filterIDModel, filterCodeModel, this);
-//    connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, msgFilterProxy, &MsgFilterProxyModel::changeIDFilterEnabled);
-//    connect(filterIDModel, &FilterIDStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
-//    connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, msgFilterProxy, &MsgFilterProxyModel::changeCodeFilterEnabled);
-//    connect(filterCodeModel, &FilterCodeStore::rowAdded, msgFilterProxy, &MsgFilterProxyModel::invalidate);
-
-//    msgProxyModel = new MsgProxyModel(this);
-//#ifdef FILTER_PROXY_VIEW
-//    msgFilterProxy->setSourceModel(this->msgModel);
-////    msgProxyModel->setSourceModel(msgFilterProxy);
-////    ui->msgTableView->setModel(msgProxyModel);
-//#else
-//    msgProxyModel->setSourceModel(this->msgModel);
-//    msgFilterProxy->setSourceModel(msgProxyModel);
-////    ui->msgTableView->setModel(msgFilterProxy);
-//#endif
-    connect(this->msgModel, &MsgModel::rowAppended, /*msgFilterProxy, &MsgFilterProxyModel::slt_RowsAdded);
-    connect(msgFilterProxy, &MsgFilterProxyModel::sgnl_RowsAdded,*/ ui->msgTableView, &MsgTableView::rowAdded);
-    //connect(this->msgModel, &MsgModel::rowsRemoved, ui->msgTableView, &MsgTableView::customRowCountChanged);
+    connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded);
     ui->msgTableView->setModel(this->msgModel);
-//    connect(this->msgModel, &MsgModel::rowAppended, msgProxyModel, &MsgProxyModel::newEntryAppendedInSourceModel);
-//    connect(this, &MainWindow::changedDataAcquisitionMode, msgProxyModel, &MsgProxyModel::continuousChange);
-//    connect(this, &MainWindow::queryFetchRow, msgProxyModel, &MsgProxyModel::fetchRowsFromSource);
-//    connect(msgProxyModel, &MsgProxyModel::rowFetched, this, &MainWindow::updateSlider);
-//    connect(msgFilterProxy, &MsgFilterProxyModel::dataChanged, msgProxyModel, &MsgProxyModel::resetInternalData);
 
     QHeaderView *horzHeader = ui->msgTableView->horizontalHeader();
-//    horzHeader->setSectionResizeMode(QHeaderView::Stretch);
     horzHeader->setSectionResizeMode(0, QHeaderView::Fixed);
     horzHeader->resizeSection(0, 150);
     horzHeader->setSectionResizeMode(1, QHeaderView::Interactive);
@@ -262,20 +272,9 @@ void MainWindow::initMsgsTableView()
     ui->msgTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     ui->msgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-    //TOO HEAVY ON PERFORMANCE...NEEDS A WORKAROUND
-    //ui->msgTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->msgTableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
 
     ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
-
-    //connect(vertScrollBar, &QScrollBar::sliderMoved, this, &MainWindow::scrollBarMsgTableViewMoved);
-
-    // scroll to the bottom as soon as a new row is inserted by
-    // since the rowsInserted signal might be fired before the view actually inserted the new rows,
-    // set up a timer to instantly fire an event which triggers the scrollToBottom
-    // with this approach it is guaranteed that all events in the meantime are carried out and thus the row is already inserted
-    //connect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
-//    connect(msgProxyModel, &MsgProxyModel::rowAppended, this, &MainWindow::autoScroll);
 }
 
 
@@ -354,7 +353,7 @@ void MainWindow::scrollBarMsgTableViewMoved(int position)
         if( (position <= (vertScrollBar->minimum())) && (!ui->msgTableView->isAtBottomEnd()) )
         {
             disconnect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-//            emit queryFetchRow(-1);
+            //            emit queryFetchRow(-1);
             qDebug() << "Scrollbar moved to position:" << position;
             ui->msgTableView->scrollFetchRows(-1);
             if(!ui->msgTableView->isAtBottomEnd())
@@ -385,7 +384,6 @@ void MainWindow::updateSlider(int direction)
     qDebug() << __PRETTY_FUNCTION__;
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()+direction);
-
 }
 
 void MainWindow::scrollToGetMoreContent(bool enabled)

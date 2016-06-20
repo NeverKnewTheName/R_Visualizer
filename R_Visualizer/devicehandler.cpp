@@ -65,6 +65,7 @@ void DeviceHandler::run()
         else if (m_driver.error())
         {
             emit sigError(m_driver.getErrorString());
+            qDebug() << "Driver error: " << m_driver.getErrorString();
             m_stop = true;
             m_driver.disconnectDevice();
             m_connected = false;
@@ -97,11 +98,13 @@ void DeviceHandler::sltStartCapture()
 {
 #ifndef DUMMY_TRANSCEIVE
     DeviceDriver::DeviceStates state = m_driver.getCurrentDeviceState();
+    qDebug() << "Start Capture, State: " << state;
     if(m_connected && (state == DeviceDriver::STATE_USBCaptureInit || state == DeviceDriver::STATE_CaptureViaUSB))
     {
         if (m_driver.sendStartCommand())
         {
             QMutexLocker locker(&m_mutex);
+            qDebug() << "StartCommand sent";
             m_stop = false;
             start();
         }

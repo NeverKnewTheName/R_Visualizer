@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-
-
 class UserRoleMngr : public QObject
 {
     Q_OBJECT

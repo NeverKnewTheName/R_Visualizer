@@ -76,6 +76,7 @@ private:
     SystemOverview *sysOvrvwWidget;
 
     UserRoleMngr *userRoleMngr;
+    bool m_IsConnectedToDevice;
 
     DeviceHandler *m_deviceHandler; /**< Pointer to the \ref DeviceHandler */
 

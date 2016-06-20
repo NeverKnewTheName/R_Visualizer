@@ -11,7 +11,7 @@ FilterCodeStore::FilterCodeStore(MsgTypeModel *msgTypeModel, QObject *parent) : 
 
 int FilterCodeStore::rowCount(const QModelIndex &parent) const
 {
-    codeStore.size();
+    return codeStore.size();
 }
 
 QVariant FilterCodeStore::data(const QModelIndex &index, int role) const

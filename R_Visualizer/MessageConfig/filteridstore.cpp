@@ -10,7 +10,7 @@ FilterIDStore::FilterIDStore(IDModel *idModel, QObject *parent) : QAbstractListM
 
 int FilterIDStore::rowCount(const QModelIndex &parent) const
 {
-    idStore.size();
+    return idStore.size();
 }
 
 QVariant FilterIDStore::data(const QModelIndex &index, int role) const
@@ -86,6 +86,7 @@ bool FilterIDStore::setData(const QModelIndex &index, const QVariant &value, int
         return true;
         break;
     }
+    return false;
 }
 
 Qt::ItemFlags FilterIDStore::flags(const QModelIndex &index) const

@@ -1,6 +1,8 @@
 #include "systemoverview.h"
 #include "ui_systemoverview.h"
 
+#include "sysoverviewgraphicsview.h"
+
 SystemOverview::SystemOverview(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemOverview)
@@ -21,6 +23,7 @@ void SystemOverview::initVisualizerGraphicsView()
     scene = new QGraphicsScene(this);
     //set the graphicsview to the newly created scene
     ui->visualizerGraphicsView->setScene(scene);
+
 
     QBrush redBrush(Qt::red);
     QBrush blueBrush(Qt::blue);

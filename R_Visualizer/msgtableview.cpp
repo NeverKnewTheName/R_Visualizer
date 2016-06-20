@@ -120,51 +120,15 @@ void MsgTableView::rowAdded(unsigned int rowNr)
             emit invisibleRows(false);
         }
         this->resizeRowToContents(rowNr);
-        scrollTo(model()->index(rowNr, 0));
+        scrollTo(model()->index(rowNr, 0),QAbstractItemView::PositionAtBottom);
     }
 }
 
 void MsgTableView::filterChanged()
 {
     unsigned int curRow = model()->rowCount();
-    qDebug() << "filterChanged - curRow" << curRow;
-    int validRows = 0;
-    //    while(curRow--)
-    //    {
-    //        if(isLegit(curRow))
-    //        {
-    ////            if((curRow > visibleRowOffset) && isRowHidden(curRow))
-    //            if(isRowHidden(curRow))
-    //            {
-    //                visibleRowCntr++;
-    //                if( visibleRowCntr > visibleRows)
-    //                {
-    //                    visibleRowCntr--;
-    //                } else
-    //                {
-    //                    setRowHidden(curRow, false);
-    //                }
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if(!isRowHidden(curRow))
-    //            {
-    //                visibleRowCntr--;
-    //                setRowHidden(curRow, true);
-    //            }
-    //            if( visibleRowOffset && (visibleRowCntr < visibleRows))
-    //            {
-    //                while(visibleRowOffset && isRowHidden(visibleRowOffset))
-    //                    visibleRowOffset--;
-    //                if(!visibleRowOffset)
-    //                    continue;
-    //                setRowHidden(visibleRowOffset, false);
-    //                visibleRowOffset--;
-    //                visibleRowCntr++;
-    //            }
-    //        }
-    //    }
+//    qDebug() << "filterChanged - curRow" << curRow;
+
     visibleRowCntr = 0;
     visibleRowOffsetHIGH = 0;
     while(curRow)
@@ -191,8 +155,8 @@ void MsgTableView::filterChanged()
             }
         }
     }
-    qDebug() << "after scan - curRow" << curRow;
-    qDebug() << "visibleRowOffset" << visibleRowOffset;
+//    qDebug() << "after scan - curRow" << curRow;
+//    qDebug() << "visibleRowOffset" << visibleRowOffset;
     if(curRow)
         emit invisibleRows(true);
     else
@@ -206,19 +170,19 @@ void MsgTableView::filterChanged()
     }
     visibleRowOffset = curRow;
 
-    qDebug() << "visibleRowCntr" << visibleRowCntr;
-    qDebug() << "visibleRowOffset" << visibleRowOffset;
+//    qDebug() << "visibleRowCntr" << visibleRowCntr;
+//    qDebug() << "visibleRowOffset" << visibleRowOffset;
 }
 
 void MsgTableView::scrollFetchRows(int direction)
 {
-    qDebug() << __PRETTY_FUNCTION__;
-    qDebug() << "VisibleRowOffset" << visibleRowOffset;
+//    qDebug() << __PRETTY_FUNCTION__;
+//    qDebug() << "VisibleRowOffset" << visibleRowOffset;
     unsigned int svdOffset = visibleRowOffset;
     continuousScrolling = false;
     if(visibleRowOffset && (direction < 0 ))
     {
-        qDebug() << "negative scroll";
+//        qDebug() << "negative scroll";
         //setRowHidden(rowAt(height()), true);
         //visibleRowOffset = rowAt(0);
         while(visibleRowOffset)
@@ -233,8 +197,8 @@ void MsgTableView::scrollFetchRows(int direction)
                 break;
             visibleRowOffsetHIGH--;
         }
-        qDebug() << "Row to show:" << visibleRowOffset;
-        qDebug() << "Row to hide:" << visibleRowOffsetHIGH; //svdOffset;
+//        qDebug() << "Row to show:" << visibleRowOffset;
+//        qDebug() << "Row to hide:" << visibleRowOffsetHIGH; //svdOffset;
         setRowHidden(visibleRowOffset, false);
         resizeRowToContents(visibleRowOffset);
 //        setRowHidden(svdOffset, true);
@@ -244,7 +208,7 @@ void MsgTableView::scrollFetchRows(int direction)
     else if( ( direction > 0 ) &&
              ( visibleRowOffsetHIGH < this->model()->rowCount()))
     {
-        qDebug() << "positive scroll";
+//        qDebug() << "positive scroll";
         svdOffset += visibleRowCntr;
         while(visibleRowOffset)
         {
@@ -252,7 +216,7 @@ void MsgTableView::scrollFetchRows(int direction)
                 break;
             visibleRowOffset++;
         }
-        qDebug() << "Model RowCount" << model()->rowCount();
+//        qDebug() << "Model RowCount" << model()->rowCount();
         unsigned int rowsInModel = model()->rowCount() -1;
 //        while(svdOffset < rowsInModel)
 //        {
@@ -266,8 +230,8 @@ void MsgTableView::scrollFetchRows(int direction)
                 break;
             visibleRowOffsetHIGH++;
         }
-        qDebug() << "Row to hide:" << visibleRowOffset;
-        qDebug() << "Row to show:" << visibleRowOffsetHIGH;
+//        qDebug() << "Row to hide:" << visibleRowOffset;
+//        qDebug() << "Row to show:" << visibleRowOffsetHIGH;
         setRowHidden(visibleRowOffset, true);
         setRowHidden(visibleRowOffsetHIGH, false);
         resizeRowToContents(visibleRowOffsetHIGH);

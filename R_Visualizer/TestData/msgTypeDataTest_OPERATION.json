@@ -100,5 +100,11 @@
         "codeName": "TempCode",
         "color": "#ffa1ab",
         "messageFormat": "Temp: #Data0#°C"
+    },
+    {
+        "code": 4,
+        "codeName": "EmergencyStop",
+        "color": "#ce0000",
+        "messageFormat": ""
     }
 ]
