@@ -18,9 +18,9 @@ CsvMsgPacketHandler::~CsvMsgPacketHandler()
 
 }
 
-QVector<Msg *> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
+HugeQVector CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
 {
-    QVector<Msg *> msgs;
+    HugeQVector msgs;
     QStringList msgsFromPacket = csvMsgPacketString.split("\n");
     QString codeLine = msgsFromPacket.at(0);
     msgsFromPacket.removeAt(0);
@@ -57,7 +57,7 @@ QVector<Msg *> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStrin
     return msgs;
 }
 
-QString CsvMsgPacketHandler::parseToString(QVector<Msg *> msgs)
+QString CsvMsgPacketHandler::parseToString(HugeQVector msgs)
 {
     if(!msgs.size())
         return QString("");
@@ -65,8 +65,10 @@ QString CsvMsgPacketHandler::parseToString(QVector<Msg *> msgs)
     QString csvFile = QString("0x").append(QString::number(msgs.at(0)->getCode(),16));
     csvFile.append(QString(";;;;;;;;;;;;;\n"));
     msgs.remove(0);
-    for(Msg *msg : msgs)
+    int size = msgs.size();
+    for(int i = 0; i < size; i++)
     {
+        Msg *msg = msgs.at(i);
         MsgDataT msgData = msg->getData();
         qDebug() << "data0: " << msgData.data0;
         qDebug() << "data1: " << msgData.data1;

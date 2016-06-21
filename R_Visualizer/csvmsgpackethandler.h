@@ -1,6 +1,7 @@
 #ifndef CSVMSGPACKETHANDLER_H
 #define CSVMSGPACKETHANDLER_H
 
+#include "hugeqvector.h"
 #include "msg.h"
 #include <QVector>
 
@@ -11,9 +12,9 @@ public:
     CsvMsgPacketHandler(QString &csvMsgPacketString);
     ~CsvMsgPacketHandler();
 
-    QVector<Msg *> parseCsvMsgPacket(QString &csvMsgPacketString);
+    HugeQVector parseCsvMsgPacket(QString &csvMsgPacketString);
 
-    QString parseToString(QVector<Msg *> msgs);
+    QString parseToString(HugeQVector msgs);
 
 private:
 };

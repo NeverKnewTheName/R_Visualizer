@@ -5,6 +5,7 @@
 #include "msg.h"
 #include "idmodel.h"
 #include "msgtypemodel.h"
+#include "hugeqvector.h"
 
 #include <QAbstractTableModel>
 #include <QString>
@@ -31,8 +32,8 @@ public:
     void addMsg(Msg *msg);
     void clear();
 
-    QVector<Msg *> getMsgs() const;
-    void setMsgs(const QVector<Msg *> value);
+    HugeQVector getMsgs() const;
+    void setMsgs(const HugeQVector value);
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
@@ -45,7 +46,8 @@ public:
         COL_NR_OF_COLS
     };
 private:
-    QVector<Msg *> msgs;
+//    QVector<Msg *> msgs;
+    HugeQVector msgs;
     friend class MainWindow;
     friend class MsgProxyModel;
 

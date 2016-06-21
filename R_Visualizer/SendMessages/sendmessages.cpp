@@ -416,9 +416,11 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
 void SendMessages::on_sndPcktSendBtn_clicked()
 {
-    QVector<Msg*> msgsToSend = this->msgPcktModel->getMsgs();
-    for(Msg *msg : msgsToSend)
+    HugeQVector msgsToSend = this->msgPcktModel->getMsgs();
+    int size = msgsToSend.size();
+    for( int i = 0; i < size; i++)
     {
+        Msg *msg = msgsToSend.at(i);
         Data_Packet::Frame frame;
         frame.ID_Standard = msg->getId();
         //    if (ui->cbIDE->isChecked())

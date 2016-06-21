@@ -19,11 +19,13 @@ MsgModel::~MsgModel()
 
 int MsgModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return msgs.size();
 }
 
 int MsgModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return COL_NR_OF_COLS;
 }
 
@@ -36,9 +38,9 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
         // returns only displayable data
-        if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
+        if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
         if(col == COL_NAME) return this->msgs.at(row)->getId();
-        if(col == COL_MESSAGE) return msgs[row]->getDataAsString();
+        if(col == COL_MESSAGE) return msgs.at(row)->getDataAsString();
         break;
     case Qt::FontRole:
         break;
@@ -59,7 +61,7 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         return this->msgs.at(row)->getCode();
         break;
     case Qt::UserRole +3: // return raw data
-        if(col == COL_TIMESTAMP) return msgs[row]->getTimestamp();
+        if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp();
         if(col == COL_NAME) return this->msgs.at(row)->getId();
         if(col == COL_MESSAGE) return this->msgs.at(row)->getCode();
         break;
@@ -74,7 +76,7 @@ bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role
     if (role == Qt::EditRole)
     {
         //save value from editor to member m_gridData
-        //msgs[index.row()] = value.toString();
+        //msgs.at(index.row()) = value.toString();
         //for presentation purposes only: build and emit a joined string
 
         //emit editCompleted( result );
@@ -121,23 +123,24 @@ void MsgModel::clear()
     // call begin/endResetModel instead, which ultimately forces all attached
     // views to reload the model
     beginResetModel();
-    qDeleteAll(msgs);
+//    qDeleteAll(msgs);
     msgs.clear();
     endResetModel();
 }
 
-QVector<Msg *> MsgModel::getMsgs() const
+HugeQVector MsgModel::getMsgs() const
 {
     return msgs;
 }
 
-void MsgModel::setMsgs(const QVector<Msg *> value)
+void MsgModel::setMsgs(const HugeQVector value)
 {
     this->clear();
     beginInsertRows(QModelIndex(),0,value.size());
-    for( auto &msg : value)
+    int size = value.size();
+    for( int i = 0; i < size; i++)
     {
-        msgs.append(msg);
+        msgs.append(value.at(i));
     }
     endInsertRows();
 }
