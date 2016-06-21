@@ -27,8 +27,6 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-//    void setIDModel(IDModel *idModel);
-//    void setMsgTypeModel(MsgTypeModel *msgTypeModel);
 
     void addMsg(Msg *msg);
     void clear();
@@ -48,8 +46,6 @@ public:
     };
 private:
     QVector<Msg *> msgs;
-//    IDModel *idModel;
-//    MsgTypeModel *msgTypeModel;
     friend class MainWindow;
     friend class MsgProxyModel;
 

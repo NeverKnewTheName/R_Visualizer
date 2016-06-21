@@ -41,41 +41,18 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         if(col == COL_MESSAGE) return msgs[row]->getDataAsString();
         break;
     case Qt::FontRole:
-//        if(col == 0)
-//        {
-//            QFont boldFont;
-//            boldFont.setBold(true);
-//            return boldFont;
-//        }
         break;
     case Qt::BackgroundRole:
         //Background is drawn by delegate
-        /*
-        if(col == COL_NAME )
-        {
-            //return QBrush(this->idModel->getColorToID(this->msgs.at(row)->getId()));
-        } else if( col == COL_MESSAGE)
-        {
-            return QBrush(this->msgTypeModel->getColorToCode(this->msgs.at(row)->getCode()));
-        }*/
         break;
     case Qt::TextAlignmentRole:
         return Qt::TextWordWrap;
-        //        if(row == 1 && col == 1)
-        //        {
-        //            return Qt::AlignRight + Qt::AlignVCenter;
-        //        }
         break;
     case Qt::CheckStateRole:
-        //        if(row == 1 && col == 0)
-        //        {
-        //            return Qt::Checked;
-        //        }
         break;
     case Qt::UserRole +1:  // return Data
     {
         return QVariant::fromValue(this->msgs.at(row)->getData());
-        //return var;
     }
         break;
     case Qt::UserRole +2:  // return Code of the line
@@ -93,7 +70,7 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
 
 bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    //ToDO
+    //ToDO if msgs should be editable
     if (role == Qt::EditRole)
     {
         //save value from editor to member m_gridData
@@ -127,16 +104,6 @@ QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role
     return QVariant();
 }
 
-//void MsgModel::setIDModel(IDModel *idModel)
-//{
-//    this->idModel = idModel;
-//}
-
-//void MsgModel::setMsgTypeModel(MsgTypeModel *msgTypeModel)
-//{
-//    this->msgTypeModel = msgTypeModel;
-//}
-
 void MsgModel::addMsg(Msg *msg)
 {
     int newRow = msgs.size();
@@ -144,7 +111,6 @@ void MsgModel::addMsg(Msg *msg)
     this->msgs.append(msg);
     endInsertRows();
     emit rowsAdded(1);
-    //    QModelIndex newIndex = ;
     emit rowAppended(newRow);
 }
 
@@ -190,7 +156,6 @@ QByteArray MsgModel::parseToJSON()
 void MsgModel::parseFromJSON(QByteArray jsonFile)
 {
     this->clear();
-    //    QJsonDocument jsonMsgs = QJsonDocument::fromBinaryData(jsonFile);
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto&& item : jsonMsgsArr)
     {
@@ -202,13 +167,11 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
 
 void MsgModel::messageReceived(CAN_PacketPtr ptr)
 {
-    //qDebug() << "Message Received";
     Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
     QDateTime timeStamp = ptr->timestamp();
     unsigned int id = packet->frame().ID_Standard;
     QByteArray canData = packet->frame().data;
-    //qDebug() << "Data:" << canData;
-    Msg *newMsg = new Msg(timeStamp, id, canData);
-    this->addMsg(newMsg);
+
+    this->addMsg(new Msg(timeStamp, id, canData));
 }
 

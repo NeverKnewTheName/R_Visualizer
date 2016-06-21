@@ -37,10 +37,15 @@ private:
     unsigned int visibleRowCntr;
     unsigned int visibleRowOffset;
     unsigned int visibleRowOffsetHIGH;
+
     bool continuousScrolling;
+    bool bottomEnd;
+    bool topEnd;
+
     FilterIDStore *filterIDModel;
     FilterCodeStore *filterCodeModel;
     FilterTimestampStore *filterTimestampModel;
+
     bool idFilterEnabled;
     bool codeFilterEnabled;
     bool timestampFromFilterEnabled;

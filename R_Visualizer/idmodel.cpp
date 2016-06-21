@@ -69,13 +69,14 @@ bool IDModel::setData(const QModelIndex &index, const QVariant &value, int role)
     switch(role)
     {
     case Qt::EditRole:
-        if(col == COL_ID) ;
+        if(col == COL_ID) {};
         if(col == COL_NAME) idPropStore.value(idStore[row])->setName(value.value<QString>());
         if(col == COL_COLOR) idPropStore.value(idStore[row])->setColor(value.value<QColor>());
         emit dataChanged(index, index);
         return true;
         break;
     }
+    return false;
 }
 
 QVariant IDModel::headerData(int section, Qt::Orientation orientation, int role) const

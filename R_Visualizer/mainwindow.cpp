@@ -79,8 +79,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
 
-//    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
-//    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
+    //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
+    //    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
     ui->actionStop->setDisabled(true);
     ui->actionStart->setDisabled(true);
 }
@@ -116,6 +116,7 @@ void MainWindow::on_actionOpen_triggered()
 #ifdef __DEBUG__
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
+    disconnect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded);
 
     QString openLoc = QFileDialog::getOpenFileName(this, QString("Open"), QString(), "JSON File (*.json)");
     qDebug() << openLoc;
@@ -131,6 +132,8 @@ void MainWindow::on_actionOpen_triggered()
     // populate ui
     // close file
     jsonOpenFile.close();
+    connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
+    ui->msgTableView->filterChanged();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -238,7 +241,7 @@ void MainWindow::on_actionStop_triggered()
 #define FILTER_PROXY_VIEW
 void MainWindow::initMsgsTableView()
 {
-    QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
+    //QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
 
     FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
@@ -258,7 +261,10 @@ void MainWindow::initMsgsTableView()
     connect(filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
 
     connect(ui->msgTableView, &MsgTableView::invisibleRows, this, &MainWindow::scrollToGetMoreContent);
-    connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded);
+    // queued connection for the case that many rows are added at once and could not be rendered either way
+    connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
+    connect(this->msgModel, &MsgModel::modelReset, ui->msgTableView, &MsgTableView::reset);
+    connect(this, &MainWindow::changedDataAcquisitionMode, ui->msgTableView, &MsgTableView::scrollContinuousChange);
     ui->msgTableView->setModel(this->msgModel);
 
     QHeaderView *horzHeader = ui->msgTableView->horizontalHeader();
@@ -327,50 +333,40 @@ void MainWindow::on_actionSwitch_User_Role_triggered()
 
 void MainWindow::scrollBarMsgTableViewMoved(int position)
 {
-    static bool scrollToBottomConnected = false;
     QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
-    qDebug() << "Scrollbar moved to position:" << position;
 
-    if((position >= (vertScrollBar->maximum())) && (!ui->msgTableView->isAtTopEnd()))
+    if(position >= (vertScrollBar->maximum()))
     {
-        qDebug() << "Scrollbar is at max pos";
-        if(!scrollToBottomConnected)
-        {
-            qDebug() << "ScrollToBottom Connect!";
-            //connect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
-            scrollToBottomConnected = true;
-            emit changedDataAcquisitionMode(true);
-        }
-        disconnect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-        ui->msgTableView->scrollFetchRows(+1);
         if(!ui->msgTableView->isAtTopEnd())
-            vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()-2);
-        connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-        qDebug() << "Scrollbar moved to position:" << position;
+        {
+            qDebug() << "Scrollbar is at max pos";
+
+            disconnect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+            ui->msgTableView->scrollFetchRows(+1);
+            if(!ui->msgTableView->isAtTopEnd())
+            {
+                vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()-2);
+            }
+            connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+        } else
+        {
+            emit this->changedDataAcquisitionMode(true);
+        }
     }
-    else
+    else if(position <= (vertScrollBar->minimum()))
     {
-        if( (position <= (vertScrollBar->minimum())) && (!ui->msgTableView->isAtBottomEnd()) )
+        if(!ui->msgTableView->isAtBottomEnd())
         {
             disconnect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
-            //            emit queryFetchRow(-1);
-            qDebug() << "Scrollbar moved to position:" << position;
             ui->msgTableView->scrollFetchRows(-1);
             if(!ui->msgTableView->isAtBottomEnd())
                 vertScrollBar->setSliderPosition(vertScrollBar->sliderPosition()+2);
             connect(vertScrollBar, &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
             qDebug() << "Scrollbar is at min pos";
         }
-        else
-            qDebug() << "Scrollbar is in the middle somewhere";
-        if(scrollToBottomConnected)
-        {
-            qDebug() << "ScrollToBottom Disconnect!";
-            //disconnect(msgModel, &MsgModel::rowsInserted, this, &MainWindow::autoScroll);
-            scrollToBottomConnected = false;
-            emit changedDataAcquisitionMode(false);
-        }
-        //ToDO reload older model indices
+    } else
+    {
+        emit this->changedDataAcquisitionMode(false);
     }
 }
 

@@ -10,6 +10,8 @@ MsgTableView::MsgTableView(QWidget *parent) :
     visibleRowOffset(0),
     visibleRowOffsetHIGH(0),
     continuousScrolling(true),
+    bottomEnd(false),
+    topEnd(true),
     idFilterEnabled(false),
     codeFilterEnabled(false),
     timestampFromFilterEnabled(false),
@@ -60,39 +62,49 @@ void MsgTableView::setFilterTimestampModel(FilterTimestampStore *value)
 
 bool MsgTableView::isAtBottomEnd()
 {
-    return visibleRowOffset == 0;
+    return bottomEnd || (visibleRowOffset == 0);
 }
 
 bool MsgTableView::isAtTopEnd()
 {
-    return !isRowHidden(model()->rowCount()-1);
+    return topEnd || (!isRowHidden(model()->rowCount()-1));
 }
 
 bool MsgTableView::isLegit(unsigned int rowNr) const
 {
     bool isLegit = true;
-    QDateTime timestamp = this->model()->index(rowNr, 0).data(Qt::UserRole+3).value<QDateTime>();
-    unsigned int id = this->model()->index(rowNr, 1).data(Qt::UserRole+3).value<unsigned int>();
-    unsigned int code = this->model()->index(rowNr, 2).data(Qt::UserRole+3).value<unsigned int>();
 
     if(idFilterEnabled)
-        isLegit = isLegit && filterIDModel->containsID(id);
-    if(codeFilterEnabled)
-        isLegit = isLegit && filterCodeModel->containsCode(code);
-    if(timestampFromFilterEnabled)
-        isLegit = isLegit && filterTimestampModel->isValidTimestampFrom(timestamp);
-    if(timestampToFilterEnabled)
-        isLegit = isLegit && filterTimestampModel->isValidTimestampTo(timestamp);
+    {
+        isLegit = isLegit && filterIDModel->containsID(this->model()->index(rowNr, 1).data(Qt::UserRole+3).value<unsigned int>());
+    }
+    if(isLegit && codeFilterEnabled)// abort instantly if already not legit
+    {
+        isLegit = isLegit && filterCodeModel->containsCode(this->model()->index(rowNr, 2).data(Qt::UserRole+3).value<unsigned int>());
+    }
+    if(isLegit && ((timestampFromFilterEnabled)||(timestampToFilterEnabled)))// abort instantly if already not legit
+    {
+        QDateTime timestamp = this->model()->index(rowNr, 0).data(Qt::UserRole+3).value<QDateTime>();
 
+        if(timestampFromFilterEnabled)
+        {
+            isLegit = isLegit && filterTimestampModel->isValidTimestampFrom(timestamp);
+        }
+        if(isLegit && timestampToFilterEnabled) // abort instantly if already not legit
+        {
+            isLegit = isLegit && filterTimestampModel->isValidTimestampTo(timestamp);
+        }
+    }
     return isLegit;
 }
 
 void MsgTableView::reset()
 {
-    QTableView::reset();
-
     visibleRowCntr = 0;
     visibleRowOffset = 0;
+    visibleRowOffsetHIGH = 0;
+    continuousScrolling = true;
+    QTableView::reset();
 }
 
 void MsgTableView::rowAdded(unsigned int rowNr)
@@ -101,18 +113,22 @@ void MsgTableView::rowAdded(unsigned int rowNr)
     if(!continuousScrolling || !isLegit(rowNr))
     {
         setRowHidden(rowNr, true);
+        if(isLegit(rowNr))
+        {
+            qDebug() << "No continuous scrolling";
+            topEnd = false;
+        }
     }
     else
     {
         visibleRowCntr++;
-        visibleRowOffsetHIGH++;
+        visibleRowOffsetHIGH = rowNr;
         if( visibleRowCntr > visibleRows)
         {
             emit invisibleRows(true);
             while(isRowHidden(visibleRowOffset))
                 visibleRowOffset++;
             setRowHidden(visibleRowOffset, true);
-            //setRowHidden(indexAt(this->rect().topLeft()).row(), true);
             visibleRowOffset++;
             visibleRowCntr--;
         }else
@@ -120,14 +136,13 @@ void MsgTableView::rowAdded(unsigned int rowNr)
             emit invisibleRows(false);
         }
         this->resizeRowToContents(rowNr);
-        scrollTo(model()->index(rowNr, 0),QAbstractItemView::PositionAtBottom);
+        scrollTo(model()->index(rowNr, 3),QAbstractItemView::PositionAtBottom);
     }
 }
 
 void MsgTableView::filterChanged()
 {
     unsigned int curRow = model()->rowCount();
-//    qDebug() << "filterChanged - curRow" << curRow;
 
     visibleRowCntr = 0;
     visibleRowOffsetHIGH = 0;
@@ -155,8 +170,6 @@ void MsgTableView::filterChanged()
             }
         }
     }
-//    qDebug() << "after scan - curRow" << curRow;
-//    qDebug() << "visibleRowOffset" << visibleRowOffset;
     if(curRow)
         emit invisibleRows(true);
     else
@@ -164,90 +177,100 @@ void MsgTableView::filterChanged()
 
     while(visibleRowOffset < curRow)
     {
-        //if(!isRowHidden(visibleRowOffset))
-            setRowHidden(visibleRowOffset++, true);
-        //visibleRowOffset++;
+        setRowHidden(visibleRowOffset, true);
+        visibleRowOffset++;
     }
     visibleRowOffset = curRow;
-
-//    qDebug() << "visibleRowCntr" << visibleRowCntr;
-//    qDebug() << "visibleRowOffset" << visibleRowOffset;
+    scrollTo(model()->index(visibleRowOffsetHIGH, 3),QAbstractItemView::PositionAtBottom);
 }
 
 void MsgTableView::scrollFetchRows(int direction)
 {
-//    qDebug() << __PRETTY_FUNCTION__;
-//    qDebug() << "VisibleRowOffset" << visibleRowOffset;
-    unsigned int svdOffset = visibleRowOffset;
+    unsigned int visibleRowOffsetShadow = visibleRowOffset;
+    unsigned int visibleRowOffsetHIGHShadow = visibleRowOffsetHIGH;
     continuousScrolling = false;
+
+    bottomEnd = false;
+    topEnd = false;
+
     if(visibleRowOffset && (direction < 0 ))
     {
-//        qDebug() << "negative scroll";
-        //setRowHidden(rowAt(height()), true);
-        //visibleRowOffset = rowAt(0);
-        while(visibleRowOffset)
+        while(visibleRowOffsetShadow)
         {
-            if(isRowHidden(visibleRowOffset) && isLegit(visibleRowOffset))
+            if(isRowHidden(visibleRowOffsetShadow) && isLegit(visibleRowOffsetShadow))
                 break;
-            visibleRowOffset--;
+            visibleRowOffsetShadow--;
         }
-        while(visibleRowOffsetHIGH)
+
+        while(visibleRowOffsetHIGHShadow)
         {
-            if(!isRowHidden(visibleRowOffsetHIGH))
+            if(!isRowHidden(visibleRowOffsetHIGHShadow))
                 break;
+            visibleRowOffsetHIGHShadow--;
+        }
+
+        if(isLegit(visibleRowOffsetShadow))
+        {
+            visibleRowOffset = visibleRowOffsetShadow;
+            visibleRowOffsetHIGH =  visibleRowOffsetHIGHShadow;
+            setRowHidden(visibleRowOffset, false);
+            resizeRowToContents(visibleRowOffset);
+            setRowHidden(visibleRowOffsetHIGH, true);
             visibleRowOffsetHIGH--;
+        }else
+        {
+            bottomEnd = true;
         }
-//        qDebug() << "Row to show:" << visibleRowOffset;
-//        qDebug() << "Row to hide:" << visibleRowOffsetHIGH; //svdOffset;
-        setRowHidden(visibleRowOffset, false);
-        resizeRowToContents(visibleRowOffset);
-//        setRowHidden(svdOffset, true);
-        setRowHidden(visibleRowOffsetHIGH--, true);
-        //emit scrollFetchRows(+2);
+
+        scrollTo(model()->index(visibleRowOffset, 3),QAbstractItemView::PositionAtTop);
     }
     else if( ( direction > 0 ) &&
              ( visibleRowOffsetHIGH < this->model()->rowCount()))
     {
-//        qDebug() << "positive scroll";
-        svdOffset += visibleRowCntr;
-        while(visibleRowOffset)
+        while(visibleRowOffsetShadow)
         {
-            if(!isRowHidden(visibleRowOffset))
+            if(!isRowHidden(visibleRowOffsetShadow))
                 break;
-            visibleRowOffset++;
+            visibleRowOffsetShadow++;
         }
-//        qDebug() << "Model RowCount" << model()->rowCount();
         unsigned int rowsInModel = model()->rowCount() -1;
-//        while(svdOffset < rowsInModel)
-//        {
-//            if(isRowHidden(svdOffset) && isLegit(svdOffset))
-//                break;
-//            svdOffset++;
-//        }
-        while(visibleRowOffsetHIGH < rowsInModel)
+
+        while(visibleRowOffsetHIGHShadow < rowsInModel)
         {
-            if(isRowHidden(visibleRowOffsetHIGH) && isLegit(visibleRowOffsetHIGH))
+            if(isRowHidden(visibleRowOffsetHIGHShadow) && isLegit(visibleRowOffsetHIGHShadow))
                 break;
-            visibleRowOffsetHIGH++;
+            visibleRowOffsetHIGHShadow++;
         }
-//        qDebug() << "Row to hide:" << visibleRowOffset;
-//        qDebug() << "Row to show:" << visibleRowOffsetHIGH;
-        setRowHidden(visibleRowOffset, true);
-        setRowHidden(visibleRowOffsetHIGH, false);
-        resizeRowToContents(visibleRowOffsetHIGH);
-        if(!isRowHidden(rowsInModel))
+
+        if(isLegit(visibleRowOffsetHIGHShadow))
+        {
+            visibleRowOffset = visibleRowOffsetShadow;
+            visibleRowOffsetHIGH = visibleRowOffsetHIGHShadow;
+            setRowHidden(visibleRowOffset, true);
+            setRowHidden(visibleRowOffsetHIGH, false);
+            resizeRowToContents(visibleRowOffsetHIGH);
+            if(!isRowHidden(rowsInModel))
+            {
+                continuousScrolling = true;
+            }
+        }
+        else
+        {
+            topEnd = true;
             continuousScrolling = true;
-        //visibleRowOffset++;
-        //emit scrollFetchRows(-2);
+        }
+        scrollTo(model()->index(visibleRowOffsetHIGH, 3),QAbstractItemView::PositionAtBottom);
+
     } else
     {
         //emit scrollFetchRows(0);
     }
-    //this->scrollTo(model()->index(svdOffset, 0));
+    qDebug() << "ContinuousScrolling :" << continuousScrolling;
 }
 
 void MsgTableView::scrollContinuousChange(bool enabled)
 {
+    qDebug() << "Continuous scrolling changed to:" << enabled;
     this->continuousScrolling = enabled;
 }
 
