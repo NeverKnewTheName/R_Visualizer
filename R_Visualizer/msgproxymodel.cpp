@@ -47,6 +47,7 @@ QModelIndex MsgProxyModel::parent(const QModelIndex &child) const
 
 int MsgProxyModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     if(!sourceModel()) return 0;
 //    qDebug() << __PRETTY_FUNCTION__ << rowCntr;
     return rowCntr;
@@ -54,6 +55,7 @@ int MsgProxyModel::rowCount(const QModelIndex &parent) const
 
 int MsgProxyModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     if(!sourceModel()) return 0;
     return sourceModel()->columnCount(mapToSource(parent));
 }
@@ -104,6 +106,7 @@ void MsgProxyModel::newEntryInSourceModel()
 
 void MsgProxyModel::newEntryAppendedInSourceModel(QModelIndex &index)
 {
+    Q_UNUSED(index)
     beginResetModel();
     if(rowCntr < visibleRows) rowCntr++;
 

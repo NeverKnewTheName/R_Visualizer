@@ -58,6 +58,7 @@ private slots:
     void on_sndPcktClrBtn_clicked();
     void on_sndMsgAddToPacketBtn_clicked();
     void on_sndMsgMsgLineEdit_returnPressed();
+    void on_sndPcktRmvBtn_clicked();
 };
 
 #endif // SENDMESSAGES_H

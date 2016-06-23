@@ -60,6 +60,8 @@ private slots:
     void updateSlider(int direction);
     void scrollToGetMoreContent(bool enabled);
 
+    void on_TestPB_1_clicked();
+
 private:
     void initMsgsTableView();
 

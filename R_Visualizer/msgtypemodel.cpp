@@ -110,14 +110,28 @@ QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
+bool MsgTypeModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    int modelSize = codeStore.size();
+    if(modelSize || ((row+count) < modelSize))
+    {
+        while(count--)
+            removeRow(row+count, parent);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void MsgTypeModel::removeRow(int row, const QModelIndex &parent)
 {
-    beginRemoveRows(QModelIndex(), row, row);
+    beginRemoveRows(parent, row, row);
     delete msgTypePropStore.value(codeStore.at(row));
     msgTypePropStore.remove(codeStore.at(row));
     codeStore.remove(row);
     endRemoveRows();
-    emit internalModelChanged();
 }
 
 Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const

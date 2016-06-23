@@ -207,11 +207,14 @@ void MessageConfig::on_idLoadBtn_clicked()
     if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "error opening: " << jsonOpenFile.fileName();
     }
-    //ToDO
-    // read file content
-    idModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
-    // parse file
-    // populate ui
+    else
+    {
+        //ToDO
+        // read file content
+        idModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        // parse file
+        // populate ui
+    }
     // close file
     jsonOpenFile.close();
 }
@@ -224,12 +227,14 @@ void MessageConfig::on_idStoreBtn_clicked()
     QFile jsonSaveFile(saveLoc);
     if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
         qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    } else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        jsonSaveFile.write(this->idModel->parseToJSON()); //ToDO check for error (-1)
     }
-    //ToDO
-    // extract ui content
-    // parse content to file format
-    // write to file
-    jsonSaveFile.write(this->idModel->parseToJSON()); //ToDO check for error (-1)
     // close file
     jsonSaveFile.flush(); //always flush after write!
     jsonSaveFile.close();
@@ -246,10 +251,16 @@ void MessageConfig::on_idAddBtn_clicked()
 void MessageConfig::on_idRmvBtn_clicked()
 {
     QModelIndexList selection = ui->idTableView->selectionModel()->selectedRows();
-    for(auto &selectedItem : selection)
+//    for(auto &selectedItem : selection)
+//    {
+//        qDebug() << "Remove row: " << selectedItem.row() << " from IDModel";
+//        this->idModel->removeRow(selectedItem.row(), QModelIndex());
+//    }
+    QItemSelectionModel *selectionModel = ui->idTableView->selectionModel();
+    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+    if(selectionIndexList.size())
     {
-        qDebug() << "Remove row: " << selectedItem.row() << " from IDModel";
-        this->idModel->removeRow(selectedItem.row(), QModelIndex());
+        this->idModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
 }
 
@@ -261,11 +272,14 @@ void MessageConfig::on_msgTypeLoadBtn_clicked()
     if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "error opening: " << jsonOpenFile.fileName();
     }
-    //ToDO
-    // read file content
-    msgTypeModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
-    // parse file
-    // populate ui
+    else
+    {
+        //ToDO
+        // read file content
+        msgTypeModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        // parse file
+        // populate ui
+    }
     // close file
     jsonOpenFile.close();
 }
@@ -278,11 +292,14 @@ void MessageConfig::on_msgTypeStoreBtn_clicked()
     if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
         qDebug() << "error open file to save: " << jsonSaveFile.fileName();
     }
-    //ToDO
-    // extract ui content
-    // parse content to file format
-    // write to file
-    jsonSaveFile.write(this->msgTypeModel->parseToJSON()); //ToDO check for error (-1)
+    else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        jsonSaveFile.write(this->msgTypeModel->parseToJSON()); //ToDO check for error (-1)
+    }
     // close file
     jsonSaveFile.flush(); //always flush after write!
     jsonSaveFile.close();
@@ -297,11 +314,17 @@ void MessageConfig::on_msgTypeAddBtn_clicked()
 
 void MessageConfig::on_msgTypeRmvBtn_clicked()
 {
-    QModelIndexList selection = ui->msgTypeTableView->selectionModel()->selectedRows();
-    for(auto &selectedItem : selection)
+//    QModelIndexList selection = ui->msgTypeTableView->selectionModel()->selectedRows();
+//    for(auto &selectedItem : selection)
+//    {
+//        qDebug() << "Remove row: " << selectedItem.row() << " from MsgTypeModel";
+//        this->msgTypeModel->removeRow(selectedItem.row(), QModelIndex());
+//    }
+    QItemSelectionModel *selectionModel = ui->msgTypeTableView->selectionModel();
+    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+    if(selectionIndexList.size())
     {
-        qDebug() << "Remove row: " << selectedItem.row() << " from MsgTypeModel";
-        this->msgTypeModel->removeRow(selectedItem.row(), QModelIndex());
+        this->msgTypeModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
 }
 
@@ -320,9 +343,16 @@ void MessageConfig::on_addFilterIDPushButton_clicked()
 
 void MessageConfig::on_rmvFilterIDPushButton_clicked()
 {
-    QModelIndex selectedIndex = ui->idFilterlistView->selectionModel()->currentIndex();
-    if(selectedIndex.isValid())
-        this->filterIDModel->removeID(selectedIndex);
+//    QModelIndex selectedIndex = ui->idFilterlistView->selectionModel()->currentIndex();
+//    if(selectedIndex.isValid())
+//        this->filterIDModel->removeID(selectedIndex);
+
+    QItemSelectionModel *selectionModel = ui->idFilterlistView->selectionModel();
+    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+    if(selectionIndexList.size())
+    {
+        this->filterIDModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
+    }
 }
 
 void MessageConfig::on_enableCodeFilterPushButton_clicked()

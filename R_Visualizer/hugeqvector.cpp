@@ -1,5 +1,8 @@
 #include "hugeqvector.h"
 
+
+#include <QDebug>
+
 HugeQVector::HugeQVector() :
     currentSize(0)
 {
@@ -9,30 +12,55 @@ HugeQVector::HugeQVector() :
 
 Msg *HugeQVector::at(int index) const
 {
-    return msgVectorStore.at(CONTAINER_SIZE/index)->at(CONTAINER_SIZE-index);
+    return msgVectorStore.at(index/CONTAINER_SIZE)->at(index%CONTAINER_SIZE);
 }
 
 Msg *HugeQVector::operator[](int index) const
 {
-    return msgVectorStore.at(CONTAINER_SIZE/index)->operator [](CONTAINER_SIZE-index);
+    return msgVectorStore.at(index/CONTAINER_SIZE)->operator [](index%CONTAINER_SIZE);
 }
 
 Msg *HugeQVector::append(Msg *msg)
 {
+
     if(!(currentSize % CONTAINER_SIZE))
     {
-        msgVectorStore.append(new QVector<Msg*>());
-        msgVectorStore.reserve(CONTAINER_SIZE);
+        QVector<Msg*> *newQVector = new QVector<Msg*>();
+        newQVector->reserve(CONTAINER_SIZE);
+        msgVectorStore.append(newQVector);
     }
-    msgVectorStore.at(CONTAINER_SIZE/currentSize)->append(msg);
+    msgVectorStore.at(currentSize/CONTAINER_SIZE)->append(msg);
     currentSize++;
     return msg;
 }
 
 void HugeQVector::remove(int index)
 {
-    msgVectorStore.at(CONTAINER_SIZE/index)->remove(CONTAINER_SIZE-index);
-    currentSize++;
+    if(!currentSize)
+        return;
+
+    int containerNr = index/CONTAINER_SIZE;
+    int currentNrOfContainers = (currentSize-1)/CONTAINER_SIZE;
+
+    qDebug() << "Remove index:" << index << "from container nr.:" << containerNr << "with a total nr of containers of: " << currentNrOfContainers;
+
+    //remove from containing container
+    msgVectorStore.at(containerNr)->remove(index%CONTAINER_SIZE);
+
+    // iterate over all preceeding containers and rearrange them
+    while(containerNr < currentNrOfContainers )
+    {
+        //take first element of preceeding container and append to current container
+        qDebug() << "First element of container nr. " << containerNr +1 << "shifts to container nr. " << containerNr;
+        msgVectorStore.at(containerNr)->append(msgVectorStore.at(containerNr+1)->first());
+        //remove the first element (QVector should rearrange itself accordingly)
+        msgVectorStore.at(containerNr+1)->remove(0);
+        //Next container
+        containerNr++;
+    }
+
+    //new size
+    currentSize--;
 }
 
 void HugeQVector::clear()
@@ -47,6 +75,7 @@ void HugeQVector::clear()
     }
     qDeleteAll(msgVectorStore);
     msgVectorStore.clear();
+    currentSize = 0;
 }
 
 int HugeQVector::size() const

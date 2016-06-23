@@ -106,6 +106,35 @@ QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role
     return QVariant();
 }
 
+bool MsgModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    int msgModelSize = msgs.size();
+    if(msgModelSize || ((row+count) < msgModelSize))
+    {
+        while(count--)
+            removeRow(row+count, parent);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void MsgModel::removeRow(int row, const QModelIndex &parent)
+{
+    int msgModelSize = msgs.size();
+    if(msgModelSize || (row < msgModelSize))
+    {
+        beginRemoveRows(parent, row, row);
+        msgs.remove(row);
+        endRemoveRows();
+    } else
+    {
+        qDebug() << "Index of row to remove not in model";
+    }
+}
+
 void MsgModel::addMsg(Msg *msg)
 {
     int newRow = msgs.size();
@@ -115,6 +144,8 @@ void MsgModel::addMsg(Msg *msg)
     emit rowsAdded(1);
     emit rowAppended(newRow);
 }
+
+
 
 void MsgModel::clear()
 {

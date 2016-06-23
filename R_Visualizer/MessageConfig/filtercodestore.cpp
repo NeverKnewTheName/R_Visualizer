@@ -103,6 +103,28 @@ Qt::ItemFlags FilterCodeStore::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
+bool FilterCodeStore::removeRows(int row, int count, const QModelIndex &parent)
+{
+    int modelSize = codeStore.size();
+    if(modelSize || ((row+count) < modelSize))
+    {
+        while(count--)
+            removeRow(row+count, parent);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void FilterCodeStore::removeRow(int row, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, row);
+    codeStore.remove(row);
+    endRemoveRows();
+}
+
 void FilterCodeStore::addCode(unsigned int code)
 {
     beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());

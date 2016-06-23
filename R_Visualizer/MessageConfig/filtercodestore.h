@@ -16,6 +16,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
     bool setData(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
+    void removeRow(int row, const QModelIndex &parent = QModelIndex());
 
     void addCode(unsigned int code);
     void addCode(QString &codeString);

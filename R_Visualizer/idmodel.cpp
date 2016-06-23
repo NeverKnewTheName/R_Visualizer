@@ -101,14 +101,28 @@ QVariant IDModel::headerData(int section, Qt::Orientation orientation, int role)
     return QVariant();
 }
 
+bool IDModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    int modelSize = idStore.size();
+    if(modelSize || ((row+count) < modelSize))
+    {
+        while(count--)
+            removeRow(row+count, parent);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void IDModel::removeRow(int row, const QModelIndex &parent)
 {
-    beginRemoveRows(QModelIndex(), row, row);
+    beginRemoveRows(parent, row, row);
     delete idPropStore.value(idStore.at(row));
     idPropStore.remove(idStore.at(row));
     idStore.remove(row);
     endRemoveRows();
-//    emit internalModelChanged();
 }
 
 Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
@@ -133,7 +147,7 @@ void IDModel::clear()
     idPropStore.clear();
     idStore.clear();
     endResetModel();
-//    emit internalModelChanged();
+    //    emit internalModelChanged();
 }
 
 unsigned int IDModel::getIDToName(const QString &name) const
@@ -153,7 +167,7 @@ void IDModel::add(int id, IDRep *idRep)
     this->idStore.append(id);
     this->idPropStore[id] = idRep;
     endInsertRows();
-//    emit internalModelChanged();
+    //    emit internalModelChanged();
 }
 
 QString IDModel::getNameToID(int id)

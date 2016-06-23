@@ -10,6 +10,7 @@ FilterIDStore::FilterIDStore(IDModel *idModel, QObject *parent) : QAbstractListM
 
 int FilterIDStore::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return idStore.size();
 }
 
@@ -66,6 +67,7 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
 
 QVariant FilterIDStore::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    Q_UNUSED(section)
     if (role == Qt::DisplayRole)
     {
         if (orientation == Qt::Horizontal) {
@@ -91,7 +93,32 @@ bool FilterIDStore::setData(const QModelIndex &index, const QVariant &value, int
 
 Qt::ItemFlags FilterIDStore::flags(const QModelIndex &index) const
 {
+    Q_UNUSED(index)
     return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+}
+
+bool FilterIDStore::removeRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(parent)
+    int modelSize = idStore.size();
+    if(modelSize || ((row+count) < modelSize))
+    {
+        while(count--)
+            removeRow(row+count, parent);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void FilterIDStore::removeRow(int row, const QModelIndex &parent)
+{
+    Q_UNUSED(parent)
+    beginRemoveRows(parent, row, row);
+    idStore.remove(row);
+    endRemoveRows();
 }
 
 void FilterIDStore::addID(unsigned int id)

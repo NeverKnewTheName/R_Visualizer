@@ -37,11 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
      */
 
     msgTypeModel = new MsgTypeModel(this);
-    //connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
     connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
     idModel = new IDModel(this);
-    //connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::reset);
     connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
     this->sysOvrvwWidget = new SystemOverview(this);
@@ -56,11 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this->msgConfigWidget, &MessageConfig::sgnlIdAddFinished, this, &MainWindow::idAddFinished);
     connect(this->msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished);
 
-
     this->initMsgsTableView();
-    //    this->msgModel->setIDModel(this->idModel);
-    //    this->msgModel->setMsgTypeModel(this->msgTypeModel);
-    //this->initVisualizerGraphicsView();
 
     this->userRoleMngr = new UserRoleMngr(this);
     ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
@@ -125,12 +119,15 @@ void MainWindow::on_actionOpen_triggered()
     if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "error opening: " << jsonOpenFile.fileName();
     }
-    //ToDO
-    // read file content
-    msgModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
-    // parse file
-    // populate ui
-    // close file
+    else
+    {
+        //ToDO
+        // read file content
+        msgModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        // parse file
+        // populate ui
+        // close file
+    }
     jsonOpenFile.close();
     connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
     ui->msgTableView->filterChanged();
@@ -152,12 +149,15 @@ void MainWindow::on_actionSave_triggered()
     if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
         qDebug() << "error open file to save: " << jsonSaveFile.fileName();
     }
-    //ToDO
-    // extract ui content
-    // parse content to file format
-    // write to file
-    jsonSaveFile.write(this->msgModel->parseToJSON()); //ToDO check for error (-1)
-    // close file
+    else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        jsonSaveFile.write(this->msgModel->parseToJSON()); //ToDO check for error (-1)
+        // close file
+    }
     jsonSaveFile.flush(); //always flush after write!
     jsonSaveFile.close();
 }
@@ -235,13 +235,13 @@ void MainWindow::on_actionStop_triggered()
     ui->actionStart->setDisabled(false);
     ui->actionStop->setDisabled(true);
     m_deviceHandler->sltStopCapture();
+    //Somehow the device cannot be restarted without a disconnect...
     emit ui->actionConnect->triggered();
 }
 
 #define FILTER_PROXY_VIEW
 void MainWindow::initMsgsTableView()
 {
-    //QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar();
     this->msgModel = new MsgModel(this);
 
     FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
@@ -388,4 +388,9 @@ void MainWindow::scrollToGetMoreContent(bool enabled)
         connect(ui->msgTableView->verticalScrollBar(), &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
     else
         disconnect(ui->msgTableView->verticalScrollBar(), &QScrollBar::valueChanged, this, &MainWindow::scrollBarMsgTableViewMoved);
+}
+
+void MainWindow::on_TestPB_1_clicked()
+{
+    this->msgModel->removeRow(3,QModelIndex());
 }

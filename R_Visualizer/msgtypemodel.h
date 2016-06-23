@@ -19,7 +19,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    void removeRow(int row, const QModelIndex &parent);
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
+    void removeRow(int row, const QModelIndex &parent = QModelIndex());
 
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
