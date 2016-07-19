@@ -201,10 +201,27 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
 
 void MsgModel::messageReceived(CAN_PacketPtr ptr)
 {
-    Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
-    QDateTime timeStamp = ptr->timestamp();
-    unsigned int id = packet->frame().ID_Standard;
-    QByteArray canData = packet->frame().data;
+    QDateTime timeStamp;
+    unsigned int id;
+    QByteArray canData;
+
+    if( ptr->type() == CAN_Packet::Data_Frame )
+    {
+        Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
+        timeStamp = ptr->timestamp();
+        id = packet->frame().ID_Standard;
+        canData = packet->frame().data;
+    }
+    else if( ptr->type() == CAN_Packet::Error_Frame )
+    {
+        Error_PacketPtr packet = qSharedPointerDynamicCast<Error_Packet>(ptr);
+        timeStamp = ptr->timestamp();
+        id = 0x0u;
+        packet->printPacket();
+        canData.append(static_cast<char>(0x0u));
+        canData.append(static_cast<char>(packet->RX_Error_Counter()));
+        canData.append(static_cast<char>(packet->TX_Error_Counter()));
+    }
 
     this->addMsg(new Msg(timeStamp, id, canData));
 }
