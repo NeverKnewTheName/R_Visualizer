@@ -11,6 +11,8 @@
 #include "SendMessages/sendmessages.h"
 #include "SystemOverview/systemoverview.h"
 
+#include "ErrLogView/errlogview.h"
+
 #include "msgmodel.h"
 #include "msgproxymodel.h"
 #include "idmodel.h"
@@ -62,6 +64,8 @@ private slots:
 
     void on_TestPB_1_clicked();
 
+    void on_actionOpen_Error_Log_triggered();
+
 private:
     void initMsgsTableView();
 
@@ -76,6 +80,8 @@ private:
     MessageConfig *msgConfigWidget;
     SendMessages *sndMsgsWidget;
     SystemOverview *sysOvrvwWidget;
+
+    ErrorLogView *errLogViewDiag;
 
     UserRoleMngr *userRoleMngr;
     bool m_IsConnectedToDevice;

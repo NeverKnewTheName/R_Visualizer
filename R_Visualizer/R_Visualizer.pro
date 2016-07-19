@@ -61,7 +61,7 @@ HEADERS  += mainwindow.h \
     idcompleter.h \
     hugeqvector.h
 
-FORMS    += mainwindow.ui \
+FORMS    += mainwindow.ui
 
 RESOURCES += \
     ressources.qrc
@@ -70,3 +70,4 @@ RESOURCES += \
 include(SystemOverview/SystemOverview.pri)
 include(SendMessages/SendMessages.pri)
 include(MessageConfig/MessageConfig.pri)
+include(ErrLogView/ErrLogView.pri)

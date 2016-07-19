@@ -1,31 +1,33 @@
+#ifdef HUGEQVECTOR_NO_TEMPLATE
+
 #include "hugeqvector.h"
 
 
 #include <QDebug>
 
-HugeQVector::HugeQVector() :
+template<class T> HugeQVector<T>::HugeQVector() :
     currentSize(0)
 {
     //    msgVectorStore.append(new QVector<Msg*>());
     //    msgVectorStore.at(0)->reserve(CONTAINER_SIZE);
 }
 
-Msg *HugeQVector::at(int index) const
+template<class T> T *HugeQVector<T>::at(int index) const
 {
     return msgVectorStore.at(index/CONTAINER_SIZE)->at(index%CONTAINER_SIZE);
 }
 
-Msg *HugeQVector::operator[](int index) const
+template<class T> T *HugeQVector<T>::operator[](int index) const
 {
     return msgVectorStore.at(index/CONTAINER_SIZE)->operator [](index%CONTAINER_SIZE);
 }
 
-Msg *HugeQVector::append(Msg *msg)
+template<class T> T *HugeQVector<T>::append(T *msg)
 {
 
     if(!(currentSize % CONTAINER_SIZE))
     {
-        QVector<Msg*> *newQVector = new QVector<Msg*>();
+        QVector<T*> *newQVector = new QVector<T*>();
         newQVector->reserve(CONTAINER_SIZE);
         msgVectorStore.append(newQVector);
     }
@@ -34,7 +36,7 @@ Msg *HugeQVector::append(Msg *msg)
     return msg;
 }
 
-void HugeQVector::remove(int index)
+template<class T> void HugeQVector<T>::remove(int index)
 {
     if(!currentSize)
         return;
@@ -63,11 +65,11 @@ void HugeQVector::remove(int index)
     currentSize--;
 }
 
-void HugeQVector::clear()
+template<class T> void HugeQVector<T>::clear()
 {
-    for(QVector<Msg*>* vector : msgVectorStore)
+    for(QVector<T*>* vector : msgVectorStore)
     {
-        for(Msg* item : *vector)
+        for(T* item : *vector)
         {
             delete item;
         }
@@ -78,8 +80,9 @@ void HugeQVector::clear()
     currentSize = 0;
 }
 
-int HugeQVector::size() const
+template<class T> int HugeQVector<T>::size() const
 {
     return currentSize;
 }
 
+#endif // HUGEQVECTOR_NO_TEMPLATE

@@ -154,17 +154,17 @@ void MsgModel::clear()
     // call begin/endResetModel instead, which ultimately forces all attached
     // views to reload the model
     beginResetModel();
-//    qDeleteAll(msgs);
+    //    qDeleteAll(msgs);
     msgs.clear();
     endResetModel();
 }
 
-HugeQVector MsgModel::getMsgs() const
+HugeQVector<Msg> MsgModel::getMsgs() const
 {
     return msgs;
 }
 
-void MsgModel::setMsgs(const HugeQVector value)
+void MsgModel::setMsgs(const HugeQVector<Msg> value)
 {
     this->clear();
     beginInsertRows(QModelIndex(),0,value.size());
@@ -201,28 +201,19 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
 
 void MsgModel::messageReceived(CAN_PacketPtr ptr)
 {
-    QDateTime timeStamp;
-    unsigned int id;
-    QByteArray canData;
-
     if( ptr->type() == CAN_Packet::Data_Frame )
     {
+        QDateTime timeStamp;
+        unsigned int id;
+        QByteArray canData;
+
         Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
         timeStamp = ptr->timestamp();
         id = packet->frame().ID_Standard;
         canData = packet->frame().data;
-    }
-    else if( ptr->type() == CAN_Packet::Error_Frame )
-    {
-        Error_PacketPtr packet = qSharedPointerDynamicCast<Error_Packet>(ptr);
-        timeStamp = ptr->timestamp();
-        id = 0x0u;
-        packet->printPacket();
-        canData.append(static_cast<char>(0x0u));
-        canData.append(static_cast<char>(packet->RX_Error_Counter()));
-        canData.append(static_cast<char>(packet->TX_Error_Counter()));
+
+        this->addMsg(new Msg(timeStamp, id, canData));
     }
 
-    this->addMsg(new Msg(timeStamp, id, canData));
 }
 

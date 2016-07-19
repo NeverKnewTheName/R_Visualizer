@@ -6,6 +6,8 @@
 #include "msgfilterproxymodel.h"
 #include "MessageConfig/filteridstore.h"
 
+#include "ErrLogView/errlogview.h"
+
 #include "csvmsgpackethandler.h"
 
 #include "devicehandler.h"
@@ -54,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this->msgConfigWidget, &MessageConfig::sgnlIdAddFinished, this, &MainWindow::idAddFinished);
     connect(this->msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished);
 
+    this->errLogViewDiag = new ErrorLogView(this);
+    connect(ui->actionOpen_Error_Log, &QAction::triggered, this->errLogViewDiag, &ErrorLogView::show);
+
     this->initMsgsTableView();
 
     this->userRoleMngr = new UserRoleMngr(this);
@@ -71,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_deviceHandler = new DeviceHandler();
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
+    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
 
     //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
@@ -393,4 +399,9 @@ void MainWindow::scrollToGetMoreContent(bool enabled)
 void MainWindow::on_TestPB_1_clicked()
 {
     this->msgModel->removeRow(3,QModelIndex());
+}
+
+void MainWindow::on_actionOpen_Error_Log_triggered()
+{
+    //this->errLogViewDiag->show();
 }

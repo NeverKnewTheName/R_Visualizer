@@ -33,8 +33,8 @@ public:
     void addMsg(Msg *msg);
     void clear();
 
-    HugeQVector getMsgs() const;
-    void setMsgs(const HugeQVector value);
+    HugeQVector<Msg> getMsgs() const;
+    void setMsgs(const HugeQVector<Msg> value);
 
     QByteArray parseToJSON();
     void parseFromJSON(QByteArray jsonFile);
@@ -47,8 +47,7 @@ public:
         COL_NR_OF_COLS
     };
 private:
-//    QVector<Msg *> msgs;
-    HugeQVector msgs;
+    HugeQVector<Msg> msgs;
     friend class MainWindow;
     friend class MsgProxyModel;
 

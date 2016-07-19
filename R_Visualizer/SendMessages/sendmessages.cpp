@@ -422,7 +422,7 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
 void SendMessages::on_sndPcktSendBtn_clicked()
 {
-    HugeQVector msgsToSend = this->msgPcktModel->getMsgs();
+    HugeQVector<Msg> msgsToSend = this->msgPcktModel->getMsgs();
     int size = msgsToSend.size();
     for( int i = 0; i < size; i++)
     {

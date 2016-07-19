@@ -12,9 +12,9 @@ public:
     CsvMsgPacketHandler(QString &csvMsgPacketString);
     ~CsvMsgPacketHandler();
 
-    HugeQVector parseCsvMsgPacket(QString &csvMsgPacketString);
+    HugeQVector<Msg> parseCsvMsgPacket(QString &csvMsgPacketString);
 
-    QString parseToString(HugeQVector msgs);
+    QString parseToString(HugeQVector<Msg> msgs);
 
 private:
 };

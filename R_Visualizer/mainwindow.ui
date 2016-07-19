@@ -95,6 +95,8 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_Error_Log"/>
    </widget>
    <widget class="QMenu" name="menuTrace">
     <property name="title">
@@ -130,6 +132,8 @@
    <addaction name="actionStop"/>
    <addaction name="separator"/>
    <addaction name="actionSwitch_User_Role"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpen_Error_Log"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -215,6 +219,11 @@
    </property>
    <property name="toolTip">
     <string>Switch the Role of the user</string>
+   </property>
+  </action>
+  <action name="actionOpen_Error_Log">
+   <property name="text">
+    <string>Open Error Log</string>
    </property>
   </action>
  </widget>

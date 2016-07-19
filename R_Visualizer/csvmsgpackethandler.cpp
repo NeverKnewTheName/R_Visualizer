@@ -18,9 +18,9 @@ CsvMsgPacketHandler::~CsvMsgPacketHandler()
 
 }
 
-HugeQVector CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
+HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
 {
-    HugeQVector msgs;
+    HugeQVector<Msg> msgs;
     QStringList msgsFromPacket = csvMsgPacketString.split("\n");
     QString codeLine = msgsFromPacket.at(0);
     msgsFromPacket.removeAt(0);
@@ -57,7 +57,7 @@ HugeQVector CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
     return msgs;
 }
 
-QString CsvMsgPacketHandler::parseToString(HugeQVector msgs)
+QString CsvMsgPacketHandler::parseToString(HugeQVector<Msg> msgs)
 {
     if(!msgs.size())
         return QString("");
