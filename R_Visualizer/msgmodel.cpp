@@ -199,21 +199,16 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
     }
 }
 
-void MsgModel::messageReceived(CAN_PacketPtr ptr)
+void MsgModel::messageReceived(Data_PacketPtr ptr)
 {
-    if( ptr->type() == CAN_Packet::Data_Frame )
-    {
         QDateTime timeStamp;
         unsigned int id;
         QByteArray canData;
 
-        Data_PacketPtr packet = qSharedPointerDynamicCast<Data_Packet>(ptr);
         timeStamp = ptr->timestamp();
-        id = packet->frame().ID_Standard;
-        canData = packet->frame().data;
+        id = ptr->frame().ID_Standard;
+        canData = ptr->frame().data;
 
         this->addMsg(new Msg(timeStamp, id, canData));
-    }
-
 }
 

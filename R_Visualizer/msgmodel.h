@@ -52,7 +52,7 @@ private:
     friend class MsgProxyModel;
 
 private slots:
-    void messageReceived(CAN_PacketPtr ptr);
+    void messageReceived(Data_PacketPtr ptr);
 
 
 signals:

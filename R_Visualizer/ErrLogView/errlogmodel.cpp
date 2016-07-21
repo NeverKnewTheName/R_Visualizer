@@ -1,4 +1,5 @@
 #include "errlogmodel.h"
+#include <QDebug>
 
 ErrLogModel::ErrLogModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -91,16 +92,13 @@ void ErrLogModel::addErrEntry(ErrorLogEntry *errLogEntry)
 //    emit rowAppended(newRow);
 }
 
-void ErrLogModel::errLogMsgReceived(CAN_PacketPtr ptr)
+void ErrLogModel::errLogMsgReceived(Error_PacketPtr ptr)
 {
-    if( ptr->type() == CAN_Packet::Error_Frame )
-    {
-        Error_PacketPtr packet = qSharedPointerDynamicCast<Error_Packet>(ptr);
         QDateTime timeStamp = ptr->timestamp();
-        int rxErrCntr = packet->RX_Error_Counter();
-        int txErrCntr = packet->TX_Error_Counter();
-        QString detailString = packet->Status_Register_String();
+        int rxErrCntr = ptr->RX_Error_Counter();
+        int txErrCntr = ptr->TX_Error_Counter();
+        QString detailString = ptr->Status_Register_String();
+//        qDebug() << detailString;
 
         this->addErrEntry(new ErrorLogEntry(timeStamp,rxErrCntr,txErrCntr,detailString));
-    }
 }

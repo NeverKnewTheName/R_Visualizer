@@ -41,6 +41,8 @@ signals:
     void switchUserRoles(UserRoleMngr::UserRole roleToSwitchTo);
     void changedDataAcquisitionMode(bool state);
     void queryFetchRow(int direction);
+    void dataReceived(Data_PacketPtr);
+    void errorReceived(Error_PacketPtr);
 
 private slots:
     void on_actionNew_triggered();
@@ -66,6 +68,9 @@ private slots:
 
     void on_actionOpen_Error_Log_triggered();
 
+
+    void messageReceived(CAN_PacketPtr ptr);
+
 private:
     void initMsgsTableView();
 
@@ -82,6 +87,8 @@ private:
     SystemOverview *sysOvrvwWidget;
 
     ErrorLogView *errLogViewDiag;
+    int currErrCntr;
+    int totalErrCntr;
 
     UserRoleMngr *userRoleMngr;
     bool m_IsConnectedToDevice;

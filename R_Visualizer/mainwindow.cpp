@@ -29,7 +29,9 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_IsConnectedToDevice(false)
+    m_IsConnectedToDevice(false),
+    currErrCntr(0),
+    totalErrCntr(0)
 {
     ui->setupUi(this);
     this->currentFileName = "";
@@ -58,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->errLogViewDiag = new ErrorLogView(this);
     connect(ui->actionOpen_Error_Log, &QAction::triggered, this->errLogViewDiag, &ErrorLogView::show);
+    ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
 
     this->initMsgsTableView();
 
@@ -75,10 +78,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_deviceHandler = new DeviceHandler();
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
-    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
-    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
-    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
 
+    connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
+
+    connect(this, &MainWindow::dataReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
+    connect(this, &MainWindow::dataReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
+    connect(this, &MainWindow::errorReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
     //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
     //    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
     ui->actionStop->setDisabled(true);
@@ -404,4 +409,19 @@ void MainWindow::on_TestPB_1_clicked()
 void MainWindow::on_actionOpen_Error_Log_triggered()
 {
     //this->errLogViewDiag->show();
+}
+
+void MainWindow::messageReceived(CAN_PacketPtr ptr)
+{
+    if( ptr->type() == CAN_Packet::Data_Frame )
+    {
+        emit dataReceived(qSharedPointerDynamicCast<Data_Packet>(ptr));
+    }
+    else if( ptr->type() == CAN_Packet::Error_Frame )
+    {
+        currErrCntr++;
+        totalErrCntr++;
+        ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
+        emit errorReceived(qSharedPointerDynamicCast<Error_Packet>(ptr));
+    }
 }

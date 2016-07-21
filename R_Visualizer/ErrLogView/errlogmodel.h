@@ -31,10 +31,10 @@ public:
     };
 private:
     HugeQVector<ErrorLogEntry> errLogStore;
-
+    friend class MainWindow;
 
 private slots:
-    void errLogMsgReceived(CAN_PacketPtr ptr);
+    void errLogMsgReceived(Error_PacketPtr ptr);
 
 signals:
     void rowAppended(unsigned int rowNr);

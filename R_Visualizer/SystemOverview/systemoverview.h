@@ -39,7 +39,7 @@ private:
 
 private slots:
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
-    void newMessage(CAN_PacketPtr ptr);
+    void newMessage(Data_PacketPtr ptr);
 };
 
 #endif // SYSTEMOVERVIEW_H
