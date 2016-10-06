@@ -18,12 +18,16 @@ private:
     QHash<QString, SysOvrvObject*> objectStore;
 
 signals:
+    void objectAddedToStore(SysOvrvObject *addedObject);
+    void objectRemovedFromStore(SysOvrvObject *removedObject);
 
 public slots:
     void addObject();
+    void rmvObject();
+    void updtObject();
     void addObjToStore(SysOvrvObject *objToAdd);
-    void removeObject(QString &objectName);
-    void updateObject(QString &objectName);
+    void removeObject(SysOvrvObject *objToRmv);
+    void updateObject(SysOvrvObject *objToUpdt);
 };
 
 #endif // SYSOVRVOBJECTSTORE_H

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>R_Visualizer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/GUI/Icons/Icons/AppICON.ico</normaloff>:/GUI/Icons/Icons/AppICON.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>

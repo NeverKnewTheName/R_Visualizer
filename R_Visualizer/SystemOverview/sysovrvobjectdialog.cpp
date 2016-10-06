@@ -1,6 +1,8 @@
 #include "sysovrvobjectdialog.h"
 #include "ui_sysovrvobjectdialog.h"
 
+#include <qDebug>
+
 SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SysOvrvObjectDialog)
@@ -17,6 +19,9 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
     ui->setupUi(this);
     this->m_curSysOvrvObject = object;
     this->setupDialog();
+    qDebug() << "Object to update name: " << object->getObjName();
+    ui->objectNameLE->setText(object->getObjName());
+    ui->objectShapeComboBox->setCurrentIndex(object->getShape());
 }
 
 
@@ -97,9 +102,12 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
     switch(ui->buttonBox->buttonRole(button))
     {
     case QDialogButtonBox::AcceptRole:
+        scene->removeItem(m_curSysOvrvObject);
+        this->m_curSysOvrvObject->setObjName(ui->objectNameLE->text());
         emit commit(this->m_curSysOvrvObject);
         break;
     case QDialogButtonBox::RejectRole:
+        scene->removeItem(m_curSysOvrvObject);
         break;
     case QDialogButtonBox::ResetRole:
         break;

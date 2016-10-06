@@ -1,5 +1,6 @@
 #include "sysovrvobjectstore.h"
 
+#include "sysoverviewgraphicsview.h"
 #include "sysovrvobjectdialog.h"
 
 #include <QDebug>
@@ -21,27 +22,46 @@ void SysOvrvObjectStore::addObject()
     addSysOvrvObjectDialog->exec();
 }
 
+void SysOvrvObjectStore::rmvObject()
+{
+    SysOvrvObject *curObj = static_cast<SysOverviewGraphicsView*>(parent())->getCurrentObject();
+
+    if(curObj == NULL)
+        return;
+    removeObject(curObj);
+    delete curObj;
+}
+
+void SysOvrvObjectStore::updtObject()
+{
+    SysOvrvObject *curObj = static_cast<SysOverviewGraphicsView*>(parent())->getCurrentObject();
+
+    if(curObj == NULL)
+        return;
+    updateObject(curObj);
+}
+
 void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
 {
     this->objectStore[objToAdd->getObjName()] = objToAdd;
     qDebug() << "GraphicsItem added: " << objToAdd->getObjName();
     disconnect(qobject_cast<SysOvrvObjectDialog *>(sender()), &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     delete sender();
+    emit this->objectAddedToStore(objToAdd);
 }
 
-void SysOvrvObjectStore::removeObject(QString &objectName)
+void SysOvrvObjectStore::removeObject(SysOvrvObject *objToRmv)
 {
-    SysOvrvObject *objToRemove = this->objectStore.value(objectName);
-    this->objectStore.remove(objectName);
-    if(objToRemove != Q_NULLPTR) delete objToRemove;
+    this->objectStore.remove(objToRmv->getObjName());
+    emit this->objectRemovedFromStore(objToRmv);
 }
 
-void SysOvrvObjectStore::updateObject(QString &objectName)
+void SysOvrvObjectStore::updateObject(SysOvrvObject *objToUpdt)
 {
-    SysOvrvObject *objToEdit = this->objectStore.value(objectName);
-    if(objToEdit != Q_NULLPTR)
+    if( objToUpdt != Q_NULLPTR)
     {
-        SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog();
+        removeObject(objToUpdt);
+        SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog(objToUpdt);
         connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
         addSysOvrvObjectDialog->exec();
     }

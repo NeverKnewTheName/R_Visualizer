@@ -3,11 +3,18 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 
+#include <QDebug>
+
 SysOvrvObject::SysOvrvObject()
 {
     pressed = false;
     myColor = QColor(Qt::gray);
+    shapeType = 0;
+    this->update();
     //setFlag(ItemIsMovable);
+    setFlag(ItemSendsGeometryChanges);
+    setFlag(ItemSendsScenePositionChanges);
+    setFlag(ItemIsFocusable);
 }
 
 QRectF SysOvrvObject::boundingRect() const
@@ -41,19 +48,16 @@ void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         break;
     case 3: // Triangle
     {
-        QVector<QLineF> linesTriangle;
-        QPointF rectTopMiddle(rect.right() - rect.left(), rect.top());
-        linesTriangle.append(QLineF(rect.bottomLeft(),rectTopMiddle));
-        linesTriangle.append(QLineF(rect.bottomRight(),rectTopMiddle));
-        linesTriangle.append(QLineF(rect.bottomLeft(), rect.bottomRight()));
-        painter->drawLines(linesTriangle);
+        QPainterPath path;
+        QPointF rectTopMiddle((rect.right() - rect.left()) / 2, rect.top());
+        path.moveTo(rectTopMiddle);
+        path.lineTo(rect.right(), rect.bottom());
+        path.lineTo(rect.left(), rect.bottom());
+        path.lineTo(rectTopMiddle);
+        painter->drawPath(path);
     }
         break;
     }
-
-//    painter->fillRect(rect, brush);
-//    painter->drawEllipse(rect);
-    //painter->drawRect(rect);
 }
 
 QHash<QString, SysOvrvObject *> SysOvrvObject::getObjStore() const
@@ -82,6 +86,11 @@ void SysOvrvObject::setShape(int shape)
     this->update();
 }
 
+int SysOvrvObject::getShape() const
+{
+    return shapeType;
+}
+
 void SysOvrvObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
@@ -94,5 +103,13 @@ void SysOvrvObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void SysOvrvObject::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
+
+}
+
+void SysOvrvObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    qreal distX = event->pos().x() - event->lastPos().x();
+    qreal distY = event->pos().y() - event->lastPos().y();
+    moveBy(distX,distY);
 
 }

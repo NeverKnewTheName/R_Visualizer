@@ -403,7 +403,7 @@ void MainWindow::scrollToGetMoreContent(bool enabled)
 
 void MainWindow::on_TestPB_1_clicked()
 {
-    this->msgModel->removeRow(3,QModelIndex());
+    //this->msgModel->removeRow(3,QModelIndex());
 }
 
 void MainWindow::on_actionOpen_Error_Log_triggered()

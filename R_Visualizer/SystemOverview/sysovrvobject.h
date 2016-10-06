@@ -9,8 +9,8 @@ class SysOvrvObject : public QGraphicsItem
 {
 public:
     explicit SysOvrvObject();
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
 
     bool pressed;
 
@@ -24,6 +24,7 @@ public:
     void setObjName(const QString &value);
 
     void setShape(int shape);
+    int  getShape() const;
 
 private:
     QString objName;
@@ -32,9 +33,10 @@ private:
     QHash<QString, SysOvrvObject *> objStore;
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
 
 signals:
 

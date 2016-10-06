@@ -9,6 +9,8 @@ SystemOverview::SystemOverview(QWidget *parent) :
 {
     ui->setupUi(this);
     this->initVisualizerGraphicsView();
+    connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectAddedToStore, this, &SystemOverview::addNewObject);
+    connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectRemovedFromStore, this, &SystemOverview::removeObject);
 }
 
 SystemOverview::~SystemOverview()
@@ -37,6 +39,9 @@ void SystemOverview::initVisualizerGraphicsView()
 
     square = new MySquare();
     scene->addItem(square);
+    sysOvrvObj = new SysOvrvObject();
+    sysOvrvObj->setShape(3);
+    scene->addItem(sysOvrvObj);
 }
 
 void SystemOverview::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -61,4 +66,14 @@ void SystemOverview::newMessage(Data_PacketPtr ptr)
             this->square->update();
         }
         //SystemOverview::repaint();
+}
+
+void SystemOverview::addNewObject(SysOvrvObject *obj)
+{
+    scene->addItem(obj);
+}
+
+void SystemOverview::removeObject(SysOvrvObject *obj)
+{
+    scene->removeItem(obj);
 }

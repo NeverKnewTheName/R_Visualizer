@@ -11,6 +11,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include "mysquare.h"
+#include "sysovrvobject.h"
 
 class MainWindow;
 
@@ -36,10 +37,13 @@ private:
     QGraphicsEllipseItem *ellipse;
     QGraphicsRectItem *rect;
     MySquare *square;
+    SysOvrvObject *sysOvrvObj;
 
 private slots:
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
     void newMessage(Data_PacketPtr ptr);
+    void addNewObject(SysOvrvObject* obj);
+    void removeObject(SysOvrvObject* obj);
 };
 
 #endif // SYSTEMOVERVIEW_H
