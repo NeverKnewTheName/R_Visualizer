@@ -14,9 +14,12 @@ public:
 
     SysOvrvObject *getCurrentObject() const;
     SysOvrvObjectStore *getObjectStore() const;
+    const QPointF &GetCurrentMousePos() const;
+
 private:
     SysOvrvObjectStore *sysOvrvObjStore;
     SysOvrvObject *currentObject;
+    QPointF currentMousePos;
 };
 
 #endif // SYSOVERVIEWGRAPHICSVIEW_H

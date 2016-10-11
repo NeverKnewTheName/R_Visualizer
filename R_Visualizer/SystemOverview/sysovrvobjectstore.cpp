@@ -19,6 +19,7 @@ void SysOvrvObjectStore::addObject()
 {
     SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog();
     connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
+    curObjPos = static_cast<SysOverviewGraphicsView*>(parent())->GetCurrentMousePos();
     addSysOvrvObjectDialog->exec();
 }
 
@@ -38,6 +39,7 @@ void SysOvrvObjectStore::updtObject()
 
     if(curObj == NULL)
         return;
+    curObjPos = curObj->pos();
     updateObject(curObj);
 }
 
@@ -47,7 +49,7 @@ void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
     qDebug() << "GraphicsItem added: " << objToAdd->getObjName();
     disconnect(qobject_cast<SysOvrvObjectDialog *>(sender()), &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     delete sender();
-    emit this->objectAddedToStore(objToAdd);
+    emit this->objectAddedToStore(objToAdd,curObjPos);
 }
 
 void SysOvrvObjectStore::removeObject(SysOvrvObject *objToRmv)

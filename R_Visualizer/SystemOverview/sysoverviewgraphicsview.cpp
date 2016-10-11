@@ -4,6 +4,8 @@
 #include <QContextMenuEvent>
 #include "sysovrvobject.h"
 
+#include <QDebug>
+
 SysOverviewGraphicsView::SysOverviewGraphicsView(QWidget *parent) :
     QGraphicsView(parent),
     currentObject(NULL)
@@ -14,15 +16,22 @@ SysOverviewGraphicsView::SysOverviewGraphicsView(QWidget *parent) :
 void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
-    QAction * actionAdd = menu.addAction("Add Object");
-    QAction * actionRmv = menu.addAction("Remove Object");
-    QAction * actionUpdt = menu.addAction("Update Object");
-
+    qDebug() << "Pos: " << event->pos();
+    currentMousePos = mapToScene(event->pos());
+    qDebug() << "CurMousePos mapped: " << currentMousePos;
     currentObject = qgraphicsitem_cast<SysOvrvObject*>(itemAt(event->pos()));
-
-    connect(actionAdd, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::addObject);
-    connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
-    connect(actionUpdt, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::updtObject);
+    if(currentObject == NULL)
+    {
+        QAction * actionAdd = menu.addAction("Add Object");
+        connect(actionAdd, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::addObject);
+    }
+    else
+    {
+        QAction * actionRmv = menu.addAction("Remove Object");
+        QAction * actionUpdt = menu.addAction("Update Object");
+        connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
+        connect(actionUpdt, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::updtObject);
+    }
 
     menu.exec(event->globalPos());
 }
@@ -35,4 +44,9 @@ SysOvrvObject *SysOverviewGraphicsView::getCurrentObject() const
 SysOvrvObjectStore *SysOverviewGraphicsView::getObjectStore() const
 {
     return sysOvrvObjStore;
+}
+
+const QPointF &SysOverviewGraphicsView::GetCurrentMousePos() const
+{
+    return currentMousePos;
 }

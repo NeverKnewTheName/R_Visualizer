@@ -16,9 +16,10 @@ public:
 
 private:
     QHash<QString, SysOvrvObject*> objectStore;
+    QPointF curObjPos;
 
 signals:
-    void objectAddedToStore(SysOvrvObject *addedObject);
+    void objectAddedToStore(SysOvrvObject *addedObject, QPointF &pos);
     void objectRemovedFromStore(SysOvrvObject *removedObject);
 
 public slots:

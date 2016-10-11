@@ -27,6 +27,11 @@ public:
     explicit SystemOverview(QWidget *parent = 0);
     ~SystemOverview();
 
+protected:
+    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+
 private:
     void initVisualizerGraphicsView();
 
@@ -34,15 +39,12 @@ private:
     friend class MainWindow;
 
     QGraphicsScene *scene;
-    QGraphicsEllipseItem *ellipse;
-    QGraphicsRectItem *rect;
-    MySquare *square;
-    SysOvrvObject *sysOvrvObj;
+    Qt::KeyboardModifiers kbrdModifiers;
 
 private slots:
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
     void newMessage(Data_PacketPtr ptr);
-    void addNewObject(SysOvrvObject* obj);
+    void addNewObject(SysOvrvObject* obj, QPointF &pos);
     void removeObject(SysOvrvObject* obj);
 };
 
