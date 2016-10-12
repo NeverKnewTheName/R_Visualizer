@@ -46,7 +46,7 @@ void SysOvrvObjectStore::updtObject()
 
 void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
 {
-    this->objectStore[objToAdd->getObjName()] = objToAdd;
+    this->objectStore[objToAdd->getHashedName()] = objToAdd;
     qDebug() << "GraphicsItem added: " << objToAdd->getObjName();
     disconnect(qobject_cast<SysOvrvObjectDialog *>(sender()), &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     delete sender();
@@ -56,7 +56,7 @@ void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
 
 void SysOvrvObjectStore::removeObject(SysOvrvObject *objToRmv)
 {
-    this->objectStore.remove(objToRmv->getObjName());
+    this->objectStore.remove(objToRmv->getHashedName());
     emit this->objectRemovedFromStore(objToRmv);
 }
 

@@ -6,6 +6,8 @@
 
 #include <QDebug>
 
+int SysOvrvObject::objCntr = 0;
+
 SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     QGraphicsItem(parent),
     isChildObject(false),
@@ -13,9 +15,11 @@ SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     corners(NULL),
     isInResizeMode(false)
 {
+    localObjCntr = objCntr++;
     myColor = QColor(Qt::gray);
     shapeType = ObjShape_Rectangle;
     setupSysOvrvObject();
+//    qDebug() << "(SysOvrvObject::SysOvrvObject): created obj: " << getHashedName();
 }
 
 SysOvrvObject::SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent) :
@@ -25,8 +29,33 @@ SysOvrvObject::SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent) :
     corners(NULL),
     isInResizeMode(false)
 {
-    *this = *obj;
+    localObjCntr = objCntr++;
+    operator =(*obj);
     setupSysOvrvObject();
+//    qDebug() << "(SysOvrvObject::SysOvrvObject): created obj: " << getHashedName() << " from object: " << obj->getHashedName();
+}
+
+SysOvrvObject::~SysOvrvObject()
+{
+//    qDebug() << "(SysOvrvObject::~SysOvrvObject): deleting obj: " << getHashedName();
+    SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject *>(parentItem());
+    if(parent != NULL)
+    {
+//        qDebug() << "(SysOvrvObject::~SysOvrvObject): removing"  << getHashedName() << "from parent: " << parent->getHashedName();
+        parent->removeChildSysOvrvItem(this);
+    }
+    for(auto child : childSysOvrvObjects)
+    {
+//        qDebug() << "(SysOvrvObject::~SysOvrvObject): Delete Child: " << static_cast<SysOvrvObject*>(child)->getHashedName() << " of " << getHashedName();
+        delete child;
+    }
+    childSysOvrvObjects.clear();
+    if(corners != NULL)
+    {
+//      qDebug() << "(SysOvrvObject::~SysOvrvObject): Deleting Corners from object: " << getHashedName();
+        delete[] corners;
+        corners = NULL;
+    }
 }
 
 QRectF SysOvrvObject::boundingRect() const
@@ -73,6 +102,8 @@ void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     }
         break;
     }
+    painter->setBrush(QBrush(Qt::red));
+    painter->drawText(rect, getHashedName());
 }
 
 void SysOvrvObject::setupSysOvrvObject()
@@ -93,16 +124,6 @@ void SysOvrvObject::setMyColor(const QColor &value)
     myColor = QColor(value);
 }
 
-QHash<QString, SysOvrvObject *> &SysOvrvObject::getObjStore()
-{
-    return objStore;
-}
-
-void SysOvrvObject::setObjStore(QHash<QString, SysOvrvObject *> &value)
-{
-    objStore = value;
-}
-
 QString SysOvrvObject::getObjName() const
 {
     return objName;
@@ -110,7 +131,7 @@ QString SysOvrvObject::getObjName() const
 
 void SysOvrvObject::setObjName(const QString &value)
 {
-    objName = value;
+    objName = QString(value);
 }
 
 void SysOvrvObject::setShape(ObjShapeTypes shape)
@@ -136,16 +157,55 @@ SysOvrvObject::ObjShapeTypes SysOvrvObject::getShape() const
     return shapeType;
 }
 
+SysOvrvObject *SysOvrvObject::duplicate()
+{
+    SysOvrvObject *duplicatedObject = new SysOvrvObject();
+
+    duplicatedObject->setPos(this->pos());
+    duplicatedObject->setObjName("d_" + this->getObjName()); // is the duplicate token really needed?
+    duplicatedObject->setMyColor(this->getMyColor());
+    duplicatedObject->setShape(this->getShape());
+    duplicatedObject->m_BoundingRect.setWidth(this->getWidth());
+    duplicatedObject->m_BoundingRect.setHeight(this->getHeight());
+    duplicatedObject->setResizeMode(this->getIsInResizeMode());
+    duplicatedObject->isChildObject = this->isAChild();
+    SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(this->parentItem());
+    if(parent != NULL)
+    {
+        parent->addChildSysOvrvItem(duplicatedObject);
+    }
+
+    for(SysOvrvObject *child : childSysOvrvObjects)
+    {
+        duplicatedObject->addChildSysOvrvItem(child->duplicate());
+    }
+
+    duplicatedObject->update();
+    return duplicatedObject;
+}
+
 SysOvrvObject &SysOvrvObject::operator=(const SysOvrvObject &obj)
 {
-
-    this->objName = obj.getObjName();
-    this->setObjStore(const_cast<SysOvrvObject &>(obj).getObjStore());
-    this->myColor = obj.getMyColor();
-    this->shapeType = obj.getShape();
+    this->setPos(obj.pos());
+    this->setObjName(obj.getObjName());
+    this->setMyColor(obj.getMyColor());
+    this->setShape(obj.getShape());
     this->m_BoundingRect.setWidth(obj.getWidth());
     this->m_BoundingRect.setHeight(obj.getHeight());
-    this->isInResizeMode = obj.getIsInResizeMode();
+    this->setResizeMode(obj.getIsInResizeMode());
+    SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(obj.parentItem());
+    if(parent != NULL)
+    {
+        parent->addChildSysOvrvItem(this);
+    }
+    QVector<SysOvrvObject*> children = QVector<SysOvrvObject*>(const_cast<SysOvrvObject&>(obj).getChidSysOvrvObjects());
+    int sizeOfChildren = children.size();
+    //for(SysOvrvObject *child : const_cast<SysOvrvObject&>(obj).getChidSysOvrvObjects())
+    for(int i = 0; i < sizeOfChildren; i++)
+    {
+        addChildSysOvrvItem(new SysOvrvObject(children.at(i)));
+    }
+    this->isChildObject = obj.isAChild();
 
     this->update();
     return *this;
@@ -154,6 +214,11 @@ SysOvrvObject &SysOvrvObject::operator=(const SysOvrvObject &obj)
 void SysOvrvObject::setAsChild(bool isChild)
 {
     this->isChildObject = isChild;
+}
+
+bool SysOvrvObject::isAChild() const
+{
+    return isChildObject;
 }
 
 void SysOvrvObject::setResizeMode(bool modeON)
@@ -175,7 +240,6 @@ void SysOvrvObject::showResizeCorners(bool show)
     {
         if(corners == NULL)
         {
-            qDebug() << "Creating Corners!";
             corners = new ResizeRectCorner[4];
             for(int i = 0; i < 4; i++)
             {
@@ -190,7 +254,6 @@ void SysOvrvObject::showResizeCorners(bool show)
     {
         if(corners != NULL)
         {
-            qDebug() << "Deleting Corners!";
             delete[] corners;
             corners = NULL;
         }
@@ -204,8 +267,7 @@ qreal SysOvrvObject::getWidth() const
 
 void SysOvrvObject::setWidth(qreal newWidth)
 {
-    qDebug() << "Changing width of obj: " << objName << " old: " << getWidth() << " new: " << newWidth;
-    if(newWidth < 0)
+    if(newWidth < 0.1)
         return;
     prepareGeometryChange();
     m_BoundingRect.setWidth(newWidth);
@@ -228,8 +290,7 @@ qreal SysOvrvObject::getHeight() const
 
 void SysOvrvObject::setHeight(qreal newHeight)
 {
-    qDebug() << "Changing height of obj: " << objName << " old: " << getHeight() << " new: " << newHeight;
-    if(newHeight < 0)
+    if(newHeight < 0.1)
         return;
     prepareGeometryChange();
     m_BoundingRect.setHeight(newHeight);
@@ -245,10 +306,32 @@ void SysOvrvObject::adjustHeight(qreal factor)
         child->adjustHeight(factor);
 }
 
-void SysOvrvObject::addChildSysOvrvItem(SysOvrvObject *child)
+void SysOvrvObject::removeChildSysOvrvItem(SysOvrvObject *child)
 {
-    childSysOvrvObjects.append(child);
+    qDebug() << "(SysOvrvObject::removeChildSysOvrvItem): removing " << child->getHashedName() << " from parent: " << getHashedName();
+    //ToTHINK !!!!
+    //ToDO !!!
+    QVector<SysOvrvObject*>::Iterator it;
+    for(it = childSysOvrvObjects.begin(); it != childSysOvrvObjects.end(); it++)
+    {
+        if(*it == child)
+        {
+            childSysOvrvObjects.remove(childSysOvrvObjects.indexOf(child));
+            childSysOvrvObjects.erase(it);
+        }
+    }
+}
+
+SysOvrvObject *SysOvrvObject::addChildSysOvrvItem(SysOvrvObject *child) //returns the added child
+{
+    qDebug() << "(SysOvrvObject::addChildSysOvrvItem): trying to add " << child->getHashedName() << " to parent: " << getHashedName();
+    if(!childSysOvrvObjects.contains(child))
+    {
+        qDebug() << "(SysOvrvObject::addChildSysOvrvItem): adding " << child->getHashedName() << " to parent: " << getHashedName();
+        childSysOvrvObjects.append(child);
+    }
     child->setParentItem(this);
+    return child;
 }
 
 QVector<SysOvrvObject *> &SysOvrvObject::getChidSysOvrvObjects()
@@ -277,7 +360,9 @@ void SysOvrvObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(this->isChildObject)
     {
-        qgraphicsitem_cast<SysOvrvObject *>(this->parentItem())->mouseMoveEvent(event);
+        SysOvrvObject * parent = qgraphicsitem_cast<SysOvrvObject *>(this->parentItem());
+        if(parent != NULL)
+                parent->mouseMoveEvent(event);
     }
     else
     {
@@ -286,6 +371,11 @@ void SysOvrvObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         moveBy(distX,distY);
     }
     //    QGraphicsItem::mouseMoveEvent(event);
+}
+
+QString SysOvrvObject::getHashedName() const
+{
+    return QString("%1__%2").arg(this->objName).arg(this->localObjCntr);
 }
 
 void SysOvrvObject::updateCorners()
@@ -316,11 +406,9 @@ void SysOvrvObject::updateCorners()
 void SysOvrvObject::focusInEvent(QFocusEvent *event)
 {
     setSelected(true);
-    qDebug() << "has now focus: " << this->getObjName();
 }
 
 void SysOvrvObject::focusOutEvent(QFocusEvent *event)
 {
     setSelected(false);
-    qDebug() << "lost focus: " << this->getObjName();
 }

@@ -16,6 +16,13 @@ SystemOverview::SystemOverview(QWidget *parent) :
     this->initVisualizerGraphicsView();
     connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectAddedToStore, this, &SystemOverview::addNewObject);
     connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectRemovedFromStore, this, &SystemOverview::removeObject);
+
+    QScrollBar *scroller;
+    scroller = ui->visualizerGraphicsView->horizontalScrollBar();
+//    scroller->blockSignals(true);
+//    scroller->
+    scroller = ui->visualizerGraphicsView->verticalScrollBar();
+//    scroller->blockSignals(true);
 }
 
 SystemOverview::~SystemOverview()
@@ -25,9 +32,10 @@ SystemOverview::~SystemOverview()
 
 void SystemOverview::wheelEvent(QWheelEvent *event)
 {
-    if(QApplication::keyboardModifiers() == kbrdModifiers)
+    qDebug() << "wheelEvent";
+    if(QApplication::keyboardModifiers() & Qt::ControlModifier)
     {
-//        ui->visualizerGraphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+        ui->visualizerGraphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
         //        const int degrees = event->delta();
 
         //        double scaleFactor = 1.15; //How fast we zoom
@@ -45,25 +53,29 @@ void SystemOverview::wheelEvent(QWheelEvent *event)
         qreal factor = qPow(1.2, event->delta() / 240.0);
         ui->visualizerGraphicsView->scale(factor, factor);
 
-        const QPointF p1mouse = ui->visualizerGraphicsView->mapFromScene(p0scene);
-        const QPointF move = p1mouse - event->pos(); // The move
-        QScrollBar *scroller;
-        scroller = ui->visualizerGraphicsView->horizontalScrollBar();
-        scroller->blockSignals(true);
-        scroller->setValue(move.x() + scroller->value());
-        scroller = ui->visualizerGraphicsView->verticalScrollBar();
-        scroller->blockSignals(true);
-        scroller->setValue(move.y() + scroller->value());
+//        const QPointF p1mouse = ui->visualizerGraphicsView->mapFromScene(p0scene);
+//        const QPointF move = p1mouse - event->pos(); // The move
+//        QScrollBar *scroller;
+//        scroller = ui->visualizerGraphicsView->horizontalScrollBar();
+//        scroller->setValue(move.x() + scroller->value());
+//        scroller = ui->visualizerGraphicsView->verticalScrollBar();
+//        scroller->setValue(move.y() + scroller->value());
     }
     else
     {
         QScrollBar *scroller;
-        scroller = ui->visualizerGraphicsView->horizontalScrollBar();
-        scroller->blockSignals(false);
-        scroller = ui->visualizerGraphicsView->verticalScrollBar();
-        scroller->blockSignals(false);
-
-        QWidget::wheelEvent(event);
+        if(QApplication::keyboardModifiers() & Qt::AltModifier)
+        {
+            //Vertical scrollbar
+            scroller = ui->visualizerGraphicsView->verticalScrollBar();
+            qDebug() << "scroll vertical";
+        }
+        else
+        {
+            //horizontal scrollbar
+            scroller = ui->visualizerGraphicsView->horizontalScrollBar();
+            qDebug() << "scroll horizontal";
+        }
     }
 }
 

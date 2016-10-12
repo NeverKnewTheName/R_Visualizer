@@ -53,6 +53,8 @@ private slots:
     void focusChanged(QGraphicsItem *newItem, QGraphicsItem *oldItem);
     void on_OpenColorPicker_clicked();
     void colorChanged(const QColor &newColor);
+    void on_pushButton_clicked();
+    void on_objectNameLE_textEdited(const QString &arg1);
 };
 
 #endif // SYSOVRVOBJECTDIALOG_H

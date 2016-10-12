@@ -12,7 +12,7 @@ class SysOvrvObject : public QGraphicsItem
 public:
     explicit SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
     explicit SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent = Q_NULLPTR);
-
+    ~SysOvrvObject();
 
     typedef enum Shapetypes
     {
@@ -31,9 +31,6 @@ public:
     QColor getMyColor() const;
     void setMyColor(const QColor &value);
 
-    QHash<QString, SysOvrvObject *> &getObjStore();
-    void setObjStore(QHash<QString, SysOvrvObject *> &value);
-
     QString getObjName() const;
     void setObjName(const QString &value);
 
@@ -41,7 +38,10 @@ public:
     ObjShapeTypes getShape() const;
 
     SysOvrvObject &operator=(const SysOvrvObject &obj);
+    SysOvrvObject *duplicate();
+
     void setAsChild(bool isChild);
+    bool isAChild() const;
 
     void setResizeMode(bool modeON);
     bool getIsInResizeMode() const;
@@ -54,19 +54,21 @@ public:
     void setHeight(qreal newHeight);
     void adjustHeight(qreal factor);
 
-    void addChildSysOvrvItem(SysOvrvObject* child);
+    SysOvrvObject *addChildSysOvrvItem(SysOvrvObject* child);
+    void removeChildSysOvrvItem(SysOvrvObject *child);
     QVector<SysOvrvObject *> &getChidSysOvrvObjects();
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
-
+    QString getHashedName() const;
 
 private:
+    static int objCntr;
+    int localObjCntr;
     bool isInResizeMode;
     bool isChildObject;
     QString objName;
     QColor myColor;
     ObjShapeTypes shapeType;
-    QHash<QString, SysOvrvObject *> objStore;
     QVector<SysOvrvObject *> childSysOvrvObjects;
     ResizeRectCorner *corners;
     QRectF m_BoundingRect;

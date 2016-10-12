@@ -13,6 +13,7 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
   updateExisting(false)
 {
     ui->setupUi(this);
+    m_svdSysOvrvObject->setObjName(m_svdSysOvrvObject->getObjName() + "BACKUP");
     m_curSysOvrvObject->setResizeMode(true);
     m_svdSysOvrvObject->setResizeMode(true);
     this->setupDialog();
@@ -22,22 +23,21 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
     QDialog(parent),
     ui(new Ui::SysOvrvObjectDialog),
     m_curSysOvrvObject(object),
-    m_svdSysOvrvObject(new SysOvrvObject(object)),
     m_focusedItem(NULL),
     updateExisting(true)
 {
+    m_svdSysOvrvObject = new SysOvrvObject(object);
+    m_svdSysOvrvObject->setObjName(m_svdSysOvrvObject->getObjName() + "BACKUP");
     ui->setupUi(this);
     this->setupDialog();
     for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
     {
         childObj->setAsChild(false);
     }
-    qDebug() << "Object to update name: " << object->getObjName();
 }
 
 SysOvrvObjectDialog::~SysOvrvObjectDialog()
 {
-    delete m_svdSysOvrvObject;
     delete ui;
 }
 
@@ -167,33 +167,38 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
         scene->removeItem(m_curSysOvrvObject);
         if(updateExisting)
         {
-            *m_curSysOvrvObject = *m_svdSysOvrvObject;
-            for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+            for(auto childObj : m_svdSysOvrvObject->getChidSysOvrvObjects())
             {
                 childObj->setAsChild(true);
             }
-            emit commit(m_curSysOvrvObject);
+            emit commit(m_svdSysOvrvObject);
+            delete m_curSysOvrvObject;
         }
         else
         {
             delete m_curSysOvrvObject;
+            delete m_svdSysOvrvObject;
         }
-        delete m_svdSysOvrvObject;
         reject();
         break;
     case QDialogButtonBox::ResetRole:
-        *m_curSysOvrvObject = *m_svdSysOvrvObject;
-        m_curSysOvrvObject->update();
+        scene->removeItem(m_curSysOvrvObject);
+        delete m_curSysOvrvObject;
+        m_curSysOvrvObject = new SysOvrvObject(m_svdSysOvrvObject);
+
+        ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
+        ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
         ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
         ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
-        scene->update();
+
+        scene->addItem(m_curSysOvrvObject);
         break;
     }
 }
 
 void SysOvrvObjectDialog::on_OpenColorPicker_clicked()
 {
-    QColorDialog *colorPicker = new QColorDialog(this);
+    QColorDialog *colorPicker = new QColorDialog(m_curSysOvrvObject->getMyColor(), this);
     connect(colorPicker, &QColorDialog::colorSelected, this, &SysOvrvObjectDialog::colorChanged);
     colorPicker->exec();
 }
@@ -204,4 +209,23 @@ void SysOvrvObjectDialog::colorChanged(const QColor &newColor)
     ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(newColor.name()));
     ui->ObjectColorLE->setText(newColor.name());
     m_curSysOvrvObject->setMyColor(QColor(newColor));
+}
+
+void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
+{
+    if(m_focusedItem == NULL)
+        return;
+
+    SysOvrvObject* duplicatedObject = m_focusedItem->duplicate();
+    SysOvrvObject* duplicateObjParent = qgraphicsitem_cast<SysOvrvObject*>(duplicatedObject->parentItem());
+    if(duplicateObjParent != NULL)
+    {
+        duplicateObjParent->removeChildSysOvrvItem(duplicatedObject);
+    }
+    m_curSysOvrvObject->addChildSysOvrvItem(duplicatedObject);
+}
+
+void SysOvrvObjectDialog::on_objectNameLE_textEdited(const QString &arg1)
+{
+    m_curSysOvrvObject->setObjName(arg1);
 }

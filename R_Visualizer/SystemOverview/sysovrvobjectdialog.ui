@@ -69,28 +69,35 @@
        <item>
         <widget class="QPushButton" name="addPropertyBtn">
          <property name="text">
-          <string>Add property</string>
+          <string>Add Object</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="rmvPropertyBtn">
          <property name="text">
-          <string>Remove property</string>
+          <string>Remove Object</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="edtPropertyBtn">
          <property name="text">
-          <string>Edit property</string>
+          <string>Edit Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Duplicate Object</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="edtTriggerBtn">
          <property name="text">
-          <string>Edit trigger</string>
+          <string>Edit Object Trigger</string>
          </property>
         </widget>
        </item>

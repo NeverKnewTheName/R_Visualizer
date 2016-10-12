@@ -34,7 +34,7 @@ void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     case topLeftCorner:
         newWidth = parentToResize->getWidth()-distX;
         factorWidth = newWidth / parentToResize->getWidth();
-        if(newWidth >= 0)
+        if(newWidth >= 0.1)
         {
             parentToResize->moveBy(distX, 0);
             parentToResize->adjustWidth(factorWidth);
@@ -42,7 +42,7 @@ void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
         newHeight = parentToResize->getHeight()-distY;
         factorHeight = newHeight / parentToResize->getHeight();
-        if(newHeight >= 0)
+        if(newHeight >= 0.1)
         {
             parentToResize->moveBy(0, distY);
             parentToResize->adjustHeight(factorHeight);
@@ -51,7 +51,7 @@ void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     case bottomLeftCorner:
         newWidth = parentToResize->getWidth()-distX;
         factorWidth = newWidth / parentToResize->getWidth();
-        if(newWidth >= 0)
+        if(newWidth >= 0.1)
         {
             parentToResize->moveBy(distX, 0);
             parentToResize->adjustWidth(factorWidth);
@@ -68,7 +68,7 @@ void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
         newHeight = parentToResize->getHeight()-distY;
         factorHeight = newHeight / parentToResize->getHeight();
-        if(newHeight >= 0)
+        if(newHeight >= 0.1)
         {
             parentToResize->moveBy(0, distY);
             parentToResize->adjustHeight(factorHeight);
