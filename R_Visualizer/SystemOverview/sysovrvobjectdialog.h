@@ -27,15 +27,10 @@ public:
 private:
     Ui::SysOvrvObjectDialog *ui;
     SysOvrvObject *m_curSysOvrvObject;
+    SysOvrvObject *m_svdSysOvrvObject;
+    SysOvrvObject *m_focusedItem;
     QGraphicsScene *scene;
-
-    enum Shapetypes
-    {
-        ObjShape_Rectangle,
-        ObjShape_Square,
-        ObjShape_Circle,
-        ObjShape_Triangle
-    }ObjShapeTypes;
+    bool updateExisting;
 
     void setupDialog();
 
@@ -54,6 +49,10 @@ private slots:
     void on_edtTriggerBtn_clicked();
 
     void objectShapeChanged(int index);
+    void addObjectToObject(SysOvrvObject *obj);
+    void focusChanged(QGraphicsItem *newItem, QGraphicsItem *oldItem);
+    void on_OpenColorPicker_clicked();
+    void colorChanged(const QColor &newColor);
 };
 
 #endif // SYSOVRVOBJECTDIALOG_H

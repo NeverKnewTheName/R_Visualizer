@@ -20,6 +20,7 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
     currentMousePos = mapToScene(event->pos());
     qDebug() << "CurMousePos mapped: " << currentMousePos;
     currentObject = qgraphicsitem_cast<SysOvrvObject*>(itemAt(event->pos()));
+
     if(currentObject == NULL)
     {
         QAction * actionAdd = menu.addAction("Add Object");
@@ -27,6 +28,9 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
     }
     else
     {
+        while(currentObject->parentItem() != NULL)
+            currentObject = qgraphicsitem_cast<SysOvrvObject*>(currentObject->parentItem());
+
         QAction * actionRmv = menu.addAction("Remove Object");
         QAction * actionUpdt = menu.addAction("Update Object");
         connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
@@ -50,3 +54,4 @@ const QPointF &SysOverviewGraphicsView::GetCurrentMousePos() const
 {
     return currentMousePos;
 }
+

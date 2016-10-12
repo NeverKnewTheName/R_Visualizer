@@ -39,6 +39,7 @@ void SysOvrvObjectStore::updtObject()
 
     if(curObj == NULL)
         return;
+    curObj->setResizeMode(true);
     curObjPos = curObj->pos();
     updateObject(curObj);
 }
@@ -49,6 +50,7 @@ void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
     qDebug() << "GraphicsItem added: " << objToAdd->getObjName();
     disconnect(qobject_cast<SysOvrvObjectDialog *>(sender()), &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     delete sender();
+    objToAdd->setResizeMode(false);
     emit this->objectAddedToStore(objToAdd,curObjPos);
 }
 
