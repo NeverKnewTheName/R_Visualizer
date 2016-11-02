@@ -61,6 +61,9 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     QString getHashedName() const;
 
+    QByteArray parseToJson() const;
+    void parseFromJson(QByteArray &jsonByteArray);
+
 private:
     static int objCntr;
     int localObjCntr;
@@ -81,6 +84,8 @@ protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     void focusInEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
     void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) Q_DECL_OVERRIDE;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) Q_DECL_OVERRIDE;
 
 signals:
 

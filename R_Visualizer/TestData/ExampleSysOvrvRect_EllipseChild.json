@@ -1,0 +1,22 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#ffaa00",
+            "ObjName": "Child1",
+            "ObjShape": 2,
+            "ObjSize": [
+                100,
+                100
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "Rect",
+    "ObjShape": 0,
+    "ObjSize": [
+        100,
+        100
+    ]
+}

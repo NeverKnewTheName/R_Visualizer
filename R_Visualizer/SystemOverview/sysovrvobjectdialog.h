@@ -27,9 +27,10 @@ public:
 private:
     Ui::SysOvrvObjectDialog *ui;
     SysOvrvObject *m_curSysOvrvObject;
-    SysOvrvObject *m_svdSysOvrvObject;
     SysOvrvObject *m_focusedItem;
     QGraphicsScene *scene;
+    QByteArray m_jsonObjSave;
+
     bool updateExisting;
 
     void setupDialog();

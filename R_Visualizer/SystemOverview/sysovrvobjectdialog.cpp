@@ -1,21 +1,23 @@
 #include "sysovrvobjectdialog.h"
 #include "ui_sysovrvobjectdialog.h"
 #include <QColorDialog>
+#include <QFile>
+#include <QFileDialog>
+
+#include <QJsonDocument>
 
 #include <qDebug>
 
 SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SysOvrvObjectDialog),
-  m_curSysOvrvObject(new SysOvrvObject()),
-  m_svdSysOvrvObject(new SysOvrvObject()),
-  m_focusedItem(NULL),
-  updateExisting(false)
+    m_curSysOvrvObject(new SysOvrvObject()),
+    m_focusedItem(NULL),
+    updateExisting(false)
 {
+    m_jsonObjSave = m_curSysOvrvObject->parseToJson();
     ui->setupUi(this);
-    m_svdSysOvrvObject->setObjName(m_svdSysOvrvObject->getObjName() + "BACKUP");
     m_curSysOvrvObject->setResizeMode(true);
-    m_svdSysOvrvObject->setResizeMode(true);
     this->setupDialog();
 }
 
@@ -26,8 +28,7 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
     m_focusedItem(NULL),
     updateExisting(true)
 {
-    m_svdSysOvrvObject = new SysOvrvObject(object);
-    m_svdSysOvrvObject->setObjName(m_svdSysOvrvObject->getObjName() + "BACKUP");
+    m_jsonObjSave = m_curSysOvrvObject->parseToJson();
     ui->setupUi(this);
     this->setupDialog();
     for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
@@ -149,43 +150,108 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
     switch(ui->buttonBox->buttonRole(button))
     {
     case QDialogButtonBox::AcceptRole:
-        if(ui->objectNameLE->text().isEmpty())
+        switch(ui->buttonBox->standardButton(button))
         {
+        case QDialogButtonBox::Ok:
+            if(ui->objectNameLE->text().isEmpty())
+            {
+                ui->objectNameLE->setFocus();
+                break;
+            }
+            scene->removeItem(m_curSysOvrvObject);
+            this->m_curSysOvrvObject->setObjName(ui->objectNameLE->text());
+            for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+            {
+                childObj->setAsChild(true);
+            }
+            emit commit(this->m_curSysOvrvObject);
+            accept();
             break;
-        }
-        scene->removeItem(m_curSysOvrvObject);
-        this->m_curSysOvrvObject->setObjName(ui->objectNameLE->text());
-        for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+        case QDialogButtonBox::Save:
+            if(ui->objectNameLE->text().isEmpty())
+            {
+                ui->objectNameLE->setFocus();
+                break;
+            }
+            qDebug() << "Accept: Save SysOvrvObj";
         {
-            childObj->setAsChild(true);
+            QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save as"), QString(), "JSON File (*.json)");
+            qDebug() << saveLoc;
+            QFile jsonSaveFile(saveLoc);
+            if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+                qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+            } else
+            {
+                //ToDO
+                // extract ui content
+                // parse content to file format
+                // write to file
+                jsonSaveFile.write(m_curSysOvrvObject->parseToJson()); //ToDO check for error (-1)
+            }
+            // close file
+            jsonSaveFile.flush(); //always flush after write!
+            jsonSaveFile.close();
         }
-        emit commit(this->m_curSysOvrvObject);
-        delete m_svdSysOvrvObject;
-        accept();
+            break;
+        case QDialogButtonBox::Open:
+            qDebug() << "Accept: Open SysOvrvObj";
+        {
+            QString openLoc = QFileDialog::getOpenFileName(this, QString("Open"), QString(), "JSON File (*.json)");
+            qDebug() << openLoc;
+            QFile jsonOpenFile(openLoc);
+            if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                qDebug() << "error opening: " << jsonOpenFile.fileName();
+            }
+            else
+            {
+                //ToDO
+                scene->removeItem(m_curSysOvrvObject);
+                delete m_curSysOvrvObject;
+                m_curSysOvrvObject = new SysOvrvObject();
+                // read file content
+                QByteArray jsonSysOvrvObj = jsonOpenFile.readAll();
+                m_curSysOvrvObject->parseFromJson(jsonSysOvrvObj); //ToDO check for error (-1)
+                for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+                {
+                    childObj->setAsChild(false);
+                }
+                ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
+                ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
+                ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
+                ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
+                scene->addItem(m_curSysOvrvObject);
+            }
+            // close file
+            jsonOpenFile.close();
+        }
+            break;
+        default:
+            qDebug() << "Invalid button: " << ui->buttonBox->standardButton(button);
+        }
+
         break;
     case QDialogButtonBox::RejectRole:
         scene->removeItem(m_curSysOvrvObject);
         if(updateExisting)
         {
-            for(auto childObj : m_svdSysOvrvObject->getChidSysOvrvObjects())
-            {
-                childObj->setAsChild(true);
-            }
-            emit commit(m_svdSysOvrvObject);
             delete m_curSysOvrvObject;
+            //restore from json save
+            m_curSysOvrvObject = new SysOvrvObject();
+            m_curSysOvrvObject->parseFromJson(m_jsonObjSave);
+            emit commit(m_curSysOvrvObject);
         }
         else
         {
             delete m_curSysOvrvObject;
-            delete m_svdSysOvrvObject;
         }
         reject();
         break;
     case QDialogButtonBox::ResetRole:
         scene->removeItem(m_curSysOvrvObject);
         delete m_curSysOvrvObject;
-        m_curSysOvrvObject = new SysOvrvObject(m_svdSysOvrvObject);
-
+        m_curSysOvrvObject = new SysOvrvObject();
+        m_curSysOvrvObject->parseFromJson(m_jsonObjSave);
+        m_curSysOvrvObject->setResizeMode(true);
         ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
         ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
         ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
@@ -218,11 +284,13 @@ void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
 
     SysOvrvObject* duplicatedObject = m_focusedItem->duplicate();
     SysOvrvObject* duplicateObjParent = qgraphicsitem_cast<SysOvrvObject*>(duplicatedObject->parentItem());
+    //The parent of the duplicated object shall always be the current object that is being edited by the current dialog!
     if(duplicateObjParent != NULL)
     {
         duplicateObjParent->removeChildSysOvrvItem(duplicatedObject);
     }
     m_curSysOvrvObject->addChildSysOvrvItem(duplicatedObject);
+    duplicatedObject->setAsChild(false);
 }
 
 void SysOvrvObjectDialog::on_objectNameLE_textEdited(const QString &arg1)

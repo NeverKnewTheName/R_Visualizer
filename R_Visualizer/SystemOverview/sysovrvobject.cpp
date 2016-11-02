@@ -3,6 +3,12 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QFocusEvent>
+#include <QCursor>
+#include <QSize>
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include <QDebug>
 
@@ -37,25 +43,21 @@ SysOvrvObject::SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent) :
 
 SysOvrvObject::~SysOvrvObject()
 {
-//    qDebug() << "(SysOvrvObject::~SysOvrvObject): deleting obj: " << getHashedName();
+    qDebug() << "(SysOvrvObject::~SysOvrvObject): deleting obj: " << getHashedName();
     SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject *>(parentItem());
     if(parent != NULL)
     {
-//        qDebug() << "(SysOvrvObject::~SysOvrvObject): removing"  << getHashedName() << "from parent: " << parent->getHashedName();
+        qDebug() << "(SysOvrvObject::~SysOvrvObject): removing"  << getHashedName() << "from parent: " << parent->getHashedName();
         parent->removeChildSysOvrvItem(this);
     }
-    for(auto child : childSysOvrvObjects)
+    for(SysOvrvObject *child : childSysOvrvObjects)
     {
-//        qDebug() << "(SysOvrvObject::~SysOvrvObject): Delete Child: " << static_cast<SysOvrvObject*>(child)->getHashedName() << " of " << getHashedName();
+        qDebug() << "(SysOvrvObject::~SysOvrvObject): Delete Child: " << static_cast<SysOvrvObject*>(child)->getHashedName() << " of " << getHashedName();
         delete child;
     }
     childSysOvrvObjects.clear();
-    if(corners != NULL)
-    {
-//      qDebug() << "(SysOvrvObject::~SysOvrvObject): Deleting Corners from object: " << getHashedName();
-        delete[] corners;
-        corners = NULL;
-    }
+    showResizeCorners(false);
+    qDebug() << "(SysOvrvObject::~SysOvrvObject): deleted obj: " << getHashedName();
 }
 
 QRectF SysOvrvObject::boundingRect() const
@@ -168,8 +170,9 @@ SysOvrvObject *SysOvrvObject::duplicate()
     duplicatedObject->m_BoundingRect.setWidth(this->getWidth());
     duplicatedObject->m_BoundingRect.setHeight(this->getHeight());
     duplicatedObject->setResizeMode(this->getIsInResizeMode());
-    duplicatedObject->isChildObject = this->isAChild();
+    duplicatedObject->setAsChild(true);
     SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(this->parentItem());
+    //ToDO!!! -- PROBABLE BUG HERE
     if(parent != NULL)
     {
         parent->addChildSysOvrvItem(duplicatedObject);
@@ -311,15 +314,18 @@ void SysOvrvObject::removeChildSysOvrvItem(SysOvrvObject *child)
     qDebug() << "(SysOvrvObject::removeChildSysOvrvItem): removing " << child->getHashedName() << " from parent: " << getHashedName();
     //ToTHINK !!!!
     //ToDO !!!
-    QVector<SysOvrvObject*>::Iterator it;
-    for(it = childSysOvrvObjects.begin(); it != childSysOvrvObjects.end(); it++)
-    {
-        if(*it == child)
-        {
-            childSysOvrvObjects.remove(childSysOvrvObjects.indexOf(child));
-            childSysOvrvObjects.erase(it);
-        }
-    }
+    qDebug() << "size before: " <<childSysOvrvObjects.size();
+    childSysOvrvObjects.removeAll(child);
+    qDebug() << "size after: " <<childSysOvrvObjects.size();
+//    QVector<SysOvrvObject*>::Iterator it;
+//    for(it = childSysOvrvObjects.begin(); it != childSysOvrvObjects.end(); it++)
+//    {
+//        if(*it == child)
+//        {
+//            childSysOvrvObjects.remove(childSysOvrvObjects.indexOf(child));
+//            childSysOvrvObjects.erase(it);
+//        }
+//    }
 }
 
 SysOvrvObject *SysOvrvObject::addChildSysOvrvItem(SysOvrvObject *child) //returns the added child
@@ -342,6 +348,7 @@ QVector<SysOvrvObject *> &SysOvrvObject::getChidSysOvrvObjects()
 void SysOvrvObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     //    QGraphicsItem::mousePressEvent(event);
+    setCursor(QCursor(Qt::ClosedHandCursor));
 }
 
 void SysOvrvObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -349,6 +356,8 @@ void SysOvrvObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     //    QGraphicsItem::mouseReleaseEvent(event);
     //    setFocus(Qt::MouseFocusReason);
     //    setSelected(true);
+
+    setCursor(QCursor(Qt::OpenHandCursor));
 }
 
 void SysOvrvObject::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
@@ -376,6 +385,77 @@ void SysOvrvObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 QString SysOvrvObject::getHashedName() const
 {
     return QString("%1__%2").arg(this->objName).arg(this->localObjCntr);
+}
+
+QByteArray SysOvrvObject::parseToJson() const
+{
+    QJsonObject jsonSysOvrvObj;
+    QJsonArray objSize;
+    QJsonArray objPos;
+    QJsonArray objChildren;
+
+    jsonSysOvrvObj["ObjName"] = this->getObjName();
+    jsonSysOvrvObj["ObjColor"] = this->getMyColor().name(QColor::HexRgb);
+    jsonSysOvrvObj["ObjShape"] = this->getShape();
+    objSize.append(QJsonValue(m_BoundingRect.width()));
+    objSize.append(QJsonValue(m_BoundingRect.height()));
+    jsonSysOvrvObj["ObjSize"] = objSize;
+    objPos.append(QJsonValue(static_cast<double>(pos().x())));
+    objPos.append(QJsonValue(static_cast<double>(pos().y())));
+    jsonSysOvrvObj["ObjPos"] = objPos;
+    for(SysOvrvObject *child : childSysOvrvObjects)
+    {
+        objChildren.append(QJsonDocument::fromJson(child->parseToJson()).object());
+    }
+    jsonSysOvrvObj["ChildObjs"] = objChildren;
+    return QJsonDocument(jsonSysOvrvObj).toJson();
+}
+
+void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
+{
+    QJsonObject jsonSysOvrvObj = QJsonDocument::fromJson(jsonByteArray).object();
+    QJsonArray objSize = jsonSysOvrvObj["ObjSize"].toArray();
+    QJsonArray objPos = jsonSysOvrvObj["ObjPos"].toArray();
+    QJsonArray objChildren = jsonSysOvrvObj["ChildObjs"].toArray();
+
+    if(objSize.size() != 2)
+    {
+        qDebug() << "Invalid size parameter ObjSize in JSON file";
+        return;
+    }
+    if(objPos.size() != 2)
+    {
+        qDebug() << "Invalid size parameter ObjPos in JSON file";
+        return;
+    }
+    if(!jsonSysOvrvObj["ObjName"].isString())
+    {
+        qDebug() << "Invalid parameter ObjName in JSON file";
+        return;
+    }
+    if(!jsonSysOvrvObj["ObjColor"].isString())
+    {
+        qDebug() << "Invalid parameter ObjColor in JSON file";
+        return;
+    }
+
+    this->setObjName(jsonSysOvrvObj["ObjName"].toString());
+    this->setMyColor(QColor(jsonSysOvrvObj["ObjColor"].toString()));
+    this->setShape(static_cast<ObjShapeTypes>(jsonSysOvrvObj["ObjShape"].toInt()));
+
+    this->setWidth(objSize[0].toInt(10));
+    this->setHeight(objSize[1].toInt(10));
+
+    this->setPos(static_cast<qreal>(objPos[0].toDouble()),static_cast<qreal>(objPos[1].toDouble()));
+
+    for(QJsonValueRef jsonChildObj : objChildren)
+    {
+        SysOvrvObject *childObj = new SysOvrvObject();
+        QByteArray jsonParsed = QJsonDocument(jsonChildObj.toObject()).toJson();
+        childObj->parseFromJson(jsonParsed);
+        this->addChildSysOvrvItem(childObj);
+        childObj->setAsChild(true);
+    }
 }
 
 void SysOvrvObject::updateCorners()
@@ -411,4 +491,14 @@ void SysOvrvObject::focusInEvent(QFocusEvent *event)
 void SysOvrvObject::focusOutEvent(QFocusEvent *event)
 {
     setSelected(false);
+}
+
+void SysOvrvObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    setCursor(QCursor(Qt::OpenHandCursor));
+}
+
+void SysOvrvObject::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    setCursor(QCursor(Qt::ArrowCursor));
 }

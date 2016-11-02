@@ -1,0 +1,135 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "ccc",
+                    "ObjPos": [
+                        46,
+                        33
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                },
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_ccc",
+                    "ObjPos": [
+                        46,
+                        33
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "bbb",
+            "ObjPos": [
+                27,
+                24
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        },
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_ccc",
+                    "ObjPos": [
+                        46,
+                        33
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_bbb",
+            "ObjPos": [
+                27,
+                24
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        },
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                        {
+                            "ChildObjs": [
+                            ],
+                            "ObjColor": "#a0a0a4",
+                            "ObjName": "d_ccc",
+                            "ObjPos": [
+                                46,
+                                33
+                            ],
+                            "ObjShape": 0,
+                            "ObjSize": [
+                                100,
+                                100
+                            ]
+                        }
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_bbb",
+                    "ObjPos": [
+                        27,
+                        24
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_aaa",
+            "ObjPos": [
+                -107,
+                39
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "aaa",
+    "ObjPos": [
+        0,
+        0
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        100,
+        100
+    ]
+}

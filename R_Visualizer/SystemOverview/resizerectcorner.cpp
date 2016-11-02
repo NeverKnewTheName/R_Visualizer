@@ -1,6 +1,7 @@
 #include "resizerectcorner.h"
 #include "sysovrvobject.h"
 #include <QGraphicsSceneMouseEvent>
+#include <QCursor>
 
 #include <QDebug>
 
@@ -8,6 +9,7 @@ ResizeRectCorner::ResizeRectCorner(QGraphicsItem *parent) :
     QGraphicsRectItem(parent)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
+    setAcceptHoverEvents(true);
 }
 
 void ResizeRectCorner::setCornerPos(ResizeRectCorner::CornerPos cornerPos)
@@ -88,4 +90,14 @@ void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 
     //    QGraphicsRectItem::mouseMoveEvent(event);
+}
+
+void ResizeRectCorner::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    setCursor(QCursor(Qt::SizeAllCursor));
+}
+
+void ResizeRectCorner::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    setCursor(QCursor(Qt::ArrowCursor));
 }
