@@ -1,0 +1,30 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_rect",
+            "ObjPos": [
+                66,
+                56
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "rect",
+    "ObjPos": [
+        0,
+        0
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        100,
+        100
+    ]
+}

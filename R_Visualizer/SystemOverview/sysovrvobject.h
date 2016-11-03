@@ -38,7 +38,7 @@ public:
     ObjShapeTypes getShape() const;
 
     SysOvrvObject &operator=(const SysOvrvObject &obj);
-    SysOvrvObject *duplicate();
+    SysOvrvObject *duplicate(SysOvrvObject *parentObj = NULL);
 
     void setAsChild(bool isChild);
     bool isAChild() const;

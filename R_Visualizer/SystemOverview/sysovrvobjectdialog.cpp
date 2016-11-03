@@ -282,7 +282,7 @@ void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
     if(m_focusedItem == NULL)
         return;
 
-    SysOvrvObject* duplicatedObject = m_focusedItem->duplicate();
+    SysOvrvObject* duplicatedObject = m_focusedItem->duplicate(m_curSysOvrvObject);
     SysOvrvObject* duplicateObjParent = qgraphicsitem_cast<SysOvrvObject*>(duplicatedObject->parentItem());
     //The parent of the duplicated object shall always be the current object that is being edited by the current dialog!
     if(duplicateObjParent != NULL)

@@ -45,17 +45,19 @@ SysOvrvObject::~SysOvrvObject()
 {
     qDebug() << "(SysOvrvObject::~SysOvrvObject): deleting obj: " << getHashedName();
     SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject *>(parentItem());
-    if(parent != NULL)
-    {
-        qDebug() << "(SysOvrvObject::~SysOvrvObject): removing"  << getHashedName() << "from parent: " << parent->getHashedName();
-        parent->removeChildSysOvrvItem(this);
-    }
+    int i = 0;
     for(SysOvrvObject *child : childSysOvrvObjects)
     {
-        qDebug() << "(SysOvrvObject::~SysOvrvObject): Delete Child: " << static_cast<SysOvrvObject*>(child)->getHashedName() << " of " << getHashedName();
+        qDebug() << "Delete Child: " << i++;
+//        qDebug() << "(SysOvrvObject::~SysOvrvObject): Delete Child: " << static_cast<SysOvrvObject*>(child)->getHashedName() << " of " << getHashedName();
         delete child;
     }
     childSysOvrvObjects.clear();
+    if(parent != NULL)
+    {
+//        qDebug() << "(SysOvrvObject::~SysOvrvObject): removing"  << getHashedName() << "from parent: " << parent->getHashedName();
+        parent->removeChildSysOvrvItem(this);
+    }
     showResizeCorners(false);
     qDebug() << "(SysOvrvObject::~SysOvrvObject): deleted obj: " << getHashedName();
 }
@@ -159,7 +161,7 @@ SysOvrvObject::ObjShapeTypes SysOvrvObject::getShape() const
     return shapeType;
 }
 
-SysOvrvObject *SysOvrvObject::duplicate()
+SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
 {
     SysOvrvObject *duplicatedObject = new SysOvrvObject();
 
@@ -171,7 +173,7 @@ SysOvrvObject *SysOvrvObject::duplicate()
     duplicatedObject->m_BoundingRect.setHeight(this->getHeight());
     duplicatedObject->setResizeMode(this->getIsInResizeMode());
     duplicatedObject->setAsChild(true);
-    SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(this->parentItem());
+    SysOvrvObject *parent = (parentObj != NULL) ? qgraphicsitem_cast<SysOvrvObject*>(this->parentItem()) : parentObj;
     //ToDO!!! -- PROBABLE BUG HERE
     if(parent != NULL)
     {
@@ -180,7 +182,7 @@ SysOvrvObject *SysOvrvObject::duplicate()
 
     for(SysOvrvObject *child : childSysOvrvObjects)
     {
-        duplicatedObject->addChildSysOvrvItem(child->duplicate());
+        duplicatedObject->addChildSysOvrvItem(child->duplicate(this));
     }
 
     duplicatedObject->update();
@@ -397,8 +399,8 @@ QByteArray SysOvrvObject::parseToJson() const
     jsonSysOvrvObj["ObjName"] = this->getObjName();
     jsonSysOvrvObj["ObjColor"] = this->getMyColor().name(QColor::HexRgb);
     jsonSysOvrvObj["ObjShape"] = this->getShape();
-    objSize.append(QJsonValue(m_BoundingRect.width()));
-    objSize.append(QJsonValue(m_BoundingRect.height()));
+    objSize.append(QJsonValue(static_cast<double>(m_BoundingRect.width())));
+    objSize.append(QJsonValue(static_cast<double>(m_BoundingRect.height())));
     jsonSysOvrvObj["ObjSize"] = objSize;
     objPos.append(QJsonValue(static_cast<double>(pos().x())));
     objPos.append(QJsonValue(static_cast<double>(pos().y())));
@@ -486,11 +488,19 @@ void SysOvrvObject::updateCorners()
 void SysOvrvObject::focusInEvent(QFocusEvent *event)
 {
     setSelected(true);
+    for(SysOvrvObject *child : childSysOvrvObjects)
+    {
+        child->focusInEvent(event);
+    }
 }
 
 void SysOvrvObject::focusOutEvent(QFocusEvent *event)
 {
     setSelected(false);
+    for(SysOvrvObject *child : childSysOvrvObjects)
+    {
+        child->focusOutEvent(event);
+    }
 }
 
 void SysOvrvObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
