@@ -5,13 +5,13 @@
 #include <QHash>
 
 #include "resizerectcorner.h"
-
+#include "sysovrvtextlabel.h"
 
 class SysOvrvObject : public QGraphicsItem
 {
 public:
     explicit SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
-    explicit SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent = Q_NULLPTR);
+//    explicit SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent = Q_NULLPTR);
     ~SysOvrvObject();
 
     typedef enum Shapetypes
@@ -20,7 +20,8 @@ public:
         ObjShape_Square,
         ObjShape_Ellipse,
         ObjShape_Circle,
-        ObjShape_Triangle
+        ObjShape_Triangle,
+        ObjShape_Text
     }ObjShapeTypes;
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
@@ -37,7 +38,10 @@ public:
     void setShape(ObjShapeTypes shape);
     ObjShapeTypes getShape() const;
 
-    SysOvrvObject &operator=(const SysOvrvObject &obj);
+    SysOvrvTextLabel * addLabel();
+    SysOvrvTextLabel * addLabel(SysOvrvTextLabel *label);
+    SysOvrvTextLabel * addLabel(QString text, qreal x, qreal y);
+
     SysOvrvObject *duplicate(SysOvrvObject *parentObj = NULL);
 
     void setAsChild(bool isChild);
@@ -64,12 +68,15 @@ public:
     QByteArray parseToJson() const;
     void parseFromJson(QByteArray &jsonByteArray);
 
+    void msgReceived(quint16 id, quint8 code, QByteArray &canData);
 private:
     static int objCntr;
     int localObjCntr;
     bool isInResizeMode;
     bool isChildObject;
+    bool doubleClicked;
     QString objName;
+    QVector<SysOvrvTextLabel*> objTextlabels;
     QColor myColor;
     ObjShapeTypes shapeType;
     QVector<SysOvrvObject *> childSysOvrvObjects;
@@ -86,10 +93,6 @@ protected:
     void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) Q_DECL_OVERRIDE;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) Q_DECL_OVERRIDE;
-
-signals:
-
-public slots:
 
 };
 

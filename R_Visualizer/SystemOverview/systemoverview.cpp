@@ -107,21 +107,22 @@ void SystemOverview::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 
 void SystemOverview::newMessage(Data_PacketPtr ptr)
 {
-    QDateTime timeStamp = ptr->timestamp();
-    quint16 id = ptr->frame().ID_Standard;
-    QByteArray canData = ptr->frame().data;
+    ui->visualizerGraphicsView->getObjectStore()->receiveMessage(ptr);
+//    QDateTime timeStamp = ptr->timestamp();
+//    quint16 id = ptr->frame().ID_Standard;
+//    QByteArray canData = ptr->frame().data;
 
-    quint8 code = canData.at(0);
+//    quint8 code = canData.at(0);
 
-    if(code == 0x10u)
-    {
-        //            if(!this->square->getMyColor().name().compare( QColor(Qt::green).name()))
-        //                this->square->setMyColor(QColor(Qt::blue));
-        //            else
-        //                this->square->setMyColor(QColor(Qt::green));
-        //            this->square->update();
-    }
-    //SystemOverview::repaint();
+//    if(code == 0x10u)
+//    {
+//        //            if(!this->square->getMyColor().name().compare( QColor(Qt::green).name()))
+//        //                this->square->setMyColor(QColor(Qt::blue));
+//        //            else
+//        //                this->square->setMyColor(QColor(Qt::green));
+//        //            this->square->update();
+//    }
+//    //SystemOverview::repaint();
 }
 
 void SystemOverview::addNewObject(SysOvrvObject *obj, QPointF &pos)

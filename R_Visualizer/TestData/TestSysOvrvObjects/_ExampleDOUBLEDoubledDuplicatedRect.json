@@ -1,0 +1,120 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "childOfRect",
+            "ObjPos": [
+                65,
+                47
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        },
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_childOfRect",
+                    "ObjPos": [
+                        65,
+                        47
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_rect",
+            "ObjPos": [
+                -77,
+                50
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        },
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_childOfRect",
+                    "ObjPos": [
+                        65,
+                        47
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                },
+                {
+                    "ChildObjs": [
+                        {
+                            "ChildObjs": [
+                            ],
+                            "ObjColor": "#a0a0a4",
+                            "ObjName": "d_d_childOfRect",
+                            "ObjPos": [
+                                65,
+                                47
+                            ],
+                            "ObjShape": 0,
+                            "ObjSize": [
+                                100,
+                                100
+                            ]
+                        }
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_d_rect",
+                    "ObjPos": [
+                        -77,
+                        50
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_rect",
+            "ObjPos": [
+                216,
+                50
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "rect",
+    "ObjPos": [
+        -552,
+        -498
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        100,
+        100
+    ]
+}

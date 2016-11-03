@@ -56,6 +56,7 @@ private slots:
     void colorChanged(const QColor &newColor);
     void on_pushButton_clicked();
     void on_objectNameLE_textEdited(const QString &arg1);
+    void on_addLblBtn_clicked();
 };
 
 #endif // SYSOVRVOBJECTDIALOG_H

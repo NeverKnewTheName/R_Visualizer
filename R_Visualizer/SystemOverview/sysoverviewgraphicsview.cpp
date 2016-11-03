@@ -33,8 +33,10 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
         QAction * actionRmv = menu.addAction("Remove Object");
         QAction * actionUpdt = menu.addAction("Update Object");
+        QAction * duplicateSelectedObject = menu.addAction("Duplicate Object");
         connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
         connect(actionUpdt, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::updtObject);
+        connect(duplicateSelectedObject, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::duplicateObject);
     }
 
     menu.exec(event->globalPos());

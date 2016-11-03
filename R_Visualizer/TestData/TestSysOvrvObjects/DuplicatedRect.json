@@ -1,0 +1,45 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_d_Rect",
+                    "ObjPos": [
+                        0,
+                        0
+                    ],
+                    "ObjShape": 0,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_Rect",
+            "ObjPos": [
+                75,
+                43
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "Rect",
+    "ObjPos": [
+        -62,
+        -23
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        100,
+        100
+    ]
+}

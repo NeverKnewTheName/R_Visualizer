@@ -10,14 +10,16 @@ SOURCES += $$PWD//systemoverview.cpp \
     $$PWD/sysovrvobjectstore.cpp \
     $$PWD/sysovrvobject.cpp \
     $$PWD/sysovrvobjectdialog.cpp \
-    $$PWD/resizerectcorner.cpp
+    $$PWD/resizerectcorner.cpp \
+    $$PWD/sysovrvtextlabel.cpp
 
 HEADERS  += $$PWD//systemoverview.h \
     $$PWD/sysoverviewgraphicsview.h \
     $$PWD/sysovrvobjectstore.h \
     $$PWD/sysovrvobject.h \
     $$PWD/sysovrvobjectdialog.h \
-    $$PWD/resizerectcorner.h
+    $$PWD/resizerectcorner.h \
+    $$PWD/sysovrvtextlabel.h
 
 FORMS    += $$PWD//systemoverview.ui \
     $$PWD/sysovrvobjectdialog.ui

@@ -1,0 +1,120 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "childchild1",
+                    "ObjPos": [
+                        6,
+                        58
+                    ],
+                    "ObjShape": 4,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "child1",
+            "ObjPos": [
+                51,
+                30
+            ],
+            "ObjShape": 3,
+            "ObjSize": [
+                100,
+                100
+            ]
+        },
+        {
+            "ChildObjs": [
+                {
+                    "ChildObjs": [
+                        {
+                            "ChildObjs": [
+                            ],
+                            "ObjColor": "#a0a0a4",
+                            "ObjName": "d_childchild1",
+                            "ObjPos": [
+                                6,
+                                58
+                            ],
+                            "ObjShape": 4,
+                            "ObjSize": [
+                                100,
+                                100
+                            ]
+                        }
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_child1",
+                    "ObjPos": [
+                        51,
+                        30
+                    ],
+                    "ObjShape": 3,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                },
+                {
+                    "ChildObjs": [
+                        {
+                            "ChildObjs": [
+                            ],
+                            "ObjColor": "#a0a0a4",
+                            "ObjName": "d_d_childchild1",
+                            "ObjPos": [
+                                6,
+                                58
+                            ],
+                            "ObjShape": 4,
+                            "ObjSize": [
+                                100,
+                                100
+                            ]
+                        }
+                    ],
+                    "ObjColor": "#a0a0a4",
+                    "ObjName": "d_d_child1",
+                    "ObjPos": [
+                        -37,
+                        59
+                    ],
+                    "ObjShape": 3,
+                    "ObjSize": [
+                        100,
+                        100
+                    ]
+                }
+            ],
+            "ObjColor": "#a0a0a4",
+            "ObjName": "d_rect",
+            "ObjPos": [
+                161,
+                -33
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                100,
+                100
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "rect",
+    "ObjPos": [
+        -618,
+        -479
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        100,
+        100
+    ]
+}

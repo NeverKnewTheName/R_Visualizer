@@ -17,8 +17,9 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
 {
     m_jsonObjSave = m_curSysOvrvObject->parseToJson();
     ui->setupUi(this);
-    m_curSysOvrvObject->setResizeMode(true);
     this->setupDialog();
+    m_curSysOvrvObject->setResizeMode(true);
+
 }
 
 SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent) :
@@ -31,6 +32,7 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
     m_jsonObjSave = m_curSysOvrvObject->parseToJson();
     ui->setupUi(this);
     this->setupDialog();
+    m_curSysOvrvObject->setResizeMode(true);
     for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
     {
         childObj->setAsChild(false);
@@ -96,6 +98,8 @@ void SysOvrvObjectDialog::objectShapeChanged(int index)
     case SysOvrvObject::ObjShape_Triangle:
         m_curSysOvrvObject->setShape(SysOvrvObject::ObjShape_Triangle);
         break;
+    case SysOvrvObject::ObjShape_Text:
+        m_curSysOvrvObject->setShape(SysOvrvObject::ObjShape_Text);
     }
 }
 
@@ -128,7 +132,8 @@ void SysOvrvObjectDialog::setupDialog()
           << "Square"
           << "Ellipse"
           << "Circle"
-          << "Triangle";
+          << "Triangle"
+          << "Text";
 
     ui->objectShapeComboBox->addItems(items);
     connect(ui->objectShapeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SysOvrvObjectDialog::objectShapeChanged);
@@ -211,6 +216,7 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
                 // read file content
                 QByteArray jsonSysOvrvObj = jsonOpenFile.readAll();
                 m_curSysOvrvObject->parseFromJson(jsonSysOvrvObj); //ToDO check for error (-1)
+                m_curSysOvrvObject->setResizeMode(true);
                 for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
                 {
                     childObj->setAsChild(false);
@@ -281,19 +287,25 @@ void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
 {
     if(m_focusedItem == NULL)
         return;
-
-    SysOvrvObject* duplicatedObject = m_focusedItem->duplicate(m_curSysOvrvObject);
-    SysOvrvObject* duplicateObjParent = qgraphicsitem_cast<SysOvrvObject*>(duplicatedObject->parentItem());
-    //The parent of the duplicated object shall always be the current object that is being edited by the current dialog!
-    if(duplicateObjParent != NULL)
-    {
-        duplicateObjParent->removeChildSysOvrvItem(duplicatedObject);
-    }
-    m_curSysOvrvObject->addChildSysOvrvItem(duplicatedObject);
+    //IF the main object is to be duplicated, the main object shall be the parent of the duplicated object
+    SysOvrvObject* duplicateObjParent = (m_focusedItem == m_curSysOvrvObject) ? m_focusedItem : NULL;
+    SysOvrvObject* duplicatedObject = m_focusedItem->duplicate(duplicateObjParent);
+    duplicateObjParent = qgraphicsitem_cast<SysOvrvObject*>(duplicatedObject->parentItem());
+//    //The parent of the duplicated object shall always be the current object that is being edited by the current dialog!
+//    if(duplicateObjParent != NULL)
+//    {
+//        duplicateObjParent->removeChildSysOvrvItem(duplicatedObject);
+//    }
+//    m_curSysOvrvObject->addChildSysOvrvItem(duplicatedObject);
     duplicatedObject->setAsChild(false);
 }
 
 void SysOvrvObjectDialog::on_objectNameLE_textEdited(const QString &arg1)
 {
     m_curSysOvrvObject->setObjName(arg1);
+}
+
+void SysOvrvObjectDialog::on_addLblBtn_clicked()
+{
+    m_curSysOvrvObject->addLabel();
 }
