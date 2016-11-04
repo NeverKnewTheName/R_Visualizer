@@ -114,9 +114,6 @@ void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         painter->drawPath(path);
     }
         break;
-    case ObjShape_Text: //Text
-        //painter->drawText(rect, objText);
-        break;
     }
     //painter->setBrush(QBrush(Qt::red));
     //painter->drawText(rect, getHashedName());
@@ -502,9 +499,52 @@ void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
     }
 }
 
+void SysOvrvObject::addTrigger(quint16 id, quint8 code, SysOvrvTrigger *newTrigger)
+{
+    LocalTriggerStore[id][code].append(newTrigger);
+    addChildsTrigger(id, code, newTrigger);
+}
+
+void SysOvrvObject::addChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *newChildTrigger)
+{
+    GlobalTriggerStore[id][code].append(newChildTrigger);
+    SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(parentItem());
+    if(parent != NULL)
+        parent->addChildsTrigger(id, code, newChildTrigger);
+}
+
+void SysOvrvObject::removeTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove)
+{
+    LocalTriggerStore[id][code].removeAll(triggerToRemove);
+    removeChildsTrigger(id, code, triggerToRemove);
+}
+
+void SysOvrvObject::removeChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove)
+{
+    GlobalTriggerStore[id][code].removeAll(triggerToRemove);
+    SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(parentItem());
+    if(parent != NULL)
+        parent->removeChildsTrigger(id, code, triggerToRemove);
+}
+
 void SysOvrvObject::msgReceived(quint16 id, quint8 code, QByteArray &canData)
 {
     qDebug() << getHashedName() << ": received msg " << id << " - " << code;
+    QVector<SysOvrvTrigger*> triggers = GlobalTriggerStore[id][code];
+    for(SysOvrvTrigger *trigger : triggers)
+    {
+        trigger->trigger(canData);
+    }
+}
+
+QList<quint16> SysOvrvObject::getTriggerIDs() const
+{
+    return GlobalTriggerStore.uniqueKeys();
+}
+
+QList<quint8> SysOvrvObject::getTriggerCodesToID(quint16 id) const
+{
+    return GlobalTriggerStore.value(id).uniqueKeys();
 }
 
 void SysOvrvObject::updateCorners()

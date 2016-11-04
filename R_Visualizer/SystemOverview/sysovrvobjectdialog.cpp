@@ -1,5 +1,8 @@
 #include "sysovrvobjectdialog.h"
 #include "ui_sysovrvobjectdialog.h"
+
+#include "sysovrvobjtriggerdialog.h"
+
 #include <QColorDialog>
 #include <QFile>
 #include <QFileDialog>
@@ -76,7 +79,10 @@ void SysOvrvObjectDialog::on_edtPropertyBtn_clicked()
 
 void SysOvrvObjectDialog::on_edtTriggerBtn_clicked()
 {
-
+    if(m_focusedItem == NULL)
+        return;
+    SysOvrvObjTriggerDialog *triggerDiag = new SysOvrvObjTriggerDialog(m_focusedItem, this);
+    triggerDiag->exec();
 }
 
 void SysOvrvObjectDialog::objectShapeChanged(int index)
@@ -98,8 +104,6 @@ void SysOvrvObjectDialog::objectShapeChanged(int index)
     case SysOvrvObject::ObjShape_Triangle:
         m_curSysOvrvObject->setShape(SysOvrvObject::ObjShape_Triangle);
         break;
-    case SysOvrvObject::ObjShape_Text:
-        m_curSysOvrvObject->setShape(SysOvrvObject::ObjShape_Text);
     }
 }
 
@@ -132,8 +136,7 @@ void SysOvrvObjectDialog::setupDialog()
           << "Square"
           << "Ellipse"
           << "Circle"
-          << "Triangle"
-          << "Text";
+          << "Triangle";
 
     ui->objectShapeComboBox->addItems(items);
     connect(ui->objectShapeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SysOvrvObjectDialog::objectShapeChanged);

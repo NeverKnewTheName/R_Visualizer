@@ -6,6 +6,7 @@
 
 #include "resizerectcorner.h"
 #include "sysovrvtextlabel.h"
+#include "sysovrvtrigger.h"
 
 class SysOvrvObject : public QGraphicsItem
 {
@@ -20,8 +21,7 @@ public:
         ObjShape_Square,
         ObjShape_Ellipse,
         ObjShape_Circle,
-        ObjShape_Triangle,
-        ObjShape_Text
+        ObjShape_Triangle
     }ObjShapeTypes;
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
@@ -68,7 +68,14 @@ public:
     QByteArray parseToJson() const;
     void parseFromJson(QByteArray &jsonByteArray);
 
+    void addTrigger(quint16 id, quint8 code, SysOvrvTrigger *newTrigger);
+    void addChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *newChildTrigger);
+    void removeTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove);
+    void removeChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove);
     void msgReceived(quint16 id, quint8 code, QByteArray &canData);
+    QList<quint16> getTriggerIDs() const;
+    QList<quint8> getTriggerCodesToID(quint16 id) const;
+
 private:
     static int objCntr;
     int localObjCntr;
@@ -77,6 +84,8 @@ private:
     bool doubleClicked;
     QString objName;
     QVector<SysOvrvTextLabel*> objTextlabels;
+    QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> GlobalTriggerStore;
+    QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> LocalTriggerStore;
     QColor myColor;
     ObjShapeTypes shapeType;
     QVector<SysOvrvObject *> childSysOvrvObjects;
