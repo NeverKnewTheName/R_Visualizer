@@ -17,7 +17,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTreeView" name="TriggerTreeView"/>
+      <widget class="QColumnView" name="TriggerColumnView"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">

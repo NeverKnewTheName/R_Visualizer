@@ -7,23 +7,24 @@ SysOvrvTriggerModel::SysOvrvTriggerModel(QObject *parent)
 
 QVariant SysOvrvTriggerModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    // FIXME: Implement me!
-    switch(orientation)
+    if (role == Qt::DisplayRole)
     {
-    case Qt::Horizontal:
-        switch(section)
-        {
-        case 0:
-            return QString("ID");
-            break;
-        case 1:
-            return QString("Code");
-            break;
-        case 2:
-            return QString("Trigger Type");
-            break;
+        if (orientation == Qt::Horizontal) {
+            switch (section)
+            {
+            case COL_ID:
+                return QString("ID");
+                break;
+            case COL_Code:
+                return QString("Code");
+                break;
+            case COL_TriggerType:
+                return QString("Trigger Type");
+                break;
+            }
         }
     }
+    return QVariant();
 }
 
 bool SysOvrvTriggerModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
@@ -38,12 +39,17 @@ bool SysOvrvTriggerModel::setHeaderData(int section, Qt::Orientation orientation
 
 QModelIndex SysOvrvTriggerModel::index(int row, int column, const QModelIndex &parent) const
 {
-    // FIXME: Implement me!
+    if(!parent.isValid())
+    {
+        return QModelIndex();
+    }
+    return this->createIndex(row,column);
 }
 
 QModelIndex SysOvrvTriggerModel::parent(const QModelIndex &index) const
 {
     // FIXME: Implement me!
+    QModelIndex();
 }
 
 int SysOvrvTriggerModel::rowCount(const QModelIndex &parent) const
@@ -52,6 +58,7 @@ int SysOvrvTriggerModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     // FIXME: Implement me!
+    return 0;
 }
 
 int SysOvrvTriggerModel::columnCount(const QModelIndex &parent) const
@@ -59,24 +66,24 @@ int SysOvrvTriggerModel::columnCount(const QModelIndex &parent) const
     if (!parent.isValid())
         return 0;
 
-    return 3;
+    return COL_NR_OF_COLS;
 }
 
-bool SysOvrvTriggerModel::hasChildren(const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-}
+//bool SysOvrvTriggerModel::hasChildren(const QModelIndex &parent) const
+//{
+//    // FIXME: Implement me!
+//}
 
-bool SysOvrvTriggerModel::canFetchMore(const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-    return false;
-}
+//bool SysOvrvTriggerModel::canFetchMore(const QModelIndex &parent) const
+//{
+//    // FIXME: Implement me!
+//    return false;
+//}
 
-void SysOvrvTriggerModel::fetchMore(const QModelIndex &parent)
-{
-    // FIXME: Implement me!
-}
+//void SysOvrvTriggerModel::fetchMore(const QModelIndex &parent)
+//{
+//    // FIXME: Implement me!
+//}
 
 QVariant SysOvrvTriggerModel::data(const QModelIndex &index, int role) const
 {
@@ -102,7 +109,7 @@ Qt::ItemFlags SysOvrvTriggerModel::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    return Qt::ItemIsEditable; // FIXME: Implement me!
+    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable | QAbstractItemModel::flags(index);
 }
 
 bool SysOvrvTriggerModel::insertRows(int row, int count, const QModelIndex &parent)

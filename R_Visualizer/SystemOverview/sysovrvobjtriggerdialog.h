@@ -2,8 +2,10 @@
 #define SYSOVRVOBJTRIGGERDIALOG_H
 
 #include <QDialog>
+#include <QStandardItemModel>
 
-#include "sysovrvobject.h"
+class SysOvrvObject;
+class SysOvrvTriggerModel;
 
 namespace Ui {
 class SysOvrvObjTriggerDialog;
@@ -29,6 +31,8 @@ private slots:
 private:
     Ui::SysOvrvObjTriggerDialog *ui;
     SysOvrvObject *ObjectToTrigger;
+    SysOvrvTriggerModel *TriggerModel;
+    QStandardItemModel *stdModel;
 };
 
 #endif // SYSOVRVOBJTRIGGERDIALOG_H

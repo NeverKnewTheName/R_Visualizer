@@ -81,7 +81,19 @@ void SysOvrvObjectDialog::on_edtTriggerBtn_clicked()
 {
     if(m_focusedItem == NULL)
         return;
+
+    // // // DEBUG // // //
+    m_focusedItem->addTrigger(42,55,new SysOvrvTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(42,57,new SysOvrvTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(42,100,new SysOvrvTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(12,100,new SysOvrvTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(12,10,new SysOvrvTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(13,1,new SysOvrvTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(13,1,new SysOvrvTrigger(m_focusedItem));
+    // // // DEBUG // // //
+
     SysOvrvObjTriggerDialog *triggerDiag = new SysOvrvObjTriggerDialog(m_focusedItem, this);
+
     triggerDiag->exec();
 }
 

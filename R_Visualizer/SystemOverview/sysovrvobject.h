@@ -75,6 +75,7 @@ public:
     void msgReceived(quint16 id, quint8 code, QByteArray &canData);
     QList<quint16> getTriggerIDs() const;
     QList<quint8> getTriggerCodesToID(quint16 id) const;
+    QVector<SysOvrvTrigger*> getTriggersToIDandCode(quint16 id, quint8 code) const;
 
 private:
     static int objCntr;
