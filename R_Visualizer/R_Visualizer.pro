@@ -67,6 +67,7 @@ RESOURCES += \
     ressources.qrc
 
 
+include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
 include(SystemOverview/SystemOverview.pri)
 include(SendMessages/SendMessages.pri)
 include(MessageConfig/MessageConfig.pri)

@@ -14,7 +14,9 @@ SOURCES += $$PWD//systemoverview.cpp \
     $$PWD/sysovrvtextlabel.cpp \
     $$PWD/sysovrvtrigger.cpp \
     $$PWD/sysovrvobjtriggerdialog.cpp \
-    $$PWD/sysovrvtriggermodel.cpp
+    $$PWD/sysovrvtriggermodel.cpp \
+    $$PWD/sysovrvtriggereditorwidget.cpp \
+    $$PWD/evaluatortablemodel.cpp
 
 HEADERS  += $$PWD//systemoverview.h \
     $$PWD/sysoverviewgraphicsview.h \
@@ -25,8 +27,11 @@ HEADERS  += $$PWD//systemoverview.h \
     $$PWD/sysovrvtextlabel.h \
     $$PWD/sysovrvtrigger.h \
     $$PWD/sysovrvobjtriggerdialog.h \
-    $$PWD/sysovrvtriggermodel.h
+    $$PWD/sysovrvtriggermodel.h \
+    $$PWD/sysovrvtriggereditorwidget.h \
+    $$PWD/evaluatortablemodel.h
 
 FORMS    += $$PWD//systemoverview.ui \
     $$PWD/sysovrvobjectdialog.ui \
-    $$PWD/sysovrvobjtriggerdialog.ui
+    $$PWD/sysovrvobjtriggerdialog.ui \
+    $$PWD/sysovrvtriggereditorwidget.ui

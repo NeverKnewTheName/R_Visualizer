@@ -547,7 +547,7 @@ QList<quint8> SysOvrvObject::getTriggerCodesToID(quint16 id) const
     return GlobalTriggerStore.value(id).uniqueKeys();
 }
 
-QVector<SysOvrvTrigger *> SysOvrvObject::getTriggersToIDandCode(quint16 id, quint8 code) const
+QVector<SysOvrvTrigger *> SysOvrvObject::getTriggersToIDandCode(quint16 id, quint8 code)
 {
     return GlobalTriggerStore.value(id).value(code);
 }

@@ -6,6 +6,7 @@
 
 class SysOvrvObject;
 class SysOvrvTriggerModel;
+class SysOvrvTriggerEditorWidget;
 
 namespace Ui {
 class SysOvrvObjTriggerDialog;
@@ -29,10 +30,13 @@ private slots:
     void on_EditTriggerBtn_clicked();
 
 private:
+    void setupModel(SysOvrvObject *sysOvrvObj);
+
     Ui::SysOvrvObjTriggerDialog *ui;
     SysOvrvObject *ObjectToTrigger;
     SysOvrvTriggerModel *TriggerModel;
     QStandardItemModel *stdModel;
+    SysOvrvTriggerEditorWidget *previewEditor;
 };
 
 #endif // SYSOVRVOBJTRIGGERDIALOG_H
