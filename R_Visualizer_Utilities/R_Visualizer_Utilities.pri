@@ -9,4 +9,5 @@ HEADERS  += \
 
 FORMS += \
     $$PWD/templatevalueevaluatorcreatorwidget.ui \
-    $$PWD/limitevaluatorcreatorwidget.ui
+    $$PWD/limitevaluatorcreatorwidget.ui \
+    $$PWD/rangeevaluatorcreatorwidget.ui

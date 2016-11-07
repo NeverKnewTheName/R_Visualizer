@@ -28,14 +28,17 @@ SysOvrvObjTriggerDialog::SysOvrvObjTriggerDialog(SysOvrvObject *sysOvrvObj, QWid
     sizes.append(200);
     sizes.append(200);
     sizes.append(200);
-    sizes.append(previewEditor->sizeHint().width());
+    sizes.append(previewEditor->sizeHint().width()+200);
     ui->TriggerColumnView->setColumnWidths(sizes);
+
 //    connect(ui->TriggerColumnView, &QColumnView::updatePreviewWidget, this->previewEditor, &SysOvrvTriggerEditorWidget::RUpdatewidgetdata);
     connect(ui->TriggerColumnView, SIGNAL(updatePreviewWidget(QModelIndex)), previewEditor, SLOT(RUpdatewidgetdata(QModelIndex)));
 }
 
 SysOvrvObjTriggerDialog::~SysOvrvObjTriggerDialog()
 {
+    delete stdModel;
+    delete previewEditor;
     delete ui;
 }
 

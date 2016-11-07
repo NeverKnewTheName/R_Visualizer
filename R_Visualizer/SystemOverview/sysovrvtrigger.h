@@ -2,6 +2,7 @@
 #define SYSOVRVTRIGGER_H
 
 #include <QColor>
+#include <QVector>
 
 class SysOvrvObject;
 class SysOvrvTextLabel;
@@ -24,7 +25,8 @@ public:
     SysOvrvTrigger(SysOvrvObject *objToTrigger, TriggerType type);
 
     virtual void trigger(QByteArray &canData) = 0;
-    virtual QString &printToString();
+    virtual QString printToString() const = 0;
+    virtual QString printFunctionToString() const = 0;
 
     SysOvrvObject *getRelatedSysOvrvObj();
 
@@ -32,13 +34,14 @@ public:
     TriggerType getType() const;
     void setType(const TriggerType &value);
 
-    TemplateValueEvaluator *getEvaluator() const;
-    void setEvaluator(TemplateValueEvaluator *value);
+    QVector<TemplateValueEvaluator *> getEvaluators() const;
+    void addEvaluator(TemplateValueEvaluator *value);
+    void removeEvaluator(TemplateValueEvaluator *value);
 
 private:
     bool evaluateData(QByteArray &canData);
     SysOvrvObject *m_pObjToTrigger;
-    TemplateValueEvaluator *evaluator;
+    QVector<TemplateValueEvaluator *> evaluators;
     TriggerType type;
 };
 
@@ -48,6 +51,8 @@ public:
     SysOvrvColorChangeTrigger(SysOvrvObject *objToTrigger);
 
     virtual void trigger(QByteArray &canData) override;
+    virtual QString printToString() const override;
+    virtual QString printFunctionToString() const override;
 
     QColor getColorToChangeTo() const;
     void setColorToChangeTo(const QColor &value);
@@ -66,6 +71,8 @@ public:
     SysOvrvTextChangeTrigger(SysOvrvObject *objToTrigger);
 
     virtual void trigger(QByteArray &canData) override;
+    virtual QString printToString() const override;
+    virtual QString printFunctionToString() const override;
 
     SysOvrvTextLabel *getTextLabelToChange() const;
     void setTextLabelToChange(SysOvrvTextLabel *value);
@@ -82,6 +89,8 @@ class SysOvrvDimensionChangeTrigger : public SysOvrvTrigger
 {
 public:
     SysOvrvDimensionChangeTrigger(SysOvrvObject *objToTrigger);
+    virtual QString printToString() const override;
+    virtual QString printFunctionToString() const override;
 
     typedef enum {
         Top = 0x1,
@@ -93,7 +102,6 @@ public:
     virtual void trigger(QByteArray &canData) override;
 
     void setupTrigger(Dimension dimensionToExpandTo, qreal startPercentage, qreal endPercentage);
-
 
 private:
     Dimension dimensionToExpandTo;

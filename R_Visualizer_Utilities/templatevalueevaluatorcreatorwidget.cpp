@@ -1,8 +1,14 @@
 #include "templatevalueevaluatorcreatorwidget.h"
 #include "ui_limitevaluatorcreatorwidget.h"
+#include "ui_rangeevaluatorcreatorwidget.h"
 #include "ui_templatevalueevaluatorcreatorwidget.h"
 
 #include "templatevalueevaluator.h"
+
+
+
+
+
 
 LimitEvaluatorCreatorWidget::LimitEvaluatorCreatorWidget(QWidget *parent) :
     QWidget(parent),
@@ -52,6 +58,71 @@ void LimitEvaluatorCreatorWidget::updateLimitEvaluator(SysOvrvTriggerLimitEvalua
     evaluatorToUpdate->setEvalOp(evalOp);
 }
 
+
+
+
+
+
+RangeEvaluatorCreatorWidget::RangeEvaluatorCreatorWidget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::RangeEvaluatorCreatorWidget)
+{
+    ui->setupUi(this);
+
+    QStringList DataTypeItems;
+    DataTypeItems << "Integer" << "Float";
+    ui->DataTypeComboBox->addItems(DataTypeItems);
+
+    QStringList EvaluationOperationItems;
+    EvaluationOperationItems << "Is in range" << "Is out of range";
+    ui->EvalOpComboBox->addItems(EvaluationOperationItems);
+
+    ui->LowerBoundaryValueLineEdit->setText(QString::number(0));
+    ui->UpperBoundaryValueLineEdit->setText(QString::number(100));
+}
+
+RangeEvaluatorCreatorWidget::~RangeEvaluatorCreatorWidget()
+{
+    delete ui;
+}
+
+void RangeEvaluatorCreatorWidget::populateUi(SysOvrvTriggerRangeEvaluator *RangeEvaluator)
+{
+    ui->EvalOpComboBox->setCurrentIndex(static_cast<int>(RangeEvaluator->getEvalOp()));
+    ui->LowerBoundaryValueLineEdit->setText(QString::number(RangeEvaluator->getLowerBoundary()));
+    ui->UpperBoundaryValueLineEdit->setText(QString::number(RangeEvaluator->getUpperBoundary()));
+    // // // DEBUG // // //
+    ui->DataTypeComboBox->setCurrentIndex(0);
+    ui->DataTypeComboBox->setEditable(false);
+    // // // DEBUG // // //
+}
+
+SysOvrvTriggerRangeEvaluator *RangeEvaluatorCreatorWidget::createRangeEvaluator() const
+{
+    int lowerBoundaryValue = ui->LowerBoundaryValueLineEdit->text().toInt();
+    int upperBoundaryValue = ui->UpperBoundaryValueLineEdit->text().toInt();
+    bool includeMarginValues = false;
+    SysOvrvTriggerRangeEvaluator::RangeEvaluatorOperation evalOp = static_cast<SysOvrvTriggerRangeEvaluator::RangeEvaluatorOperation>(ui->EvalOpComboBox->currentIndex());
+    SysOvrvTriggerRangeEvaluator * newlyCreatedRangeEvaluator = new SysOvrvTriggerRangeEvaluator(lowerBoundaryValue, upperBoundaryValue, evalOp, includeMarginValues);
+    return newlyCreatedRangeEvaluator;
+}
+
+void RangeEvaluatorCreatorWidget::updateRangeEvaluator(SysOvrvTriggerRangeEvaluator *evaluatorToUpdate) const
+{
+    int lowerBoundaryValue = ui->LowerBoundaryValueLineEdit->text().toInt();
+    int upperBoundaryValue = ui->UpperBoundaryValueLineEdit->text().toInt();
+    bool includeMarginValues = false;
+    SysOvrvTriggerRangeEvaluator::RangeEvaluatorOperation evalOp = static_cast<SysOvrvTriggerRangeEvaluator::RangeEvaluatorOperation>(ui->EvalOpComboBox->currentIndex());
+    evaluatorToUpdate->setLowerBoundary(lowerBoundaryValue);
+    evaluatorToUpdate->setUpperBoundary(upperBoundaryValue);
+    evaluatorToUpdate->setEvalOp(evalOp);
+}
+
+
+
+
+
+
 TemplateValueEvaluatorCreatorWidget::TemplateValueEvaluatorCreatorWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TemplateValueEvaluatorCreatorWidget),
@@ -81,7 +152,7 @@ TemplateValueEvaluatorCreatorWidget::TemplateValueEvaluatorCreatorWidget(Templat
         static_cast<LimitEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->populateUi(static_cast<SysOvrvTriggerLimitEvaluator *>(EvaluatorToEdit));
         break;
     case TemplateValueEvaluator::RangeEvaluator:
-//        static_cast<RangeEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->populateUi(static_cast<SysOvrvTriggerRangeEvaluator *>(EvaluatorToEdit));
+        static_cast<RangeEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->populateUi(static_cast<SysOvrvTriggerRangeEvaluator *>(EvaluatorToEdit));
         break;
     }
 }
@@ -108,7 +179,7 @@ void TemplateValueEvaluatorCreatorWidget::on_EvaluatorTypeComboBox_currentIndexC
         SpecificEvaluatorCreatorWidget = new LimitEvaluatorCreatorWidget(this);
         break;
     case TemplateValueEvaluator::RangeEvaluator:
-//        SpecificEvaluatorCreatorWidget = new RangeEvaluatorCreatorWidget(this);
+        SpecificEvaluatorCreatorWidget = new RangeEvaluatorCreatorWidget(this);
         break;
     }
     if(SpecificEvaluatorCreatorWidget != NULL)
@@ -128,10 +199,10 @@ void TemplateValueEvaluatorCreatorWidget::on_AddEvaluatorPushButton_clicked()
             static_cast<LimitEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->updateLimitEvaluator(static_cast<SysOvrvTriggerLimitEvaluator*>(EvaluatorToEdit));
         break;
     case TemplateValueEvaluator::RangeEvaluator:
-//        if(EvaluatorToEdit == NULL)
-//            newlyCreatedEvaluator = static_cast<RangeEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->createRangeEvaluator();
-//        else
-//            static_cast<RangeEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->updateRangeEvaluator(static_cast<SysOvrvTriggerRangeEvaluator*>(EvaluatorToEdit));
+        if(EvaluatorToEdit == NULL)
+            EvaluatorToEdit = static_cast<RangeEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->createRangeEvaluator();
+        else
+            static_cast<RangeEvaluatorCreatorWidget*>(SpecificEvaluatorCreatorWidget)->updateRangeEvaluator(static_cast<SysOvrvTriggerRangeEvaluator*>(EvaluatorToEdit));
         break;
     }
     emit newTemplateValueEvaluatorCreated(EvaluatorToEdit);

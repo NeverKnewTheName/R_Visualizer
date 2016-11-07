@@ -93,16 +93,20 @@ bool EvaluatorTablemodel::removeRow(TemplateValueEvaluator *EvaluatorToRemove)
     return true;
 }
 
+bool EvaluatorTablemodel::removeRow(int row, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, row);
+    EvaluatorStore.removeAt(row);
+    endRemoveRows();
+    return true;
+}
 
 bool EvaluatorTablemodel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    beginRemoveRows(parent, row, row + count - 1);
-    //    row--;
     while(count--)
     {
-        EvaluatorStore.removeAt(row);
+        removeRow(row, parent);
     }
-    endRemoveRows();
     return true;
 }
 

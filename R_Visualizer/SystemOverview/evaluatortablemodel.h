@@ -29,6 +29,7 @@ public:
 
     // Remove data:
     bool removeRow(TemplateValueEvaluator *EvaluatorToRemove);
+    bool removeRow(int row, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 public slots:

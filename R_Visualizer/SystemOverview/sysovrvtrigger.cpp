@@ -18,7 +18,6 @@ QString TriggerNames[SysOvrvTrigger::NrOfTriggers] =
 
 SysOvrvTrigger::SysOvrvTrigger(SysOvrvObject *objToTrigger, TriggerType type) :
     m_pObjToTrigger(objToTrigger),
-    evaluator(NULL),
     type(type)
 {
 
@@ -27,11 +26,6 @@ SysOvrvTrigger::SysOvrvTrigger(SysOvrvObject *objToTrigger, TriggerType type) :
 void SysOvrvTrigger::trigger(QByteArray &canData)
 {
     qDebug() << "Triggered";
-}
-
-QString &SysOvrvTrigger::printToString()
-{
-    return TriggerNames[type];
 }
 
 SysOvrvObject *SysOvrvTrigger::getRelatedSysOvrvObj()
@@ -49,14 +43,19 @@ void SysOvrvTrigger::setType(const TriggerType &value)
     type = value;
 }
 
-TemplateValueEvaluator *SysOvrvTrigger::getEvaluator() const
+QVector<TemplateValueEvaluator *> SysOvrvTrigger::getEvaluators() const
 {
-    return evaluator;
+    return evaluators;
 }
 
-void SysOvrvTrigger::setEvaluator(TemplateValueEvaluator *value)
+void SysOvrvTrigger::addEvaluator(TemplateValueEvaluator *value)
 {
-    evaluator = value;
+    evaluators.append(value);
+}
+
+void SysOvrvTrigger::removeEvaluator(TemplateValueEvaluator *value)
+{
+    evaluators.removeAll(value);
 }
 
 SysOvrvColorChangeTrigger::SysOvrvColorChangeTrigger(SysOvrvObject *objToTrigger) :
@@ -68,6 +67,18 @@ SysOvrvColorChangeTrigger::SysOvrvColorChangeTrigger(SysOvrvObject *objToTrigger
 void SysOvrvColorChangeTrigger::trigger(QByteArray &canData)
 {
     qDebug() << "ColorChangeTrigger";
+}
+
+QString SysOvrvColorChangeTrigger::printToString() const
+{
+    return QString("ColorChanageTrigger");
+}
+
+QString SysOvrvColorChangeTrigger::printFunctionToString() const
+{
+    //ToDO iterate Evaluators and add to string;
+//    QString("if %1");
+    return QString("Change Color from %1 to %2 %3").arg(this->initialColor.name(QColor::HexRgb)).arg(this->colorToChangeTo.name(QColor::HexRgb)).arg("");
 }
 
 QColor SysOvrvColorChangeTrigger::getColorToChangeTo() const
@@ -101,6 +112,18 @@ void SysOvrvTextChangeTrigger::trigger(QByteArray &canData)
     qDebug() << "TextChangeTrigger";
 }
 
+QString SysOvrvTextChangeTrigger::printToString() const
+{
+    return QString("TextChangeTrigger");
+}
+
+QString SysOvrvTextChangeTrigger::printFunctionToString() const
+{
+    //ToDO iterate Evaluators and add to string;
+//    QString("if %1");
+    return QString("Change label text to %1 %2").arg(this->textToChangeTo).arg("");
+}
+
 SysOvrvTextLabel *SysOvrvTextChangeTrigger::getTextLabelToChange() const
 {
     return textLabelToChange;
@@ -128,6 +151,49 @@ SysOvrvDimensionChangeTrigger::SysOvrvDimensionChangeTrigger(SysOvrvObject *objT
     endChangePercentage(100)
 {
 
+}
+
+QString SysOvrvDimensionChangeTrigger::printToString() const
+{
+    return QString("DimensionChangeTrigger");
+}
+
+QString SysOvrvDimensionChangeTrigger::printFunctionToString() const
+{
+    //ToDO iterate Evaluators and add to string;
+//    QString("if %1");
+    QString dimensionString;
+    if(this->dimensionToExpandTo & Top)
+    {
+        dimensionString.append("top");
+    }
+    if(this->dimensionToExpandTo & Bottom)
+    {
+        if(!dimensionString.isEmpty())
+        {
+            dimensionString.append(" and ");
+        }
+        dimensionString.append("bottom");
+    }
+    if(this->dimensionToExpandTo & Left)
+    {
+        if(!dimensionString.isEmpty())
+        {
+            dimensionString.append(" and ");
+        }
+        dimensionString.append("left");
+    }
+    if(this->dimensionToExpandTo & Right)
+    {
+        if(!dimensionString.isEmpty())
+        {
+            dimensionString.append(" and ");
+        }
+        dimensionString.append("right");
+    }
+
+
+    return QString("Change Dimension %1 from %2 % to %3 % %4").arg(dimensionString).arg(this->startChangePercentage).arg(this->endChangePercentage).arg("");
 }
 
 void SysOvrvDimensionChangeTrigger::trigger(QByteArray &canData)

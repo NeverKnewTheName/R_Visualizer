@@ -5,10 +5,12 @@
 
 class TemplateValueEvaluator;
 class SysOvrvTriggerLimitEvaluator;
+class SysOvrvTriggerRangeEvaluator;
 
 namespace Ui {
 class TemplateValueEvaluatorCreatorWidget;
 class LimitEvaluatorCreatorWidget;
+class RangeEvaluatorCreatorWidget;
 }
 
 class LimitEvaluatorCreatorWidget : public QWidget
@@ -27,6 +29,24 @@ private slots:
 private:
     Ui::LimitEvaluatorCreatorWidget *ui;
 };
+
+
+class RangeEvaluatorCreatorWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit RangeEvaluatorCreatorWidget(QWidget *parent = 0);
+    ~RangeEvaluatorCreatorWidget();
+
+    void populateUi(SysOvrvTriggerRangeEvaluator *RangeEvaluator);
+    SysOvrvTriggerRangeEvaluator *createRangeEvaluator() const;
+    void updateRangeEvaluator(SysOvrvTriggerRangeEvaluator *evaluatorToUpdate) const;
+private:
+    Ui::RangeEvaluatorCreatorWidget *ui;
+};
+
+
 
 class TemplateValueEvaluatorCreatorWidget : public QWidget
 {

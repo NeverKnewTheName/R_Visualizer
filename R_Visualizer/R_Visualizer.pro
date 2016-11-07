@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     msglimitfilterproxy.cpp \
     msgtableview.cpp \
     idcompleter.cpp \
-    hugeqvector.cpp
+    hugeqvector.cpp \
+    msgparser.cpp
 
 HEADERS  += mainwindow.h \
     mysquare.h \
@@ -59,7 +60,8 @@ HEADERS  += mainwindow.h \
     msglimitfilterproxy.h \
     msgtableview.h \
     idcompleter.h \
-    hugeqvector.h
+    hugeqvector.h \
+    msgparser.h
 
 FORMS    += mainwindow.ui
 

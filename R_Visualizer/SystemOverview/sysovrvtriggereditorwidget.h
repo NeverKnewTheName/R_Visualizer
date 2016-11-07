@@ -5,6 +5,7 @@
 
 class SysOvrvTrigger;
 class EvaluatorTablemodel;
+class TemplateValueEvaluator;
 
 namespace Ui {
 class SysOvrvTriggerEditorWidget;
@@ -34,6 +35,7 @@ private slots:
     void RUpdatewidgetdata(const QModelIndex &index);
     void on_IDLineEdit_textEdited(const QString &arg1);
     void on_AddEvaluatorPushButton_clicked();
+    void EvaluatorAdded(TemplateValueEvaluator*evalToAdd);
     void on_EditEvaluatorPushButton_clicked();
     void on_RemoveEvaluatorPushButton_clicked();
 };

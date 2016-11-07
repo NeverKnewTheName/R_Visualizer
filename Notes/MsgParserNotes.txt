@@ -1,0 +1,32 @@
+MsgParser 
+
+MsgParser --- Pattern
+Token:
+#CX##\CX#       -- Conversion X with X: 0 1 2 ( DEC HEX BIN ) -- MAY ONLY SURROUND WHOLE OPERATIONS (not inside a nested operation)
+#OX##\OX#     -- Operation X with X: 0 1 2 3 4 5 6 7 8 9 ( + - * / % >> << & | ^ ) -- can be nested
+#DX#            -- Data byte nr X with X: 0 1 2 3 4 5 6
+#VX#            -- Value X with X: integer value
+#RX#            -- Result of preceding Operation X with X: integer value
+
+MsgParser --- Regular Expression
+Operator
+//#OP(\d+)#\(((#((Data)|(Val))(\d+)#)|#((Res)\d+)#)((#((Data)|(Val))(\d+)#)|#((Res)\d+)#)\)#\/OP\1#  -- DEPRECATED
+(#O(\d+)##((?:D)|(?:V)|(?:R))(\d+)##((?:D)|(?:V)|(?:R))(\d+)##\/O\2#)  --> CaptureGroups: 1(Whole expression as String) 2(Operator) 3(OperandOneType) 4(OperandOneValue) 5(OperandTwoType) 6(OperandTwoValue)
+Converter
+#C(\d+)#.*#\/C\1#
+
+MsgParser --- Example
+Operator
+#O1##D1##D0##/O1#                     --- Data1 - Data0
+
+#O0##O6##D0##V8##/O6##D1##/O0#      --- (Data0 << 8) + Data1    -->  #O0#(#R0##D1#)#/O0# with #R0# == Data0 << 8
+#O0##R0##D1##/O0#                     --- #R0# + Data 1         --> See Above
+
+Converter
+#C0##D0##/C0#                           --- Data0 in DEC
+#C1##V15##/C1#                          --- 0xF
+#C2##R0##/C2#                           --- Result of Operation 0 in BIN
+
+
+Receiver:	#HEX#(#OP#(#OP#(#Data0##<<#8)#/OP##+##Data1#)#/OP#)#/HEX#
+Data:	#BIN#(#OP#(#OP#(#Data2##<<#5)#/OP##+##Data3#)#/OP#)#/BIN#

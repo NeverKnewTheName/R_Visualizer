@@ -49,9 +49,9 @@ SysOvrvObjectDialog::~SysOvrvObjectDialog()
 
 void SysOvrvObjectDialog::on_addPropertyBtn_clicked()
 {
-    SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog();
-    connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectDialog::addObjectToObject);
-    addSysOvrvObjectDialog->exec();
+    SysOvrvObjectDialog addSysOvrvObjectDialog;// = new SysOvrvObjectDialog();
+    connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectDialog::addObjectToObject);
+    addSysOvrvObjectDialog.exec();
 }
 
 void SysOvrvObjectDialog::on_rmvPropertyBtn_clicked()

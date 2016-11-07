@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LimitEvaluatorCreatorWidget</class>
- <widget class="QWidget" name="LimitEvaluatorCreatorWidget">
+ <class>RangeEvaluatorCreatorWidget</class>
+ <widget class="QWidget" name="RangeEvaluatorCreatorWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
-    <height>108</height>
+    <width>372</width>
+    <height>146</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -30,25 +30,35 @@
    <item row="0" column="1">
     <widget class="QComboBox" name="DataTypeComboBox"/>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="LimitValueLabel">
-     <property name="text">
-      <string>Limit value:</string>
-     </property>
-    </widget>
+   <item row="4" column="1">
+    <widget class="QComboBox" name="EvalOpComboBox"/>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="LimitValueLineEdit"/>
-   </item>
-   <item row="2" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="EvalOpLabel">
      <property name="text">
       <string>Evaluation operation:</string>
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="LowerBoundaryValueLabel">
+     <property name="text">
+      <string>Lower boundary</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="1">
-    <widget class="QComboBox" name="EvalOpComboBox"/>
+    <widget class="QLineEdit" name="LowerBoundaryValueLineEdit"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="UpperBoundaryLabel">
+     <property name="text">
+      <string>Upper boundary</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="UpperBoundaryValueLineEdit"/>
    </item>
   </layout>
  </widget>

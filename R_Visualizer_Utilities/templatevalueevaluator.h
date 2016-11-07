@@ -13,6 +13,7 @@ public:
     } EvaluatorType;
 
     TemplateValueEvaluator(){}
+    virtual ~TemplateValueEvaluator(){}
     virtual bool evaluate(int curValue) = 0;
 
     virtual QString printName() const = 0;
@@ -160,6 +161,37 @@ public:
         default:
             return false;
         }
+    }
+
+    virtual QString printName() const override
+    {
+        return QString("RangeEvaluator");
+    }
+
+    virtual QString printFunction() const override
+    {
+        QString opName;
+        QString marginValues = QString("margin values ");
+        if(this->includeMargins)
+        {
+            marginValues.append("included");
+        }
+        else
+        {
+            marginValues.append("excluded");
+        }
+        switch(evalOp)
+        {
+        case IsInRange:
+            opName = QString("is in the range of");
+            break;
+        case IsOutOfRange:
+            opName = QString("is out of the range ");
+            break;
+        default:
+            return false;
+        }
+        return QString("Triggered if Value %1 %2 and %3 (%4)").arg(opName).arg(QString::number(lowerBoundary)).arg(QString::number(upperBoundary)).arg(marginValues);
     }
 
     virtual EvaluatorType getEvalType() const
