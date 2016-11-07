@@ -38,7 +38,7 @@ public:
     void addEvaluator(TemplateValueEvaluator *value);
     void removeEvaluator(TemplateValueEvaluator *value);
 
-private:
+protected:
     bool evaluateData(QByteArray &canData);
     SysOvrvObject *m_pObjToTrigger;
     QVector<TemplateValueEvaluator *> evaluators;

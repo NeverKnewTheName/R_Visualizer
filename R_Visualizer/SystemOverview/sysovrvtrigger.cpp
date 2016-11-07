@@ -23,11 +23,6 @@ SysOvrvTrigger::SysOvrvTrigger(SysOvrvObject *objToTrigger, TriggerType type) :
 
 }
 
-void SysOvrvTrigger::trigger(QByteArray &canData)
-{
-    qDebug() << "Triggered";
-}
-
 SysOvrvObject *SysOvrvTrigger::getRelatedSysOvrvObj()
 {
     return m_pObjToTrigger;
@@ -62,10 +57,25 @@ SysOvrvColorChangeTrigger::SysOvrvColorChangeTrigger(SysOvrvObject *objToTrigger
     SysOvrvTrigger(objToTrigger,ColorChangeTrigger)
 {
     initialColor = QColor(objToTrigger->getMyColor());
+    colorToChangeTo = QColor(Qt::white);
 }
 
 void SysOvrvColorChangeTrigger::trigger(QByteArray &canData)
 {
+    bool Evaluation = true;
+    for(TemplateValueEvaluator *evaluator : evaluators)
+    {
+        Evaluation &= evaluator->evaluate(canData.at(0)); //ToDO
+    }
+
+    if(Evaluation != true)
+    {
+        m_pObjToTrigger->setMyColor(initialColor);
+        return;
+    }
+
+    m_pObjToTrigger->setMyColor(colorToChangeTo);
+
     qDebug() << "ColorChangeTrigger";
 }
 
@@ -102,7 +112,6 @@ void SysOvrvColorChangeTrigger::setInitialColor(const QColor &value)
 }
 SysOvrvTextChangeTrigger::SysOvrvTextChangeTrigger(SysOvrvObject *objToTrigger) :
     SysOvrvTrigger(objToTrigger,TextChangeTrigger)
-
 {
 
 }

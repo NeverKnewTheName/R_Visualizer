@@ -8,6 +8,8 @@
 #include "evaluatortablemodel.h"
 
 #include <QDialog>
+#include <QColorDialog>
+
 
 #include <QDebug>
 
@@ -17,6 +19,7 @@ SysOvrvTriggerEditorWidget::SysOvrvTriggerEditorWidget(QWidget *parent) :
     evaluatorModel(NULL)
 {
     ui->setupUi(this);
+    ui->TriggerTypeComboBox;
     ui->EvaluatorTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
@@ -32,6 +35,13 @@ void SysOvrvTriggerEditorWidget::RUpdatewidgetdata(const QModelIndex &index)
     if(!index.isValid())
         return;
 
+
+    triggerToEdit = static_cast<SysOvrvTrigger*>(index.data(Qt::UserRole+1).value<void *>());
+    currentID = static_cast<quint16>(index.parent().parent().data().toUInt());
+    currentCode = static_cast<quint8>(index.parent().data().toUInt());
+    ui->IDLineEdit->setText(QString::number(currentID));
+    ui->CodeLineEdit->setText(QString::number(currentCode));
+
     EvaluatorTablemodel *oldModel = evaluatorModel;
 
     evaluatorModel = new EvaluatorTablemodel(this);
@@ -42,11 +52,6 @@ void SysOvrvTriggerEditorWidget::RUpdatewidgetdata(const QModelIndex &index)
         delete oldModel;
     }
 
-    triggerToEdit = static_cast<SysOvrvTrigger*>(index.data(Qt::UserRole+1).value<void *>());
-    currentID = static_cast<quint16>(index.parent().parent().data().toUInt());
-    currentCode = static_cast<quint8>(index.parent().data().toUInt());
-    ui->IDLineEdit->setText(QString::number(currentID));
-    ui->CodeLineEdit->setText(QString::number(currentCode));
     QVector<TemplateValueEvaluator*> evaluatorList = triggerToEdit->getEvaluators();
     for(TemplateValueEvaluator *evaluator : evaluatorList)
     {
@@ -111,4 +116,27 @@ void SysOvrvTriggerEditorWidget::on_RemoveEvaluatorPushButton_clicked()
         triggerToEdit->removeEvaluator(EvalToDelete);
         delete EvalToDelete;
     }
+}
+
+void SysOvrvTriggerEditorWidget::on_TriggerTypeComboBox_currentIndexChanged(int index)
+{
+    switch(index)
+    {
+    case 0:
+        break;
+    case 1:
+        break;
+    }
+}
+
+void SysOvrvTriggerEditorWidget::on_pushButton_clicked()
+{
+    QColorDialog *colorPicker = new QColorDialog(static_cast<SysOvrvColorChangeTrigger*>(triggerToEdit)->getColorToChangeTo(), this);
+    connect(colorPicker, &QColorDialog::colorSelected, this, &SysOvrvTriggerEditorWidget::colorChanged);
+    colorPicker->exec();
+}
+
+void SysOvrvTriggerEditorWidget::colorChanged(const QColor &newColor)
+{
+    static_cast<SysOvrvColorChangeTrigger*>(triggerToEdit)->setColorToChangeTo(newColor);
 }

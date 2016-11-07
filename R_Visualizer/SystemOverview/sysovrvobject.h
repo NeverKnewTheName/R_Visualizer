@@ -3,26 +3,62 @@
 
 #include <QGraphicsItem>
 #include <QHash>
+#include <QImage>
+#include <QPixmap>
 
 #include "resizerectcorner.h"
 #include "sysovrvtextlabel.h"
 #include "sysovrvtrigger.h"
 
+
+//class SysOvrvObjectPainter
+//{
+
+//};
+
+//class SysOvrvImagePainter
+//{
+//public:
+//    SysOvrvImagePainter(SysOvrvObject::ObjShapeType shape, QRectF boundingRect, QColor color = QColor());
+
+//    void constructPixmap();
+
+//private:
+//    QPixmap ConstructedPixMap;
+//    QRectF BoundingRect;
+//    QColor Color;
+//    SysOvrvObject::ObjShapeType ObjShape;
+//};
+
+//class SysOvrvShapePainter
+//{
+//public:
+//    SysOvrvShapePainter(QColor color = QColor());
+
+//    void constructPixmap();
+
+//private:
+//    QImage ImageLoadedFromFile;
+//    QPixmap ConstructedPixMap;
+//};
+
+
 class SysOvrvObject : public QGraphicsItem
 {
 public:
-    explicit SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
-//    explicit SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent = Q_NULLPTR);
-    ~SysOvrvObject();
-
-    typedef enum Shapetypes
+    typedef enum _ObjShapeType
     {
         ObjShape_Rectangle,
         ObjShape_Square,
         ObjShape_Ellipse,
         ObjShape_Circle,
-        ObjShape_Triangle
-    }ObjShapeTypes;
+        ObjShape_Triangle,
+        ObjShape_Image
+    }ObjShapeType;
+
+    explicit SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
+    //    explicit SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent = Q_NULLPTR);
+    ~SysOvrvObject();
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
@@ -35,8 +71,10 @@ public:
     QString getObjName() const;
     void setObjName(const QString &value);
 
-    void setShape(ObjShapeTypes shape);
-    ObjShapeTypes getShape() const;
+    void loadImageFromFile();
+
+    void setShape(ObjShapeType shape);
+    ObjShapeType getShape() const;
 
     SysOvrvTextLabel * addLabel();
     SysOvrvTextLabel * addLabel(SysOvrvTextLabel *label);
@@ -77,6 +115,9 @@ public:
     QList<quint8> getTriggerCodesToID(quint16 id) const;
     QVector<SysOvrvTrigger *> getTriggersToIDandCode(quint16 id, quint8 code);
 
+    QPixmap getObjPixMap() const;
+    void setObjPixMap(const QPixmap &value);
+
 private:
     static int objCntr;
     int localObjCntr;
@@ -88,12 +129,15 @@ private:
     QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> GlobalTriggerStore;
     QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> LocalTriggerStore;
     QColor myColor;
-    ObjShapeTypes shapeType;
+    ObjShapeType shapeType;
     QVector<SysOvrvObject *> childSysOvrvObjects;
     ResizeRectCorner *corners;
     QRectF m_BoundingRect;
+    QPixmap ObjPixMap;
 
     void updateCorners();
+
+    void update(const QRectF &rect = QRectF());
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
@@ -103,7 +147,6 @@ protected:
     void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) Q_DECL_OVERRIDE;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) Q_DECL_OVERRIDE;
-
 };
 
 #endif // SYSOVRVOBJECT_H

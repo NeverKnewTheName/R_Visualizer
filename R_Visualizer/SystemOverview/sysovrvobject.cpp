@@ -14,6 +14,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
+#include <QFileDialog>
+#include <QImageReader>
+
 #include <QDebug>
 
 int SysOvrvObject::objCntr = 0;
@@ -28,7 +31,7 @@ SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
 {
     localObjCntr = objCntr++;
     myColor = QColor(Qt::gray);
-    shapeType = ObjShape_Rectangle;
+    setShape(ObjShape_Rectangle);
     setupSysOvrvObject();
 }
 
@@ -79,44 +82,8 @@ QRectF SysOvrvObject::boundingRect() const
 void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QRectF rect = boundingRect();
-    QBrush brush(myColor);
 
-    if(this->isSelected()/* || (isChildObject && parentItem() != NULL && parentItem()->isSelected())*/) //ToTHINK visualize children also as selected??
-    {
-        brush.setColor(myColor.darker());
-    }
-
-    painter->setBrush(brush);
-
-    switch(shapeType)
-    {
-    case ObjShape_Rectangle: // Rect
-        painter->drawRect(rect);
-        break;
-    case ObjShape_Square: // Square
-        rect.setY(rect.x());
-        painter->drawRect(rect);
-        break;
-    case ObjShape_Ellipse:
-        painter->drawEllipse(rect);
-        break;
-    case ObjShape_Circle: // Circle
-        painter->drawEllipse(rect);
-        break;
-    case ObjShape_Triangle: // Triangle
-    {
-        QPainterPath path;
-        QPointF rectTopMiddle((rect.right() - rect.left()) / 2, rect.top());
-        path.moveTo(rectTopMiddle);
-        path.lineTo(rect.right(), rect.bottom());
-        path.lineTo(rect.left(), rect.bottom());
-        path.lineTo(rectTopMiddle);
-        painter->drawPath(path);
-    }
-        break;
-    }
-    //painter->setBrush(QBrush(Qt::red));
-    //painter->drawText(rect, getHashedName());
+    painter->drawPixmap(rect, ObjPixMap, ObjPixMap.rect());
 }
 
 void SysOvrvObject::setupSysOvrvObject()
@@ -125,6 +92,7 @@ void SysOvrvObject::setupSysOvrvObject()
     setFlag(ItemSendsScenePositionChanges);
     setFlag(ItemIsFocusable);
     setFlag(ItemIsSelectable);
+    update();
 }
 
 QColor SysOvrvObject::getMyColor() const
@@ -135,6 +103,7 @@ QColor SysOvrvObject::getMyColor() const
 void SysOvrvObject::setMyColor(const QColor &value)
 {
     myColor = QColor(value);
+    update();
 }
 
 QString SysOvrvObject::getObjName() const
@@ -147,10 +116,20 @@ void SysOvrvObject::setObjName(const QString &value)
     objName = QString(value);
 }
 
-void SysOvrvObject::setShape(ObjShapeTypes shape)
+void SysOvrvObject::loadImageFromFile()
+{
+    QString FilePath = QFileDialog::getOpenFileName(Q_NULLPTR, QString("Open Image"), QString(), "Images (*.bmp *.jpg *.png)");
+    ObjPixMap = QPixmap(FilePath);
+}
+
+void SysOvrvObject::setShape(SysOvrvObject::ObjShapeType shape)
 {
     shapeType = shape;
-    if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
+
+    if(shapeType == ObjShape_Image)
+    {
+    }
+    else if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
     {
         if(m_BoundingRect.width() > m_BoundingRect.height())
         {
@@ -162,10 +141,11 @@ void SysOvrvObject::setShape(ObjShapeTypes shape)
         }
         updateCorners();
     }
+
     this->update();
 }
 
-SysOvrvObject::ObjShapeTypes SysOvrvObject::getShape() const
+SysOvrvObject::ObjShapeType SysOvrvObject::getShape() const
 {
     return shapeType;
 }
@@ -208,9 +188,10 @@ SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
     SysOvrvObject *duplicatedObject = new SysOvrvObject();
 
     duplicatedObject->setPos(this->pos());
+    duplicatedObject->setObjPixMap(this->getObjPixMap());
+    duplicatedObject->setShape(this->getShape());
     duplicatedObject->setObjName("d_" + this->getObjName()); // is the duplicate token really needed?
     duplicatedObject->setMyColor(this->getMyColor());
-    duplicatedObject->setShape(this->getShape());
     duplicatedObject->m_BoundingRect.setWidth(this->getWidth());
     duplicatedObject->m_BoundingRect.setHeight(this->getHeight());
     duplicatedObject->setResizeMode(this->getIsInResizeMode());
@@ -232,7 +213,6 @@ SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
     {
         parent->addChildSysOvrvItem(duplicatedObject);
     }
-
 
     duplicatedObject->update();
     return duplicatedObject;
@@ -305,6 +285,7 @@ void SysOvrvObject::setWidth(qreal newWidth)
     if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle) // SQUARE || CIRCLE
         m_BoundingRect.setHeight(newWidth);
     updateCorners();
+    update();
 }
 
 void SysOvrvObject::adjustWidth(qreal factor)
@@ -328,6 +309,7 @@ void SysOvrvObject::setHeight(qreal newHeight)
     if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle) // SQUARE || CIRCLE
         m_BoundingRect.setWidth(newHeight);
     updateCorners();
+    update();
 }
 
 void SysOvrvObject::adjustHeight(qreal factor)
@@ -475,7 +457,7 @@ void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
 
     this->setObjName(jsonSysOvrvObj["ObjName"].toString());
     this->setMyColor(QColor(jsonSysOvrvObj["ObjColor"].toString()));
-    this->setShape(static_cast<ObjShapeTypes>(jsonSysOvrvObj["ObjShape"].toInt()));
+    this->setShape(static_cast<ObjShapeType>(jsonSysOvrvObj["ObjShape"].toInt()));
 
     this->setWidth(static_cast<qreal>(objSize[0].toDouble(100)));
     this->setHeight(static_cast<qreal>(objSize[1].toDouble(100)));
@@ -552,6 +534,16 @@ QVector<SysOvrvTrigger *> SysOvrvObject::getTriggersToIDandCode(quint16 id, quin
     return GlobalTriggerStore.value(id).value(code);
 }
 
+QPixmap SysOvrvObject::getObjPixMap() const
+{
+    return ObjPixMap;
+}
+
+void SysOvrvObject::setObjPixMap(const QPixmap &value)
+{
+    ObjPixMap = value;
+}
+
 void SysOvrvObject::updateCorners()
 {
     if(!isInResizeMode || corners == NULL)
@@ -577,9 +569,73 @@ void SysOvrvObject::updateCorners()
     corners[3].update();
 }
 
+void SysOvrvObject::update(const QRectF &rect)
+{
+    if(shapeType == ObjShape_Image)
+    {
+//        ObjPixMap = QPixmap(FilePath);
+    }
+    else
+    {
+        if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
+        {
+            if(m_BoundingRect.width() > m_BoundingRect.height())
+            {
+                m_BoundingRect.setHeight(m_BoundingRect.width());
+            }
+            else
+            {
+                m_BoundingRect.setWidth(m_BoundingRect.height());
+            }
+            updateCorners();
+        }
+
+        ObjPixMap = QPixmap(m_BoundingRect.size().toSize());
+        ObjPixMap.fill(Qt::white);
+
+        QPainter painter(&ObjPixMap);
+        QBrush brush(myColor);
+
+        if(this->isSelected()/* || (isChildObject && parentItem() != NULL && parentItem()->isSelected())*/) //ToTHINK visualize children also as selected??
+        {
+            brush.setColor(myColor.darker());
+        }
+
+        painter.setBrush(brush);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        switch(shapeType)
+        {
+        case ObjShape_Rectangle: // Rect
+        case ObjShape_Square: // Square
+            painter.drawRect(m_BoundingRect);
+            break;
+        case ObjShape_Ellipse:
+        case ObjShape_Circle: // Circle
+            painter.drawEllipse(m_BoundingRect);
+            break;
+        case ObjShape_Triangle: // Triangle
+        {
+            QPainterPath path;
+            QPointF rectTopMiddle((m_BoundingRect.right() - m_BoundingRect.left()) / 2, m_BoundingRect.top());
+            path.moveTo(rectTopMiddle);
+            path.lineTo(m_BoundingRect.right(), m_BoundingRect.bottom());
+            path.lineTo(m_BoundingRect.left(), m_BoundingRect.bottom());
+            path.lineTo(rectTopMiddle);
+            painter.drawPath(path);
+        }
+            break;
+        case ObjShape_Image:
+            break;
+        }
+    }
+    QGraphicsItem::update(rect);
+}
+
 void SysOvrvObject::focusInEvent(QFocusEvent *event)
 {
     setSelected(true);
+    update();
     for(SysOvrvObject *child : childSysOvrvObjects)
     {
         child->focusInEvent(event);
@@ -589,6 +645,7 @@ void SysOvrvObject::focusInEvent(QFocusEvent *event)
 void SysOvrvObject::focusOutEvent(QFocusEvent *event)
 {
     setSelected(false);
+    update();
     for(SysOvrvObject *child : childSysOvrvObjects)
     {
         child->focusOutEvent(event);

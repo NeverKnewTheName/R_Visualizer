@@ -38,6 +38,9 @@ private slots:
     void EvaluatorAdded(TemplateValueEvaluator*evalToAdd);
     void on_EditEvaluatorPushButton_clicked();
     void on_RemoveEvaluatorPushButton_clicked();
+    void on_TriggerTypeComboBox_currentIndexChanged(int index);
+    void on_pushButton_clicked();
+    void colorChanged(const QColor &newColor);
 };
 
 #endif // SYSOVRVTRIGGEREDITORWIDGET_H

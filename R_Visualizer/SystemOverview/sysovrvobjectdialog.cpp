@@ -83,13 +83,8 @@ void SysOvrvObjectDialog::on_edtTriggerBtn_clicked()
         return;
 
     // // // DEBUG // // //
-    m_focusedItem->addTrigger(42,55,new SysOvrvColorChangeTrigger(m_focusedItem));
-    m_focusedItem->addTrigger(42,57,new SysOvrvColorChangeTrigger(m_focusedItem));
-    m_focusedItem->addTrigger(42,100,new SysOvrvColorChangeTrigger(m_focusedItem));
-    m_focusedItem->addTrigger(12,100,new SysOvrvColorChangeTrigger(m_focusedItem));
-    m_focusedItem->addTrigger(12,10,new SysOvrvColorChangeTrigger(m_focusedItem));
-    m_focusedItem->addTrigger(13,1,new SysOvrvColorChangeTrigger(m_focusedItem));
-    m_focusedItem->addTrigger(13,1,new SysOvrvColorChangeTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(0x100,0x98,new SysOvrvColorChangeTrigger(m_focusedItem));
+    m_focusedItem->addTrigger(0x100,0x99,new SysOvrvColorChangeTrigger(m_focusedItem));
     // // // DEBUG // // //
 
     SysOvrvObjTriggerDialog *triggerDiag = new SysOvrvObjTriggerDialog(m_focusedItem, this);
@@ -115,6 +110,10 @@ void SysOvrvObjectDialog::objectShapeChanged(int index)
         break;
     case SysOvrvObject::ObjShape_Triangle:
         m_curSysOvrvObject->setShape(SysOvrvObject::ObjShape_Triangle);
+        break;
+    case SysOvrvObject::ObjShape_Image:
+        m_curSysOvrvObject->loadImageFromFile();
+        m_curSysOvrvObject->setShape(SysOvrvObject::ObjShape_Image);
         break;
     }
 }
@@ -148,15 +147,16 @@ void SysOvrvObjectDialog::setupDialog()
           << "Square"
           << "Ellipse"
           << "Circle"
-          << "Triangle";
+          << "Triangle"
+          << "Image";
 
     ui->objectShapeComboBox->addItems(items);
-    connect(ui->objectShapeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SysOvrvObjectDialog::objectShapeChanged);
-
+    ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
     ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
     ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
     ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
-    ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
+
+    connect(ui->objectShapeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SysOvrvObjectDialog::objectShapeChanged);
 
     scene = new QGraphicsScene();
     scene->addItem(this->m_curSysOvrvObject);
