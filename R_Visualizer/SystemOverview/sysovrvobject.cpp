@@ -19,29 +19,21 @@
 
 #include <QDebug>
 
-int SysOvrvObject::objCntr = 0;
+unsigned int SysOvrvObject::objCntr = 0;
 
 SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     QGraphicsItem(parent),
     isChildObject(false),
     doubleClicked(false),
+    isInResizeMode(false),
     m_BoundingRect(0,0,100,100),
     corners(NULL),
-    isInResizeMode(false)
+    localObjCntr(objCntr++)
 {
-    localObjCntr = objCntr++;
     myColor = QColor(Qt::gray);
     setShape(ObjShape_Rectangle);
     setupSysOvrvObject();
 }
-
-//SysOvrvObject::SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent) :
-//    QGraphicsItem(parent)
-//{
-//    localObjCntr = objCntr++;
-//    *this = *obj;
-//    setupSysOvrvObject();
-//}
 
 SysOvrvObject::~SysOvrvObject()
 {
@@ -49,11 +41,12 @@ SysOvrvObject::~SysOvrvObject()
     SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject *>(parentItem());
     int i = 0;
     //Destroy children
-    for(SysOvrvObject *child : childSysOvrvObjects)
+    while(childSysOvrvObjects.size())
     {
-        qDebug() << "Delete Child: " << i++;
+        qDebug() << "Delete Child from " << getHashedName() << ": " << i++;
         //        qDebug() << "(SysOvrvObject::~SysOvrvObject): Delete Child: " << static_cast<SysOvrvObject*>(child)->getHashedName() << " of " << getHashedName();
-        delete child;
+        delete childSysOvrvObjects.last();
+        childSysOvrvObjects.pop_back();
     }
     childSysOvrvObjects.clear();
     //remove this item from its parent if any
@@ -81,9 +74,9 @@ QRectF SysOvrvObject::boundingRect() const
 
 void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
-
-    painter->drawPixmap(rect, ObjPixMap, ObjPixMap.rect());
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+    painter->drawPixmap(boundingRect(), ObjPixMap, ObjPixMap.rect());
 }
 
 void SysOvrvObject::setupSysOvrvObject()
@@ -119,17 +112,20 @@ void SysOvrvObject::setObjName(const QString &value)
 void SysOvrvObject::loadImageFromFile()
 {
     QString FilePath = QFileDialog::getOpenFileName(Q_NULLPTR, QString("Open Image"), QString(), "Images (*.bmp *.jpg *.png)");
+    loadImageFromFile(FilePath);
+}
+
+void SysOvrvObject::loadImageFromFile(QString &FilePath)
+{
     ObjPixMap = QPixmap(FilePath);
+    update();
 }
 
 void SysOvrvObject::setShape(SysOvrvObject::ObjShapeType shape)
 {
     shapeType = shape;
 
-    if(shapeType == ObjShape_Image)
-    {
-    }
-    else if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
+    if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
     {
         if(m_BoundingRect.width() > m_BoundingRect.height())
         {
@@ -187,7 +183,10 @@ SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
 {
     SysOvrvObject *duplicatedObject = new SysOvrvObject();
 
-    duplicatedObject->setPos(this->pos());
+    duplicatedObject->setPos(mapToItem(parentObj,mapFromParent(this->pos())));
+
+//    duplicatedObject->setPos(mapToItem(parentObj,this->pos()));
+
     duplicatedObject->setObjPixMap(this->getObjPixMap());
     duplicatedObject->setShape(this->getShape());
     duplicatedObject->setObjName("d_" + this->getObjName()); // is the duplicate token really needed?
@@ -202,16 +201,19 @@ SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
         duplicatedObject->addLabel(textlabel->text(), textlabel->x(), textlabel->y());
     }
 
-    for(SysOvrvObject *child : childSysOvrvObjects)
+    int childCount = childSysOvrvObjects.size();
+//    for(SysOvrvObject *child : childSysOvrvObjects)
+    for(int i = 0; i < childCount; i++)
     {
+        SysOvrvObject *child = childSysOvrvObjects.at(i);
         duplicatedObject->addChildSysOvrvItem(child->duplicate(this));
     }
 
-    SysOvrvObject *parent = (parentObj == NULL) ? qgraphicsitem_cast<SysOvrvObject*>(this->parentItem()) : parentObj;
+    //    SysOvrvObject *parent = (parentObj == NULL) ? qgraphicsitem_cast<SysOvrvObject*>(this->parentItem()) : parentObj;
     //ToDO!!! -- PROBABLE BUG HERE
-    if(parent != NULL)
+    if(parentObj != NULL)
     {
-        parent->addChildSysOvrvItem(duplicatedObject);
+        parentObj->addChildSysOvrvItem(duplicatedObject);
     }
 
     duplicatedObject->update();
@@ -349,12 +351,14 @@ QVector<SysOvrvObject *> &SysOvrvObject::getChidSysOvrvObjects()
 
 void SysOvrvObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event)
     //    QGraphicsItem::mousePressEvent(event);
     setCursor(QCursor(Qt::ClosedHandCursor));
 }
 
 void SysOvrvObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event)
     //    QGraphicsItem::mouseReleaseEvent(event);
     //    setFocus(Qt::MouseFocusReason);
     //    setSelected(true);
@@ -369,6 +373,7 @@ void SysOvrvObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void SysOvrvObject::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event)
     //    QGraphicsItem::mouseDoubleClickEvent(event);
     qDebug() << "DoubleClickEvent";
     doubleClicked = true;
@@ -573,7 +578,7 @@ void SysOvrvObject::update(const QRectF &rect)
 {
     if(shapeType == ObjShape_Image)
     {
-//        ObjPixMap = QPixmap(FilePath);
+        //        ObjPixMap = QPixmap(FilePath);
     }
     else
     {
@@ -591,7 +596,7 @@ void SysOvrvObject::update(const QRectF &rect)
         }
 
         ObjPixMap = QPixmap(m_BoundingRect.size().toSize());
-        ObjPixMap.fill(Qt::white);
+        ObjPixMap.fill(Qt::transparent);
 
         QPainter painter(&ObjPixMap);
         QBrush brush(myColor);
@@ -654,10 +659,12 @@ void SysOvrvObject::focusOutEvent(QFocusEvent *event)
 
 void SysOvrvObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
+    Q_UNUSED(event)
     setCursor(QCursor(Qt::OpenHandCursor));
 }
 
 void SysOvrvObject::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
+    Q_UNUSED(event)
     setCursor(QCursor(Qt::ArrowCursor));
 }

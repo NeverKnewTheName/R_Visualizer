@@ -11,38 +11,6 @@
 #include "sysovrvtrigger.h"
 
 
-//class SysOvrvObjectPainter
-//{
-
-//};
-
-//class SysOvrvImagePainter
-//{
-//public:
-//    SysOvrvImagePainter(SysOvrvObject::ObjShapeType shape, QRectF boundingRect, QColor color = QColor());
-
-//    void constructPixmap();
-
-//private:
-//    QPixmap ConstructedPixMap;
-//    QRectF BoundingRect;
-//    QColor Color;
-//    SysOvrvObject::ObjShapeType ObjShape;
-//};
-
-//class SysOvrvShapePainter
-//{
-//public:
-//    SysOvrvShapePainter(QColor color = QColor());
-
-//    void constructPixmap();
-
-//private:
-//    QImage ImageLoadedFromFile;
-//    QPixmap ConstructedPixMap;
-//};
-
-
 class SysOvrvObject : public QGraphicsItem
 {
 public:
@@ -57,7 +25,6 @@ public:
     }ObjShapeType;
 
     explicit SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
-    //    explicit SysOvrvObject(SysOvrvObject *obj, QGraphicsItem *parent = Q_NULLPTR);
     ~SysOvrvObject();
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
@@ -72,6 +39,7 @@ public:
     void setObjName(const QString &value);
 
     void loadImageFromFile();
+    void loadImageFromFile(QString &FilePath);
 
     void setShape(ObjShapeType shape);
     ObjShapeType getShape() const;
@@ -119,8 +87,8 @@ public:
     void setObjPixMap(const QPixmap &value);
 
 private:
-    static int objCntr;
-    int localObjCntr;
+    static unsigned int objCntr;
+    const unsigned int localObjCntr;
     bool isInResizeMode;
     bool isChildObject;
     bool doubleClicked;
