@@ -2,11 +2,9 @@
 #include "ui_mainwindow.h"
 
 #include "msgdelegate.h"
-#include "msgproxymodel.h"
-#include "msgfilterproxymodel.h"
-#include "MessageConfig/filteridstore.h"
+#include "filteridstore.h"
 
-#include "ErrLogView/errlogview.h"
+#include "errlogview.h"
 
 #include "csvmsgpackethandler.h"
 
@@ -29,9 +27,9 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_IsConnectedToDevice(false),
     currErrCntr(0),
-    totalErrCntr(0)
+    totalErrCntr(0),
+    m_IsConnectedToDevice(false)
 {
     ui->setupUi(this);
     this->currentFileName = "";
@@ -105,11 +103,29 @@ void MainWindow::on_actionNew_triggered()
     //TESTING ONLY
     static int cntr = 0;
     ++cntr;
-    MsgDataT msgData = { 0x2, cntr, 0x0,cntr*2,0x0,cntr,0x4*cntr,cntr};
+    MsgDataT msgData = {
+        static_cast<quint8>(0x2),
+        static_cast<quint8>(cntr),
+        static_cast<quint8>(0x0),
+        static_cast<quint8>(cntr*2),
+        static_cast<quint8>(0x0),
+        static_cast<quint8>(cntr),
+        static_cast<quint8>(0x4*cntr),
+        static_cast<quint8>(cntr)
+    };
     msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
     msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
     msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgData = { 0x3, cntr, 0x0,cntr*2,0x0,cntr,0x4*cntr,cntr};
+    msgData = {
+        static_cast<quint8>(0x3),
+        static_cast<quint8>(cntr),
+        static_cast<quint8>(0x0),
+        static_cast<quint8>(cntr*2),
+        static_cast<quint8>(0x0),
+        static_cast<quint8>(cntr),
+        static_cast<quint8>(0x4*cntr),
+        static_cast<quint8>(cntr)
+    };
     msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
     msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
     msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
@@ -308,35 +324,36 @@ void MainWindow::msgTypeAddFinished(const int code, const QString codeName, cons
 
 void MainWindow::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 {
-    if(roleToSwitchTo == UserRoleMngr::NormalUserRole)
+    QString RoleName;
+    QIcon RoleIcon;
+
+    if( roleToSwitchTo == UserRoleMngr::NormalUserRole )
     {
-
-
+        RoleIcon = QIcon(":/GUI/Icons/Icons/UserAdmin-32.png");
+        RoleName = QString("Admin");
     }
-    else if(roleToSwitchTo == UserRoleMngr::AdminRole)
+    else if( roleToSwitchTo == UserRoleMngr::AdminRole )
     {
-
-
+        RoleIcon = QIcon(":/GUI/Icons/Icons/UserNormal-32.png");
+        RoleName = QString("User");
     }
+
+    ui->actionSwitch_User_Role->setIcon(RoleIcon);
+    ui->actionSwitch_User_Role->setToolTip(QString("Switch to %1 Role").arg(RoleName));
+    ui->actionSwitch_User_Role->setText(QString("Switch to %1 Role").arg(RoleName));
 }
-
 
 void MainWindow::on_actionSwitch_User_Role_triggered()
 {
     UserRoleMngr::UserRole role = this->userRoleMngr->getCurrentRole();
+
     if( role == UserRoleMngr::NormalUserRole )
     {
         role = UserRoleMngr::AdminRole;
-        ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserNormal-32.png"));
-        ui->actionSwitch_User_Role->setToolTip(QString("Switch to User Role"));
-        ui->actionSwitch_User_Role->setText(QString("Switch to User Role"));
     }
     else if( role == UserRoleMngr::AdminRole )
     {
         role = UserRoleMngr::NormalUserRole;
-        ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
-        ui->actionSwitch_User_Role->setToolTip(QString("Switch to Admin Role"));
-        ui->actionSwitch_User_Role->setText(QString("Switch to Admin Role"));
     }
 
     emit this->switchUserRoles(role);

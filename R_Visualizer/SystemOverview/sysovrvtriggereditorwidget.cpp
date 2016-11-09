@@ -19,7 +19,7 @@ SysOvrvTriggerEditorWidget::SysOvrvTriggerEditorWidget(QWidget *parent) :
     evaluatorModel(NULL)
 {
     ui->setupUi(this);
-    ui->TriggerTypeComboBox;
+//    ui->TriggerTypeComboBox;  //ToDO Fill with trigger types!
     ui->EvaluatorTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 

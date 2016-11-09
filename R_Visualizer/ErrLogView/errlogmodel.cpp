@@ -84,8 +84,8 @@ bool ErrLogModel::removeRows(int row, int count, const QModelIndex &parent)
 
 void ErrLogModel::addErrEntry(ErrorLogEntry *errLogEntry)
 {
-    int newRow = this->errLogStore.size();
-    beginInsertRows(QModelIndex(),newRow,newRow);
+    int newRowIndex = this->errLogStore.size();
+    beginInsertRows(QModelIndex(),newRowIndex,newRowIndex);
     this->errLogStore.append(errLogEntry);
     endInsertRows();
 //    emit rowsAdded(1);

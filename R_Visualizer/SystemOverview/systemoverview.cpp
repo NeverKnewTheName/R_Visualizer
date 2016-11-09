@@ -7,6 +7,8 @@
 #include <QScrollBar>
 #include <QtMath>
 
+#include <QDebug>
+
 SystemOverview::SystemOverview(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemOverview),

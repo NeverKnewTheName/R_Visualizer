@@ -23,11 +23,11 @@ unsigned int SysOvrvObject::objCntr = 0;
 
 SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     QGraphicsItem(parent),
+    m_BoundingRect(0,0,100,100),
+    corners(NULL),
     isChildObject(false),
     doubleClicked(false),
     isInResizeMode(false),
-    m_BoundingRect(0,0,100,100),
-    corners(NULL),
     localObjCntr(objCntr++)
 {
     myColor = QColor(Qt::gray);
@@ -234,12 +234,17 @@ bool SysOvrvObject::isAChild() const
     return isChildObject;
 }
 
-void SysOvrvObject::setResizeMode(bool modeON)
+void SysOvrvObject::setResizeMode(bool modeON, bool propagateToChildObjs)
 {
     isInResizeMode = modeON;
     showResizeCorners(modeON);
-    for(auto child : childSysOvrvObjects)
-        child->setResizeMode(modeON);
+    if(propagateToChildObjs)
+    {
+        for(auto child : childSysOvrvObjects)
+        {
+            child->setResizeMode(modeON, propagateToChildObjs);
+        }
+    }
 }
 
 bool SysOvrvObject::getIsInResizeMode() const

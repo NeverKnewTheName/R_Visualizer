@@ -48,7 +48,6 @@ public:
     };
 
 private:
-
     QVector<int> idStore;
     QHash<int, IDRep *> idPropStore;
 

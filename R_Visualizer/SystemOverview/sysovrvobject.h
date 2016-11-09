@@ -53,7 +53,7 @@ public:
     void setAsChild(bool isChild);
     bool isAChild() const;
 
-    void setResizeMode(bool modeON);
+    void setResizeMode(bool modeON, bool propagateToChildObjs = true);
     bool getIsInResizeMode() const;
     void showResizeCorners(bool show);
 
@@ -86,26 +86,27 @@ public:
     QPixmap getObjPixMap() const;
     void setObjPixMap(const QPixmap &value);
 
+    void update(const QRectF &rect = QRectF());
+
 private:
+    QRectF m_BoundingRect;
+    ResizeRectCorner *corners;
     static unsigned int objCntr;
     const unsigned int localObjCntr;
     bool isInResizeMode;
     bool isChildObject;
     bool doubleClicked;
     QString objName;
+    QColor myColor;
+    ObjShapeType shapeType;
+    QPixmap ObjPixMap;
+
+    QVector<SysOvrvObject *> childSysOvrvObjects;
     QVector<SysOvrvTextLabel*> objTextlabels;
     QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> GlobalTriggerStore;
     QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> LocalTriggerStore;
-    QColor myColor;
-    ObjShapeType shapeType;
-    QVector<SysOvrvObject *> childSysOvrvObjects;
-    ResizeRectCorner *corners;
-    QRectF m_BoundingRect;
-    QPixmap ObjPixMap;
 
     void updateCorners();
-
-    void update(const QRectF &rect = QRectF());
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;

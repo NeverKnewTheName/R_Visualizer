@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 DEPENDPATH += $$PWD
+INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD//systemoverview.cpp \
     $$PWD/sysoverviewgraphicsview.cpp \

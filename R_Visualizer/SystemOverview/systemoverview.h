@@ -10,7 +10,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
-#include "mysquare.h"
 #include "sysovrvobject.h"
 
 class MainWindow;

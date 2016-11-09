@@ -12,7 +12,6 @@
 #include <QVector>
 
 class MainWindow;
-class MsgProxyModel;
 
 class MsgModel : public QAbstractTableModel
 {
@@ -49,16 +48,13 @@ public:
 private:
     HugeQVector<Msg> msgs;
     friend class MainWindow;
-    friend class MsgProxyModel;
 
 private slots:
     void messageReceived(Data_PacketPtr ptr);
 
-
 signals:
     void rowAppended(unsigned int rowNr);
     void rowsAdded(unsigned int nrOfRowsAdded);
-    //void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
 };
 
 #endif // MSGMODEL_H

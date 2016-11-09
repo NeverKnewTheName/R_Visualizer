@@ -9,10 +9,7 @@ class IDRep
 {
 public:
     IDRep();
-    IDRep(/*int id, */QString name, QColor color = QColor(Qt::white));
-
-//    int getId() const;
-//    void setId(int value);
+    IDRep(QString name, QColor color = QColor(Qt::white));
 
     QString getName() const;
     void setName(const QString &value);
@@ -24,7 +21,6 @@ public:
     QJsonObject parseOUT();
 
 private:
-//    int id;
     QString name;
     QColor color;
 };

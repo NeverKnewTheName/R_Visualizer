@@ -3,7 +3,6 @@
 
 #include "msgdelegate.h"
 #include "csvmsgpackethandler.h"
-#include "idcompleter.h"
 
 #include <QFile>
 #include <QFileDialog>
@@ -47,8 +46,6 @@ SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget
     connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
     connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
 
-    //    IDCompleter *idCompleter = new IDCompleter(this);
-    //    ui->sndMsgIDLineEdit->setCompleter(idCompleter->getCompleter());
     QCompleter *idCompleter = new QCompleter(this);
     idCompleter->setModel(this->idModel);
     idCompleter->setCompletionColumn(1);

@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 DEPENDPATH += $$PWD
+INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD//sendmessages.cpp
 

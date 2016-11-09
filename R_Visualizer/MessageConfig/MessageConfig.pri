@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 DEPENDPATH += $$PWD
+INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD//messageconfig.cpp \
     $$PWD//ideditordelegate.cpp \

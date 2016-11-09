@@ -225,7 +225,7 @@ void MsgTableView::scrollFetchRows(int direction)
         scrollTo(model()->index(visibleRowOffset, 3),QAbstractItemView::PositionAtTop);
     }
     else if( ( direction > 0 ) &&
-             ( visibleRowOffsetHIGH < this->model()->rowCount()))
+             ( visibleRowOffsetHIGH < static_cast<unsigned int>(model()->rowCount())))
     {
         while(visibleRowOffsetShadow)
         {

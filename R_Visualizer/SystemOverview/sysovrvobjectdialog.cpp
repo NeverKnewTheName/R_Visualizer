@@ -126,6 +126,8 @@ void SysOvrvObjectDialog::addObjectToObject(SysOvrvObject *obj)
 
 void SysOvrvObjectDialog::focusChanged(QGraphicsItem *newItem, QGraphicsItem *oldItem)
 {
+    Q_UNUSED(oldItem)
+
     if(newItem != NULL)
         m_focusedItem = qgraphicsitem_cast<SysOvrvObject *>(newItem);
 }
@@ -279,6 +281,8 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
         ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
 
         scene->addItem(m_curSysOvrvObject);
+        break;
+    default:
         break;
     }
 }

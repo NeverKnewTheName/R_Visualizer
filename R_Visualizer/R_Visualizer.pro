@@ -21,46 +21,15 @@ LIBS += -lhidapi -L../../CAN_Analyser_USB_Driver/hidapi/
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mysquare.cpp \
-    msgmodel.cpp \
-    msgdelegate.cpp \
-    msg.cpp \
-    idmodel.cpp \
-    msgtypemodel.cpp \
-    idrep.cpp \
-    msgtyperep.cpp \
-    msgiddelegate.cpp \
     csvmsgpackethandler.cpp \
     devicehandler.cpp \
     userrolemngr.cpp \
-    msgproxymodel.cpp \
-    msgfilterproxymodel.cpp \
-    msglimitfilterproxy.cpp \
-    msgtableview.cpp \
-    idcompleter.cpp \
-    hugeqvector.cpp \
     msgparser.cpp
 
 HEADERS  += mainwindow.h \
-    mysquare.h \
-    msgmodel.h \
-    msgdelegate.h \
-    msg.h \
-    idmodel.h \
-    msgtypemodel.h \
-    idrep.h \
-    msgtyperep.h \
-    msgiddelegate.h \
     csvmsgpackethandler.h \
     devicehandler.h \
     userrolemngr.h \
-    msgproxymodel.h \
-    r_ringbuffer.h \
-    msgfilterproxymodel.h \
-    msglimitfilterproxy.h \
-    msgtableview.h \
-    idcompleter.h \
-    hugeqvector.h \
     msgparser.h
 
 FORMS    += mainwindow.ui
@@ -69,6 +38,7 @@ RESOURCES += \
     ressources.qrc
 
 
+include(Msg/Msg.pri)
 include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
 include(SystemOverview/SystemOverview.pri)
 include(SendMessages/SendMessages.pri)

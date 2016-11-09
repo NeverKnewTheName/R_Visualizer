@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 DEPENDPATH += $$PWD
+INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD//errlogview.cpp \
     $$PWD/errlogmodel.cpp \

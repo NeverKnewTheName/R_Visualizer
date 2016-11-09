@@ -7,14 +7,14 @@
 /*
  * Custom Widgets
  */
-#include "MessageConfig/messageconfig.h"
-#include "SendMessages/sendmessages.h"
-#include "SystemOverview/systemoverview.h"
+#include "messageconfig.h"
+#include "sendmessages.h"
+#include "systemoverview.h"
 
-#include "ErrLogView/errlogview.h"
+#include "errlogview.h"
 
 #include "msgmodel.h"
-#include "msgproxymodel.h"
+//#include "msgproxymodel.h"
 #include "idmodel.h"
 #include "msgtypemodel.h"
 
@@ -77,7 +77,6 @@ private:
     Ui::MainWindow *ui;
     QString currentFileName;
     MsgModel *msgModel;
-    MsgProxyModel *msgProxyModel;
     MsgModel *msgPcktModel;
     IDModel *idModel;
     MsgTypeModel *msgTypeModel;

@@ -49,7 +49,7 @@ QModelIndex SysOvrvTriggerModel::index(int row, int column, const QModelIndex &p
 QModelIndex SysOvrvTriggerModel::parent(const QModelIndex &index) const
 {
     // FIXME: Implement me!
-    QModelIndex();
+    return QModelIndex();
 }
 
 int SysOvrvTriggerModel::rowCount(const QModelIndex &parent) const

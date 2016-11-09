@@ -1,9 +1,9 @@
 #ifndef MSGTABLEVIEW_H
 #define MSGTABLEVIEW_H
 
-#include "MessageConfig/filteridstore.h"
-#include "MessageConfig/filtercodestore.h"
-#include "MessageConfig/filtertimestampstore.h"
+#include "filteridstore.h"
+#include "filtercodestore.h"
+#include "filtertimestampstore.h"
 
 #include <QTableView>
 

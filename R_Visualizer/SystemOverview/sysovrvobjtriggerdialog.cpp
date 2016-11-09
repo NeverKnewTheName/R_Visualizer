@@ -12,8 +12,8 @@ SysOvrvObjTriggerDialog::SysOvrvObjTriggerDialog(SysOvrvObject *sysOvrvObj, QWid
     QDialog(parent),
     ui(new Ui::SysOvrvObjTriggerDialog),
     ObjectToTrigger(sysOvrvObj),
-    previewEditor(new SysOvrvTriggerEditorWidget(this)),
-    stdModel(new QStandardItemModel(this))
+    stdModel(new QStandardItemModel(this)),
+    previewEditor(new SysOvrvTriggerEditorWidget(this))
 {
     ui->setupUi(this);
 

@@ -24,12 +24,20 @@ HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStr
     QStringList msgsFromPacket = csvMsgPacketString.split("\n");
     QString codeLine = msgsFromPacket.at(0);
     msgsFromPacket.removeAt(0);
-//    QString regExprPattern("(0x)?[\\d\\w]+");
-//    QRegularExpression regExpr(regExprPattern);
     QString code = codeLine.split(";").at(0);
 
-    qDebug() << "RegEx extracted CODE: " << code.toInt(0, 16);;
-    MsgDataT msgData = { code.toInt(0, 16), 0xd, 0x84, 0, 0, 0, 0, 0 };
+    qDebug() << "RegEx extracted CODE: " << code.toInt(0, 16);
+    MsgDataT msgData = {
+        static_cast<quint8>(code.toInt(0, 16)),
+        static_cast<quint8>(0xd),
+        static_cast<quint8>(0x84),
+        static_cast<quint8>(0),
+        static_cast<quint8>(0),
+        static_cast<quint8>(0),
+        static_cast<quint8>(0),
+        static_cast<quint8>(0)
+    };
+
     msgs.append(new Msg(QDateTime(), 0xFF, msgData));
     for(auto &msg : msgsFromPacket )
     {
@@ -48,7 +56,16 @@ HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStr
         qDebug() << "Data High: " << dataHigh << " - " << dataHigh.toInt(0,2);
         QString dataLow = msgAsString.at(9) + msgAsString.at(10) + msgAsString.at(11) + msgAsString.at(12) + msgAsString.at(13);
         qDebug() << "Data Low: " << dataLow << " - " << dataLow.toInt(0,2);
-        msgData = { 0x0B, ((recvrID >> 8) & 0xFFu ), (recvrID & 0xFFu), dataHigh.toInt(0,2), dataLow.toInt(0,2), 0, 0, 0 };
+        msgData = {
+            static_cast<quint8>(0x0B),
+            static_cast<quint8>(((recvrID >> 8) & 0xFFu )),
+            static_cast<quint8>((recvrID & 0xFFu)),
+            static_cast<quint8>(dataHigh.toInt(0,2)),
+            static_cast<quint8>(dataLow.toInt(0,2)),
+            static_cast<quint8>(0),
+            static_cast<quint8>(0),
+            static_cast<quint8>(0)
+        };
         qDebug() << "MsgData";
         qDebug() << "RecvID LOW:" << msgData.data0;
         qDebug() << "RecvID HIGH:" << msgData.data1;
