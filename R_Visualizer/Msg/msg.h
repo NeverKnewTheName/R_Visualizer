@@ -1,49 +1,43 @@
 #ifndef MSG_H
 #define MSG_H
 
-#include <QJsonObject>
+class QJsonObject;
 #include <QDateTime>
 
 #include <QMetaType>
+#include <QVector>
 
-typedef struct msgDataT
+typedef QVector<quint8> DataByteVect, *PDataByteVect;
+Q_DECLARE_METATYPE(DataByteVect)
+
+typedef struct _MsgData
 {
-    quint8 code;
-    quint8 data0;
-    quint8 data1;
-    quint8 data2;
-    quint8 data3;
-    quint8 data4;
-    quint8 data5;
-    quint8 data6;
-}MsgDataT;
+    DataByteVect DataBytes;
+    unsigned int DataSizeInBytes;
+}MsgDataStruc, *PMsgDataStruc;
 
-Q_DECLARE_METATYPE(MsgDataT)
+Q_DECLARE_METATYPE(MsgDataStruc)
 
 class Msg
 {
 public:
+
     Msg();
-    Msg(QDateTime timestamp, unsigned int id, MsgDataT &data);
-    Msg(QDateTime timestamp, unsigned int id, QByteArray &data);
-    Msg(QDateTime timestamp, unsigned int id, quint8 code, quint8 data0 = 0,quint8 data1 = 0,quint8 data2 = 0,quint8 data3 = 0,quint8 data4 = 0,quint8 data5 = 0,quint8 data6 = 0);
+    Msg(QDateTime timestamp, quint16 id, quint16 code, DataByteVect dataBytes);
 
     QDateTime getTimestamp() const;
-    void setTimestamp(QDateTime value);
+    void setTimestamp(const QDateTime value);
 
-    unsigned int getId() const;
-    void setId(unsigned int value);
+    quint16 getId() const;
+    void setId(const quint16 value);
 
-    MsgDataT getData() const;
+    quint16 getCode() const;
+    void setCode(const quint16 value);
+
+    PMsgDataStruc getData();
     QByteArray getDataAsByteArray() const;
-    void setData(const MsgDataT &value);
-    void setData(quint8 code, quint8 data0 = 0, quint8 data1 = 0, quint8 data2 = 0, quint8 data3 = 0, quint8 data4 = 0, quint8 data5 = 0, quint8 data6 = 0);
-
-    quint8 getCode() const;
-    void setCode(quint8 value);
-
-    //unsigned int getMessage() const;
-    void setMessage(quint8 data0 = 0, quint8 data1 = 0, quint8 data2 = 0, quint8 data3 = 0, quint8 data4 = 0, quint8 data5 = 0, quint8 data6 = 0);
+    void setData(const DataByteVect dataBytes);
+    void setDataByte(quint8 index, quint8 dataByte);
 
     QString getMessageAsString() const;
     QString getDataAsString() const;
@@ -51,11 +45,13 @@ public:
     void parseIN(QJsonObject jsonMsg);
     QJsonObject parseOUT() const;
 
-
 private:
-    QDateTime timestamp;
-    unsigned int id;
-    MsgDataT data;
+    QDateTime MsgTimestamp;
+    quint16 MsgID;
+    quint16 MsgCode;
+    MsgDataStruc MsgData;
 };
+
+Q_DECLARE_METATYPE(Msg)
 
 #endif // MSG_H

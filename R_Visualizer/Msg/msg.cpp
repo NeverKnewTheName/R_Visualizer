@@ -1,191 +1,161 @@
 #include "msg.h"
 
-Msg::Msg()
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+
+#include <QDebug>
+
+/**
+ * @brief Initializes an empty Msg with invalid ID and Code as well as empty Data
+ */
+Msg::Msg() :
+    MsgTimestamp(QDateTime()),
+    MsgID(0x0u),
+    MsgCode(0x0u),
+    MsgData({
+            DataByteVect(),
+            0u
+            })
 {
-    this->timestamp = QDateTime();
-    this->id = 0x0u;
-    this->data = {
-         static_cast<quint8>(0),static_cast<quint8>(0),static_cast<quint8>(0),static_cast<quint8>(0),static_cast<quint8>(0),static_cast<quint8>(0),static_cast<quint8>(0),static_cast<quint8>(0)
-    };
 }
 
-Msg::Msg(QDateTime timestamp, unsigned int id, MsgDataT &data) : timestamp(timestamp), id(id), data(data)
-{
-
-}
-
-Msg::Msg(QDateTime timestamp, unsigned int id, QByteArray &data) : timestamp(timestamp), id(id)
-{
-    this->data = {
-        static_cast<quint8>(data.at(0)),
-        static_cast<quint8>(0),
-        static_cast<quint8>(0),
-        static_cast<quint8>(0),
-        static_cast<quint8>(0),
-        static_cast<quint8>(0),
-        static_cast<quint8>(0),
-        static_cast<quint8>(0)
-    };
-    if(data.length() > 1 )
-    {
-        this->data.data0 = data.at(1);
-    }
-    if(data.length() > 2 )
-    {
-        this->data.data1 = data.at(2);
-    }
-    if(data.length() > 3 )
-    {
-        this->data.data2 = data.at(3);
-    }
-    if(data.length() > 4 )
-    {
-        this->data.data3 = data.at(4);
-    }
-    if(data.length() > 5 )
-    {
-        this->data.data4 = data.at(5);
-    }
-    if(data.length() > 6 )
-    {
-        this->data.data5 = data.at(6);
-    }
-    if(data.length() > 7 )
-    {
-        this->data.data6 = data.at(7);
-    }
-
-}
-
-Msg::Msg(QDateTime timestamp, unsigned int id, quint8 code, quint8 data0, quint8 data1, quint8 data2, quint8 data3, quint8 data4, quint8 data5, quint8 data6)
-    : timestamp(timestamp), id(id), data({code, data0, data1, data2, data3, data4, data5, data6})
+/**
+ * @brief Initializes a Msg with the given paramters
+ *
+ * @param[in] timestamp Timestamp of message receival
+ * @param[in] id        ID of the message sender
+ * @param[in] code      Code that identifies the purpose of the message
+ * @param[in] dataBytes Data bytes that were sent alongside the message
+ */
+Msg::Msg(QDateTime timestamp, quint16 id, quint16 code, DataByteVect dataBytes) :
+    MsgTimestamp(timestamp),
+    MsgID(id),
+    MsgCode(code),
+    MsgData({
+            dataBytes,
+            dataBytes.size()
+            })
 {
 
 }
 
 QDateTime Msg::getTimestamp() const
 {
-    return timestamp;
+    return MsgTimestamp;
 }
 
-void Msg::setTimestamp(QDateTime value)
+void Msg::setTimestamp(const QDateTime value)
 {
-    timestamp = value;
+    MsgTimestamp = value;
 }
 
-unsigned int Msg::getId() const
+quint16 Msg::getId() const
 {
-    return id;
+    return MsgID;
 }
 
-void Msg::setId(unsigned int value)
+void Msg::setId(const quint16 value)
 {
-    id = value;
+    MsgID = value;
 }
 
-
-quint8 Msg::getCode() const
+quint16 Msg::getCode() const
 {
-    return this->data.code;
+    return MsgCode;
 }
 
-void Msg::setCode(quint8 value)
+void Msg::setCode(const quint16 value)
 {
-    this->data.code = value;
+    MsgCode = value;
 }
 
-void Msg::setMessage(quint8 data0, quint8 data1, quint8 data2, quint8 data3, quint8 data4, quint8 data5, quint8 data6)
+PMsgDataStruc Msg::getData()
 {
-    this->data = { this->data.code, data0, data1, data2, data3, data4, data5, data6 };
-}
-
-QString Msg::getMessageAsString() const
-{
-    return QString("0x%1%2%3%4%5%6%7")
-            .arg(this->data.data0/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data1/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data2/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data3/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data4/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data5/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data6/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+    return &MsgData;
 }
 
 QString Msg::getDataAsString() const
 {
-    return QString("Code:\t0x%1\nMessage:\t0x%2%3%4%5%6%7%8")
-            .arg(this->data.code/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data0/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data1/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data2/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data3/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data4/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data5/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-            .arg(this->data.data6/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+    QString DataAsString("");
+
+    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    {
+        DataAsString.append(QString("0x%1 ")
+            .arg(MsgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
+    }
+    return DataAsString.trimmed();
 }
+
+//QString Msg::getCodeAndDataAsString() const
+//{
+//    QString DataAsString = QString("Code:\t0x%1\nMessage:\t")
+//            .arg(MsgCode/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+
+//    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+//    {
+//        DataAsString.append(QString("0x%1 ").arg(MsgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
+//    }
+//    return DataAsString.trimmed();
+//}
 
 void Msg::parseIN(QJsonObject jsonMsg)
 {
-    this->timestamp = QDateTime::fromString(jsonMsg["timestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    this->id = jsonMsg["id"].toInt();
-    QJsonObject jsonData = jsonMsg["data"].toObject();
-    this->data  = {
-        static_cast<quint8>(jsonData["code"].toInt()),
-        static_cast<quint8>(jsonData["data0"].toInt()),
-        static_cast<quint8>(jsonData["data1"].toInt()),
-        static_cast<quint8>(jsonData["data2"].toInt()),
-        static_cast<quint8>(jsonData["data3"].toInt()),
-        static_cast<quint8>(jsonData["data4"].toInt()),
-        static_cast<quint8>(jsonData["data5"].toInt()),
-        static_cast<quint8>(jsonData["data6"].toInt())
-    };
+    MsgTimestamp = QDateTime::fromString(jsonMsg["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    MsgID = static_cast<quint16>(jsonMsg["MsgID"].toInt());
+    MsgCode = static_cast<quint16>(jsonMsg["MsgCode"].toInt());
+    QJsonArray jsonData = jsonMsg["MsgData"].toArray();
+    MsgData.DataSizeInBytes = jsonData.size();
+    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    {
+        MsgData.DataBytes.append(static_cast<quint8>(jsonData.at(i).toInt()));
+    }
 }
 
 QJsonObject Msg::parseOUT() const
 {
     QJsonObject jsonMsg;
-    QJsonObject jsonData;
-    jsonMsg["timestamp"] = this->timestamp.toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    jsonMsg["id"] = QJsonValue(static_cast<int>(this->id));
-    jsonData["code"] = this->data.code;
-    jsonData["data0"] = this->data.data0;
-    jsonData["data1"] = this->data.data1;
-    jsonData["data2"] = this->data.data2;
-    jsonData["data3"] = this->data.data3;
-    jsonData["data4"] = this->data.data4;
-    jsonData["data5"] = this->data.data5;
-    jsonData["data6"] = this->data.data6;
-    jsonMsg["data"] = jsonData;
+    QJsonArray  jsonData;
+
+    jsonMsg["MsgTimestamp"] = MsgTimestamp.toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    jsonMsg["MsgID"] = QJsonValue(static_cast<int>(MsgID));
+    jsonMsg["MsgCode"] = QJsonValue(static_cast<int>(MsgCode));
+    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    {
+        jsonData.append(QJsonValue(static_cast<int>(MsgData.DataBytes.at(i))));
+    }
+    jsonMsg["MsgData"] = jsonData;
 
     return jsonMsg;
 }
 
-MsgDataT Msg::getData() const
-{
-    return this->data;
-}
-
+/**
+ * @brief Returns the Msg's MsgData as a QByteArray
+ * @return MsgData as QByteArray
+ */
 QByteArray Msg::getDataAsByteArray() const
 {
     QByteArray data;
-    data.append( this->data.code);
-    data.append( this->data.data0);
-    data.append( this->data.data1);
-    data.append( this->data.data2);
-    data.append( this->data.data3);
-    data.append( this->data.data4);
-    data.append( this->data.data5);
-    data.append( this->data.data6);
+    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    {
+        data.append(MsgData.DataBytes.at(i));
+    }
 
     return data;
 }
 
-void Msg::setData(const MsgDataT &value)
+void Msg::setData(const DataByteVect dataBytes)
 {
-    this->data = value;
+    MsgData.DataBytes = dataBytes;
+    MsgData.DataSizeInBytes = dataBytes.size();
 }
 
-void Msg::setData(quint8 code, quint8 data0, quint8 data1, quint8 data2, quint8 data3, quint8 data4, quint8 data5, quint8 data6)
+void Msg::setDataByte(quint8 index, quint8 dataByte)
 {
-    this->data = { code, data0, data1, data2, data3, data4, data5, data6 };
+    if(index > MsgData.DataSizeInBytes)
+    {
+        qDebug() << __FUNCTION__ << "Index not in range of MsgData";
+    }
+
+    MsgData.DataBytes[index] = dataByte;
 }

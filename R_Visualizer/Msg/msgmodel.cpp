@@ -1,12 +1,18 @@
 #include "msgmodel.h"
 
-#include <QDebug>
+#include "msg.h"
+#include "idmodel.h"
+#include "msgtypemodel.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
 
 #include <QFont>
 #include <QBrush>
+
+
+#include <QDebug>
+
 
 MsgModel::MsgModel(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -40,7 +46,7 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         // returns only displayable data
         if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
         if(col == COL_NAME) return this->msgs.at(row)->getId();
-        if(col == COL_MESSAGE) return msgs.at(row)->getDataAsString();
+        if(col == COL_MESSAGE) return QString("Code: 0x%1\tData: %2").arg(msgs.at(row)->getCode()).arg(msgs.at(row)->getDataAsString());
         break;
     case Qt::FontRole:
         break;
@@ -53,9 +59,7 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     case Qt::CheckStateRole:
         break;
     case Qt::UserRole +1:  // return Data
-    {
-        return QVariant::fromValue(this->msgs.at(row)->getData());
-    }
+        return QVariant::fromValue(static_cast<void*>(this->msgs.at(row)));
         break;
     case Qt::UserRole +2:  // return Code of the line
         return this->msgs.at(row)->getCode();
@@ -109,7 +113,7 @@ QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role
 bool MsgModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     int msgModelSize = msgs.size();
-    if(msgModelSize || ((row+count) < msgModelSize))
+    if((row+count) < msgModelSize)
     {
         while(count--)
             removeRow(row+count, parent);
@@ -124,7 +128,7 @@ bool MsgModel::removeRows(int row, int count, const QModelIndex &parent)
 void MsgModel::removeRow(int row, const QModelIndex &parent)
 {
     int msgModelSize = msgs.size();
-    if(msgModelSize || (row < msgModelSize))
+    if(row < msgModelSize)
     {
         beginRemoveRows(parent, row, row);
         msgs.remove(row);
@@ -144,8 +148,6 @@ void MsgModel::addMsg(Msg *msg)
     emit rowsAdded(1);
     emit rowAppended(newRow);
 }
-
-
 
 void MsgModel::clear()
 {
@@ -199,16 +201,8 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
     }
 }
 
-void MsgModel::messageReceived(Data_PacketPtr ptr)
+void MsgModel::messageReceived(Msg *msg)
 {
-        QDateTime timeStamp;
-        unsigned int id;
-        QByteArray canData;
-
-        timeStamp = ptr->timestamp();
-        id = ptr->frame().ID_Standard;
-        canData = ptr->frame().data;
-
-        this->addMsg(new Msg(timeStamp, id, canData));
+        this->addMsg(msg);
 }
 

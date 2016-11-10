@@ -1,6 +1,7 @@
 #ifndef SENDMESSAGES_H
 #define SENDMESSAGES_H
 
+#include "msg.h"
 #include "can_packet.h"
 #include "msgmodel.h"
 #include "idmodel.h"
@@ -27,8 +28,8 @@ private:
     void initMsgPacketTableView();
     void emitSendMsg();
 
-    QByteArray extractMsgData(QString msgDataString, int formatIndex);
-    QString createMsgData(QByteArray msgDataBytes, int formatIndex);
+    DataByteVect extractMsgData(QString msgDataString, int formatIndex);
+    QString createMsgData(DataByteVect msgDataBytes, int formatIndex);
 
     qulonglong parseToNumber(QString numericalString);
     QString parseToString(qulonglong number);

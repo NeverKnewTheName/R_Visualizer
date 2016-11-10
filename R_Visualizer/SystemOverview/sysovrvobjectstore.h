@@ -3,10 +3,11 @@
 
 #include "sysovrvobject.h"
 #include "can_packet.h"
-#include "msg.h"
 
 #include <QObject>
 #include <QHash>
+
+class Msg;
 
 class SysOvrvObjectStore : public QObject
 {

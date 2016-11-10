@@ -57,9 +57,11 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     else if (col == MsgModel::COL_MESSAGE)
     {
         // Retrieve MsgData structure from the message
-        MsgDataT msgData = index.model()->data(index, Qt::UserRole + 1).value<MsgDataT>();
+        Msg *msg = static_cast<Msg*>(index.model()->data(index, Qt::UserRole + 1).value<void*>());
+        quint16 code = msg->getCode();
+        PMsgDataStruc msgData = msg->getData();
         // Get color for the background
-        QColor itemBackground = this->msgTypeModel->getColorToCode(msgData.code);
+        QColor itemBackground = this->msgTypeModel->getColorToCode(code);
         if(itemBackground.isValid())
         {
             if(option.features & QStyleOptionViewItem::Alternate)
@@ -73,12 +75,12 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         }
         // Get the name of the code included in the message
         // returns an empty string if no name is specified or if there is no netry in the MsgType model
-        QString codeName = this->msgTypeModel->getNameToCode(msgData.code);
+        QString codeName = this->msgTypeModel->getNameToCode(code);
         if(codeName.isEmpty())
         {
             // There is no name specified or there is no entry in the MsgType model
             // Standard formatting for the code as hex
-            codeName = QString("Code:\t0x%1").arg(msgData.code/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+            codeName = QString("Code:\t0x%1").arg(code/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
         }
         else
         {
@@ -90,18 +92,12 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         dataPrint.append(codeName);
         // end code line
         //dataPrint.append(QString("\n"));
-        QString msgString = this->msgTypeModel->getMessageToCode(msgData.code);
+        QString msgString = this->msgTypeModel->getMessageToCode(code);
         if(msgString.isEmpty())
         {
             // Craft a standard Message
-            msgString = QString("Message:\t0x%1%2%3%4%5%6%7")
-                    .arg(msgData.data0/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-                    .arg(msgData.data1/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-                    .arg(msgData.data2/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-                    .arg(msgData.data3/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-                    .arg(msgData.data4/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-                    .arg(msgData.data5/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/)
-                    .arg(msgData.data6/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+            msgString = QString("Message:\t%1")
+                    .arg(msg->getDataAsString());
             dataPrint.append(msgString);
         }
         else
@@ -109,13 +105,22 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
             // format the message according to the retrieved format string
             QString formatString = msgString;
             QString formattedMessage = formatString;
-            formattedMessage.replace("#Data0#", QString::number(msgData.data0));
-            formattedMessage.replace("#Data1#", QString::number(msgData.data1));
-            formattedMessage.replace("#Data2#", QString::number(msgData.data2));
-            formattedMessage.replace("#Data3#", QString::number(msgData.data3));
-            formattedMessage.replace("#Data4#", QString::number(msgData.data4));
-            formattedMessage.replace("#Data5#", QString::number(msgData.data5));
-            formattedMessage.replace("#Data6#", QString::number(msgData.data6));
+            QRegularExpression dataRE(QString("(#Data(\\d*)#)"));
+            QRegularExpressionMatch dataMatch = dataRE.match(formattedMessage);
+            while(dataMatch.hasMatch())
+            {
+                unsigned int dataIndex = dataMatch.captured(1).toInt();
+                int num = 0;
+
+                if(dataIndex < msgData->DataSizeInBytes)
+                    num = msgData->DataBytes.at(dataIndex);
+                else
+                    qDebug() << __FUNCTION__ << "Index out of range!";
+
+                formattedMessage.replace(QString("%1").arg(dataMatch.captured(0)), QString::number(num));
+                dataMatch = dataRE.match(formattedMessage);
+            }
+
             // parse operations form string
             //QRegularExpression opParse(QString("#OP#\\((\\d\\.?\\d*)#.*#(\\d\\.?\\d*)\\)#\\/OP#"));
             QRegularExpression opParse(QString("#OP#\\((\\d\\.?\\d*)#([+-/*%&|^]|(>>)|(<<))#(\\d\\.?\\d*)\\)#\\/OP#"));

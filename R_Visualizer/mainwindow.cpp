@@ -79,9 +79,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
 
-    connect(this, &MainWindow::dataReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
+    connect(m_deviceHandler, &DeviceHandler::sigMsgReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
     connect(this, &MainWindow::dataReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
-    connect(this, &MainWindow::errorReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
+    connect(m_deviceHandler, &DeviceHandler::sigErrorMsgReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
     //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
     //    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
     ui->actionStop->setDisabled(true);
@@ -103,33 +103,32 @@ void MainWindow::on_actionNew_triggered()
     //TESTING ONLY
     static int cntr = 0;
     ++cntr;
-    MsgDataT msgData = {
-        static_cast<quint8>(0x2),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr*2),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x4*cntr),
-        static_cast<quint8>(cntr)
-    };
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgData = {
-        static_cast<quint8>(0x3),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr*2),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x4*cntr),
-        static_cast<quint8>(cntr)
-    };
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
+    DataByteVect msgData;
+    msgData.append(static_cast<quint8>(cntr));
+    msgData.append(static_cast<quint8>(0x0));
+    msgData.append(static_cast<quint8>(cntr*2));
+    msgData.append(static_cast<quint8>(0x0));
+    msgData.append(static_cast<quint8>(cntr));
+    msgData.append(static_cast<quint8>(0x4*cntr));
+    msgData.append(static_cast<quint8>(cntr));
+
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x2,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
+    msgData.clear();
+
+    msgData.append(static_cast<quint8>(cntr));
+    msgData.append(static_cast<quint8>(0x0));
+    msgData.append(static_cast<quint8>(cntr*2));
+    msgData.append(static_cast<quint8>(0x0));
+    msgData.append(static_cast<quint8>(cntr));
+    msgData.append(static_cast<quint8>(0x4*cntr));
+    msgData.append(static_cast<quint8>(cntr));
+
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x3,msgData));
+    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
 }
 
 void MainWindow::on_actionOpen_triggered()

@@ -1,5 +1,8 @@
 #include "errlogview.h"
 #include "ui_errlogview.h"
+#include "errorlogentry.h"
+
+#include <QDateTime>
 
 #include <QDebug>
 
@@ -15,9 +18,7 @@ ErrorLogView::ErrorLogView(QWidget *parent) :
     QHeaderView *horzHeader = ui->errLogTblV->horizontalHeader();
     horzHeader->setSectionResizeMode(0, QHeaderView::Fixed);
     horzHeader->resizeSection(0, 150);
-    horzHeader->resizeSection(1, 100);
-    horzHeader->resizeSection(2, 100);
-    horzHeader->setSectionResizeMode(3, QHeaderView::Stretch);
+    horzHeader->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->errLogTblV->verticalHeader()->hide();
 
     ui->errLogTblV->setAlternatingRowColors(true);
@@ -36,7 +37,7 @@ void ErrorLogView::on_savePB_clicked()
 {
     qDebug() << "ErrLogView" << "SAVE";
     qDebug() << "ADDING EXAMPLE ERROR";
-    errLogModel->addErrEntry(new ErrorLogEntry(QDateTime::currentDateTime(), 3, 4, QString("This is some example error detail String!")));
+    errLogModel->addErrEntry(new ErrorLogEntry(QDateTime::currentDateTime(), QString("This is some example error detail String!")));
 }
 
 void ErrorLogView::on_openPB_clicked()

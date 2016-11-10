@@ -70,9 +70,9 @@ SendMessages::~SendMessages()
     delete ui;
 }
 
-QByteArray SendMessages::extractMsgData(QString msgDataString, int formatIndex)
+DataByteVect SendMessages::extractMsgData(QString msgDataString, int formatIndex)
 {
-    QByteArray extractedDataBytes;
+    DataByteVect extractedDataBytes;
     QStringList dataBytes;
     msgDataString = msgDataString.simplified();
 
@@ -155,7 +155,7 @@ QByteArray SendMessages::extractMsgData(QString msgDataString, int formatIndex)
     return extractedDataBytes;
 }
 
-QString SendMessages::createMsgData(QByteArray msgDataBytes, int formatIndex)
+QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
 {
     QString newMsgDataString;
 
@@ -276,20 +276,20 @@ qulonglong SendMessages::parseToNumber(QString numericalString)
 
 void SendMessages::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 {
+    bool adminBtnVisibility;
     if(roleToSwitchTo == UserRoleMngr::NormalUserRole)
     {
-        ui->sndPcktAddBtn->setVisible(false);
-        ui->sndPcktRmvBtn->setVisible(false);
-        ui->sndPcktStoreBtn->setVisible(false);
         ui->sndPcktTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+        adminBtnVisibility = false;
     }
     else if(roleToSwitchTo == UserRoleMngr::AdminRole)
     {
-        ui->sndPcktAddBtn->setVisible(true);
-        ui->sndPcktRmvBtn->setVisible(true);
-        ui->sndPcktStoreBtn->setVisible(true);
+        adminBtnVisibility = true;
     }
+
+    ui->sndPcktAddBtn->setVisible(adminBtnVisibility);
+    ui->sndPcktRmvBtn->setVisible(adminBtnVisibility);
+    ui->sndPcktStoreBtn->setVisible(adminBtnVisibility);
 }
 
 void SendMessages::on_sndPcktLoadBtn_clicked()
@@ -385,7 +385,7 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
     frame.RTR = 0;
 
-    QByteArray dataToSend;
+    DataByteVect dataToSend;
 
     lineEditContent = ui->sndMsgMsgLineEdit->text().simplified();
     dataToSend = this->extractMsgData(lineEditContent, this->currentDataFormatIndex);
@@ -407,7 +407,9 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
     frame.DLC = dataToSend.size();
 
-    frame.data = dataToSend;
+    frame.data.clear();
+    for(quint8 byte : dataToSend)
+        frame.data.append(byte);
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
@@ -494,8 +496,8 @@ void SendMessages::on_sndPcktClrBtn_clicked()
 void SendMessages::on_sndMsgAddToPacketBtn_clicked()
 {
     quint16 msgID;
-    quint8 msgCode;
-    QByteArray data;
+    quint16 msgCode;
+    DataByteVect data;
     QString lineEditContent;
     bool conversionOK;
 
@@ -518,7 +520,7 @@ void SendMessages::on_sndMsgAddToPacketBtn_clicked()
 
     data.prepend(msgCode);
 
-    this->msgPcktModel->addMsg(new Msg(QDateTime(),msgID,data));
+    this->msgPcktModel->addMsg(new Msg(QDateTime(),msgID,msgCode,data));
 }
 
 void SendMessages::on_sndMsgMsgLineEdit_returnPressed()

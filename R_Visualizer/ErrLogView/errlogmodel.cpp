@@ -1,4 +1,7 @@
 #include "errlogmodel.h"
+#include "errorlogentry.h"
+#include "hugeqvector.h"
+
 #include <QDebug>
 
 ErrLogModel::ErrLogModel(QObject *parent) :
@@ -28,8 +31,6 @@ QVariant ErrLogModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         // returns only displayable data
         if(col == COL_TIMESTAMP) return errLogStore.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
-        if(col == COL_TX_ERR_CNTR) return errLogStore.at(row)->getTxErrCntr();
-        if(col == COL_RX_ERR_CNTR) return errLogStore.at(row)->getRxErrCntr();
         if(col == COL_DETAILS) return errLogStore.at(row)->getDetailString();
         break;
     case Qt::FontRole:
@@ -56,12 +57,6 @@ QVariant ErrLogModel::headerData(int section, Qt::Orientation orientation, int r
             case COL_TIMESTAMP:
                 return QString("Timestamp");
                 break;
-            case COL_TX_ERR_CNTR:
-                return QString("TX Error Counter");
-                break;
-            case COL_RX_ERR_CNTR:
-                return QString("RX Error Counter");
-                break;
             case COL_DETAILS:
                 return QString("Details");
                 break;
@@ -69,11 +64,6 @@ QVariant ErrLogModel::headerData(int section, Qt::Orientation orientation, int r
         }
     }
     return QVariant();
-}
-
-bool ErrLogModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    return true;
 }
 
 
@@ -92,13 +82,7 @@ void ErrLogModel::addErrEntry(ErrorLogEntry *errLogEntry)
 //    emit rowAppended(newRow);
 }
 
-void ErrLogModel::errLogMsgReceived(Error_PacketPtr ptr)
+void ErrLogModel::errLogMsgReceived(ErrorLogEntry *errLogEntry)
 {
-        QDateTime timeStamp = ptr->timestamp();
-        int rxErrCntr = ptr->RX_Error_Counter();
-        int txErrCntr = ptr->TX_Error_Counter();
-        QString detailString = ptr->Status_Register_String();
-//        qDebug() << detailString;
-
-        this->addErrEntry(new ErrorLogEntry(timeStamp,rxErrCntr,txErrCntr,detailString));
+        this->addErrEntry(errLogEntry);
 }

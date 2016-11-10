@@ -1,15 +1,17 @@
 #ifndef MSGMODEL_H
 #define MSGMODEL_H
 
-#include "can_packet.h"
-#include "msg.h"
-#include "idmodel.h"
-#include "msgtypemodel.h"
+class Msg;
+class IDModel;
+class MsgTypeModel;
+
+//#include "msg.h"
+//#include "idmodel.h"
+//#include "msgtypemodel.h"
 #include "hugeqvector.h"
 
 #include <QAbstractTableModel>
 #include <QString>
-#include <QVector>
 
 class MainWindow;
 
@@ -50,7 +52,7 @@ private:
     friend class MainWindow;
 
 private slots:
-    void messageReceived(Data_PacketPtr ptr);
+    void messageReceived(Msg *msg);
 
 signals:
     void rowAppended(unsigned int rowNr);

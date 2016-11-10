@@ -18,6 +18,9 @@
 #include <QTimer>
 #include <devicedriver.h>
 
+#include "msg.h"
+#include "errorlogentry.h"
+
 /** \addtogroup Group_BasicApplication
  *  @{
  */
@@ -76,6 +79,9 @@ class DeviceHandler : public QThread
          * @param CAN_PacketPtr Pointer that holds the new CAN_Packet.
          */
         void sigPacketReceived(CAN_PacketPtr);
+
+        void sigMsgReceived(Msg *msg);
+        void sigErrorMsgReceived(ErrorLogEntry *errEntry);
         /**
          * @brief Signal that notifies the application of an error in the usb communication.
          *
