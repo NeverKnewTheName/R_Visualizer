@@ -33,5 +33,6 @@ win32 {
     SOURCES += windows/hid.c
     LIBS += -lsetupapi
 
-    DESTDIR = $$PWD
+#    DESTDIR = $$PWD
+    DESTDIR = ./
 }

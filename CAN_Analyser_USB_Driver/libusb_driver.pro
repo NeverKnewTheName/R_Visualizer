@@ -41,5 +41,6 @@ unix {
 }
 
 win32 {
-    DESTDIR = $$PWD
+#    DESTDIR = $$PWD
+    DESTDIR = ./
 }

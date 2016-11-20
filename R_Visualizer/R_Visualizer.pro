@@ -13,11 +13,11 @@ TEMPLATE = app
 
 
 INCLUDEPATH += .
-INCLUDEPATH += ../CAN_Analyser_USB_Driver/.
 INCLUDEPATH += ../CAN_Analyser_USB_Driver/hidapi/.
+INCLUDEPATH += ../CAN_Analyser_USB_Driver/.
 
-LIBS += -lusb_driver -L../../CAN_Analyser_USB_Driver/
-LIBS += -lhidapi -L../../CAN_Analyser_USB_Driver/hidapi/
+LIBS += -L../../CAN_Analyser_USB_Driver/hidapi/ -lhidapi
+LIBS += -L../../CAN_Analyser_USB_Driver/ -lusb_driver
 
 SOURCES += main.cpp\
         mainwindow.cpp \
