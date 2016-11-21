@@ -90,24 +90,24 @@ quint16 IDRep::getId() const
     return id;
 }
 
-const QPixmap &IDRep::paintIDRep(const QRect &boundingRect)
+void IDRep::paintIDRep(const QRect &rect, QPixmap &destPixMap) const
 {
-    if((boundingRect.size() == IDRepPixmap.size()) && !IDRepPixmap.isNull())
-    {
-        return IDRepPixmap;
-    }
-    qDebug() << "IDRep repaint";
-    IDRepPixmap = QPixmap(boundingRect.size());
-    IDRepPixmap.fill(color);
+//    static const QStyleOptionViewItem &oldOptions = option;
 
-    QPainter pixmapPainter(&IDRepPixmap);
+//    if((oldOptions == option) && !destPixMap.isNull())
+//    {
+//        return;
+//    }
+    qDebug() << "IDRep repaint";
+    destPixMap = QPixmap(rect.size());
+    destPixMap.fill(/*option.features & QStyleOptionViewItem::Alternate ? color.darker() :*/ color);
+
+    QPainter pixmapPainter(&destPixMap);
 
     pixmapPainter.setRenderHint(QPainter::TextAntialiasing);
     pixmapPainter.drawText(
-                IDRepPixmap.rect(),
+                destPixMap.rect(),
                 Qt::TextWordWrap |
                 Qt::AlignCenter,
                 name);
-
-    return IDRepPixmap;
 }

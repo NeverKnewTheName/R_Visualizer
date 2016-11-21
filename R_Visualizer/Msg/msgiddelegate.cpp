@@ -1,62 +1,108 @@
 #include "msgiddelegate.h"
 
-
-/*
- * DEPRECATED
- */
+#include "msgmodel.h"
+#include "idmodel.h"
 
 #include <QPainter>
+#include <QPixmap>
+#include <QPixmapCache>
 
-msgIDDelegate::msgIDDelegate(IDModel &idModel, QWidget *parent)
-    : QStyledItemDelegate(parent),idModel(idModel)
+#include <QDebug>
+
+MsgIDDelegate::MsgIDDelegate(IDModel &idModel, QWidget *parent) :
+    QStyledItemDelegate(parent),
+    idModel(idModel),
+    MsgIDPixMapStore(100),
+    relatedColumnWidth(100),
+    relatedColumnHeight(50)
 {
-
 }
 
-void msgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void MsgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    if(!index.isValid())
+        return;
 
-    MsgIDType    quint16/*ToDO MsgIDType*/ id = index.model()->data(index, Qt::DisplayRole).value<int>();
-    QColor background(idModel.getColorToID(id));
+    int row = index.row();
+    QPixmap CurPixMap = MsgIDPixMapStore.value(row);
 
-    if(option.state & QStyle::State_Selected)
+    painter->save();
+
+    if(CurPixMap.isNull())
     {
-        background = background.darker();
+        QStyledItemDelegate::paint(painter,option,index);
     }
-    painter->fillRect(option.rect, background);
-
-
-    QString name = idModel.getNameToID(id);
-    if(name.isEmpty())
+    else
     {
-        // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        name =  QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+        painter->drawPixmap(option.rect, CurPixMap);
     }
-
-    painter->drawText(option.rect, Qt::AlignLeft/* | Qt::AlignBottom*/, name);
+    painter->restore();
 }
 
-QSize msgIDDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize MsgIDDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     return QStyledItemDelegate::sizeHint(option, index);
 }
 
-QWidget *msgIDDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *MsgIDDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     return QStyledItemDelegate::createEditor(parent,option,index);
 }
 
-void msgIDDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+void MsgIDDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     return QStyledItemDelegate::setEditorData(editor, index);
 }
 
-void msgIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void MsgIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     return QStyledItemDelegate::setModelData(editor, model, index);
 }
 
-void msgIDDelegate::commitAndCloseEditor()
+void MsgIDDelegate::UpdatePixmap(const QModelIndex &index)
+{
+    if(!index.isValid())
+        return;
+    if(index.column() != MsgModel::COL_NAME)
+        return;
+
+    int row = index.row();
+    QPixmap CurPixMap = MsgIDPixMapStore.value(row);
+
+    QRect rect = QRect(0,0,relatedColumnWidth,relatedColumnHeight);
+
+    if(rect.isNull())
+    {
+        return;
+    }
+
+    MsgIDType/*ToDO MsgIDType*/ id = index.data(Qt::UserRole +3).value<int>();
+    if(!idModel.getNameToID(id).isEmpty())
+    {
+        idModel.paintID(rect, CurPixMap, id);
+    }
+    if(CurPixMap.isNull())
+    {
+        CurPixMap = QPixmap(rect.size());
+        CurPixMap.fill(Qt::white);
+        QPainter MsgIDPainter(&CurPixMap);
+        MsgIDPainter.setRenderHint(QPainter::TextAntialiasing);
+        MsgIDPainter.drawText(
+                    rect,
+                    Qt::TextWordWrap |
+                    Qt::AlignCenter,
+                    index.data(Qt::DisplayRole).value<QString>()
+                    );
+    }
+    MsgIDPixMapStore.replace(row, CurPixMap);
+}
+
+void MsgIDDelegate::columWidthChanged(int newWidth)
+{
+    relatedColumnWidth = newWidth;
+}
+
+void MsgIDDelegate::commitAndCloseEditor()
 {
 
 }

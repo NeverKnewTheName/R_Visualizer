@@ -42,7 +42,7 @@ public:
     PMsgDataStruc getData();
     QByteArray getDataAsByteArray() const;
     void setData(const DataByteVect dataBytes);
-    void setDataByte(quint8 index, quint8 dataByte);
+    void setDataByte(const quint8 index, const quint8 dataByte);
 
     QString getMessageAsString() const;
     QString getDataAsString() const;

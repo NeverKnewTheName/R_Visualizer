@@ -248,7 +248,7 @@ void MsgTypeModel::parseFromJSON(const QByteArray &jsonFile)
     }
 }
 
-const QPixmap &MsgTypeModel::paintMsgTypeRep(const QRect &boundingRect, const MsgCodeType code)
+void MsgTypeModel::paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap, const MsgCodeType code)
 {
-    return msgTypePropStore[code].paintMsgTypeRep(boundingRect);
+    msgTypePropStore[code].paintMsgTypeRep(rect, destPixMap);
 }

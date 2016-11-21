@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include "msgdelegate.h"
+#include "msgiddelegate.h"
+#include "msgdatadelegate.h"
 #include "filteridstore.h"
 
 #include "errlogview.h"
@@ -115,22 +117,22 @@ void MainWindow::on_actionNew_triggered()
     msgData.append(static_cast<quint8>(cntr));
 
     msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x2,msgData));
-//    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
-//    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
-//    msgData.clear();
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
+    //    msgData.clear();
 
-//    msgData.append(static_cast<quint8>(cntr));
-//    msgData.append(static_cast<quint8>(0x0));
-//    msgData.append(static_cast<quint8>(cntr*2));
-//    msgData.append(static_cast<quint8>(0x0));
-//    msgData.append(static_cast<quint8>(cntr));
-//    msgData.append(static_cast<quint8>(0x4*cntr));
-//    msgData.append(static_cast<quint8>(cntr));
+    //    msgData.append(static_cast<quint8>(cntr));
+    //    msgData.append(static_cast<quint8>(0x0));
+    //    msgData.append(static_cast<quint8>(cntr*2));
+    //    msgData.append(static_cast<quint8>(0x0));
+    //    msgData.append(static_cast<quint8>(cntr));
+    //    msgData.append(static_cast<quint8>(0x4*cntr));
+    //    msgData.append(static_cast<quint8>(cntr));
 
-//    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
-//    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
-//    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x3,msgData));
-//    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -306,7 +308,25 @@ void MainWindow::initMsgsTableView()
     ui->msgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->msgTableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
 
-    ui->msgTableView->setItemDelegate( new MsgDelegate(msgTypeModel, idModel, ui->msgTableView));
+    MsgIDDelegate *idDelegate = new MsgIDDelegate(idModel, ui->msgTableView);
+    MsgDataDelegate *dataDelegate = new MsgDataDelegate(msgTypeModel, ui->msgTableView);
+    connect(&msgModel, SIGNAL(rowInvalidated(QModelIndex)), idDelegate, SLOT(UpdatePixmap(QModelIndex)));
+    connect(&msgModel, SIGNAL(rowInvalidated(QModelIndex)), dataDelegate, SLOT(UpdatePixmap(QModelIndex)));
+    connect(ui->msgTableView->horizontalHeader(), &QHeaderView::sectionResized, this, [=,this](int index, int oldSize, int newSize ){
+        switch(index)
+        {
+        case 1:
+            idDelegate->columWidthChanged(newSize);
+            break;
+        case 2:
+            dataDelegate->columWidthChanged(newSize);
+            break;
+        }
+    });
+    ui->msgTableView->setItemDelegateForColumn(1, idDelegate);
+    ui->msgTableView->setItemDelegateForColumn(2, dataDelegate);
+    //    ui->msgTableView->setItemDelegate( new MsgDelegate(msgTypeModel,idModel,ui->msgTableView));
+
 }
 
 

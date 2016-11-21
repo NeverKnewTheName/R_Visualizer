@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QHash>
 #include <QColor>
+#include <QStyleOptionViewItem>
 
 class IDModel : public QAbstractTableModel
 {
@@ -48,7 +49,7 @@ public:
         COL_NR_OF_COLS
     };
 
-    const QPixmap &paintID(const QRect &boundingRect, const quint16/*ToDO MsgIDType*/ id);
+    void paintID(const QRect &rect, QPixmap &destPixMap, const quint16/*ToDO MsgIDType*/ id) const;
 
 private:
     QVector<quint16> idStore; //ToDO MsgIDType

@@ -5,6 +5,8 @@
 
 #include <QPainter>
 
+#include <QTextDocument>
+
 MsgTypeRep::MsgTypeRep() :
     isValidObj(false),
     code(0x0),
@@ -35,7 +37,7 @@ MsgTypeRep::MsgTypeRep(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString
 
 }
 
-quint8/*ToDo MsgCodeType*/ MsgTypeRep::getCode() const
+MsgCodeType/*ToDo MsgCodeType*/ MsgTypeRep::getCode() const
 {
     return code;
 }
@@ -109,31 +111,33 @@ bool MsgTypeRep::operator==(const MsgTypeRep &other) const
     return (this->code == other.getCode());
 }
 
-const QPixmap &MsgTypeRep::paintMsgTypeRep(const QRect &boundingRect)
+void MsgTypeRep::paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap)
 {
-    if((boundingRect.size() == MsgTypeRepPixmap.size()) && !MsgTypeRepPixmap.isNull())
-    {
-        return MsgTypeRepPixmap;
-    }
-    MsgTypeRepPixmap = QPixmap(boundingRect.size());
-    MsgTypeRepPixmap.fill(color);
+    QTextDocument ItemText(QString("Code: %1\nData: 0x%2 0x%3 0x%4 0x%5 0x%6 0x%7 0x%8")
+            .arg(code)
+            .arg((int)10,(int)2,(int)16,'0')
+            .arg((int)11,(int)2,(int)16,'0')
+            .arg((int)12,(int)2,(int)16,'0')
+            .arg((int)13,(int)2,(int)16,'0')
+            .arg((int)14,(int)2,(int)16,'0')
+            .arg((int)15,(int)2,(int)16,'0')
+            .arg((int)16,(int)2,(int)16,'0')
+                           );
 
-    QPainter pixmapPainter(&MsgTypeRepPixmap);
+    ItemText.setTextWidth(rect.width());
+    destPixMap = QPixmap(ItemText.size().toSize());
+    destPixMap.fill( /*(rect.features & QStyleOptionViewItem::Alternate) ? color.darker() :*/ color);
 
-    pixmapPainter.drawText(
-                MsgTypeRepPixmap.rect(),
-                Qt::TextWordWrap |
-                Qt::AlignCenter,
-                QString("Code: %1\nData: 0x%2 0x%3 0x%4 0x%5 0x%6 0x%7 0x%8")
-                .arg(code)
-                .arg(10,2,16,'0')
-                .arg(11,2,16,'0')
-                .arg(12,2,16,'0')
-                .arg(13,2,16,'0')
-                .arg(14,2,16,'0')
-                .arg(15,2,16,'0')
-                .arg(16,2,16,'0')
-                );
+    QPainter pixmapPainter(&destPixMap);
 
-    return MsgTypeRepPixmap;
+    pixmapPainter.setRenderHint(QPainter::TextAntialiasing);
+    ItemText.drawContents(&pixmapPainter, destPixMap.rect());
+
+//    QPainter pixmapPainter(&destPixMap);
+
+//    pixmapPainter.drawText(
+//                destPixMap.rect(),
+//                ItemText.toPlainText(),
+//                ItemText.
+//                );
 }

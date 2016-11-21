@@ -36,7 +36,7 @@ Msg::Msg(const Msg &other) :
  * @param[in] code      Code that identifies the purpose of the message
  * @param[in] dataBytes Data bytes that were sent alongside the message
  */
-Msg::Msg(QDateTime timestamp, MsgIDType id, MsgCodeType code, DataByteVect dataBytes) :
+Msg::Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code, DataByteVect dataBytes) :
     MsgTimestamp(timestamp),
     MsgID(id),
     MsgCode(code),
@@ -56,7 +56,7 @@ QDateTime Msg::getTimestamp() const
     return MsgTimestamp;
 }
 
-void Msg::setTimestamp(const QDateTime value)
+void Msg::setTimestamp(const QDateTime &value)
 {
     MsgTimestamp = value;
 }
@@ -154,7 +154,7 @@ void Msg::setData(const DataByteVect dataBytes)
     MsgData.DataSizeInBytes = dataBytes.size();
 }
 
-void Msg::setDataByte(quint8 index, quint8 dataByte)
+void Msg::setDataByte(const quint8 index, const quint8 dataByte)
 {
     if(index > MsgData.DataSizeInBytes)
     {

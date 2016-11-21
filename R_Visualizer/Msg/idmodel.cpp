@@ -208,9 +208,9 @@ void IDModel::parseFromJSON(const QByteArray &jsonFile)
     }
 }
 
-const QPixmap &IDModel::paintID(const QRect &boundingRect, const quint16 id)
+void IDModel::paintID(const QRect &rect, QPixmap &destPixMap, const quint16 id) const
 {
-    return idPropStore[id].paintIDRep(boundingRect);
+    idPropStore[id].paintIDRep(rect, destPixMap);
 }
 
 QStringList IDModel::getAllIDNames() const

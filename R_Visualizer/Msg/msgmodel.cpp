@@ -13,7 +13,8 @@
 #include <QDebug>
 
 
-MsgModel::MsgModel(QObject *parent) : QAbstractTableModel(parent)
+MsgModel::MsgModel(QObject *parent) :
+    QAbstractTableModel(parent)
 {
 }
 
@@ -47,6 +48,8 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         if(col == COL_NAME) return msgs.at(row)->getId();
         if(col == COL_MESSAGE) return QString("Code: 0x%1\nData: %2").arg(msgs.at(row)->getCode()).arg(msgs.at(row)->getDataAsString());
         break;
+//    case Qt::SizeHintRole:
+//        break;
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:
@@ -166,6 +169,8 @@ void MsgModel::addMsg(Msg *msg)
     beginInsertRows(QModelIndex(),newRow,newRow);
     this->msgs.append(msg);
     endInsertRows();
+    emit rowInvalidated(createIndex(newRow,2));
+    emit rowInvalidated(createIndex(newRow,1));
     emit rowsAdded(1);
     emit rowAppended(newRow);
 }
@@ -195,6 +200,8 @@ void MsgModel::setMsgs(const HugeQVector<Msg> value)
     for( int i = 0; i < size; i++)
     {
         msgs.append(value.at(i));
+//        emit rowInvalidated(createIndex(i,1));
+//        emit rowInvalidated(createIndex(i,2));
     }
     endInsertRows();
 }
@@ -224,6 +231,6 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
 
 void MsgModel::messageReceived(Msg *msg)
 {
-        this->addMsg(msg);
+    this->addMsg(msg);
 }
 

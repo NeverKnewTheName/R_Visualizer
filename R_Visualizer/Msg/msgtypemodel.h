@@ -6,6 +6,7 @@
 
 #include <QAbstractTableModel>
 #include <QVector>
+#include <QStyleOptionViewItem>
 
 class MsgTypeModel : public QAbstractTableModel
 {
@@ -48,11 +49,10 @@ public:
         COL_NR_OF_COLS
     };
 
-    const QPixmap &paintMsgTypeRep(const QRect &boundingRect, const MsgCodeType/*ToDO MsgCodeType*/ code);
+    void paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap, const MsgCodeType/*ToDO MsgCodeType*/ code);
 private:
     QVector<MsgCodeType/*ToDO MsgCodeType*/> codeStore;
     QHash<MsgCodeType/*ToDO MsgCodeType*/, MsgTypeRep> msgTypePropStore;
-
 
 signals:
     void internalModelChanged();

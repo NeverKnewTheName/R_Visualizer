@@ -42,6 +42,7 @@ public:
         COL_MESSAGE,
         COL_NR_OF_COLS
     };
+
 private:
     HugeQVector<Msg> msgs;
     friend class MainWindow;
@@ -52,6 +53,7 @@ private slots:
 signals:
     void rowAppended(unsigned int rowNr);
     void rowsAdded(unsigned int nrOfRowsAdded);
+    void rowInvalidated(const QModelIndex &index);
 };
 
 #endif // MSGMODEL_H

@@ -7,6 +7,8 @@
 #include <QString>
 #include <QColor>
 #include <QPixmap>
+#include <QStyleOptionViewItem>
+
 
 class MsgTypeRep
 {
@@ -33,7 +35,7 @@ public:
     bool isValid() const;
     bool operator==(const MsgTypeRep &other) const;
 
-    const QPixmap &paintMsgTypeRep(const QRect &boundingRect);
+    void paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap);
 
 private:
     bool isValidObj;

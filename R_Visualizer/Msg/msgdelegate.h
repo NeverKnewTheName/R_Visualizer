@@ -5,6 +5,8 @@
 #include "idmodel.h"
 
 #include <QStyledItemDelegate>
+#include <QVector>
+#include <QPixmap>
 
 
 class MsgDelegate : public QStyledItemDelegate
@@ -24,12 +26,14 @@ public:
     void setModelData(QWidget *editor, QAbstractItemModel *model,
                       const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-//    void setMsgTypeModel(MsgTypeModel *msgTypeModel);
-//    void setIDModel(IDModel *idModel);
+    void UpdatePixmap(const QModelIndex &index);
 
 private:
     MsgTypeModel &msgTypeModel;
     IDModel &idModel;
+    QVector<QPixmap> MsgTimeStampPixMapStore;
+    QVector<QPixmap> MsgIDPixMapStore;
+    QVector<QPixmap> MsgDataPixMapStore;
 
 private slots:
     void commitAndCloseEditor();

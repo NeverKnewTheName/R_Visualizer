@@ -1,20 +1,18 @@
-#ifndef MSGIDDELEGATE_H
-#define MSGIDDELEGATE_H
+#ifndef MSGDATADELEGATE_H
+#define MSGDATADELEGATE_H
 
 #include "msgtypemodel.h"
-#include "idmodel.h"
 
 #include <QStyledItemDelegate>
 #include <QVector>
 #include <QPixmap>
 
-
-class MsgIDDelegate : public QStyledItemDelegate
+class MsgDataDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    MsgIDDelegate(IDModel &idModel, QWidget *parent = 0);
+    MsgDataDelegate(MsgTypeModel &msgTypeModel, QWidget *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
                const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -27,11 +25,14 @@ public:
                       const QModelIndex &index) const Q_DECL_OVERRIDE;
 
 private:
-    IDModel &idModel;
-    QVector<QPixmap> MsgIDPixMapStore;
+    MsgTypeModel &msgTypeModel;
+    QVector<QPixmap> MsgDataPixMapStore;
     friend class MainWindow;
     int relatedColumnWidth;
     int relatedColumnHeight;
+
+signals:
+    void MustUpdatePixmapForIndex(const QStyleOptionViewItem &option, const QModelIndex &index);
 
 private slots:
     void commitAndCloseEditor();
@@ -40,4 +41,4 @@ private slots:
     void columHeightChanged(int newHeight);
 };
 
-#endif // MSGIDDELEGATE_H
+#endif // MSGDATADELEGATE_H

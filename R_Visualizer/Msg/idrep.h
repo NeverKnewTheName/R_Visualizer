@@ -7,6 +7,7 @@
 #include <QString>
 #include <QColor>
 #include <QPixmap>
+#include <QStyleOptionViewItem>
 
 class IDRep
 {
@@ -32,7 +33,7 @@ public:
 
     MsgIDType getId() const;
 
-    const QPixmap &paintIDRep(const QRect &boundingRect);
+    void paintIDRep(const QRect &rect, QPixmap &destPixMap) const;
 
 private:
     bool isValidObj;
