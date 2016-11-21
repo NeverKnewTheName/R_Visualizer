@@ -10,7 +10,7 @@ MsgTypeRep::MsgTypeRep() :
     code(0x0),
     codeName(QString("")),
     messageFormat(QString("")),
-    color(QColor(Qt::black))
+    color(QColor(Qt::white))
 {
 
 }
@@ -25,7 +25,7 @@ MsgTypeRep::MsgTypeRep(const MsgTypeRep &other) :
 
 }
 
-MsgTypeRep::MsgTypeRep(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color) :
+MsgTypeRep::MsgTypeRep(const quint8/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color) :
     isValidObj(true),
     code(code),
     codeName(codeName),
@@ -74,7 +74,7 @@ void MsgTypeRep::setColor(const QColor &value)
 MsgTypeRep MsgTypeRep::createObjFromJson(const QJsonObject &jsonMsg)
 {
     return MsgTypeRep(
-                static_cast<const MsgCodeType>(jsonMsg["code"].toInt()),
+                jsonMsg["code"].toInt(),
                 jsonMsg["codeName"].toString(),
                 jsonMsg["messageFormat"].toString(),
                 QColor(jsonMsg["color"].toString())
@@ -92,7 +92,7 @@ void MsgTypeRep::parseIN(const QJsonObject &jsonMsg)
 QJsonObject MsgTypeRep::parseOUT() const
 {
     QJsonObject jsonMsg;
-    jsonMsg["code"] = static_cast<int>(this->code);
+    jsonMsg["code"] = this->code;
     jsonMsg["codeName"] = this->codeName;
     jsonMsg["messageFormat"] = this->messageFormat;
     jsonMsg["color"] = this->color.name();

@@ -36,7 +36,7 @@ Msg::Msg(const Msg &other) :
  * @param[in] code      Code that identifies the purpose of the message
  * @param[in] dataBytes Data bytes that were sent alongside the message
  */
-Msg::Msg(QDateTime timestamp, MsgIDType id, MsgCodeType code, DataByteVect dataBytes) :
+Msg::Msg(QDateTime timestamp, quint16 id, quint16 code, DataByteVect dataBytes) :
     MsgTimestamp(timestamp),
     MsgID(id),
     MsgCode(code),
@@ -61,22 +61,22 @@ void Msg::setTimestamp(const QDateTime value)
     MsgTimestamp = value;
 }
 
-MsgIDType Msg::getId() const
+quint16 Msg::getId() const
 {
     return MsgID;
 }
 
-void Msg::setId(const MsgIDType value)
+void Msg::setId(const quint16 value)
 {
     MsgID = value;
 }
 
-MsgCodeType Msg::getCode() const
+quint16 Msg::getCode() const
 {
     return MsgCode;
 }
 
-void Msg::setCode(const MsgCodeType value)
+void Msg::setCode(const quint16 value)
 {
     MsgCode = value;
 }
@@ -101,8 +101,8 @@ QString Msg::getDataAsString() const
 void Msg::parseIN(QJsonObject jsonMsg)
 {
     MsgTimestamp = QDateTime::fromString(jsonMsg["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    MsgID = static_cast<MsgIDType>(jsonMsg["MsgID"].toInt());
-    MsgCode = static_cast<MsgCodeType>(jsonMsg["MsgCode"].toInt());
+    MsgID = static_cast<quint16>(jsonMsg["MsgID"].toInt());
+    MsgCode = static_cast<quint16>(jsonMsg["MsgCode"].toInt());
     QJsonArray jsonData = jsonMsg["MsgData"].toArray();
     MsgData.DataSizeInBytes = jsonData.size();
     for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)

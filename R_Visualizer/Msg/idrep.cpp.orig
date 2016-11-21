@@ -21,7 +21,7 @@ IDRep::IDRep(const IDRep &other) :
 
 }
 
-IDRep::IDRep(const MsgIDType id, const QString &name, const QColor &color) :
+IDRep::IDRep(const quint16/*ToDo MsgIDType*/ id, const QString &name, const QColor &color) :
     isValidObj(true),
     id(id),
     name(name),
@@ -52,7 +52,7 @@ void IDRep::setColor(const QColor &value)
 
 IDRep IDRep::createObjFromJson(const QJsonObject &jsonMsg)
 {
-    return IDRep(static_cast<MsgIDType>(jsonMsg["id"].toInt()), jsonMsg["name"].toString(), QColor(jsonMsg["color"].toString()));
+    return IDRep(jsonMsg["id"].toInt(), jsonMsg["name"].toString(), QColor(jsonMsg["color"].toString()));
 }
 
 void IDRep::parseIN(const QJsonObject &jsonMsg)
@@ -64,7 +64,7 @@ void IDRep::parseIN(const QJsonObject &jsonMsg)
 QJsonObject IDRep::parseOUT() const
 {
     QJsonObject jsonMsg;
-    jsonMsg["id"] = static_cast<int>(this->id);
+    jsonMsg["id"] = this->id;
     jsonMsg["name"] = this->name;
     jsonMsg["color"] = this->color.name();
     return jsonMsg;

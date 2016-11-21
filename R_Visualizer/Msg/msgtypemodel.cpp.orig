@@ -167,7 +167,7 @@ void MsgTypeModel::clear()
     //    emit internalModelChanged();
 }
 
-QString MsgTypeModel::getNameToCode(const MsgCodeType/*ToDO MsgCodeType*/ code) const
+QString MsgTypeModel::getNameToCode(const quint8/*ToDO MsgCodeType*/ code) const
 {
     if(msgTypePropStore.contains(code))
     {
@@ -187,7 +187,7 @@ quint8 MsgTypeModel::getCodeToName(const QString &name) const
     return 0;
 }
 
-QString MsgTypeModel::getMessageToCode(const MsgCodeType code) const
+QString MsgTypeModel::getMessageToCode(const quint8 code) const
 {
     if(msgTypePropStore.contains(code))
     {
@@ -197,7 +197,7 @@ QString MsgTypeModel::getMessageToCode(const MsgCodeType code) const
     return QString("");
 }
 
-QColor MsgTypeModel::getColorToCode(const MsgCodeType/*ToDO MsgCodeType*/ code) const
+QColor MsgTypeModel::getColorToCode(const quint8/*ToDO MsgCodeType*/ code) const
 {
     if(msgTypePropStore.contains(code))
     {
@@ -207,7 +207,7 @@ QColor MsgTypeModel::getColorToCode(const MsgCodeType/*ToDO MsgCodeType*/ code) 
     return QColor();
 }
 
-int MsgTypeModel::getNrLinesToCode(const MsgCodeType code)
+int MsgTypeModel::getNrLinesToCode(const quint8 code)
 {
     if(msgTypePropStore.contains(code))
     {
@@ -230,7 +230,7 @@ QStringList MsgTypeModel::getAllCodeNames() const
 QByteArray MsgTypeModel::parseToJSON() const
 {
     QJsonArray jsonMsgsArr;
-    for(const MsgCodeType/*ToDO MsgCodeType*/ code : codeStore)
+    for(const quint8/*ToDO MsgCodeType*/ code : codeStore)
     {
         const MsgTypeRep &newMsgTypeRep = msgTypePropStore[code];
         jsonMsgsArr.append(newMsgTypeRep.parseOUT());
@@ -248,7 +248,7 @@ void MsgTypeModel::parseFromJSON(const QByteArray &jsonFile)
     }
 }
 
-const QPixmap &MsgTypeModel::paintMsgTypeRep(const QRect &boundingRect, const MsgCodeType code)
+const QPixmap &MsgTypeModel::paintMsgTypeRep(const QRect &boundingRect, const quint8 code)
 {
     return msgTypePropStore[code].paintMsgTypeRep(boundingRect);
 }

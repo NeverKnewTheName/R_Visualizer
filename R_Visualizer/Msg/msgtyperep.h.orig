@@ -1,8 +1,6 @@
 #ifndef MSGTYPEREP_H
 #define MSGTYPEREP_H
 
-#include "msg.h"
-
 #include <QJsonObject>
 #include <QString>
 #include <QColor>
@@ -13,9 +11,9 @@ class MsgTypeRep
 public:
     MsgTypeRep();
     MsgTypeRep(const MsgTypeRep &other);
-    MsgTypeRep(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color);
+    MsgTypeRep(const quint8/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color);
 
-    MsgCodeType getCode() const;  //ToDO MsgCodeType
+    quint8 getCode() const;  //ToDO MsgCodeType
 
     QString getCodeName() const;
     void setCodeName(const QString &value);
@@ -37,7 +35,7 @@ public:
 
 private:
     bool isValidObj;
-    const MsgCodeType code;  //ToDO MsgCodeType...
+    const quint8 code;  //ToDO MsgCodeType...
     QString codeName;
     QString messageFormat;
     QColor color;

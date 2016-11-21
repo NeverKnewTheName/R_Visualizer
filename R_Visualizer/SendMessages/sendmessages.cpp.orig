@@ -273,7 +273,7 @@ qulonglong SendMessages::parseToNumber(QString numericalString)
 
 void SendMessages::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 {
-    bool adminBtnVisibility = false;
+    bool adminBtnVisibility;
     if(roleToSwitchTo == UserRoleMngr::NormalUserRole)
     {
         ui->sndPcktTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -357,8 +357,8 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     Data_Packet::Frame frame;
     QString lineEditContent = ui->sndMsgIDLineEdit->text();
     bool conversionOK;
-    MsgIDType msgID;
-    MsgCodeType msgCode;
+    quint16 msgID;
+    quint8 msgCode;
 
     msgID = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
@@ -395,15 +395,12 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     }
 
     qDebug() << "Msg Code: " << msgCode;
-    dataToSend.prepend(static_cast<quint8>(msgCode&0xFFu));
+    dataToSend.prepend(msgCode);
 
     //dataToSend.append(QByteArray::number(msgData, 10));
     qDebug() << "Data to send" << dataToSend.at(0);
     qDebug() << "Data to send size" << dataToSend.size();
-    for(int i = 0; i < dataToSend.size(); i++)
-    {
-        qDebug() << "Data" << i << ": " << dataToSend.at(i);
-    }
+    qDebug() << "Data to send" << dataToSend;
 
     frame.DLC = dataToSend.size();
 
@@ -443,14 +440,10 @@ void SendMessages::on_sndPcktSendBtn_clicked()
 
         frame.RTR = 0;
 
-        frame.DLC = msg->getData()->DataSizeInBytes + 1; // +1 for code
+        frame.DLC = 8;
 
-        DataByteVect dataToSend = msg->getData()->DataBytes;
-        dataToSend.prepend(static_cast<quint8>(msg->getCode()&0xFFu));
-
-        frame.data.clear();
-        for(quint8 byte : dataToSend)
-            frame.data.append(byte);
+        QByteArray dataToSend = msg->getDataAsByteArray();
+        frame.data = dataToSend;
 
         CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
         qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);

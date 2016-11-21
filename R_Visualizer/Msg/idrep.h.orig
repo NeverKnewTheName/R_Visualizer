@@ -1,8 +1,6 @@
 #ifndef IDREP_H
 #define IDREP_H
 
-#include "msg.h"
-
 #include <QJsonObject>
 #include <QString>
 #include <QColor>
@@ -13,7 +11,7 @@ class IDRep
 public:
     IDRep();
     IDRep(const IDRep& other);
-    IDRep(const MsgIDType id, const QString &name, const QColor &color); /*ToDo MsgIDType*/
+    IDRep(const quint16 id, const QString &name, const QColor &color); /*ToDo MsgIDType*/
 
     QString getName() const;
     void setName(const QString &value);
@@ -30,13 +28,13 @@ public:
 
 //    IDRep &operator=(const IDRep &other);
 
-    MsgIDType getId() const;
+    quint16 getId() const;
 
     const QPixmap &paintIDRep(const QRect &boundingRect);
 
 private:
     bool isValidObj;
-    const MsgIDType/*ToDo MsgIDType*/ id;
+    const quint16/*ToDo MsgIDType*/ id;
     QString name;
     QColor color;
     QPixmap IDRepPixmap;

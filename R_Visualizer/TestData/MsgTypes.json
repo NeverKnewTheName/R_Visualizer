@@ -1,0 +1,200 @@
+[
+    {
+        "code": 1,
+        "codeName": "TIME_SYS_TICK_code",
+        "color": "#98ffc1",
+        "messageFormat": "#OP#(#OP#(#Data0##<<#8)#/OP##+##Data1#)#/OP#"
+    },
+    {
+        "code": 2,
+        "codeName": "START_code",
+        "color": "#aaff00",
+        "messageFormat": ""
+    },
+    {
+        "code": 3,
+        "codeName": "STOP_code",
+        "color": "#ffaa00",
+        "messageFormat": ""
+    },
+    {
+        "code": 4,
+        "codeName": "SOS_STOP_code",
+        "color": "#ff0000",
+        "messageFormat": ""
+    },
+    {
+        "code": 9,
+        "codeName": "NEW_MATRIX_code",
+        "color": "#aaaaff",
+        "messageFormat": ""
+    },
+    {
+        "code": 10,
+        "codeName": "MATRIX_HEADER_code",
+        "color": "#00aaff",
+        "messageFormat": ""
+    },
+    {
+        "code": 11,
+        "codeName": "MATRIX_code",
+        "color": "#a0d3ff",
+        "messageFormat": ""
+    },
+    {
+        "code": 16,
+        "codeName": "SYS_TICK_code",
+        "color": "#00ff95",
+        "messageFormat": "Tick nr. #Data0#"
+    },
+    {
+        "code": 32,
+        "codeName": "PROGRAM_code",
+        "color": "#ffff7f",
+        "messageFormat": ""
+    },
+    {
+        "code": 64,
+        "codeName": "SYNC_code",
+        "color": "#86c5ff",
+        "messageFormat": ""
+    },
+    {
+        "code": 79,
+        "codeName": "OK_code",
+        "color": "#00ce00",
+        "messageFormat": ""
+    },
+    {
+        "code": 80,
+        "codeName": "PUMP_SENT_code",
+        "color": "#d778ff",
+        "messageFormat": ""
+    },
+    {
+        "code": 81,
+        "codeName": "PUMP_ON_code",
+        "color": "#bfa6ff",
+        "messageFormat": ""
+    },
+    {
+        "code": 82,
+        "codeName": "PUMP_OFF_code",
+        "color": "#ffa2ff",
+        "messageFormat": ""
+    },
+    {
+        "code": 96,
+        "codeName": "ALIVE_code",
+        "color": "#75ff4b",
+        "messageFormat": ""
+    },
+    {
+        "code": 112,
+        "codeName": "TEMP_code",
+        "color": "#ffaa7f",
+        "messageFormat": "TEMP: #Data0#°C"
+    },
+    {
+        "code": 128,
+        "codeName": "PARAM_code",
+        "color": "#cdeeff",
+        "messageFormat": ""
+    },
+    {
+        "code": 160,
+        "codeName": "VALVE_code",
+        "color": "#b05ae2",
+        "messageFormat": ""
+    },
+    {
+        "code": 161,
+        "codeName": "VALVE_SET_code",
+        "color": "#5d24be",
+        "messageFormat": ""
+    },
+    {
+        "code": 162,
+        "codeName": "VALVE_RESET_code",
+        "color": "#ab0ab6",
+        "messageFormat": ""
+    },
+    {
+        "code": 145,
+        "codeName": "STARTUP_code",
+        "color": "#22af2d",
+        "messageFormat": ""
+    },
+    {
+        "code": 145,
+        "codeName": "STARTUP_code",
+        "color": "#22af2d",
+        "messageFormat": ""
+    },
+    {
+        "code": 146,
+        "codeName": "START_OK_code",
+        "color": "#24aa2d",
+        "messageFormat": "System Started!"
+    },
+    {
+        "code": 147,
+        "codeName": "STOP_OK_code",
+        "color": "#ffb26f",
+        "messageFormat": "System is Stopped!"
+    },
+    {
+        "code": 148,
+        "codeName": "STOP_REQ_code",
+        "color": "#ffe08f",
+        "messageFormat": "System Stop was requested!"
+    },
+    {
+        "code": 149,
+        "codeName": "MATRIX_REC_OK_code",
+        "color": "#6a92ff",
+        "messageFormat": ""
+    },
+    {
+        "code": 150,
+        "codeName": "MATRIX_REC_NOK_code",
+        "color": "#ff4561",
+        "messageFormat": ""
+    },
+    {
+        "code": 151,
+        "codeName": "SYS_TICK_REC_code",
+        "color": "#62ffd8",
+        "messageFormat": ""
+    },
+    {
+        "code": 152,
+        "codeName": "PUMP_STAT_ON_code",
+        "color": "#9b9bff",
+        "messageFormat": "PUMP is ON"
+    },
+    {
+        "code": 153,
+        "codeName": "PUMP_STAT_OFF",
+        "color": "#bc85ff",
+        "messageFormat": "PUMP is OFF"
+    },
+    {
+        "code": 154,
+        "codeName": "WRONG_CARD_code",
+        "color": "#ff5959",
+        "messageFormat": "Wrong VALVE card number"
+    },
+    {
+        "code": 155,
+        "codeName": "MATRIX_TX_NOK_code",
+        "color": "#ff0504",
+        "messageFormat": "Matrix transmission to slave failed!"
+    },
+    {
+        "code": 159,
+        "codeName": "ERROR_code",
+        "color": "#ff0004",
+        "messageFormat": "ERROR"
+    }
+]

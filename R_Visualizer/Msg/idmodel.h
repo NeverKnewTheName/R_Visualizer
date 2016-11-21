@@ -1,8 +1,8 @@
 #ifndef IDMODEL_H
 #define IDMODEL_H
 
-#include "idrep.h"
 #include "msg.h"
+#include "idrep.h"
 
 #include <QAbstractTableModel>
 #include <QVector>

@@ -49,7 +49,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     }
     else if (col == MsgModel::COL_NAME)
     {
-        MsgIDType/*ToDO MsgIDType*/ id = index.data(Qt::UserRole +3).value<int>();
+        quint16/*ToDO MsgIDType*/ id = index.data(Qt::UserRole +3).value<int>();
         if(!idModel.getNameToID(id).isEmpty())
         {
             painter->drawPixmap(rect, idModel.paintID(rect, id));
@@ -68,7 +68,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     }
     else if (col == MsgModel::COL_MESSAGE)
     {
-        MsgCodeType/*ToDO MsgCodeType*/ code = index.data(Qt::UserRole +3).value<int>();
+        quint8/*ToDO MsgCodeType*/ code = index.data(Qt::UserRole +3).value<int>();
         if(!msgTypeModel.getNameToCode(code).isEmpty())
         {
             painter->drawPixmap(rect, msgTypeModel.paintMsgTypeRep(rect, code));

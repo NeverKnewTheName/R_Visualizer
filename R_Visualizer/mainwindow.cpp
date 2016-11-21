@@ -310,14 +310,14 @@ void MainWindow::initMsgsTableView()
 }
 
 
-void MainWindow::idAddFinished(const quint16/*ToDO MsgIDType*/ id, const QString &name, const QColor &color)
+void MainWindow::idAddFinished(const MsgIDType/*ToDO MsgIDType*/ id, const QString &name, const QColor &color)
 {
     IDRep IdRepToAdd(id, name, color);
     idModel.add(IdRepToAdd);
 }
 
 
-void MainWindow::msgTypeAddFinished(const quint8/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color)
+void MainWindow::msgTypeAddFinished(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
     MsgTypeRep MsgTypeRepToAdd(code, codeName, messageFormat, color);
     msgTypeModel.add(MsgTypeRepToAdd);

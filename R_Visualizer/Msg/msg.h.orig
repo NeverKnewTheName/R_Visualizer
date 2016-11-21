@@ -18,26 +18,22 @@ typedef struct _MsgData
 
 Q_DECLARE_METATYPE(MsgDataStruc)
 
-typedef quint16 MsgIDType;
-
-typedef quint16 MsgCodeType;
-
 class Msg
 {
 public:
     Msg();
     Msg(const Msg &other);
-    Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code, DataByteVect dataBytes);
+    Msg(QDateTime timestamp, quint16 id, quint16 code, DataByteVect dataBytes);
     ~Msg();
 
     QDateTime getTimestamp() const;
-    void setTimestamp(const QDateTime &value);
+    void setTimestamp(const QDateTime value);
 
-    MsgIDType getId() const;
-    void setId(const MsgIDType value);
+    quint16 getId() const;
+    void setId(const quint16 value);
 
-    MsgCodeType getCode() const;
-    void setCode(const MsgCodeType value);
+    quint16 getCode() const;
+    void setCode(const quint16 value);
 
     PMsgDataStruc getData();
     QByteArray getDataAsByteArray() const;
@@ -54,8 +50,8 @@ public:
 
 private:
     QDateTime MsgTimestamp;
-    MsgIDType MsgID;
-    MsgCodeType MsgCode;
+    quint16 MsgID;
+    quint16 MsgCode;
     MsgDataStruc MsgData;
 };
 

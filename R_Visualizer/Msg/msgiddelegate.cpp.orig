@@ -16,7 +16,7 @@ msgIDDelegate::msgIDDelegate(IDModel &idModel, QWidget *parent)
 void msgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 
-    MsgIDType    quint16/*ToDO MsgIDType*/ id = index.model()->data(index, Qt::DisplayRole).value<int>();
+    quint16/*ToDO MsgIDType*/ id = index.model()->data(index, Qt::DisplayRole).value<int>();
     QColor background(idModel.getColorToID(id));
 
     if(option.state & QStyle::State_Selected)

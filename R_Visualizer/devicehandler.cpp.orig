@@ -71,16 +71,13 @@ void DeviceHandler::run()
                 Data_PacketPtr dataPtr = qSharedPointerDynamicCast<Data_Packet>(ptr);
 
                 DataByteVect msgData;
-
                 QByteArray canData = dataPtr->frame().data;
-                MsgCodeType code = static_cast<MsgCodeType>(canData.at(0) & 0xFFu);
-
                 for(unsigned int i = 1; i < canData.size(); i++)
                 {
-                    msgData.append(static_cast<quint8>(canData.at(i)));
+                    msgData.append(canData.at(i));
                 }
 
-                Msg *msg = new Msg(timestamp, dataPtr->frame().ID_Standard, code, msgData);
+                Msg *msg = new Msg(timestamp, dataPtr->frame().ID_Standard, canData.at(0), msgData);
                 emit sigMsgReceived(msg);
             }
                 break;

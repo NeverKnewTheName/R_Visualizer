@@ -31,7 +31,7 @@ HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStr
     DataByteVect dataBytes;
     dataBytes.append(static_cast<quint8>(0xd));
     dataBytes.append(static_cast<quint8>(0x84));
-    msgs.append(new Msg(QDateTime(), static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(code.toInt(0,16)), dataBytes));
+    msgs.append(new Msg(QDateTime(), static_cast<quint16>(0xFFu), static_cast<quint16>(code.toInt(0,16)), dataBytes));
 
     for(auto &msg : msgsFromPacket )
     {
@@ -60,7 +60,7 @@ HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStr
         qDebug() << "MsgData";
         qDebug() << "RecvID LOW:" << dataBytes.at(0);
         qDebug() << "RecvID HIGH:" << dataBytes.at(1);
-        msgs.append(new Msg(QDateTime(), static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(0x0B), dataBytes));
+        msgs.append(new Msg(QDateTime(), static_cast<quint16>(0xFFu), static_cast<quint16>(0x0B), dataBytes));
     }
     return msgs;
 }
