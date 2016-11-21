@@ -8,6 +8,7 @@
 #include "msgtypemodel.h"
 #include "userrolemngr.h"
 #include <QWidget>
+#include <QCompleter>
 
 class MainWindow;
 
@@ -20,7 +21,7 @@ class SendMessages : public QWidget
     Q_OBJECT
 
 public:
-    explicit SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent = 0);
+    explicit SendMessages(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent = 0);
     ~SendMessages();
 
 private:
@@ -36,10 +37,12 @@ private:
 
     Ui::SendMessages *ui;
     friend class MainWindow;
-    MsgModel *msgPcktModel;
-    IDModel *idModel;
-    MsgTypeModel *msgTypeModel;
+    MsgModel msgPcktModel; //MAYBE REFERENCE???
+    IDModel &idModel;
+    MsgTypeModel &msgTypeModel;
     QStringList inputMasks;
+    QCompleter idCompleter;
+    QCompleter codeCompleter;
 
     int currentDataFormatIndex;
 

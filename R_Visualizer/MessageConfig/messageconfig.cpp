@@ -16,11 +16,14 @@
 
 #include <QSortFilterProxyModel>
 
-MessageConfig::MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent) :
+MessageConfig::MessageConfig(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MessageConfig),
     idModel(idModel),
     msgTypeModel(msgTypeModel),
+    filterIDModel(idModel, this),
+    filterCodeModel(msgTypeModel, this),
+    filterTimestampStore(this),
     idFilterEnabled(false),
     codeFilterEnabled(false),
     timeStampFilterFromEnabled(false),
@@ -29,18 +32,15 @@ MessageConfig::MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidg
 {
     ui->setupUi(this);
 
-    filterIDModel = new FilterIDStore(idModel, this);
-    filterCodeModel = new FilterCodeStore(msgTypeModel, this);
-    filterTimestampStore = new FilterTimestampStore(this);
     this->initIDTableView();
     this->initMsgTypeTableView();
     this->initFilterIDListView();
     this->initFilterCodeListView();
     //connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampFromChanged);
     connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &MessageConfig::slt_timestampFromChanged);
-    connect(this, &MessageConfig::sgnl_timestampFromChanged, filterTimestampStore, &FilterTimestampStore::timestampFromChanged);
+    connect(this, &MessageConfig::sgnl_timestampFromChanged, &filterTimestampStore, &FilterTimestampStore::timestampFromChanged);
     connect(ui->filterTimeStampToDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &MessageConfig::slt_timestampToChanged);
-    connect(this, &MessageConfig::sgnl_timestampToChanged, filterTimestampStore, &FilterTimestampStore::timestampToChanged);
+    connect(this, &MessageConfig::sgnl_timestampToChanged, &filterTimestampStore, &FilterTimestampStore::timestampToChanged);
 }
 
 MessageConfig::~MessageConfig()
@@ -48,25 +48,25 @@ MessageConfig::~MessageConfig()
     delete ui;
 }
 
-FilterIDStore *MessageConfig::getFilterIDModel() const
-{
-    return this->filterIDModel;
-}
+//FilterIDStore &MessageConfig::getFilterIDModel() const
+//{
+//    return filterIDModel;
+//}
 
-FilterCodeStore *MessageConfig::getFilterCodeModel() const
-{
-    return this->filterCodeModel;
-}
+//FilterCodeStore &MessageConfig::getFilterCodeModel() const
+//{
+//    return filterCodeModel;
+//}
 
-FilterTimestampStore *MessageConfig::getFilterTimestampModel() const
-{
-    return this->filterTimestampStore;
-}
+//FilterTimestampStore &MessageConfig::getFilterTimestampModel() const
+//{
+//    return filterTimestampStore;
+//}
 
 void MessageConfig::initIDTableView()
 {
     QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
-    proxy->setSourceModel(idModel);
+    proxy->setSourceModel(&idModel);
     ui->idTableView->setSortingEnabled(true);
     ui->idTableView->setModel(proxy);
     ui->idTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -78,7 +78,7 @@ void MessageConfig::initIDTableView()
 
 
     //ToDO scrollToBottom might not be the best slot to address....
-    connect(idModel, &IDModel::rowsInserted, ui->idTableView, &QTableView::scrollToBottom);
+    connect(&idModel, &IDModel::rowsInserted, ui->idTableView, &QTableView::scrollToBottom);
     //DEBUG//
     //    idModel->add(0xFF, new IDRep(0xFF00, QString("Master"), QColor(Qt::blue)));
     //    idModel->add(0xF0, new IDRep(0xF000, QString("PC"), QColor(Qt::green)));
@@ -88,7 +88,7 @@ void MessageConfig::initIDTableView()
 void MessageConfig::initMsgTypeTableView()
 {
     QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
-    proxy->setSourceModel(msgTypeModel);
+    proxy->setSourceModel(&msgTypeModel);
     ui->msgTypeTableView->setSortingEnabled(true);
     ui->msgTypeTableView->setModel(proxy);
     ui->msgTypeTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -99,7 +99,7 @@ void MessageConfig::initMsgTypeTableView()
     ui->msgTypeTableView->setItemDelegate(new MsgTypeEditorDelegate(ui->msgTypeTableView));
 
     //ToDO scrollToBottom might not be the best slot to address....
-    connect(msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
+    connect(&msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
     //DEBUG//
     //    msgTypeModel->add(new MsgTypeRep(0x02, QString("Start"), QColor(Qt::green)));
     //    msgTypeModel->add(new MsgTypeRep(0x03, QString("Stop"), QColor(Qt::red)));
@@ -110,42 +110,62 @@ void MessageConfig::initFilterIDListView()
 {
     //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
     //    proxy->setSourceModel(&filterIDModel);
-    ui->idFilterlistView->setModel(filterIDModel);
+    ui->idFilterlistView->setModel(&filterIDModel);
     ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     //    ui->idFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
     ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->idFilterlistView->setAlternatingRowColors(true);
-    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(idModel, ui->idFilterlistView));
+    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(&idModel, ui->idFilterlistView));
 
     //connect(filterIDModel, &FilterIDStore::rowAdded, this, &MessageConfig::filterIDAdded);
-    connect(filterIDModel, &FilterIDStore::rowAdded, ui->idFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
+    connect(&filterIDModel, &FilterIDStore::rowAdded, ui->idFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
 }
 
 void MessageConfig::initFilterCodeListView()
 {
     //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
     //    proxy->setSourceModel(&filterCodeModel);
-    ui->codeFilterlistView->setModel(filterCodeModel);
+    ui->codeFilterlistView->setModel(&filterCodeModel);
     ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->codeFilterlistView->setAlternatingRowColors(true);
-    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(msgTypeModel, ui->codeFilterlistView));
-    connect(filterCodeModel, &FilterCodeStore::rowAdded, ui->codeFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
+    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(&msgTypeModel, ui->codeFilterlistView));
+    connect(&filterCodeModel, &FilterCodeStore::rowAdded, ui->codeFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
 }
 
-void MessageConfig::idAddFinished(const int id, const QString name, const QColor color)
+FilterIDStore &MessageConfig::getFilterIDModel()
+{
+    return filterIDModel;
+}
+
+FilterTimestampStore &MessageConfig::getFilterTimestampModel()
+{
+    return filterTimestampStore;
+}
+
+FilterCodeStore &MessageConfig::getFilterCodeModel()
+{
+    return filterCodeModel;
+}
+
+MsgTypeModel &MessageConfig::getMsgTypeModel() const
+{
+    return msgTypeModel;
+}
+
+void MessageConfig::idAddFinished(const quint16 id, const QString &name, const QColor &color)
 {
     emit sgnlIdAddFinished(id,name,color);
 }
 
-void MessageConfig::msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color)
+void MessageConfig::msgTypeAddFinished(const quint8 code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
     emit sgnlMsgTypeAddFinished(code, codeName, messageFormat, color);
 }
 
 void MessageConfig::filterIDAdded(unsigned int pos)
 {
-    QModelIndex index = filterIDModel->index(pos);
+    QModelIndex index = filterIDModel.index(pos);
     qDebug() << "index row: " << index;
     ui->idFilterlistView->edit(index);
     //emit startEditFilterID(filterIDModel->index(pos));
@@ -211,7 +231,7 @@ void MessageConfig::on_idLoadBtn_clicked()
     {
         //ToDO
         // read file content
-        idModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        idModel.parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
         // parse file
         // populate ui
     }
@@ -233,7 +253,7 @@ void MessageConfig::on_idStoreBtn_clicked()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(this->idModel->parseToJSON()); //ToDO check for error (-1)
+        jsonSaveFile.write(idModel.parseToJSON()); //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
@@ -260,7 +280,7 @@ void MessageConfig::on_idRmvBtn_clicked()
     QModelIndexList selectionIndexList = selectionModel->selectedRows();
     if(selectionIndexList.size())
     {
-        this->idModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
+        idModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
 }
 
@@ -276,7 +296,7 @@ void MessageConfig::on_msgTypeLoadBtn_clicked()
     {
         //ToDO
         // read file content
-        msgTypeModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        msgTypeModel.parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
         // parse file
         // populate ui
     }
@@ -298,7 +318,7 @@ void MessageConfig::on_msgTypeStoreBtn_clicked()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(this->msgTypeModel->parseToJSON()); //ToDO check for error (-1)
+        jsonSaveFile.write(msgTypeModel.parseToJSON()); //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
@@ -324,7 +344,7 @@ void MessageConfig::on_msgTypeRmvBtn_clicked()
     QModelIndexList selectionIndexList = selectionModel->selectedRows();
     if(selectionIndexList.size())
     {
-        this->msgTypeModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
+        msgTypeModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
 }
 
@@ -338,7 +358,7 @@ void MessageConfig::on_enableIDFilterPushButton_clicked()
 
 void MessageConfig::on_addFilterIDPushButton_clicked()
 {
-    this->filterIDModel->addID(0x0);
+    filterIDModel.addID(0x0);
 }
 
 void MessageConfig::on_rmvFilterIDPushButton_clicked()
@@ -351,7 +371,7 @@ void MessageConfig::on_rmvFilterIDPushButton_clicked()
     QModelIndexList selectionIndexList = selectionModel->selectedRows();
     if(selectionIndexList.size())
     {
-        this->filterIDModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
+        filterIDModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
 }
 
@@ -364,14 +384,14 @@ void MessageConfig::on_enableCodeFilterPushButton_clicked()
 
 void MessageConfig::on_addFilterCodePushButton_clicked()
 {
-    this->filterCodeModel->addCode(0x0);
+    filterCodeModel.addCode(0x0);
 }
 
 void MessageConfig::on_rmvFilterCodePushButton_clicked()
 {
     QModelIndex selectedIndex = ui->codeFilterlistView->selectionModel()->currentIndex();
     if(selectedIndex.isValid())
-        this->filterCodeModel->removeCode(selectedIndex);
+        filterCodeModel.removeCode(selectedIndex);
 }
 
 void MessageConfig::on_enableTimestampFromFilterPushButton_clicked()

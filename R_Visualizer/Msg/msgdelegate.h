@@ -12,7 +12,7 @@ class MsgDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    MsgDelegate(MsgTypeModel *msgTypeModel, IDModel *idModel, QWidget *parent = 0);
+    MsgDelegate(MsgTypeModel &msgTypeModel, IDModel &idModel, QWidget *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
                const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -24,12 +24,12 @@ public:
     void setModelData(QWidget *editor, QAbstractItemModel *model,
                       const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    void setMsgTypeModel(MsgTypeModel *msgTypeModel);
-    void setIDModel(IDModel *idModel);
+//    void setMsgTypeModel(MsgTypeModel *msgTypeModel);
+//    void setIDModel(IDModel *idModel);
 
 private:
-    MsgTypeModel *msgTypeModel;
-    IDModel *idModel;
+    MsgTypeModel &msgTypeModel;
+    IDModel &idModel;
 
 private slots:
     void commitAndCloseEditor();

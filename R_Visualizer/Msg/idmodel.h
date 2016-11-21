@@ -2,6 +2,7 @@
 #define IDMODEL_H
 
 #include "idrep.h"
+#include "msg.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
@@ -24,20 +25,20 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    void add(int id, IDRep *idRep);
+    void add(const IDRep &idRep);
     void clear();
 
-    QString getNameToID(int id);
-    unsigned int getIDToName(const QString &name) const;
-    QColor getColorToID(int id);
+    QString getNameToID(const quint16 id) const;
+    quint16/*ToDO MsgIDType*/ getIDToName(const QString &name) const;
+    QColor getColorToID(const quint16 id) const;
 
-    QHash<int, IDRep *> getIdPropStore() const;
-    void setIdPropStore(const QHash<int, IDRep *> &value);
+//    QHash<int, IDRep *> getIdPropStore() const;
+//    void setIdPropStore(const QHash<int, IDRep *> &value);
 
     QStringList getAllIDNames() const;
 
     QByteArray parseToJSON() const;
-    void parseFromJSON(QByteArray jsonFile);
+    void parseFromJSON(const QByteArray &jsonFile);
 
     enum HeaderCols
     {
@@ -47,9 +48,11 @@ public:
         COL_NR_OF_COLS
     };
 
+    const QPixmap &paintID(const QRect &boundingRect, const quint16/*ToDO MsgIDType*/ id);
+
 private:
-    QVector<int> idStore;
-    QHash<int, IDRep *> idPropStore;
+    QVector<quint16> idStore; //ToDO MsgIDType
+    QHash<quint16, IDRep> idPropStore; //ToDO MsgIDType
 
 signals:
     void internalModelChanged();

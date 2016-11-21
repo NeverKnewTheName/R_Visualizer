@@ -20,6 +20,14 @@ Msg::Msg() :
 {
 }
 
+Msg::Msg(const Msg &other) :
+    MsgTimestamp(other.getTimestamp()),
+    MsgID(other.getId()),
+    MsgCode(other.getCode()),
+    MsgData(other.getMsgData())
+{
+}
+
 /**
  * @brief Initializes a Msg with the given paramters
  *
@@ -37,7 +45,10 @@ Msg::Msg(QDateTime timestamp, quint16 id, quint16 code, DataByteVect dataBytes) 
             dataBytes.size()
             })
 {
+}
 
+Msg::~Msg()
+{
 }
 
 QDateTime Msg::getTimestamp() const
@@ -82,22 +93,10 @@ QString Msg::getDataAsString() const
     for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
     {
         DataAsString.append(QString("0x%1 ")
-            .arg(MsgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
+                            .arg(MsgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
     }
     return DataAsString.trimmed();
 }
-
-//QString Msg::getCodeAndDataAsString() const
-//{
-//    QString DataAsString = QString("Code:\t0x%1\nMessage:\t")
-//            .arg(MsgCode/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
-
-//    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
-//    {
-//        DataAsString.append(QString("0x%1 ").arg(MsgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
-//    }
-//    return DataAsString.trimmed();
-//}
 
 void Msg::parseIN(QJsonObject jsonMsg)
 {
@@ -127,6 +126,11 @@ QJsonObject Msg::parseOUT() const
     jsonMsg["MsgData"] = jsonData;
 
     return jsonMsg;
+}
+
+MsgDataStruc Msg::getMsgData() const
+{
+    return MsgData;
 }
 
 /**

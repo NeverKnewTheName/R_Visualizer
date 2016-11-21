@@ -9,7 +9,7 @@ class FilterCodeStore : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit FilterCodeStore(MsgTypeModel *msgTypeModel, QObject *parent = 0);
+    explicit FilterCodeStore(MsgTypeModel &msgTypeModel, QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
@@ -19,16 +19,16 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     void removeRow(int row, const QModelIndex &parent = QModelIndex());
 
-    void addCode(unsigned int code);
-    void addCode(QString &codeString);
-    void removeCode(QModelIndex &index);
+    void addCode(const quint8/*ToDO MsgCodeType*/ code);
+    void addCode(const QString &codeString);
+    void removeCode(const QModelIndex &index);
 
-    bool containsCode(unsigned int code);
+    bool containsCode(const quint8/*ToDO MsgCodeType*/ code);
 
 private:
     QModelIndex tempIndex;
-    QVector<unsigned int> codeStore;
-    MsgTypeModel *msgTypeModel;
+    QVector<quint8/*ToDO MsgCodeType*/> codeStore;
+    MsgTypeModel &msgTypeModel;
 
 signals:
     void internalModelChanged();

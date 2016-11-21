@@ -24,19 +24,19 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    void add(unsigned int code, MsgTypeRep *msgTypeRep);
+    void add(const MsgTypeRep &msgTypeRep);
     void clear();
 
-    QString getNameToCode(unsigned int code) const;
-    unsigned int getCodeToName(const QString &name) const;
-    QString getMessageToCode(unsigned int code) const;
-    QColor getColorToCode(unsigned int code) const;
-    int getNrLinesToCode(unsigned int code);
+    QString getNameToCode(const quint8 code) const;
+    quint8/*ToDO MsgCodeType*/ getCodeToName(const QString &name) const;
+    QString getMessageToCode(const quint8/*ToDO MsgCodeType*/ code) const;
+    QColor getColorToCode(const quint8 code) const;
+    int getNrLinesToCode(const quint8/*ToDO MsgCodeType*/ code);
 
     QStringList getAllCodeNames() const;
 
-    QByteArray parseToJSON();
-    void parseFromJSON(QByteArray jsonFile);
+    QByteArray parseToJSON() const;
+    void parseFromJSON(const QByteArray &jsonFile);
 
     enum HeaderCols
     {
@@ -46,9 +46,11 @@ public:
         COL_COLOR,
         COL_NR_OF_COLS
     };
+
+    const QPixmap &paintMsgTypeRep(const QRect &boundingRect, const quint8/*ToDO MsgCodeType*/ code);
 private:
-    QVector<unsigned int> codeStore;
-    QHash<unsigned int, MsgTypeRep *> msgTypePropStore;
+    QVector<quint8/*ToDO MsgCodeType*/> codeStore;
+    QHash<quint8/*ToDO MsgCodeType*/, MsgTypeRep> msgTypePropStore;
 
 
 signals:

@@ -4,15 +4,16 @@
 #include <QJsonObject>
 #include <QString>
 #include <QColor>
+#include <QPixmap>
 
 class MsgTypeRep
 {
 public:
     MsgTypeRep();
-    MsgTypeRep(int code, QString codeName, QString messageFormat, QColor color = QColor(Qt::white));
+    MsgTypeRep(const MsgTypeRep &other);
+    MsgTypeRep(const quint8/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color);
 
-    int getCode() const;
-    void setCode(int value);
+    quint8 getCode() const;  //ToDO MsgCodeType
 
     QString getCodeName() const;
     void setCodeName(const QString &value);
@@ -23,14 +24,22 @@ public:
     QColor getColor() const;
     void setColor(const QColor &value);
 
-    void parseIN(QJsonObject jsonMsg);
-    QJsonObject parseOUT();
+    static MsgTypeRep createObjFromJson(const QJsonObject &jsonMsg);
+    void parseIN(const QJsonObject &jsonMsg);
+    QJsonObject parseOUT() const;
+
+    bool isValid() const;
+    bool operator==(const MsgTypeRep &other) const;
+
+    const QPixmap &paintMsgTypeRep(const QRect &boundingRect);
 
 private:
-    int code;
+    bool isValidObj;
+    const quint8 code;  //ToDO MsgCodeType...
     QString codeName;
     QString messageFormat;
     QColor color;
+    QPixmap MsgTypeRepPixmap;
 };
 
 #endif // MSGTYPEREP_H

@@ -14,7 +14,7 @@ class msgIDDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    msgIDDelegate(IDModel *idModel, QWidget *parent = 0);
+    msgIDDelegate(IDModel &idModel, QWidget *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -22,10 +22,10 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index) const Q_DECL_OVERRIDE;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    void setIDModel(IDModel *idModel);
+//    void setIDModel(IDModel *idModel);
 
 private:
-    IDModel *idModel;
+    IDModel &idModel;
 
 private slots:
     void commitAndCloseEditor();

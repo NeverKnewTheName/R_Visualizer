@@ -21,9 +21,10 @@ Q_DECLARE_METATYPE(MsgDataStruc)
 class Msg
 {
 public:
-
     Msg();
+    Msg(const Msg &other);
     Msg(QDateTime timestamp, quint16 id, quint16 code, DataByteVect dataBytes);
+    ~Msg();
 
     QDateTime getTimestamp() const;
     void setTimestamp(const QDateTime value);
@@ -44,6 +45,8 @@ public:
 
     void parseIN(QJsonObject jsonMsg);
     QJsonObject parseOUT() const;
+
+    MsgDataStruc getMsgData() const;
 
 private:
     QDateTime MsgTimestamp;

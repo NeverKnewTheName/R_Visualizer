@@ -12,6 +12,7 @@ ErrLogModel::ErrLogModel(QObject *parent) :
 
 int ErrLogModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return this->errLogStore.size();
 }
 
@@ -69,6 +70,9 @@ QVariant ErrLogModel::headerData(int section, Qt::Orientation orientation, int r
 
 bool ErrLogModel::removeRows(int row, int count, const QModelIndex &parent)
 {
+    Q_UNUSED(row)
+    Q_UNUSED(count)
+    Q_UNUSED(parent)
     return true;
 }
 

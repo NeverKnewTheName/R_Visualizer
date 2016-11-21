@@ -12,7 +12,7 @@ class FilterIDStore : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit FilterIDStore(IDModel *idModel, QObject *parent = 0);
+    explicit FilterIDStore(IDModel &idModel, QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
@@ -35,8 +35,8 @@ public slots:
 
 private:
     QModelIndex tempIndex;
-    QVector<unsigned int> idStore;
-    IDModel *idModel;
+    QVector<quint16/*ToDO MsgIDType*/> idStore;
+    IDModel &idModel;
 };
 
 #endif // FILTERIDSTORE_H

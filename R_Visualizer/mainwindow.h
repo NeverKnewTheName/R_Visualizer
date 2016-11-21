@@ -52,8 +52,8 @@ private slots:
     void on_actionStart_triggered();
     void on_actionStop_triggered();
 
-    void idAddFinished(const int id, const QString name, const QColor color);
-    void msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color);
+    void idAddFinished(const quint16 id, const QString &name, const QColor &color);
+    void msgTypeAddFinished(const quint8 code, const QString &codeName, const QString &messageFormat, const QColor &color);
 
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
 
@@ -76,10 +76,10 @@ private:
 
     Ui::MainWindow *ui;
     QString currentFileName;
-    MsgModel *msgModel;
-    MsgModel *msgPcktModel;
-    IDModel *idModel;
-    MsgTypeModel *msgTypeModel;
+    MsgModel msgModel;
+    MsgModel msgPcktModel;
+    IDModel idModel;
+    MsgTypeModel msgTypeModel;
 
     MessageConfig *msgConfigWidget;
     SendMessages *sndMsgsWidget;

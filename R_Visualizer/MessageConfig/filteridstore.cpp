@@ -3,7 +3,7 @@
 #include <QBrush>
 #include <QDebug>
 
-FilterIDStore::FilterIDStore(IDModel *idModel, QObject *parent) : QAbstractListModel(parent), idModel(idModel)
+FilterIDStore::FilterIDStore(IDModel &idModel, QObject *parent) : QAbstractListModel(parent), idModel(idModel)
 {
 
 }

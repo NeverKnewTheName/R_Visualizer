@@ -1,10 +1,9 @@
 #include "msgmodel.h"
 
 #include "msg.h"
-#include "idmodel.h"
-#include "msgtypemodel.h"
 
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QJsonArray>
 
 #include <QFont>
@@ -45,8 +44,8 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         // returns only displayable data
         if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
-        if(col == COL_NAME) return this->msgs.at(row)->getId();
-        if(col == COL_MESSAGE) return QString("Code: 0x%1\tData: %2").arg(msgs.at(row)->getCode()).arg(msgs.at(row)->getDataAsString());
+        if(col == COL_NAME) return msgs.at(row)->getId();
+        if(col == COL_MESSAGE) return QString("Code: 0x%1\nData: %2").arg(msgs.at(row)->getCode()).arg(msgs.at(row)->getDataAsString());
         break;
     case Qt::FontRole:
         break;
@@ -66,8 +65,30 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         break;
     case Qt::UserRole +3: // return raw data
         if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp();
-        if(col == COL_NAME) return this->msgs.at(row)->getId();
-        if(col == COL_MESSAGE) return this->msgs.at(row)->getCode();
+        if(col == COL_NAME) return msgs.at(row)->getId();
+        if(col == COL_MESSAGE) return msgs.at(row)->getCode();
+        break;
+    case Qt::UserRole +4:// return Keys for PixmapCache
+        if(col == COL_TIMESTAMP)
+        {
+            return QString("PxmpCach_TmStmp%1").arg(msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz"));
+        }
+        if(col == COL_NAME)
+        {
+            return QString("PxmpCach_ID%1").arg(msgs.at(row)->getId());
+        }
+        if(col == COL_MESSAGE)
+        {
+            QString MsgDataKey(QString("PxmpCach_MsgData_ID%1_Code%2_Data")
+                    .arg(msgs.at(row)->getCode())
+                    .arg(msgs.at(row)->getCode())
+                               );
+            for(auto & dataByte : msgs.at(row)->getData()->DataBytes)
+            {
+                MsgDataKey.append(QString::number(dataByte));
+            }
+            return MsgDataKey;
+        }
         break;
     }
 

@@ -2,12 +2,7 @@
 #define MSGMODEL_H
 
 class Msg;
-class IDModel;
-class MsgTypeModel;
 
-//#include "msg.h"
-//#include "idmodel.h"
-//#include "msgtypemodel.h"
 #include "hugeqvector.h"
 
 #include <QAbstractTableModel>
