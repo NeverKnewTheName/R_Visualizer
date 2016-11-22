@@ -1,0 +1,160 @@
+/**
+  * \file MsgStorage.cpp
+  * \author Christian Neuberger
+  * \date 22.11.2016
+  *
+  * \brief Dynamic storage of huge amounts of messages with automated serializing to and from temporary files
+  */
+#ifndef MSGSTORAGE_H
+#define MSGSTORAGE_H
+
+#include <QVector>
+#include "msg.h"
+
+
+struct ContainerID{
+    int ContainerNR;
+    int IndexInStore;
+
+    ContainerID(const int index = -1, const int indexInStore = -1) : ContainerNR(index), IndexInStore(indexInStore){}
+    bool operator ==(const ContainerID &other) const { return (ContainerNR == other.ContainerNR); }
+    bool operator >(const ContainerID &other) const { return (ContainerNR > other.ContainerNR); }
+    bool operator <(const ContainerID &other) const { return (ContainerNR < other.ContainerNR); }
+    bool isValid() const { return ( ( ContainerNR >= 0 ) && ( IndexInStore >= 0 ) ); }
+};
+
+template<typename T> class RSimpleDestructiveRingBuff
+{
+public:
+    RSimpleDestructiveRingBuff(const int size) :
+        RBufBuffer(size),
+        RBufSize(size),
+        RBufStartIndex(0),
+        RBufOffsetIndex(0)
+    {
+    }
+
+    void append(const T &value)
+    {
+        RBufBuffer.replace(RBufOffsetIndex, value);
+        RBufOffsetIndex = (RBufOffsetIndex + 1) % RBufSize;
+        if(RBufOffsetIndex == RBufStartIndex)
+        {
+            RBufStartIndex = (RBufStartIndex + 1) % RBufSize;
+        }
+    }
+
+    void prepend(const T &value)
+    {
+        RBufStartIndex = (RBufStartIndex - 1+RBufSize) % RBufSize; //Negative modulo...
+        if(RBufStartIndex == RBufOffsetIndex)
+        {
+            RBufOffsetIndex = (RBufOffsetIndex - 1+RBufSize) % RBufSize;
+        }
+        RBufBuffer.replace(RBufStartIndex, value);
+    }
+
+    const T &first() const
+    {
+        return RBufBuffer.at(RBufStartIndex);
+    }
+    const T &last() const
+    {
+        return RBufBuffer.at((RBufOffsetIndex-1+RBufSize)%RBufSize);
+    }
+
+    const T &at(const int index) const
+    {
+        const int calcdIndex = ( index + RBufStartIndex ) % RBufSize;
+//        qDebug() << __PRETTY_FUNCTION__ << "CalcdIndex: " << calcdIndex;
+        return RBufBuffer.at(calcdIndex);
+    }
+
+    bool contains(const T &value) const
+    {
+        return RBufBuffer.contains(value);
+    }
+
+private:
+    QVector<T> RBufBuffer;
+    const int RBufSize;
+    int RBufStartIndex;
+    int RBufOffsetIndex;
+};
+
+class MsgStorage
+{
+public:
+    typedef QVector<Msg> MsgContainer;
+    typedef QVector<MsgContainer> MsgContainerStore;
+
+    /**
+     * @brief Constructs a MsgStorage object with the given metrics
+     * @param[in] ContainerSize             Size of one container in the MsgStore
+     * @param[in] NrOfContainersToKeepInRAM Nr of containers to keep in RAM at a time
+     *
+     * \note If 0 is entered for either parameter, the respective paramter is set to 1
+     *
+     * \note The given default values are optimal for most applications.
+     *       The middle container (index 1) can be used to retrieve data.
+     *       If its size is exceeded or a lower index is requested
+     *       the next container is already loaded
+     *       (also this will trigger the container on the other side to be serialized
+     *       and the next container to be loaded into RAM)
+     */
+    MsgStorage(const int ContainerSize = 1000, const int NrOfContainersToKeepInRAM = 3);
+
+    /**
+     * @brief at
+     * @param index
+     * @return
+     *
+     * \note This function returns a copy of the retrieved Msg because
+     *       it cannot be guaranteed that the retrieved Msg is held in
+     *       RAM; it can even not be guaranteed that a reference would
+     *       be up to date...
+     */
+    Msg at(const int index);
+
+    void append( const Msg &value );
+    void replace( const int index, const Msg &value );
+
+
+    int size() const;
+    bool isEmpty() const;
+
+private:
+    /**
+     * @brief SerializeToFile
+     * @param IndexInStore
+     *
+     * \note This does not invalidate the given index!
+     */
+    void SerializeToFile(const ContainerID &containerID) const;
+    void SerializeToFile(const int ContainerNr, const MsgContainer &ContainerToSerialize) const;
+
+    /**
+     * @brief SerializeToFile
+     * @param IndexInStore
+     *
+     * \note The MsgContainer at the given index is replaced with the MsgContainer that is loaded from the file!
+     */
+    void SerializeFromFile(const ContainerID &IndexInStoreToInsertIn);
+
+    MsgContainer &appendNewContainer();
+private:
+    MsgContainerStore MsgStore;
+    MsgContainer LastContainer; //!< LastContaine is kept in memory permanently because of append method!
+    QVector<QString> ContainerFileNames;
+    const int ContainerSize;               //CONST BECAUSE THIS SHOULD NOT BE CHANGEABLE AT RUNTIME ONCE THE OBJECT WAS CREATED!
+    const int NrOfContainersToKeepInRAM;        //CONST BECAUSE THIS SHOULD NOT BE CHANGEABLE AT RUNTIME ONCE THE OBJECT WAS CREATED!
+    RSimpleDestructiveRingBuff<ContainerID> ContainerInRAMIndexMapping;
+    const QString FilePrefix;
+    int CurrentSize;
+    int CurrentNrOfContainers;
+    int CurrentFileNr;
+
+    static int MsgStorageCntr;
+};
+
+#endif // MSGSTORAGE_H

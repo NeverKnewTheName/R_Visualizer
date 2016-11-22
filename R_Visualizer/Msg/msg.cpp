@@ -30,6 +30,19 @@ Msg::Msg(const Msg &other) :
 {
 }
 
+Msg::Msg(const QJsonObject &jsonObj) :
+    MsgTimestamp(QDateTime::fromString(jsonObj["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"))),
+    MsgID(static_cast<MsgIDType>(jsonObj["MsgID"].toInt())),
+    MsgCode(static_cast<MsgCodeType>(jsonObj["MsgCode"].toInt()))
+{
+    QJsonArray jsonData = jsonObj["MsgData"].toArray();
+    MsgData.DataSizeInBytes = jsonData.size();
+    for(auto &&dataByteJson : jsonData)
+    {
+        MsgData.DataBytes.append(static_cast<quint8>(dataByteJson.toInt()));
+    }
+}
+
 /**
  * @brief Initializes a Msg with the given paramters
  *

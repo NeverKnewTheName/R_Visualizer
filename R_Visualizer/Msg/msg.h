@@ -29,6 +29,7 @@ class Msg
 public:
     Msg();
     Msg(const Msg &other);
+    Msg(const QJsonObject &jsonObj);
     Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code, DataByteVect dataBytes);
     ~Msg();
 
