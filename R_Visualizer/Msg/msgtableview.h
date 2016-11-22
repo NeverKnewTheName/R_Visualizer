@@ -7,7 +7,7 @@
 
 #include <QTableView>
 
-#define VISIBLE_ROWS 100u
+#define VISIBLE_ROWS 200u
 
 class MsgTableView : public QTableView
 {

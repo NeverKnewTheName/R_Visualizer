@@ -111,7 +111,7 @@ void SystemOverview::newMessage(Data_PacketPtr ptr)
 {
     ui->visualizerGraphicsView->getObjectStore()->receiveMessage(ptr);
 //    QDateTime timeStamp = ptr->timestamp();
-//    quint16 id = ptr->frame().ID_Standard;
+//    const MsgIDType id = ptr->frame().ID_Standard;
 //    QByteArray canData = ptr->frame().data;
 
 //    quint8 code = canData.at(0);

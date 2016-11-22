@@ -22,11 +22,11 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     void removeRow(int row, const QModelIndex &parent = QModelIndex() );
 
-    void addID(unsigned int id);
+    void addID(const MsgIDType id);
     void addID(QString &idString);
     void removeID(QModelIndex &index);
 
-    bool containsID(unsigned int id);
+    bool containsID(const MsgIDType id) const;
 signals:
     void internalModelChanged();
     //void rowAdded(unsigned int pos);
@@ -35,7 +35,7 @@ public slots:
 
 private:
     QModelIndex tempIndex;
-    QVector<quint16/*ToDO MsgIDType*/> idStore;
+    QVector<MsgIDType> idStore;
     IDModel &idModel;
 };
 

@@ -8,7 +8,7 @@
 
 #include <QFont>
 #include <QBrush>
-
+#include <QTextEdit>
 
 #include <QDebug>
 
@@ -47,9 +47,12 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
         if(col == COL_NAME) return msgs.at(row)->getId();
         if(col == COL_MESSAGE) return QString("Code: 0x%1\nData: %2").arg(msgs.at(row)->getCode()).arg(msgs.at(row)->getDataAsString());
+//        if(col == COL_MESSAGE) return QTextEdit(QString("RABL\nRABL\nRABL\nRABL\n"));
         break;
-//    case Qt::SizeHintRole:
-//        break;
+    case Qt::SizeHintRole:
+//        return QSize(100,40);
+        return msgs.at(row)->getMsgSizeHint();
+        break;
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:

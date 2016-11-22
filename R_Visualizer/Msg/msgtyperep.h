@@ -15,9 +15,9 @@ class MsgTypeRep
 public:
     MsgTypeRep();
     MsgTypeRep(const MsgTypeRep &other);
-    MsgTypeRep(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color);
+    MsgTypeRep(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
 
-    MsgCodeType getCode() const;  //ToDO MsgCodeType
+    MsgCodeType getCode() const;
 
     QString getCodeName() const;
     void setCodeName(const QString &value);
@@ -35,7 +35,8 @@ public:
     bool isValid() const;
     bool operator==(const MsgTypeRep &other) const;
 
-    void paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap);
+    QString getMsgDataAsString(Msg &msg);
+    void paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, Msg &msg) const;
 
 private:
     bool isValidObj;
@@ -43,7 +44,7 @@ private:
     QString codeName;
     QString messageFormat;
     QColor color;
-    QPixmap MsgTypeRepPixmap;
+    QSize MsgTypeRepSizeHint;
 };
 
 #endif // MSGTYPEREP_H

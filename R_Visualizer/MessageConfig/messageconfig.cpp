@@ -153,12 +153,12 @@ MsgTypeModel &MessageConfig::getMsgTypeModel() const
     return msgTypeModel;
 }
 
-void MessageConfig::idAddFinished(const quint16 id, const QString &name, const QColor &color)
+void MessageConfig::idAddFinished(const MsgIDType id, const QString &name, const QColor &color)
 {
     emit sgnlIdAddFinished(id,name,color);
 }
 
-void MessageConfig::msgTypeAddFinished(const quint8 code, const QString &codeName, const QString &messageFormat, const QColor &color)
+void MessageConfig::msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
     emit sgnlMsgTypeAddFinished(code, codeName, messageFormat, color);
 }

@@ -7,6 +7,8 @@
 
 #include <QTextDocument>
 
+#include <QDebug>
+
 MsgTypeRep::MsgTypeRep() :
     isValidObj(false),
     code(0x0),
@@ -27,7 +29,7 @@ MsgTypeRep::MsgTypeRep(const MsgTypeRep &other) :
 
 }
 
-MsgTypeRep::MsgTypeRep(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color) :
+MsgTypeRep::MsgTypeRep(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color) :
     isValidObj(true),
     code(code),
     codeName(codeName),
@@ -37,7 +39,7 @@ MsgTypeRep::MsgTypeRep(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString
 
 }
 
-MsgCodeType/*ToDo MsgCodeType*/ MsgTypeRep::getCode() const
+MsgCodeType MsgTypeRep::getCode() const
 {
     return code;
 }
@@ -111,33 +113,47 @@ bool MsgTypeRep::operator==(const MsgTypeRep &other) const
     return (this->code == other.getCode());
 }
 
-void MsgTypeRep::paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap)
+QString MsgTypeRep::getMsgDataAsString(Msg &msg)
 {
-    QTextDocument ItemText(QString("Code: %1\nData: 0x%2 0x%3 0x%4 0x%5 0x%6 0x%7 0x%8")
+    return msg.getDataAsString();
+}
+
+void MsgTypeRep::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, Msg &msg) const
+{
+    QTextDocument ItemText(QString("Code: %1\nData:\n0x%2 0x%3 0x%4 \n0x%5 0x%6 0x%7 0x%8")
             .arg(code)
-            .arg((int)10,(int)2,(int)16,'0')
-            .arg((int)11,(int)2,(int)16,'0')
-            .arg((int)12,(int)2,(int)16,'0')
-            .arg((int)13,(int)2,(int)16,'0')
-            .arg((int)14,(int)2,(int)16,'0')
-            .arg((int)15,(int)2,(int)16,'0')
-            .arg((int)16,(int)2,(int)16,'0')
-                           );
+            .arg((int)10)
+            .arg((int)11)
+            .arg((int)12)
+            .arg((int)13)
+            .arg((int)14)
+            .arg((int)15)
+            .arg((int)16));
 
-    ItemText.setTextWidth(rect.width());
-    destPixMap = QPixmap(ItemText.size().toSize());
-    destPixMap.fill( /*(rect.features & QStyleOptionViewItem::Alternate) ? color.darker() :*/ color);
+    ItemText.setTextWidth(option.rect.width());
 
-    QPainter pixmapPainter(&destPixMap);
+//    qDebug() << __PRETTY_FUNCTION__ << "  TextWidth: " << ItemText.textWidth();
 
-    pixmapPainter.setRenderHint(QPainter::TextAntialiasing);
-    ItemText.drawContents(&pixmapPainter, destPixMap.rect());
+//    ItemText.size().toSize();
+//    int lineCount = ItemText.count(QChar('\n'));
+//    QSize sizeHint(option.rect.width(), (option.fontMetrics.size(0,QString("X")).height()*lineCount));
 
-//    QPainter pixmapPainter(&destPixMap);
+    QSizeF sizeHint(ItemText.size());
+    msg.setMsgSizeHint(sizeHint.toSize());
 
-//    pixmapPainter.drawText(
-//                destPixMap.rect(),
-//                ItemText.toPlainText(),
-//                ItemText.
-//                );
+    QRectF BoundingRect(option.rect.x(), option.rect.y(), sizeHint.width(), sizeHint.height());
+//    qDebug() << __PRETTY_FUNCTION__ << "Rects: " << option.rect << BoundingRect;
+
+//    ItemText.drawContents();
+
+    painter->save();
+//    painter->setWindow(option.rect.x(),option.rect.y(),msg.getMsgSizeHint().width(),msg.getMsgSizeHint().height());
+    painter->fillRect(BoundingRect, (option.features & QStyleOptionViewItem::Alternate) ? color.darker(100) : color);
+    painter->setRenderHint(QPainter::TextAntialiasing);
+
+    painter->translate( BoundingRect.topLeft() );
+    ItemText.drawContents( painter, BoundingRect.translated( -BoundingRect.topLeft() ) );
+
+//    ItemText.drawContents(painter);
+    painter->restore();
 }

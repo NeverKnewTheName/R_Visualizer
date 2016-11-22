@@ -26,11 +26,16 @@ QSize MsgTypeEditorDelegate::sizeHint(const QStyleOptionViewItem &option, const 
 
 QWidget *MsgTypeEditorDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    qDebug() << __PRETTY_FUNCTION__;
+    if(!index.isValid())
+        return QStyledItemDelegate::createEditor(parent, option, index);
+
     int col = index.column();
     if (col == MsgTypeModel::COL_CODENAME)
     {
         //NAME
         QLineEdit *textEdit = new QLineEdit(parent);
+        textEdit->setText(qvariant_cast<QString>(index.data()));
         connect(textEdit, &QLineEdit::editingFinished,
                 this, &MsgTypeEditorDelegate::commitAndCloseEditor);
         return textEdit;
@@ -49,28 +54,34 @@ QWidget *MsgTypeEditorDelegate::createEditor(QWidget *parent, const QStyleOption
         connect(colorEdit, &QColorDialog::finished,
                 this, &MsgTypeEditorDelegate::commitAndCloseEditor);
         return colorEdit;
-    } else {
-        return QStyledItemDelegate::createEditor(parent, option, index);
     }
+
+    return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
 void MsgTypeEditorDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
+    qDebug() << __PRETTY_FUNCTION__;
+    if(!index.isValid())
+        return;
+
     int col = index.column();
     if (col == MsgTypeModel::COL_CODENAME) {
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
-        textEdit->setText(index.model()->data(index, Qt::DisplayRole).value<QString>());
+        QString currentCodeName = index.data(Qt::DisplayRole).value<QString>();
+        textEdit->setText(currentCodeName);
+        textEdit->update();
     }
     if (col == MsgTypeModel::COL_MESSAGEFORMAT) {
         //QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
         MsgTypeFormatterDialog *formatEdit = qobject_cast<MsgTypeFormatterDialog *>(editor);
-        formatEdit->setFormatString(index.model()->data(index, Qt::DisplayRole).value<QString>());
+        formatEdit->setFormatString(index.data(Qt::DisplayRole).value<QString>());
     }
     else if (col == MsgTypeModel::COL_COLOR)
     {
         //COLOR
         QColorDialog *colorEdit = qobject_cast<QColorDialog *>(editor);
-        colorEdit->setCurrentColor(index.model()->data(index, Qt::BackgroundRole).value<QColor>());
+        colorEdit->setCurrentColor(index.data(Qt::BackgroundRole).value<QColor>());
     }
     else {
         QStyledItemDelegate::setEditorData(editor, index);
@@ -79,6 +90,9 @@ void MsgTypeEditorDelegate::setEditorData(QWidget *editor, const QModelIndex &in
 
 void MsgTypeEditorDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
+    qDebug() << __PRETTY_FUNCTION__;
+    if(!index.isValid())
+        return;
     int col = index.column();
     if (col == MsgTypeModel::COL_CODENAME) {
         //NAME

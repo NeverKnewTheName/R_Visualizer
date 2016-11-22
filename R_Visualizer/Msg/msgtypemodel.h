@@ -29,11 +29,13 @@ public:
     void add(const MsgTypeRep &msgTypeRep);
     void clear();
 
+
+    bool contains(const MsgCodeType MsgCode) const;
     QString getNameToCode(const MsgCodeType code) const;
-    quint8/*ToDO MsgCodeType*/ getCodeToName(const QString &name) const;
-    QString getMessageToCode(const MsgCodeType/*ToDO MsgCodeType*/ code) const;
+    MsgCodeType getCodeToName(const QString &name) const;
+    QString getMessageToCode(const MsgCodeType code) const;
     QColor getColorToCode(const MsgCodeType code) const;
-    int getNrLinesToCode(const MsgCodeType/*ToDO MsgCodeType*/ code);
+    int getNrLinesToCode(const MsgCodeType code);
 
     QStringList getAllCodeNames() const;
 
@@ -49,10 +51,11 @@ public:
         COL_NR_OF_COLS
     };
 
-    void paintMsgTypeRep(const QRect &rect, QPixmap &destPixMap, const MsgCodeType/*ToDO MsgCodeType*/ code);
+
+    void paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const;
 private:
-    QVector<MsgCodeType/*ToDO MsgCodeType*/> codeStore;
-    QHash<MsgCodeType/*ToDO MsgCodeType*/, MsgTypeRep> msgTypePropStore;
+    QVector<MsgCodeType> codeStore;
+    QHash<MsgCodeType, MsgTypeRep> msgTypePropStore;
 
 signals:
     void internalModelChanged();

@@ -121,12 +121,12 @@ void FilterIDStore::removeRow(int row, const QModelIndex &parent)
     endRemoveRows();
 }
 
-void FilterIDStore::addID(unsigned int id)
+void FilterIDStore::addID(const MsgIDType id)
 {
     beginInsertRows(QModelIndex(), idStore.size(), idStore.size());
     idStore.append(id);
     endInsertRows();
-    tempIndex = this->index(idStore.size()-1);
+    tempIndex = index(idStore.size()-1);
     qDebug() << "Index:" << tempIndex.row();
     emit rowAdded(tempIndex);
 }
@@ -136,7 +136,7 @@ void FilterIDStore::addID(QString &idString)
     beginInsertRows(QModelIndex(), idStore.size(), idStore.size());
     idStore.append(idString.toUInt());
     endInsertRows();
-    tempIndex = this->index(idStore.size()-1);
+    tempIndex = index(idStore.size()-1);
     qDebug() << "Index:" << tempIndex.row();
     emit rowAdded(tempIndex);
 }
@@ -149,7 +149,7 @@ void FilterIDStore::removeID(QModelIndex &index)
     emit internalModelChanged();
 }
 
-bool FilterIDStore::containsID(unsigned int id)
+bool FilterIDStore::containsID(const MsgIDType id) const
 {
     return idStore.contains(id);
 }

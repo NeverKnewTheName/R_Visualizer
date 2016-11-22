@@ -22,7 +22,7 @@ void FilterIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
                 option.palette.currentColorGroup(),
                 (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
 
-    int id = index.model()->data(index, Qt::DisplayRole).value<int>();
+    int id = index.data(Qt::DisplayRole).value<int>();
     QColor itemBackground(this->idModel->getColorToID(id));
     if(itemBackground.isValid())
     {
@@ -83,7 +83,7 @@ void FilterIDDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
     int col = index.column();
     if (col == 0) {
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
-        textEdit->setText(index.model()->data(index, Qt::DisplayRole).value<QString>());
+        textEdit->setText(index.data(Qt::DisplayRole).value<QString>());
     }
     else {
         QStyledItemDelegate::setEditorData(editor, index);

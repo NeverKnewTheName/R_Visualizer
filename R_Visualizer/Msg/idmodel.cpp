@@ -12,16 +12,23 @@ IDModel::IDModel(QObject *parent) : QAbstractTableModel(parent)
 
 int IDModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return idStore.size();
 }
 
 int IDModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return COL_NR_OF_COLS;
 }
 
 QVariant IDModel::data(const QModelIndex &index, int role) const
 {
+    if(!index.isValid())
+    {
+        return QVariant();
+    }
+
     int row = index.row();
     int col = index.column();
 
@@ -41,10 +48,7 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-    {
-        QBrush bgBrush(idPropStore.value(idStore[row]).getColor());
-        return bgBrush;
-    }
+        return QBrush(idPropStore.value(idStore[row]).getColor());
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -102,6 +106,7 @@ QVariant IDModel::headerData(int section, Qt::Orientation orientation, int role)
 
 bool IDModel::removeRows(int row, int count, const QModelIndex &parent)
 {
+    Q_UNUSED(parent)
     int modelSize = idStore.size();
     if(modelSize || ((row+count) < modelSize))
     {
@@ -146,7 +151,12 @@ void IDModel::clear()
     endResetModel();
 }
 
-quint16 IDModel::getIDToName(const QString &name) const
+bool IDModel::contains(const MsgIDType MsgID) const
+{
+    return idStore.contains(MsgID);
+}
+
+MsgIDType IDModel::getIDToName(const QString &name) const
 {
     for( auto &idProp : idPropStore )
     {
@@ -159,7 +169,7 @@ quint16 IDModel::getIDToName(const QString &name) const
 void IDModel::add(const IDRep &idRep)
 {
     int newRow = idStore.size();
-    const quint16/*ToDO MsgIDType*/ id = idRep.getId();
+    const MsgIDType id = idRep.getId();
     beginInsertRows(QModelIndex(),newRow,newRow);
     idStore.append(id);
     idPropStore.remove(id);
@@ -167,7 +177,7 @@ void IDModel::add(const IDRep &idRep)
     endInsertRows();
 }
 
-QString IDModel::getNameToID(const quint16/*ToDO MsgIDType*/ id) const
+QString IDModel::getNameToID(const MsgIDType id) const
 {
     if(idPropStore.contains(id))
     {
@@ -177,7 +187,7 @@ QString IDModel::getNameToID(const quint16/*ToDO MsgIDType*/ id) const
     return QString("");
 }
 
-QColor IDModel::getColorToID(const quint16/*ToDO MsgIDType*/ id) const
+QColor IDModel::getColorToID(const MsgIDType id) const
 {
     if(idPropStore.contains(id))
     {
@@ -190,7 +200,7 @@ QColor IDModel::getColorToID(const quint16/*ToDO MsgIDType*/ id) const
 QByteArray IDModel::parseToJSON() const
 {
     QJsonArray jsonMsgsArr;
-    for(quint16 id : idStore)
+    for(const MsgIDType &id : idStore)
     {
         QJsonObject jsonSveObj = idPropStore[id].parseOUT();
         jsonMsgsArr.append(jsonSveObj);
@@ -208,15 +218,15 @@ void IDModel::parseFromJSON(const QByteArray &jsonFile)
     }
 }
 
-void IDModel::paintID(const QRect &rect, QPixmap &destPixMap, const quint16 id) const
+void IDModel::paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const
 {
-    idPropStore[id].paintIDRep(rect, destPixMap);
+    idPropStore[id].paintIDRep(painter, option);
 }
 
 QStringList IDModel::getAllIDNames() const
 {
     QStringList names;
-    for(auto idRep : idPropStore)
+    for(auto &&idRep : idPropStore)
     {
         names.append(idRep.getName());
     }

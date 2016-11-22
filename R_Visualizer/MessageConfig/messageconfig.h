@@ -55,8 +55,8 @@ private:
     bool timeStampFilterToEnabled;
 
 signals:
-    void sgnlIdAddFinished(const quint16/*ToDo MsgIDType*/ id, const QString &name, const QColor &color);
-    void sgnlMsgTypeAddFinished(const quint8/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color);
+    void sgnlIdAddFinished(const MsgIDType id, const QString &name, const QColor &color);
+    void sgnlMsgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
     void startEditFilterID(QModelIndex &);
     void filterIDstateChange(bool enabled);
     void filterCodestateChange(bool enabled);
@@ -66,8 +66,8 @@ signals:
     void sgnl_timestampToChanged(QDateTime newToDateTime);
 
 private slots:
-    void idAddFinished(const quint16/*ToDo MsgIDType*/ id, const QString &name, const QColor &color);
-    void msgTypeAddFinished(const quint8/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color);
+    void idAddFinished(const MsgIDType id, const QString &name, const QColor &color);
+    void msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
     void filterIDAdded(unsigned int pos);
     void slt_timestampFromChanged();
     void slt_timestampToChanged();

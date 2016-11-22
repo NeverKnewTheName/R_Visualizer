@@ -18,7 +18,8 @@ SOURCES += \
     $$PWD/hugeqvector.cpp \
     $$PWD/msgdisplaywidget.cpp \
     $$PWD/msgiddelegate.cpp \
-    $$PWD/msgdatadelegate.cpp
+    $$PWD/msgdatadelegate.cpp \
+    $$PWD/msgdatawidget.cpp
 
 HEADERS  += \
     $$PWD/msg.h \
@@ -32,8 +33,10 @@ HEADERS  += \
     $$PWD/hugeqvector.h \
     $$PWD/msgdisplaywidget.h \
     $$PWD/msgiddelegate.h \
-    $$PWD/msgdatadelegate.h
+    $$PWD/msgdatadelegate.h \
+    $$PWD/msgdatawidget.h
 
 
 FORMS    += \
-    $$PWD/msgdisplaywidget.ui
+    $$PWD/msgdisplaywidget.ui \
+    $$PWD/msgdatawidget.ui

@@ -33,6 +33,7 @@ private:
 
 signals:
     void MustUpdatePixmapForIndex(const QStyleOptionViewItem &option, const QModelIndex &index);
+    void RowSizeChanged(const int row) const;
 
 private slots:
     void commitAndCloseEditor();

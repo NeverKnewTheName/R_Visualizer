@@ -7,6 +7,8 @@ class QJsonObject;
 #include <QMetaType>
 #include <QVector>
 
+#include <QSize>
+
 typedef QVector<quint8> DataByteVect, *PDataByteVect;
 Q_DECLARE_METATYPE(DataByteVect)
 
@@ -52,11 +54,16 @@ public:
 
     MsgDataStruc getMsgData() const;
 
+    QSize getMsgSizeHint() const;
+
+    void setMsgSizeHint(const QSize &value);
+
 private:
     QDateTime MsgTimestamp;
     MsgIDType MsgID;
     MsgCodeType MsgCode;
     MsgDataStruc MsgData;
+    QSize msgSizeHint;
 };
 
 Q_DECLARE_METATYPE(Msg)

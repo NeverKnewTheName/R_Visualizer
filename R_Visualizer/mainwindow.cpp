@@ -310,34 +310,32 @@ void MainWindow::initMsgsTableView()
 
     MsgIDDelegate *idDelegate = new MsgIDDelegate(idModel, ui->msgTableView);
     MsgDataDelegate *dataDelegate = new MsgDataDelegate(msgTypeModel, ui->msgTableView);
-    connect(&msgModel, SIGNAL(rowInvalidated(QModelIndex)), idDelegate, SLOT(UpdatePixmap(QModelIndex)));
-    connect(&msgModel, SIGNAL(rowInvalidated(QModelIndex)), dataDelegate, SLOT(UpdatePixmap(QModelIndex)));
-    connect(ui->msgTableView->horizontalHeader(), &QHeaderView::sectionResized, this, [=,this](int index, int oldSize, int newSize ){
-        switch(index)
-        {
-        case 1:
-            idDelegate->columWidthChanged(newSize);
-            break;
-        case 2:
-            dataDelegate->columWidthChanged(newSize);
-            break;
-        }
-    });
-    ui->msgTableView->setItemDelegateForColumn(1, idDelegate);
-    ui->msgTableView->setItemDelegateForColumn(2, dataDelegate);
+    connect(dataDelegate, &MsgDataDelegate::RowSizeChanged, ui->msgTableView, &MsgTableView::resizeRowsToContents, Qt::QueuedConnection);
+//    connect(ui->msgTableView->horizontalHeader(), &QHeaderView::sectionResized, this, [=,this](int index, int oldSize, int newSize ){
+//        switch(index)
+//        {
+//        case 1:
+//            idDelegate->columWidthChanged(newSize);
+//            break;
+//        case 2:
+//            dataDelegate->columWidthChanged(newSize);
+//            break;
+//        }
+//    });
+    ui->msgTableView->setItemDelegateForColumn(MsgModel::COL_NAME, idDelegate);
+    ui->msgTableView->setItemDelegateForColumn(MsgModel::COL_MESSAGE, dataDelegate);
     //    ui->msgTableView->setItemDelegate( new MsgDelegate(msgTypeModel,idModel,ui->msgTableView));
-
 }
 
 
-void MainWindow::idAddFinished(const MsgIDType/*ToDO MsgIDType*/ id, const QString &name, const QColor &color)
+void MainWindow::idAddFinished(const MsgIDType id, const QString &name, const QColor &color)
 {
     IDRep IdRepToAdd(id, name, color);
     idModel.add(IdRepToAdd);
 }
 
 
-void MainWindow::msgTypeAddFinished(const MsgCodeType/*ToDo MsgCodeType*/ code, const QString &codeName, const QString &messageFormat, const QColor &color)
+void MainWindow::msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
     MsgTypeRep MsgTypeRepToAdd(code, codeName, messageFormat, color);
     msgTypeModel.add(MsgTypeRepToAdd);

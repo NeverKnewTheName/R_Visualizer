@@ -29,9 +29,10 @@ public:
     void add(const IDRep &idRep);
     void clear();
 
-    QString getNameToID(const quint16 id) const;
-    quint16/*ToDO MsgIDType*/ getIDToName(const QString &name) const;
-    QColor getColorToID(const quint16 id) const;
+    bool contains(const MsgIDType MsgID) const;
+    QString getNameToID(const MsgIDType id) const;
+    MsgIDType getIDToName(const QString &name) const;
+    QColor getColorToID(const MsgIDType id) const;
 
 //    QHash<int, IDRep *> getIdPropStore() const;
 //    void setIdPropStore(const QHash<int, IDRep *> &value);
@@ -49,11 +50,11 @@ public:
         COL_NR_OF_COLS
     };
 
-    void paintID(const QRect &rect, QPixmap &destPixMap, const quint16/*ToDO MsgIDType*/ id) const;
+    void paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const;
 
 private:
-    QVector<quint16> idStore; //ToDO MsgIDType
-    QHash<quint16, IDRep> idPropStore; //ToDO MsgIDType
+    QVector<MsgIDType> idStore; //ToDO MsgIDType
+    QHash<MsgIDType, IDRep> idPropStore; //ToDO MsgIDType
 
 signals:
     void internalModelChanged();

@@ -89,7 +89,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     //        CurPixMap = MsgIDPixMapStore.value(row);
     //        if(CurPixMap.isNull())
     //        {
-    //            MsgIDType/*ToDO MsgIDType*/ id = index.data(Qt::UserRole +3).value<int>();
+    //            MsgIDType id = index.data(Qt::UserRole +3).value<int>();
     //            if(!idModel.getNameToID(id).isEmpty())
     //            {
     //                idModel.paintID(opt, CurPixMap, id);
@@ -115,7 +115,7 @@ void MsgDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     //        CurPixMap = MsgDataPixMapStore.value(row);
     //        if(CurPixMap.isNull())
     //        {
-    //            MsgCodeType/*ToDO MsgCodeType*/ code = index.data(Qt::UserRole +3).value<int>();
+    //            MsgCodeType code = index.data(Qt::UserRole +3).value<int>();
     //            if(!msgTypeModel.getNameToCode(code).isEmpty())
     //            {
     //                msgTypeModel.paintMsgTypeRep(rect, code);
@@ -213,7 +213,7 @@ void MsgDelegate::UpdatePixmap(const QModelIndex &index)
 //        CurPixMap = MsgDataPixMapStore.value(row);
 //        if(CurPixMap.isNull())
 //        {
-//            MsgCodeType/*ToDO MsgCodeType*/ code = index.data(Qt::UserRole +3).value<int>();
+//            MsgCodeType code = index.data(Qt::UserRole +3).value<int>();
 //            if(!msgTypeModel.getNameToCode(code).isEmpty())
 //            {
 //                msgTypeModel.paintMsgTypeRep(rect, code);
@@ -238,7 +238,7 @@ void MsgDelegate::UpdatePixmap(const QModelIndex &index)
 //        CurPixMap = MsgIDPixMapStore.value(row);
 //        if(CurPixMap.isNull())
 //        {
-//            MsgIDType/*ToDO MsgIDType*/ id = index.data(Qt::UserRole +3).value<int>();
+//            MsgIDType id = index.data(Qt::UserRole +3).value<int>();
 //            if(!idModel.getNameToID(id).isEmpty())
 //            {
 //                idModel.paintID(opt, CurPixMap, id);

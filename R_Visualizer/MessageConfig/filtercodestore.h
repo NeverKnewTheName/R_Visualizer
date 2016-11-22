@@ -19,15 +19,15 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     void removeRow(int row, const QModelIndex &parent = QModelIndex());
 
-    void addCode(const quint8/*ToDO MsgCodeType*/ code);
+    void addCode(const MsgCodeType code);
     void addCode(const QString &codeString);
     void removeCode(const QModelIndex &index);
 
-    bool containsCode(const quint8/*ToDO MsgCodeType*/ code);
+    bool containsCode(const MsgCodeType code) const;
 
 private:
     QModelIndex tempIndex;
-    QVector<quint8/*ToDO MsgCodeType*/> codeStore;
+    QVector<MsgCodeType> codeStore;
     MsgTypeModel &msgTypeModel;
 
 signals:

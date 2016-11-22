@@ -14,7 +14,7 @@ class IDRep
 public:
     IDRep();
     IDRep(const IDRep& other);
-    IDRep(const MsgIDType id, const QString &name, const QColor &color); /*ToDo MsgIDType*/
+    IDRep(const MsgIDType id, const QString &name, const QColor &color);
 
     QString getName() const;
     void setName(const QString &value);
@@ -33,11 +33,11 @@ public:
 
     MsgIDType getId() const;
 
-    void paintIDRep(const QRect &rect, QPixmap &destPixMap) const;
+    void paintIDRep(QPainter *painter, const QStyleOptionViewItem &option) const;
 
 private:
     bool isValidObj;
-    const MsgIDType/*ToDo MsgIDType*/ id;
+    const MsgIDType id;
     QString name;
     QColor color;
     QPixmap IDRepPixmap;

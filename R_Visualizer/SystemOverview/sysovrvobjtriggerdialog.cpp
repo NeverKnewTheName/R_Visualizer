@@ -65,13 +65,13 @@ void SysOvrvObjTriggerDialog::on_EditTriggerBtn_clicked()
 void SysOvrvObjTriggerDialog::setupModel(SysOvrvObject *sysOvrvObj)
 {
     stdModel->clear();
-    QList<quint16> idList = sysOvrvObj->getTriggerIDs();
-    for( quint16 id : idList)
+    QList<MsgIDType> idList = sysOvrvObj->getTriggerIDs();
+    for( const MsgIDType &id : idList)
     {
         QStandardItem *pIDItem = new QStandardItem();
         pIDItem->setData(QVariant(id),Qt::DisplayRole);
-        QList<quint8> codeList = sysOvrvObj->getTriggerCodesToID(id);
-        for( quint8 code : codeList )
+        QList<MsgCodeType> codeList = sysOvrvObj->getTriggerCodesToID(id);
+        for( const MsgCodeType &code : codeList )
         {
             QStandardItem *pCodeItem = new QStandardItem();
             pCodeItem->setData(QVariant(code),Qt::DisplayRole);

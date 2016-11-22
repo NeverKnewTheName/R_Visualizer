@@ -499,8 +499,8 @@ void SendMessages::on_sndPcktClrBtn_clicked()
 
 void SendMessages::on_sndMsgAddToPacketBtn_clicked()
 {
-    quint16 msgID;
-    quint16 msgCode;
+    MsgIDType msgID;
+    MsgCodeType msgCode;
     DataByteVect data;
     QString lineEditContent;
     bool conversionOK;

@@ -127,7 +127,7 @@ void FilterCodeStore::removeRow(int row, const QModelIndex &parent)
     endRemoveRows();
 }
 
-void FilterCodeStore::addCode(const quint8 code)
+void FilterCodeStore::addCode(const MsgCodeType code)
 {
     beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(code);
@@ -155,7 +155,7 @@ void FilterCodeStore::removeCode(const QModelIndex &index)
     emit internalModelChanged();
 }
 
-bool FilterCodeStore::containsCode(const quint8/*ToDO MsgCodeType*/ code)
+bool FilterCodeStore::containsCode(const MsgCodeType code) const
 {
     return codeStore.contains(code);
 }

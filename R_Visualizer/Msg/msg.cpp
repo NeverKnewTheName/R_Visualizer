@@ -16,7 +16,8 @@ Msg::Msg() :
     MsgData({
             DataByteVect(),
             0u
-            })
+            }),
+    msgSizeHint(100,50)
 {
 }
 
@@ -24,7 +25,8 @@ Msg::Msg(const Msg &other) :
     MsgTimestamp(other.getTimestamp()),
     MsgID(other.getId()),
     MsgCode(other.getCode()),
-    MsgData(other.getMsgData())
+    MsgData(other.getMsgData()),
+    msgSizeHint(other.getMsgSizeHint())
 {
 }
 
@@ -43,7 +45,8 @@ Msg::Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code,
     MsgData({
             dataBytes,
             dataBytes.size()
-            })
+            }),
+    msgSizeHint(100,50)
 {
 }
 
@@ -131,6 +134,16 @@ QJsonObject Msg::parseOUT() const
 MsgDataStruc Msg::getMsgData() const
 {
     return MsgData;
+}
+
+QSize Msg::getMsgSizeHint() const
+{
+    return msgSizeHint;
+}
+
+void Msg::setMsgSizeHint(const QSize &value)
+{
+    msgSizeHint = value;
 }
 
 /**

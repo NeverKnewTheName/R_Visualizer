@@ -11,6 +11,8 @@
 #include <QTableView>
 #include <QRect>
 
+#include <QTextEdit>
+
 #include <QDebug>
 
 MsgDataDelegate::MsgDataDelegate(MsgTypeModel &msgTypeModel, QWidget *parent) :
@@ -28,31 +30,33 @@ void MsgDataDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     if(!index.isValid())
         return;
 
-    int row = index.row();
-    QPixmap CurPixMap = MsgDataPixMapStore.value(row);
+    const MsgCodeType MsgCode = qvariant_cast<MsgCodeType>(index.data(Qt::UserRole +3));
+    Msg *msg = static_cast<Msg*>(index.data(Qt::UserRole +1).value<void*>());
+//    qDebug() << msg->getDataAsString();
 
-    painter->save();
-
-    if(CurPixMap.isNull())
+    if(!msgTypeModel.contains(MsgCode))
     {
-        //emit MustUpdatePixmapForIndex(option, index);
         QStyledItemDelegate::paint(painter,option,index);
     }
     else
     {
-        painter->drawPixmap(option.rect, CurPixMap);
+//        QColor color = msgTypeModel.getColorToCode(MsgCode);
+//        painter->fillRect(option.rect, (option.features & QStyleOptionViewItem::Alternate) ? color.darker(100) : color);
+        msgTypeModel.paintMsgTypeRep(painter, option, MsgCode, *msg);
+        if(option.rect.height() != sizeHint(option,index).height())
+        {
+            emit RowSizeChanged(index.row());
+        }
+//        qobject_cast<QTableView*>(parent())->resizeRowToContents(index.row());
     }
-
-    painter->restore();
 }
 
 QSize MsgDataDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QPixmap CurPixMap = MsgDataPixMapStore.value(index.row());
-    if(CurPixMap.isNull())
-        return QStyledItemDelegate::sizeHint(option, index);
-
-    return CurPixMap.size();
+    QSize sizehint = qvariant_cast<QSize>(index.data(Qt::SizeHintRole));
+//    qDebug() << __PRETTY_FUNCTION__ << "    SizeHint: " << sizehint;
+    return sizehint;
+    return QStyledItemDelegate::sizeHint(option, index);
 }
 
 QWidget *MsgDataDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -72,40 +76,40 @@ void MsgDataDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, c
 
 void MsgDataDelegate::UpdatePixmap(const QModelIndex &index)
 {
-    if(!index.isValid())
-        return;
-    if(index.column() != MsgModel::COL_MESSAGE)
-        return;
+//    if(!index.isValid())
+//        return;
+//    if(index.column() != MsgModel::COL_MESSAGE)
+//        return;
 
-    int row = index.row();
-    QPixmap CurPixMap = MsgDataPixMapStore.value(row);
+//    int row = index.row();
+//    QPixmap CurPixMap = MsgDataPixMapStore.value(row);
 
-    QRect rect = QRect(0,0,relatedColumnWidth,relatedColumnHeight);
+//    QRect rect = QRect(0,0,relatedColumnWidth,relatedColumnHeight);
 
-    if(rect.isNull())
-    {
-        return;
-    }
+//    if(rect.isNull())
+//    {
+//        return;
+//    }
 
-    MsgCodeType/*ToDO MsgCodeType*/ code = index.data(Qt::UserRole +3).value<int>();
-    if(!msgTypeModel.getNameToCode(code).isEmpty())
-    {
-        msgTypeModel.paintMsgTypeRep(rect, CurPixMap, code);
-    }
-    if(CurPixMap.isNull())
-    {
-        CurPixMap = QPixmap(rect.size());
-        CurPixMap.fill(Qt::white);
-        QPainter MsgDataPainter(&CurPixMap);
-        MsgDataPainter.setRenderHint(QPainter::TextAntialiasing);
-        MsgDataPainter.drawText(
-                    rect,
-                    Qt::TextWordWrap |
-                    Qt::AlignCenter,
-                    index.data(Qt::DisplayRole).value<QString>()
-                    );
-    }
-    MsgDataPixMapStore.replace(row, CurPixMap);
+//    MsgCodeType code = index.data(Qt::UserRole +3).value<int>();
+//    if(!msgTypeModel.getNameToCode(code).isEmpty())
+//    {
+//        msgTypeModel.paintMsgTypeRep(rect, CurPixMap, code);
+//    }
+//    if(CurPixMap.isNull())
+//    {
+//        CurPixMap = QPixmap(rect.size());
+//        CurPixMap.fill(Qt::white);
+//        QPainter MsgDataPainter(&CurPixMap);
+//        MsgDataPainter.setRenderHint(QPainter::TextAntialiasing);
+//        MsgDataPainter.drawText(
+//                    rect,
+//                    Qt::TextWordWrap |
+//                    Qt::AlignCenter,
+//                    index.data(Qt::DisplayRole).value<QString>()
+//                    );
+//    }
+//    MsgDataPixMapStore.replace(row, CurPixMap);
 }
 
 void MsgDataDelegate::columWidthChanged(int newWidth)

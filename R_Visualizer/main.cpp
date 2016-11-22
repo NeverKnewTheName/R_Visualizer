@@ -8,6 +8,8 @@
 // // // DEBUG // // //
 #include <QDebug>
 #include "msgparser.h"
+#include "msgdatawidget.h"
+
 // // // DEBUG // // //
 
 int main(int argc, char *argv[])
@@ -21,7 +23,6 @@ int main(int argc, char *argv[])
     qRegisterMetaType <MsgDataStruc>("MsgDataStruc");
     qRegisterMetaType <DataByteVect>("DataByteVect");
     qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
-
 
     MainWindow w;
     w.show();

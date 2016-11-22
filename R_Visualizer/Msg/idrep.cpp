@@ -85,29 +85,28 @@ bool IDRep::operator==(const IDRep &other) const
 
 //}
 
-quint16 IDRep::getId() const
+MsgIDType IDRep::getId() const
 {
     return id;
 }
 
-void IDRep::paintIDRep(const QRect &rect, QPixmap &destPixMap) const
+void IDRep::paintIDRep(QPainter *painter, const QStyleOptionViewItem &option) const
 {
-//    static const QStyleOptionViewItem &oldOptions = option;
+//    qDebug() << "IDRep repaint: "<<id << " color: " << color;
 
-//    if((oldOptions == option) && !destPixMap.isNull())
-//    {
-//        return;
-//    }
-    qDebug() << "IDRep repaint";
-    destPixMap = QPixmap(rect.size());
-    destPixMap.fill(/*option.features & QStyleOptionViewItem::Alternate ? color.darker() :*/ color);
+//    QBrush brush();
 
-    QPainter pixmapPainter(&destPixMap);
+    painter->save();
+//    painter->setBrush(brush);
+    painter->setFont(option.font);
+    painter->setRenderHint(QPainter::TextAntialiasing);
+//    painter->setBackground(brush);
 
-    pixmapPainter.setRenderHint(QPainter::TextAntialiasing);
-    pixmapPainter.drawText(
-                destPixMap.rect(),
+    painter->fillRect(option.rect, (option.features & QStyleOptionViewItem::Alternate) ? color.darker(100) : color);
+    painter->drawText(
+                option.rect,
                 Qt::TextWordWrap |
                 Qt::AlignCenter,
                 name);
+    painter->restore();
 }

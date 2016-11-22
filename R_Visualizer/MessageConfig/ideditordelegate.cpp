@@ -48,13 +48,13 @@ void IDEditorDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
     int col = index.column();
     if (col == IDModel::COL_NAME) {
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
-        textEdit->setText(index.model()->data(index, Qt::DisplayRole).value<QString>());
+        textEdit->setText(index.data(Qt::DisplayRole).value<QString>());
     }
     else if (col == IDModel::COL_COLOR)
     {
         //COLOR
         QColorDialog *colorEdit = qobject_cast<QColorDialog *>(editor);
-        colorEdit->setCurrentColor(index.model()->data(index, Qt::BackgroundRole).value<QColor>());
+        colorEdit->setCurrentColor(index.data(Qt::BackgroundRole).value<QColor>());
     }
     else {
         QStyledItemDelegate::setEditorData(editor, index);

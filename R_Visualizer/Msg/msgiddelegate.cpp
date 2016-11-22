@@ -23,20 +23,16 @@ void MsgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     if(!index.isValid())
         return;
 
-    int row = index.row();
-    QPixmap CurPixMap = MsgIDPixMapStore.value(row);
+    const MsgIDType MsgID = index.data(Qt::UserRole +3).value<MsgIDType>();
 
-    painter->save();
-
-    if(CurPixMap.isNull())
+    if(!idModel.contains(MsgID))
     {
         QStyledItemDelegate::paint(painter,option,index);
     }
     else
     {
-        painter->drawPixmap(option.rect, CurPixMap);
+        idModel.paintID(painter, option, MsgID);
     }
-    painter->restore();
 }
 
 QSize MsgIDDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -61,45 +57,50 @@ void MsgIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, con
 
 void MsgIDDelegate::UpdatePixmap(const QModelIndex &index)
 {
-    if(!index.isValid())
-        return;
-    if(index.column() != MsgModel::COL_NAME)
-        return;
+//    if(!index.isValid())
+//        return;
+//    if(index.column() != MsgModel::COL_NAME)
+//        return;
 
-    int row = index.row();
-    QPixmap CurPixMap = MsgIDPixMapStore.value(row);
+//    int row = index.row();
+//    QPixmap CurPixMap = MsgIDPixMapStore.value(row);
 
-    QRect rect = QRect(0,0,relatedColumnWidth,relatedColumnHeight);
+//    QRect rect = QRect(0,0,relatedColumnWidth,relatedColumnHeight);
 
-    if(rect.isNull())
-    {
-        return;
-    }
+//    if(rect.isNull())
+//    {
+//        return;
+//    }
 
-    MsgIDType/*ToDO MsgIDType*/ id = index.data(Qt::UserRole +3).value<int>();
-    if(!idModel.getNameToID(id).isEmpty())
-    {
-        idModel.paintID(rect, CurPixMap, id);
-    }
-    if(CurPixMap.isNull())
-    {
-        CurPixMap = QPixmap(rect.size());
-        CurPixMap.fill(Qt::white);
-        QPainter MsgIDPainter(&CurPixMap);
-        MsgIDPainter.setRenderHint(QPainter::TextAntialiasing);
-        MsgIDPainter.drawText(
-                    rect,
-                    Qt::TextWordWrap |
-                    Qt::AlignCenter,
-                    index.data(Qt::DisplayRole).value<QString>()
-                    );
-    }
-    MsgIDPixMapStore.replace(row, CurPixMap);
+//    MsgIDType id = index.data(Qt::UserRole +3).value<int>();
+//    if(!idModel.getNameToID(id).isEmpty())
+//    {
+//        idModel.paintID(rect, CurPixMap, id);
+//    }
+//    if(CurPixMap.isNull())
+//    {
+//        CurPixMap = QPixmap(rect.size());
+//        CurPixMap.fill(Qt::white);
+//        QPainter MsgIDPainter(&CurPixMap);
+//        MsgIDPainter.setRenderHint(QPainter::TextAntialiasing);
+//        MsgIDPainter.drawText(
+//                    rect,
+//                    Qt::TextWordWrap |
+//                    Qt::AlignCenter,
+//                    index.data(Qt::DisplayRole).value<QString>()
+//                    );
+//    }
+//    MsgIDPixMapStore.replace(row, CurPixMap);
 }
 
 void MsgIDDelegate::columWidthChanged(int newWidth)
 {
     relatedColumnWidth = newWidth;
+}
+
+void MsgIDDelegate::columHeightChanged(int newHeight)
+{
+
 }
 
 void MsgIDDelegate::commitAndCloseEditor()
