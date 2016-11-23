@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}About R\_Visualizer}{3}
+\contentsline {section}{\numberline {2}Installing}{3}
+\contentsline {section}{\numberline {3}Getting Started}{3}
+\contentsline {subsection}{\numberline {3.1}Connecting the Host PC to the System}{3}
+\contentsline {subsubsection}{\numberline {3.1.1}Connection to the System}{3}
+\contentsline {subsubsection}{\numberline {3.1.2}Connection to the Host PC}{3}
+\contentsline {subsection}{\numberline {3.2}Overview}{4}
+\contentsline {subsubsection}{\numberline {3.2.1}Menu}{4}
+\contentsline {subsubsection}{\numberline {3.2.2}Message Stream}{4}
+\contentsline {subsubsection}{\numberline {3.2.3}System Overview}{5}
+\contentsline {subsubsection}{\numberline {3.2.4}Send Messages}{5}
+\contentsline {paragraph}{\nonumberline Sending single messages}{5}
+\contentsline {subsubsection}{\numberline {3.2.5}Message Config}{6}
+\contentsline {subsection}{\numberline {3.3}Setting up R\_Visualizer}{6}
+\contentsline {subsection}{\numberline {3.4}Quickstart Guide}{6}
+\contentsline {section}{\numberline {4}Observing a System}{6}
+\contentsline {section}{\numberline {5}Inspecting the Aggregated Data}{6}
+\contentsline {section}{\numberline {6}Controlling a System}{6}

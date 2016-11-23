@@ -1,6 +1,7 @@
 #include "msgstorage.h"
 
 #include <QFile>
+#include <QDir>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
@@ -12,29 +13,28 @@
 int MsgStorage::MsgStorageCntr = 0;
 
 MsgStorage::MsgStorage(const int ContainerSize, const int NrOfContainersToKeepInRAM) :
-    ContainerSize(!ContainerSize ? 1 : ContainerSize),
-    NrOfContainersToKeepInRAM(!NrOfContainersToKeepInRAM ? 1 : NrOfContainersToKeepInRAM),
-    ContainerInRAMIndexMapping(this->NrOfContainersToKeepInRAM),
-    FilePrefix(QString("./RMsgStTmp/RMsgStore_%1_").arg(MsgStorageCntr++)),
+    ContainerSize((!ContainerSize) ? 1 : ContainerSize),
+    NrOfContainersToKeepInRAM((!NrOfContainersToKeepInRAM) ? 1 : NrOfContainersToKeepInRAM),
+    ContainerInRAMIndexMapping(NrOfContainersToKeepInRAM),
+    FilePrefix(QString("RMsgStore_%1_").arg(MsgStorageCntr++)),
     CurrentSize(0),
     CurrentNrOfContainers(0),
     CurrentFileNr(0)
 {
+    QString MsgStoreTempDirName(QString("RMsgStoreTmp_%1").arg(MsgStorageCntr));
+
+    MsgStorageTempDir;
+
+    if(!MsgStorageTempDir.exists(MsgStoreTempDirName))
+    {
+        MsgStorageTempDir.mkdir(MsgStoreTempDirName);
+    }
+
+    MsgStorageTempDir.setPath(MsgStoreTempDirName);
+//    qDebug() << MsgStorageTempDir.path();
+
     //MsgContainerStore is reserved upfront to get rid of fragmentation and unneccessary alocations
     MsgStore.reserve(NrOfContainersToKeepInRAM);
-//    MsgStore.append(MsgContainer());
-//    MsgStore.append(MsgContainer());
-//    MsgStore.append(MsgContainer());
-//    for(auto &Container : MsgStore)
-//    {
-//        //the contained MsgContainers are also reserved upfront to get rid of fragmentation and unneccessary alocations
-//        Container.reserve(ContainerSize);
-//    }
-
-//    ContainerInRAMIndexMapping.append(ContainerID(0,0));
-//    ContainerInRAMIndexMapping.append(ContainerID(1,1));
-//    ContainerInRAMIndexMapping.append(ContainerID(2,2));
-
     LastContainer.reserve(ContainerSize);
 }
 
@@ -46,7 +46,7 @@ Msg MsgStorage::at(const int index)
     if( ( index > CurrentSize ) || ( containerIndex > CurrentNrOfContainers ) )
         return Msg();
 
-    if( containerIndex == ( CurrentNrOfContainers-1 ) )
+    if( containerIndex == ( CurrentNrOfContainers ) )
     {
         //ShortCut to LastContainer
         return LastContainer.value(indexInContainer);
@@ -62,8 +62,8 @@ Msg MsgStorage::at(const int index)
             ContainerID ContainerIDToFlush = ContainerInRAMIndexMapping.first();
             fetchedContainerID.IndexInStore = ContainerIDToFlush.IndexInStore;
 
-            SerializeToFile(ContainerIDToFlush.IndexInStore); // Save old
-            SerializeFromFile(fetchedContainerID.IndexInStore); // Retrieve new
+            SerializeToFile(ContainerIDToFlush); // Save old
+            SerializeFromFile(fetchedContainerID); // Retrieve new
 
             ContainerInRAMIndexMapping.append(fetchedContainerID);
         }
@@ -73,20 +73,40 @@ Msg MsgStorage::at(const int index)
             ContainerID ContainerIDToFlush = ContainerInRAMIndexMapping.last();
             fetchedContainerID.IndexInStore = ContainerIDToFlush.IndexInStore;
 
-            SerializeToFile(ContainerIDToFlush.IndexInStore); // Save old
-            SerializeFromFile(fetchedContainerID.IndexInStore); // Retrieve new
+            SerializeToFile(ContainerIDToFlush); // Save old
+            SerializeFromFile(fetchedContainerID); // Retrieve new
 
             ContainerInRAMIndexMapping.prepend(fetchedContainerID);
         }
         else
         {
             //ContainerIndex is somewhere in the middle
+            int IndexMapBuffSize = ContainerInRAMIndexMapping.size();
+            ContainerID ContainerIDToFlush;
+            while(IndexMapBuffSize--)
+            {
+                ContainerIDToFlush = ContainerInRAMIndexMapping.at(IndexMapBuffSize);
+                if(ContainerIDToFlush.ContainerNR < fetchedContainerID.ContainerNR)
+                {
+                    break;
+                }
+            }
+            fetchedContainerID.IndexInStore = ContainerIDToFlush.IndexInStore;
+
+            SerializeToFile(ContainerIDToFlush); // Save old
+            SerializeFromFile(fetchedContainerID); // Retrieve new
+
+            ContainerInRAMIndexMapping.replace(IndexMapBuffSize, fetchedContainerID);
         }
+    }
+    else
+    {
+        fetchedContainerID = ContainerInRAMIndexMapping.find(fetchedContainerID);
     }
 
     const MsgContainer &RelatedContainer = MsgStore.at(fetchedContainerID.IndexInStore);
 
-    return RelatedContainer.value(indexInContainer);
+    return RelatedContainer.at(indexInContainer);
 }
 
 void MsgStorage::append(const Msg &value)
@@ -106,7 +126,7 @@ void MsgStorage::append(const Msg &value)
             LastContainerID.IndexInStore = containerIndex;
             ContainerInRAMIndexMapping.append(LastContainerID);
             MsgStore.append(std::move(LastContainer));
-            qDebug() << __PRETTY_FUNCTION__ << " " << LastContainer.size();
+//            qDebug() << __PRETTY_FUNCTION__ << " " << LastContainer.size();
         }
         else if( containerIndex == ( ContainerInRAMIndexMapping.last().ContainerNR + 1 ) )
         {
@@ -114,7 +134,7 @@ void MsgStorage::append(const Msg &value)
             ContainerID ContainerIDToFlush = ContainerInRAMIndexMapping.first();
             LastContainerID.IndexInStore = ContainerIDToFlush.IndexInStore;
 
-            SerializeToFile(ContainerIDToFlush.IndexInStore); // Save old
+            SerializeToFile(ContainerIDToFlush); // Save old
 
             MsgStore.replace(LastContainerID.IndexInStore, LastContainer);
 
@@ -125,6 +145,7 @@ void MsgStorage::append(const Msg &value)
             SerializeToFile(containerIndex, LastContainer); // Save old LastContainer
         }
 
+        ContainerFileNames.append(QString(FilePrefix).append(QString::number(containerIndex)));
         LastContainer = MsgContainer(); // Create new LastContainer
         LastContainer.reserve(ContainerSize);
         CurrentNrOfContainers++;
@@ -144,23 +165,36 @@ bool MsgStorage::isEmpty() const
     return static_cast<bool>(CurrentSize);
 }
 
-void MsgStorage::SerializeToFile(const ContainerID &containerID) const
+int MsgStorage::MemUsage() const
+{
+    int FullMemUsage = 0;
+    FullMemUsage += MsgStore.capacity() * sizeof(MsgContainer);
+    for(const MsgContainer &msgContainer : MsgStore)
+        FullMemUsage += msgContainer.capacity() * sizeof(Msg);
+    FullMemUsage += LastContainer.capacity() * sizeof(Msg);
+    FullMemUsage += ContainerFileNames.capacity() * sizeof(QString);
+    FullMemUsage += ContainerInRAMIndexMapping.capacity() * sizeof(ContainerID);
+
+    return FullMemUsage;
+}
+
+void MsgStorage::SerializeToFile(const ContainerID &containerID)
 {
     SerializeToFile(containerID.ContainerNR, MsgStore.at(containerID.IndexInStore));
 }
 
-void MsgStorage::SerializeToFile(const int ContainerNr, const MsgStorage::MsgContainer &ContainerToSerialize) const
+void MsgStorage::SerializeToFile(const int ContainerNr, const MsgStorage::MsgContainer &ContainerToSerialize)
 {
-    qDebug() << "Serialize to file --- Container nr. " << ContainerNr;
+//    qDebug() << "Serialize to file --- Container nr. " << ContainerNr;
     QJsonArray jsonMsgsArr;
     for(auto &&msg : ContainerToSerialize)
     {
         jsonMsgsArr.append(msg.parseOUT());
     }
 
-    QString FileName(QString(FilePrefix).append(QString::number(ContainerNr)));
+    QFile MsgDataTempFile(MsgStorageTempDir.filePath(QString(FilePrefix).append(QString::number(ContainerNr))));
 
-    QFile MsgDataTempFile(FileName);
+//    QFile MsgDataTempFile(FileName);
     if(!MsgDataTempFile.open(QIODevice::WriteOnly)) {
         qDebug() << "error open file to save: " << MsgDataTempFile.fileName();
     }
@@ -174,15 +208,21 @@ void MsgStorage::SerializeToFile(const int ContainerNr, const MsgStorage::MsgCon
 
 void MsgStorage::SerializeFromFile(const ContainerID &IndexInStoreToInsertIn)
 {
-    qDebug() << "Serialize from file --- Container nr. " << IndexInStoreToInsertIn.ContainerNR;
+//    qDebug() << "Serialize from file --- Container nr. " << IndexInStoreToInsertIn.ContainerNR;
     MsgContainer NewMsgContainer;
-    QString FileName(ContainerFileNames.at(IndexInStoreToInsertIn.ContainerNR));
-    QFile MsgDataTempFile(FileName);
+    QFile MsgDataTempFile(MsgStorageTempDir.filePath(ContainerFileNames.at(IndexInStoreToInsertIn.ContainerNR)));
     QJsonArray jsonMsgsArr;
 
-    MsgDataTempFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(!MsgDataTempFile.exists())
+    {
+        qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+    }
+
+    MsgDataTempFile.open(QIODevice::ReadOnly);
 
     jsonMsgsArr = QJsonDocument::fromBinaryData(MsgDataTempFile.readAll()).array();
+
+    NewMsgContainer.reserve(ContainerSize);
 
     for(auto&& item : jsonMsgsArr)
     {
@@ -192,9 +232,4 @@ void MsgStorage::SerializeFromFile(const ContainerID &IndexInStoreToInsertIn)
     MsgDataTempFile.close();
 
     MsgStore.replace(IndexInStoreToInsertIn.IndexInStore, NewMsgContainer);
-}
-
-MsgStorage::MsgContainer &MsgStorage::appendNewContainer()
-{
-    CurrentNrOfContainers++;
 }

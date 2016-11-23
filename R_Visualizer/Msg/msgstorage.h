@@ -9,6 +9,7 @@
 #define MSGSTORAGE_H
 
 #include <QVector>
+#include <QDir>
 #include "msg.h"
 
 
@@ -29,29 +30,47 @@ public:
     RSimpleDestructiveRingBuff(const int size) :
         RBufBuffer(size),
         RBufSize(size),
+        RBufCurSize(0),
         RBufStartIndex(0),
-        RBufOffsetIndex(0)
+        RBufEndIndex(size-1)
     {
     }
 
     void append(const T &value)
     {
-        RBufBuffer.replace(RBufOffsetIndex, value);
-        RBufOffsetIndex = (RBufOffsetIndex + 1) % RBufSize;
-        if(RBufOffsetIndex == RBufStartIndex)
+        RBufEndIndex = ( RBufEndIndex +1 ) % RBufSize;
+
+        if(RBufCurSize == RBufSize)
         {
             RBufStartIndex = (RBufStartIndex + 1) % RBufSize;
         }
+        else
+        {
+            RBufCurSize++;
+        }
+
+        RBufBuffer.replace(RBufEndIndex, value);
     }
 
     void prepend(const T &value)
     {
         RBufStartIndex = (RBufStartIndex - 1+RBufSize) % RBufSize; //Negative modulo...
-        if(RBufStartIndex == RBufOffsetIndex)
+
+        if(RBufCurSize == RBufSize)
         {
-            RBufOffsetIndex = (RBufOffsetIndex - 1+RBufSize) % RBufSize;
+            RBufEndIndex = (RBufEndIndex - 1+RBufSize) % RBufSize;
         }
+        else
+        {
+            RBufCurSize++;
+        }
+
         RBufBuffer.replace(RBufStartIndex, value);
+    }
+
+    void replace(const int index, const T &value)
+    {
+        RBufBuffer.replace((index + RBufStartIndex ) % RBufSize, value);
     }
 
     const T &first() const
@@ -60,7 +79,7 @@ public:
     }
     const T &last() const
     {
-        return RBufBuffer.at((RBufOffsetIndex-1+RBufSize)%RBufSize);
+        return RBufBuffer.at(RBufEndIndex);
     }
 
     const T &at(const int index) const
@@ -75,11 +94,34 @@ public:
         return RBufBuffer.contains(value);
     }
 
+    T find(const T&value) const
+    {
+        int curIndex = RBufCurSize;
+        while(curIndex--)
+        {
+            const T&found = at(curIndex);
+            if(value == found)
+                return found;
+        }
+        return T();
+    }
+
+    int size() const
+    {
+        return RBufCurSize;
+    }
+
+    int capacity() const
+    {
+        return RBufBuffer.capacity();
+    }
+
 private:
     QVector<T> RBufBuffer;
     const int RBufSize;
+    int RBufCurSize;
     int RBufStartIndex;
-    int RBufOffsetIndex;
+    int RBufEndIndex;
 };
 
 class MsgStorage
@@ -122,6 +164,7 @@ public:
 
     int size() const;
     bool isEmpty() const;
+    int MemUsage() const;
 
 private:
     /**
@@ -130,8 +173,8 @@ private:
      *
      * \note This does not invalidate the given index!
      */
-    void SerializeToFile(const ContainerID &containerID) const;
-    void SerializeToFile(const int ContainerNr, const MsgContainer &ContainerToSerialize) const;
+    void SerializeToFile(const ContainerID &containerID);
+    void SerializeToFile(const int ContainerNr, const MsgContainer &ContainerToSerialize);
 
     /**
      * @brief SerializeToFile
@@ -141,7 +184,6 @@ private:
      */
     void SerializeFromFile(const ContainerID &IndexInStoreToInsertIn);
 
-    MsgContainer &appendNewContainer();
 private:
     MsgContainerStore MsgStore;
     MsgContainer LastContainer; //!< LastContaine is kept in memory permanently because of append method!
@@ -150,6 +192,7 @@ private:
     const int NrOfContainersToKeepInRAM;        //CONST BECAUSE THIS SHOULD NOT BE CHANGEABLE AT RUNTIME ONCE THE OBJECT WAS CREATED!
     RSimpleDestructiveRingBuff<ContainerID> ContainerInRAMIndexMapping;
     const QString FilePrefix;
+    QDir MsgStorageTempDir;
     int CurrentSize;
     int CurrentNrOfContainers;
     int CurrentFileNr;

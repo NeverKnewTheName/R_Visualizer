@@ -1,0 +1,113 @@
+\documentclass[12pt,a4paper]{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Christian Neuberger}
+\title{R\_Visualizer Manual}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{About R\_Visualizer}
+\label{sec:About}
+R\_Visualizer is a graphical tool used to observe and control the state of a compatible system. Said system is connected to the host pc running R\_Visualizer via the CAN-Analyser USB interface. This interface will continually receive CAN messages from the system and propagate these messages to R\_Visualizer and vice versa. Received messages will subsequently be visualized by R\_Visualizer. The application itself is capable of sending messages to the system via the CAN-Analyser USB interface to control the system state or behavior.
+
+\section{Installing}
+\label{sec:Installing}
+There is no installation needed. Simply unzip the provided zip file to any location you desire that does not require administrative priviledges and start the application via the \textit{R\_Visualizer.exe} file. Do not delete any file or folder from the unzipped folder.
+
+\section{Getting Started}
+\label{sec:GettingStarted}
+
+\subsection{Connecting the Host PC to the System}
+\label{subsec:GettingStartedEstablishConnection}
+The CAN-Analyser USB interface has exactly two outputs: a standard USB connector and a four pin CAN connector. The CAN connector shall be connected to the observed System's CAN bus, whereas the USB connector shall be connected to the host PC.
+
+\subsubsection{Connection to the System}
+\label{subsubsec:GettingStartedEstablishConnectionConnectionToSystem}
+Make sure that the system is not powered\footnote{Sidenote: It is possible to plug in the CAN-Analyser USB interface while the system is powered on (or even running), but it is not advised. System failure or damage could be the result.}. Connect the CAN-Analyser USB interface to one of the free connectors on the system's CAN bus using a supplied CAN compatible cable. 
+
+
+\subsubsection{Connection to the Host PC}
+\label{subsubsec:GettingStartedEstablishConnectionConnectionToHost}
+Simply plug the CAN-Analyser USB interface into one of your host PC's USB ports. Windows should be able to deduct the needed driver and install the CAN-Analyser USB interface accordingly. 
+
+The drivers needed are the HID driver and a USB driver. When the host PC is equipped with either a keyboard, a mouse or any other kind of standard input device, the HID driver should be pre-installed. When the host PC is equipped with USB ports, the USB drivers should be pre-installed. 
+
+It is advised to use a USB extension cable. Since the CAN-Anylser USB interface is moderately sized and only held by the USB connector, the USB connector can easily be destroyed by force in either direction when applied to the plugged in CAN-Analyser USB interface. Moreover, the whole CAN-Analyser USB interface might take damage when exposed to forced.
+
+Additionally it is advised to plug the CAN-Analyser USB interface into a self-powering USB hub in order not to damager the host PC's USB ports in case of unexpected system failure. This scenario is quite unrealistic, since the CAN-Analyser USB interface has been tested thoroughly, but worthing noting.
+
+\subsection{Overview}
+\label{subsec:GettingStartedOverview}
+The general user interface is designed with simplicity in mind. Nevertheless, the main goal was to expose as much information as possible without distracting the user with cluttered configuration dialogs. Therefore, the interface is divided into two main parts: the message stream on the left-hand side and the overview/configuration dialogs on the right-hand side. 
+
+Most of the application is tailored to the current user. A user can either be a regular user or an \textit{Admin}. The regular user is only exposed to basic functionality that is needed to monitor and control the observed system. On the other side, the \textit{Admin} user has advanced functionality like storing or editing configuration entries. The user roles can be switched with the respective symbol in the shortcut panel or from the \textit{User} menu at the top of the application.
+
+\subsubsection{Menu}
+\label{subsubsec:GettingStartedOverviewMenu}
+The \textit{Menu} is comprised of the items: \textit{File}, \textit{Trace} and \textit{User}.
+
+The \textit{File} menu can be used to load a recent \textit{Message Stream} or store the current \textit{Message Stream}. Additionally, the \textit{Error Log} is accessible from the \textit{File} menu.
+
+The \textit{Trace} menu can be used to establish a connection to the CAN-Analyser USB interface and to disconnect R\_Visualizer from the CAN-Anylser USB interface, as well as starting and stopping the recording of messages.\footnote{Keep in mind that stopping the message recording will stop the Message Stream from storing incoming messages. Messages that are not stored by the Message Stream are lost and cannot be retrieved by any means.}
+
+\subsubsection{Message Stream}
+\label{subsubsec:GettingStartedOverviewMsgStream}
+To achieve maximum exposure of the system behavior, the \textit{Message Stream} is visible in all configuration dialogs and during the system overview dialog. The incoming messages are continuously updated and displayed. 
+
+The \textit{Message Stream} displays messages in the order they are picked up by the CAN-Anylser USB interface: in a chronological order. The messages visualization is customizable via the configuration dialogs in the \textit{Message Config} tab. Per default messages are displayed with their respective timestamp, id and code plus data. 
+
+The user can use scrolling to view any messages that were picked up by the \textit{Messages Stream}, there is no limitation on the history.
+
+\subsubsection{System Overview}
+\label{subsubsec:GettingStartedOverviewSysOverview}
+\textbf{CURRENTLY NOT IN A PRODUCTION STATE. USE AT OWN RISK.}
+
+The System Overview tab can be used to visually recreate the connected system and observe the system's current state.
+
+\subsubsection{Send Messages}
+\label{subsubsec:GettingStartedOverviewSendMsgs}
+In order to communicate and control the system, the \textit{Send Messages} tab provides the means to send single messages or whole packages of messages to the system.
+
+\paragraph{Sending single messages} can be achieved with the Send Single Message sub-dialog within the \textit{Send Messages} tab. Type in an ID that shall be exposed to the system as the sender of the message, the desired code to send and additionally the data you want to send with the message. 
+
+The ID/Name field can be filled with a numerical value in decimal or hexademical format\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If the ID to name mapping has already been loaded or created in the \textit{Message Config} tab, it is also possible to type in the specified name or choose one from the auto-completion list.
+
+The Code field can be filled with a numerical value in decimal or hexademical format\footnotee{for hexadecimal prepend 0x to the hexadecimal number}. If the Code to name mapping has already been loaded or created in the \textit{Message Config} tab, it is also possible to type in the specified name or choose one from the auto-completion list. 
+
+The Data field can be filled with numerical values according to your selection in the the combo box right next to the data field. If Hex is specified you can enter hex values in portions of bytes, else if Dec Data is specified you can enter decimal values in portions of bytes\footnote{Keep in mind that one byte must not exceed the number 255}, else if Dec Value is specified you can enter a decimal value which will automatically be translated to bytes by the application\footnote{Keep in mind not to exceed the 56bit limitation, which is 72057594037927935}, else if Bin is selected you can enter the data byte-wise in binary notation. When switching the selection of the combo box the value is automatically translated from the last selection to the new selection\footnote{Keep in mind that translating from a value-based notation to a byte-wise notation or vice versa might mess up the byte order.}
+
+\subsubsection{Message Config}
+\label{subsubsec:GettingStartedOverviewMsgConfig}
+The \textit{Message Config} tab directly interferes with the \textit{Message Stream}. It consists of three separate sub-dialogs: Filter, IDs and Message Types.
+
+The Filter section can be used to filter the \textit{Message Stream} for certain properties. The filters are chained. To be more specific, the filters interact with each other to display only messages that suffice all filter criteria at onces. Use multiple filters to get a fine-grained filtering of the \textit{Message Stream}.
+
+The ID/Name subsection can be used to filter for certain IDs or -provided the ID to name mapping has been setup appropriately- names. To create an ID filter, simply click the \textit{Add} button and type in the desired ID in either decimal or hexadecimal representation\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If and only if an ID to name mapping has been set up, the respective names can be entered directly or chosen from the auto-completion dialog. To remove a filter, select the according entry from the list and click on the \textit{Remove} button. Per default the ID/Name filter is disabled. To enable the filter click on the \textit{Enable} button.\footnote{It is advised to first add all desired filter criteria before enabling the filter, because the \textit{Message Stream} will be updated with each new entry which leads to increased workload}.
+
+The Code subsection can be used to filter for certain code or -provided the code to name mapping has been setup appropriately- names. To create a code filter, simply click the \textit{Add} button and type in the desired Code in either decimal or hexadecimal representation\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If and only if a code to name mapping has been set up, the respective names can be entered directly or chosen from the auto-completion dialog. To remove a filter, select the according entry from the list and click on the \textit{Remove} button. Per default the ID/Name filter is disabled. To enable the filter click on the \textit{Enable} button.\footnote{It is advised to first add all desired filter criteria before enabling the filter, because the \textit{Message Stream} will be updated with each new entry which leads to increased workload}.
+
+\subsection{Setting up R\_Visualizer}
+\label{subsec:GettingStartedSetup}
+
+\subsection{Quickstart Guide}
+\label{subsec:GettingStartedQuickStart}
+
+\section{Observing a System}
+\label{sec:Observing}
+
+\section{Inspecting the Aggregated Data}
+\label{sec:Inspecting}
+
+\section{Controlling a System}
+\label{sec:Controlling}
+
+\end{document}
