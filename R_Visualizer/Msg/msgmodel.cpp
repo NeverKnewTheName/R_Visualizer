@@ -170,7 +170,7 @@ void MsgModel::addMsg(Msg *msg)
 {
     int newRow = msgs.size();
     beginInsertRows(QModelIndex(),newRow,newRow);
-    this->msgs.append(msg);
+    msgs.append(msg);
     endInsertRows();
     emit rowInvalidated(createIndex(newRow,2));
     emit rowInvalidated(createIndex(newRow,1));
@@ -203,8 +203,6 @@ void MsgModel::setMsgs(const HugeQVector<Msg> value)
     for( int i = 0; i < size; i++)
     {
         msgs.append(value.at(i));
-//        emit rowInvalidated(createIndex(i,1));
-//        emit rowInvalidated(createIndex(i,2));
     }
     endInsertRows();
 }
@@ -234,6 +232,6 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
 
 void MsgModel::messageReceived(Msg *msg)
 {
-    this->addMsg(msg);
+    addMsg(msg);
 }
 

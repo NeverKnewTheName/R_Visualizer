@@ -116,6 +116,14 @@ public:
         return RBufBuffer.capacity();
     }
 
+    void clear()
+    {
+        RBufBuffer = QVector<T>(RBufSize);
+        RBufCurSize = 0;
+        RBufStartIndex = 0;
+        RBufEndIndex = RBufSize-1;
+    }
+
 private:
     QVector<T> RBufBuffer;
     const int RBufSize;
@@ -158,9 +166,12 @@ public:
      */
     Msg at(const int index);
 
+    void append(Msg &&value);
     void append( const Msg &value );
     void replace( const int index, const Msg &value );
+    void remove( const int index );
 
+    void clear();
 
     int size() const;
     bool isEmpty() const;
@@ -174,7 +185,7 @@ private:
      * \note This does not invalidate the given index!
      */
     void SerializeToFile(const ContainerID &containerID);
-    void SerializeToFile(const int ContainerNr, const MsgContainer &ContainerToSerialize);
+    void SerializeToFile(const int ContainerNr, const MsgContainer &ContainerToSerializeTo);
 
     /**
      * @brief SerializeToFile
@@ -183,6 +194,10 @@ private:
      * \note The MsgContainer at the given index is replaced with the MsgContainer that is loaded from the file!
      */
     void SerializeFromFile(const ContainerID &IndexInStoreToInsertIn);
+
+    void appendHelper();
+    void fetchContainerFromFile(ContainerID &ContainerIDToFetch);
+    void fetchContainerIDHelper(ContainerID &ContainerIDToFetch);
 
 private:
     MsgContainerStore MsgStore;
