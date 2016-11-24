@@ -57,6 +57,7 @@ void MsgIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, con
 
 void MsgIDDelegate::UpdatePixmap(const QModelIndex &index)
 {
+    Q_UNUSED(index)
 //    if(!index.isValid())
 //        return;
 //    if(index.column() != MsgModel::COL_NAME)

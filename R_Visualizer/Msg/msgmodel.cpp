@@ -103,6 +103,8 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
 
 bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    Q_UNUSED(index)
+    Q_UNUSED(value)
     //ToDO if msgs should be editable
     if (role == Qt::EditRole)
     {

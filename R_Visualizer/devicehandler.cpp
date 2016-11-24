@@ -75,7 +75,7 @@ void DeviceHandler::run()
                 QByteArray canData = dataPtr->frame().data;
                 MsgCodeType code = static_cast<MsgCodeType>(canData.at(0) & 0xFFu);
 
-                for(unsigned int i = 1; i < canData.size(); i++)
+                for(int i = 1; i < canData.size(); i++)
                 {
                     msgData.append(static_cast<quint8>(canData.at(i)));
                 }

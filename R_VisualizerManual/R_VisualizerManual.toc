@@ -1,18 +1,24 @@
 \contentsline {section}{\numberline {1}About R\_Visualizer}{3}
 \contentsline {section}{\numberline {2}Installing}{3}
 \contentsline {section}{\numberline {3}Getting Started}{3}
-\contentsline {subsection}{\numberline {3.1}Connecting the Host PC to the System}{3}
-\contentsline {subsubsection}{\numberline {3.1.1}Connection to the System}{3}
-\contentsline {subsubsection}{\numberline {3.1.2}Connection to the Host PC}{3}
-\contentsline {subsection}{\numberline {3.2}Overview}{4}
-\contentsline {subsubsection}{\numberline {3.2.1}Menu}{4}
-\contentsline {subsubsection}{\numberline {3.2.2}Message Stream}{4}
-\contentsline {subsubsection}{\numberline {3.2.3}System Overview}{5}
-\contentsline {subsubsection}{\numberline {3.2.4}Send Messages}{5}
-\contentsline {paragraph}{\nonumberline Sending single messages}{5}
-\contentsline {subsubsection}{\numberline {3.2.5}Message Config}{6}
-\contentsline {subsection}{\numberline {3.3}Setting up R\_Visualizer}{6}
-\contentsline {subsection}{\numberline {3.4}Quickstart Guide}{6}
-\contentsline {section}{\numberline {4}Observing a System}{6}
-\contentsline {section}{\numberline {5}Inspecting the Aggregated Data}{6}
-\contentsline {section}{\numberline {6}Controlling a System}{6}
+\contentsline {subsection}{\numberline {3.1}Overview}{3}
+\contentsline {subsubsection}{\numberline {3.1.1}Menu}{3}
+\contentsline {subsubsection}{\numberline {3.1.2}Message Stream}{4}
+\contentsline {subsubsection}{\numberline {3.1.3}System Overview}{7}
+\contentsline {subsubsection}{\numberline {3.1.4}Send Messages}{7}
+\contentsline {paragraph}{\nonumberline Sending single messages}{7}
+\contentsline {subsubsection}{\numberline {3.1.5}Message Config}{7}
+\contentsline {paragraph}{\nonumberline The Filter section}{7}
+\contentsline {subparagraph}{\nonumberline The ID/Name subsection}{10}
+\contentsline {subparagraph}{\nonumberline The Code subsection}{10}
+\contentsline {subparagraph}{\nonumberline The Timestamp subsection}{10}
+\contentsline {paragraph}{\nonumberline The IDs section}{11}
+\contentsline {paragraph}{\nonumberline The Message Types section}{11}
+\contentsline {subsection}{\numberline {3.2}Setting up R\_Visualizer}{11}
+\contentsline {subsection}{\numberline {3.3}Connecting the Host PC to the System}{11}
+\contentsline {subsubsection}{\numberline {3.3.1}Connection to the System}{12}
+\contentsline {subsubsection}{\numberline {3.3.2}Connection to the Host PC}{12}
+\contentsline {subsection}{\numberline {3.4}Quickstart Guide}{13}
+\contentsline {section}{\numberline {4}Observing a System}{13}
+\contentsline {section}{\numberline {5}Inspecting the Aggregated Data}{13}
+\contentsline {section}{\numberline {6}Controlling a System}{13}

@@ -27,6 +27,17 @@ MsgStorage::MsgStorage(const int ContainerSize, const int NrOfContainersToKeepIn
     {
         MsgStorageTempDir.mkdir(MsgStoreTempDirName);
     }
+    //    else
+    //    {
+    //        MsgStorageTempDir.setPath(MsgStoreTempDirName);
+    //        QFileInfoList fileInfLst = MsgStorageTempDir.entryInfoList();
+    //        for(auto &&fileInf : fileInfLst)
+    //        {
+    //            if(!fileInf.isFile())
+    //                continue;
+    //            MsgStorageTempDir.remove(fileInf.baseName());
+    //        }
+    //    }
 
     MsgStorageTempDir.setPath(MsgStoreTempDirName);
     //    qDebug() << MsgStorageTempDir.path();
@@ -78,6 +89,8 @@ void MsgStorage::replace(const int index, const Msg &value)
     const int containerIndex = index / ContainerSize;
     const int indexInContainer = index % ContainerSize;
 
+//    qDebug() << "index: " << index << " ContainerIndex " << containerIndex << " IndexInContainer " << indexInContainer;
+
     if( ( index > CurrentSize ) || ( containerIndex > CurrentNrOfContainers ) )
         return;
 
@@ -85,12 +98,15 @@ void MsgStorage::replace(const int index, const Msg &value)
     {
         //ShortCut to LastContainer
         LastContainer.replace(indexInContainer, value);
+        return;
     }
 
     ContainerID fetchedContainerID( containerIndex );
     fetchContainerIDHelper(fetchedContainerID);
 
-    if(fetchedContainerID.IndexInStore == -1)
+//    qDebug() << "Fetched ContainerID container " << fetchedContainerID.ContainerNR << " IndexInStore " << fetchedContainerID.IndexInStore;
+
+    if(!fetchedContainerID.isValid())
         return;
 
     MsgStore[fetchedContainerID.IndexInStore].replace(indexInContainer, value);
@@ -113,8 +129,8 @@ void MsgStorage::remove(const int index)
     else
     {
         ContainerID ContainerIDToRemoveValueFrom(containerIndex);
-        MsgContainer curContainer;
-        MsgContainer recentContainer;
+        //        MsgContainer curContainer;
+        //        MsgContainer recentContainer;
         QJsonArray curJsonMsgsArr;
         QJsonArray recentJsonMsgsArr;
         Msg curMsg;
@@ -125,38 +141,35 @@ void MsgStorage::remove(const int index)
         if(ContainerInRAMIndexMapping.contains(ContainerIDToRemoveValueFrom))
         {
             //Is in RAM
-            ContainerIDToRemoveValueFrom = ContainerInRAMIndexMapping.find(ContainerIDToRemoveValueFrom);
+            ContainerIDToRemoveValueFrom = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(ContainerIDToRemoveValueFrom));
             try {
-                curContainer = MsgStore.at(ContainerIDToRemoveValueFrom.IndexInStore);
+                MsgStore[ContainerIDToRemoveValueFrom.IndexInStore].remove(indexInContainer);
             } catch (const std::exception& e) {
                 qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
             }
-            try {
-                curContainer.remove(indexInContainer);
-            } catch (const std::exception& e) {
-                qDebug() << __LINE__ << " a standard exception was caught, with message '"<< e.what();
-            }
-            recentContainer = curContainer;
+            recentContainerNR = ContainerIDToRemoveValueFrom.ContainerNR;
             recentContainerWasLoaded = false;
         }
         else
         {
             //Needs to be loaded...
             //            QFile MsgDataTempFile(ContainerFileNames[containerIndex]);
-            QString fileLoc;
-            try {
-                fileLoc = ContainerFileNames[containerIndex];
-            } catch (const std::exception& e) {
-                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-            }
+            //            QString fileLoc;
+            //            try {
+            //                fileLoc = ContainerFileNames[containerIndex];
+            //            } catch (const std::exception& e) {
+            //                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+            //            }
             //        QJsonArray jsonMsgsArr;
-            QFile MsgDataTempFile(fileLoc);
+            QFile MsgDataTempFile(ContainerFileNames[containerIndex]);
             if(!MsgDataTempFile.exists())
             {
-                qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+                qDebug() << __PRETTY_FUNCTION__ << __LINE__ <<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
             }
 
-            MsgDataTempFile.open(QIODevice::ReadOnly);
+            if(!MsgDataTempFile.open(QIODevice::ReadOnly)) {
+                qDebug() << "error opening: " << MsgDataTempFile.fileName();
+            }
 
             curJsonMsgsArr = QJsonDocument::fromBinaryData(MsgDataTempFile.readAll(),QJsonDocument::BypassValidation).array();
             MsgDataTempFile.close();
@@ -176,13 +189,9 @@ void MsgStorage::remove(const int index)
             if(ContainerInRAMIndexMapping.contains(ContainerIDToRemoveValueFrom))
             {
                 //Is in RAM
-                ContainerIDToRemoveValueFrom = ContainerInRAMIndexMapping.find(ContainerIDToRemoveValueFrom);
+                ContainerIDToRemoveValueFrom = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(ContainerIDToRemoveValueFrom));
 
-                try {
-                    curContainer = MsgStore.at(ContainerIDToRemoveValueFrom.IndexInStore);
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                }
+                MsgContainer &curContainer = MsgStore[ContainerIDToRemoveValueFrom.IndexInStore];
                 curMsg = curContainer.first();
                 curContainer.removeFirst();
                 if(curContainer.isEmpty())
@@ -216,55 +225,63 @@ void MsgStorage::remove(const int index)
             else
             {
                 //Needs to be loaded...
-                QString fileLoc;
-                try {
-                    fileLoc = ContainerFileNames[containerIndex];
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                }
-                QFile MsgDataTempFile(fileLoc);
+                //                QString fileLoc;
+                //                try {
+                //                    fileLoc = ContainerFileNames[containerIndex];
+                //                } catch (const std::exception& e) {
+                //                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+                //                }
+                QFile MsgDataTempFile(ContainerFileNames[containerIndex]);
                 if(!MsgDataTempFile.exists())
                 {
-                    qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+                    qDebug() << __PRETTY_FUNCTION__<< __LINE__ <<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
                 }
 
-                MsgDataTempFile.open(QIODevice::ReadOnly);
+                if(!MsgDataTempFile.open(QIODevice::ReadOnly)) {
+                    qDebug() << "error opening: " << MsgDataTempFile.fileName();
+                }
 
                 curJsonMsgsArr = QJsonDocument::fromBinaryData(MsgDataTempFile.readAll(),QJsonDocument::BypassValidation).array();
                 MsgDataTempFile.close();
                 curMsg = Msg(curJsonMsgsArr.first().toObject());
                 curJsonMsgsArr.removeFirst();
-                //            curContainer = MsgContainer();
             }
 
             if(recentContainerWasLoaded)
             {
                 //Handle if the previous container was loaded
                 recentJsonMsgsArr.append(curMsg.parseOUT());
-                QString fileLoc;
-                try {
-                    fileLoc = ContainerFileNames[containerIndex];
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                }
-                QFile MsgDataTempFile(fileLoc);
+                //                QString fileLoc;
+                //                try {
+                //                    fileLoc = ContainerFileNames[containerIndex];
+                //                } catch (const std::exception& e) {
+                //                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+                //                }
+                QFile MsgDataTempFile(ContainerFileNames[recentContainerNR]);
                 if(!MsgDataTempFile.exists())
                 {
-                    qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+                    qDebug() << __PRETTY_FUNCTION__<< __LINE__ <<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
                 }
 
-                MsgDataTempFile.open(QIODevice::WriteOnly);
+                if(!MsgDataTempFile.open(QIODevice::WriteOnly)) {
+                    qDebug() << "error opening: " << MsgDataTempFile.fileName();
+                }
+#ifdef PRINT_MSGS_AS_JSON
+                MsgDataTempFile.write(QJsonDocument(recentJsonMsgsArr).toJson());
+#else
                 MsgDataTempFile.write(QJsonDocument(recentJsonMsgsArr).toBinaryData());
+#endif
                 MsgDataTempFile.flush();
                 MsgDataTempFile.close();
             }
             else
             {
-                //Handle if the previous container was in RAM
-                try {
-                    recentContainer.append(curMsg);
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+                ContainerID recentContainerID(recentContainerNR);
+
+                recentContainerID = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(recentContainerID));
+                if(recentContainerID.isValid())
+                {
+                    MsgStore[recentContainerID.IndexInStore].append(curMsg);
                 }
             }
 
@@ -276,7 +293,6 @@ void MsgStorage::remove(const int index)
             {
                 recentContainerWasLoaded = true;
             }
-            recentContainer = curContainer;
             recentJsonMsgsArr = curJsonMsgsArr;
             recentContainerNR = containerIndex;
             containerIndex++;
@@ -290,29 +306,37 @@ void MsgStorage::remove(const int index)
         {
             recentJsonMsgsArr.append(curMsg.parseOUT());
 
-            QString fileLoc;
-            try {
-                fileLoc = ContainerFileNames[containerIndex];
-            } catch (const std::exception& e) {
-                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-            }
-            QFile MsgDataTempFile(fileLoc);
+            //            QString fileLoc;
+            //            try {
+            //                fileLoc = ContainerFileNames[containerIndex];
+            //            } catch (const std::exception& e) {
+            //                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+            //            }
+            QFile MsgDataTempFile(ContainerFileNames[recentContainerNR]);
             if(!MsgDataTempFile.exists())
             {
-                qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+                qDebug() << __PRETTY_FUNCTION__<< __LINE__ <<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
             }
 
-            MsgDataTempFile.open(QIODevice::WriteOnly);
+            if(!MsgDataTempFile.open(QIODevice::WriteOnly)) {
+                qDebug() << "error opening: " << MsgDataTempFile.fileName();
+            }
+#ifdef PRINT_MSGS_AS_JSON
+            MsgDataTempFile.write(QJsonDocument(recentJsonMsgsArr).toJson());
+#else
             MsgDataTempFile.write(QJsonDocument(recentJsonMsgsArr).toBinaryData());
+#endif
             MsgDataTempFile.flush();
             MsgDataTempFile.close();
         }
         else
         {
-            try {
-                recentContainer.append(curMsg);
-            } catch (const std::exception& e) {
-                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+            ContainerID recentContainerID(recentContainerNR);
+
+            recentContainerID = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(recentContainerID));
+            if(recentContainerID.isValid())
+            {
+                MsgStore[recentContainerID.IndexInStore].append(curMsg);
             }
         }
         CurrentSize--;
@@ -321,63 +345,96 @@ void MsgStorage::remove(const int index)
     //Handle if LastContainer is empty and needs to be adjusted
     if( LastContainer.isEmpty() && ( CurrentSize != 0 ) )
     {
-        if( CurrentNrOfContainers > 1 )
-        {
-            //Get ContainerID of preceding container to LastContainer
-            ContainerID ContainerIDNextLastContainer(CurrentNrOfContainers-1);
+        //        if( CurrentNrOfContainers > 1 )
+        //        {
+        //__IGNORE //There is more than one container(LastContainer) left
 
-            if(ContainerInRAMIndexMapping.contains(ContainerIDNextLastContainer))
+        //Get ContainerID of the container preceding LastContainer
+        ContainerID ContainerIDNextLastContainer(CurrentNrOfContainers-1);
+
+        if(!ContainerIDNextLastContainer.isValidIndex())
+        {
+            qDebug() << __PRETTY_FUNCTION__ << __LINE__ << "FAILURE: INVALID ContainerID";
+        }
+
+        //Check wether the next container to load is in the RAM mapping
+        if(ContainerInRAMIndexMapping.contains(ContainerIDNextLastContainer))
+        {
+            //The next container to load is in RAM
+            //Retrieve the corresponding container, assign it to last container and remove it from the RAM mapping
+            const int indexInRamMapping = ContainerInRAMIndexMapping.find(ContainerIDNextLastContainer);
+            ContainerIDNextLastContainer = ContainerInRAMIndexMapping.at(indexInRamMapping);
+            try {
+                LastContainer = MsgStore.at(ContainerIDNextLastContainer.IndexInStore);
+            } catch (const std::exception& e) {
+                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+            }
+            ContainerInRAMIndexMapping.remove(indexInRamMapping);
+
+            //Load the next lower container (if any) into RAM
+            ContainerID ContainerIDNextToLoad(ContainerIDNextLastContainer.ContainerNR-1);
+            if(ContainerIDNextToLoad.isValidIndex())
             {
-                //Is in RAM
-                ContainerIDNextLastContainer = ContainerInRAMIndexMapping.find(ContainerIDNextLastContainer);
-                try {
-                    LastContainer = MsgStore.at(ContainerIDNextLastContainer.IndexInStore);
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                }
-                ContainerID ContainerIDNextToLoad(ContainerIDNextLastContainer.ContainerNR-1);
-                //Find nextlower container to load into ram...
+                //Find nextlower container, which is not already in RAM, to load into ram...
                 while(ContainerInRAMIndexMapping.contains(ContainerIDNextToLoad))
                 {
                     ContainerIDNextToLoad = ContainerID(ContainerIDNextToLoad.ContainerNR-1);
+                    if(!ContainerIDNextToLoad.isValidIndex())
+                    {
+                        //There is no container to load into RAM...
+                        break;
+                    }
                 }
                 try {
-                    fetchContainerFromFile(ContainerIDNextToLoad);
+                    if(ContainerIDNextToLoad.isValidIndex())
+                    {
+                        //Found a container to load -> load into RAM
+                        fetchContainerFromFileToRAM(ContainerIDNextToLoad);
+                    }
                 } catch (const std::exception& e) {
                     qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                }
-            }
-            else
-            {
-                //Needs to be loaded...
-                QString fileLoc;
-                try {
-                    fileLoc = ContainerFileNames[containerIndex-1];
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                }
-                QFile MsgDataTempFile(fileLoc);
-                QJsonArray jsonMsgsArr;
-
-                if(!MsgDataTempFile.exists())
-                {
-                    qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
-                }
-
-                MsgDataTempFile.open(QIODevice::ReadOnly);
-
-                jsonMsgsArr = QJsonDocument::fromBinaryData(MsgDataTempFile.readAll(),QJsonDocument::BypassValidation).array();
-
-                MsgDataTempFile.close();
-
-                for(auto&& item : jsonMsgsArr)
-                {
-                    LastContainer.append(std::move(Msg(item.toObject())));
                 }
             }
         }
+        else
+        {
+            //Needs to be loaded...
+            //            QString fileLoc;
+            //            try {
+            //                fileLoc = ContainerFileNames[ContainerIDNextLastContainer.ContainerNR];
+            //            } catch (const std::exception& e) {
+            //                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+            //            }
+            QFile MsgDataTempFile(ContainerFileNames[ContainerIDNextLastContainer.ContainerNR]);
+            QJsonArray jsonMsgsArr;
+
+            if(!MsgDataTempFile.exists())
+            {
+                qDebug() << __PRETTY_FUNCTION__<< __LINE__ <<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+            }
+
+            if(!MsgDataTempFile.open(QIODevice::ReadOnly)) {
+                qDebug() << "error opening: " << MsgDataTempFile.fileName();
+            }
+
+            jsonMsgsArr = QJsonDocument::fromBinaryData(MsgDataTempFile.readAll(),QJsonDocument::BypassValidation).array();
+
+            MsgDataTempFile.close();
+
+            for(auto&& item : jsonMsgsArr)
+            {
+                LastContainer.append(std::move(Msg(item.toObject())));
+            }
+        }
+        //        }
+        //        else
+        //        {
+        //            //There is only LastContainer left...
+        //        }
         CurrentNrOfContainers--;
     }
+
+    return;
 }
 
 
@@ -390,8 +447,16 @@ void MsgStorage::clear()
     CurrentSize = 0;
     CurrentNrOfContainers = 0;
     CurrentFileNr = 0;
-
-    MsgStorageTempDir.removeRecursively();
+    QFileInfoList fileInfLst = MsgStorageTempDir.entryInfoList();
+    for(auto &&fileInf : fileInfLst)
+    {
+        if(!fileInf.isFile())
+            continue;
+        MsgStorageTempDir.remove(fileInf.baseName());
+    }
+    QString curDirName = MsgStorageTempDir.dirName();
+    MsgStorageTempDir.cdUp();
+    MsgStorageTempDir.rmdir(curDirName);
 
     MsgStorageCntr++;
     QString MsgStoreTempDirName(std::move(QString("RMsgStoreTmp_%1").arg(MsgStorageCntr)));
@@ -454,7 +519,11 @@ void MsgStorage::SerializeToFile(const int ContainerNr, const MsgStorage::MsgCon
     }
     else
     {
+#ifdef PRINT_MSGS_AS_JSON
+        MsgDataTempFile.write(QJsonDocument(jsonMsgsArr).toJson());
+#else
         MsgDataTempFile.write(QJsonDocument(jsonMsgsArr).toBinaryData());
+#endif
     }
     MsgDataTempFile.flush(); //always flush after write!
     MsgDataTempFile.close();
@@ -469,10 +538,13 @@ void MsgStorage::SerializeFromFile(const ContainerID &IndexInStoreToInsertIn)
 
     if(!MsgDataTempFile.exists())
     {
-        qDebug() << __PRETTY_FUNCTION__<<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
+        qDebug() << __PRETTY_FUNCTION__<< __LINE__ <<": ERROR - File does not exist! Name: " << MsgDataTempFile.fileName();
     }
 
-    MsgDataTempFile.open(QIODevice::ReadOnly);
+    if(!MsgDataTempFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "error opening: " << MsgDataTempFile.fileName();
+    }
+
 
     jsonMsgsArr = QJsonDocument::fromBinaryData(MsgDataTempFile.readAll(),QJsonDocument::BypassValidation).array();
 
@@ -534,7 +606,7 @@ void MsgStorage::appendHelper()
     CurrentSize++;
 }
 
-void MsgStorage::fetchContainerFromFile(ContainerID &ContainerIDToFetch)
+void MsgStorage::fetchContainerFromFileToRAM(ContainerID &ContainerIDToFetch)
 {
     if(ContainerIDToFetch > ContainerInRAMIndexMapping.last())
     {
@@ -584,10 +656,10 @@ void MsgStorage::fetchContainerIDHelper(ContainerID &ContainerIDToFetch)
 {
     if(!ContainerInRAMIndexMapping.contains(ContainerIDToFetch))
     {
-        fetchContainerFromFile(ContainerIDToFetch);
+        fetchContainerFromFileToRAM(ContainerIDToFetch);
     }
     else
     {
-        ContainerIDToFetch = ContainerInRAMIndexMapping.find(ContainerIDToFetch);
+        ContainerIDToFetch = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(ContainerIDToFetch));
     }
 }

@@ -14,8 +14,9 @@
 #include "msgstorage.h"
 // // // DEBUG // // //
 
-int MsgStorageTest();
-void MsgStorageRemoveTest();
+int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
+void MsgStorageRemoveTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
+void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
 
 int main(int argc, char *argv[])
 {
@@ -30,8 +31,11 @@ int main(int argc, char *argv[])
     //    qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
 
     QElapsedTimer myTimer;
+    const int NrMsgsToTest = 10000000;
     myTimer.start();
-    MsgStorageRemoveTest();
+    MsgStorageTest(NrMsgsToTest, 1000, 3);
+    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
+    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
 
     QFile isDone("DONE.NOTICE");
 
@@ -50,14 +54,103 @@ int main(int argc, char *argv[])
     //    return a.exec();
 }
 
-void MsgStorageRemoveTest()
+void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
 {
-    QElapsedTimer myTimer;
-    QElapsedTimer perDeleteTimer;
-    quint16 elapsedTime;
 
-    const int NrOfMessages = 100;//100000500; //10000000;
-//    const double sizeDivisor = 100.0;//10000.0;
+    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
+    QElapsedTimer myTimer;
+    quint64 elapsedTime;
+    quint64 elapsedTotal = 0;
+
+    int min = 100000;
+    int max = 0;
+
+    MsgStorage msgStore(ContainerSize, NrElemRAM);
+
+    QFile log("MsgStorageReplaceTestLog.log");
+
+
+    if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "error open file to save: " << log.fileName();
+    }
+    else
+    {
+        qDebug() << "File Opened";
+    }
+
+    QTextStream logString(&log);
+    logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    logString << "\n\nNrOfMessages: " << NrOfMessages;
+    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
+    logString << "\n\n";
+
+    logString.flush();
+    log.flush();
+
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nAppending " << NrOfMessages << " Messages";
+    for(int i = 0; i < NrOfMessages; i++)
+    {
+        myTimer.restart();
+        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
+    }
+    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
+
+    int MsgStoreSize = msgStore.size();
+    const int itemsToReplace = MsgStoreSize/100;
+    int iter = itemsToReplace;
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nReplacing " << itemsToReplace << " Messages";
+    while(iter--)
+    {
+        int randomIndex = qrand()%(MsgStoreSize);
+        int randomInput = qrand()%(5000);
+        Msg randomMsg(QDateTime::currentDateTime(),randomInput,randomInput,DataByteVect());
+
+        logString << "\n\nReplacing index: " << randomIndex;
+        logString << "\n\tCurrent value: " << msgStore.at(randomIndex).getId();
+        logString << "\n\tReplacement: " << randomMsg.getId();
+        myTimer.restart();
+        msgStore.replace(randomIndex, randomMsg);
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\tTime taken: " << (double)elapsedTime << " ---Total: " << (double)elapsedTotal;
+        logString << "\n\tValue: " << msgStore.at(randomIndex).getId();
+        logString.flush();
+    }
+    logString << "\nMsgStorage Replacing total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/itemsToReplace << "ms";
+    logString << "\nMsgStorage Replacing min: " << min << " - max: " << max;
+    logString << "\n\nEND time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+
+    logString.flush();
+    log.flush();
+}
+
+void MsgStorageRemoveTest( const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
+{
+    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
+    QElapsedTimer myTimer;
+    quint64 elapsedTime;
+    quint64 elapsedTotal = 0;
+
+    int min = 100000;
+    int max = 0;
+
+    MsgStorage msgStore(ContainerSize, NrElemRAM);
 
     QFile log("MsgStorageDeleteTestLog.log");
 
@@ -73,28 +166,34 @@ void MsgStorageRemoveTest()
     QTextStream logString(&log);
     logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
     logString << "\n\nNrOfMessages: " << NrOfMessages;
+    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
+    logString << "\n\n";
 
     logString.flush();
     log.flush();
 
-
-    MsgStorage msgStore(10,3);
-
-    myTimer.restart();
+    logString << "\n\nAppending " << NrOfMessages << " Messages";
     for(int i = 0; i < NrOfMessages; i++)
     {
+        myTimer.restart();
         msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
     }
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage append "<< NrOfMessages <<" Msgs -> Time(ms): " << elapsedTime;
-    logString << "\n\t\t TimePerMsg: " << (double)elapsedTime/NrOfMessages << "ms";
+    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
     logString.flush();
+    log.flush();
 
+    int IndexToRemove = msgStore.size()-1;
     logString << "\nDelete last element";
     myTimer.restart();
-    msgStore.remove(NrOfMessages-1);
+    msgStore.remove(IndexToRemove);
     elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage remove "<< NrOfMessages-1 <<" nTh Element -> Time(ms): " << elapsedTime;
+    logString << "\nMsgStorage remove "<< IndexToRemove <<" nTh Element -> Time(ms): " << elapsedTime;
 
     logString << "\nDelete first element";
     myTimer.restart();
@@ -102,51 +201,129 @@ void MsgStorageRemoveTest()
     elapsedTime = myTimer.elapsed();
     logString << "\nMsgStorage remove "<< 0 <<" nTh Element -> Time(ms): " << elapsedTime;
 
-
-    int RandomIndex;
-    int MsgStoreSize = msgStore.size();
-    while(MsgStoreSize)
-    {
-//        RandomIndex = qrand()%(MsgStoreSize);
-        RandomIndex = MsgStoreSize-1;
-        logString << "\nDelete random element: " << RandomIndex;
-        myTimer.restart();
-        msgStore.remove(RandomIndex);
-        elapsedTime = myTimer.elapsed();
-        logString << "\nMsgStorage removed "<< RandomIndex <<" nTh Element -> Time(ms): " << elapsedTime;
-        MsgStoreSize = msgStore.size();
-        logString << "\n\tMsgStorage size: " << MsgStoreSize;
-        logString.flush();
-        log.flush();
-    }
     logString.flush();
     log.flush();
 
-    int sizeOfMsgStore = msgStore.size();
-    while(sizeOfMsgStore--)
+    int MsgStoreSize = msgStore.size();
+    const int NrElemetnsToRemove = MsgStoreSize/100;
+    int removeIter = NrElemetnsToRemove;
+    logString << "\nRemoving: " << NrElemetnsToRemove << " Elements";
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    while(removeIter--)
     {
-        int Index = sizeOfMsgStore;
-        Msg msg(msgStore.at(Index));
-        logString << "\nIndex: " << Index << " retrieved: " << msg.getId();
-    }
+#define RANDOM_DELETE
+#ifdef RANDOM_DELETE
+        IndexToRemove = qrand()%(MsgStoreSize);
+#else
+        IndexToRemove = MsgStoreSize-1;
+#endif
+        int MsgIDToRemove = msgStore.at(IndexToRemove).getId();
+        logString << "\n\tDelete random element: " << IndexToRemove << " with its current value: " << MsgIDToRemove;
 
+        myTimer.restart();
+        msgStore.remove(IndexToRemove);
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\t\tMsgStorage removed " << IndexToRemove << " nTh Element -> Time(ms): " << elapsedTime;
+
+        MsgIDToRemove = msgStore.at(IndexToRemove).getId();
+        logString << "\n\t\tElement at index: " << IndexToRemove << " is now: " << MsgIDToRemove;
+
+        MsgStoreSize = msgStore.size();
+#ifdef PRINT_MSGSTORE_PER_ITERATION
+        int sizeOfMsgStore = MsgStoreSize;
+        logString << "\n\nMsgStore with size: " << sizeOfMsgStore;
+        while(sizeOfMsgStore--)
+        {
+            int Index = sizeOfMsgStore;
+            Msg msg(msgStore.at(Index));
+            logString << "\n\t\tIndex: " << Index << " retrieved: " << msg.getId();
+        }
+#endif
+        logString << "\n\tMsgStorage size: " << MsgStoreSize;
+#ifdef PRINT_MSGSTORE_PER_ITERATION
+        logString.flush();
+        log.flush();
+#endif
+    }
+    logString << "\n\tMsgStorage Remove total: " << elapsedTotal;
+    logString << "\n\tTime/Message: " << (double)elapsedTotal/NrElemetnsToRemove;
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
+
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nAppending " << NrOfMessages << " Messages";
+    for(int i = 0; i < NrOfMessages; i++)
+    {
+        myTimer.restart();
+        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
+    }
+    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
+
+    removeIter = NrElemetnsToRemove;
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nDeleting " << NrElemetnsToRemove << " Messages RANDOMLY without shrinking";
+    while(removeIter--)
+    {
+        IndexToRemove = qrand()%(MsgStoreSize);
+        int MsgIDToRemove = msgStore.at(IndexToRemove).getId();
+        logString << "\n\tDelete random element: " << IndexToRemove << " with its current value: " << MsgIDToRemove;
+
+        myTimer.restart();
+        msgStore.remove(IndexToRemove);
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\t\tMsgStorage removed " << IndexToRemove << " nTh Element -> Time(ms): " << elapsedTime;
+
+        MsgIDToRemove = msgStore.at(IndexToRemove).getId();
+        logString << "\n\t\tElement at index: " << IndexToRemove << " is now: " << MsgIDToRemove;
+        msgStore.append(Msg(QDateTime::currentDateTime(), qrand()%(5000),5,DataByteVect()));
+        MsgStoreSize = msgStore.size();
+    }
+    logString << "\nTOTAL time for removing without shrinking the MsgStorage: " << elapsedTotal;
+    logString << "\n\tTime/Message: " << (double)elapsedTotal/NrElemetnsToRemove;
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
+
+
+    logString << "\n\nEND time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
     logString.flush();
     log.flush();
     log.close();
 }
 
 
-int MsgStorageTest()
+int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
 {
     QElapsedTimer myTimer;
-    QElapsedTimer perMsgTimer;
-    quint16 elapsedTime;
+    quint64 elapsedTime;
+    quint64 elapsedTotal = 0;
 
-    const int NrOfMessages = 5000;//100000500; //10000000;
-    const double sizeDivisor = 100.0;//10000.0;
+    int min = 100000;
+    int max = 0;
 
     QFile log("MsgStorageTestLog.log");
-
+    MsgStorage msgStore(ContainerSize, NrElemRAM);
 
     if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "error open file to save: " << log.fileName();
@@ -157,144 +334,105 @@ int MsgStorageTest()
     }
 
     QTextStream logString(&log);
-    //    QVector<Msg> msgs;
-    //    QVector<Msg> TestVect;
-    //    myTimer.start();
-    //    for(int i = 0; i < NrOfMessages; i++)
-    //    {
-    //        msgs.append(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect()));
-    //    }
-    //    qDebug() << "QVector append "<<NrOfMessages<<" Msgs -> Time(ms): " << myTimer.elapsed();
     logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
     logString << "\n\nNrOfMessages: " << NrOfMessages;
+    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
+    logString << "\n\n";
 
     logString.flush();
     log.flush();
-    //    myTimer.start();
-    //    for(Msg &msg : msgs)
-    //        TestVect.append(msg);
 
-    //    qDebug() << "QVector append 5000 Msgs -> Time(ms): " << myTimer.elapsed();
-
-    //    int SizeOfTestVect = TestVect.size();
-
-    //    myTimer.restart();
-    //    while(SizeOfTestVect--)
-    //    {
-    //        /*Msg msg =*/ TestVect.at(SizeOfTestVect);
-    //    }
-    //    qDebug() << "QVector retrieve 5000 Msgs backward -> Time(ms): " << myTimer.elapsed();
-
-    //    myTimer.restart();
-    //    for(int i = 0; i < 5000; i++)
-    //    {
-    //        /*Msg msg =*/ TestVect.at(i);
-    //        qDebug() << msg.getId() << " : " << msg.getTimestamp();
-    //    }
-    //    qDebug() << "QVector retrieve 5000 Msgs forward -> Time(ms): " << myTimer.elapsed();
-
-
-    MsgStorage msgStore(1000,3);
-
-    myTimer.restart();
-    //    for(Msg &msg : msgs)
-    //        msgStore.append(msg);
+    logString << "\n\nAppending " << NrOfMessages << " Messages";
     for(int i = 0; i < NrOfMessages; i++)
     {
+        myTimer.restart();
         msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
-        //        if(!(i % (int)100))
-        //        {
-        //            logString << "\n\t Append at: " << i;
-        //            logString.flush();
-        //        }
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
     }
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage append "<< NrOfMessages <<" Msgs -> Time(ms): " << elapsedTime;
-    logString << "\n\t\t TimePerMsg: " << (double)elapsedTime/NrOfMessages << "ms";
+    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
 
-
-    //    qDebug() << "MemUsage (msgs): " << msgs.capacity() * sizeof(Msg);
     logString << "\nMemUsage (msgStore): " << msgStore.MemUsage();
 
-    int sizeOfMsgStore = msgStore.size();
+    const int sizeOfMsgStore = msgStore.size();
     logString << "\nMsgStoreSize: " << sizeOfMsgStore;
 
     logString.flush();
     log.flush();
-    //    myTimer.restart();
-    //    for(int i = 0; i < NrOfMessages; i++)
-    //    {
-    //        Msg msg = msgStore.at(i);
-    ////        qDebug() << msg.getId() << " : " << msg.getTimestamp();
-    //    }
-    //    qDebug() << "MsgStorage retrieve "<< NrOfMessages <<" Msgs forward -> Time(ms): " << myTimer.elapsed();
 
-    //    sizeOfMsgStore /= 1000;
-
-    sizeOfMsgStore = NrOfMessages;
-    myTimer.restart();
-    perMsgTimer.restart();
-    while(sizeOfMsgStore--)
+    const int ElementsToRetrieve = sizeOfMsgStore/100;
+    int retrieveIter = ElementsToRetrieve;
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the BACK";
+    while(retrieveIter--)
     {
-        int Index = sizeOfMsgStore;
-        Msg msg(msgStore.at(Index));
-        if(!(Index % (int)sizeDivisor))
-        {
-            logString << "\nBackwards: tempRes: " << (perMsgTimer.elapsed()/(double)sizeDivisor);
-            perMsgTimer.restart();
-            logString.flush();
-            log.flush();
-        }
-        //        qDebug() << "Index: " << Index << " retrieved: " << msg.getId() << " : " << msg.getTimestamp();
+        int curIndex = sizeOfMsgStore - retrieveIter;
+        logString << "\n\tCurrent index: " << curIndex;
+        myTimer.restart();
+        Msg msg(msgStore.at(curIndex));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
     }
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage retrieve "<< NrOfMessages <<" Msgs BACKWARD -> Time(ms): " << elapsedTime;
-    logString << "\n\t\tTimePerMsg: " << (double)elapsedTime/NrOfMessages << "ms";
+    logString << "\n\tMsgStorage retrieve BACKWARD total: " << elapsedTotal;
+    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
     logString.flush();
     log.flush();
 
-    sizeOfMsgStore = NrOfMessages;
-    myTimer.restart();
-    perMsgTimer.restart();
-    while(sizeOfMsgStore--)
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the FRONT";
+    for(int i = 0; i < ElementsToRetrieve; i++)
     {
-        int RandomIndex = qrand()%NrOfMessages;
-        Msg msg(msgStore.at(RandomIndex));
-        if(!(sizeOfMsgStore % (int)sizeDivisor))
-        {
-            logString << "\n\t RandomIndex: " << RandomIndex << " -> ID: " << msg.getId();
-            logString << "\nRandomIndex: tempRes: " << perMsgTimer.elapsed()/(double)sizeDivisor;
-            perMsgTimer.restart();
-            logString.flush();
-            log.flush();
-        }
-        //        qDebug() << "RandomIndex: " << RandomIndex << " retrieved: " << msg.getId() << " : " << msg.getTimestamp();
+        logString << "\n\tCurrent index: " << i;
+        myTimer.restart();
+        Msg msg(msgStore.at(i));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
     }
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage retrieve "<< NrOfMessages <<" Msgs RANDOM ACCESS -> Time(ms): " << elapsedTime;
-    logString << "\n\t\t TimePerMsg: " << (double)elapsedTime/NrOfMessages << "ms";
+    logString << "\n\tMsgStorage retrieve FORWARD total: " << elapsedTotal;
+    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
     logString.flush();
     log.flush();
-    sizeOfMsgStore = NrOfMessages/(int)sizeDivisor;
 
-    myTimer.restart();
-    perMsgTimer.start();
-    perMsgTimer.restart();
-    while(sizeOfMsgStore--)
+    retrieveIter = ElementsToRetrieve;
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages RANDOMLY";
+    while(retrieveIter--)
     {
         int RandomIndex = qrand()%NrOfMessages;
+        logString << "\n\tCurrent index: " << RandomIndex;
+        myTimer.restart();
         Msg msg(msgStore.at(RandomIndex));
-        logString << "\n\tRandomIndex: " << RandomIndex << " retrieved: " << msg.getId() << " __ time: " << perMsgTimer.elapsed();
-        perMsgTimer.restart();
-        if(!(sizeOfMsgStore % (int)sizeDivisor))
-        {
-            logString.flush();
-            log.flush();
-        }
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
     }
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage retrieve "<< NrOfMessages/sizeDivisor <<" Msgs and print with RANDOM ACCESS -> Time(ms): " << elapsedTime;
-    logString << "\n\t\t TimePerMsg: " << (double)elapsedTime/(NrOfMessages/sizeDivisor) << "ms";
+    logString << "\n\tMsgStorage retrieve RANDOMLY total: " << elapsedTotal;
+    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
 
     logString << "\n\nEND time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
     logString.flush();

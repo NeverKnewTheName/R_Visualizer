@@ -21,6 +21,7 @@ struct ContainerID{
     bool operator ==(const ContainerID &other) const { return (ContainerNR == other.ContainerNR); }
     bool operator >(const ContainerID &other) const { return (ContainerNR > other.ContainerNR); }
     bool operator <(const ContainerID &other) const { return (ContainerNR < other.ContainerNR); }
+    bool isValidIndex() const { return (ContainerNR >=0); }
     bool isValid() const { return ( ( ContainerNR >= 0 ) && ( IndexInStore >= 0 ) ); }
 };
 
@@ -38,32 +39,30 @@ public:
 
     void append(const T &value)
     {
-        RBufEndIndex = ( RBufEndIndex +1 ) % RBufSize;
-
         if(RBufCurSize == RBufSize)
         {
-            RBufStartIndex = (RBufStartIndex + 1) % RBufSize;
+            IncrementIndex(RBufStartIndex);// = (RBufStartIndex + 1) % RBufSize;
         }
         else
         {
             RBufCurSize++;
         }
+        IncrementIndex(RBufEndIndex);// = ( RBufEndIndex +1 ) % RBufSize;
 
         RBufBuffer.replace(RBufEndIndex, value);
     }
 
     void prepend(const T &value)
     {
-        RBufStartIndex = (RBufStartIndex - 1+RBufSize) % RBufSize; //Negative modulo...
-
         if(RBufCurSize == RBufSize)
         {
-            RBufEndIndex = (RBufEndIndex - 1+RBufSize) % RBufSize;
+            DecrementIndex(RBufEndIndex);// = (RBufEndIndex - 1+RBufSize) % RBufSize;
         }
         else
         {
             RBufCurSize++;
         }
+        DecrementIndex(RBufStartIndex);// = (RBufStartIndex - 1+RBufSize) % RBufSize; //Negative modulo...
 
         RBufBuffer.replace(RBufStartIndex, value);
     }
@@ -71,6 +70,38 @@ public:
     void replace(const int index, const T &value)
     {
         RBufBuffer.replace((index + RBufStartIndex ) % RBufSize, value);
+    }
+
+    void remove(const int index)
+    {
+        int calcdIndex = ( index + RBufStartIndex ) % RBufSize;
+        if(calcdIndex < RBufCurSize)
+        {
+            if( calcdIndex == RBufStartIndex )
+            {
+                //Remove first
+                IncrementIndex(RBufStartIndex);
+            }
+            else if( calcdIndex == RBufEndIndex )
+            {
+                //Remove last
+                DecrementIndex(RBufEndIndex);
+            }
+            else
+            {
+                //Remove somewhere between...
+                while(calcdIndex != RBufEndIndex)
+                {
+                    T &ToReplace = RBufBuffer[calcdIndex];
+                    IncrementIndex(calcdIndex);
+                    ToReplace = RBufBuffer[calcdIndex];
+                }
+
+                DecrementIndex(RBufEndIndex);// = (RBufEndIndex - 1+RBufSize) % RBufSize;
+            }
+
+            RBufCurSize--;
+        }
     }
 
     const T &first() const
@@ -85,7 +116,7 @@ public:
     const T &at(const int index) const
     {
         const int calcdIndex = ( index + RBufStartIndex ) % RBufSize;
-//        qDebug() << __PRETTY_FUNCTION__ << "CalcdIndex: " << calcdIndex;
+        //        qDebug() << __PRETTY_FUNCTION__ << "CalcdIndex: " << calcdIndex;
         return RBufBuffer.at(calcdIndex);
     }
 
@@ -94,16 +125,16 @@ public:
         return RBufBuffer.contains(value);
     }
 
-    T find(const T&value) const
+    int find(const T&value) const
     {
         int curIndex = RBufCurSize;
         while(curIndex--)
         {
             const T&found = at(curIndex);
             if(value == found)
-                return found;
+                return curIndex;
         }
-        return T();
+        return -1;
     }
 
     int size() const
@@ -125,6 +156,17 @@ public:
     }
 
 private:
+    int DecrementIndex(int &index)
+    {
+        index = (index - 1+RBufSize) % RBufSize; //Negative modulo...
+        return index;
+    }
+    int IncrementIndex(int &index)
+    {
+        index = (index + 1) % RBufSize;
+        return index;
+    }
+
     QVector<T> RBufBuffer;
     const int RBufSize;
     int RBufCurSize;
@@ -196,7 +238,7 @@ private:
     void SerializeFromFile(const ContainerID &IndexInStoreToInsertIn);
 
     void appendHelper();
-    void fetchContainerFromFile(ContainerID &ContainerIDToFetch);
+    void fetchContainerFromFileToRAM(ContainerID &ContainerIDToFetch);
     void fetchContainerIDHelper(ContainerID &ContainerIDToFetch);
 
 private:

@@ -194,6 +194,7 @@ void MsgDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const
 
 void MsgDelegate::UpdatePixmap(const QModelIndex &index)
 {
+    Q_UNUSED(index)
 //    int col = index.column();
 //    int row = index.row();
 

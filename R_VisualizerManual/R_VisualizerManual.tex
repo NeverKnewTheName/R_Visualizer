@@ -26,6 +26,155 @@ There is no installation needed. Simply unzip the provided zip file to any locat
 \section{Getting Started}
 \label{sec:GettingStarted}
 
+\subsection{Overview}
+\label{subsec:GettingStartedOverview}
+The general user interface is designed with simplicity in mind. The main goal was to expose as much information as possible without distracting the user with cluttered configuration dialogs. Therefore, the interface is divided into two main parts: the message stream on the left-hand side and the overview/configuration dialogs on the right-hand side. 
+
+Most of the application is tailored to the current user. A user can either be a regular user or an \textit{Admin}. The regular user is only exposed to basic functionality that is needed to monitor and control the observed system. On the other hand, the \textit{Admin} user has advanced functionality like storing or editing configuration entries. The user roles can be switched with the respective symbol in the shortcut panel or from the \textit{User} menu at the top of the application.
+
+\subsubsection{Menu}
+\label{subsubsec:GettingStartedOverviewMenu}
+The \textit{Menu} is comprised of the items: 
+
+\begin{itemize}
+\item File (see Fig. \ref{fig:menuFile})\\
+can be used to load a recent \textit{Message Stream} or store the current \textit{Message Stream}. Additionally, the \textit{Error Log} is accessible from the \textit{File} menu.\footnote{Currently the \textit{New} option is used for testing. It does not flush the \textit{Message Stream} to create a new stream but rather adds example messages to the stream...}
+\begin{itemize}
+	\item New - TESTING ONLY
+	\item Open - Open a previously saved \textit{Message Stream}
+	\item Save - Save the current \textit{Message Stream}
+	\item Show Error Log - Displays the current \textit{Error Log}\footnote{ONLNY CAN errors are displayed here.}
+\end{itemize}
+\item Trace (see Fig. \ref{fig:menuTrace})\\
+can be used to establish a connection to the CAN-Analyser USB interface and to disconnect R\_Visualizer from the CAN-Anylser USB interface, as well as starting and stopping the recording of messages.\footnote{Keep in mind that stopping the message recording will stop the Message Stream from storing incoming messages. Messages that are not stored by the Message Stream are lost and cannot be retrieved by any means.}
+\begin{itemize}
+	\item (Dis)Connect - Connect or disconnect to the CAN-Analyser USB interface\footnote{The functionality of the menu entry depends on the current connection state.}
+	\item Start - Start recording incoming messages to the \textit{Message Stream}(Connect first!)
+	\item Stop - Stop recording incoming messages to the \textit{Message Stream}
+\end{itemize}
+\item User (see Fig. \ref{fig:menuUser})\\
+can be used to switch between \textit{Admin} and \textit{User} mode.
+\begin{itemize}
+	\item Admin/User - Switch to the currently displayed user role
+\end{itemize}
+\end{itemize}
+
+All items from all sub-menus can also be accessed through the respective shortcut buttons in the menu panel.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth,keepaspectratio]{Graphics/Menu}
+	\caption[Menu]{}
+	\label{fig:menu}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.55\linewidth,keepaspectratio]{Graphics/MenuFile}
+\caption[File Menu]{}
+\label{fig:menuFile}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth,keepaspectratio]{Graphics/MenuTrace}
+\caption[Trace Menu]{}
+\label{fig:menuTrace}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\linewidth,keepaspectratio]{Graphics/MenuUser}
+\caption[User Menu]{}
+\label{fig:menuUser}
+\end{figure}
+
+
+\subsubsection{Message Stream}
+\label{subsubsec:GettingStartedOverviewMsgStream}
+To achieve maximum exposure of the system behavior, the \textit{Message Stream} is visible in all configuration dialogs and during the system overview dialog. The incoming messages are continuously updated and displayed. 
+
+The \textit{Message Stream} displays messages in the order they are picked up by the CAN-Anylser USB interface: in a chronological order. The messages visualization is customizable via the configuration dialogs in the \textit{Message Config} tab (see Fig. \ref{fig:MessageStreamOvrv}). Per default messages are displayed with their respective timestamp, id and code plus data. 
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,keepaspectratio]{Graphics/MessageStream}
+	\caption[Message Stream]{The \textit{Message Stream} displaying incoming messages}
+	\label{fig:MessageStreamOvrv}
+\end{figure}
+
+The user can use scrolling to view any messages that were picked up by the \textit{Messages Stream}, there is no limitation on the history.
+
+\subsubsection{System Overview}
+\label{subsubsec:GettingStartedOverviewSysOverview}
+\textbf{CURRENTLY NOT IN A PRODUCTION STATE. USE AT OWN RISK.}
+
+The System Overview tab can be used to visually recreate the connected system and observe the system's current state.
+
+\subsubsection{Send Messages}
+\label{subsubsec:GettingStartedOverviewSendMsgs}
+In order to communicate and control the system, the \textit{Send Messages} tab provides the means to send single messages or whole packages of messages to the system (see Fig. \ref{fig:SendMessagesOvrv})
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,keepaspectratio]{Graphics/SendMessagesOverview}
+	\caption[Send Messages Dialog]{The \textit{Send Messages} dialog that can be used to send single messages or whole packages of messages in the specified order}
+	\label{fig:SendMessagesOvrv}
+\end{figure}
+
+\paragraph{Sending single messages} can be achieved with the Send Single Message sub-dialog within the \textit{Send Messages} tab. Type in an ID that shall be exposed to the system as the sender of the message, the desired code to send and additionally the data you want to send with the message. 
+
+The ID/Name field can be filled with a numerical value in decimal or hexademical format\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If the ID to name mapping has already been loaded or created in the \textit{Message Config} tab, it is also possible to type in the specified name or choose one from the auto-completion list.
+
+The Code field can be filled with a numerical value in decimal or hexademical format\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If the Code to name mapping has already been loaded or created in the \textit{Message Config} tab, it is also possible to type in the specified name or choose one from the auto-completion list. 
+
+The Data field can be filled with numerical values according to your selection in the the combo box right next to the data field. If Hex is specified you can enter hex values in portions of bytes, else if Dec Data is specified you can enter decimal values in portions of bytes\footnote{Keep in mind that one byte must not exceed the number 255}, else if Dec Value is specified you can enter a decimal value which will automatically be translated to bytes by the application\footnote{Keep in mind not to exceed the 56bit limitation, which is 72057594037927935}, else if Bin is selected you can enter the data byte-wise in binary notation. When switching the selection of the combo box the value is automatically translated from the last selection to the new selection\footnote{Keep in mind that translating from a value-based notation to a byte-wise notation or vice versa might mess up the byte order.}
+
+\subsubsection{Message Config}
+\label{subsubsec:GettingStartedOverviewMsgConfig}
+The \textit{Message Config} tab directly interferes with the \textit{Message Stream}. It consists of three separate sub-dialogs: Filter, IDs and Message Types (see Fig. \ref{fig:MessageConfigOvrv})
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,keepaspectratio]{Graphics/MessageConfigOverview}
+	\caption[Message Config Dialog]{The \textit{Message Config} dialog that can be used to enhance the visual representation of messages in the \textit{Message Stream} and to filter for specific messages in the \textit{Message Stream}}
+	\label{fig:MessageConfigOvrv}
+\end{figure}
+
+\paragraph{The Filter section} can be used to filter the \textit{Message Stream} for certain properties (see Fig. \ref{fig:MessageConfigFilter}). The filters are chained. To be more specific, the filters interact with each other to display only messages that suffice all enabled filter criteria at onces. Use multiple filters to get a fine-grained filtering of the \textit{Message Stream}. Since the \textit{Messages Stream} is updated live, it is advised to first setup all of the desired filter criteria and then enable all filters, starting from the most general one.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,keepaspectratio]{Graphics/MessageConfigFilter}
+	\caption[Message Config Filter]{The \textit{Message Config} Filters that can be used to filter the \textit{Message Stream}for specific messages}
+	\label{fig:MessageConfigFilter}
+\end{figure}
+
+\subparagraph{The ID/Name subsection} can be used to filter for certain IDs or -provided the ID to name mapping has been setup appropriately- names. To create an ID filter, simply click the \textit{Add} button and type in the desired ID in either decimal or hexadecimal representation\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If and only if an ID to name mapping has been set up, the respective names can be entered directly or chosen from the auto-completion dialog. To remove a filter, select the according entry from the list and click on the \textit{Remove} button. Per default the ID/Name filter is disabled. To enable the filter click on the \textit{Enable} button.\footnote{It is advised to first add all desired filter criteria before enabling the filter, because the \textit{Message Stream} will be updated with each new entry which leads to increased workload}.
+
+\subparagraph{The Code subsection} can be used to filter for certain code or -provided the code to name mapping has been setup appropriately- names. To create a code filter, simply click the \textit{Add} button and type in the desired Code in either decimal or hexadecimal representation\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If and only if a code to name mapping has been set up, the respective names can be entered directly or chosen from the auto-completion dialog. To remove a filter, select the according entry from the list and click on the \textit{Remove} button. Per default the ID/Name filter is disabled. To enable the filter click on the \textit{Enable} button.\footnote{It is advised to first add all desired filter criteria before enabling the filter, because the \textit{Message Stream} will be updated with each new entry which leads to increased workload}.
+
+\subparagraph{The Timestamp subsection} can be used to filter for a certain period of time. Both, the \textit{from} as well as the \textit{to}, can be enabled or disabled independently from another. Setting the \textit{from} parameter will automatically adjust the \textit{to} parameter and vice versa to form a meaningful time span -even if disabled. Again, it is advised to adjust the parameters with the filters being disabled in order to gain performance.
+
+\paragraph{The IDs section} can be used to alter the visualization of the \textit{Message Stream's} \textit{Name} column (see Fig. \ref{fig:MessageConfigIDs}). Each ID can be assigned to an alias and a color. If a message in the \textit{Message Stream} matches against a configured ID, its name will be displayed instead of the numerical representation and the respective field will be colored in the configured color. This is especially useful to rapidly distinguish different message senders in the \textit{Message Stream}. In addition, all fields in all other menus that require IDs are updated to auto-complete if a name to a configured ID is entered. Most of the fields are then also colored respectively.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,keepaspectratio]{Graphics/MessageConfigIDs}
+	\caption[Message Config IDs]{The \textit{Message Config} IDs that can be used to set alias name and coloring for the \textit{Message Stream's} Name column}
+	\label{fig:MessageConfigIDs}
+\end{figure}
+
+\paragraph{The Message Types section} can be used to alter the visualization of the \textit{Message Stream's} \textit{Message} column (see Fig. \ref{fig:MessageConfigMessageTypes}). Each Code can be assigned to an alias and a color. In addition, a message format can be set with the message formatter dialog that will be used to parse the data portion and code of an incoming message to a visually appealing format. If a message in the \textit{Message Stream} matches against a configured Code, its name will be displayed instead of the numerical representation and the respective field will be colored in the configured color. In addition, the configured message format will be used to enhance the representation of the message. This is especially useful to rapidly distinguish different messages by code in the \textit{Message Stream}. In addition, all fields in all other menus that require Codes are updated to auto-complete if a name to a configured Code is entered. Most of the fields are then also colored respectively.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,keepaspectratio]{Graphics/MessageConfigMessageTypes}
+	\caption[Message Config Message Types]{The \textit{Message Config} Message Types that can be used to set alias name and coloring for the \textit{Message Stream's} Message column and format the messages' data}
+	\label{fig:MessageConfigMessageTypes}
+\end{figure}
+
+\subsection{Setting up R\_Visualizer}
+\label{subsec:GettingStartedSetup}
+
 \subsection{Connecting the Host PC to the System}
 \label{subsec:GettingStartedEstablishConnection}
 The CAN-Analyser USB interface has exactly two outputs: a standard USB connector and a four pin CAN connector. The CAN connector shall be connected to the observed System's CAN bus, whereas the USB connector shall be connected to the host PC.
@@ -44,59 +193,6 @@ The drivers needed are the HID driver and a USB driver. When the host PC is equi
 It is advised to use a USB extension cable. Since the CAN-Anylser USB interface is moderately sized and only held by the USB connector, the USB connector can easily be destroyed by force in either direction when applied to the plugged in CAN-Analyser USB interface. Moreover, the whole CAN-Analyser USB interface might take damage when exposed to forced.
 
 Additionally it is advised to plug the CAN-Analyser USB interface into a self-powering USB hub in order not to damager the host PC's USB ports in case of unexpected system failure. This scenario is quite unrealistic, since the CAN-Analyser USB interface has been tested thoroughly, but worthing noting.
-
-\subsection{Overview}
-\label{subsec:GettingStartedOverview}
-The general user interface is designed with simplicity in mind. Nevertheless, the main goal was to expose as much information as possible without distracting the user with cluttered configuration dialogs. Therefore, the interface is divided into two main parts: the message stream on the left-hand side and the overview/configuration dialogs on the right-hand side. 
-
-Most of the application is tailored to the current user. A user can either be a regular user or an \textit{Admin}. The regular user is only exposed to basic functionality that is needed to monitor and control the observed system. On the other side, the \textit{Admin} user has advanced functionality like storing or editing configuration entries. The user roles can be switched with the respective symbol in the shortcut panel or from the \textit{User} menu at the top of the application.
-
-\subsubsection{Menu}
-\label{subsubsec:GettingStartedOverviewMenu}
-The \textit{Menu} is comprised of the items: \textit{File}, \textit{Trace} and \textit{User}.
-
-The \textit{File} menu can be used to load a recent \textit{Message Stream} or store the current \textit{Message Stream}. Additionally, the \textit{Error Log} is accessible from the \textit{File} menu.
-
-The \textit{Trace} menu can be used to establish a connection to the CAN-Analyser USB interface and to disconnect R\_Visualizer from the CAN-Anylser USB interface, as well as starting and stopping the recording of messages.\footnote{Keep in mind that stopping the message recording will stop the Message Stream from storing incoming messages. Messages that are not stored by the Message Stream are lost and cannot be retrieved by any means.}
-
-\subsubsection{Message Stream}
-\label{subsubsec:GettingStartedOverviewMsgStream}
-To achieve maximum exposure of the system behavior, the \textit{Message Stream} is visible in all configuration dialogs and during the system overview dialog. The incoming messages are continuously updated and displayed. 
-
-The \textit{Message Stream} displays messages in the order they are picked up by the CAN-Anylser USB interface: in a chronological order. The messages visualization is customizable via the configuration dialogs in the \textit{Message Config} tab. Per default messages are displayed with their respective timestamp, id and code plus data. 
-
-The user can use scrolling to view any messages that were picked up by the \textit{Messages Stream}, there is no limitation on the history.
-
-\subsubsection{System Overview}
-\label{subsubsec:GettingStartedOverviewSysOverview}
-\textbf{CURRENTLY NOT IN A PRODUCTION STATE. USE AT OWN RISK.}
-
-The System Overview tab can be used to visually recreate the connected system and observe the system's current state.
-
-\subsubsection{Send Messages}
-\label{subsubsec:GettingStartedOverviewSendMsgs}
-In order to communicate and control the system, the \textit{Send Messages} tab provides the means to send single messages or whole packages of messages to the system.
-
-\paragraph{Sending single messages} can be achieved with the Send Single Message sub-dialog within the \textit{Send Messages} tab. Type in an ID that shall be exposed to the system as the sender of the message, the desired code to send and additionally the data you want to send with the message. 
-
-The ID/Name field can be filled with a numerical value in decimal or hexademical format\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If the ID to name mapping has already been loaded or created in the \textit{Message Config} tab, it is also possible to type in the specified name or choose one from the auto-completion list.
-
-The Code field can be filled with a numerical value in decimal or hexademical format\footnotee{for hexadecimal prepend 0x to the hexadecimal number}. If the Code to name mapping has already been loaded or created in the \textit{Message Config} tab, it is also possible to type in the specified name or choose one from the auto-completion list. 
-
-The Data field can be filled with numerical values according to your selection in the the combo box right next to the data field. If Hex is specified you can enter hex values in portions of bytes, else if Dec Data is specified you can enter decimal values in portions of bytes\footnote{Keep in mind that one byte must not exceed the number 255}, else if Dec Value is specified you can enter a decimal value which will automatically be translated to bytes by the application\footnote{Keep in mind not to exceed the 56bit limitation, which is 72057594037927935}, else if Bin is selected you can enter the data byte-wise in binary notation. When switching the selection of the combo box the value is automatically translated from the last selection to the new selection\footnote{Keep in mind that translating from a value-based notation to a byte-wise notation or vice versa might mess up the byte order.}
-
-\subsubsection{Message Config}
-\label{subsubsec:GettingStartedOverviewMsgConfig}
-The \textit{Message Config} tab directly interferes with the \textit{Message Stream}. It consists of three separate sub-dialogs: Filter, IDs and Message Types.
-
-The Filter section can be used to filter the \textit{Message Stream} for certain properties. The filters are chained. To be more specific, the filters interact with each other to display only messages that suffice all filter criteria at onces. Use multiple filters to get a fine-grained filtering of the \textit{Message Stream}.
-
-The ID/Name subsection can be used to filter for certain IDs or -provided the ID to name mapping has been setup appropriately- names. To create an ID filter, simply click the \textit{Add} button and type in the desired ID in either decimal or hexadecimal representation\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If and only if an ID to name mapping has been set up, the respective names can be entered directly or chosen from the auto-completion dialog. To remove a filter, select the according entry from the list and click on the \textit{Remove} button. Per default the ID/Name filter is disabled. To enable the filter click on the \textit{Enable} button.\footnote{It is advised to first add all desired filter criteria before enabling the filter, because the \textit{Message Stream} will be updated with each new entry which leads to increased workload}.
-
-The Code subsection can be used to filter for certain code or -provided the code to name mapping has been setup appropriately- names. To create a code filter, simply click the \textit{Add} button and type in the desired Code in either decimal or hexadecimal representation\footnote{for hexadecimal prepend 0x to the hexadecimal number}. If and only if a code to name mapping has been set up, the respective names can be entered directly or chosen from the auto-completion dialog. To remove a filter, select the according entry from the list and click on the \textit{Remove} button. Per default the ID/Name filter is disabled. To enable the filter click on the \textit{Enable} button.\footnote{It is advised to first add all desired filter criteria before enabling the filter, because the \textit{Message Stream} will be updated with each new entry which leads to increased workload}.
-
-\subsection{Setting up R\_Visualizer}
-\label{subsec:GettingStartedSetup}
 
 \subsection{Quickstart Guide}
 \label{subsec:GettingStartedQuickStart}

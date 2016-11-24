@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  23 NOV 2016 18:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  24 NOV 2016 18:46
 entering extended mode
 **R_VisualizerManual.tex
 
@@ -268,17 +268,111 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (C:\LabWrk\QTWrkSpc\R_Visualizer_Build\R_VisualizerManual\R_VisualizerManual.to
 c)
 \tf@toc=\write3
- [2] [3] [4] [5] [6]
+ [2]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 40.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 40.
+ [3]
+<Graphics/Menu.png, id=21, 296.60812pt x 67.0003pt>
+File: Graphics/Menu.png Graphic file (type png)
+ <use Graphics/Menu.png>
+Package pdftex.def Info: Graphics/Menu.png used on input line 66.
+(pdftex.def)             Requested size: 313.69029pt x 70.8615pt.
+
+<Graphics/MenuFile.png, id=23, 246.9225pt x 150.5625pt>
+File: Graphics/MenuFile.png Graphic file (type png)
+
+<use Graphics/MenuFile.png>
+Package pdftex.def Info: Graphics/MenuFile.png used on input line 72.
+(pdftex.def)             Requested size: 246.47339pt x 150.28642pt.
+
+<Graphics/MenuTrace.png, id=24, 165.61874pt x 124.465pt>
+File: Graphics/MenuTrace.png Graphic file (type png)
+
+<use Graphics/MenuTrace.png>
+Package pdftex.def Info: Graphics/MenuTrace.png used on input line 78.
+(pdftex.def)             Requested size: 224.06548pt x 168.39653pt.
+
+<Graphics/MenuUser.png, id=25, 278.03876pt x 80.3pt>
+File: Graphics/MenuUser.png Graphic file (type png)
+
+<use Graphics/MenuUser.png>
+Package pdftex.def Info: Graphics/MenuUser.png used on input line 84.
+(pdftex.def)             Requested size: 268.8813pt x 77.65686pt.
+
+<Graphics/MessageStream.png, id=26, 571.38469pt x 827.34094pt>
+File: Graphics/MessageStream.png Graphic file (type png)
+
+<use Graphics/MessageStream.png>
+Package pdftex.def Info: Graphics/MessageStream.png used on input line 99.
+(pdftex.def)             Requested size: 448.13095pt x 648.88336pt.
+
+
+LaTeX Warning: Float too large for page by 42.2334pt on input line 102.
+
+[4 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/Menu.png>
+] [5 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/MenuFil
+e.png> <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/MenuT
+race.png> <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/Me
+nuUser.png>] [6 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graph
+ics/MessageStream.png>]
+<Graphics/SendMessagesOverview.png, id=41, 863.47594pt x 819.8128pt>
+File: Graphics/SendMessagesOverview.png Graphic file (type png)
+
+<use Graphics/SendMessagesOverview.png>
+Package pdftex.def Info: Graphics/SendMessagesOverview.png used on input line 1
+18.
+(pdftex.def)             Requested size: 448.13095pt x 425.46698pt.
+
+<Graphics/MessageConfigOverview.png, id=42, 865.73438pt x 820.56563pt>
+File: Graphics/MessageConfigOverview.png Graphic file (type png)
+
+<use Graphics/MessageConfigOverview.png>
+Package pdftex.def Info: Graphics/MessageConfigOverview.png used on input line 
+137.
+(pdftex.def)             Requested size: 448.13095pt x 424.75586pt.
+ [7] [8 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/Send
+MessagesOverview.png>] [9 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerMa
+nual/Graphics/MessageConfigOverview.png>] <Graphics/MessageConfigFilter.png, id
+=55, 846.91406pt x 300.3722pt>
+File: Graphics/MessageConfigFilter.png Graphic file (type png)
+
+<use Graphics/MessageConfigFilter.png>
+Package pdftex.def Info: Graphics/MessageConfigFilter.png used on input line 14
+6.
+(pdftex.def)             Requested size: 448.13095pt x 158.93524pt.
+ [10 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/Message
+ConfigFilter.png>]
+<Graphics/MessageConfigIDs.png, id=60, 846.91406pt x 240.9pt>
+File: Graphics/MessageConfigIDs.png Graphic file (type png)
+
+<use Graphics/MessageConfigIDs.png>
+Package pdftex.def Info: Graphics/MessageConfigIDs.png used on input line 161.
+(pdftex.def)             Requested size: 448.13095pt x 127.46686pt.
+
+<Graphics/MessageConfigMessageTypes.png, id=61, 847.66687pt x 242.40562pt>
+File: Graphics/MessageConfigMessageTypes.png Graphic file (type png)
+
+<use Graphics/MessageConfigMessageTypes.png>
+Package pdftex.def Info: Graphics/MessageConfigMessageTypes.png used on input l
+ine 170.
+(pdftex.def)             Requested size: 448.13095pt x 128.14886pt.
+ [11 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/Graphics/Message
+ConfigIDs.png>] [12 <C:/LabWrk/QTWrkSpc/R_Visualizer_Build/R_VisualizerManual/G
+raphics/MessageConfigMessageTypes.png>] [13]
 (C:\LabWrk\QTWrkSpc\R_Visualizer_Build\R_VisualizerManual\R_VisualizerManual.au
 x) ) 
 Here is how much of TeX's memory you used:
- 3595 strings out of 493921
- 54336 string characters out of 3144842
- 169500 words of memory out of 3000000
- 6867 multiletter control sequences out of 15000+200000
- 13667 words of font info for 53 fonts, out of 3000000 for 9000
+ 3680 strings out of 493921
+ 56389 string characters out of 3144842
+ 170592 words of memory out of 3000000
+ 6936 multiletter control sequences out of 15000+200000
+ 14013 words of font info for 54 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 43i,8n,50p,943b,216s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,8n,50p,1083b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pf
 b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/
@@ -286,10 +380,12 @@ Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Pro
 gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program
  Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fil
 es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Fil
-es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on R_VisualizerManual.pdf (6 pages, 117951 bytes).
+es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files
+ (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on R_VisualizerManual.pdf (13 pages, 370446 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
+ 106 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
