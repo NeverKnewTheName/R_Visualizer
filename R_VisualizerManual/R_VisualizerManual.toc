@@ -1,24 +1,24 @@
-\contentsline {section}{\numberline {1}About R\_Visualizer}{3}
-\contentsline {section}{\numberline {2}Installing}{3}
-\contentsline {section}{\numberline {3}Getting Started}{3}
-\contentsline {subsection}{\numberline {3.1}Overview}{3}
-\contentsline {subsubsection}{\numberline {3.1.1}Menu}{3}
-\contentsline {subsubsection}{\numberline {3.1.2}Message Stream}{4}
-\contentsline {subsubsection}{\numberline {3.1.3}System Overview}{7}
-\contentsline {subsubsection}{\numberline {3.1.4}Send Messages}{7}
-\contentsline {paragraph}{\nonumberline Sending single messages}{7}
-\contentsline {subsubsection}{\numberline {3.1.5}Message Config}{7}
-\contentsline {paragraph}{\nonumberline The Filter section}{7}
-\contentsline {subparagraph}{\nonumberline The ID/Name subsection}{10}
-\contentsline {subparagraph}{\nonumberline The Code subsection}{10}
-\contentsline {subparagraph}{\nonumberline The Timestamp subsection}{10}
-\contentsline {paragraph}{\nonumberline The IDs section}{11}
-\contentsline {paragraph}{\nonumberline The Message Types section}{11}
-\contentsline {subsection}{\numberline {3.2}Setting up R\_Visualizer}{11}
-\contentsline {subsection}{\numberline {3.3}Connecting the Host PC to the System}{11}
-\contentsline {subsubsection}{\numberline {3.3.1}Connection to the System}{12}
-\contentsline {subsubsection}{\numberline {3.3.2}Connection to the Host PC}{12}
-\contentsline {subsection}{\numberline {3.4}Quickstart Guide}{13}
-\contentsline {section}{\numberline {4}Observing a System}{13}
-\contentsline {section}{\numberline {5}Inspecting the Aggregated Data}{13}
-\contentsline {section}{\numberline {6}Controlling a System}{13}
+\contentsline {section}{\numberline {1}About R\_Visualizer}{3}{section.1}
+\contentsline {section}{\numberline {2}Installing}{3}{section.2}
+\contentsline {section}{\numberline {3}Getting Started}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Overview}{3}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Menu}{4}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Message Stream}{6}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}System Overview}{7}{subsubsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.4}Send Messages}{7}{subsubsection.3.1.4}
+\contentsline {paragraph}{\nonumberline Sending single messages}{7}{section*.2}
+\contentsline {paragraph}{\nonumberline Sending packages of messages}{8}{section*.3}
+\contentsline {subsubsection}{\numberline {3.1.5}Message Configuration}{8}{subsubsection.3.1.5}
+\contentsline {paragraph}{\nonumberline The Filter section}{10}{section*.4}
+\contentsline {subparagraph}{\nonumberline The ID/Name subsection}{10}{section*.5}
+\contentsline {subparagraph}{\nonumberline The Code subsection}{10}{section*.6}
+\contentsline {subparagraph}{\nonumberline The Timestamp subsection}{11}{section*.7}
+\contentsline {paragraph}{\nonumberline The IDs section}{11}{section*.8}
+\contentsline {paragraph}{\nonumberline The Message Types section}{12}{section*.9}
+\contentsline {subsection}{\numberline {3.2}Connecting the Host PC to the System}{13}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Connection to the System}{13}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Connection to the Host PC}{13}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}Quickstart Guide}{13}{subsection.3.3}
+\contentsline {section}{\numberline {4}Observing a System}{15}{section.4}
+\contentsline {section}{\numberline {5}Inspecting the Aggregated Data}{16}{section.5}
+\contentsline {section}{\numberline {6}Controlling a System}{16}{section.6}

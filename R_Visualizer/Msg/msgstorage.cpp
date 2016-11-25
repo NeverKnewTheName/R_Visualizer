@@ -89,7 +89,7 @@ void MsgStorage::replace(const int index, const Msg &value)
     const int containerIndex = index / ContainerSize;
     const int indexInContainer = index % ContainerSize;
 
-//    qDebug() << "index: " << index << " ContainerIndex " << containerIndex << " IndexInContainer " << indexInContainer;
+    //    qDebug() << "index: " << index << " ContainerIndex " << containerIndex << " IndexInContainer " << indexInContainer;
 
     if( ( index > CurrentSize ) || ( containerIndex > CurrentNrOfContainers ) )
         return;
@@ -104,7 +104,7 @@ void MsgStorage::replace(const int index, const Msg &value)
     ContainerID fetchedContainerID( containerIndex );
     fetchContainerIDHelper(fetchedContainerID);
 
-//    qDebug() << "Fetched ContainerID container " << fetchedContainerID.ContainerNR << " IndexInStore " << fetchedContainerID.IndexInStore;
+    //    qDebug() << "Fetched ContainerID container " << fetchedContainerID.ContainerNR << " IndexInStore " << fetchedContainerID.IndexInStore;
 
     if(!fetchedContainerID.isValid())
         return;
@@ -129,10 +129,8 @@ void MsgStorage::remove(const int index)
     else
     {
         ContainerID ContainerIDToRemoveValueFrom(containerIndex);
-        //        MsgContainer curContainer;
-        //        MsgContainer recentContainer;
-        QJsonArray curJsonMsgsArr;
-        QJsonArray recentJsonMsgsArr;
+        QJsonArray  curJsonMsgsArr;
+        QJsonArray  recentJsonMsgsArr;
         Msg curMsg;
         int recentContainerNR;
         bool recentContainerWasLoaded = false;
@@ -153,14 +151,6 @@ void MsgStorage::remove(const int index)
         else
         {
             //Needs to be loaded...
-            //            QFile MsgDataTempFile(ContainerFileNames[containerIndex]);
-            //            QString fileLoc;
-            //            try {
-            //                fileLoc = ContainerFileNames[containerIndex];
-            //            } catch (const std::exception& e) {
-            //                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-            //            }
-            //        QJsonArray jsonMsgsArr;
             QFile MsgDataTempFile(ContainerFileNames[containerIndex]);
             if(!MsgDataTempFile.exists())
             {
@@ -225,12 +215,6 @@ void MsgStorage::remove(const int index)
             else
             {
                 //Needs to be loaded...
-                //                QString fileLoc;
-                //                try {
-                //                    fileLoc = ContainerFileNames[containerIndex];
-                //                } catch (const std::exception& e) {
-                //                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                //                }
                 QFile MsgDataTempFile(ContainerFileNames[containerIndex]);
                 if(!MsgDataTempFile.exists())
                 {
@@ -251,12 +235,6 @@ void MsgStorage::remove(const int index)
             {
                 //Handle if the previous container was loaded
                 recentJsonMsgsArr.append(curMsg.parseOUT());
-                //                QString fileLoc;
-                //                try {
-                //                    fileLoc = ContainerFileNames[containerIndex];
-                //                } catch (const std::exception& e) {
-                //                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-                //                }
                 QFile MsgDataTempFile(ContainerFileNames[recentContainerNR]);
                 if(!MsgDataTempFile.exists())
                 {
@@ -306,12 +284,6 @@ void MsgStorage::remove(const int index)
         {
             recentJsonMsgsArr.append(curMsg.parseOUT());
 
-            //            QString fileLoc;
-            //            try {
-            //                fileLoc = ContainerFileNames[containerIndex];
-            //            } catch (const std::exception& e) {
-            //                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-            //            }
             QFile MsgDataTempFile(ContainerFileNames[recentContainerNR]);
             if(!MsgDataTempFile.exists())
             {
@@ -345,10 +317,6 @@ void MsgStorage::remove(const int index)
     //Handle if LastContainer is empty and needs to be adjusted
     if( LastContainer.isEmpty() && ( CurrentSize != 0 ) )
     {
-        //        if( CurrentNrOfContainers > 1 )
-        //        {
-        //__IGNORE //There is more than one container(LastContainer) left
-
         //Get ContainerID of the container preceding LastContainer
         ContainerID ContainerIDNextLastContainer(CurrentNrOfContainers-1);
 
@@ -364,11 +332,7 @@ void MsgStorage::remove(const int index)
             //Retrieve the corresponding container, assign it to last container and remove it from the RAM mapping
             const int indexInRamMapping = ContainerInRAMIndexMapping.find(ContainerIDNextLastContainer);
             ContainerIDNextLastContainer = ContainerInRAMIndexMapping.at(indexInRamMapping);
-            try {
-                LastContainer = MsgStore.at(ContainerIDNextLastContainer.IndexInStore);
-            } catch (const std::exception& e) {
-                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-            }
+            LastContainer = MsgStore.at(ContainerIDNextLastContainer.IndexInStore);
             ContainerInRAMIndexMapping.remove(indexInRamMapping);
 
             //Load the next lower container (if any) into RAM
@@ -385,26 +349,15 @@ void MsgStorage::remove(const int index)
                         break;
                     }
                 }
-                try {
-                    if(ContainerIDNextToLoad.isValidIndex())
-                    {
-                        //Found a container to load -> load into RAM
-                        fetchContainerFromFileToRAM(ContainerIDNextToLoad);
-                    }
-                } catch (const std::exception& e) {
-                    qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
+                if(ContainerIDNextToLoad.isValidIndex())
+                {
+                    //Found a container to load -> load into RAM
+                    fetchContainerFromFileToRAM(ContainerIDNextToLoad);
                 }
             }
         }
         else
         {
-            //Needs to be loaded...
-            //            QString fileLoc;
-            //            try {
-            //                fileLoc = ContainerFileNames[ContainerIDNextLastContainer.ContainerNR];
-            //            } catch (const std::exception& e) {
-            //                qDebug() << __LINE__ << " a standard exception was caught, with message '" << e.what();
-            //            }
             QFile MsgDataTempFile(ContainerFileNames[ContainerIDNextLastContainer.ContainerNR]);
             QJsonArray jsonMsgsArr;
 
@@ -426,11 +379,6 @@ void MsgStorage::remove(const int index)
                 LastContainer.append(std::move(Msg(item.toObject())));
             }
         }
-        //        }
-        //        else
-        //        {
-        //            //There is only LastContainer left...
-        //        }
         CurrentNrOfContainers--;
     }
 
