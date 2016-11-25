@@ -12,11 +12,14 @@
 #include "msgparser.h"
 #include "msgdatawidget.h"
 #include "msgstorage.h"
+#include <QJsonDocument>
+#include <QJsonArray>
 // // // DEBUG // // //
 
 int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
 void MsgStorageRemoveTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
 void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
+void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
 
 int main(int argc, char *argv[])
 {
@@ -33,9 +36,10 @@ int main(int argc, char *argv[])
     QElapsedTimer myTimer;
     const int NrMsgsToTest = 10000000;
     myTimer.start();
-    MsgStorageTest(NrMsgsToTest, 1000, 3);
-    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
-    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
+    MsgStorageStoreLoadTest(NrMsgsToTest,1000,3);
+//    MsgStorageTest(NrMsgsToTest, 1000, 3);
+//    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
+//    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
 
     QFile isDone("DONE.NOTICE");
 
@@ -440,4 +444,117 @@ int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int Nr
     log.close();
 
     return 0;
+}
+
+void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
+{
+    QElapsedTimer myTimer;
+    quint64 elapsedTime;
+    quint64 elapsedTotal = 0;
+
+    int min = 100000;
+    int max = 0;
+
+    QFile log("MsgStorageStoreLoadTestLog.log");
+    MsgStorage msgStore(ContainerSize, NrElemRAM);
+
+    if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "error open file to save: " << log.fileName();
+    }
+    else
+    {
+        qDebug() << "File Opened";
+    }
+
+    QTextStream logString(&log);
+    logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    logString << "\n\nNrOfMessages: " << NrOfMessages;
+    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
+    logString << "\n\n";
+
+    logString.flush();
+    log.flush();
+
+    logString << "\n\nAppending " << NrOfMessages << " Messages";
+    for(int i = 0; i < NrOfMessages; i++)
+    {
+        myTimer.restart();
+        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
+    }
+    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
+
+    logString << "\nMemUsage (msgStore): " << msgStore.MemUsage();
+
+    const int sizeOfMsgStore = msgStore.size();
+    logString << "\nMsgStoreSize: " << sizeOfMsgStore;
+
+    logString.flush();
+    log.flush();
+
+    QFile MsgStoreSave(QString("MsgStoreSaveFile"));
+    if(!MsgStoreSave.open(QIODevice::ReadWrite))
+    {
+        qWarning() << "Failed to open file: " << MsgStoreSave.fileName();
+    }
+    else
+    {
+        qDebug() << "Opened file to save msgStore to: " << MsgStoreSave.fileName();
+    }
+
+    QJsonDocument docToSave;
+    logString << "\nSaving MsgStore to file";
+    myTimer.restart();
+    docToSave = msgStore.parseToJson();
+    elapsedTime = myTimer.elapsed();
+
+    logString << "\n\tMsgStorage save total: " << elapsedTime;
+    logString << "\n\tTime/Message: " << (double)elapsedTime/NrOfMessages;
+    logString.flush();
+    log.flush();
+
+    MsgStoreSave.write(docToSave.toJson());
+    MsgStoreSave.flush();
+    MsgStoreSave.close();
+
+    logString << "\nSaving MsgStore to file";
+    myTimer.restart();
+    msgStore.parseFromJson(docToSave.array());
+    elapsedTime = myTimer.elapsed();
+
+    logString << "\n\tMsgStorage load total: " << elapsedTime;
+    logString << "\n\tTime/Message: " << (double)elapsedTime/NrOfMessages;
+    logString.flush();
+    log.flush();
+
+    const int ElementsToRetrieve = sizeOfMsgStore;
+    int retrieveIter = ElementsToRetrieve;
+    elapsedTotal = 0;
+    min = 1000000;
+    max = 0;
+    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the BACK";
+    while(retrieveIter--)
+    {
+        int curIndex = sizeOfMsgStore - retrieveIter;
+        logString << "\n\tCurrent index: " << curIndex;
+        myTimer.restart();
+        Msg msg(msgStore.at(curIndex));
+        elapsedTime = myTimer.elapsed();
+        elapsedTotal += elapsedTime;
+        min = (min < elapsedTime) ? min : elapsedTime;
+        max = (max > elapsedTime) ? max : elapsedTime;
+        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
+    }
+    logString << "\n\tMsgStorage retrieve BACKWARD total: " << elapsedTotal;
+    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
+    logString << "\nMsgStorage append min: " << min << " - max: " << max;
+    logString.flush();
+    log.flush();
 }

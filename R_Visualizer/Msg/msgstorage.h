@@ -219,6 +219,8 @@ public:
     bool isEmpty() const;
     int MemUsage() const;
 
+    QJsonDocument parseToJson() const;
+    bool parseFromJson(const QJsonArray &jsonMsgsArray);
 private:
     /**
      * @brief SerializeToFile

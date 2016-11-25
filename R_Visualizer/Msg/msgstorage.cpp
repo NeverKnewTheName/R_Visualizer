@@ -55,7 +55,7 @@ Msg MsgStorage::at(const int index)
     if( ( index > CurrentSize ) || ( containerIndex > CurrentNrOfContainers ) )
         return Msg();
 
-    if( containerIndex == ( CurrentNrOfContainers ) )
+    if( containerIndex == CurrentNrOfContainers )
     {
         //ShortCut to LastContainer
         return LastContainer.value(indexInContainer);
@@ -443,6 +443,134 @@ int MsgStorage::MemUsage() const
     FullMemUsage += ContainerInRAMIndexMapping.capacity() * sizeof(ContainerID);
 
     return FullMemUsage;
+}
+
+QJsonDocument MsgStorage::parseToJson() const
+{
+    int curContainerNr = 0;
+    const int NrOfLastContainer = CurrentNrOfContainers-1;
+    QJsonArray msgsAsJsonObjsArray;
+
+    // parse all containers either in file or RAM
+    while(curContainerNr < NrOfLastContainer)
+    {
+        ContainerID curContainerIDToParse(curContainerNr);
+        if(ContainerInRAMIndexMapping.contains(curContainerIDToParse))
+        {
+            //Is in RAM
+            curContainerIDToParse = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(curContainerIDToParse));
+            const MsgContainer &curContainerToParse = MsgStore.at(curContainerIDToParse.IndexInStore);
+            for(const Msg &msg : curContainerToParse)
+            {
+                msgsAsJsonObjsArray.append(msg.parseOUT());
+            }
+        }
+        else
+        {
+            //Is a file
+            QFile CurFileToParse(ContainerFileNames[curContainerNr]);
+            if(!CurFileToParse.exists())
+            {
+                qDebug() << __PRETTY_FUNCTION__<< __LINE__ <<": ERROR - File does not exist! Name: " << CurFileToParse.fileName();
+            }
+
+            if(!CurFileToParse.open(QIODevice::ReadOnly)) {
+                qDebug() << "error opening: " << CurFileToParse.fileName();
+            }
+
+            QJsonArray tempArray = QJsonDocument::fromBinaryData(CurFileToParse.readAll(),QJsonDocument::BypassValidation).array();
+            CurFileToParse.close();
+
+            for(auto &&tmpElement : tempArray)
+            {
+                msgsAsJsonObjsArray.append(tmpElement);
+            }
+        }
+        curContainerNr++;
+    }
+
+    //parse last container
+    for(const Msg &msg : LastContainer)
+    {
+        msgsAsJsonObjsArray.append(msg.parseOUT());
+    }
+
+    return QJsonDocument(msgsAsJsonObjsArray);
+}
+
+bool MsgStorage::parseFromJson(const QJsonArray &jsonMsgsArray)
+{
+    clear();
+    const int NrOfMessagesInTotal = jsonMsgsArray.size();
+    const int NrMessagesInLastContainer = NrOfMessagesInTotal & ContainerSize;
+    const int ContainersToCreate = NrOfMessagesInTotal / ContainerSize;
+    const int ContainersToCreateAsFiles = ( ContainersToCreate > NrOfContainersToKeepInRAM ) ? ContainersToCreate - NrOfContainersToKeepInRAM : 0;
+
+    int CurContainerNr = 0;
+
+    while(CurContainerNr < ContainersToCreateAsFiles)
+    {
+        QString fileName = MsgStorageTempDir.filePath(QString(FilePrefix).append(QString::number(CurContainerNr)));
+        ContainerFileNames.append(fileName);
+        QFile fileToCreate(fileName);
+        if(!fileToCreate.open(QIODevice::WriteOnly))
+        {
+            qWarning() << "Error opening file: " << fileToCreate.fileName();
+        }
+
+        QJsonArray arrayToParseToFile;
+        int i = CurContainerNr * ContainerSize;
+        const int end = i + ContainerSize;
+        while(i < end)
+        {
+            arrayToParseToFile.append(jsonMsgsArray.at(i));
+            i++;
+            this->CurrentSize++;
+        }
+
+#ifdef PRINT_MSGS_AS_JSON
+        fileToCreate.write(QJsonDocument(arrayToParseToFile).toJson());
+#else
+        fileToCreate.write(QJsonDocument(arrayToParseToFile).toBinaryData());
+#endif
+
+        fileToCreate.flush();
+        fileToCreate.close();
+
+        CurContainerNr++;
+    }
+
+    while( CurContainerNr < ContainersToCreate )
+    {
+        QString fileName = MsgStorageTempDir.filePath(QString(FilePrefix).append(QString::number(CurContainerNr)));
+        ContainerFileNames.append(fileName);
+        const int CurIndexInStore = CurContainerNr - ContainersToCreateAsFiles;
+        ContainerID CurContainerID(CurContainerNr, CurIndexInStore);
+        ContainerInRAMIndexMapping.append(CurContainerID);
+
+        int i = CurContainerNr * ContainerSize;
+        const int end = i + ContainerSize;
+        MsgContainer CurContainerInRam;
+        while(i < end)
+        {
+            CurContainerInRam.append(Msg(jsonMsgsArray.at(i).toObject()));
+            i++;
+            this->CurrentSize++;
+        }
+        MsgStore.append(CurContainerInRam);
+        CurContainerNr++;
+    }
+
+    int CurIndex = NrOfMessagesInTotal - NrMessagesInLastContainer;
+    while(CurIndex < NrMessagesInLastContainer)
+    {
+        LastContainer.append(Msg(jsonMsgsArray.at(CurIndex).toObject()));
+        CurIndex++;
+        this->CurrentSize++;
+    }
+
+
+    return true;
 }
 
 void MsgStorage::SerializeToFile(const ContainerID &containerID)
