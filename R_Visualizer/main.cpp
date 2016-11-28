@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
     //    qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
 
     QElapsedTimer myTimer;
-    const int NrMsgsToTest = 10000000;
+    const int NrMsgsToTest = 100;
     myTimer.start();
-    MsgStorageStoreLoadTest(NrMsgsToTest,1000,3);
+    MsgStorageStoreLoadTest(NrMsgsToTest,5,3);
 //    MsgStorageTest(NrMsgsToTest, 1000, 3);
 //    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
 //    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
@@ -517,6 +517,9 @@ void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, co
 
     logString << "\n\tMsgStorage save total: " << elapsedTime;
     logString << "\n\tTime/Message: " << (double)elapsedTime/NrOfMessages;
+    logString << "\nFile: " << docToSave.toBinaryData();
+
+    qDebug() << "File: " << docToSave.toBinaryData();
     logString.flush();
     log.flush();
 
