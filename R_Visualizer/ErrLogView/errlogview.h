@@ -1,3 +1,13 @@
+/**
+ * @file	errorlogview.h
+ * @author	Christian Neuberger
+ *
+ * \brief Class to interact with the Error Log View Dialog
+ *
+ *
+ *
+ */
+
 #ifndef ERRORLOGVIEW_H
 #define ERRORLOGVIEW_H
 

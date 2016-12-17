@@ -15,11 +15,14 @@
 
 #include <QDebug>
 
-SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent) :
+SendMessages::SendMessages(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SendMessages),
+    msgPcktModel(this),
     idModel(idModel),
-    msgTypeModel(msgTypeModel)
+    msgTypeModel(msgTypeModel),
+    idCompleter(this),
+    codeCompleter(this)
 {
     ui->setupUi(this);
     inputMasks << "\\0\\xhh hh hh hh hh hh hh"/*HEX*/
@@ -33,36 +36,30 @@ SendMessages::SendMessages(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget
 
     currentDataFormatIndex = ui->msgDataFormatComboBox->currentIndex();
 
-    this->msgPcktModel = new MsgModel(this);
-
     this->initMsgPacketTableView();
 
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
-    connect(this->msgPcktModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::scrollToBottom);
-    connect(this->msgPcktModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
-    connect(this->msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
-    connect(this->msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
-    connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
-    connect(this->idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
+    connect(&msgPcktModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::scrollToBottom);
+    connect(&msgPcktModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
+    connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
+    connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
+    connect(&idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
+    connect(&idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
 
-    QCompleter *idCompleter = new QCompleter(this);
-    idCompleter->setModel(this->idModel);
-    idCompleter->setCompletionColumn(1);
-    idCompleter->setCompletionRole(Qt::DisplayRole);
-    idCompleter->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->sndMsgIDLineEdit->setCompleter(idCompleter);
+    idCompleter.setModel(&idModel);
+    idCompleter.setCompletionColumn(1);
+    idCompleter.setCompletionRole(Qt::DisplayRole);
+    idCompleter.setCaseSensitivity(Qt::CaseInsensitive);
+    ui->sndMsgIDLineEdit->setCompleter(&idCompleter);
     connect(ui->sndMsgIDLineEdit, &QLineEdit::textChanged, this, &SendMessages::idChanged);
 
-
-    QCompleter *codeCompleter = new QCompleter(this);
-    codeCompleter->setModel(this->msgTypeModel);
-    codeCompleter->setCompletionColumn(1);
-    codeCompleter->setCompletionRole(Qt::DisplayRole);
-    codeCompleter->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->sndMsgCodeLineEdit->setCompleter(codeCompleter);
+    codeCompleter.setModel(&msgTypeModel);
+    codeCompleter.setCompletionColumn(1);
+    codeCompleter.setCompletionRole(Qt::DisplayRole);
+    codeCompleter.setCaseSensitivity(Qt::CaseInsensitive);
+    ui->sndMsgCodeLineEdit->setCompleter(&codeCompleter);
     connect(ui->sndMsgCodeLineEdit, &QLineEdit::textChanged, this, &SendMessages::codeChanged);
-
 }
 
 SendMessages::~SendMessages()
@@ -70,9 +67,9 @@ SendMessages::~SendMessages()
     delete ui;
 }
 
-QByteArray SendMessages::extractMsgData(QString msgDataString, int formatIndex)
+DataByteVect SendMessages::extractMsgData(QString msgDataString, int formatIndex)
 {
-    QByteArray extractedDataBytes;
+    DataByteVect extractedDataBytes;
     QStringList dataBytes;
     msgDataString = msgDataString.simplified();
 
@@ -155,7 +152,7 @@ QByteArray SendMessages::extractMsgData(QString msgDataString, int formatIndex)
     return extractedDataBytes;
 }
 
-QString SendMessages::createMsgData(QByteArray msgDataBytes, int formatIndex)
+QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
 {
     QString newMsgDataString;
 
@@ -217,7 +214,7 @@ void SendMessages::convertMsgData(QString &msgDataString, int oldIndex, int newI
 
 void SendMessages::initMsgPacketTableView()
 {
-    ui->sndPcktTableView->setModel(this->msgPcktModel);
+    ui->sndPcktTableView->setModel(&msgPcktModel);
     ui->sndPcktTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //ui->msgTableView->horizontalHeader()->setStretchLastSection(true);
     ui->sndPcktTableView->verticalHeader()->hide();
@@ -276,20 +273,20 @@ qulonglong SendMessages::parseToNumber(QString numericalString)
 
 void SendMessages::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 {
+    bool adminBtnVisibility = false;
     if(roleToSwitchTo == UserRoleMngr::NormalUserRole)
     {
-        ui->sndPcktAddBtn->setVisible(false);
-        ui->sndPcktRmvBtn->setVisible(false);
-        ui->sndPcktStoreBtn->setVisible(false);
         ui->sndPcktTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+        adminBtnVisibility = false;
     }
     else if(roleToSwitchTo == UserRoleMngr::AdminRole)
     {
-        ui->sndPcktAddBtn->setVisible(true);
-        ui->sndPcktRmvBtn->setVisible(true);
-        ui->sndPcktStoreBtn->setVisible(true);
+        adminBtnVisibility = true;
     }
+
+    ui->sndPcktAddBtn->setVisible(adminBtnVisibility);
+    ui->sndPcktRmvBtn->setVisible(adminBtnVisibility);
+    ui->sndPcktStoreBtn->setVisible(adminBtnVisibility);
 }
 
 void SendMessages::on_sndPcktLoadBtn_clicked()
@@ -309,10 +306,10 @@ void SendMessages::on_sndPcktLoadBtn_clicked()
         {
             CsvMsgPacketHandler csvMsgPacketParser;
             QString msgPacket = QString(csvOpenFile.readAll());
-            this->msgPcktModel->setMsgs(csvMsgPacketParser.parseCsvMsgPacket(msgPacket));
+            msgPcktModel.setMsgs(csvMsgPacketParser.parseCsvMsgPacket(msgPacket));
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
-            this->msgPcktModel->parseFromJSON(csvOpenFile.readAll());
+            msgPcktModel.parseFromJSON(csvOpenFile.readAll());
         }
     }
     csvOpenFile.close();
@@ -344,11 +341,11 @@ void SendMessages::on_sndPcktStoreBtn_clicked()
         if(!fileFormat.compare(QString("CSV File (*.csv)")))
         {
             CsvMsgPacketHandler csvMsgPacketParser;
-            csvSaveFile.write(csvMsgPacketParser.parseToString(this->msgPcktModel->getMsgs()).toUtf8()); //ToDO check for error (-1)
+            csvSaveFile.write(csvMsgPacketParser.parseToString(msgPcktModel.getMsgs()).toUtf8()); //ToDO check for error (-1)
             // close file
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
-            csvSaveFile.write(this->msgPcktModel->parseToJSON());
+            csvSaveFile.write(msgPcktModel.parseToJSON());
         }
     }
     csvSaveFile.flush(); //always flush after write!
@@ -360,13 +357,13 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     Data_Packet::Frame frame;
     QString lineEditContent = ui->sndMsgIDLineEdit->text();
     bool conversionOK;
-    quint16 msgID;
-    quint8 msgCode;
+    MsgIDType msgID;
+    MsgCodeType msgCode;
 
     msgID = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
     {
-        msgID = idModel->getIDToName(lineEditContent);
+        msgID = idModel.getIDToName(lineEditContent);
     }
 
     frame.ID_Standard = msgID;
@@ -385,7 +382,7 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
     frame.RTR = 0;
 
-    QByteArray dataToSend;
+    DataByteVect dataToSend;
 
     lineEditContent = ui->sndMsgMsgLineEdit->text().simplified();
     dataToSend = this->extractMsgData(lineEditContent, this->currentDataFormatIndex);
@@ -394,20 +391,25 @@ void SendMessages::on_sndMsgSendBtn_clicked()
     msgCode = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
     {
-        msgCode = msgTypeModel->getCodeToName(lineEditContent);
+        msgCode = msgTypeModel.getCodeToName(lineEditContent);
     }
 
     qDebug() << "Msg Code: " << msgCode;
-    dataToSend.prepend(msgCode);
+    dataToSend.prepend(static_cast<quint8>(msgCode&0xFFu));
 
     //dataToSend.append(QByteArray::number(msgData, 10));
     qDebug() << "Data to send" << dataToSend.at(0);
     qDebug() << "Data to send size" << dataToSend.size();
-    qDebug() << "Data to send" << dataToSend;
+    for(int i = 0; i < dataToSend.size(); i++)
+    {
+        qDebug() << "Data" << i << ": " << dataToSend.at(i);
+    }
 
     frame.DLC = dataToSend.size();
 
-    frame.data = dataToSend;
+    frame.data.clear();
+    for(quint8 byte : dataToSend)
+        frame.data.append(byte);
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
@@ -419,7 +421,7 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
 void SendMessages::on_sndPcktSendBtn_clicked()
 {
-    HugeQVector<Msg> msgsToSend = this->msgPcktModel->getMsgs();
+    HugeQVector<Msg> msgsToSend = msgPcktModel.getMsgs();
     int size = msgsToSend.size();
     for( int i = 0; i < size; i++)
     {
@@ -441,10 +443,14 @@ void SendMessages::on_sndPcktSendBtn_clicked()
 
         frame.RTR = 0;
 
-        frame.DLC = 8;
+        frame.DLC = msg->getData()->DataSizeInBytes + 1; // +1 for code
 
-        QByteArray dataToSend = msg->getDataAsByteArray();
-        frame.data = dataToSend;
+        DataByteVect dataToSend = msg->getData()->DataBytes;
+        dataToSend.prepend(static_cast<quint8>(msg->getCode()&0xFFu));
+
+        frame.data.clear();
+        for(quint8 byte : dataToSend)
+            frame.data.append(byte);
 
         CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
         qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
@@ -458,7 +464,7 @@ void SendMessages::on_sndPcktSendBtn_clicked()
 
 void SendMessages::idChanged(const QString &newIDName)
 {
-    QColor newBackground = idModel->getColorToID(idModel->getIDToName(newIDName));
+    QColor newBackground = idModel.getColorToID(idModel.getIDToName(newIDName));
     if(!newBackground.isValid())
         newBackground = QColor(Qt::white);
 
@@ -467,7 +473,7 @@ void SendMessages::idChanged(const QString &newIDName)
 
 void SendMessages::codeChanged(const QString &newCodeName)
 {
-    QColor newBackground = msgTypeModel->getColorToCode(msgTypeModel->getCodeToName(newCodeName));
+    QColor newBackground = msgTypeModel.getColorToCode(msgTypeModel.getCodeToName(newCodeName));
     if(!newBackground.isValid())
         newBackground = QColor(Qt::white);
 
@@ -488,14 +494,14 @@ void SendMessages::on_msgDataFormatComboBox_currentIndexChanged(int index)
 
 void SendMessages::on_sndPcktClrBtn_clicked()
 {
-    this->msgPcktModel->clear();
+    msgPcktModel.clear();
 }
 
 void SendMessages::on_sndMsgAddToPacketBtn_clicked()
 {
-    quint16 msgID;
-    quint8 msgCode;
-    QByteArray data;
+    MsgIDType msgID;
+    MsgCodeType msgCode;
+    DataByteVect data;
     QString lineEditContent;
     bool conversionOK;
 
@@ -503,7 +509,7 @@ void SendMessages::on_sndMsgAddToPacketBtn_clicked()
     msgID = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
     {
-        msgID = idModel->getIDToName(lineEditContent);
+        msgID = idModel.getIDToName(lineEditContent);
     }
 
     lineEditContent = ui->sndMsgMsgLineEdit->text().simplified();
@@ -513,12 +519,12 @@ void SendMessages::on_sndMsgAddToPacketBtn_clicked()
     msgCode = lineEditContent.toInt(&conversionOK, (lineEditContent.startsWith("0x")) ? 16 : 0);
     if(!conversionOK)
     {
-        msgCode = msgTypeModel->getCodeToName(lineEditContent);
+        msgCode = msgTypeModel.getCodeToName(lineEditContent);
     }
 
     data.prepend(msgCode);
 
-    this->msgPcktModel->addMsg(new Msg(QDateTime(),msgID,data));
+    msgPcktModel.addMsg(new Msg(QDateTime(),msgID,msgCode,data));
 }
 
 void SendMessages::on_sndMsgMsgLineEdit_returnPressed()
@@ -532,7 +538,7 @@ void SendMessages::on_sndPcktRmvBtn_clicked()
     QModelIndexList selectionIndexList = selectionModel->selectedRows();
     if(selectionIndexList.size())
     {
-        this->msgPcktModel->removeRows(selectionIndexList.first().row(), selectionIndexList.size());
+        msgPcktModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
     //this->msgPcktModel->removeRow(ui->sndPcktTableView->selectionModel()->currentIndex().row());
 }

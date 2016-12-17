@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "msg.h"
+
 class SysOvrvTrigger;
 class EvaluatorTablemodel;
 class TemplateValueEvaluator;
@@ -23,8 +25,8 @@ private:
     Ui::SysOvrvTriggerEditorWidget *ui;
     EvaluatorTablemodel *evaluatorModel;
     SysOvrvTrigger *triggerToEdit;
-    quint16 currentID;
-    quint8 currentCode;
+    MsgIDType currentID;
+    MsgCodeType currentCode;
 
 
 signals:

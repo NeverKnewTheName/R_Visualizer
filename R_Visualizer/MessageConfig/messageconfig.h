@@ -20,11 +20,19 @@ class MessageConfig : public QWidget
     Q_OBJECT
 
 public:
-    explicit MessageConfig(IDModel *idModel, MsgTypeModel *msgTypeModel, QWidget *parent = 0);
+    explicit MessageConfig(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent = 0);
     ~MessageConfig();
-    FilterIDStore *getFilterIDModel() const;
-    FilterCodeStore *getFilterCodeModel() const;
-    FilterTimestampStore *getFilterTimestampModel() const;
+//    FilterIDStore &getFilterIDModel() const;
+//    FilterCodeStore &getFilterCodeModel() const;
+//    FilterTimestampStore &getFilterTimestampModel() const;
+
+    MsgTypeModel &getMsgTypeModel() const;
+
+    FilterCodeStore &getFilterCodeModel();
+
+    FilterTimestampStore &getFilterTimestampModel();
+
+    FilterIDStore &getFilterIDModel();
 
 private:
     Ui::MessageConfig *ui;
@@ -35,11 +43,11 @@ private:
 
     friend class MainWindow;
 
-    IDModel *idModel;
-    MsgTypeModel *msgTypeModel;
-    FilterIDStore *filterIDModel;
-    FilterCodeStore *filterCodeModel;
-    FilterTimestampStore *filterTimestampStore;
+    IDModel &idModel;
+    MsgTypeModel &msgTypeModel;
+    FilterIDStore filterIDModel;
+    FilterCodeStore filterCodeModel;
+    FilterTimestampStore filterTimestampStore;
 
     bool idFilterEnabled;
     bool codeFilterEnabled;
@@ -47,8 +55,8 @@ private:
     bool timeStampFilterToEnabled;
 
 signals:
-    void sgnlIdAddFinished(const int id, const QString name, const QColor color);
-    void sgnlMsgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color);
+    void sgnlIdAddFinished(const MsgIDType id, const QString &name, const QColor &color);
+    void sgnlMsgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
     void startEditFilterID(QModelIndex &);
     void filterIDstateChange(bool enabled);
     void filterCodestateChange(bool enabled);
@@ -58,8 +66,8 @@ signals:
     void sgnl_timestampToChanged(QDateTime newToDateTime);
 
 private slots:
-    void idAddFinished(const int id, const QString name, const QColor color);
-    void msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color);
+    void idAddFinished(const MsgIDType id, const QString &name, const QColor &color);
+    void msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
     void filterIDAdded(unsigned int pos);
     void slt_timestampFromChanged();
     void slt_timestampToChanged();

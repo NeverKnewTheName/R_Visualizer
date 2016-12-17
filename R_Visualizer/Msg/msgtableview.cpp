@@ -297,3 +297,9 @@ void MsgTableView::changeTimestampToFilterEnabled(bool enabled)
     this->timestampToFilterEnabled = enabled;
     this->filterChanged();
 }
+
+void MsgTableView::columnResized(int column, int oldWidth, int newWidth)
+{
+    qDebug() << __PRETTY_FUNCTION__;
+    QTableView::columnResized(column,oldWidth,newWidth);
+}

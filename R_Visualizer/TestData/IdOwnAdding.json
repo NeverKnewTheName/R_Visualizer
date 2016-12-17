@@ -1,38 +1,32 @@
 [
     {
-        "255": {
-            "color": "#ffaa7f",
-            "name": "PC"
-        }
+        "id" : 255,
+        "color": "#ffaa7f",
+        "name": "PC"
     },
     {
-        "240": {
-            "color": "#abd0ff",
-            "name": "Master"
-        }
+        "id" : 240,
+        "color": "#abd0ff",
+        "name": "Master"
     },
     {
-        "256": {
-            "color": "#d7b4ff",
-            "name": "Pump"
-        }
+        "id" : 256,
+        "color": "#d7b4ff",
+        "name": "Pump"
     },
     {
-        "272": {
-            "color": "#ff9c9c",
-            "name": "Temp"
-        }
+        "id" : 272,
+        "color": "#ff9c9c",
+        "name": "Temp"
     },
     {
-        "288": {
-            "color": "#7a5d7f",
-            "name": "Valve0"
-        }
+        "id" : 288,
+        "color": "#7a5d7f",
+        "name": "Valve0"
     },
     {
-        "289": {
-            "color": "#7f5b71",
-            "name": "Valve1"
-        }
+        "id" : 289,
+        "color": "#7f5b71",
+        "name": "Valve1"
     }
 ]

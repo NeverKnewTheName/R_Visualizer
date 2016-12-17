@@ -491,13 +491,13 @@ void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
     }
 }
 
-void SysOvrvObject::addTrigger(quint16 id, quint8 code, SysOvrvTrigger *newTrigger)
+void SysOvrvObject::addTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *newTrigger)
 {
     LocalTriggerStore[id][code].append(newTrigger);
     addChildsTrigger(id, code, newTrigger);
 }
 
-void SysOvrvObject::addChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *newChildTrigger)
+void SysOvrvObject::addChildsTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *newChildTrigger)
 {
     GlobalTriggerStore[id][code].append(newChildTrigger);
     SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(parentItem());
@@ -505,13 +505,13 @@ void SysOvrvObject::addChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *ne
         parent->addChildsTrigger(id, code, newChildTrigger);
 }
 
-void SysOvrvObject::removeTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove)
+void SysOvrvObject::removeTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *triggerToRemove)
 {
     LocalTriggerStore[id][code].removeAll(triggerToRemove);
     removeChildsTrigger(id, code, triggerToRemove);
 }
 
-void SysOvrvObject::removeChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove)
+void SysOvrvObject::removeChildsTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *triggerToRemove)
 {
     GlobalTriggerStore[id][code].removeAll(triggerToRemove);
     SysOvrvObject *parent = qgraphicsitem_cast<SysOvrvObject*>(parentItem());
@@ -519,7 +519,7 @@ void SysOvrvObject::removeChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger 
         parent->removeChildsTrigger(id, code, triggerToRemove);
 }
 
-void SysOvrvObject::msgReceived(quint16 id, quint8 code, QByteArray &canData)
+void SysOvrvObject::msgReceived(const MsgIDType id, const MsgCodeType code, QByteArray &canData)
 {
     qDebug() << getHashedName() << ": received msg " << id << " - " << code;
     QVector<SysOvrvTrigger*> triggers = GlobalTriggerStore[id][code];
@@ -529,17 +529,17 @@ void SysOvrvObject::msgReceived(quint16 id, quint8 code, QByteArray &canData)
     }
 }
 
-QList<quint16> SysOvrvObject::getTriggerIDs() const
+QList<MsgIDType> SysOvrvObject::getTriggerIDs() const
 {
     return GlobalTriggerStore.uniqueKeys();
 }
 
-QList<quint8> SysOvrvObject::getTriggerCodesToID(quint16 id) const
+QList<MsgCodeType> SysOvrvObject::getTriggerCodesToID(const MsgIDType id) const
 {
     return GlobalTriggerStore.value(id).uniqueKeys();
 }
 
-QVector<SysOvrvTrigger *> SysOvrvObject::getTriggersToIDandCode(quint16 id, quint8 code)
+QVector<SysOvrvTrigger *> SysOvrvObject::getTriggersToIDandCode(const MsgIDType id, const MsgCodeType code)
 {
     return GlobalTriggerStore.value(id).value(code);
 }

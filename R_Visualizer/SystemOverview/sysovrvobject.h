@@ -9,7 +9,7 @@
 #include "resizerectcorner.h"
 #include "sysovrvtextlabel.h"
 #include "sysovrvtrigger.h"
-
+#include "msg.h"
 
 class SysOvrvObject : public QGraphicsItem
 {
@@ -74,14 +74,14 @@ public:
     QByteArray parseToJson() const;
     void parseFromJson(QByteArray &jsonByteArray);
 
-    void addTrigger(quint16 id, quint8 code, SysOvrvTrigger *newTrigger);
-    void addChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *newChildTrigger);
-    void removeTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove);
-    void removeChildsTrigger(quint16 id, quint8 code, SysOvrvTrigger *triggerToRemove);
-    void msgReceived(quint16 id, quint8 code, QByteArray &canData);
-    QList<quint16> getTriggerIDs() const;
-    QList<quint8> getTriggerCodesToID(quint16 id) const;
-    QVector<SysOvrvTrigger *> getTriggersToIDandCode(quint16 id, quint8 code);
+    void addTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *newTrigger);
+    void addChildsTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *newChildTrigger);
+    void removeTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *triggerToRemove);
+    void removeChildsTrigger(const MsgIDType id, const MsgCodeType code, SysOvrvTrigger *triggerToRemove);
+    void msgReceived(const MsgIDType id, const MsgCodeType code, QByteArray &canData);
+    QList<MsgIDType> getTriggerIDs() const;
+    QList<MsgCodeType> getTriggerCodesToID(const MsgIDType id) const;
+    QVector<SysOvrvTrigger *> getTriggersToIDandCode(const MsgIDType id, const MsgCodeType code);
 
     QPixmap getObjPixMap() const;
     void setObjPixMap(const QPixmap &value);
@@ -103,8 +103,8 @@ private:
 
     QVector<SysOvrvObject *> childSysOvrvObjects;
     QVector<SysOvrvTextLabel*> objTextlabels;
-    QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> GlobalTriggerStore;
-    QHash<quint16, QHash<quint8, QVector<SysOvrvTrigger*>>> LocalTriggerStore;
+    QHash<MsgIDType, QHash<MsgCodeType, QVector<SysOvrvTrigger*>>> GlobalTriggerStore;
+    QHash<MsgIDType, QHash<MsgCodeType, QVector<SysOvrvTrigger*>>> LocalTriggerStore;
 
     void updateCorners();
 

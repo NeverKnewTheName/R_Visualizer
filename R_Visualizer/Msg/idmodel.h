@@ -1,12 +1,14 @@
 #ifndef IDMODEL_H
 #define IDMODEL_H
 
+#include "msg.h"
 #include "idrep.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
 #include <QHash>
 #include <QColor>
+#include <QStyleOptionViewItem>
 
 class IDModel : public QAbstractTableModel
 {
@@ -24,20 +26,21 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    void add(int id, IDRep *idRep);
+    void add(const IDRep &idRep);
     void clear();
 
-    QString getNameToID(int id);
-    unsigned int getIDToName(const QString &name) const;
-    QColor getColorToID(int id);
+    bool contains(const MsgIDType MsgID) const;
+    QString getNameToID(const MsgIDType id) const;
+    MsgIDType getIDToName(const QString &name) const;
+    QColor getColorToID(const MsgIDType id) const;
 
-    QHash<int, IDRep *> getIdPropStore() const;
-    void setIdPropStore(const QHash<int, IDRep *> &value);
+//    QHash<int, IDRep *> getIdPropStore() const;
+//    void setIdPropStore(const QHash<int, IDRep *> &value);
 
     QStringList getAllIDNames() const;
 
     QByteArray parseToJSON() const;
-    void parseFromJSON(QByteArray jsonFile);
+    void parseFromJSON(const QByteArray &jsonFile);
 
     enum HeaderCols
     {
@@ -47,9 +50,11 @@ public:
         COL_NR_OF_COLS
     };
 
+    void paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const;
+
 private:
-    QVector<int> idStore;
-    QHash<int, IDRep *> idPropStore;
+    QVector<MsgIDType> idStore; //ToDO MsgIDType
+    QHash<MsgIDType, IDRep> idPropStore; //ToDO MsgIDType
 
 signals:
     void internalModelChanged();

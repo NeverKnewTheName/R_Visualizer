@@ -7,6 +7,7 @@
 
 #include "evaluatortablemodel.h"
 
+
 #include <QDialog>
 #include <QColorDialog>
 
@@ -37,8 +38,8 @@ void SysOvrvTriggerEditorWidget::RUpdatewidgetdata(const QModelIndex &index)
 
 
     triggerToEdit = static_cast<SysOvrvTrigger*>(index.data(Qt::UserRole+1).value<void *>());
-    currentID = static_cast<quint16>(index.parent().parent().data().toUInt());
-    currentCode = static_cast<quint8>(index.parent().data().toUInt());
+    currentID = static_cast<MsgIDType>(index.parent().parent().data().toUInt());
+    currentCode = static_cast<MsgCodeType>(index.parent().data().toUInt());
     ui->IDLineEdit->setText(QString::number(currentID));
     ui->CodeLineEdit->setText(QString::number(currentCode));
 

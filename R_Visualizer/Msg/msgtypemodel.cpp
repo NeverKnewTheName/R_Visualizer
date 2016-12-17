@@ -15,16 +15,23 @@ MsgTypeModel::MsgTypeModel(QObject *parent) : QAbstractTableModel(parent)
 
 int MsgTypeModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return codeStore.size();
 }
 
 int MsgTypeModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return COL_NR_OF_COLS;
 }
 
 QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
 {
+    if(!index.isValid())
+    {
+        return QVariant();
+    }
+
     int row = index.row();
     int col = index.column();
 
@@ -32,9 +39,9 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
         if(col == COL_CODE) return QString("0x%1").arg(codeStore[row]/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        if(col == COL_CODENAME) return msgTypePropStore.value(codeStore[row])->getCodeName();
-        if(col == COL_MESSAGEFORMAT) return msgTypePropStore.value(codeStore[row])->getMessageFormat();
-        if(col == COL_COLOR) return msgTypePropStore.value(codeStore[row])->getColor().name();
+        if(col == COL_CODENAME) return msgTypePropStore.value(codeStore[row]).getCodeName();
+        if(col == COL_MESSAGEFORMAT) return msgTypePropStore[codeStore[row]].getMessageFormat();
+        if(col == COL_COLOR) return msgTypePropStore[codeStore[row]].getColor().name();
         break;
     case Qt::FontRole:
         //        if(row == 0 && col == 0)
@@ -45,10 +52,7 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-    {
-        QBrush bgBrush(msgTypePropStore.value(codeStore[row])->getColor());
-        return bgBrush;
-    }
+        return QBrush(msgTypePropStore[codeStore[row]].getColor());
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -73,12 +77,11 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
     switch(role)
     {
     case Qt::EditRole:
-        if(col == COL_CODE) {};
-        if(col == COL_CODENAME) msgTypePropStore.value(codeStore[row])->setCodeName(value.value<QString>());
-        if(col == COL_MESSAGEFORMAT ) msgTypePropStore.value(codeStore[row])->setMessageFormat(value.value<QString>());
-        if(col == COL_COLOR) msgTypePropStore.value(codeStore[row])->setColor(value.value<QColor>());
+        if(col == COL_CODENAME) msgTypePropStore[codeStore[row]].setCodeName(value.value<QString>());
+        if(col == COL_MESSAGEFORMAT ) msgTypePropStore[codeStore[row]].setMessageFormat(value.value<QString>());
+        if(col == COL_COLOR) msgTypePropStore[codeStore[row]].setColor(value.value<QColor>());
         emit dataChanged(index, index);
-        emit internalModelChanged();
+        //        emit internalModelChanged();
         return true;
         break;
     }
@@ -112,6 +115,7 @@ QVariant MsgTypeModel::headerData(int section, Qt::Orientation orientation, int 
 
 bool MsgTypeModel::removeRows(int row, int count, const QModelIndex &parent)
 {
+    Q_UNUSED(parent)
     int modelSize = codeStore.size();
     if(modelSize || ((row+count) < modelSize))
     {
@@ -128,7 +132,6 @@ bool MsgTypeModel::removeRows(int row, int count, const QModelIndex &parent)
 void MsgTypeModel::removeRow(int row, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row);
-    delete msgTypePropStore.value(codeStore.at(row));
     msgTypePropStore.remove(codeStore.at(row));
     codeStore.remove(row);
     endRemoveRows();
@@ -144,14 +147,16 @@ Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
     return Qt::NoItemFlags;
 }
 
-void MsgTypeModel::add(unsigned int code, MsgTypeRep *msgTypeRep)
+void MsgTypeModel::add(const MsgTypeRep &msgTypeRep)
 {
-    int newRow = this->codeStore.size();
+    int newRow = codeStore.size();
+    const MsgCodeType code = msgTypeRep.getCode();
     beginInsertRows(QModelIndex(),newRow,newRow);
-    this->codeStore.append(code);
-    this->msgTypePropStore[code] = msgTypeRep;
+    codeStore.append(code);
+    msgTypePropStore.remove(code);
+    msgTypePropStore.insertMulti(code, msgTypeRep);
     endInsertRows();
-    emit internalModelChanged();
+    //    emit internalModelChanged();
 }
 
 void MsgTypeModel::clear()
@@ -161,101 +166,99 @@ void MsgTypeModel::clear()
     // call begin/endResetModel instead, which ultimately forces all attached
     // views to reload the model
     beginResetModel();
-    qDeleteAll(msgTypePropStore);
     msgTypePropStore.clear();
     codeStore.clear();
     endResetModel();
-    emit internalModelChanged();
+    //    emit internalModelChanged();
 }
 
-QString MsgTypeModel::getNameToCode(unsigned int code) const
+bool MsgTypeModel::contains(const MsgCodeType MsgCode) const
 {
-    MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
-
-    if(msgTypeRep != Q_NULLPTR)
-        return msgTypeRep->getCodeName();
-    else
-        return QString("");
+    return msgTypePropStore.contains(MsgCode);
 }
 
-unsigned int MsgTypeModel::getCodeToName(const QString &name) const
+QString MsgTypeModel::getNameToCode(const MsgCodeType code) const
 {
-    for( auto &msgTR : msgTypePropStore )
+    if(msgTypePropStore.contains(code))
     {
-        if(!name.compare(msgTR->getCodeName(),Qt::CaseInsensitive))
-            return msgTR->getCode();
+        return msgTypePropStore[code].getCodeName();
     }
+    return QString("");
+}
+
+MsgCodeType MsgTypeModel::getCodeToName(const QString &name) const
+{
+    for( auto &msgTypeRep : msgTypePropStore )
+    {
+        if(!name.compare(msgTypeRep.getCodeName(),Qt::CaseInsensitive))
+            return msgTypeRep.getCode();
+    }
+
     return 0;
 }
 
-QString MsgTypeModel::getMessageToCode(unsigned int code) const
+QString MsgTypeModel::getMessageToCode(const MsgCodeType code) const
 {
-    MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
-
-    if(msgTypeRep != Q_NULLPTR)
+    if(msgTypePropStore.contains(code))
     {
-
-        return msgTypeRep->getMessageFormat();
+        return msgTypePropStore[code].getMessageFormat();
     }
-    else
-        return QString("");
+
+    return QString("");
 }
 
-QColor MsgTypeModel::getColorToCode(unsigned int code) const
+QColor MsgTypeModel::getColorToCode(const MsgCodeType code) const
 {
-    MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
+    if(msgTypePropStore.contains(code))
+    {
+        return msgTypePropStore[code].getColor();
+    }
 
-    if(msgTypeRep != Q_NULLPTR)
-        return msgTypeRep->getColor();
-    else
-        return QColor();
+    return QColor();
 }
 
-int MsgTypeModel::getNrLinesToCode(unsigned int code)
+int MsgTypeModel::getNrLinesToCode(const MsgCodeType code)
 {
-    //qDebug() << __FUNCTION__;
-    MsgTypeRep *msgTypeRep = msgTypePropStore.value(code);
+    if(msgTypePropStore.contains(code))
+    {
+        return msgTypePropStore[code].getMessageFormat().count("\n");
+    }
 
-    if(msgTypeRep != Q_NULLPTR)
-    {
-        return msgTypeRep->getMessageFormat().count("\n");
-    }
-    else
-    {
-        return 1;
-    }
+    return 1;
 }
 
 QStringList MsgTypeModel::getAllCodeNames() const
 {
     QStringList names;
-    for(auto msgTypeRep : this->msgTypePropStore )
+    for(const auto &msgTypeRep : msgTypePropStore )
     {
-        names.append(msgTypeRep->getCodeName());
+        names.append(msgTypeRep.getCodeName());
     }
     return names;
 }
 
-QByteArray MsgTypeModel::parseToJSON()
+QByteArray MsgTypeModel::parseToJSON() const
 {
     QJsonArray jsonMsgsArr;
-    for(int i = 0; i < this->codeStore.size();++i)
+    for(const MsgCodeType &code : codeStore)
     {
-        MsgTypeRep *newMsgTypeRep = this->msgTypePropStore.value(this->codeStore.at(i));
-        jsonMsgsArr.append(newMsgTypeRep->parseOUT());
+        const MsgTypeRep &newMsgTypeRep = msgTypePropStore[code];
+        jsonMsgsArr.append(newMsgTypeRep.parseOUT());
     }
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void MsgTypeModel::parseFromJSON(QByteArray jsonFile)
+void MsgTypeModel::parseFromJSON(const QByteArray &jsonFile)
 {
     this->clear();
-    //    QJsonDocument jsonMsgs = QJsonDocument::fromBinaryData(jsonFile);
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto&& item : jsonMsgsArr)
     {
-        MsgTypeRep *newMsgTypeRep = new MsgTypeRep();
-        newMsgTypeRep->parseIN(item.toObject());
-        this->add(newMsgTypeRep->getCode(), newMsgTypeRep);
+        add(MsgTypeRep::createObjFromJson(item.toObject()));
     }
+}
+
+void MsgTypeModel::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const
+{
+    msgTypePropStore[code].paintMsgTypeRep(painter, option, msg);
 }

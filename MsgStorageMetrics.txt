@@ -1,0 +1,67 @@
+
+QVector append 5000 Msgs -> Time(ms):  39
+
+QVector retrieve and print 5000 Msgs -> Time(ms):  3426
+
+MsgStorage append 5000 Msgs -> Time(ms):  362
+
+MsgStorage retrieve and print 5000 Msgs -> Time(ms):  4279
+
+
+QVector append 5000 Msgs -> Time(ms):  1
+QVector retrieve 5000 Msgs -> Time(ms):  2
+MsgStorage append 5000 Msgs -> Time(ms):  247
+MsgStorage retrieve 5000 Msgs -> Time(ms):  681
+
+
+QVector append 5000 Msgs -> Time(ms):  1
+QVector retrieve 5000 Msgs forward -> Time(ms):  2
+QVector retrieve 5000 Msgs backward -> Time(ms):  0
+MsgStorage append 5000 Msgs -> Time(ms):  255
+MsgStorage retrieve 5000 Msgs forward -> Time(ms):  676
+MsgStorage retrieve 5000 Msgs backward -> Time(ms):  646
+
+
+#######################################################################
+
+NrOfMessages:  10000000
+QVector append  10000000  Msgs -> Time(ms):  65475
+MsgStorage append  10000000  Msgs -> Time(ms):  747170
+MemUsage (msgs):  268435440
+MemUsage (msgStore):  161556
+MsgStoreSize 10000000
+MsgStorage retrieve  10000000  Msgs forward -> Time(ms):  2719868
+MsgStorage retrieve  10000000  Msgs backward -> Time(ms):  3027929
+
+9.999 Dateien, 0 Ordner
+1,26 GB (1.360.066.428 Bytes)
+1,29 GB (1.392.500.736 Bytes)
+
+
+#######################################################################
+
+NrOfMessages:  10000000
+
+Begin:                  15.764K
+Loaded:                 16.984K (took: 2209140ms)
+
+Peak during workload:   17.400K (approximated)
+--> retrieve 100 Messages (took: 307ms)
+
+
+#######################################################################
+
+RANDOM ACCESS
+
+Debugging starts
+NrOfMessages:  10000
+MsgStorage append  10000  Msgs -> Time(ms):  925
+MemUsage (msgStore):  96084
+MsgStoreSize 10000
+MsgStorage retrieve  10000  Msgs backward -> Time(ms):  1204722
+
+
+#######################################################################
+
+
+30279290

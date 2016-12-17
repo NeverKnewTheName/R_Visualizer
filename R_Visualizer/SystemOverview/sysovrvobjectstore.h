@@ -3,10 +3,11 @@
 
 #include "sysovrvobject.h"
 #include "can_packet.h"
-#include "msg.h"
 
 #include <QObject>
 #include <QHash>
+
+class Msg;
 
 class SysOvrvObjectStore : public QObject
 {
@@ -15,11 +16,11 @@ public:
     explicit SysOvrvObjectStore(QObject *parent = 0);
 
     QHash<QString, SysOvrvObject *> getObjectStore() const;
-    void addMesageToWatch(quint16 id, quint8 code, SysOvrvObject *relatedSysOvrvObj);
-    void removeMesageToWatch(quint16 id, quint8 code, SysOvrvObject *relatedSysOvrvObj);
+    void addMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj);
+    void removeMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj);
 private:
     QHash<QString, SysOvrvObject*> objectStore;
-    QHash<quint16, QHash<quint8, QVector<SysOvrvObject*>>> msgParserStore;
+    QHash<MsgIDType, QHash<MsgCodeType, QVector<SysOvrvObject*>>> msgParserStore;
     QPointF curObjPos;
 
 signals:

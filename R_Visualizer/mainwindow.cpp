@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include "msgdelegate.h"
+#include "msgiddelegate.h"
+#include "msgdatadelegate.h"
 #include "filteridstore.h"
 
 #include "errlogview.h"
@@ -27,31 +29,33 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    msgModel(this),
+    msgPcktModel(this),
+    idModel(this),
+    msgTypeModel(this),
     currErrCntr(0),
     totalErrCntr(0),
     m_IsConnectedToDevice(false)
 {
     ui->setupUi(this);
-    this->currentFileName = "";
+    currentFileName = "";
 
     /*
      * INIT MODELS
      */
 
-    msgTypeModel = new MsgTypeModel(this);
-    connect(msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
+    connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
-    idModel = new IDModel(this);
-    connect(idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
+    connect(&idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
     this->sysOvrvwWidget = new SystemOverview(this);
-    ui->tabWidget->addTab(this->sysOvrvwWidget, QString("System Overview"));
+    ui->tabWidget->addTab(sysOvrvwWidget, QString("System Overview"));
 
-    this->sndMsgsWidget = new SendMessages(this->idModel, this->msgTypeModel, this);
-    ui->tabWidget->addTab(this->sndMsgsWidget, QString("Send Messages"));
+    this->sndMsgsWidget = new SendMessages(idModel, msgTypeModel, this);
+    ui->tabWidget->addTab(sndMsgsWidget, QString("Send Messages"));
 
-    this->msgConfigWidget = new MessageConfig(this->idModel, this->msgTypeModel, this);
-    ui->tabWidget->addTab(this->msgConfigWidget, QString("Message Configuration"));
+    this->msgConfigWidget = new MessageConfig(idModel, msgTypeModel, this);
+    ui->tabWidget->addTab(msgConfigWidget, QString("Message Configuration"));
 
     connect(this->msgConfigWidget, &MessageConfig::sgnlIdAddFinished, this, &MainWindow::idAddFinished);
     connect(this->msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished);
@@ -79,9 +83,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
 
-    connect(this, &MainWindow::dataReceived, this->msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
+    connect(m_deviceHandler, &DeviceHandler::sigMsgReceived, &msgModel, &MsgModel::messageReceived, Qt::QueuedConnection);
     connect(this, &MainWindow::dataReceived, this->sysOvrvwWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
-    connect(this, &MainWindow::errorReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
+    connect(m_deviceHandler, &DeviceHandler::sigErrorMsgReceived, this->errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
     //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
     //    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
     ui->actionStop->setDisabled(true);
@@ -103,33 +107,32 @@ void MainWindow::on_actionNew_triggered()
     //TESTING ONLY
     static int cntr = 0;
     ++cntr;
-    MsgDataT msgData = {
-        static_cast<quint8>(0x2),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr*2),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x4*cntr),
-        static_cast<quint8>(cntr)
-    };
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgData = {
-        static_cast<quint8>(0x3),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr*2),
-        static_cast<quint8>(0x0),
-        static_cast<quint8>(cntr),
-        static_cast<quint8>(0x4*cntr),
-        static_cast<quint8>(cntr)
-    };
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,msgData));
-    msgModel->addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,msgData));
+    DataByteVect msgData;
+    msgData.append(static_cast<quint8>(cntr));
+    msgData.append(static_cast<quint8>(0x0));
+    msgData.append(static_cast<quint8>(cntr*2));
+    msgData.append(static_cast<quint8>(0x0));
+    msgData.append(static_cast<quint8>(cntr));
+    msgData.append(static_cast<quint8>(0x4*cntr));
+    msgData.append(static_cast<quint8>(cntr));
+
+    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x2,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x2,msgData));
+    //    msgData.clear();
+
+    //    msgData.append(static_cast<quint8>(cntr));
+    //    msgData.append(static_cast<quint8>(0x0));
+    //    msgData.append(static_cast<quint8>(cntr*2));
+    //    msgData.append(static_cast<quint8>(0x0));
+    //    msgData.append(static_cast<quint8>(cntr));
+    //    msgData.append(static_cast<quint8>(0x4*cntr));
+    //    msgData.append(static_cast<quint8>(cntr));
+
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xF0,0x3,msgData));
+    //    msgModel.addMsg(new Msg(QDateTime::fromMSecsSinceEpoch(cntr),0xFF,0x3,msgData));
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -137,7 +140,7 @@ void MainWindow::on_actionOpen_triggered()
 #ifdef __DEBUG__
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
-    disconnect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded);
+    disconnect(&msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded);
 
     QString openLoc = QFileDialog::getOpenFileName(this, QString("Open"), QString(), "JSON File (*.json)");
     qDebug() << openLoc;
@@ -150,13 +153,13 @@ void MainWindow::on_actionOpen_triggered()
     {
         //ToDO
         // read file content
-        msgModel->parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        msgModel.parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
         // parse file
         // populate ui
         // close file
     }
     jsonOpenFile.close();
-    connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
+    connect(&msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
     ui->msgTableView->filterChanged();
 }
 
@@ -182,7 +185,7 @@ void MainWindow::on_actionSave_triggered()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(this->msgModel->parseToJSON()); //ToDO check for error (-1)
+        jsonSaveFile.write(msgModel.parseToJSON()); //ToDO check for error (-1)
         // close file
     }
     jsonSaveFile.flush(); //always flush after write!
@@ -269,30 +272,28 @@ void MainWindow::on_actionStop_triggered()
 #define FILTER_PROXY_VIEW
 void MainWindow::initMsgsTableView()
 {
-    this->msgModel = new MsgModel(this);
-
-    FilterIDStore *filterIDModel = this->msgConfigWidget->getFilterIDModel();
-    FilterCodeStore *filterCodeModel = this->msgConfigWidget->getFilterCodeModel();
-    FilterTimestampStore *filterTimestampModel = this->msgConfigWidget->getFilterTimestampModel();
-    ui->msgTableView->setFilterIDModel(filterIDModel);
-    ui->msgTableView->setFilterCodeModel(filterCodeModel);
-    ui->msgTableView->setFilterTimestampModel(filterTimestampModel);
+    FilterIDStore &filterIDModel = this->msgConfigWidget->getFilterIDModel();
+    FilterCodeStore &filterCodeModel = this->msgConfigWidget->getFilterCodeModel();
+    FilterTimestampStore &filterTimestampModel = this->msgConfigWidget->getFilterTimestampModel();
+    ui->msgTableView->setFilterIDModel(&filterIDModel);
+    ui->msgTableView->setFilterCodeModel(&filterCodeModel);
+    ui->msgTableView->setFilterTimestampModel(&filterTimestampModel);
 
     connect(this->msgConfigWidget, &MessageConfig::filterIDstateChange, ui->msgTableView, &MsgTableView::changeIDFilterEnabled);
     connect(this->msgConfigWidget, &MessageConfig::filterCodestateChange, ui->msgTableView, &MsgTableView::changeCodeFilterEnabled);
     connect(this->msgConfigWidget, &MessageConfig::filterTimestampFromStateChange, ui->msgTableView, &MsgTableView::changeTimestampFromFilterEnabled);
     connect(this->msgConfigWidget, &MessageConfig::filterTimestampToStateChange, ui->msgTableView, &MsgTableView::changeTimestampToFilterEnabled);
 
-    connect(filterIDModel, &FilterIDStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
-    connect(filterCodeModel, &FilterCodeStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
-    connect(filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(&filterIDModel, &FilterIDStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(&filterCodeModel, &FilterCodeStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(&filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
 
     connect(ui->msgTableView, &MsgTableView::invisibleRows, this, &MainWindow::scrollToGetMoreContent);
     // queued connection for the case that many rows are added at once and could not be rendered either way
-    connect(this->msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
-    connect(this->msgModel, &MsgModel::modelReset, ui->msgTableView, &MsgTableView::reset);
+    connect(&msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
+    connect(&msgModel, &MsgModel::modelReset, ui->msgTableView, &MsgTableView::reset);
     connect(this, &MainWindow::changedDataAcquisitionMode, ui->msgTableView, &MsgTableView::scrollContinuousChange);
-    ui->msgTableView->setModel(this->msgModel);
+    ui->msgTableView->setModel(&msgModel);
 
     QHeaderView *horzHeader = ui->msgTableView->horizontalHeader();
     horzHeader->setSectionResizeMode(0, QHeaderView::Fixed);
@@ -307,19 +308,37 @@ void MainWindow::initMsgsTableView()
     ui->msgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->msgTableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
 
-    ui->msgTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->msgTableView));
+    MsgIDDelegate *idDelegate = new MsgIDDelegate(idModel, ui->msgTableView);
+    MsgDataDelegate *dataDelegate = new MsgDataDelegate(msgTypeModel, ui->msgTableView);
+    connect(dataDelegate, &MsgDataDelegate::RowSizeChanged, ui->msgTableView, &MsgTableView::resizeRowsToContents, Qt::QueuedConnection);
+//    connect(ui->msgTableView->horizontalHeader(), &QHeaderView::sectionResized, this, [=,this](int index, int oldSize, int newSize ){
+//        switch(index)
+//        {
+//        case 1:
+//            idDelegate->columWidthChanged(newSize);
+//            break;
+//        case 2:
+//            dataDelegate->columWidthChanged(newSize);
+//            break;
+//        }
+//    });
+    ui->msgTableView->setItemDelegateForColumn(MsgModel::COL_NAME, idDelegate);
+    ui->msgTableView->setItemDelegateForColumn(MsgModel::COL_MESSAGE, dataDelegate);
+    //    ui->msgTableView->setItemDelegate( new MsgDelegate(msgTypeModel,idModel,ui->msgTableView));
 }
 
 
-void MainWindow::idAddFinished(const int id, const QString name, const QColor color)
+void MainWindow::idAddFinished(const MsgIDType id, const QString &name, const QColor &color)
 {
-    idModel->add(id, new IDRep( name, color));
+    IDRep IdRepToAdd(id, name, color);
+    idModel.add(IdRepToAdd);
 }
 
 
-void MainWindow::msgTypeAddFinished(const int code, const QString codeName, const QString messageFormat, const QColor color)
+void MainWindow::msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
-    msgTypeModel->add(code, new MsgTypeRep(code, codeName, messageFormat, color));
+    MsgTypeRep MsgTypeRepToAdd(code, codeName, messageFormat, color);
+    msgTypeModel.add(MsgTypeRepToAdd);
 }
 
 void MainWindow::applyRole(UserRoleMngr::UserRole roleToSwitchTo)

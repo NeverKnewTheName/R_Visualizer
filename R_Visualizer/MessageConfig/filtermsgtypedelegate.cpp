@@ -18,7 +18,7 @@ void FilterMsgTypeDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
                 option.palette.currentColorGroup(),
                 (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
 
-    int code = index.model()->data(index, Qt::DisplayRole).value<int>();
+    int code = index.data(Qt::DisplayRole).value<int>();
     QColor itemBackground(this->msgTypeModel->getColorToCode(code));
     if(itemBackground.isValid())
     {
@@ -80,7 +80,7 @@ void FilterMsgTypeDelegate::setEditorData(QWidget *editor, const QModelIndex &in
     int col = index.column();
     if (col == 0) {
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
-        textEdit->setText(index.model()->data(index, Qt::DisplayRole).value<QString>());
+        textEdit->setText(index.data(Qt::DisplayRole).value<QString>());
     }
     else {
         QStyledItemDelegate::setEditorData(editor, index);

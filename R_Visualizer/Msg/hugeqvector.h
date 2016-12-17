@@ -1,8 +1,6 @@
 #ifndef HUGEQVECTOR_H
 #define HUGEQVECTOR_H
 
-#include "msg.h"
-
 #include <QVector>
 #include <QDebug>
 

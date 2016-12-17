@@ -3,7 +3,7 @@
 #include <QBrush>
 #include <QDebug>
 
-FilterCodeStore::FilterCodeStore(MsgTypeModel *msgTypeModel, QObject *parent) : QAbstractListModel(parent), msgTypeModel(msgTypeModel)
+FilterCodeStore::FilterCodeStore(MsgTypeModel &msgTypeModel, QObject *parent) : QAbstractListModel(parent), msgTypeModel(msgTypeModel)
 {
 
 }
@@ -11,6 +11,7 @@ FilterCodeStore::FilterCodeStore(MsgTypeModel *msgTypeModel, QObject *parent) : 
 
 int FilterCodeStore::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return codeStore.size();
 }
 
@@ -100,6 +101,7 @@ bool FilterCodeStore::setData(const QModelIndex &index, const QVariant &value, i
 
 Qt::ItemFlags FilterCodeStore::flags(const QModelIndex &index) const
 {
+    Q_UNUSED(index)
     return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
@@ -125,7 +127,7 @@ void FilterCodeStore::removeRow(int row, const QModelIndex &parent)
     endRemoveRows();
 }
 
-void FilterCodeStore::addCode(unsigned int code)
+void FilterCodeStore::addCode(const MsgCodeType code)
 {
     beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(code);
@@ -135,7 +137,7 @@ void FilterCodeStore::addCode(unsigned int code)
     emit rowAdded(tempIndex);
 }
 
-void FilterCodeStore::addCode(QString &codeString)
+void FilterCodeStore::addCode(const QString &codeString)
 {
     beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(codeString.toUInt());
@@ -145,7 +147,7 @@ void FilterCodeStore::addCode(QString &codeString)
     emit rowAdded(tempIndex);
 }
 
-void FilterCodeStore::removeCode(QModelIndex &index)
+void FilterCodeStore::removeCode(const QModelIndex &index)
 {
     beginRemoveRows(QModelIndex(),index.row(), index.row());
     codeStore.remove(index.row());
@@ -153,7 +155,7 @@ void FilterCodeStore::removeCode(QModelIndex &index)
     emit internalModelChanged();
 }
 
-bool FilterCodeStore::containsCode(unsigned int code)
+bool FilterCodeStore::containsCode(const MsgCodeType code) const
 {
     return codeStore.contains(code);
 }

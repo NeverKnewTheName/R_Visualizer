@@ -15,7 +15,7 @@ QHash<QString, SysOvrvObject *> SysOvrvObjectStore::getObjectStore() const
     return objectStore;
 }
 
-void SysOvrvObjectStore::addMesageToWatch(quint16 id, quint8 code, SysOvrvObject *relatedSysOvrvObj)
+void SysOvrvObjectStore::addMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj)
 {
     QVector<SysOvrvObject*>objVector = msgParserStore[id][code];
     if(objVector.contains(relatedSysOvrvObj))
@@ -23,7 +23,7 @@ void SysOvrvObjectStore::addMesageToWatch(quint16 id, quint8 code, SysOvrvObject
     objVector.append(relatedSysOvrvObj);
 }
 
-void SysOvrvObjectStore::removeMesageToWatch(quint16 id, quint8 code, SysOvrvObject *relatedSysOvrvObj)
+void SysOvrvObjectStore::removeMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj)
 {
     QVector<SysOvrvObject*>objVector = msgParserStore[id][code];
     if(objVector.contains(relatedSysOvrvObj))
@@ -59,11 +59,11 @@ void SysOvrvObjectStore::updtObject()
 
     if(curObj == NULL)
         return;
-    QList<quint16> triggerIDs = curObj->getTriggerIDs();
-    for(quint16 id : triggerIDs)
+    QList<MsgIDType> triggerIDs = curObj->getTriggerIDs();
+    for(const MsgIDType &id : triggerIDs)
     {
-        QList<quint8> triggerCodes = curObj->getTriggerCodesToID(id);
-        for(quint8 code : triggerCodes)
+        QList<MsgCodeType> triggerCodes = curObj->getTriggerCodesToID(id);
+        for(const MsgCodeType &code : triggerCodes)
         {
             removeMesageToWatch(id, code, curObj);
         }
@@ -94,11 +94,11 @@ void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
     qDebug() << "GraphicsItem added: " << objToAdd->getObjName();
     disconnect(qobject_cast<SysOvrvObjectDialog *>(sender()), &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     delete sender();
-    QList<quint16> triggerIDs = objToAdd->getTriggerIDs();
-    for(quint16 id : triggerIDs)
+    QList<MsgIDType> triggerIDs = objToAdd->getTriggerIDs();
+    for(const MsgIDType &id : triggerIDs)
     {
-        QList<quint8> triggerCodes = objToAdd->getTriggerCodesToID(id);
-        for(quint8 code : triggerCodes)
+        QList<MsgCodeType> triggerCodes = objToAdd->getTriggerCodesToID(id);
+        for(const MsgCodeType &code : triggerCodes)
         {
             addMesageToWatch(id, code, objToAdd);
         }
@@ -110,11 +110,11 @@ void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
 void SysOvrvObjectStore::removeObject(SysOvrvObject *objToRmv)
 {
     this->objectStore.remove(objToRmv->getHashedName());
-    QList<quint16> triggerIDs = objToRmv->getTriggerIDs();
-    for(quint16 id : triggerIDs)
+    QList<MsgIDType> triggerIDs = objToRmv->getTriggerIDs();
+    for(const MsgIDType &id : triggerIDs)
     {
-        QList<quint8> triggerCodes = objToRmv->getTriggerCodesToID(id);
-        for(quint8 code : triggerCodes)
+        QList<MsgCodeType> triggerCodes = objToRmv->getTriggerCodesToID(id);
+        for(const MsgCodeType &code : triggerCodes)
         {
             removeMesageToWatch(id, code, objToRmv);
         }
@@ -137,10 +137,10 @@ void SysOvrvObjectStore::receiveMessage(Data_PacketPtr ptr)
 {
 
     QDateTime timeStamp = ptr->timestamp();
-    quint16 id = ptr->frame().ID_Standard;
+    const MsgIDType id = ptr->frame().ID_Standard;
     QByteArray canData = ptr->frame().data;
 
-    quint8 code = canData.at(0);
+    const MsgCodeType code = canData.at(0);
 
     qDebug() << "SysOvrvObjectStore::receiveMessage " << id << " " << code;
 

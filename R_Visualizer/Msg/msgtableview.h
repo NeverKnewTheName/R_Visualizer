@@ -7,7 +7,7 @@
 
 #include <QTableView>
 
-#define VISIBLE_ROWS 100u
+#define VISIBLE_ROWS 200u
 
 class MsgTableView : public QTableView
 {
@@ -65,6 +65,9 @@ public slots:
     void changeCodeFilterEnabled(bool enabled);
     void changeTimestampFromFilterEnabled(bool enabled);
     void changeTimestampToFilterEnabled(bool enabled);
+
+protected slots:
+    void columnResized(int column, int oldWidth, int newWidth);
 };
 
 #endif // MSGTABLEVIEW_H

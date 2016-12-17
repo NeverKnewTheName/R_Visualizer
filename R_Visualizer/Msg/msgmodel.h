@@ -1,15 +1,12 @@
 #ifndef MSGMODEL_H
 #define MSGMODEL_H
 
-#include "can_packet.h"
-#include "msg.h"
-#include "idmodel.h"
-#include "msgtypemodel.h"
+class Msg;
+
 #include "hugeqvector.h"
 
 #include <QAbstractTableModel>
 #include <QString>
-#include <QVector>
 
 class MainWindow;
 
@@ -45,16 +42,18 @@ public:
         COL_MESSAGE,
         COL_NR_OF_COLS
     };
+
 private:
     HugeQVector<Msg> msgs;
     friend class MainWindow;
 
 private slots:
-    void messageReceived(Data_PacketPtr ptr);
+    void messageReceived(Msg *msg);
 
 signals:
     void rowAppended(unsigned int rowNr);
     void rowsAdded(unsigned int nrOfRowsAdded);
+    void rowInvalidated(const QModelIndex &index);
 };
 
 #endif // MSGMODEL_H

@@ -3,24 +3,45 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-MsgTypeRep::MsgTypeRep()
+#include <QPainter>
+
+#include <QTextDocument>
+
+#include <QDebug>
+
+MsgTypeRep::MsgTypeRep() :
+    isValidObj(false),
+    code(0x0),
+    codeName(QString("")),
+    messageFormat(QString("")),
+    color(QColor(Qt::black))
 {
 
 }
 
-MsgTypeRep::MsgTypeRep(int code, QString codeName, QString messageFormat, QColor color) : code(code), codeName(codeName), messageFormat(messageFormat), color(color)
+MsgTypeRep::MsgTypeRep(const MsgTypeRep &other) :
+    isValidObj(other.isValid()),
+    code(other.getCode()),
+    codeName(other.getCodeName()),
+    messageFormat(other.getMessageFormat()),
+    color(other.getColor())
 {
 
 }
 
-int MsgTypeRep::getCode() const
+MsgTypeRep::MsgTypeRep(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color) :
+    isValidObj(true),
+    code(code),
+    codeName(codeName),
+    messageFormat(messageFormat),
+    color(color)
+{
+
+}
+
+MsgCodeType MsgTypeRep::getCode() const
 {
     return code;
-}
-
-void MsgTypeRep::setCode(int value)
-{
-    code = value;
 }
 
 
@@ -54,20 +75,85 @@ void MsgTypeRep::setColor(const QColor &value)
     color = value;
 }
 
-void MsgTypeRep::parseIN(QJsonObject jsonMsg)
+MsgTypeRep MsgTypeRep::createObjFromJson(const QJsonObject &jsonMsg)
 {
-    this->code = jsonMsg["code"].toInt();
+    return MsgTypeRep(
+                static_cast<const MsgCodeType>(jsonMsg["code"].toInt()),
+                jsonMsg["codeName"].toString(),
+                jsonMsg["messageFormat"].toString(),
+                QColor(jsonMsg["color"].toString())
+            );
+}
+
+void MsgTypeRep::parseIN(const QJsonObject &jsonMsg)
+{
+//    this->code = jsonMsg["code"].toInt();
     this->codeName = jsonMsg["codeName"].toString();
     this->messageFormat = jsonMsg["messageFormat"].toString();
     this->color = QColor(jsonMsg["color"].toString());
 }
 
-QJsonObject MsgTypeRep::parseOUT()
+QJsonObject MsgTypeRep::parseOUT() const
 {
     QJsonObject jsonMsg;
-    jsonMsg["code"] = this->code;
+    jsonMsg["code"] = static_cast<int>(this->code);
     jsonMsg["codeName"] = this->codeName;
     jsonMsg["messageFormat"] = this->messageFormat;
     jsonMsg["color"] = this->color.name();
     return jsonMsg;
+}
+
+bool MsgTypeRep::isValid() const
+{
+    return isValidObj;
+}
+
+bool MsgTypeRep::operator==(const MsgTypeRep &other) const
+{
+    return (this->code == other.getCode());
+}
+
+QString MsgTypeRep::getMsgDataAsString(Msg &msg)
+{
+    return msg.getDataAsString();
+}
+
+void MsgTypeRep::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, Msg &msg) const
+{
+    QTextDocument ItemText(QString("Code: %1\nData:\n0x%2 0x%3 0x%4 \n0x%5 0x%6 0x%7 0x%8")
+            .arg(code)
+            .arg((int)10)
+            .arg((int)11)
+            .arg((int)12)
+            .arg((int)13)
+            .arg((int)14)
+            .arg((int)15)
+            .arg((int)16));
+
+    ItemText.setTextWidth(option.rect.width());
+
+//    qDebug() << __PRETTY_FUNCTION__ << "  TextWidth: " << ItemText.textWidth();
+
+//    ItemText.size().toSize();
+//    int lineCount = ItemText.count(QChar('\n'));
+//    QSize sizeHint(option.rect.width(), (option.fontMetrics.size(0,QString("X")).height()*lineCount));
+
+    QSizeF sizeHint(ItemText.size());
+    msg.setMsgSizeHint(sizeHint.toSize());
+
+    QRectF BoundingRect(option.rect.x(), option.rect.y(), sizeHint.width(), sizeHint.height());
+//    qDebug() << __PRETTY_FUNCTION__ << "Rects: " << option.rect << BoundingRect;
+
+//    ItemText.drawContents();
+
+    painter->save();
+//    painter->setWindow(option.rect.x(),option.rect.y(),msg.getMsgSizeHint().width(),msg.getMsgSizeHint().height());
+    painter->fillRect(BoundingRect, (option.features & QStyleOptionViewItem::Alternate) ? color.darker(100) : color);
+    painter->setRenderHint(QPainter::TextAntialiasing);
+
+    painter->translate( BoundingRect.topLeft() );
+    ItemText.drawContents( painter, BoundingRect.translated( -BoundingRect.topLeft() ) );
+
+//    ItemText.drawContents(painter);
+    painter->restore();
 }

@@ -1,14 +1,20 @@
 #include "msgmodel.h"
 
-#include <QDebug>
+#include "msg.h"
 
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QJsonArray>
 
 #include <QFont>
 #include <QBrush>
+#include <QTextEdit>
 
-MsgModel::MsgModel(QObject *parent) : QAbstractTableModel(parent)
+#include <QDebug>
+
+
+MsgModel::MsgModel(QObject *parent) :
+    QAbstractTableModel(parent)
 {
 }
 
@@ -39,8 +45,13 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         // returns only displayable data
         if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
-        if(col == COL_NAME) return this->msgs.at(row)->getId();
-        if(col == COL_MESSAGE) return msgs.at(row)->getDataAsString();
+        if(col == COL_NAME) return msgs.at(row)->getId();
+        if(col == COL_MESSAGE) return QString("Code: 0x%1\nData: %2").arg(msgs.at(row)->getCode()).arg(msgs.at(row)->getDataAsString());
+//        if(col == COL_MESSAGE) return QTextEdit(QString("RABL\nRABL\nRABL\nRABL\n"));
+        break;
+    case Qt::SizeHintRole:
+//        return QSize(100,40);
+        return msgs.at(row)->getMsgSizeHint();
         break;
     case Qt::FontRole:
         break;
@@ -53,17 +64,37 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     case Qt::CheckStateRole:
         break;
     case Qt::UserRole +1:  // return Data
-    {
-        return QVariant::fromValue(this->msgs.at(row)->getData());
-    }
+        return QVariant::fromValue(static_cast<void*>(this->msgs.at(row)));
         break;
     case Qt::UserRole +2:  // return Code of the line
         return this->msgs.at(row)->getCode();
         break;
     case Qt::UserRole +3: // return raw data
         if(col == COL_TIMESTAMP) return msgs.at(row)->getTimestamp();
-        if(col == COL_NAME) return this->msgs.at(row)->getId();
-        if(col == COL_MESSAGE) return this->msgs.at(row)->getCode();
+        if(col == COL_NAME) return msgs.at(row)->getId();
+        if(col == COL_MESSAGE) return msgs.at(row)->getCode();
+        break;
+    case Qt::UserRole +4:// return Keys for PixmapCache
+        if(col == COL_TIMESTAMP)
+        {
+            return QString("PxmpCach_TmStmp%1").arg(msgs.at(row)->getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz"));
+        }
+        if(col == COL_NAME)
+        {
+            return QString("PxmpCach_ID%1").arg(msgs.at(row)->getId());
+        }
+        if(col == COL_MESSAGE)
+        {
+            QString MsgDataKey(QString("PxmpCach_MsgData_ID%1_Code%2_Data")
+                    .arg(msgs.at(row)->getCode())
+                    .arg(msgs.at(row)->getCode())
+                               );
+            for(auto & dataByte : msgs.at(row)->getData()->DataBytes)
+            {
+                MsgDataKey.append(QString::number(dataByte));
+            }
+            return MsgDataKey;
+        }
         break;
     }
 
@@ -72,6 +103,8 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
 
 bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    Q_UNUSED(index)
+    Q_UNUSED(value)
     //ToDO if msgs should be editable
     if (role == Qt::EditRole)
     {
@@ -109,7 +142,7 @@ QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role
 bool MsgModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     int msgModelSize = msgs.size();
-    if(msgModelSize || ((row+count) < msgModelSize))
+    if((row+count) < msgModelSize)
     {
         while(count--)
             removeRow(row+count, parent);
@@ -124,7 +157,7 @@ bool MsgModel::removeRows(int row, int count, const QModelIndex &parent)
 void MsgModel::removeRow(int row, const QModelIndex &parent)
 {
     int msgModelSize = msgs.size();
-    if(msgModelSize || (row < msgModelSize))
+    if(row < msgModelSize)
     {
         beginRemoveRows(parent, row, row);
         msgs.remove(row);
@@ -139,13 +172,13 @@ void MsgModel::addMsg(Msg *msg)
 {
     int newRow = msgs.size();
     beginInsertRows(QModelIndex(),newRow,newRow);
-    this->msgs.append(msg);
+    msgs.append(msg);
     endInsertRows();
+    emit rowInvalidated(createIndex(newRow,2));
+    emit rowInvalidated(createIndex(newRow,1));
     emit rowsAdded(1);
     emit rowAppended(newRow);
 }
-
-
 
 void MsgModel::clear()
 {
@@ -199,16 +232,8 @@ void MsgModel::parseFromJSON(QByteArray jsonFile)
     }
 }
 
-void MsgModel::messageReceived(Data_PacketPtr ptr)
+void MsgModel::messageReceived(Msg *msg)
 {
-        QDateTime timeStamp;
-        unsigned int id;
-        QByteArray canData;
-
-        timeStamp = ptr->timestamp();
-        id = ptr->frame().ID_Standard;
-        canData = ptr->frame().data;
-
-        this->addMsg(new Msg(timeStamp, id, canData));
+    addMsg(msg);
 }
 
