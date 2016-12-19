@@ -125,16 +125,15 @@ public:
     void enableChildrenEdit(bool enable = true);
 
 private:
-    bool isRootObject;
-    QRectF m_BoundingRect;
     static unsigned int objCntr;
     const unsigned int localObjCntr;
-    bool isChildObject;
-    bool doubleClicked;
-    bool isEditable;
+    QRectF m_BoundingRect;
     QString objName;
     QColor myColor;
     ObjShapeType shapeType;
+    bool isChildObject;
+    bool isEditable;
+    bool doubleClicked;
     QPixmap ObjPixMap;
 
     void updateShape(const QRectF &rect = QRectF());

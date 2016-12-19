@@ -42,7 +42,7 @@ private:
     Ui::SystemOverview *ui;
     friend class MainWindow;
 
-    QGraphicsScene *scene;
+    QGraphicsScene SystemOverviewScene;
     Qt::KeyboardModifiers kbrdModifiers;
 
 private slots:

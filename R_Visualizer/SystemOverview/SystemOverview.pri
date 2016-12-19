@@ -7,10 +7,12 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD//systemoverview.cpp \
-    $$PWD/sysoverviewgraphicsview.cpp
+    $$PWD/sysoverviewgraphicsview.cpp \
+    $$PWD/isysovrvelement.cpp
 
 HEADERS  += $$PWD//systemoverview.h \
-    $$PWD/sysoverviewgraphicsview.h
+    $$PWD/sysoverviewgraphicsview.h \
+    $$PWD/isysovrvelement.h
 
 FORMS    += $$PWD//systemoverview.ui
 

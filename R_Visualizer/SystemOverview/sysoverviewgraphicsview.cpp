@@ -32,11 +32,20 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
             currentObject = qgraphicsitem_cast<SysOvrvObject*>(currentObject->parentItem());
 
         QAction * actionRmv = menu.addAction("Remove Object");
-        QAction * actionUpdt = menu.addAction("Update Object");
-        QAction * duplicateSelectedObject = menu.addAction("Duplicate Object");
-        connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
-        connect(actionUpdt, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::updtObject);
-        connect(duplicateSelectedObject, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::duplicateObject);
+        QAction * actionEdit = menu.addAction("Edit Object");
+        QAction * actionDuplctObj = menu.addAction("Duplicate Object");
+//        connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
+        QAction::connect(actionRmv, &QAction::triggered, [this] () {
+            sysOvrvObjStore->removeObject(currentObject);
+        } );
+//        connect(actionEdit, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::updtObject);
+        QAction::connect(actionEdit, &QAction::triggered, [this] () {
+            sysOvrvObjStore->updateObject(currentObject);
+        } );
+//        connect(actionDuplctObj, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::duplicateObject);
+        QAction::connect(actionDuplctObj, &QAction::triggered, [this] () {
+            sysOvrvObjStore->duplicateObject();
+        } );
     }
 
     menu.exec(event->globalPos());

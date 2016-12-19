@@ -37,10 +37,10 @@ void SysOvrvObjectStore::removeMesageToWatch(const MsgIDType id, const MsgCodeTy
 
 void SysOvrvObjectStore::addObject()
 {
-    SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog();
-    connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
+    SysOvrvObjectDialog addSysOvrvObjectDialog;
+    connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     curObjPos = static_cast<SysOverviewGraphicsView*>(parent())->GetCurrentMousePos();
-    addSysOvrvObjectDialog->exec();
+    addSysOvrvObjectDialog.exec();
 }
 
 void SysOvrvObjectStore::rmvObject()
@@ -127,9 +127,9 @@ void SysOvrvObjectStore::updateObject(SysOvrvObject *objToUpdt)
     if( objToUpdt != Q_NULLPTR)
     {
         removeObject(objToUpdt);
-        SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog(objToUpdt);
-        connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
-        addSysOvrvObjectDialog->exec();
+        SysOvrvObjectDialog addSysOvrvObjectDialog(objToUpdt);
+        connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
+        addSysOvrvObjectDialog.exec();
     }
 }
 

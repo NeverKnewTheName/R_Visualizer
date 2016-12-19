@@ -148,7 +148,7 @@ void SysOvrvTextLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     }
     QAction::connect(editAction, &QAction::triggered, [this] () {
         textEdit();
-   } );
+    } );
     menu.exec(event->screenPos());
 }
 

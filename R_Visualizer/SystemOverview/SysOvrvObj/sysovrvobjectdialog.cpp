@@ -22,8 +22,7 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
     m_jsonObjSave = m_curSysOvrvObject->parseToJson();
     ui->setupUi(this);
     this->setupDialog();
-    m_curSysOvrvObject->enableResizing(true);
-
+    m_curSysOvrvObject->enableEdit(true);
 }
 
 SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent) :
@@ -36,7 +35,7 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
     m_jsonObjSave = m_curSysOvrvObject->parseToJson();
     ui->setupUi(this);
     this->setupDialog();
-    m_curSysOvrvObject->enableResizing(true);
+    m_curSysOvrvObject->enableEdit(true);
     for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
     {
         childObj->setAsChild(false);
@@ -45,6 +44,7 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
 
 SysOvrvObjectDialog::~SysOvrvObjectDialog()
 {
+    qDebug() << __PRETTY_FUNCTION__;
     delete ui;
 }
 

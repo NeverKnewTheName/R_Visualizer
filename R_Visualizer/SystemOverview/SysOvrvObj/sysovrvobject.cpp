@@ -23,13 +23,14 @@ unsigned int SysOvrvObject::objCntr = 0;
 
 SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     ResizableGraphicsItem(parent),
+    localObjCntr(objCntr++),
     m_BoundingRect(0,0,100,100),
+    objName(std::move(QString(""))),
     myColor(std::move(QColor(Qt::gray))),
     shapeType(ObjShape_Rectangle),
     isChildObject(false),
-    doubleClicked(false),
     isEditable(true),
-    localObjCntr(objCntr++)
+    doubleClicked(false)
 {
     initResizeCorners(m_BoundingRect);
     setupSysOvrvObject();
@@ -38,14 +39,14 @@ SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
 
 SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
     ResizableGraphicsItem(ToCopy.parentItem()),
+    localObjCntr(objCntr++),
     m_BoundingRect(ToCopy.m_BoundingRect),
-    isChildObject(ToCopy.isChildObject),
-    doubleClicked(ToCopy.doubleClicked),
-    isEditable(ToCopy.isEditable),
-    localObjCntr(ToCopy.localObjCntr),
     objName(ToCopy.objName),
     myColor(ToCopy.myColor),
-    shapeType(ToCopy.shapeType)
+    shapeType(ToCopy.shapeType),
+    isChildObject(ToCopy.isChildObject),
+    isEditable(ToCopy.isEditable),
+    doubleClicked(ToCopy.doubleClicked)
 {
     QList<QGraphicsItem*> ToCopyChildren = ToCopy.childItems();
     for(QGraphicsItem * const child : ToCopyChildren)
@@ -64,21 +65,7 @@ SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
             childCopy->setParentItem(this);
             continue;
         }
-
-        //        child->setParentItem(this);
     }
-    //    for(SysOvrvObject * const child : ToCopy.childSysOvrvObjects)
-    //    {
-    //        SysOvrvObject *childCopy = new SysOvrvObject(*child);
-    //        childCopy->setParentItem(this);
-    //        childSysOvrvObjects.append(childCopy);
-    //    }
-    //    for(SysOvrvTextLabel * const textLabel : ToCopy.objTextlabels)
-    //    {
-    //        SysOvrvTextLabel *textLabelCopy = new SysOvrvTextLabel(*textLabel);
-    //        textLabelCopy->setParentItem(this);
-    //        objTextlabels.append(textLabelCopy);
-    //    }
     setPos(ToCopy.pos());
     initResizeCorners(m_BoundingRect);
     enableResizing(ToCopy.getResizeEnabled());
@@ -88,14 +75,14 @@ SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
 
 SysOvrvObject::SysOvrvObject(SysOvrvObject &&ToMove) :
     ResizableGraphicsItem(ToMove.parentItem()),
-    m_BoundingRect(std::move(ToMove.m_BoundingRect)),
-    isChildObject(ToMove.isChildObject),
-    doubleClicked(ToMove.doubleClicked),
-    isEditable(ToMove.isEditable),
     localObjCntr(ToMove.localObjCntr),
+    m_BoundingRect(std::move(ToMove.m_BoundingRect)),
     objName(std::move(ToMove.objName)),
     myColor(std::move(ToMove.myColor)),
-    shapeType(ToMove.shapeType)
+    shapeType(ToMove.shapeType),
+    isChildObject(ToMove.isChildObject),
+    isEditable(ToMove.isEditable),
+    doubleClicked(ToMove.doubleClicked)
 {
     QList<QGraphicsItem*> ToMoveChildren = ToMove.childItems();
     for(QGraphicsItem * const child : ToMoveChildren)
@@ -113,8 +100,7 @@ SysOvrvObject::SysOvrvObject(SysOvrvObject &&ToMove) :
 
 SysOvrvObject::~SysOvrvObject()
 {
-    qDebug() << "(SysOvrvObject::~SysOvrvObject): deleting obj: " << getHashedName();
-
+    //Invalidate Parent (if any..)
     this->setParentItem(Q_NULLPTR);
     qDebug() << "(SysOvrvObject::~SysOvrvObject): deleted obj: " << getHashedName();
 }
