@@ -17,7 +17,7 @@ DEFINES += USB_DRIVER_LIBRARY
 
 INCLUDEPATH += ./hidapi/.
 
-LIBS += -L../../CAN_Analyser_USB_Driver/hidapi -lhidapi
+LIBS += -Lhidapi -lhidapi
 
 SOURCES += devicedriver.cpp \
     can_packet.cpp \

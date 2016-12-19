@@ -23,16 +23,22 @@ void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, co
 
 int main(int argc, char *argv[])
 {
-    //    QApplication a(argc, argv);
+#ifndef __MSG_STORAGE_TEST__
+        QApplication a(argc, argv);
 
-    //    qRegisterMetaType <CAN_PacketPtr>("CAN_PacketPtr");
-    //    qRegisterMetaType <Data_PacketPtr>("Data_PacketPtr");
-    //    qRegisterMetaType <Error_PacketPtr>("Error_PacketPtr");
-    //    qRegisterMetaType <Msg>("Msg");
-    //    qRegisterMetaType <MsgDataStruc>("MsgDataStruc");
-    //    qRegisterMetaType <DataByteVect>("DataByteVect");
-    //    qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
+        qRegisterMetaType <CAN_PacketPtr>("CAN_PacketPtr");
+        qRegisterMetaType <Data_PacketPtr>("Data_PacketPtr");
+        qRegisterMetaType <Error_PacketPtr>("Error_PacketPtr");
+        qRegisterMetaType <Msg>("Msg");
+        qRegisterMetaType <MsgDataStruc>("MsgDataStruc");
+        qRegisterMetaType <DataByteVect>("DataByteVect");
+        qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
 
+        MainWindow w;
+        w.show();
+
+        return a.exec();
+#else
     QElapsedTimer myTimer;
     const int NrMsgsToTest = 100;
     myTimer.start();
@@ -51,11 +57,7 @@ int main(int argc, char *argv[])
     isDone.close();
 
     return 0;
-
-    //    MainWindow w;
-    //    w.show();
-
-    //    return a.exec();
+#endif
 }
 
 void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)

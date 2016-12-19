@@ -16,6 +16,7 @@ SystemOverview::SystemOverview(QWidget *parent) :
 {
     ui->setupUi(this);
     this->initVisualizerGraphicsView();
+
     connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectAddedToStore, this, &SystemOverview::addNewObject);
     connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectRemovedFromStore, this, &SystemOverview::removeObject);
 
@@ -83,12 +84,10 @@ void SystemOverview::wheelEvent(QWheelEvent *event)
 
 void SystemOverview::keyPressEvent(QKeyEvent *event)
 {
-
 }
 
 void SystemOverview::keyReleaseEvent(QKeyEvent *event)
 {
-
 }
 
 void SystemOverview::initVisualizerGraphicsView()

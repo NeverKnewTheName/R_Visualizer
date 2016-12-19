@@ -18,6 +18,11 @@ namespace Ui {
 class SystemOverview;
 }
 
+/**
+ * @brief The SystemOverview class is a QWidget that can be used to display \ref SysOvrvObjects.
+ *
+ * The SystemOverview handles certain mouse and key events and holds its own scene.
+ */
 class SystemOverview : public QWidget
 {
     Q_OBJECT
