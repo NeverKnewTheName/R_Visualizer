@@ -17,6 +17,10 @@ DEFINES += USB_DRIVER_LIBRARY
 
 INCLUDEPATH += ./hidapi/
 
+<<<<<<< HEAD
+LIBS += -Lhidapi -lhidapi
+=======
+>>>>>>> dev
 
 SOURCES += devicedriver.cpp \
     can_packet.cpp \
@@ -44,5 +48,8 @@ unix {
 win32 {
 #    DESTDIR = $$PWD
     DESTDIR = ./
+<<<<<<< HEAD
+=======
     LIBS += -Lhidapi -lhidapi
+>>>>>>> dev
 }

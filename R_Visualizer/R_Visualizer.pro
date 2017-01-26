@@ -16,8 +16,6 @@ INCLUDEPATH += .
 INCLUDEPATH += ../CAN_Analyser_USB_Driver/hidapi/
 INCLUDEPATH += ../CAN_Analyser_USB_Driver/
 
-LIBS += -L../CAN_Analyser_USB_Driver/hidapi/ -lhidapi
-LIBS += -L../CAN_Analyser_USB_Driver/ -lusb_driver
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -37,6 +35,19 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     ressources.qrc
 
+unix {
+    LIBS += -L../CAN_Analyser_USB_Driver/lib -lusb_driver -lhidapi
+
+    OBJECTS_DIR = .build
+    MOC_DIR     = .build
+    UI_DIR      = .build
+    RCC_DIR     = .build
+}
+
+win32 {
+    LIBS += -L../CAN_Analyser_USB_Driver/hidapi/ -lhidapi
+    LIBS += -L../CAN_Analyser_USB_Driver/ -lusb_driver
+}
 
 include(Msg/Msg.pri)
 include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)

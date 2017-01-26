@@ -23,10 +23,7 @@ SystemOverview::SystemOverview(QWidget *parent) :
 
     QScrollBar *scroller;
     scroller = ui->visualizerGraphicsView->horizontalScrollBar();
-//    scroller->blockSignals(true);
-//    scroller->
     scroller = ui->visualizerGraphicsView->verticalScrollBar();
-//    scroller->blockSignals(true);
 }
 
 SystemOverview::~SystemOverview()
