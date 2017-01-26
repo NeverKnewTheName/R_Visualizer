@@ -37,10 +37,10 @@ void SysOvrvObjectStore::removeMesageToWatch(const MsgIDType id, const MsgCodeTy
 
 void SysOvrvObjectStore::addObject()
 {
-    SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog();
-    connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
+    SysOvrvObjectDialog addSysOvrvObjectDialog;
+    connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     curObjPos = static_cast<SysOverviewGraphicsView*>(parent())->GetCurrentMousePos();
-    addSysOvrvObjectDialog->exec();
+    addSysOvrvObjectDialog.exec();
 }
 
 void SysOvrvObjectStore::rmvObject()
@@ -59,16 +59,16 @@ void SysOvrvObjectStore::updtObject()
 
     if(curObj == NULL)
         return;
-    QList<MsgIDType> triggerIDs = curObj->getTriggerIDs();
-    for(const MsgIDType &id : triggerIDs)
-    {
-        QList<MsgCodeType> triggerCodes = curObj->getTriggerCodesToID(id);
-        for(const MsgCodeType &code : triggerCodes)
-        {
-            removeMesageToWatch(id, code, curObj);
-        }
-    }
-    curObj->setResizeMode(true);
+//    QList<MsgIDType> triggerIDs = curObj->getTriggerIDs();
+//    for(const MsgIDType &id : triggerIDs)
+//    {
+//        QList<MsgCodeType> triggerCodes = curObj->getTriggerCodesToID(id);
+//        for(const MsgCodeType &code : triggerCodes)
+//        {
+//            removeMesageToWatch(id, code, curObj);
+//        }
+//    }
+    curObj->enableResizing(true);
     curObjPos = curObj->pos();
     updateObject(curObj);
 }
@@ -84,7 +84,7 @@ void SysOvrvObjectStore::duplicateObject()
     this->objectStore[newObj->getHashedName()] = newObj;
     qDebug() << "GraphicsItem added: " << newObj->getObjName();
 
-    newObj->setResizeMode(false);
+    newObj->enableResizing(false);
     emit this->objectAddedToStore(newObj,curObjPos);
 }
 
@@ -94,31 +94,31 @@ void SysOvrvObjectStore::addObjToStore(SysOvrvObject *objToAdd)
     qDebug() << "GraphicsItem added: " << objToAdd->getObjName();
     disconnect(qobject_cast<SysOvrvObjectDialog *>(sender()), &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
     delete sender();
-    QList<MsgIDType> triggerIDs = objToAdd->getTriggerIDs();
-    for(const MsgIDType &id : triggerIDs)
-    {
-        QList<MsgCodeType> triggerCodes = objToAdd->getTriggerCodesToID(id);
-        for(const MsgCodeType &code : triggerCodes)
-        {
-            addMesageToWatch(id, code, objToAdd);
-        }
-    }
-    objToAdd->setResizeMode(false);
+//    QList<MsgIDType> triggerIDs = objToAdd->getTriggerIDs();
+//    for(const MsgIDType &id : triggerIDs)
+//    {
+//        QList<MsgCodeType> triggerCodes = objToAdd->getTriggerCodesToID(id);
+//        for(const MsgCodeType &code : triggerCodes)
+//        {
+//            addMesageToWatch(id, code, objToAdd);
+//        }
+//    }
+    objToAdd->enableResizing(false);
     emit this->objectAddedToStore(objToAdd,curObjPos);
 }
 
 void SysOvrvObjectStore::removeObject(SysOvrvObject *objToRmv)
 {
     this->objectStore.remove(objToRmv->getHashedName());
-    QList<MsgIDType> triggerIDs = objToRmv->getTriggerIDs();
-    for(const MsgIDType &id : triggerIDs)
-    {
-        QList<MsgCodeType> triggerCodes = objToRmv->getTriggerCodesToID(id);
-        for(const MsgCodeType &code : triggerCodes)
-        {
-            removeMesageToWatch(id, code, objToRmv);
-        }
-    }
+//    QList<MsgIDType> triggerIDs = objToRmv->getTriggerIDs();
+//    for(const MsgIDType &id : triggerIDs)
+//    {
+//        QList<MsgCodeType> triggerCodes = objToRmv->getTriggerCodesToID(id);
+//        for(const MsgCodeType &code : triggerCodes)
+//        {
+//            removeMesageToWatch(id, code, objToRmv);
+//        }
+//    }
     emit this->objectRemovedFromStore(objToRmv);
 }
 
@@ -127,9 +127,9 @@ void SysOvrvObjectStore::updateObject(SysOvrvObject *objToUpdt)
     if( objToUpdt != Q_NULLPTR)
     {
         removeObject(objToUpdt);
-        SysOvrvObjectDialog *addSysOvrvObjectDialog = new SysOvrvObjectDialog(objToUpdt);
-        connect(addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
-        addSysOvrvObjectDialog->exec();
+        SysOvrvObjectDialog addSysOvrvObjectDialog(objToUpdt);
+        connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, this, &SysOvrvObjectStore::addObjToStore);
+        addSysOvrvObjectDialog.exec();
     }
 }
 
@@ -153,17 +153,17 @@ void SysOvrvObjectStore::receiveMessage(Data_PacketPtr ptr)
 
     QVector<SysOvrvObject *> relatedSysOvrvObjs = msgParserStore[id][code];
 
-    for(SysOvrvObject *relatedSysOvrvObj : relatedSysOvrvObjs)
-    {
-        qDebug() << "Trigger from ParserStore: " << relatedSysOvrvObj->getObjName();
-        relatedSysOvrvObj->msgReceived(id,code,canData);
-    }
+//    for(SysOvrvObject *relatedSysOvrvObj : relatedSysOvrvObjs)
+//    {
+//        qDebug() << "Trigger from ParserStore: " << relatedSysOvrvObj->getObjName();
+//        relatedSysOvrvObj->msgReceived(id,code,canData);
+//    }
 
     // // // DEBUG // // //
-    for(SysOvrvObject *obj : this->objectStore.values())
-    {
-        qDebug() << "Trigger: " << obj->getObjName();
-        obj->msgReceived(id, code, canData);
-    }
+//    for(SysOvrvObject *obj : this->objectStore.values())
+//    {
+//        qDebug() << "Trigger: " << obj->getObjName();
+//        obj->msgReceived(id, code, canData);
+//    }
     // // // DEBUG // // //
 }

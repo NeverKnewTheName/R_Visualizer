@@ -12,19 +12,18 @@
 SystemOverview::SystemOverview(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemOverview),
+    SystemOverviewScene(this),
     kbrdModifiers(Qt::ControlModifier)
 {
     ui->setupUi(this);
     this->initVisualizerGraphicsView();
+
     connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectAddedToStore, this, &SystemOverview::addNewObject);
     connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectRemovedFromStore, this, &SystemOverview::removeObject);
 
     QScrollBar *scroller;
     scroller = ui->visualizerGraphicsView->horizontalScrollBar();
-//    scroller->blockSignals(true);
-//    scroller->
     scroller = ui->visualizerGraphicsView->verticalScrollBar();
-//    scroller->blockSignals(true);
 }
 
 SystemOverview::~SystemOverview()
@@ -83,23 +82,18 @@ void SystemOverview::wheelEvent(QWheelEvent *event)
 
 void SystemOverview::keyPressEvent(QKeyEvent *event)
 {
-
 }
 
 void SystemOverview::keyReleaseEvent(QKeyEvent *event)
 {
-
 }
 
 void SystemOverview::initVisualizerGraphicsView()
 {
-    //create a new scene
-    scene = new QGraphicsScene(this);
-
     //    scene->setSceneRect(QRectF(QPointF(0,0),
     //                               ui->visualizerGraphicsView->maximumViewportSize()));
     //set the graphicsview to the newly created scene
-    ui->visualizerGraphicsView->setScene(scene);
+    ui->visualizerGraphicsView->setScene(&SystemOverviewScene);
 }
 
 void SystemOverview::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -129,12 +123,12 @@ void SystemOverview::newMessage(Data_PacketPtr ptr)
 
 void SystemOverview::addNewObject(SysOvrvObject *obj, QPointF &pos)
 {
-    scene->addItem(obj);
+    SystemOverviewScene.addItem(obj);
     qDebug() << "Item: " << obj->getObjName() << " added to scene at pos: " << pos;
     obj->setPos(pos);
 }
 
 void SystemOverview::removeObject(SysOvrvObject *obj)
 {
-    scene->removeItem(obj);
+    SystemOverviewScene.removeItem(obj);
 }

@@ -28,7 +28,7 @@ private:
     Ui::SysOvrvObjectDialog *ui;
     SysOvrvObject *m_curSysOvrvObject;
     SysOvrvObject *m_focusedItem;
-    QGraphicsScene *scene;
+    QGraphicsScene SysOvrvScene;
     QByteArray m_jsonObjSave;
 
     bool updateExisting;
@@ -52,6 +52,7 @@ private slots:
     void objectShapeChanged(int index);
     void addObjectToObject(SysOvrvObject *obj);
     void focusChanged(QGraphicsItem *newItem, QGraphicsItem *oldItem);
+    void selectionChanged();
     void on_OpenColorPicker_clicked();
     void colorChanged(const QColor &newColor);
     void on_pushButton_clicked();

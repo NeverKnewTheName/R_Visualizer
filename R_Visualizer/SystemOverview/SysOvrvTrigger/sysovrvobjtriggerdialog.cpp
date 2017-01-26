@@ -65,27 +65,27 @@ void SysOvrvObjTriggerDialog::on_EditTriggerBtn_clicked()
 void SysOvrvObjTriggerDialog::setupModel(SysOvrvObject *sysOvrvObj)
 {
     stdModel->clear();
-    QList<MsgIDType> idList = sysOvrvObj->getTriggerIDs();
-    for( const MsgIDType &id : idList)
-    {
-        QStandardItem *pIDItem = new QStandardItem();
-        pIDItem->setData(QVariant(id),Qt::DisplayRole);
-        QList<MsgCodeType> codeList = sysOvrvObj->getTriggerCodesToID(id);
-        for( const MsgCodeType &code : codeList )
-        {
-            QStandardItem *pCodeItem = new QStandardItem();
-            pCodeItem->setData(QVariant(code),Qt::DisplayRole);
-            QVector<SysOvrvTrigger*> triggerList = sysOvrvObj->getTriggersToIDandCode(id, code);
-            for( SysOvrvTrigger *trigger : triggerList)
-            {
-                QStandardItem *pTriggerItem = new QStandardItem(trigger->printToString());
-                pTriggerItem->setData(QVariant::fromValue(static_cast<void *>(trigger)));
-                pCodeItem->appendRow(pTriggerItem);
-            }
-            pIDItem->appendRow(pCodeItem);
-        }
-        stdModel->appendRow(pIDItem);
-    }
+//    QList<MsgIDType> idList = sysOvrvObj->getTriggerIDs();
+//    for( const MsgIDType &id : idList)
+//    {
+//        QStandardItem *pIDItem = new QStandardItem();
+//        pIDItem->setData(QVariant(id),Qt::DisplayRole);
+//        QList<MsgCodeType> codeList = sysOvrvObj->getTriggerCodesToID(id);
+//        for( const MsgCodeType &code : codeList )
+//        {
+//            QStandardItem *pCodeItem = new QStandardItem();
+//            pCodeItem->setData(QVariant(code),Qt::DisplayRole);
+//            QVector<SysOvrvTrigger*> triggerList = sysOvrvObj->getTriggersToIDandCode(id, code);
+//            for( SysOvrvTrigger *trigger : triggerList)
+//            {
+//                QStandardItem *pTriggerItem = new QStandardItem(trigger->printToString());
+//                pTriggerItem->setData(QVariant::fromValue(static_cast<void *>(trigger)));
+//                pCodeItem->appendRow(pTriggerItem);
+//            }
+//            pIDItem->appendRow(pCodeItem);
+//        }
+//        stdModel->appendRow(pIDItem);
+//    }
 
     stdModel->setHeaderData(0,Qt::Horizontal,QString("ID"),Qt::DisplayRole);
     stdModel->setHeaderData(1,Qt::Horizontal,QString("Code"),Qt::DisplayRole);
