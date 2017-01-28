@@ -15,9 +15,8 @@ CONFIG += silent release dll plugin
 
 DEFINES += USB_DRIVER_LIBRARY
 
-INCLUDEPATH += ./hidapi/.
+INCLUDEPATH += ./hidapi/
 
-LIBS += -L../../CAN_Analyser_USB_Driver/hidapi -lhidapi
 
 SOURCES += devicedriver.cpp \
     can_packet.cpp \
@@ -32,7 +31,9 @@ HEADERS += devicedriver.h \
 
 
 unix {
-    DESTDIR=../lib
+    DESTDIR=./lib
+
+    LIBS += -L./lib -lhidapi
 
     OBJECTS_DIR = .build
     MOC_DIR     = .build
@@ -41,5 +42,7 @@ unix {
 }
 
 win32 {
-    DESTDIR = $$PWD
+#    DESTDIR = $$PWD
+    DESTDIR = ./
+    LIBS += -Lhidapi -lhidapi
 }

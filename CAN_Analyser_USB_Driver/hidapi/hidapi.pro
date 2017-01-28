@@ -19,6 +19,7 @@ HEADERS += hidapi.h\
 
 unix {
     SOURCES += linux/hid-libusb.c
+    INCLUDEPATH += /usr/include/libusb-1.0/
     LIBS += -lusb-1.0 -ludev
 
     DESTDIR=../lib
@@ -33,5 +34,6 @@ win32 {
     SOURCES += windows/hid.c
     LIBS += -lsetupapi
 
-    DESTDIR = $$PWD
+#    DESTDIR = $$PWD
+    DESTDIR = ./
 }
