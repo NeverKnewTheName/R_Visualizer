@@ -13,30 +13,45 @@ TEMPLATE = app
 
 
 INCLUDEPATH += .
-INCLUDEPATH += ../CAN_Analyser_USB_Driver/.
-INCLUDEPATH += ../CAN_Analyser_USB_Driver/hidapi/.
+INCLUDEPATH += ./inc
+INCLUDEPATH += ../CAN_Analyser_USB_Driver/hidapi/
+INCLUDEPATH += ../CAN_Analyser_USB_Driver/
 
-LIBS += -lusb_driver -L../../CAN_Analyser_USB_Driver/
-LIBS += -lhidapi -L../../CAN_Analyser_USB_Driver/hidapi/
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    csvmsgpackethandler.cpp \
-    devicehandler.cpp \
-    userrolemngr.cpp \
-    msgparser.cpp
+SOURCES += \
+    ./src/main.cpp \
+    ./src/mainwindow.cpp \
+    ./src/csvmsgpackethandler.cpp \
+    ./src/devicehandler.cpp \
+    ./src/userrolemngr.cpp \
+    ./src/msgparser.cpp
 
-HEADERS  += mainwindow.h \
-    csvmsgpackethandler.h \
-    devicehandler.h \
-    userrolemngr.h \
-    msgparser.h
+HEADERS  += \
+    ./inc/mainwindow.h \
+    ./inc/csvmsgpackethandler.h \
+    ./inc/devicehandler.h \
+    ./inc/userrolemngr.h \
+    ./inc/msgparser.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    ./ui/mainwindow.ui
 
 RESOURCES += \
-    ressources.qrc
+    ./res/ressources.qrc
 
+unix {
+    LIBS += -L../CAN_Analyser_USB_Driver/lib -lusb_driver -lhidapi
+
+    OBJECTS_DIR = .build
+    MOC_DIR     = .build
+    UI_DIR      = .build
+    RCC_DIR     = .build
+}
+
+win32 {
+    LIBS += -L../CAN_Analyser_USB_Driver/hidapi/ -lhidapi
+    LIBS += -L../CAN_Analyser_USB_Driver/ -lusb_driver
+}
 
 include(Msg/Msg.pri)
 include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)

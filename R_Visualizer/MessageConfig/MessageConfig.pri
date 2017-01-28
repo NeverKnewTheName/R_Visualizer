@@ -3,34 +3,37 @@
 # Project created by QtCreator 2016-05-31T23:57:59
 #
 #-------------------------------------------------
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD/inc
+INCLUDEPATH += $$PWD/inc
 
-SOURCES += $$PWD//messageconfig.cpp \
-    $$PWD//ideditordelegate.cpp \
-    $$PWD//msgtypeeditordelegate.cpp \
-    $$PWD//msgtypeformatterdialog.cpp \
-    $$PWD//idadddialog.cpp \
-    $$PWD//msgtypeadddialog.cpp \
-    $$PWD/filteridstore.cpp \
-    $$PWD/filtercodestore.cpp \
-    $$PWD/filtertimestampstore.cpp \
-    $$PWD/filteriddelegate.cpp \
-    $$PWD/filtermsgtypedelegate.cpp
+SOURCES += \
+    $$PWD/src/messageconfig.cpp \
+    $$PWD/src/ideditordelegate.cpp \
+    $$PWD/src/msgtypeeditordelegate.cpp \
+    $$PWD/src/msgtypeformatterdialog.cpp \
+    $$PWD/src/idadddialog.cpp \
+    $$PWD/src/msgtypeadddialog.cpp \
+    $$PWD/src/filteridstore.cpp \
+    $$PWD/src/filtercodestore.cpp \
+    $$PWD/src/filtertimestampstore.cpp \
+    $$PWD/src/filteriddelegate.cpp \
+    $$PWD/src/filtermsgtypedelegate.cpp
 
-HEADERS  += $$PWD//messageconfig.h \
-    $$PWD//ideditordelegate.h \
-    $$PWD//msgtypeeditordelegate.h \
-    $$PWD//msgtypeformatterdialog.h \
-    $$PWD//idadddialog.h \
-    $$PWD//msgtypeadddialog.h \
-    $$PWD/filteridstore.h \
-    $$PWD/filtercodestore.h \
-    $$PWD/filtertimestampstore.h \
-    $$PWD/filteriddelegate.h \
-    $$PWD/filtermsgtypedelegate.h
+HEADERS  += \
+    $$PWD/inc/messageconfig.h \
+    $$PWD/inc/ideditordelegate.h \
+    $$PWD/inc/msgtypeeditordelegate.h \
+    $$PWD/inc/msgtypeformatterdialog.h \
+    $$PWD/inc/idadddialog.h \
+    $$PWD/inc/msgtypeadddialog.h \
+    $$PWD/inc/filteridstore.h \
+    $$PWD/inc/filtercodestore.h \
+    $$PWD/inc/filtertimestampstore.h \
+    $$PWD/inc/filteriddelegate.h \
+    $$PWD/inc/filtermsgtypedelegate.h
 
-FORMS    += $$PWD//messageconfig.ui \
-    $$PWD//idadddialog.ui \
-    $$PWD//msgtypeadddialog.ui \
-    $$PWD//msgtypeformatterdialog.ui
+FORMS    += \
+    $$PWD/ui/messageconfig.ui \
+    $$PWD/ui/idadddialog.ui \
+    $$PWD/ui/msgtypeadddialog.ui \
+    $$PWD/ui/msgtypeformatterdialog.ui

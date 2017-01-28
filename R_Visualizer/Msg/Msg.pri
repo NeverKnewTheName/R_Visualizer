@@ -3,40 +3,42 @@
 # Project created by QtCreator 2016-06-01T01:53:25
 #
 #-------------------------------------------------
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD/inc
+INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/msg.cpp \
-    $$PWD/msgmodel.cpp \
-    $$PWD/msgdelegate.cpp \
-    $$PWD/idmodel.cpp \
-    $$PWD/idrep.cpp \
-    $$PWD/msgtypemodel.cpp \
-    $$PWD/msgtyperep.cpp \
-    $$PWD/msgtableview.cpp \
-    $$PWD/hugeqvector.cpp \
-    $$PWD/msgdisplaywidget.cpp \
-    $$PWD/msgiddelegate.cpp \
-    $$PWD/msgdatadelegate.cpp \
-    $$PWD/msgdatawidget.cpp
+    $$PWD/src/msg.cpp \
+    $$PWD/src/msgmodel.cpp \
+    $$PWD/src/msgdelegate.cpp \
+    $$PWD/src/idmodel.cpp \
+    $$PWD/src/idrep.cpp \
+    $$PWD/src/msgtypemodel.cpp \
+    $$PWD/src/msgtyperep.cpp \
+    $$PWD/src/msgtableview.cpp \
+    $$PWD/src/hugeqvector.cpp \
+    $$PWD/src/msgdisplaywidget.cpp \
+    $$PWD/src/msgiddelegate.cpp \
+    $$PWD/src/msgdatadelegate.cpp \
+    $$PWD/src/msgdatawidget.cpp \
+    $$PWD/src/msgstorage.cpp
 
 HEADERS  += \
-    $$PWD/msg.h \
-    $$PWD/msgmodel.h \
-    $$PWD/msgdelegate.h \
-    $$PWD/idmodel.h \
-    $$PWD/idrep.h \
-    $$PWD/msgtypemodel.h \
-    $$PWD/msgtyperep.h \
-    $$PWD/msgtableview.h \
-    $$PWD/hugeqvector.h \
-    $$PWD/msgdisplaywidget.h \
-    $$PWD/msgiddelegate.h \
-    $$PWD/msgdatadelegate.h \
-    $$PWD/msgdatawidget.h
+    $$PWD/inc/msg.h \
+    $$PWD/inc/msgmodel.h \
+    $$PWD/inc/msgdelegate.h \
+    $$PWD/inc/idmodel.h \
+    $$PWD/inc/idrep.h \
+    $$PWD/inc/msgtypemodel.h \
+    $$PWD/inc/msgtyperep.h \
+    $$PWD/inc/msgtableview.h \
+    $$PWD/inc/hugeqvector.h \
+    $$PWD/inc/msgdisplaywidget.h \
+    $$PWD/inc/msgiddelegate.h \
+    $$PWD/inc/msgdatadelegate.h \
+    $$PWD/inc/msgdatawidget.h \
+    $$PWD/inc/msgstorage.h
 
 
 FORMS    += \
-    $$PWD/msgdisplaywidget.ui \
-    $$PWD/msgdatawidget.ui
+    $$PWD/ui/msgdisplaywidget.ui \
+    $$PWD/ui/msgdatawidget.ui

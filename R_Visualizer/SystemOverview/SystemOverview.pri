@@ -3,36 +3,21 @@
 # Project created by QtCreator 2016-06-01T01:52:38
 #
 #-------------------------------------------------
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD/inc
+INCLUDEPATH += $$PWD/inc
 
-SOURCES += $$PWD//systemoverview.cpp \
-    $$PWD/sysoverviewgraphicsview.cpp \
-    $$PWD/sysovrvobjectstore.cpp \
-    $$PWD/sysovrvobject.cpp \
-    $$PWD/sysovrvobjectdialog.cpp \
-    $$PWD/resizerectcorner.cpp \
-    $$PWD/sysovrvtextlabel.cpp \
-    $$PWD/sysovrvtrigger.cpp \
-    $$PWD/sysovrvobjtriggerdialog.cpp \
-    $$PWD/sysovrvtriggermodel.cpp \
-    $$PWD/sysovrvtriggereditorwidget.cpp \
-    $$PWD/evaluatortablemodel.cpp
+SOURCES += \
+    $$PWD/src/systemoverview.cpp \
+    $$PWD/src/sysoverviewgraphicsview.cpp \
+    $$PWD/src/isysovrvelement.cpp
 
-HEADERS  += $$PWD//systemoverview.h \
-    $$PWD/sysoverviewgraphicsview.h \
-    $$PWD/sysovrvobjectstore.h \
-    $$PWD/sysovrvobject.h \
-    $$PWD/sysovrvobjectdialog.h \
-    $$PWD/resizerectcorner.h \
-    $$PWD/sysovrvtextlabel.h \
-    $$PWD/sysovrvtrigger.h \
-    $$PWD/sysovrvobjtriggerdialog.h \
-    $$PWD/sysovrvtriggermodel.h \
-    $$PWD/sysovrvtriggereditorwidget.h \
-    $$PWD/evaluatortablemodel.h
+HEADERS  += \
+    $$PWD/inc/systemoverview.h \
+    $$PWD/inc/sysoverviewgraphicsview.h \
+    $$PWD/inc/isysovrvelement.h
 
-FORMS    += $$PWD//systemoverview.ui \
-    $$PWD/sysovrvobjectdialog.ui \
-    $$PWD/sysovrvobjtriggerdialog.ui \
-    $$PWD/sysovrvtriggereditorwidget.ui
+FORMS    += \
+    $$PWD/ui/systemoverview.ui
+
+include(SysOvrvObj/SysOvrvObj.pri)
+include(SysOvrvTrigger/SysOvrvTrigger.pri)

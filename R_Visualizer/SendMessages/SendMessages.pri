@@ -3,11 +3,14 @@
 # Project created by QtCreator 2016-06-01T01:53:25
 #
 #-------------------------------------------------
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD/inc
+INCLUDEPATH += $$PWD/inc
 
-SOURCES += $$PWD//sendmessages.cpp
+SOURCES += \
+    $$PWD/src/sendmessages.cpp
 
-HEADERS  += $$PWD//sendmessages.h
+HEADERS  += \
+    $$PWD/inc/sendmessages.h
 
-FORMS    += $$PWD//sendmessages.ui
+FORMS    += \
+    $$PWD/ui/sendmessages.ui
