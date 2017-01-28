@@ -7,10 +7,8 @@
 #include <QColorDialog>
 #include <QFile>
 #include <QFileDialog>
-
 #include <QJsonDocument>
-
-#include <qDebug>
+#include <QDebug>
 
 SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
     QDialog(parent),
@@ -83,16 +81,7 @@ void SysOvrvObjectDialog::on_edtTriggerBtn_clicked()
     if(m_focusedItem == NULL)
         return;
 
-//    TriggerableSysOvrvObj* triggerableObj = dynamic_cast<TriggerableSysOvrvObj*>(m_focusedItem);
-//    if(triggerableObj == Q_NULLPTR)
-//    {
-//        return;
-//    }
-    // // // DEBUG // // //
-//    triggerableObj->addTrigger(0x100,0x98,new SysOvrvColorChangeTrigger(triggerableObj));
-//    triggerableObj->addTrigger(0x100,0x99,new SysOvrvColorChangeTrigger(triggerableObj));
-    // // // DEBUG // // //
-
+    //DO SOMETHING HERE! TRIGGER ALL THE SysOvrvObjs!
     SysOvrvObjTriggerDialog *triggerDiag = new SysOvrvObjTriggerDialog(m_focusedItem, this);
 
     triggerDiag->exec();

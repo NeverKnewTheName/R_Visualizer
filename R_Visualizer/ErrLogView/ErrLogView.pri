@@ -4,15 +4,15 @@
 #
 #-------------------------------------------------
 
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD/inc
+INCLUDEPATH += $$PWD/inc
 
-SOURCES += $$PWD//errlogview.cpp \
-    $$PWD/errlogmodel.cpp \
-    $$PWD/errorlogentry.cpp
+SOURCES += $$PWD/src/errlogview.cpp \
+    $$PWD/src/errlogmodel.cpp \
+    $$PWD/src/errorlogentry.cpp
 
-HEADERS += $$PWD//errlogview.h \
-    $$PWD/errlogmodel.h \
-    $$PWD/errorlogentry.h
+HEADERS += $$PWD/inc/errlogview.h \
+    $$PWD/inc/errlogmodel.h \
+    $$PWD/inc/errorlogentry.h
 
-FORMS += $$PWD//errlogview.ui
+FORMS += $$PWD/ui/errlogview.ui

@@ -3,18 +3,21 @@
 # Project created by QtCreator 2016-06-01T01:52:38
 #
 #-------------------------------------------------
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD/inc
+INCLUDEPATH += $$PWD/inc
 
-SOURCES += $$PWD//systemoverview.cpp \
-    $$PWD/sysoverviewgraphicsview.cpp \
-    $$PWD/isysovrvelement.cpp
+SOURCES += \
+    $$PWD/src/systemoverview.cpp \
+    $$PWD/src/sysoverviewgraphicsview.cpp \
+    $$PWD/src/isysovrvelement.cpp
 
-HEADERS  += $$PWD//systemoverview.h \
-    $$PWD/sysoverviewgraphicsview.h \
-    $$PWD/isysovrvelement.h
+HEADERS  += \
+    $$PWD/inc/systemoverview.h \
+    $$PWD/inc/sysoverviewgraphicsview.h \
+    $$PWD/inc/isysovrvelement.h
 
-FORMS    += $$PWD//systemoverview.ui
+FORMS    += \
+    $$PWD/ui/systemoverview.ui
 
 include(SysOvrvObj/SysOvrvObj.pri)
 include(SysOvrvTrigger/SysOvrvTrigger.pri)

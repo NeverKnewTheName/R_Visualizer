@@ -13,27 +13,31 @@ TEMPLATE = app
 
 
 INCLUDEPATH += .
+INCLUDEPATH += ./inc
 INCLUDEPATH += ../CAN_Analyser_USB_Driver/hidapi/
 INCLUDEPATH += ../CAN_Analyser_USB_Driver/
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    csvmsgpackethandler.cpp \
-    devicehandler.cpp \
-    userrolemngr.cpp \
-    msgparser.cpp
+SOURCES += \
+    ./src/main.cpp \
+    ./src/mainwindow.cpp \
+    ./src/csvmsgpackethandler.cpp \
+    ./src/devicehandler.cpp \
+    ./src/userrolemngr.cpp \
+    ./src/msgparser.cpp
 
-HEADERS  += mainwindow.h \
-    csvmsgpackethandler.h \
-    devicehandler.h \
-    userrolemngr.h \
-    msgparser.h
+HEADERS  += \
+    ./inc/mainwindow.h \
+    ./inc/csvmsgpackethandler.h \
+    ./inc/devicehandler.h \
+    ./inc/userrolemngr.h \
+    ./inc/msgparser.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    ./ui/mainwindow.ui
 
 RESOURCES += \
-    ressources.qrc
+    ./res/ressources.qrc
 
 unix {
     LIBS += -L../CAN_Analyser_USB_Driver/lib -lusb_driver -lhidapi
