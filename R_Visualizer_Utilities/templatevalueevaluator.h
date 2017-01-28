@@ -97,7 +97,7 @@ public:
             opName = QString("is lower than");
             break;
         default:
-            return false;
+            return QString();
         }
         return QString("Triggered if Value %1 %2").arg(opName).arg(QString::number(limit));
     }
@@ -189,7 +189,7 @@ public:
             opName = QString("is out of the range ");
             break;
         default:
-            return false;
+            return QString();
         }
         return QString("Triggered if Value %1 %2 and %3 (%4)").arg(opName).arg(QString::number(lowerBoundary)).arg(QString::number(upperBoundary)).arg(marginValues);
     }
