@@ -1,0 +1,104 @@
+[
+    {
+        "code": 2,
+        "codeName": "Start",
+        "color": "#ffaa00",
+        "messageFormat": ""
+    },
+    {
+        "code": 3,
+        "codeName": "Stop",
+        "color": "#ff5500",
+        "messageFormat": ""
+    },
+    {
+        "code": 10,
+        "codeName": "MatrixHeader",
+        "color": "#d86365",
+        "messageFormat": ""
+    },
+    {
+        "code": 11,
+        "codeName": "MatrixCode",
+        "color": "#ffaa7f",
+        "messageFormat": "Receiver:\t#HEX#(#OP#(#OP#(#Data0##<<#8)#/OP##+##Data0#)#/OP#)#/HEX#\nData:\t#BIN#(#OP#(#OP#(#Data2##<<#5)#/OP##+##Data3#)#/OP#)#/BIN#"
+    },
+    {
+        "code": 79,
+        "codeName": "OK",
+        "color": "#b3f5b0",
+        "messageFormat": "OK CODE"
+    },
+    {
+        "code": 9,
+        "codeName": "NewMatrix",
+        "color": "#fff9b3",
+        "messageFormat": ""
+    },
+    {
+        "code": 64,
+        "codeName": "SyncCode",
+        "color": "#aaaaff",
+        "messageFormat": "#HEX#(#Data0#)#/HEX# #HEX#(#Data1#)#/HEX# #HEX#(#Data2#)#/HEX# #HEX#(#Data3#)#/HEX# #HEX#(#Data4#)#/HEX# #HEX#(#Data5#)#/HEX# #HEX#(#Data6#)#/HEX#"
+    },
+    {
+        "code": 144,
+        "codeName": "StartUpCode",
+        "color": "#5daa48",
+        "messageFormat": ""
+    },
+    {
+        "code": 16,
+        "codeName": "SysTickCode",
+        "color": "#74aa23",
+        "messageFormat": "Tick: #Data0#"
+    },
+    {
+        "code": 153,
+        "codeName": "PumpStatOn",
+        "color": "#aaff00",
+        "messageFormat": "Pump is ON"
+    },
+    {
+        "code": 152,
+        "codeName": "PumpStatOff",
+        "color": "#ff5500",
+        "messageFormat": "Pump is OFF"
+    },
+    {
+        "code": 159,
+        "codeName": "ERROR",
+        "color": "#ff0000",
+        "messageFormat": "ERROR"
+    },
+    {
+        "code": 146,
+        "codeName": "StartOK",
+        "color": "#75ff6b",
+        "messageFormat": "Start OK"
+    },
+    {
+        "code": 147,
+        "codeName": "StopOK",
+        "color": "#ffaa00",
+        "messageFormat": "Stop OK"
+    },
+    {
+        "code": 148,
+        "codeName": "StopReq",
+        "color": "#ffaa7f",
+        "messageFormat": "Stop requested"
+    },
+    {
+        "code": 149,
+        "codeName": "MatrixRecOK",
+        "color": "#b3ff74",
+        "messageFormat": "Matrix received OK"
+    },
+    {
+        "code": 112,
+        "codeName": "TempCode",
+        "color": "#ffa1ab",
+        "messageFormat": "Temp: #Data0#°C"
+    }
+]

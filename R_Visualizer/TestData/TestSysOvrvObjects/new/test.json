@@ -1,0 +1,51 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#00aa7f",
+            "ObjName": "ddd",
+            "ObjPos": [
+                187,
+                51
+            ],
+            "ObjShape": 3,
+            "ObjSize": [
+                27,
+                27
+            ],
+            "Textlabels": [
+            ]
+        },
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#00ff7f",
+            "ObjName": "dgbee",
+            "ObjPos": [
+                10,
+                10
+            ],
+            "ObjShape": 3,
+            "ObjSize": [
+                24,
+                24
+            ],
+            "Textlabels": [
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "gdege",
+    "ObjPos": [
+        -541,
+        -352
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        225,
+        89
+    ],
+    "Textlabels": [
+    ]
+}

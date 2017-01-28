@@ -1,0 +1,170 @@
+[
+    {
+        "MsgCode": 0,
+        "MsgData": [
+        ],
+        "MsgID": 0,
+        "MsgTimestamp": ""
+    },
+    {
+        "MsgCode": 0,
+        "MsgData": [
+        ],
+        "MsgID": 0,
+        "MsgTimestamp": ""
+    },
+    {
+        "MsgCode": 0,
+        "MsgData": [
+        ],
+        "MsgID": 0,
+        "MsgTimestamp": ""
+    },
+    {
+        "MsgCode": 0,
+        "MsgData": [
+        ],
+        "MsgID": 0,
+        "MsgTimestamp": ""
+    },
+    {
+        "MsgCode": 0,
+        "MsgData": [
+        ],
+        "MsgID": 0,
+        "MsgTimestamp": ""
+    },
+    {
+        "MsgCode": 0,
+        "MsgData": [
+        ],
+        "MsgID": 0,
+        "MsgTimestamp": ""
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            7,
+            0,
+            14,
+            0,
+            7,
+            28,
+            7
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.007"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            8,
+            0,
+            16,
+            0,
+            8,
+            32,
+            8
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.008"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            9,
+            0,
+            18,
+            0,
+            9,
+            36,
+            9
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.009"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            10,
+            0,
+            20,
+            0,
+            10,
+            40,
+            10
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.010"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            11,
+            0,
+            22,
+            0,
+            11,
+            44,
+            11
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.011"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            12,
+            0,
+            24,
+            0,
+            12,
+            48,
+            12
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.012"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            13,
+            0,
+            26,
+            0,
+            13,
+            52,
+            13
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.013"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            14,
+            0,
+            28,
+            0,
+            14,
+            56,
+            14
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.014"
+    },
+    {
+        "MsgCode": 2,
+        "MsgData": [
+            15,
+            0,
+            30,
+            0,
+            15,
+            60,
+            15
+        ],
+        "MsgID": 255,
+        "MsgTimestamp": "01.01.1970 - 01:00:00.015"
+    }
+]
