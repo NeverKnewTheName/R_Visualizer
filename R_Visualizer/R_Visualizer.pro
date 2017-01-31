@@ -54,6 +54,7 @@ win32 {
 }
 
 include(Msg/Msg.pri)
+include(MessageStream/MessageStream.pri)
 include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
 include(SystemOverview/SystemOverview.pri)
 include(SendMessages/SendMessages.pri)

@@ -8,11 +8,6 @@ CsvMsgPacketHandler::CsvMsgPacketHandler()
 
 }
 
-CsvMsgPacketHandler::CsvMsgPacketHandler(QString &csvMsgPacketString)
-{
-    this->parseCsvMsgPacket(csvMsgPacketString);
-}
-
 CsvMsgPacketHandler::~CsvMsgPacketHandler()
 {
 
