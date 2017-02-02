@@ -774,6 +774,7 @@ WARN_LOGFILE           =
 INPUT                  = ./R_Visualizer ./R_Visualizer/inc ./R_Visualizer/src \
                          ./R_Visualizer/ErrLogView ./R_Visualizer/ErrLogView/inc ./R_Visualizer/ErrLogView/src \
                          ./R_Visualizer/Msg ./R_Visualizer/Msg/inc ./R_Visualizer/Msg/src \
+                         ./R_Visualizer/MessageStorage ./R_Visualizer/MessageStorage/inc ./R_Visualizer/MessageStorage/src \
                          ./R_Visualizer/MessageConfig ./R_Visualizer/MessageConfig/inc ./R_Visualizer/MessageConfig/src \
                          ./R_Visualizer/SendMessages ./R_Visualizer/SendMessages/inc ./R_Visualizer/SendMessages/src \
                          ./R_Visualizer/SystemOverview ./R_Visualizer/SystemOverview/inc ./R_Visualizer/SystemOverview/src \

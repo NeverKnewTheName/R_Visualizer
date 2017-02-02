@@ -15,12 +15,10 @@ SOURCES += \
     $$PWD/src/msgtypemodel.cpp \
     $$PWD/src/msgtyperep.cpp \
     $$PWD/src/msgtableview.cpp \
-    $$PWD/src/hugeqvector.cpp \
     $$PWD/src/msgdisplaywidget.cpp \
     $$PWD/src/msgiddelegate.cpp \
     $$PWD/src/msgdatadelegate.cpp \
     $$PWD/src/msgdatawidget.cpp \
-    $$PWD/src/msgstorage.cpp
 
 HEADERS  += \
     $$PWD/inc/msg.h \
@@ -31,13 +29,10 @@ HEADERS  += \
     $$PWD/inc/msgtypemodel.h \
     $$PWD/inc/msgtyperep.h \
     $$PWD/inc/msgtableview.h \
-    $$PWD/inc/hugeqvector.h \
     $$PWD/inc/msgdisplaywidget.h \
     $$PWD/inc/msgiddelegate.h \
     $$PWD/inc/msgdatadelegate.h \
     $$PWD/inc/msgdatawidget.h \
-    $$PWD/inc/msgstorage.h
-
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \

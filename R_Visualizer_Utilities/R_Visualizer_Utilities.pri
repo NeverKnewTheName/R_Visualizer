@@ -6,6 +6,7 @@ SOURCES += \
 HEADERS  += \
     $$PWD/templatevalueevaluator.h \
     $$PWD/templatevalueevaluatorcreatorwidget.h
+    $$PWD/rsimpleringbuff.h \
 
 FORMS += \
     $$PWD/templatevalueevaluatorcreatorwidget.ui \
