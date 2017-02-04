@@ -12,6 +12,7 @@
 #include <QDir>
 #include "msg.h"
 
+#include "rsimpleringbuff.h"
 
 /**
  * \brief The ContainerID is the mapping of a container to a given MsgStore in the MsgStorage
@@ -51,232 +52,6 @@ struct ContainerID{
     bool isValid() const { return ( ( ContainerNR >= 0 ) && ( IndexInStore >= 0 ) ); }
 };
 
-/**
- * \brief Simple RingBuffer that destroys elements on overflow
- * 
- * \note The template parameter must have an implemented == operator!
- */
-template<typename T> class RSimpleDestructiveRingBuff
-{
-public:
-    /**
-     * \brief constructs the ring buffer with the given size
-     * 
-     * \param[in] size    Size to set for the ring buffer
-     */
-    RSimpleDestructiveRingBuff(const int size) :
-        RBufBuffer(size),
-        RBufSize(size),
-        RBufCurSize(0),
-        RBufStartIndex(0),
-        RBufEndIndex(size-1)
-    {
-    }
-
-    /**
-     * \brief append an element to the current end of the ring buffer
-     * 
-     * if the size of the ring buffer is exceeded the first element is overriden
-     * the ring buffers location pointers are adapted accordingly
-     */
-    void append(const T &value)
-    {
-        if(RBufCurSize == RBufSize)
-        {
-            IncrementIndex(RBufStartIndex);// = (RBufStartIndex + 1) % RBufSize;
-        }
-        else
-        {
-            RBufCurSize++;
-        }
-        IncrementIndex(RBufEndIndex);// = ( RBufEndIndex +1 ) % RBufSize;
-
-        RBufBuffer.replace(RBufEndIndex, value);
-    }
-
-    /** 
-     * \brief prepend an element to the current start of the ring buffer
-     * if the size of the ring buffer is exceeded the last element is overriden
-     * the ring buffers location pointers are adapted accordingly
-     */
-    void prepend(const T &value)
-    {
-        if(RBufCurSize == RBufSize)
-        {
-            DecrementIndex(RBufEndIndex);// = (RBufEndIndex - 1+RBufSize) % RBufSize;
-        }
-        else
-        {
-            RBufCurSize++;
-        }
-        DecrementIndex(RBufStartIndex);// = (RBufStartIndex - 1+RBufSize) % RBufSize; //Negative modulo...
-
-        RBufBuffer.replace(RBufStartIndex, value);
-    }
-
-    /**
-     * \brief replaces the element at the given index with the given value
-     */
-    void replace(const int index, const T &value)
-    {
-        RBufBuffer.replace((index + RBufStartIndex ) % RBufSize, value);
-    }
-
-    /**
-     * \brief removes the element at the given index from the ring buffer
-     * 
-     * The ring buffer's location pointers are adapted accordindly
-     */
-    void remove(const int index)
-    {
-        int calcdIndex = ( index + RBufStartIndex ) % RBufSize;
-        if(calcdIndex < RBufCurSize)
-        {
-            if( calcdIndex == RBufStartIndex )
-            {
-                //Remove first
-                IncrementIndex(RBufStartIndex);
-            }
-            else if( calcdIndex == RBufEndIndex )
-            {
-                //Remove last
-                DecrementIndex(RBufEndIndex);
-            }
-            else
-            {
-                //Remove somewhere between...
-                while(calcdIndex != RBufEndIndex)
-                {
-                    T &ToReplace = RBufBuffer[calcdIndex];
-                    IncrementIndex(calcdIndex);
-                    ToReplace = RBufBuffer[calcdIndex];
-                }
-
-                DecrementIndex(RBufEndIndex);// = (RBufEndIndex - 1+RBufSize) % RBufSize;
-            }
-
-            RBufCurSize--;
-        }
-    }
-
-    /** 
-     * \brief retrieves the current first element of the ring buffer
-     * 
-     * The first element is the element pointed to by the ring buffer's
-     * start pointer.
-     */
-    const T &first() const
-    {
-        return RBufBuffer.at(RBufStartIndex);
-    }
-
-    /**
-     * \brief retrieves the current last element of the ring buffer
-     * 
-     * The last element is the element pointed to by the ring buffer's
-     * end pointer
-     */
-    const T &last() const
-    {
-        return RBufBuffer.at(RBufEndIndex);
-    }
-
-    /**
-     * \brief retrieves the current element at the given index
-     */
-    const T &at(const int index) const
-    {
-        const int calcdIndex = ( index + RBufStartIndex ) % RBufSize;
-        //        qDebug() << __PRETTY_FUNCTION__ << "CalcdIndex: " << calcdIndex;
-        return RBufBuffer.at(calcdIndex);
-    }
-
-    /**
-     * \brief verfifies that a given value is contained in the ring buffer
-     */
-    bool contains(const T &value) const
-    {
-        return RBufBuffer.contains(value);
-    }
-
-    /**
-     * \brief returns the location of a given value in the ring buffer
-     * 
-     * if the value is not contained in the ring buffer -1 is returned.
-     */
-    int find(const T&value) const
-    {
-        int curIndex = RBufCurSize;
-        while(curIndex--)
-        {
-            const T&found = at(curIndex);
-            if(value == found)
-                return curIndex;
-        }
-        return -1;
-    }
-
-    /**
-     * \brief returns the current size of the ring buffer
-     * 
-     * \note the size of the ring buffer never exceeds its set size, 
-     * however the current size of the ring buffer can be smaller.
-     */
-    int size() const
-    {
-        return RBufCurSize;
-    }
-
-    /**
-     * \brief returns the capacity of the internal buffer
-     */
-    int capacity() const
-    {
-        return RBufBuffer.capacity();
-    }
-
-    /**
-     * \brief clears the ring buffer and resets its location pointers
-     * 
-     * \warning This does not free the contained elements!
-     */
-    void clear()
-    {
-        RBufBuffer = QVector<T>(RBufSize);
-        RBufCurSize = 0;
-        RBufStartIndex = 0;
-        RBufEndIndex = RBufSize-1;
-    }
-
-private:
-    /**
-     * \brief Decrement the given index with respect to the buffer size
-     * 
-     * This method ensures that the index is set to the maximum value if the minimum value
-     * is fallen short of.
-     */
-    int DecrementIndex(int &index)
-    {
-        index = (index - 1+RBufSize) % RBufSize; //Negative modulo...
-        return index;
-    }
-    /**
-     * \brief Increment the given index with respect to the buffer size
-     * 
-     * This method ensures that the index does not exceed the buffer's size
-     */
-    int IncrementIndex(int &index)
-    {
-        index = (index + 1) % RBufSize;
-        return index;
-    }
-
-    QVector<T> RBufBuffer; //!< Buffer vector
-    const int RBufSize;    //!< Maximum size of the buffer
-    int RBufCurSize;       //!< Current size of the buffer/Current number of elements in the buffer
-    int RBufStartIndex;    //!< Current start index of the buffer
-    int RBufEndIndex;      //!< Current end index of the buffer
-};
 
 /**
  * \brief MsgStorage to store huge numbers of messages
@@ -328,7 +103,9 @@ public:
      *       RAM; it can even not be guaranteed that a reference would
      *       be up to date...
      */
-    Msg at(const int index);
+    Msg at(const size_t index);
+
+    Msg operator[](const size_t index);
 
     /**
      * \brief appends a messages to the MsgStorage with a move operation
@@ -393,8 +170,60 @@ private:
      */
     void SerializeFromFile(const ContainerID &IndexInStoreToInsertIn);
 
+    /**
+     * \brief Maintenance of containers before appending an element to the #MsgStorage
+     * 
+     * The appendHelper evaluates whether the element to append will exceed the size boundaries of 
+     * the current #LastContainer and calculates the index for the element.
+     * 
+     * If the element does not fit into the current #LastContainer, the current #LastContainer is saved
+     * according to the following scheme and a new #LastContainer is created.
+     * 
+     * If the #CurrentNrOfContainers does not exceed the #NrOfContainersToKeepInRAM, the current #LastContainer
+     * is appended to the #MsgStore.
+     * Else if the current #LastContainer is the next successor to the last container in RAM, the first container
+     * in RAM is saved to disk and removed from the #MsgStore and the current #LastContainer is append to the 
+     * #MsgStore.
+     * Else if none of the above applies, the current #LastContainer is saved to disk and no further
+     * actions are taken.
+     */
     void appendHelper();
+    /**
+     * \brief Load a previously saved container from its file into the #MsgStore
+     * 
+     * the fetchContainerFromFileToRAM method loads a container that was previously saved by
+     * writing it to a file back into the #MsgStore. The #MsgStore is adjusted accordingly.
+     * 
+     * If the ContainerID of the fetched container is greater than the ContainerID of the current
+     * last container in the #MsgStore, the first container in the #MsgStore is saved to a file
+     * and removed from teh #MsgStore. The newly fetched container is then appended to the #MsgStore.
+     * 
+     * Else if the ContainerID of the fetched container is lower than the ContainerID of the current
+     * first container in the #MsgStore, the last container in the #MsgStore is saved to a file
+     * and removed from the #MsgStore. The newly fetched container is then prepended to the #MsgStore.
+     * 
+     * Else if none of the above applies, the ContainerID of the fetched container is compared against
+     * all containers' ContainerID in the #MsgStore. Starting from the last container, the first ContainerID
+     * of a container that is lower than the fetched container's ContainerID determines the container 
+     * to save to file and remove from the #MsgStore to make space for the fetched container.
+     */
     void fetchContainerFromFileToRAM(ContainerID &ContainerIDToFetch);
+    /**
+     * \brief Determines wheter the container with the given ContainerID is alread in the #MsgStore or needs to be fetched.
+     * 
+     * \param[inout] ContainerIDToFetch     Must contain the ContainerNR of the container to fetch. Will contain the IndexInStore
+     *                                      that the container has in the #MsgStore.
+     *                                      
+     * \pre The given ContainerID must contain a valid ContainerNR
+     * \post The given ContainerID contains the IndexInStore of the queried container
+     * \post If the container with the given ContainerNR was not already loaded into the #MsgStore
+     * it is loaded into the #MsgStore during this method. All rules of #fetchContainerFromFileToRAM then apply!
+     * 
+     * If the container with the ContainerNR contained in the given ContainerID is in the #MsgStore, the IndexInStore is
+     * inserted into the ContainerID.
+     * If the container with the ContainerNr contained in the given ContainerID is not the #MsgStore, it is fetched
+     * from the file it was written to previously with the #fetchContainerFromFileToRAM method.
+     */
     void fetchContainerIDHelper(ContainerID &ContainerIDToFetch);
 
 private:

@@ -52,7 +52,7 @@ public:
      * This constructor creates a new #UserRoleMngr object. If no defaultRole is provided,
      * the defaultRole is set to #NormalUserRole.
      */
-    explicit UserRoleMngr(UserRole defaultRole = NormalUserRole, QObject *parent = 0);
+    explicit UserRoleMngr( QObject *parent = 0, UserRole defaultRole = NormalUserRole);
 
     /**
      * \brief Retrieve the current #UserRole

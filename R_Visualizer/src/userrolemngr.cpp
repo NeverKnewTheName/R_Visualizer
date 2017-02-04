@@ -1,11 +1,11 @@
 #include "userrolemngr.h"
 
-UserRoleMngr::UserRoleMngr(QObject *parent) : QObject(parent)
-{
-    this->currentRole = UserRoleMngr::NormalUserRole;
-}
+//UserRoleMngr::UserRoleMngr(QObject *parent) : QObject(parent)
+//{
+//    this->currentRole = UserRoleMngr::NormalUserRole;
+//}
 
-UserRoleMngr::UserRoleMngr(UserRole defaultRole, QObject *parent) : QObject(parent), currentRole(defaultRole)
+UserRoleMngr::UserRoleMngr( QObject *parent, UserRole defaultRole) : QObject(parent), currentRole(defaultRole)
 {
 
 }

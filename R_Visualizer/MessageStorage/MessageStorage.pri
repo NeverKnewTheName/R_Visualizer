@@ -7,7 +7,8 @@ SOURCES += \
 
 HEADERS  += \
     $$PWD/inc/hugeqvector.h \
-    $$PWD/inc/msgstorage.h
+    $$PWD/inc/msgstorage.h \
+    $$PWD/inc/datastorage.h
 
 
 FORMS    += \

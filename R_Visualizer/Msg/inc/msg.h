@@ -101,17 +101,53 @@ public:
 
 
    /////////// IMsgStorable INTERFACE //////////////
-   QJsonObject ParseToJson() const;
-   void ParseFromJson(const QJsonObject &jsonObj);
+   virtual QJsonObject ParseToJson() const;
+   virtual void ParseFromJson(const QJsonObject &jsonObj);
 
 private:
-    QDateTime MsgTimestamp;
-    MsgIDType MsgID;
-    MsgCodeType MsgCode;
-    MsgDataStruc MsgData;
-    QSize msgSizeHint;
+    QDateTime MsgTimestamp; //!< Timestamp of when the message was received
+    MsgIDType MsgID; //!< The ID that clearly identifies the sender of a message
+    MsgCodeType MsgCode; //!< The Code that clearly identifies the purpose of the message
+    MsgDataStruc MsgData; //!< Optional data accompaying the message
+    QSize msgSizeHint; //Size hint for painting... subject to removal -> OPTIMIZE //ToTHINK!
 };
 
 Q_DECLARE_METATYPE(Msg)
 
+/**
+ * \brief Class for received messages
+ * 
+ * IncomingMsg extends #Msg to include a timestamp that contains the time the message was received.
+ */
+class IncomingMsg
+{
+public:
+   IncomingMsg (const QDateTime &timestamp, const MsgIDType &id, const MsgCodeType &code, const DataByteVect &dataBytes);
+   virtual ~IncomingMsg ();
+
+   const QDateTime &GetMsgTimeStamp() const;
+
+   QJsonObject ParseToJson() const;
+   void ParseFromJson(const QJsonObject &jsonObj);
+
+private:
+   const QDateTime MsgTimestamp; //!< Timestamp of when the message was received
+};
+
+/**
+ * \brief Class for messages to send
+ * 
+ * OutgoingMsg extends #Msg to create a special class for messages that are to be sent.
+ */
+class OutgoingMsg
+{
+public:
+    OutgoingMsg (const MsgIDType &id, const MsgCodeType &code, const DataByteVect &dataBytes );
+    virtual ~OutgoingMsg ();
+
+   QJsonObject ParseToJson() const;
+   void ParseFromJson(const QJsonObject &jsonObj);
+private:
+    
+};
 #endif // MSG_H

@@ -1,4 +1,5 @@
 DEPENDPATH += $$PWD
+INCPATH += $$PWD
 
 SOURCES += \
     $$PWD/templatevalueevaluatorcreatorwidget.cpp
@@ -6,7 +7,6 @@ SOURCES += \
 HEADERS  += \
     $$PWD/templatevalueevaluator.h \
     $$PWD/templatevalueevaluatorcreatorwidget.h
-    $$PWD/rsimpleringbuff.h \
 
 FORMS += \
     $$PWD/templatevalueevaluatorcreatorwidget.ui \

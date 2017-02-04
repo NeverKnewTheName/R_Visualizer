@@ -15,7 +15,7 @@ SOURCES += \
     $$PWD/src/msgtypemodel.cpp \
     $$PWD/src/msgtyperep.cpp \
     $$PWD/src/msgtableview.cpp \
-    $$PWD/src/msgdisplaywidget.cpp \
+    # $$PWD/src/msgdisplaywidget.cpp \
     $$PWD/src/msgiddelegate.cpp \
     $$PWD/src/msgdatadelegate.cpp \
     $$PWD/src/msgdatawidget.cpp \
@@ -29,7 +29,7 @@ HEADERS  += \
     $$PWD/inc/msgtypemodel.h \
     $$PWD/inc/msgtyperep.h \
     $$PWD/inc/msgtableview.h \
-    $$PWD/inc/msgdisplaywidget.h \
+    # $$PWD/inc/msgdisplaywidget.h \
     $$PWD/inc/msgiddelegate.h \
     $$PWD/inc/msgdatadelegate.h \
     $$PWD/inc/msgdatawidget.h \

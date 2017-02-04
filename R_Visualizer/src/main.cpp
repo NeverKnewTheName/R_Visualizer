@@ -11,7 +11,8 @@
 #include <QThread>
 #include "msgparser.h"
 #include "msgdatawidget.h"
-#include "msgstorage.h"
+/* #include "msgstorage.h" */
+#include "datastorage.h"
 #include <QJsonDocument>
 #include <QJsonArray>
 // // // DEBUG // // //
@@ -23,6 +24,7 @@ void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, co
 
 int main(int argc, char *argv[])
 {
+/* #define __MSG_STORAGE_TEST__ */
 #ifndef __MSG_STORAGE_TEST__
         QApplication a(argc, argv);
 
@@ -40,12 +42,12 @@ int main(int argc, char *argv[])
         return a.exec();
 #else
     QElapsedTimer myTimer;
-    const int NrMsgsToTest = 100;
+    const int NrMsgsToTest = 1000;
     myTimer.start();
-    MsgStorageStoreLoadTest(NrMsgsToTest,5,3);
-//    MsgStorageTest(NrMsgsToTest, 1000, 3);
-//    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
-//    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
+    /* MsgStorageStoreLoadTest(NrMsgsToTest,5,3); */
+      /* MsgStorageTest(NrMsgsToTest, 100, 3); */
+    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
+    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
 
     QFile isDone("DONE.NOTICE");
 
@@ -71,7 +73,7 @@ void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, cons
     int min = 100000;
     int max = 0;
 
-    MsgStorage msgStore(ContainerSize, NrElemRAM);
+    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
 
     QFile log("MsgStorageReplaceTestLog.log");
 
@@ -156,7 +158,7 @@ void MsgStorageRemoveTest( const int NrOfMessages, const int ContainerSize, cons
     int min = 100000;
     int max = 0;
 
-    MsgStorage msgStore(ContainerSize, NrElemRAM);
+    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
 
     QFile log("MsgStorageDeleteTestLog.log");
 
@@ -329,7 +331,7 @@ int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int Nr
     int max = 0;
 
     QFile log("MsgStorageTestLog.log");
-    MsgStorage msgStore(ContainerSize, NrElemRAM);
+    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
 
     if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "error open file to save: " << log.fileName();
@@ -380,7 +382,7 @@ int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int Nr
     logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the BACK";
     while(retrieveIter--)
     {
-        int curIndex = sizeOfMsgStore - retrieveIter;
+        int curIndex = sizeOfMsgStore-1 - retrieveIter;
         logString << "\n\tCurrent index: " << curIndex;
         myTimer.restart();
         Msg msg(msgStore.at(curIndex));
@@ -458,7 +460,7 @@ void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, co
     int max = 0;
 
     QFile log("MsgStorageStoreLoadTestLog.log");
-    MsgStorage msgStore(ContainerSize, NrElemRAM);
+    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
 
     if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "error open file to save: " << log.fileName();
@@ -514,14 +516,14 @@ void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, co
     QJsonDocument docToSave;
     logString << "\nSaving MsgStore to file";
     myTimer.restart();
-    docToSave = msgStore.parseToJson();
+    docToSave = msgStore.ParseToJson();
     elapsedTime = myTimer.elapsed();
 
     logString << "\n\tMsgStorage save total: " << elapsedTime;
     logString << "\n\tTime/Message: " << (double)elapsedTime/NrOfMessages;
-    logString << "\nFile: " << docToSave.toBinaryData();
+    logString << "\nFile: " << docToSave.toJson();
 
-    qDebug() << "File: " << docToSave.toBinaryData();
+    qDebug() << "File: " << docToSave.toJson();
     logString.flush();
     log.flush();
 
@@ -531,7 +533,7 @@ void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, co
 
     logString << "\nSaving MsgStore to file";
     myTimer.restart();
-    msgStore.parseFromJson(docToSave.array());
+    msgStore.ParseFromJson(docToSave.array());
     elapsedTime = myTimer.elapsed();
 
     logString << "\n\tMsgStorage load total: " << elapsedTime;

@@ -14,7 +14,7 @@
    <string>R_Visualizer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="ressources.qrc">
+   <iconset>
     <normaloff>:/GUI/Icons/Icons/AppICON.ico</normaloff>:/GUI/Icons/Icons/AppICON.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -89,7 +89,7 @@
      <x>0</x>
      <y>0</y>
      <width>1040</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -142,7 +142,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/Add-New-32.png</normaloff>:/GUI/Icons/Icons/Add-New-32.png</iconset>
    </property>
    <property name="text">
@@ -157,7 +157,7 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/Open-32.png</normaloff>:/GUI/Icons/Icons/Open-32.png</iconset>
    </property>
    <property name="text">
@@ -172,7 +172,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/Save-32.png</normaloff>:/GUI/Icons/Icons/Save-32.png</iconset>
    </property>
    <property name="text">
@@ -187,7 +187,7 @@
   </action>
   <action name="actionConnect">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/Network-01-32.png</normaloff>:/GUI/Icons/Icons/Network-01-32.png</iconset>
    </property>
    <property name="text">
@@ -196,7 +196,7 @@
   </action>
   <action name="actionStart">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/Check-32.png</normaloff>:/GUI/Icons/Icons/Check-32.png</iconset>
    </property>
    <property name="text">
@@ -205,7 +205,7 @@
   </action>
   <action name="actionStop">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/Delete-32.png</normaloff>:/GUI/Icons/Icons/Delete-32.png</iconset>
    </property>
    <property name="text">
@@ -214,7 +214,7 @@
   </action>
   <action name="actionSwitch_User_Role">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/GUI/Icons/Icons/UserNormal-32.png</normaloff>
      <normalon>:/GUI/Icons/Icons/UserAdmin-32.png</normalon>:/GUI/Icons/Icons/UserNormal-32.png</iconset>
    </property>
@@ -239,8 +239,6 @@
    <header>msgtableview.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="ressources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

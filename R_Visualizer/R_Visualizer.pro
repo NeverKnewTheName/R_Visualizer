@@ -53,10 +53,11 @@ win32 {
     LIBS += -L../CAN_Analyser_USB_Driver/ -lusb_driver
 }
 
+include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
+include(Utils/Utils.pri)
 include(Msg/Msg.pri)
 include(MessageStorage/MessageStorage.pri)
 include(MessageStream/MessageStream.pri)
-include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
 include(SystemOverview/SystemOverview.pri)
 include(SendMessages/SendMessages.pri)
 include(MessageConfig/MessageConfig.pri)

@@ -6,8 +6,6 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-
-
 #include <QDebug>
 
 int MsgStorage::MsgStorageCntr = 0;
@@ -47,7 +45,7 @@ MsgStorage::MsgStorage(const int ContainerSize, const int NrOfContainersToKeepIn
     LastContainer.reserve(ContainerSize);
 }
 
-Msg MsgStorage::at(const int index)
+Msg MsgStorage::at(const size_t index)
 {
     const int containerIndex = index / ContainerSize;
     const int indexInContainer = index % ContainerSize;

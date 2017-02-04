@@ -11,6 +11,6 @@ HEADERS  += \
 
 
 FORMS    += \
-    $$PWD/ui/msgstream.ui \
+#    $$PWD/ui/msgstream.ui \
     $$PWD/messagestream.ui
 

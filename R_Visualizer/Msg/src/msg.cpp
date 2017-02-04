@@ -193,7 +193,7 @@ void Msg::setDataByte(const quint8 index, const quint8 dataByte)
 
 
 ///////////// MsgStorable INTERFACE //////////////////////
-QJsonObject ParseToJson() const
+QJsonObject Msg::ParseToJson() const
 {
     QJsonObject jsonMsg;
     QJsonArray  jsonData;
@@ -210,12 +210,12 @@ QJsonObject ParseToJson() const
     return jsonMsg;
 }
 
-void ParseFromJson(const QJsonObject &jsonObj)
+void Msg::ParseFromJson(const QJsonObject &jsonObj)
 {
-    MsgTimestamp = QDateTime::fromString(jsonMsg["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    MsgID = static_cast<MsgIDType>(jsonMsg["MsgID"].toInt());
-    MsgCode = static_cast<MsgCodeType>(jsonMsg["MsgCode"].toInt());
-    QJsonArray jsonData = jsonMsg["MsgData"].toArray();
+    MsgTimestamp = QDateTime::fromString(jsonObj["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    MsgID = static_cast<MsgIDType>(jsonObj["MsgID"].toInt());
+    MsgCode = static_cast<MsgCodeType>(jsonObj["MsgCode"].toInt());
+    QJsonArray jsonData = jsonObj["MsgData"].toArray();
     MsgData.DataSizeInBytes = jsonData.size();
     for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
     {
