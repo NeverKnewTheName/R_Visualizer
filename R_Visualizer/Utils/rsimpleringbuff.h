@@ -1,3 +1,11 @@
+/**
+ * \file rsimpleringbuff.h
+ * \author Christian Neuberger
+ * \date 2017-02-04
+ * 
+ * \brief Simple destructive ring buffer for multipurpose use
+ * 
+ */
 #ifndef RSIMPLERINGBUFF_H
 #define RSIMPLERINGBUFF_H
 

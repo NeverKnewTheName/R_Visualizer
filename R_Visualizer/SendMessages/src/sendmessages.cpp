@@ -524,7 +524,7 @@ void SendMessages::on_sndMsgAddToPacketBtn_clicked()
 
     data.prepend(msgCode);
 
-    msgPcktModel.addMsg(new Msg(QDateTime(),msgID,msgCode,data));
+    msgPcktModel.addMsg(Msg(QDateTime(),msgID,msgCode,data));
 }
 
 void SendMessages::on_sndMsgMsgLineEdit_returnPressed()

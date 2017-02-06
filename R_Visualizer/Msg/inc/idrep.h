@@ -1,3 +1,10 @@
+/**
+ * \file idrep.h
+ * \author Christian Neuberger
+ * \date 2017-02-04
+ * 
+ * \brief Representation of a MsgID
+ */
 #ifndef IDREP_H
 #define IDREP_H
 
@@ -9,37 +16,104 @@
 #include <QPixmap>
 #include <QStyleOptionViewItem>
 
+/**
+ * \brief The IDRep class contains all information necessary for displaying a MsgID
+ * 
+ * The MsgID is displayed according to the name and color mapping
+ */
 class IDRep
 {
 public:
+    /**
+     * \brief Constructs an empty #IDRep object
+     */
     IDRep();
+    /**
+     * \brief Copies a given #IDRep to this #IDRep
+     */
     IDRep(const IDRep& other);
+    /**
+     * \brief Constructs a new #IDRep
+     * 
+     * \param[in] id The ID this mapping applies to
+     * \param[in] name The name this ID is mapped to
+     * \param[in] color The color this ID is mapped to
+     * 
+     */
     IDRep(const MsgIDType id, const QString &name, const QColor &color);
 
+    /**
+     * \brief Returns the name the ID corresponds to
+     */
     QString getName() const;
+    /**
+     * \brief Sets a name that this ID shall correspond to
+     */
     void setName(const QString &value);
 
+    /**
+     * \brief Returns the color the ID corresponds to
+     */
     QColor getColor() const;
+    /**
+     * \brief Sets a color that this ID shall correspond to
+     */
     void setColor(const QColor &value);
 
+    /**
+     * \brief Creates an #IDRep from a QJsonObject
+     */
     static IDRep createObjFromJson(const QJsonObject &jsonMsg);
+    /**
+     * \brief Sets the data of this #IDRep according to a QJsonObject's contents
+     */
     void parseIN(const QJsonObject &jsonMsg);
+    /**
+     * \brief Ouptus the data of this #IDRep to a QJsonObject
+     */
     QJsonObject parseOUT() const;
 
+    /**
+     * \brief Returns whether this #IDRep is valid
+     */
     bool isValid() const;
+    /**
+     * \brief The copy assignment operator for an #IDRep
+     */
     bool operator==(const IDRep &other) const;
 
 //    IDRep &operator=(const IDRep &other);
 
+    /**
+     * \brief Returns the ID that this #IDRep contains
+     */
     MsgIDType getId() const;
 
+    /**
+     * \brief Issues a paint of the given ID according to the stored name and color information
+     */
     void paintIDRep(QPainter *painter, const QStyleOptionViewItem &option) const;
 
 private:
+    /**
+     * \brief Stores whether the #IDRep object is valid
+     */
     bool isValidObj;
+    /**
+     * \brief The #MsgIDType this #IDRep object contains the mappings for
+     */
     const MsgIDType id;
+    /**
+     * \brief The name that is mapped to the id
+     */
     QString name;
+    /**
+     * \brief The color that is mapped to the id
+     */
     QColor color;
+    /**
+     * \brief WHUD?
+     */
     QPixmap IDRepPixmap;
 };
 
