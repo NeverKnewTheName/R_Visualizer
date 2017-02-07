@@ -14,7 +14,7 @@
    <string>R_Visualizer</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../res/ressources.qrc">
     <normaloff>:/GUI/Icons/Icons/AppICON.ico</normaloff>:/GUI/Icons/Icons/AppICON.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -24,20 +24,6 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="MsgTableView" name="msgTableView">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>1</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message browser which displays all incoming messages chronologically.&lt;/p&gt;&lt;p&gt;Use System Config to edit the format and depiction of messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="locale">
-        <locale language="English" country="UnitedStates"/>
-       </property>
-      </widget>
       <widget class="QTabWidget" name="tabWidget">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -142,7 +128,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/Add-New-32.png</normaloff>:/GUI/Icons/Icons/Add-New-32.png</iconset>
    </property>
    <property name="text">
@@ -157,7 +143,7 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/Open-32.png</normaloff>:/GUI/Icons/Icons/Open-32.png</iconset>
    </property>
    <property name="text">
@@ -172,7 +158,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/Save-32.png</normaloff>:/GUI/Icons/Icons/Save-32.png</iconset>
    </property>
    <property name="text">
@@ -187,7 +173,7 @@
   </action>
   <action name="actionConnect">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/Network-01-32.png</normaloff>:/GUI/Icons/Icons/Network-01-32.png</iconset>
    </property>
    <property name="text">
@@ -196,7 +182,7 @@
   </action>
   <action name="actionStart">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/Check-32.png</normaloff>:/GUI/Icons/Icons/Check-32.png</iconset>
    </property>
    <property name="text">
@@ -205,7 +191,7 @@
   </action>
   <action name="actionStop">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/Delete-32.png</normaloff>:/GUI/Icons/Icons/Delete-32.png</iconset>
    </property>
    <property name="text">
@@ -214,7 +200,7 @@
   </action>
   <action name="actionSwitch_User_Role">
    <property name="icon">
-    <iconset>
+    <iconset resource="../res/ressources.qrc">
      <normaloff>:/GUI/Icons/Icons/UserNormal-32.png</normaloff>
      <normalon>:/GUI/Icons/Icons/UserAdmin-32.png</normalon>:/GUI/Icons/Icons/UserNormal-32.png</iconset>
    </property>
@@ -232,13 +218,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>MsgTableView</class>
-   <extends>QTableView</extends>
-   <header>msgtableview.h</header>
-  </customwidget>
- </customwidgets>
- <resources/>
+ <resources>
+  <include location="../res/ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

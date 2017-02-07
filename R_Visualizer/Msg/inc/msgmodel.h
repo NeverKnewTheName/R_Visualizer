@@ -27,18 +27,26 @@ class MsgModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
+    /**
+     * \brief Enumeration of all possible columns for the #MsgModel
+     */
     enum HeaderCols
     {
-        COL_TIMESTAMP,
-        COL_NAME,
-        COL_MESSAGE,
-        COL_NR_OF_COLS
+        COL_TIMESTAMP, //!< The Timestamp
+        COL_NAME, //!< The ID/Name of a #Msg
+        COL_CODE, //!< The Code/MsgType of a #Msg
+        COL_MESSAGE, //!< The Data/Message of a #Msg
+        COL_NR_OF_COLS //!< The number of header columns
     };
 
     /**
      * \brief Constructs an empty #MsgModel for use with a MessageStream
      */
-    MsgModel(size_t nrOfMessagesToDisplay, QObject *parent = Q_NULLPTR);
+    MsgModel(size_t nrOfMessagesToDisplay,
+             const FilterIDStore &filterIDModel,
+             const FilterCodeStore &filterCodeModel,
+             const FilterTimestampStore &filterTimestampModel,
+             QObject *parent = Q_NULLPTR);
     /**
      * \brief Cleans up the MsgModel
      */
@@ -115,6 +123,10 @@ private:
     /* HugeQVector<Msg> msgs; */
     const size_t NrOfMessagesToDisplay;
     friend class MainWindow;
+
+    const FilterIDStore &FilterIDModel;
+    const FilterCodeStore &FilterCodeModel;
+    const FilterTimestampStore &FilterTimestampModel;
 
 private slots:
     /**

@@ -5,9 +5,6 @@
 #include "idmodel.h"
 #include "msgtypemodel.h"
 #include "userrolemngr.h"
-#include "filteridstore.h"
-#include "filtercodestore.h"
-#include "filtertimestampstore.h"
 
 class MainWindow;
 
@@ -45,9 +42,6 @@ private:
 
     IDModel &idModel;
     MsgTypeModel &msgTypeModel;
-    FilterIDStore filterIDModel;
-    FilterCodeStore filterCodeModel;
-    FilterTimestampStore filterTimestampStore;
 
     bool idFilterEnabled;
     bool codeFilterEnabled;

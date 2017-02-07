@@ -2,3 +2,6 @@
 /Docu/*
 *.pro.user*
 *.swp
+tag
+cscope.out
+types_c.taghl

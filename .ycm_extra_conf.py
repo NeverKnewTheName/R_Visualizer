@@ -45,6 +45,7 @@ flags = [
     '-I', './R_Visualizer',
     '-I', './R_Visualizer/ErrLogView/inc',
     '-I', './R_Visualizer/MessageConfig/inc',
+    '-I', './R_Visualizer/MessageFilter/inc',
     '-I', './R_Visualizer/MessageStorage/inc',
     '-I', './R_Visualizer/Msg/inc',
     '-I', './R_Visualizer/SendMessages/inc',

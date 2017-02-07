@@ -75,14 +75,8 @@ void MessageConfig::initIDTableView()
     ui->idTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->idTableView->setItemDelegate(new IDEditorDelegate(ui->idTableView));
 
-
-
     //ToDO scrollToBottom might not be the best slot to address....
     connect(&idModel, &IDModel::rowsInserted, ui->idTableView, &QTableView::scrollToBottom);
-    //DEBUG//
-    //    idModel->add(0xFF, new IDRep(0xFF00, QString("Master"), QColor(Qt::blue)));
-    //    idModel->add(0xF0, new IDRep(0xF000, QString("PC"), QColor(Qt::green)));
-    //DEBUG//
 }
 
 void MessageConfig::initMsgTypeTableView()
@@ -100,10 +94,6 @@ void MessageConfig::initMsgTypeTableView()
 
     //ToDO scrollToBottom might not be the best slot to address....
     connect(&msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
-    //DEBUG//
-    //    msgTypeModel->add(new MsgTypeRep(0x02, QString("Start"), QColor(Qt::green)));
-    //    msgTypeModel->add(new MsgTypeRep(0x03, QString("Stop"), QColor(Qt::red)));
-    //DEBUG//
 }
 
 void MessageConfig::initFilterIDListView()

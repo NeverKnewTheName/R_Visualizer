@@ -39,7 +39,7 @@ public:
      * 
      * The default colums include:
      * - The MsgID
-     * - A associated name
+     * - An associated name
      * - An associated color
      */
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -98,7 +98,7 @@ public:
      */
     MsgIDType getIDToName(const QString &name) const;
     /**
-     * \brief Returns the name mapping for the given #MsgIDType
+     * \brief Returns the color mapping to the given #MsgIDType
      */
     QColor getColorToID(const MsgIDType id) const;
 
@@ -119,14 +119,20 @@ public:
      */
     void ParseFromJSON(const QByteArray &jsonFile);
 
+    /**
+     * \brief Enumeration of the header columns for the #IDModel
+     */
     enum HeaderCols
     {
-        COL_ID,
-        COL_NAME,
-        COL_COLOR,
-        COL_NR_OF_COLS
+        COL_ID, //!< Column in which the #MsgIDType is shown
+        COL_NAME, //!< Column in which the name mapping is shown
+        COL_COLOR, //!< Column in which the color mapping is shown
+        COL_NR_OF_COLS //!< Number of header columns for the #IDModel
     };
 
+    /**
+     * \brief Paint a #Msg according to its #MsgIDType and the mappings contained in this #IDModel
+     */
     void paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const;
 
 private:
@@ -141,7 +147,7 @@ private:
 
 signals:
     /**
-     * \brief the #internalModelChanged signal is emitted every time the data in the #IDModel changes
+     * \brief The #internalModelChanged signal is emitted every time the data in the #IDModel changes
      */
     void internalModelChanged();
 };

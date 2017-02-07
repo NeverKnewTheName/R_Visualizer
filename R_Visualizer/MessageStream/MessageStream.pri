@@ -3,14 +3,16 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/msgstream.cpp \
-    $$PWD/messagestream.cpp
+    $$PWD/src/msgstreammodel.cpp \
+    $$PWD/src/messagestream.cpp
 
 HEADERS  += \
     $$PWD/inc/msgstream.h \
-    $$PWD/messagestream.h
+    $$PWD/inc/msgstreammodel.h \
+    $$PWD/inc/messagestream.h
 
 
 FORMS    += \
 #    $$PWD/ui/msgstream.ui \
-    $$PWD/messagestream.ui
+    $$PWD/ui/messagestream.ui
 

@@ -35,9 +35,9 @@ public:
     /**
      * \brief Constructs a new #IDRep
      * 
-     * \param[in] id The ID this mapping applies to
-     * \param[in] name The name this ID is mapped to
-     * \param[in] color The color this ID is mapped to
+     * \param[in] id The ID the mapping applies to
+     * \param[in] name The name the ID is mapped to
+     * \param[in] color The color the ID is mapped to
      * 
      */
     IDRep(const MsgIDType id, const QString &name, const QColor &color);
@@ -65,7 +65,7 @@ public:
      */
     static IDRep createObjFromJson(const QJsonObject &jsonMsg);
     /**
-     * \brief Sets the data of this #IDRep according to a QJsonObject's contents
+     * \brief Sets the data of this #IDRep according to the QJsonObject's contents
      */
     void parseIN(const QJsonObject &jsonMsg);
     /**
@@ -78,14 +78,14 @@ public:
      */
     bool isValid() const;
     /**
-     * \brief The copy assignment operator for an #IDRep
+     * \brief Copares this #IDRep to another for equality
      */
     bool operator==(const IDRep &other) const;
 
 //    IDRep &operator=(const IDRep &other);
 
     /**
-     * \brief Returns the ID that this #IDRep contains
+     * \brief Returns the ID that this #IDRep contain/applies to
      */
     MsgIDType getId() const;
 

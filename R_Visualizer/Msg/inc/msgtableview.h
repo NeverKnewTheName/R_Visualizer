@@ -1,3 +1,10 @@
+/**
+ * \file msgtableview.h
+ * \author Christian Neuberger
+ * \date 2017-02-06
+ * 
+ * \brief A TableView for the #MessageStream that displays #Msg
+ */
 #ifndef MSGTABLEVIEW_H
 #define MSGTABLEVIEW_H
 
@@ -9,13 +16,29 @@
 
 #define VISIBLE_ROWS 200u
 
+/**
+ * \brief The #MsgTableView class provides a TableView to display #Msg
+ * 
+ * The class limits the number of #Msg that are shown for efficiency.
+ * If the TableView is scrolled the respective #Msg are automatically loaded
+ * and displayed.
+ */
 class MsgTableView : public QTableView
 {
     Q_OBJECT
 public:
+    /**
+     * \brief Constructs a new #MsgTableView
+     */
     explicit MsgTableView(QWidget *parent = Q_NULLPTR);
 
+    /**
+     * \brief Returns the number of visible rows
+     */
     unsigned int getVisibleRows() const;
+    /**
+     * \brief Sets the number of visible rows
+     */
     void setVisibleRows(unsigned int value);
 
     FilterIDStore *getFilterIDModel() const;

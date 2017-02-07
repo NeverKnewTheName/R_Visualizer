@@ -13,10 +13,17 @@
 #include <QDebug>
 
 
-MsgModel::MsgModel(const size_t nrOfMessagesToDisplay, QObject *parent) :
+MsgModel::MsgModel(const size_t nrOfMessagesToDisplay,
+                   const FilterIDStore &filterIDModel,
+                   const FilterCodeStore &filterCodeModel,
+                   const FilterTimestampStore &filterTimestampModel,
+                   QObject *parent) :
     QAbstractTableModel(parent),
     NrOfMessagesToDisplay(nrOfMessagesToDisplay),
-    msgBuffer(nrOfMessagesToDisplay)
+    msgBuffer(nrOfMessagesToDisplay),
+    FilterIDModel(filterIDModel),
+    FilterCodeModel(filterCodeModel),
+    FilterTimestampModel(filterTimestampModel)
 {
 }
 

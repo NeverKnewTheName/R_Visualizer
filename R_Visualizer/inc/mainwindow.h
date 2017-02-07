@@ -15,6 +15,7 @@
  * Custom Widgets
  */
 #include "messageconfig.h"
+#include "messagefilter.h"
 #include "sendmessages.h"
 #include "systemoverview.h"
 
@@ -141,19 +142,20 @@ private:
     IDModel idModel;
     MsgTypeModel msgTypeModel;
 
-    MessageConfig *msgConfigWidget;
-    SendMessages *sndMsgsWidget;
-    SystemOverview *sysOvrvwWidget;
+    MessageStream msgStream;
+    MessageConfig msgConfigWidget;
+    MessageFilter msgFilterWidget;
+    SendMessages sndMsgsWidget;
+    SystemOverview sysOvrvWidget;
 
-    ErrorLogView *errLogViewDiag;
+    ErrorLogView errLogViewDiag;
     int currErrCntr;
     int totalErrCntr;
 
-    UserRoleMngr *userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
+    UserRoleMngr userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
     bool m_IsConnectedToDevice; //!< Keeps track of whether an interface ot an R_Sys is connected
 
     DeviceHandler *m_deviceHandler; /**< Pointer to the \ref DeviceHandler */
-
 };
 
 #endif // MAINWINDOW_H
