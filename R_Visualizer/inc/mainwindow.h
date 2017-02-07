@@ -14,6 +14,7 @@
 /*
  * Custom Widgets
  */
+#include "messagestream.h"
 #include "messageconfig.h"
 #include "messagefilter.h"
 #include "sendmessages.h"
@@ -133,6 +134,15 @@ private slots:
     void messageReceived(CAN_PacketPtr ptr);
 
 private:
+    void initDeviceHandler();
+
+    void initMessageStream();
+    void initTabs();
+
+    void initErrorLog();
+
+    void initUserRoleManager();
+
     void initMsgsTableView();
 
     Ui::MainWindow *ui; //!< The User Interface that was created by QT
@@ -155,7 +165,7 @@ private:
     UserRoleMngr userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
     bool m_IsConnectedToDevice; //!< Keeps track of whether an interface ot an R_Sys is connected
 
-    DeviceHandler *m_deviceHandler; /**< Pointer to the \ref DeviceHandler */
+    DeviceHandler m_deviceHandler; /**< #DeviceHandler */
 };
 
 #endif // MAINWINDOW_H

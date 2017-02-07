@@ -10,6 +10,7 @@
 
 #include <QWidget>
 
+#include "msgstreammodel.h"
 #include "msgiddelegate.h"
 #include "msgdatadelegate.h"
 
@@ -57,7 +58,7 @@ private:
     Ui::MessageStream *ui;
     const IDModel &msgStreamIDModel;
     const MsgTypeModel &msgStreamTypeModel;
-    MessageStreamModel msgStreamModel;
+    MsgStreamModel msgStreamModel;
     MsgIDDelegate idDelegate;
     MsgDataDelegate dataDelegate;
 };

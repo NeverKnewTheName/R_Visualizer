@@ -55,12 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
 
-    ui->tabWidget->addTab(&sysOvrvWidget, QString("System Overview"));
-
-    ui->tabWidget->addTab(&sndMsgsWidget, QString("Send Messages"));
-
-    ui->tabWidget->addTab(&msgConfigWidget, QString("Message Configuration"));
-    ui->tabWidget->addTab(&msgConfigWidget, QString("Message Configuration"));
 
     connect(&msgConfigWidget, &MessageConfig::sgnlIdAddFinished, this, &MainWindow::idAddFinished);
     connect(&msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished);
@@ -70,17 +64,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->initMsgsTableView();
 
-    ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
-    ui->actionSwitch_User_Role->setToolTip(QString("Switch to Admin Role"));
-    ui->actionSwitch_User_Role->setText(QString("Switch to Admin Role"));
-    connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
-    connect(this, &MainWindow::switchUserRoles, &sysOvrvWidget, &SystemOverview::applyRole);
-    connect(this, &MainWindow::switchUserRoles, &sndMsgsWidget, &SendMessages::applyRole);
-    connect(this, &MainWindow::switchUserRoles, &msgConfigWidget, &MessageConfig::applyRole);
-    connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
+    initDeviceHandler();
+    initMessageStream();
+    initTabs();
+    initErrorLog();
+    initUserRoleManager();
 
-    emit switchUserRoles(UserRoleMngr::NormalUserRole);
+}
 
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete m_deviceHandler;
+}
+
+void MainWindow::initDeviceHandler()
+{
     m_deviceHandler = new DeviceHandler();
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
 
@@ -95,10 +94,58 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionStart->setDisabled(true);
 }
 
-MainWindow::~MainWindow()
+void MainWindow::initMessageStream()
 {
-    delete ui;
-    delete m_deviceHandler;
+    const FilterIDStore &filterIDModel = msgConfigWidget->getFilterIDModel();
+    const FilterCodeStore &filterCodeModel = msgConfigWidget->getFilterCodeModel();
+    const FilterTimestampStore &filterTimestampModel = msgConfigWidget->getFilterTimestampModel();
+    /* ui->msgStream->setFilterIDModel(filterIDModel); */
+    /* ui->msgStream->setFilterCodeModel(filterCodeModel); */
+    /* ui->msgStream->setFilterTimestampModel(filterTimestampModel); */
+
+    connect(&msgConfigWidget, &MessageConfig::filterIDstateChange, ui->msgTableView, &MsgTableView::changeIDFilterEnabled);
+    connect(&msgConfigWidget, &MessageConfig::filterCodestateChange, ui->msgTableView, &MsgTableView::changeCodeFilterEnabled);
+    connect(&msgConfigWidget, &MessageConfig::filterTimestampFromStateChange, ui->msgTableView, &MsgTableView::changeTimestampFromFilterEnabled);
+    connect(&msgConfigWidget, &MessageConfig::filterTimestampToStateChange, ui->msgTableView, &MsgTableView::changeTimestampToFilterEnabled);
+
+    connect(&filterIDModel, &FilterIDStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(&filterCodeModel, &FilterCodeStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+    connect(&filterTimestampModel, &FilterTimestampStore::internalModelChanged, ui->msgTableView, &MsgTableView::filterChanged);
+
+    connect(ui->msgTableView, &MsgTableView::invisibleRows, this, &MainWindow::scrollToGetMoreContent);
+    // queued connection for the case that many rows are added at once and could not be rendered either way
+    connect(&msgModel, &MsgModel::rowAppended, ui->msgTableView, &MsgTableView::rowAdded, Qt::QueuedConnection);
+    connect(&msgModel, &MsgModel::modelReset, ui->msgTableView, &MsgTableView::reset);
+    connect(this, &MainWindow::changedDataAcquisitionMode, ui->msgTableView, &MsgTableView::scrollContinuousChange);
+    ui->msgTableView->setModel(&msgModel);
+}
+
+void MainWindow::initTabs()
+{
+    //Set up Tabs in order
+    ui->tabWidget->addTab(&sysOvrvWidget, QString("System Overview"));
+    ui->tabWidget->addTab(&sndMsgsWidget, QString("Send Messages"));
+    ui->tabWidget->addTab(&msgConfigWidget, QString("Message Configuration"));
+    ui->tabWidget->addTab(&msgFilterWidget, QString("Message Stream Filter"));
+}
+
+void MainWindow::initErrorLog()
+{
+}
+
+void MainWindow::initUserRoleManager()
+{
+    ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
+    ui->actionSwitch_User_Role->setToolTip(QString("Switch to Admin Role"));
+    ui->actionSwitch_User_Role->setText(QString("Switch to Admin Role"));
+
+    connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
+    connect(this, &MainWindow::switchUserRoles, &sysOvrvWidget, &SystemOverview::applyRole);
+    connect(this, &MainWindow::switchUserRoles, &sndMsgsWidget, &SendMessages::applyRole);
+    connect(this, &MainWindow::switchUserRoles, &msgConfigWidget, &MessageConfig::applyRole);
+    connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
+
+    emit switchUserRoles(UserRoleMngr::NormalUserRole);
 }
 
 
@@ -297,7 +344,6 @@ void MainWindow::initMsgsTableView()
     connect(&msgModel, &MsgModel::modelReset, ui->msgTableView, &MsgTableView::reset);
     connect(this, &MainWindow::changedDataAcquisitionMode, ui->msgTableView, &MsgTableView::scrollContinuousChange);
     ui->msgTableView->setModel(&msgModel);
-
 }
 
 

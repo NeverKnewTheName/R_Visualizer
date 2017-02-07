@@ -21,6 +21,9 @@ class Msg;
 #include <QString>
 
 class MainWindow;
+class FilterIDStore;
+class FilterCodeStore;
+class FilterTimestampStore;
 
 class MsgStreamModel : public QAbstractTableModel
 {
@@ -40,7 +43,7 @@ public:
     {
         DataUsr_Msg = Qt::UserRole+1,
         DataUsr_RawData = Qt::UserRole+2
-    }
+    };
 
     /**
      * \brief Constructs an empty #MsgStreamModel for use with a MessageStream
@@ -107,20 +110,6 @@ public:
      */
     void ParseFromJSON(QByteArray jsonFile);
 
-private:
-    /**
-     * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
-     */
-    RSimpleDestructiveRingBuff<Msg> msgBuffer;
-    /* DataStorage<Msg> msgs; */
-    /* HugeQVector<Msg> msgs; */
-    const size_t NrOfMessagesToDisplay;
-    friend class MainWindow;
-
-    const FilterIDStore &FilterIDModel;
-    const FilterCodeStore &FilterCodeModel;
-    const FilterTimestampStore &FilterTimestampModel;
-
 private slots:
     /**
      * \brief The #messageReceived slot shall be called whenever a new message that is to be displayed is received
@@ -140,6 +129,20 @@ signals:
      * \brief The #rowInvalidated singal is emitted every time a row/#Msg is invalidated
      */
     void rowInvalidated(const QModelIndex &index);
+
+private:
+    /**
+     * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
+     */
+    RSimpleDestructiveRingBuff<Msg> msgBuffer;
+    /* DataStorage<Msg> msgs; */
+    /* HugeQVector<Msg> msgs; */
+    const size_t NrOfMessagesToDisplay;
+    friend class MainWindow;
+
+    const FilterIDStore &FilterIDModel;
+    const FilterCodeStore &FilterCodeModel;
+    const FilterTimestampStore &FilterTimestampModel;
 };
 
 #endif // MSGSTREAMMODEL_H
