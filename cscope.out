@@ -1,4 +1,4 @@
-cscope 15 $HOME/QtWrkSpc/R_Visualizer_Build               0000570723
+cscope 15 $HOME/QtWrkSpc/R_Visualizer_Build               0000574236
 	@CAN_Analyser_USB_Driver/can_packet.cpp
 
 1 
@@ -22826,18 +22826,24 @@ FILTERCODEADDDIALOG_H
 >
 
 6 
+şass
+ 
+	gMsgTy³Mod–
+;
+
+8 
 Çme¥aû
  
 	gUi
  {
 
-7 
+9 
 şass
  
 	gF‹rCodeAddDŸlog
 ;
 
-10 şas 
+12 şas 
 	cF‹rCodeAddDŸlog
  : 
 public
@@ -22845,39 +22851,71 @@ public
 QDŸlog
 
 
-12 
+14 
 Q_OBJECT
 
 
-14 
+16 
 public
 :
 
-15 
+17 
 ex¶ic™
  
 F‹rCodeAddDŸlog
-(
+ĞcÚ¡ 
+MsgTy³Mod–
+ &
+msgTy³Mod–FÜCom¶‘iÚ
+, 
 QWidg‘
  *
 ·»Á
  = 0);
 
-16 ~
+18 ~
 F‹rCodeAddDŸlog
 ();
 
-18 
+20 
 	m´iv©e
 :
 
-19 
+21 
 Ui
 ::
 F‹rCodeAddDŸlog
  *
 ui
 ;
+
+22 cÚ¡ 
+	mMsgTy³Mod–
+ &
+	mmsgTy³Mod–FÜCom¶‘iÚ
+;
+
+24 
+	msigÇls
+:
+
+25 
+comm™
+(cÚ¡ 
+MsgCodeTy³
+ 
+codeToComm™
+);
+
+27 
+´iv©e
+ 
+	m¦Ùs
+:
+
+28 
+»adyToComm™
+();
 
 	@R_Visualizer/MessageFilter/inc/filtercodestore.h
 
@@ -23109,33 +23147,39 @@ public
 
 	@R_Visualizer/MessageFilter/inc/filteridadddialog.h
 
-1 #iâdeà
+8 #iâdeà
 FILTERIDADDDIALOG_H
 
 
-2 
+9 
 	#FILTERIDADDDIALOG_H
 
 
 	)
 
-4 
+11 
 	~<QDŸlog
 >
 
-6 
+13 
+şass
+ 
+	gIDMod–
+;
+
+15 
 Çme¥aû
  
 	gUi
  {
 
-7 
+16 
 şass
  
 	gF‹rIDAddDŸlog
 ;
 
-10 şas 
+19 şas 
 	cF‹rIDAddDŸlog
  : 
 public
@@ -23143,39 +23187,71 @@ public
 QDŸlog
 
 
-12 
+21 
 Q_OBJECT
 
 
-14 
+23 
 public
 :
 
-15 
+30 
 ex¶ic™
  
 F‹rIDAddDŸlog
-(
+(cÚ¡ 
+IDMod–
+ &
+idMod–FÜCom¶‘iÚ
+, 
 QWidg‘
  *
 ·»Á
  = 0);
 
-16 ~
+31 ~
 F‹rIDAddDŸlog
 ();
 
-18 
+33 
 	m´iv©e
 :
 
-19 
+34 
 Ui
 ::
 F‹rIDAddDŸlog
  *
 ui
 ;
+
+38 cÚ¡ 
+	mIDMod–
+ &
+	midMod–FÜCom¶‘iÚ
+;
+
+40 
+	msigÇls
+:
+
+44 
+comm™
+(cÚ¡ 
+MsgIDTy³
+ 
+idToComm™
+);
+
+46 
+´iv©e
+ 
+	m¦Ùs
+:
+
+53 
+»adyToComm™
+();
 
 	@R_Visualizer/MessageFilter/inc/filteriddelegate.h
 
@@ -23903,7 +23979,7 @@ MESSAGEFILTER_H
 	gMes§geF‹r
 ;
 
-22 şas 
+25 şas 
 	cMes§geF‹r
  : 
 public
@@ -23911,65 +23987,65 @@ public
 QWidg‘
 
 
-24 
+27 
 Q_OBJECT
 
 
-26 
+29 
 public
 :
 
-27 
+36 
 ex¶ic™
  
 Mes§geF‹r
 (
 
-28 cÚ¡ 
+37 cÚ¡ 
 IDMod–
  &
 idMod–
 ,
 
-29 cÚ¡ 
+38 cÚ¡ 
 MsgTy³Mod–
  &
 msgTy³Mod–
 ,
 
-30 
+39 
 QWidg‘
  *
 ·»Á
  = 0
 
-32 ~
+41 ~
 Mes§geF‹r
 ();
 
-34 cÚ¡ 
-F‹rIDStÜe
- 
+46 cÚ¡ 
+	mF‹rIDStÜe
+ &
 	$g‘F‹rIDMod–
 () const;
 
-35 cÚ¡ 
+50 cÚ¡ 
 F‹rCodeStÜe
- 
+ &
 	$g‘F‹rCodeMod–
 () const;
 
-36 cÚ¡ 
+54 cÚ¡ 
 F‹rTime¡ampStÜe
- 
+ &
 	$g‘F‹rTime¡ampMod–
 () const;
 
-38 
+56 
 sigÇls
 :
 
-39 
+60 
 	`sgÆ_IDF‹rEÇbËd
 (
 boŞ
@@ -23977,15 +24053,15 @@ boŞ
 ’abËd
 );
 
-40 
+64 
 	`sgÆ_IDAddedToF‹r
 ();
 
-41 
+68 
 	`sgÆ_IDRemovedFromF‹r
 ();
 
-42 
+72 
 	`sgÆ_CodeF‹rEÇbËd
 (
 boŞ
@@ -23993,15 +24069,15 @@ boŞ
 ’abË
 );
 
-43 
+76 
 	`sgÆ_CodeAddedToF‹r
 ();
 
-44 
+80 
 	`sgÆ_CodeRemovedFromF‹r
 ();
 
-45 
+84 
 	`sgÆ_Time¡ampF‹rToEÇbËd
 (
 boŞ
@@ -24009,11 +24085,11 @@ boŞ
 ’abË
 );
 
-46 
+88 
 	`sgÆ_Time¡ampToChªged
 ();
 
-47 
+92 
 	`sgÆ_Time¡ampF‹rFromEÇbËd
 (
 boŞ
@@ -24021,17 +24097,17 @@ boŞ
 ’abË
 );
 
-48 
+96 
 	`sgÆ_Time¡ampFromChªged
 ();
 
-50 
+98 
 ´iv©e
  
 ¦Ùs
 :
 
-51 
+102 
 	`Ú_’abËIDF‹rCheckBox_toggËd
 (
 boŞ
@@ -24039,15 +24115,15 @@ boŞ
 checked
 );
 
-52 
+106 
 	`Ú_addF‹rIDPushBu‰Ú_şicked
 ();
 
-53 
+110 
 	`Ú_rmvF‹rIDPushBu‰Ú_şicked
 ();
 
-54 
+114 
 	`Ú_’abËCodeF‹rCheckBox_toggËd
 (
 boŞ
@@ -24055,15 +24131,15 @@ boŞ
 checked
 );
 
-55 
+118 
 	`Ú_addF‹rCodePushBu‰Ú_şicked
 ();
 
-56 
+122 
 	`Ú_rmvF‹rCodePushBu‰Ú_şicked
 ();
 
-57 
+126 
 	`Ú_’abËTime¡ampFromF‹rCheckBox_toggËd
 (
 boŞ
@@ -24071,7 +24147,7 @@ boŞ
 checked
 );
 
-58 
+133 
 	`Ú_f‹rTimeSmpFromD©eTimeEd™_d©eTimeChªged
 (cÚ¡ 
 QD©eTime
@@ -24079,7 +24155,7 @@ QD©eTime
 d©eTime
 );
 
-59 
+137 
 	`Ú_’abËTime¡ampToF‹rCheckBox_toggËd
 (
 boŞ
@@ -24087,7 +24163,7 @@ boŞ
 checked
 );
 
-60 
+144 
 	`Ú_f‹rTimeSmpToD©eTimeEd™_d©eTimeChªged
 (cÚ¡ 
 QD©eTime
@@ -24095,11 +24171,43 @@ QD©eTime
 d©eTime
 );
 
-62 
+146 
+	`¦t_time¡ampToChªged
+(cÚ¡ 
+QD©eTime
+ &
+ÃwFromD©eTime
+);
+
+147 
+	`¦t_time¡ampFromChªged
+(cÚ¡ 
+QD©eTime
+ &
+ÃwToD©eTime
+);
+
+154 
+	`f‹rIDComm™
+(cÚ¡ 
+MsgIDTy³
+ 
+idToComm™
+);
+
+160 
+	`f‹rCodeComm™
+(cÚ¡ 
+MsgCodeTy³
+ 
+codeToComm™
+);
+
+162 
 ´iv©e
 :
 
-63 
+166 
 	`š™F‹rIDLi¡V›w
 (cÚ¡ 
 IDMod–
@@ -24107,7 +24215,7 @@ IDMod–
 idMod–
 );
 
-64 
+170 
 	`š™F‹rCodeLi¡V›w
 (cÚ¡ 
 MsgTy³Mod–
@@ -24115,7 +24223,11 @@ MsgTy³Mod–
 msgTy³Mod–
 );
 
-66 
+174 
+	`š™F‹rTime¡amp
+();
+
+176 
 Ui
 ::
 Mes§geF‹r
@@ -24123,19 +24235,19 @@ Mes§geF‹r
 ui
 ;
 
-67 
+180 
 F‹rIDStÜe
  
 f‹rIDMod–
 ;
 
-68 
+184 
 F‹rCodeStÜe
  
 f‹rCodeMod–
 ;
 
-69 
+188 
 F‹rTime¡ampStÜe
  
 f‹rTime¡ampStÜe
@@ -24151,33 +24263,55 @@ f‹rTime¡ampStÜe
 	~"ui_f‹rcod—dddŸlog.h
 "
 
-4 
+4 
+	~<QSŒšg
+>
+
+5 
+	~<QCom¶‘”
+>
+
+7 
+	~"msgty³mod–.h
+"
+
+9 
 	gF‹rCodeAddDŸlog
 ::
 	$F‹rCodeAddDŸlog
-(
+ĞcÚ¡ 
+MsgTy³Mod–
+ &
+msgTy³Mod–FÜCom¶‘iÚ
+, 
 QWidg‘
  *
 ·»Á
 ) :
 
-5 
+10 
 	`QDŸlog
 (
 ·»Á
 ),
 
-6 
-	$ui
+11 
+	`ui
 (
 Ãw
  
 Ui
 ::
 F‹rCodeAddDŸlog
+),
+
+12 
+	$msgTy³Mod–FÜCom¶‘iÚ
+(
+msgTy³Mod–FÜCom¶‘iÚ
 )
 
-8 
+14 
 ui
 ->
 	`£tupUi
@@ -24185,23 +24319,135 @@ ui
 this
 );
 
-9 
+16 
+QCom¶‘”
+ *
+codeCom¶‘”
+ = 
+Ãw
+ 
+	`QCom¶‘”
+(
+msgTy³Mod–FÜCom¶‘iÚ
+->
+	`g‘AÎCodeNames
+(), 
+this
+);
+
+17 
+codeCom¶‘”
+->
+	`£tCa£S’s™iv™y
+(
+Qt
+::
+Ca£In£ns™ive
+);
+
+18 
+ui
+->
+codeTy³Le
+->
+	`£tCom¶‘”
+(
+codeCom¶‘”
+);
+
+19 
+	`cÚÃù
+(
+this
+, &
+F‹rCodeAddDŸlog
+::
+acû±ed
+,his, &F‹rCodeAddDŸlog::
+»adyToComm™
+);
+
+20 
 	}
 }
 
-11 
+22 
 	gF‹rCodeAddDŸlog
 ::~
 	$F‹rCodeAddDŸlog
 ()
 
-13 
+24 
 d–‘e
  
 ui
 ;
 
-14 
+25 
+	}
+}
+
+27 
+	gF‹rCodeAddDŸlog
+::
+	$»adyToComm™
+()
+
+29 cÚ¡ 
+QSŒšg
+ &
+codeTy³Text
+ = 
+ui
+->
+codeTy³Le
+->
+	`‹xt
+();
+
+30 
+boŞ
+ 
+cÚv”siÚOK
+;
+
+31 
+MsgCodeTy³
+ 
+»Œ›vedCode
+ = 
+codeTy³Text
+.
+	`toIÁ
+(&
+cÚv”siÚOK
+, (codeTy³Text.
+	`¡¬tsW™h
+("0x")) ? 16 : 0);
+
+33 if(!
+cÚv”siÚOK
+)
+
+35 
+»Œ›vedCode
+ = 
+msgTy³Mod–FÜCom¶‘iÚ
+->
+	`g‘CodeToName
+(
+codeTy³Text
+);
+
+38 
+em™
+ 
+	`comm™
+(
+»Œ›vedCode
+);
+
+39 
 	}
 }
 
@@ -24779,33 +25025,55 @@ code
 	~"ui_f‹ridadddŸlog.h
 "
 
-4 
+4 
+	~<QSŒšg
+>
+
+5 
+	~<QCom¶‘”
+>
+
+7 
+	~"idmod–.h
+"
+
+9 
 	gF‹rIDAddDŸlog
 ::
 	$F‹rIDAddDŸlog
-(
+(cÚ¡ 
+IDMod–
+ &
+idMod–FÜCom¶‘iÚ
+, 
 QWidg‘
  *
 ·»Á
 ) :
 
-5 
+10 
 	`QDŸlog
 (
 ·»Á
 ),
 
-6 
-	$ui
+11 
+	`ui
 (
 Ãw
  
 Ui
 ::
 F‹rIDAddDŸlog
+),
+
+12 
+	$idMod–FÜCom¶‘iÚ
+(
+idMod–FÜCom¶‘iÚ
 )
 
-8 
+14 
 ui
 ->
 	`£tupUi
@@ -24813,23 +25081,135 @@ ui
 this
 );
 
-9 
+19 
+QCom¶‘”
+ *
+idCom¶‘”
+ = 
+Ãw
+ 
+	`QCom¶‘”
+(
+idMod–FÜCom¶‘iÚ
+->
+	`g‘AÎIDNames
+(), 
+this
+);
+
+20 
+idCom¶‘”
+->
+	`£tCa£S’s™iv™y
+(
+Qt
+::
+Ca£In£ns™ive
+);
+
+21 
+ui
+->
+idNameLe
+->
+	`£tCom¶‘”
+(
+idCom¶‘”
+);
+
+22 
+	`cÚÃù
+(
+this
+, &
+F‹rIDAddDŸlog
+::
+acû±ed
+,hi &F‹rIDAddDŸlog::
+»adyToComm™
+);
+
+23 
 	}
 }
 
-11 
+25 
 	gF‹rIDAddDŸlog
 ::~
 	$F‹rIDAddDŸlog
 ()
 
-13 
+27 
 d–‘e
  
 ui
 ;
 
-14 
+28 
+	}
+}
+
+30 
+	gF‹rIDAddDŸlog
+::
+	$»adyToComm™
+()
+
+32 cÚ¡ 
+QSŒšg
+ &
+idNameText
+ = 
+ui
+->
+idNameLe
+->
+	`‹xt
+();
+
+33 
+boŞ
+ 
+cÚv”siÚOK
+;
+
+34 
+MsgIDTy³
+ 
+»Œ›vedID
+ = 
+idNameText
+.
+	`toIÁ
+(&
+cÚv”siÚOK
+, (idNameText.
+	`¡¬tsW™h
+("0x")) ? 16 : 0);
+
+39 if(!
+cÚv”siÚOK
+)
+
+41 
+»Œ›vedID
+ = 
+idMod–FÜCom¶‘iÚ
+->
+	`g‘IDToName
+(
+idNameText
+);
+
+44 
+em™
+ 
+	`comm™
+(
+»Œ›vedID
+);
+
+45 
 	}
 }
 
@@ -26978,34 +27358,10 @@ Mes§geF‹r
 (),
 
 23 
-	`f‹rTime¡ampMod–
-(),
-
-24 
-	`idF‹rEÇbËd
-(
-çl£
-),
+	$f‹rTime¡ampMod–
+()
 
 25 
-	`codeF‹rEÇbËd
-(
-çl£
-),
-
-26 
-	`timeSmpF‹rFromEÇbËd
-(
-çl£
-),
-
-27 
-	$timeSmpF‹rToEÇbËd
-(
-çl£
-)
-
-29 
 ui
 ->
 	`£tupUi
@@ -27013,103 +27369,39 @@ ui
 this
 );
 
-30 
+26 
 	`š™F‹rIDLi¡V›w
 ();
 
-31 
+27 
 	`š™F‹rCodeLi¡V›w
 ();
 
-33 
-	`cÚÃù
-(
-ui
-->
-f‹rTimeSmpFromD©eTimeEd™
-, &
-QD©eTimeEd™
-::
-d©eTimeChªged
-, 
-this
-, &
-Mes§geCÚfig
-::
-¦t_time¡ampFromChªged
-);
+28 
+	`š™F‹rTime¡amp
+();
 
-34 
-	`cÚÃù
-(
-this
-, &
-Mes§geCÚfig
-::
-sgÆ_time¡ampFromChªged
-, &
-f‹rTime¡ampStÜe
-, &
-F‹rTime¡ampStÜe
-::
-time¡ampFromChªged
-);
-
-35 
-	`cÚÃù
-(
-ui
-->
-f‹rTimeSmpToD©eTimeEd™
-, &
-QD©eTimeEd™
-::
-d©eTimeChªged
-, 
-this
-, &
-Mes§geCÚfig
-::
-¦t_time¡ampToChªged
-);
-
-36 
-	`cÚÃù
-(
-this
-, &
-Mes§geCÚfig
-::
-sgÆ_time¡ampToChªged
-, &
-f‹rTime¡ampStÜe
-, &
-F‹rTime¡ampStÜe
-::
-time¡ampToChªged
-);
-
-37 
+30 
 	}
 }
 
-39 
+32 
 	gMes§geF‹r
 ::~
 	$Mes§geF‹r
 ()
 
-41 
+34 
 d–‘e
  
 ui
 ;
 
-42 
+35 
 	}
 }
 
-45 
+38 
 	gMes§geF‹r
 ::
 	$š™F‹rIDLi¡V›w
@@ -27119,7 +27411,7 @@ IDMod–
 idMod–
 )
 
-51 
+44 
 ui
 ->
 idF‹¾i¡V›w
@@ -27129,7 +27421,7 @@ idF‹¾i¡V›w
 f‹rIDMod–
 );
 
-53 
+46 
 ui
 ->
 idF‹¾i¡V›w
@@ -27141,7 +27433,7 @@ QAb¡¿ùI‹mV›w
 CÚtiguousS–eùiÚ
 );
 
-54 
+47 
 ui
 ->
 idF‹¾i¡V›w
@@ -27153,7 +27445,7 @@ QAb¡¿ùI‹mV›w
 NoEd™Trigg”s
 );
 
-55 
+48 
 ui
 ->
 idF‹¾i¡V›w
@@ -27163,7 +27455,7 @@ idF‹¾i¡V›w
 Œue
 );
 
-56 
+49 
 ui
 ->
 idF‹¾i¡V›w
@@ -27177,11 +27469,11 @@ idF‹¾i¡V›w
 idMod–
 , ui->idFilterlistView));
 
-64 
+57 
 	}
 }
 
-66 
+59 
 	gMes§geF‹r
 ::
 	$š™F‹rCodeLi¡V›w
@@ -27191,7 +27483,7 @@ MsgTy³Mod–
 msgTy³Mod–
 )
 
-72 
+65 
 ui
 ->
 codeF‹¾i¡V›w
@@ -27201,7 +27493,7 @@ codeF‹¾i¡V›w
 f‹rCodeMod–
 );
 
-74 
+67 
 ui
 ->
 codeF‹¾i¡V›w
@@ -27213,7 +27505,7 @@ QAb¡¿ùI‹mV›w
 CÚtiguousS–eùiÚ
 );
 
-75 
+68 
 ui
 ->
 codeF‹¾i¡V›w
@@ -27225,7 +27517,7 @@ QAb¡¿ùI‹mV›w
 NoEd™Trigg”s
 );
 
-76 
+69 
 ui
 ->
 codeF‹¾i¡V›w
@@ -27235,7 +27527,7 @@ codeF‹¾i¡V›w
 Œue
 );
 
-77 
+70 
 ui
 ->
 codeF‹¾i¡V›w
@@ -27248,6 +27540,40 @@ codeF‹¾i¡V›w
 (&
 msgTy³Mod–
 , ui->codeFilterlistView));
+
+78 
+	}
+}
+
+80 
+	gMes§geF‹r
+::
+	$š™F‹rTime¡amp
+()
+
+83 
+f‹rTime¡ampMod–
+.
+	`£tTime¡ampF‹rTo
+(
+ui
+->
+f‹rTime¡ampToD©eTimeEd™
+->
+	`D©eTime
+());
+
+84 
+f‹rTime¡ampMod–
+.
+	`£tTime¡ampF‹rFrom
+(
+ui
+->
+f‹rTime¡ampFromD©eTimeEd™
+->
+	`D©eTime
+());
 
 85 
 	}
@@ -27338,6 +27664,8 @@ f‹rIDAddDŸg
  
 	`F‹rIDAddDŸlog
 (
+idMod–
+, 
 this
 );
 
@@ -27354,62 +27682,78 @@ this
 , &
 Mes§geF‹r
 ::
-
-116 cÚ¡ 
-QMod–Index
- &
-ÃwlyAddedIDIndex
- = 
-f‹rIDMod–
-.
-	`addID
-(0x0);
-
-118 
-ui
-->
-idF‹¾i¡V›w
-->
-	`ed™
-(
-ÃwlyAddedIDIndex
+f‹rIDComm™
 );
 
-120 
-f‹rIDMod–
+115 
+f‹rIDAddDŸg
 .
-	`d©a
-(
-ÃwlyAddedIDIndex
-);
-
-122 
-em™
- 
-	`sgÆ_IDAddedToF‹r
+	`exec
 ();
 
-123 
+125 
 	}
 }
 
-125 
+127 
 	gMes§geF‹r
 ::
 	$Ú_rmvF‹rIDPushBu‰Ú_şicked
 ()
 
-128 
+129 
+QI‹mS–eùiÚMod–
+ *
+£ËùiÚMod–
+ = 
+ui
+->
+idF‹¾i¡V›w
+->
+	`£ËùiÚMod–
+();
+
+130 
+QMod–IndexLi¡
+ 
+£ËùiÚIndexLi¡
+ = 
+£ËùiÚMod–
+->
+	`£ËùedRows
+();
+
+131 if(
+£ËùiÚIndexLi¡
+.
+	`size
+())
+
+133 
+f‹rIDMod–
+.
+	`»moveRows
+(
+£ËùiÚIndexLi¡
+.
+	`fœ¡
+().
+	`row
+(), s–eùiÚIndexLi¡.
+	`size
+());
+
+135 
 em™
  
 	`sgÆ_IDRemovedFromF‹r
 ();
 
-129 
+136 
 	}
 }
 
-131 
+138 
 	gMes§geF‹r
 ::
 	$Ú_’abËCodeF‹rCheckBox_toggËd
@@ -27419,32 +27763,124 @@ boŞ
 checked
 )
 
-134 
+140 
+em™
+ 
+	`sgÆ_CodeF‹rEÇbËd
+(
+checked
+);
+
+141 
 	}
 }
 
-136 
-Mes§geF‹r
+143 
+	gMes§geF‹r
 ::
 	$Ú_addF‹rCodePushBu‰Ú_şicked
 ()
 
-139 
+145 
+F‹rCodeAddDŸlog
+ *
+f‹rCodeAddDŸlog
+ = 
+Ãw
+ 
+	`F‹rCodeAddDŸlog
+(
+msgTy³Mod–
+, 
+this
+);
+
+146 
+	`cÚÃù
+(
+f‹rCodeAddDŸlog
+, &
+F‹rCodeAddDŸlog
+::
+comm™
+, 
+this
+, &
+Mes§geF‹r
+::
+f‹rCodeComm™
+);
+
+147 
+f‹rCodeAddDŸlog
+.
+	`exec
+();
+
+148 
 	}
 }
 
-141 
-Mes§geF‹r
+150 
+	gMes§geF‹r
 ::
 	$Ú_rmvF‹rCodePushBu‰Ú_şicked
 ()
 
-144 
+152 
+QI‹mS–eùiÚMod–
+ *
+£ËùiÚMod–
+ = 
+ui
+->
+codeF‹¾i¡V›w
+->
+	`£ËùiÚMod–
+();
+
+153 
+QMod–IndexLi¡
+ 
+£ËùiÚIndexLi¡
+ = 
+£ËùiÚMod–
+->
+	`£ËùedRows
+();
+
+154 if(
+£ËùiÚIndexLi¡
+.
+	`size
+())
+
+156 
+f‹rCodeMod–
+.
+	`»moveRows
+(
+£ËùiÚIndexLi¡
+.
+	`fœ¡
+().
+	`row
+(), s–eùiÚIndexLi¡.
+	`size
+());
+
+159 
+em™
+ 
+	`¢gl_CodeRemovedFromF‹r
+();
+
+160 
 	}
 }
 
-146 
-Mes§geF‹r
+162 
+	gMes§geF‹r
 ::
 	$Ú_’abËTime¡ampFromF‹rCheckBox_toggËd
 (
@@ -27453,12 +27889,20 @@ boŞ
 checked
 )
 
-149 
+164 
+em™
+ 
+	`sgÆ_Time¡ampF‹rFromEÇbËd
+(
+checked
+);
+
+165 
 	}
 }
 
-151 
-Mes§geF‹r
+167 
+	gMes§geF‹r
 ::
 	$Ú_f‹rTimeSmpFromD©eTimeEd™_d©eTimeChªged
 (cÚ¡ 
@@ -27467,12 +27911,46 @@ QD©eTime
 d©eTime
 )
 
-154 
+169 if(
+ui
+->
+f‹rTime¡ampToD©eTimeEd™
+->
+	`d©eTime
+(è< 
+d©eTime
+)
+
+171 
+ui
+->
+f‹rTime¡ampToD©eTimeEd™
+->
+	`£tD©eTime
+(
+d©eTime
+);
+
+174 
+f‹rTime¡ampStÜe
+.
+	`£tTime¡ampF‹rFrom
+(
+d©eTime
+);
+
+176 
+em™
+ 
+	`sgÆ_Time¡ampFromChªged
+();
+
+177 
 	}
 }
 
-156 
-Mes§geF‹r
+179 
+	gMes§geF‹r
 ::
 	$Ú_’abËTime¡ampToF‹rCheckBox_toggËd
 (
@@ -27481,12 +27959,20 @@ boŞ
 checked
 )
 
-159 
+181 
+em™
+ 
+	`sgÆ_Time¡ampF‹rToEÇbËd
+(
+checked
+);
+
+182 
 	}
 }
 
-161 
-Mes§geF‹r
+184 
+	gMes§geF‹r
 ::
 	$Ú_f‹rTimeSmpToD©eTimeEd™_d©eTimeChªged
 (cÚ¡ 
@@ -27495,7 +27981,85 @@ QD©eTime
 d©eTime
 )
 
-164 
+186 if(
+ui
+->
+f‹rTime¡ampFromD©eTimeEd™
+->
+	`d©eTime
+(è> 
+d©eTime
+)
+
+188 
+ui
+->
+f‹rTime¡ampFromD©eTimeEd™
+->
+	`£tD©eTime
+(
+d©eTime
+);
+
+191 
+f‹rTime¡ampStÜe
+.
+	`£tTime¡ampF‹rTo
+(
+d©eTime
+);
+
+193 
+em™
+ 
+	`sgÆ_Time¡ampToChªged
+();
+
+194 
+	}
+}
+
+196 
+	gMes§geF‹r
+::
+	$f‹rIDComm™
+(cÚ¡ 
+MsgIDTy³
+ 
+idToComm™
+)
+
+198 
+f‹rIDMod–
+.
+	`addID
+(
+idToComm™
+);
+
+199 
+	}
+}
+
+201 
+	gMes§geF‹r
+::
+	$f‹rCodeComm™
+(cÚ¡ 
+MsgCodeTy³
+ 
+codeToComm™
+)
+
+203 
+f‹rCodeMod–
+.
+	`addCode
+(
+codeToComm™
+);
+
+204 
 	}
 }
 

@@ -41,8 +41,8 @@ public:
 
     enum DataUserRole
     {
-        DataUsr_Msg = Qt::UserRole+1,
-        DataUsr_RawData = Qt::UserRole+2
+        DataUsr_RawData = Qt::UserRole+0,
+        DataUsr_Msg = Qt::UserRole+1
     };
 
     /**
@@ -131,14 +131,12 @@ signals:
     void rowInvalidated(const QModelIndex &index);
 
 private:
+    friend class MainWindow;
     /**
      * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
      */
     RSimpleDestructiveRingBuff<Msg> msgBuffer;
-    /* DataStorage<Msg> msgs; */
-    /* HugeQVector<Msg> msgs; */
     const size_t NrOfMessagesToDisplay;
-    friend class MainWindow;
 
     const FilterIDStore &FilterIDModel;
     const FilterCodeStore &FilterCodeModel;

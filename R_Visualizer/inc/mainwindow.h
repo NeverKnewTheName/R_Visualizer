@@ -9,7 +9,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <can_packet.h>
+#include "can_packet.h"
+#include "devicehandler.h"
 
 /*
  * Custom Widgets
@@ -147,14 +148,13 @@ private:
 
     Ui::MainWindow *ui; //!< The User Interface that was created by QT
     QString currentFileName;
-    MsgModel msgModel;
+    MsgStorage receivedMsgsStore;
     MsgModel msgPcktModel;
-    IDModel idModel;
-    MsgTypeModel msgTypeModel;
 
-    MessageStream msgStream;
+    //Maybe use pointers and dynamic allocation here... QObject hierarchy and garbage collection...
     MessageConfig msgConfigWidget;
     MessageFilter msgFilterWidget;
+    MessageStream msgStream;
     SendMessages sndMsgsWidget;
     SystemOverview sysOvrvWidget;
 

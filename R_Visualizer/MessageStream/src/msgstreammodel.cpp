@@ -90,10 +90,7 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
         break;
     case Qt::CheckStateRole:
         break;
-    case DataUsr_Msg:  //Qt::UserRole +1:  // return Data
-        return msgAtIndex;
-        break;
-    case DataUsr_RawData:  //Qt::UserRole +2: // return raw data
+    case DataUsr_RawData:  //Qt::UserRole +0: // return raw data
         switch(col)
         {
             case COL_TIMESTAMP:
@@ -111,6 +108,9 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
         }
+        break;
+    case DataUsr_Msg:  //Qt::UserRole +1:  // return Data
+        return msgAtIndex;
         break;
     }
 

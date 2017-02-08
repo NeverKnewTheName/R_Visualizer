@@ -6,13 +6,10 @@
 
 #include <QDebug>
 
-FilterIDDelegate::FilterIDDelegate(IDModel *idModel, QWidget *parent) :
+FilterIDDelegate::FilterIDDelegate(const IDModel &idModel, QWidget *parent) :
     QStyledItemDelegate(parent),
     idModel(idModel)
 {
-    this->availableIDNames.append(QString("Master"));
-    this->availableIDNames.append(QString("MastersMaster"));
-    this->availableIDNames.append(QString("RablRabl"));
 }
 
 void FilterIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

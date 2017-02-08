@@ -33,6 +33,9 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
         break;
     case Qt::CheckStateRole:
         break;
+    case Qt:UserRole: //UserRole is used for returning raw data for the IDDelegate
+            return idStore.at(row);
+            break;
     }
     return QVariant();
 }
@@ -114,6 +117,18 @@ void FilterIDStore::removeID(QModelIndex &index)
     idStore.remove(index.row());
     endRemoveRows();
     emit internalModelChanged();
+    //Better: emit row removed...
+}
+
+void FilterIDStore::removeID(const MsgIDType id)
+{
+    int row = idStore.indexOf(id);
+    QModelIndex tempIndex = index(row);
+    if(!tempIndexn.isValid())
+    {
+        return;
+    }
+    removeID(tempIndex);
 }
 
 bool FilterIDStore::containsID(const MsgIDType id) const

@@ -29,14 +29,22 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    msgModel(this),
+    currentFileName(QString()),
+    receivedMsgsStore(this),
     msgPcktModel(this),
-    idModel(this),
-    msgTypeModel(this),
-    msgStream(),
-    msgConfigWidget(idModel, msgTypeModel, this),
-    msgFilterWidget(idModel, msgTypeModel, this),
-    sndMsgsWidget(idModel, msgTypeModel, this),
+    /* MessageConfig provides IDModel and MsgTypeModel */
+    msgConfigWidget(this),
+    /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
+    msgFilterWidget(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), this),
+    msgStream(
+            msgConfigWidget->getIDModel(),
+            msgConfigWidget->getMsgTypeModel(),
+            msgFilterWidget->getFilterIDModel(),
+            msgFilterWidget->getFilterCodeModel(),
+            msgFilterWidget->getFilterTimestampModel(),
+            this
+            ),
+    sndMsgsWidget(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), this),
     sysOvrvWidget(this),
     errLogViewDiag(this),
     currErrCntr(0),
@@ -45,24 +53,19 @@ MainWindow::MainWindow(QWidget *parent) :
     m_IsConnectedToDevice(false)
 {
     ui->setupUi(this);
-    currentFileName = "";
 
     /*
      * INIT MODELS
      */
 
-    connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
-
+    //ToDO Rewire signals to respective msg models..
     connect(&idModel, &IDModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
-
-
+    connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->msgTableView, &QTableView::resizeRowsToContents);
     connect(&msgConfigWidget, &MessageConfig::sgnlIdAddFinished, this, &MainWindow::idAddFinished);
     connect(&msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished);
 
-    connect(ui->actionOpen_Error_Log, &QAction::triggered, &errLogViewDiag, &ErrorLogView::show);
-    ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
 
-    this->initMsgsTableView();
+    initMsgsTableView();
 
     initDeviceHandler();
     initMessageStream();
@@ -96,6 +99,7 @@ void MainWindow::initDeviceHandler()
 
 void MainWindow::initMessageStream()
 {
+    //ToDO Add MessageStream to MainWindow!
     const FilterIDStore &filterIDModel = msgConfigWidget->getFilterIDModel();
     const FilterCodeStore &filterCodeModel = msgConfigWidget->getFilterCodeModel();
     const FilterTimestampStore &filterTimestampModel = msgConfigWidget->getFilterTimestampModel();
@@ -131,6 +135,8 @@ void MainWindow::initTabs()
 
 void MainWindow::initErrorLog()
 {
+    connect(ui->actionOpen_Error_Log, &QAction::triggered, &errLogViewDiag, &ErrorLogView::show);
+    ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
 }
 
 void MainWindow::initUserRoleManager()

@@ -21,7 +21,7 @@ public:
      * 
      * \param[in] idModel Data Model that holds the IDs (for autocompletion and coloring)
      */
-    explicit FilterIDStore( const IDModel &idModel, QObject *parent = 0);
+    explicit FilterIDStore(QObject *parent = 0);
 
     /**
      * \brief Returns the current row count/number of elements in the store
@@ -47,9 +47,16 @@ public:
      * \brief Remove count rows starting from row
      */
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
+    /**
+     * \brief Remove one row at row
+     */
     void removeRow(int row, const QModelIndex &parent = QModelIndex() );
 
+    /**
+     * \brief Add an #MsgIDType to the #FilterIDStore
+     */
     QModelIndex addID(const MsgIDType id);
+    void removeID(const MsgIDType id);
     void removeID(QModelIndex &index);
 
     bool containsID(const MsgIDType id) const;

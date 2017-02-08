@@ -29,7 +29,7 @@ public:
      * 
      * \param[in] idModel The #IDModel that holds all #IDRep that are used in this delegate
      */
-    MsgIDDelegate(IDModel &idModel, QWidget *parent = 0);
+    MsgIDDelegate(const IDModel &idModel, QWidget *parent = 0);
 
     /**
      * \brief Paints a #Msg's #MsgIDType according to its #MsgIDRep
@@ -65,7 +65,7 @@ private:
     /**
      * \brief The #IDModel that is queried for #IDReps
      */
-    IDModel &idModel;
+    const IDModel &idModel;
     QVector<QPixmap> MsgIDPixMapStore;
     friend class MainWindow;
     int relatedColumnWidth;

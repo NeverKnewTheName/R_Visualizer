@@ -9,7 +9,7 @@
 
 #include <QDebug>
 
-MsgIDDelegate::MsgIDDelegate(IDModel &idModel, QWidget *parent) :
+MsgIDDelegate::MsgIDDelegate(const IDModel &idModel, QWidget *parent) :
     QStyledItemDelegate(parent),
     idModel(idModel),
     MsgIDPixMapStore(100),
@@ -23,7 +23,8 @@ void MsgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     if(!index.isValid())
         return;
 
-    const MsgIDType MsgID = index.data(Qt::UserRole +3).value<MsgIDType>();
+    const MsgIDType MsgID = index.data(Qt::UserRole).value<MsgIDType>();
+    painter->save();
 
     if(!idModel.contains(MsgID))
     {
@@ -31,8 +32,10 @@ void MsgIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     }
     else
     {
-        idModel.paintID(painter, option, MsgID);
+        /* idModel.paintID(painter, option, MsgID); */
+
     }
+    painter->restore();
 }
 
 QSize MsgIDDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

@@ -23,8 +23,8 @@ MessageFilter::MessageFilter(
     filterTimestampModel()
 {
     ui->setupUi(this);
-    initFilterIDListView();
-    initFilterCodeListView();
+    initFilterIDListView(idModel);
+    initFilterCodeListView(msgTypeModel);
     initFilterTimestamp();
 
 }
@@ -79,7 +79,7 @@ void MessageFilter::initFilterCodeListView(const MsgTypeModel &msgTypeModel)
 
 void MessageFilter::initFilterTimestamp()
 {
-    //WhatToDo?
+    //Init the model
     filterTimestampModel.setTimestampFilterTo(ui->filterTimestampToDateTimeEdit->DateTime());
     filterTimestampModel.setTimestampFilterFrom(ui->filterTimestampFromDateTimeEdit->DateTime());
 }

@@ -43,6 +43,7 @@ flags = [
     '-I', './CAN_Analyser_USB_Driver',
     '-I', './CAN_Analyser_USB_Driver/hidapi',
     '-I', './R_Visualizer',
+    '-I', './R_Visualizer/inc',
     '-I', './R_Visualizer/ErrLogView/inc',
     '-I', './R_Visualizer/MessageConfig/inc',
     '-I', './R_Visualizer/MessageFilter/inc',

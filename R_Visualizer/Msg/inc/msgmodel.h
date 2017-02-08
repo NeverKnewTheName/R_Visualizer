@@ -47,6 +47,7 @@ public:
              const FilterCodeStore &filterCodeModel,
              const FilterTimestampStore &filterTimestampModel,
              QObject *parent = Q_NULLPTR);
+
     /**
      * \brief Cleans up the MsgModel
      */
