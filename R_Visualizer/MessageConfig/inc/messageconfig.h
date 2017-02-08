@@ -17,31 +17,21 @@ class MessageConfig : public QWidget
     Q_OBJECT
 
 public:
-    explicit MessageConfig(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent = 0);
+    explicit MessageConfig(QWidget *parent = 0);
     ~MessageConfig();
-//    FilterIDStore &getFilterIDModel() const;
-//    FilterCodeStore &getFilterCodeModel() const;
-//    FilterTimestampStore &getFilterTimestampModel() const;
 
-    MsgTypeModel &getMsgTypeModel() const;
-
-    FilterCodeStore &getFilterCodeModel();
-
-    FilterTimestampStore &getFilterTimestampModel();
-
-    FilterIDStore &getFilterIDModel();
+    const IDModel &getIDModel() const;
+    const MsgTypeModel &getMsgTypeModel() const;
 
 private:
     Ui::MessageConfig *ui;
     void initIDTableView();
     void initMsgTypeTableView();
-    void initFilterIDListView();
-    void initFilterCodeListView();
 
     friend class MainWindow;
 
-    IDModel &idModel;
-    MsgTypeModel &msgTypeModel;
+    IDModel idModel;
+    MsgTypeModel msgTypeModel;
 
     bool idFilterEnabled;
     bool codeFilterEnabled;

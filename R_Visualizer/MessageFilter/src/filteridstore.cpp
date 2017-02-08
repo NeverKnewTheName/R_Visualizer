@@ -3,7 +3,7 @@
 #include <QBrush>
 #include <QDebug>
 
-FilterIDStore::FilterIDStore(IDModel &idModel, QObject *parent) : QAbstractListModel(parent), idModel(idModel)
+FilterIDStore::FilterIDStore(QObject *parent) : QAbstractListModel(parent)
 {
 
 }
@@ -23,43 +23,15 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
     {
         return idStore.at(row);
-//        unsigned int id = idStore.at(row);
-//        QString idName = idModel->getNameToID(id);
-//        if(idName.isEmpty())
-//        {
-//            return QString("0x%1").arg(id/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-//        }
-//        else
-//        {
-//            return idName;
-//        }
     }
         break;
     case Qt::FontRole:
-        //        if(row == 0 && col == 0)
-        //        {
-        //            QFont boldFont;
-        //            boldFont.setBold(true);
-        //            return boldFont;
-        //        }
         break;
     case Qt::BackgroundRole:
-    {
-//        QBrush bgBrush(idModel->getColorToID(idStore.at(row)));
-//                return bgBrush;
-    }
         break;
     case Qt::TextAlignmentRole:
-        //        if(row == 1 && col == 1)
-        //        {
-        //            return Qt::AlignRight + Qt::AlignVCenter;
-        //        }
         break;
     case Qt::CheckStateRole:
-        //        if(row == 1 && col == 0)
-        //        {
-        //            return Qt::Checked;
-        //        }
         break;
     }
     return QVariant();
@@ -68,11 +40,13 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
 QVariant FilterIDStore::headerData(int section, Qt::Orientation orientation, int role) const
 {
     Q_UNUSED(section)
-    if (role == Qt::DisplayRole)
+    switch(role)
     {
-        if (orientation == Qt::Horizontal) {
-            return QString("ID/Name");
-        }
+        case Qt::DisplayRole:
+            if (orientation == Qt::Horizontal)
+            {
+                return QString("ID/Name");
+            }
     }
     return QVariant();
 }
@@ -104,7 +78,9 @@ bool FilterIDStore::removeRows(int row, int count, const QModelIndex &parent)
     if(modelSize || ((row+count) < modelSize))
     {
         while(count--)
+        {
             removeRow(row+count, parent);
+        }
         return true;
     }
     else
@@ -121,24 +97,15 @@ void FilterIDStore::removeRow(int row, const QModelIndex &parent)
     endRemoveRows();
 }
 
-void FilterIDStore::addID(const MsgIDType id)
+QModelIndex FilterIDStore::addID(const MsgIDType id)
 {
     beginInsertRows(QModelIndex(), idStore.size(), idStore.size());
     idStore.append(id);
     endInsertRows();
-    tempIndex = index(idStore.size()-1);
+    QModelIndex tempIndex = index(idStore.size()-1);
     qDebug() << "Index:" << tempIndex.row();
     emit rowAdded(tempIndex);
-}
-
-void FilterIDStore::addID(QString &idString)
-{
-    beginInsertRows(QModelIndex(), idStore.size(), idStore.size());
-    idStore.append(idString.toUInt());
-    endInsertRows();
-    tempIndex = index(idStore.size()-1);
-    qDebug() << "Index:" << tempIndex.row();
-    emit rowAdded(tempIndex);
+    return tempIndex;
 }
 
 void FilterIDStore::removeID(QModelIndex &index)

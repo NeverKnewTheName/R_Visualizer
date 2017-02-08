@@ -5,8 +5,6 @@
 #include "ideditordelegate.h"
 #include "msgtypeadddialog.h"
 #include "msgtypeeditordelegate.h"
-#include "filteriddelegate.h"
-#include "filtermsgtypedelegate.h"
 #include <QFile>
 #include <QFileDialog>
 
@@ -16,52 +14,23 @@
 
 #include <QSortFilterProxyModel>
 
-MessageConfig::MessageConfig(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent) :
+MessageConfig::MessageConfig(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MessageConfig),
     idModel(idModel),
     msgTypeModel(msgTypeModel),
-    filterIDModel(idModel, this),
-    filterCodeModel(msgTypeModel, this),
-    filterTimestampStore(this),
-    idFilterEnabled(false),
-    codeFilterEnabled(false),
-    timeStampFilterFromEnabled(false),
-    timeStampFilterToEnabled(false)
   //filterTimestampStore(this)//ToDO
 {
     ui->setupUi(this);
 
     this->initIDTableView();
     this->initMsgTypeTableView();
-    this->initFilterIDListView();
-    this->initFilterCodeListView();
-    //connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::editingFinished, this, &MessageConfig::slt_timestampFromChanged);
-    connect(ui->filterTimeStampFromDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &MessageConfig::slt_timestampFromChanged);
-    connect(this, &MessageConfig::sgnl_timestampFromChanged, &filterTimestampStore, &FilterTimestampStore::timestampFromChanged);
-    connect(ui->filterTimeStampToDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &MessageConfig::slt_timestampToChanged);
-    connect(this, &MessageConfig::sgnl_timestampToChanged, &filterTimestampStore, &FilterTimestampStore::timestampToChanged);
 }
 
 MessageConfig::~MessageConfig()
 {
     delete ui;
 }
-
-//FilterIDStore &MessageConfig::getFilterIDModel() const
-//{
-//    return filterIDModel;
-//}
-
-//FilterCodeStore &MessageConfig::getFilterCodeModel() const
-//{
-//    return filterCodeModel;
-//}
-
-//FilterTimestampStore &MessageConfig::getFilterTimestampModel() const
-//{
-//    return filterTimestampStore;
-//}
 
 void MessageConfig::initIDTableView()
 {
@@ -96,49 +65,12 @@ void MessageConfig::initMsgTypeTableView()
     connect(&msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
 }
 
-void MessageConfig::initFilterIDListView()
+const IDmodel &MessageConfig::getIDModel() const
 {
-    //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
-    //    proxy->setSourceModel(&filterIDModel);
-    ui->idFilterlistView->setModel(&filterIDModel);
-    ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    //    ui->idFilterlistView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
-    ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->idFilterlistView->setAlternatingRowColors(true);
-    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(&idModel, ui->idFilterlistView));
-
-    //connect(filterIDModel, &FilterIDStore::rowAdded, this, &MessageConfig::filterIDAdded);
-    connect(&filterIDModel, &FilterIDStore::rowAdded, ui->idFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
+    return idModel;
 }
 
-void MessageConfig::initFilterCodeListView()
-{
-    //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
-    //    proxy->setSourceModel(&filterCodeModel);
-    ui->codeFilterlistView->setModel(&filterCodeModel);
-    ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->codeFilterlistView->setAlternatingRowColors(true);
-    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(&msgTypeModel, ui->codeFilterlistView));
-    connect(&filterCodeModel, &FilterCodeStore::rowAdded, ui->codeFilterlistView, static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit));
-}
-
-FilterIDStore &MessageConfig::getFilterIDModel()
-{
-    return filterIDModel;
-}
-
-FilterTimestampStore &MessageConfig::getFilterTimestampModel()
-{
-    return filterTimestampStore;
-}
-
-FilterCodeStore &MessageConfig::getFilterCodeModel()
-{
-    return filterCodeModel;
-}
-
-MsgTypeModel &MessageConfig::getMsgTypeModel() const
+const MsgTypeModel &MessageConfig::getMsgTypeModel() const
 {
     return msgTypeModel;
 }
@@ -253,9 +185,9 @@ void MessageConfig::on_idStoreBtn_clicked()
 
 void MessageConfig::on_idAddBtn_clicked()
 {
-    IDAddDialog *idAddDialogg = new IDAddDialog(this);
-    connect(idAddDialogg, &IDAddDialog::commit, this, &MessageConfig::idAddFinished);
-    idAddDialogg->exec();
+    IDAddDialog *idAddDialog = new IDAddDialog(this);
+    connect(idAddDialog, &IDAddDialog::commit, this, &MessageConfig::idAddFinished);
+    idAddDialog->exec();
 }
 
 void MessageConfig::on_idRmvBtn_clicked()

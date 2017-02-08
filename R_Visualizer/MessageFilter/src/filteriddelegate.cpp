@@ -83,6 +83,11 @@ void FilterIDDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
     int col = index.column();
     if (col == 0) {
         QLineEdit *textEdit = qobject_cast<QLineEdit *>(editor);
+        if(editor == Q_NULLPTR)
+        {
+            //FAILURE! WHO DID CALL THIS FUNCTION???
+            return;
+        }
         textEdit->setText(index.data(Qt::DisplayRole).value<QString>());
     }
     else {
@@ -114,6 +119,11 @@ void FilterIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 void FilterIDDelegate::commitAndCloseEditor()
 {
     QLineEdit *editor = qobject_cast<QLineEdit *>(sender());
+    if(editor == Q_NULLPTR)
+    {
+        //FAILURE! WHO DID SIGNAL THIS SLOT???
+        return;
+    }
     emit commitData(editor);
     emit closeEditor(editor);
 }

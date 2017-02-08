@@ -26,13 +26,6 @@
       <string>Message Code</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="1" column="0">
-       <widget class="QPushButton" name="enableCodeFilterPushButton">
-        <property name="text">
-         <string>Enable</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0" colspan="4">
        <widget class="QListView" name="codeFilterlistView">
         <property name="sizePolicy">
@@ -70,6 +63,13 @@
         </property>
        </spacer>
       </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="enableCodeFilterCheckBox">
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -82,16 +82,9 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>ID/Name</string>
+      <string>Message ID/Name</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="2" column="0">
-       <widget class="QPushButton" name="enableIDFilterPushButton">
-        <property name="text">
-         <string>Enable</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="3">
        <widget class="QPushButton" name="rmvFilterIDPushButton">
         <property name="text">
@@ -129,6 +122,13 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="enableIDFilterCheckBox">
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -147,7 +147,7 @@
       </size>
      </property>
      <property name="title">
-      <string>Timestamp</string>
+      <string>Message Timestamp</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
@@ -186,9 +186,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="enableTimestampFromFilterPushButton">
+         <widget class="QCheckBox" name="enableTimestampFromFilterCheckBox">
           <property name="text">
-           <string>Enable</string>
+           <string>Enabled</string>
           </property>
          </widget>
         </item>
@@ -239,9 +239,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="enableTimestampToFilterPushButton">
+         <widget class="QCheckBox" name="enableTimestampToFilterCheckBox">
           <property name="text">
-           <string>Enable</string>
+           <string>Enabled</string>
           </property>
          </widget>
         </item>

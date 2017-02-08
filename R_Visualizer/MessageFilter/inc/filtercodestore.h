@@ -8,9 +8,9 @@
 #ifndef FILTERCODESTORE_H
 #define FILTERCODESTORE_H
 
-#include "msgtypemodel.h"
-
 #include <QAbstractListModel>
+#include <QVector>
+#include <QString>
 
 class FilterCodeStore : public QAbstractListModel
 {
@@ -21,7 +21,7 @@ public:
      * 
      * \param[in] msgTypeModel Data Model that holds the MsgTypes (for autocompletion and coloring)
      */
-    explicit FilterCodeStore(MsgTypeModel &msgTypeModel, QObject *parent = 0);
+    explicit FilterCodeStore(QObject *parent = 0);
 
     /**
      * \brief Returns the current row count/number of elements in the store
@@ -73,7 +73,6 @@ public:
 private:
     QModelIndex tempIndex;
     QVector<MsgCodeType> codeStore;
-    MsgTypeModel &msgTypeModel;
 
 signals:
     void internalModelChanged();

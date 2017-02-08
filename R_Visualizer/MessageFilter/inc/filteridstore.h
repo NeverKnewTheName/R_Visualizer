@@ -8,12 +8,9 @@
 #ifndef FILTERIDSTORE_H
 #define FILTERIDSTORE_H
 
-#include "idmodel.h"
-
 #include <QAbstractListModel>
 #include <QVector>
 #include <QString>
-#include <QItemSelectionModel>
 
 class FilterIDStore : public QAbstractListModel
 {
@@ -24,7 +21,7 @@ public:
      * 
      * \param[in] idModel Data Model that holds the IDs (for autocompletion and coloring)
      */
-    explicit FilterIDStore(IDModel &idModel, QObject *parent = 0);
+    explicit FilterIDStore( const IDModel &idModel, QObject *parent = 0);
 
     /**
      * \brief Returns the current row count/number of elements in the store
@@ -52,8 +49,7 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     void removeRow(int row, const QModelIndex &parent = QModelIndex() );
 
-    void addID(const MsgIDType id);
-    void addID(QString &idString);
+    QModelIndex addID(const MsgIDType id);
     void removeID(QModelIndex &index);
 
     bool containsID(const MsgIDType id) const;
@@ -64,9 +60,7 @@ signals:
 public slots:
 
 private:
-    QModelIndex tempIndex;
     QVector<MsgIDType> idStore;
-    IDModel &idModel;
 };
 
 #endif // FILTERIDSTORE_H
