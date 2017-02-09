@@ -24,7 +24,7 @@ public:
      * @brief Constructs a MsgStorage object with the given metrics
      *
      */
-    MsgStorage(QObject parent = Q_NULLPTR);
+    MsgStorage(QObject *parent = Q_NULLPTR);
 
     /**
      * @brief at

@@ -13,7 +13,7 @@
 #include <QDebug>
 
 
-MsgModel::MsgModel(
+MsgStreamModel::MsgStreamModel(
         const size_t nrOfMessagesToDisplay,
         const FilterIDStore &filterIDModel,
         const FilterCodeStore &filterCodeModel,
@@ -29,24 +29,24 @@ MsgModel::MsgModel(
 {
 }
 
-MsgModel::~MsgModel()
+MsgStreamModel::~MsgStreamModel()
 {
     this->clear();
 }
 
-int MsgModel::rowCount(const QModelIndex &parent) const
+int MsgStreamModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return msgBuffer.size();
 }
 
-int MsgModel::columnCount(const QModelIndex &parent) const
+int MsgStreamModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return COL_NR_OF_COLS;
 }
 
-QVariant MsgModel::data(const QModelIndex &index, int role) const
+QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     int col = index.column();
@@ -83,10 +83,23 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:
+        switch(col)
+        {
+            case COL_TIMESTAMP:
+
+                break;
+            case COL_ID:
+                break;
+            case COL_CODE:
+                break;
+            case COL_DATA:
+                break;
+        }
         //Background is drawn by delegate
         break;
     case Qt::TextAlignmentRole:
-        return Qt::TextWordWrap;
+        return Qt::AlignLeft | Qt::AlignVCenter;
+        /* return Qt::TextWordWrap; */
         break;
     case Qt::CheckStateRole:
         break;
@@ -117,7 +130,7 @@ QVariant MsgModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool MsgStreamModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     Q_UNUSED(index)
     Q_UNUSED(value)
@@ -131,7 +144,7 @@ bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role
     return true;
 }
 
-QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant MsgStreamModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -164,7 +177,7 @@ QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role
     return QVariant();
 }
 
-void MsgModel::addMsg(const Msg &msg)
+void MsgStreamModel::addMsg(const Msg &msg)
 {
     /*
      * addMsg must validate if the incoming msg shall be displayed (filters)
@@ -201,7 +214,7 @@ void MsgModel::addMsg(const Msg &msg)
     }
 }
 
-void MsgModel::clear()
+void MsgStreamModel::clear()
 {
     // clearing all data is a reset of the model
     // In order to ease the processing, do not call begin/endRemoveRows
@@ -212,7 +225,7 @@ void MsgModel::clear()
     endResetModel();
 }
 
-QByteArray MsgModel::ParseToJSON()
+QByteArray MsgStreamModel::ParseToJSON()
 {
     QJsonArray jsonMsgsArr;
     for(int i = 0; i < msgBuff.size();++i)
@@ -223,7 +236,7 @@ QByteArray MsgModel::ParseToJSON()
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void MsgModel::ParseFromJSON(QByteArray jsonFile)
+void MsgStreamModel::ParseFromJSON(QByteArray jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
@@ -234,7 +247,7 @@ void MsgModel::ParseFromJSON(QByteArray jsonFile)
     }
 }
 
-void MsgModel::messageReceived(const Msg &msg)
+void MsgStreamModel::messageReceived(const Msg &msg)
 {
     addMsg(msg);
 }

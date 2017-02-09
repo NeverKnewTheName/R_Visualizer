@@ -28,7 +28,7 @@ MessageStream::MessageStream(
     ui->setupUi(this);
 
     // set the model of the message stream
-    ui->msgStreamModel->setModel(&msgStreamModel);
+    ui->msgStreamTV->setModel(&msgStreamModel);
 
     // Adjust the horizontal header of the message stream
     QHeaderView *horzHeader = ui->msgStreamTV->horizontalHeader();
@@ -59,4 +59,9 @@ MessageStream::MessageStream(
 MessageStream::~MessageStream()
 {
     delete ui;
+}
+
+void MessageStream::slt_ReceiveMsg(const Msg &receivedMsg)
+{
+
 }

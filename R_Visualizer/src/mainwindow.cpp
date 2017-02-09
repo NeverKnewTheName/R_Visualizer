@@ -32,21 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
     currentFileName(QString()),
     receivedMsgsStore(this),
     msgPcktModel(this),
-    /* MessageConfig provides IDModel and MsgTypeModel */
-    msgConfigWidget(this),
-    /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
-    msgFilterWidget(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), this),
-    msgStream(
-            msgConfigWidget->getIDModel(),
-            msgConfigWidget->getMsgTypeModel(),
-            msgFilterWidget->getFilterIDModel(),
-            msgFilterWidget->getFilterCodeModel(),
-            msgFilterWidget->getFilterTimestampModel(),
-            this
-            ),
-    sndMsgsWidget(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), this),
-    sysOvrvWidget(this),
-    errLogViewDiag(this),
     currErrCntr(0),
     totalErrCntr(0),
     userRoleMngr(this),
@@ -54,6 +39,26 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    /*
+     * Actually initializing these widgets using the constructor's initializer list
+     * would be better, but we cannot tell whether the ui is already set up at this stage...
+     * Thus we initialize these widgets here after the ui->setupUI call.
+     */
+    msgConfigWidget = new MessageConfig(ui->configTabWidget);
+    /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
+    msgFilterWidget = new MessageFilter(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
+    msgStream = new MessageStream(
+            msgConfigWidget->getIDModel(),
+            msgConfigWidget->getMsgTypeModel(),
+            msgFilterWidget->getFilterIDModel(),
+            msgFilterWidget->getFilterCodeModel(),
+            msgFilterWidget->getFilterTimestampModel(),
+            this
+            );
+    sndMsgsWidget = new SendMessages(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
+    sysOvrvWidget = new SystemOverview(ui->configTabWidget);
+    errLogViewDiag = new ErrorLogView(this);
+    /* MessageConfig provides IDModel and MsgTypeModel */
     /*
      * INIT MODELS
      */
@@ -65,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished);
 
 
+    /* obsolote */
     initMsgsTableView();
 
     initDeviceHandler();
@@ -78,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_deviceHandler;
 }
 
 void MainWindow::initDeviceHandler()
@@ -127,10 +132,10 @@ void MainWindow::initMessageStream()
 void MainWindow::initTabs()
 {
     //Set up Tabs in order
-    ui->tabWidget->addTab(&sysOvrvWidget, QString("System Overview"));
-    ui->tabWidget->addTab(&sndMsgsWidget, QString("Send Messages"));
-    ui->tabWidget->addTab(&msgConfigWidget, QString("Message Configuration"));
-    ui->tabWidget->addTab(&msgFilterWidget, QString("Message Stream Filter"));
+    ui->configTabWidget->addTab(&sysOvrvWidget, QString("System Overview"));
+    ui->configTabWidget->addTab(&sndMsgsWidget, QString("Send Messages"));
+    ui->configTabWidget->addTab(&msgConfigWidget, QString("Message Configuration"));
+    ui->configTabWidget->addTab(&msgFilterWidget, QString("Message Stream Filter"));
 }
 
 void MainWindow::initErrorLog()

@@ -15,24 +15,31 @@
 /*
  * Custom Widgets
  */
-#include "messagestream.h"
-#include "messageconfig.h"
-#include "messagefilter.h"
-#include "sendmessages.h"
-#include "systemoverview.h"
+/* #include "messagestream.h" */
+class MessageStream;
+/* #include "messageconfig.h" */
+class MessageConfig;
+/* #include "messagefilter.h" */
+class MessageFilter;
+/* #include "sendmessages.h" */
+class SendMessages;
+/* #include "systemoverview.h" */
+class SystemOverview;
 
-#include "errlogview.h"
+/* #include "errlogview.h" */
+class ErrorLogView;
 
-#include "msgmodel.h"
-//#include "msgproxymodel.h"
-#include "idmodel.h"
-#include "msgtypemodel.h"
+/*
+ * Custom Models
+ */
+#include "msgstorage.h" // Model for the MessageStream Widget
+#include "sendmsgmodel.h" // Model for the SendMessages Widget
+#include "idmodel.h" // ID Model for the MessageConfig Widget
+#include "msgtypemodel.h" // MessageType Model for the MessageConfig Widget
 
 #include "userrolemngr.h"
 
 #include <QMainWindow>
-
-class DeviceHandler;
 
 namespace Ui {
 class MainWindow;
@@ -149,16 +156,25 @@ private:
     Ui::MainWindow *ui; //!< The User Interface that was created by QT
     QString currentFileName;
     MsgStorage receivedMsgsStore;
-    MsgModel msgPcktModel;
+    SendMsgModel msgPcktModel;
 
     //Maybe use pointers and dynamic allocation here... QObject hierarchy and garbage collection...
-    MessageConfig msgConfigWidget;
-    MessageFilter msgFilterWidget;
-    MessageStream msgStream;
-    SendMessages sndMsgsWidget;
-    SystemOverview sysOvrvWidget;
+    /*
+     * Actually using the stack to allocate these widgets would be better...
+     * but to accomodate the QT object hierarchy and management we use the 
+     * heap to allocate these widgets. They are automatically delete according
+     * to QT's object management as soon as their parent is deleted.
+     * For the MessageStream and the ErrorLogView the parent is the MainWindow.
+     * For the configuration widgets the parent is the QTabWidget that is
+     * inside of the MainWindow.
+     */
+    MessageConfig *msgConfigWidget;
+    MessageFilter *msgFilterWidget;
+    MessageStream *msgStream;
+    SendMessages *sndMsgsWidget;
+    SystemOverview *sysOvrvWidget;
 
-    ErrorLogView errLogViewDiag;
+    ErrorLogView *errLogViewDiag;
     int currErrCntr;
     int totalErrCntr;
 

@@ -54,6 +54,11 @@ public:
      */
     ~MessageStream();
 
+signals:
+
+private slots:
+    void slt_ReceiveMsg(const Msg &receivedMsg);
+
 private:
     Ui::MessageStream *ui;
     const IDModel &msgStreamIDModel;

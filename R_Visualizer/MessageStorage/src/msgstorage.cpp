@@ -6,7 +6,7 @@
 
 #include <QDebug>
 
-MsgStorage::MsgStorage(QObject parent) :
+MsgStorage::MsgStorage(QObject *parent) :
     QObject(parent),
     msgStore(1000, 3)
 {

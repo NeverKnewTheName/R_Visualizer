@@ -89,13 +89,6 @@ public:
      */
     void clear();
 
-    //Kept for compatibility with SendMessages ... //ToDELETE
-    RSimpleDestructiveRingBuff<Msg> getMsgs() const;
-    //Kept for compatibility with SendMessages ... //ToDELETE
-    void setMsgs(const RSimpleDestructiveRingBuff<Msg> value);
-    /* HugeQVector<Msg> getMsgs() const; */
-    /* void setMsgs(const HugeQVector<Msg> value); */
-
     /**
      * \brief Parses the contents of the #MsgStreamModel to JSON format
      * 
