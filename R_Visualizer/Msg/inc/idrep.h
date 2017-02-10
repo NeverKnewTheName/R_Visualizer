@@ -33,6 +33,15 @@ public:
      */
     IDRep(const IDRep& other);
     /**
+     * \brief Constructs a plain #IDRep object for the given id
+     * 
+     * \param[in] id The id to construct the plain #IDRep for
+     * 
+     * The plain object will have a white background and a default
+     * text representation of the id that is the id printed as a hex value.
+     */
+    IDRep(const MsgIDType id);
+    /**
      * \brief Constructs a new #IDRep
      * 
      * \param[in] id The ID the mapping applies to
@@ -79,6 +88,8 @@ public:
     bool isValid() const;
     /**
      * \brief Copares this #IDRep to another for equality
+     * 
+     * \note For two #IDRep objects to be considered equal their #id field has to match.
      */
     bool operator==(const IDRep &other) const;
 

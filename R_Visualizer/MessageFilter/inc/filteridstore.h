@@ -12,6 +12,8 @@
 #include <QVector>
 #include <QString>
 
+#include "msg.h"
+
 class FilterIDStore : public QAbstractListModel
 {
     Q_OBJECT

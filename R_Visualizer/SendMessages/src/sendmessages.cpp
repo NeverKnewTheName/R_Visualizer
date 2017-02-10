@@ -1,7 +1,7 @@
 #include "sendmessages.h"
 #include "ui_sendmessages.h"
 
-#include "msgdelegate.h"
+/* #include "msgdelegate.h" */
 #include "csvmsgpackethandler.h"
 
 #include <QFile>
@@ -15,7 +15,7 @@
 
 #include <QDebug>
 
-SendMessages::SendMessages(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget *parent) :
+SendMessages::SendMessages(const IDModel &idModel, const MsgTypeModel &msgTypeModel, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SendMessages),
     msgPcktModel(this),
@@ -47,15 +47,22 @@ SendMessages::SendMessages(IDModel &idModel, MsgTypeModel &msgTypeModel, QWidget
     connect(&idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
     connect(&idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
 
-    idCompleter.setModel(&idModel);
-    idCompleter.setCompletionColumn(1);
-    idCompleter.setCompletionRole(Qt::DisplayRole);
-    idCompleter.setCaseSensitivity(Qt::CaseInsensitive);
-    ui->sndMsgIDLineEdit->setCompleter(&idCompleter);
+    /*
+     * The QCompleter does net alter the model... I don't know why it does not take a const...
+     */
+    /* idCompleter.setModel(&(const_cast<IDModel &>(idModel))); */
+    /* idCompleter.setCompletionColumn(IDModel::COL_NAME); */
+    /* idCompleter.setCompletionRole(Qt::DisplayRole); */
+    /* idCompleter.setCaseSensitivity(Qt::CaseInsensitive); */
+    QCompleter *newIDCompleter = idModel.createIDCompleter(ui->sndMsgIDLineEdit);
+    ui->sndMsgIDLineEdit->setCompleter(newIDCompleter);
     connect(ui->sndMsgIDLineEdit, &QLineEdit::textChanged, this, &SendMessages::idChanged);
 
-    codeCompleter.setModel(&msgTypeModel);
-    codeCompleter.setCompletionColumn(1);
+    /*
+     * The QCompleter does net alter the model... I don't know why it does not take a const...
+     */
+    codeCompleter.setModel(&(const_cast<MsgTypeModel &>(msgTypeModel)));
+    codeCompleter.setCompletionColumn(MsgTypeModel::COL_CODENAME);
     codeCompleter.setCompletionRole(Qt::DisplayRole);
     codeCompleter.setCaseSensitivity(Qt::CaseInsensitive);
     ui->sndMsgCodeLineEdit->setCompleter(&codeCompleter);
@@ -223,7 +230,7 @@ void SendMessages::initMsgPacketTableView()
 
     ui->sndPcktTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    ui->sndPcktTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->sndPcktTableView));
+    /* ui->sndPcktTableView->setItemDelegate( new MsgDelegate(this->msgTypeModel, this->idModel, ui->sndPcktTableView)); */
 
     ui->sndPcktTableView->hideColumn(0);
 }

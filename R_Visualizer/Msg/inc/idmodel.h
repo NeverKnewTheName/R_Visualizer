@@ -9,14 +9,16 @@
 #ifndef IDMODEL_H
 #define IDMODEL_H
 
-#include "msg.h"
-#include "idrep.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
 #include <QHash>
 #include <QColor>
 #include <QStyleOptionViewItem>
+#include <QCompleter>
+
+#include "msg.h"
+#include "idrep.h"
 
 /**
  * \brief The #IDModel class provides a model to hold ID to name and color mappings for #Msg
@@ -135,6 +137,8 @@ public:
      */
     void paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const;
 
+    QCompleter *createIDCompleter(QObject *parent = Q_NULLPTR) const;
+
 private:
     /**
      * \brief QVector containing all stored #MsgIDTypes for which mappings exist in the #IDModel
@@ -150,6 +154,9 @@ signals:
      * \brief The #internalModelChanged signal is emitted every time the data in the #IDModel changes
      */
     void internalModelChanged();
+    void sgnl_IDRepAdded(const IDRep &newIDRep);
+    void sgnl_IDRepUpdated(const IDRep &updatedIDRep);
+    void sgnl_IDRepRemoved(const MsgIDType relatedID);
 };
 
 #endif // IDMODEL_H

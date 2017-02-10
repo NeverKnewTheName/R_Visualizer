@@ -1,4 +1,4 @@
-#include "msgmodel.h"
+#include "msgstreammodel.h"
 
 #include "msg.h"
 
@@ -98,7 +98,7 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
         //Background is drawn by delegate
         break;
     case Qt::TextAlignmentRole:
-        return Qt::AlignLeft | Qt::AlignVCenter;
+        /* return (Qt::AlignLeft | Qt::AlignVCenter); */
         /* return Qt::TextWordWrap; */
         break;
     case Qt::CheckStateRole:
@@ -116,32 +116,18 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
                 return msgAtIndex.getCode();
                 break;
             case COL_DATA:
-                return msgAtIndex.getData();
+                /* return msgAtIndex.getData(); */
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
         }
         break;
     case DataUsr_Msg:  //Qt::UserRole +1:  // return Data
-        return msgAtIndex;
+        /* return msgAtIndex; */
         break;
     }
 
     return QVariant();
-}
-
-bool MsgStreamModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    Q_UNUSED(index)
-    Q_UNUSED(value)
-    //ToDO if msgs should be editable
-    if (role == Qt::EditRole)
-    {
-        //msgs.at(index.row()) = value.toString();
-
-        //emit editCompleted( result );
-    }
-    return true;
 }
 
 QVariant MsgStreamModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -225,25 +211,27 @@ void MsgStreamModel::clear()
     endResetModel();
 }
 
-QByteArray MsgStreamModel::ParseToJSON()
+QByteArray MsgStreamModel::ParseToJson()
 {
     QJsonArray jsonMsgsArr;
-    for(int i = 0; i < msgBuff.size();++i)
+    int msgBuffSize = msgBuffer.size();
+    for(int i = 0; i < msgBuffSize;++i)
     {
         const Msg &msg = msgBuffer.at(i);
-        jsonMsgsArr.append(msg.ParseToJSON());
+        jsonMsgsArr.append(msg.ParseToJson());
     }
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void MsgStreamModel::ParseFromJSON(QByteArray jsonFile)
+void MsgStreamModel::ParseFromJson(const QByteArray &jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto&& item : jsonMsgsArr)
     {
-        const Msg &newMsg(item.toObject);
-        addMsg(newMsg);
+        //ToDO
+        /* const Msg newMsg(item.toObject); */
+        /* addMsg(newMsg); */
     }
 }
 
@@ -252,3 +240,47 @@ void MsgStreamModel::messageReceived(const Msg &msg)
     addMsg(msg);
 }
 
+void MsgStreamModel::slt_IDRepAdded(const IDRep &addedIDRep)
+{
+
+}
+
+void MsgStreamModel::slt_IDRepUpdated(const IDRep &changedIDRep)
+{
+
+}
+
+void MsgStreamModel::slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved)
+{
+
+}
+
+void MsgStreamModel::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
+{
+
+}
+
+void MsgStreamModel::slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep)
+{
+
+}
+
+void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved)
+{
+
+}
+
+/* void MsgStreamModel::slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep) */
+/* { */
+
+/* } */
+
+/* void MsgStreamModel::slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep) */
+/* { */
+
+/* } */
+
+/* void MsgStreamModel::slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved) */
+/* { */
+
+/* } */

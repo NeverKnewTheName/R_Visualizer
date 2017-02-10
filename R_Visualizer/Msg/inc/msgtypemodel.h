@@ -162,6 +162,9 @@ signals:
      * \brief The #internalModelChanged signal is emitted every time the data in the #MsgTypeModel changes
      */
     void internalModelChanged();
+    void sgnl_MsgTypeRepAdded(const MsgTypeRep &newMsgTypeRep);
+    void sgnl_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
+    void sgnl_MsgTypeRepRemoved(const MsgCodeType relatedCode);
 };
 
 #endif // MSGTYPEMODEL_H

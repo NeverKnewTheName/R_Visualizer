@@ -71,7 +71,7 @@ public:
      * \brief constructs a regular Msg
      */
     Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code, DataByteVect dataBytes);
-    ~Msg();
+    virtual ~Msg();
 
     QDateTime getTimestamp() const;
     void setTimestamp(const QDateTime &value);

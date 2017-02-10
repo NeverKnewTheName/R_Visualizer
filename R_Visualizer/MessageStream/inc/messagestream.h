@@ -11,8 +11,8 @@
 #include <QWidget>
 
 #include "msgstreammodel.h"
-#include "msgiddelegate.h"
-#include "msgdatadelegate.h"
+/* #include "msgiddelegate.h" */
+/* #include "msgdatadelegate.h" */
 
 class IDModel;
 class MsgTypeModel;
@@ -30,7 +30,7 @@ public:
      * \brief Constructs a new MessageStream object
      * 
      * \param[in] msgStreamIDModel                  The #IDModel to use for the #MessageStream's #MsgIDDelegate
-     * \param[in] msgStreamTypeModel                The #MsgTypeModel to use for the #MessageStream's #MsgDataDelegate
+     * \param[in] msgStreamMsgTypeModel                The #MsgTypeModel to use for the #MessageStream's #MsgDataDelegate
      * \param[in] msgStreamIDFilterModel            The #FilterIDStore to use for filtering #MsgIDType in the #MessageStream
      * \param[in] msgStreamCodeFilterModel          The #FilterCodeStore to use for filtering #MsgCodeType in the #MessageStream
      * \param[in] msgStreamTimestampFilterModel     The #FilterTimestampStore to use for filtering #Msg according to timestamps in the #MessageStream
@@ -41,7 +41,7 @@ public:
      */
     explicit MessageStream(
             const IDModel &msgStreamIDModel,
-            const MsgTypeModel &msgStreamTypeModel,
+            const MsgTypeModel &msgStreamMsgTypeModel,
             const FilterIDStore &msgStreamIDFilterModel,
             const FilterCodeStore &msgStreamCodeFilterModel,
             const FilterTimestampStore &msgStreamTimestampFilterModel,
@@ -54,18 +54,29 @@ public:
      */
     ~MessageStream();
 
+    void appendMsg(const Msg &msgToAppend);
+
 signals:
 
 private slots:
     void slt_ReceiveMsg(const Msg &receivedMsg);
+    void slt_IDRepAdded(const IDRep &addedIDRep);
+    void slt_IDRepUpdated(const IDRep &changedIDRep);
+    void slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved);
+    void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep);
+    void slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep);
+    void slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved);
+    /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
+    /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
+    /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
 
 private:
     Ui::MessageStream *ui;
     const IDModel &msgStreamIDModel;
-    const MsgTypeModel &msgStreamTypeModel;
+    const MsgTypeModel &msgStreamMsgTypeModel;
     MsgStreamModel msgStreamModel;
-    MsgIDDelegate idDelegate;
-    MsgDataDelegate dataDelegate;
+    /* MsgIDDelegate idDelegate; */
+    /* MsgDataDelegate dataDelegate; */
 };
 
 #endif // MESSAGESTREAM_H

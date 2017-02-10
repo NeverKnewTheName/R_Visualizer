@@ -178,6 +178,13 @@ public:
 
         return RelatedContainer.at(indexInContainer);
     }
+    /**
+     * \brief Operator wrapper for #at
+     */
+    T operator[](const typename DataContainer::size_type index)
+    {
+     return at(index);
+    }
 
     /**
      * \brief appends a messages to the DataStorage with a move operation

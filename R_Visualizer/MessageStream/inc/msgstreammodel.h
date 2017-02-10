@@ -10,7 +10,6 @@
 #ifndef MSGSTREAMMODEL_H
 #define MSGSTREAMMODEL_H
 
-class Msg;
 
 /* #include "hugeqvector.h" */
 
@@ -20,10 +19,16 @@ class Msg;
 #include <QAbstractTableModel>
 #include <QString>
 
+class Msg;
 class MainWindow;
+class MessageStream;
 class FilterIDStore;
 class FilterCodeStore;
 class FilterTimestampStore;
+
+class IDRep;
+class MsgTypeRep;
+/* class MsgDataRep; */
 
 class MsgStreamModel : public QAbstractTableModel
 {
@@ -94,20 +99,30 @@ public:
      * 
      * The #MsgStreamModel consists of its #msgBuffer
      */
-    QByteArray ParseToJSON();
+    QByteArray ParseToJson();
     /**
      * \brief Parses a QByteArray that was previously saved by a #MsgStreamModel back to a valid #MsgStreamModel
      * 
      * The QByteArray shall contain the #msgBuffer for the #MsgStreamModel
      * \warning All contents that were in the #MsgStreamModel prior to calling this method are dropped!
      */
-    void ParseFromJSON(QByteArray jsonFile);
+    void ParseFromJson(const QByteArray &jsonFile);
 
 private slots:
     /**
      * \brief The #messageReceived slot shall be called whenever a new message that is to be displayed is received
      */
     void messageReceived(const Msg &msg);
+
+    void slt_IDRepAdded(const IDRep &addedIDRep);
+    void slt_IDRepUpdated(const IDRep &changedIDRep);
+    void slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved);
+    void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep);
+    void slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep);
+    void slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved);
+    /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
+    /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
+    /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
 
 signals:
     /**
@@ -125,6 +140,7 @@ signals:
 
 private:
     friend class MainWindow;
+    friend class MessageStream;
     /**
      * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
      */

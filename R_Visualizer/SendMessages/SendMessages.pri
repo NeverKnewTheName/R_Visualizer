@@ -8,11 +8,11 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/sendmessages.cpp
-    $$PWD/src/sendmessagesmodel.cpp
+    $$PWD/src/sendmsgmodel.cpp
 
 HEADERS  += \
     $$PWD/inc/sendmessages.h
-    $$PWD/inc/sendmessagesmodel.h
+    $$PWD/inc/sendmsgmodel.h
 
 FORMS    += \
     $$PWD/ui/sendmessages.ui

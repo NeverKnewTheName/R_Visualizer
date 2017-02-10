@@ -1,0 +1,12 @@
+digraph g {
+    receivedMsg -> convertToPrettymsg -> storePrettyMsgInModel;
+    idRepAdded -> updatePrettyMsgInModel;
+    idRepUpdated -> updatePrettyMsgInModel;
+    idRepRemoved -> updatePrettyMsgInModel;
+    msgTypeRepAdded -> updatePrettyMsgInModel;
+    msgTypeRepUpdated -> updatePrettyMsgInModel;
+    msgTypeRepRemoved -> updatePrettyMsgInModel;
+    msgDataRepAdded -> updatePrettyMsgInModel;
+    msgDataRepUpdated -> updatePrettyMsgInModel;
+    msgDataRepRemoved -> updatePrettyMsgInModel;
+}

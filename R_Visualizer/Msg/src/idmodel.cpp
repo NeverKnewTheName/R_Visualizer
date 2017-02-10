@@ -197,7 +197,7 @@ QColor IDModel::getColorToID(const MsgIDType id) const
     return QColor();
 }
 
-QByteArray IDModel::parseToJSON() const
+QByteArray IDModel::ParseToJSON() const
 {
     QJsonArray jsonMsgsArr;
     for(const MsgIDType &id : idStore)
@@ -208,7 +208,7 @@ QByteArray IDModel::parseToJSON() const
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void IDModel::parseFromJSON(const QByteArray &jsonFile)
+void IDModel::ParseFromJSON(const QByteArray &jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
@@ -231,4 +231,15 @@ QStringList IDModel::getAllIDNames() const
         names.append(idRep.getName());
     }
     return names;
+}
+
+QCompleter *IDModel::createIDCompleter(QObject *parent) const
+{
+    QCompleter *newIDCompleter = new QCompleter(parent);
+    newIDCompleter->setModel(const_cast<IDModel*>(this));
+    newIDCompleter->setCompletionColumn(COL_NAME);
+    newIDCompleter->setCompletionRole(Qt::DisplayRole);
+    newIDCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    return newIDCompleter;
 }

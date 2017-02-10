@@ -43,7 +43,7 @@ QJsonDocument MsgStorage::ParseToJson() const
 {
     /* return msgStore.ParseToJson(); */
     qDebug() << "Parse to json currently not available in MsgStorage";
-    return QJsonDocument;
+    return QJsonDocument();
 }
 
 bool MsgStorage::ParseFromJson(const QJsonArray &jsonMsgsArray)

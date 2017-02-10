@@ -6,10 +6,9 @@
 IDRep::IDRep() :
     isValidObj(false),
     id(0x0),
-    name(QString("")),
-    color(QColor(Qt::white))
+    name(""),
+    color(Qt::white)
 {
-
 }
 
 IDRep::IDRep(const IDRep &other) :
@@ -18,7 +17,14 @@ IDRep::IDRep(const IDRep &other) :
     name(other.getName()),
     color(other.getColor())
 {
+}
 
+IDRep::IDRep(const MsgIDType id) :
+    isValidObj(true),
+    id(id),
+    name(QString("0x%1").arg(id, 4, 16, QLatin1Char('0'))), //ToDO Upper case letters for HEX representation would be nice
+    color(Qt::white)
+{
 }
 
 IDRep::IDRep(const MsgIDType id, const QString &name, const QColor &color) :
@@ -27,7 +33,6 @@ IDRep::IDRep(const MsgIDType id, const QString &name, const QColor &color) :
     name(name),
     color(color)
 {
-
 }
 
 QString IDRep::getName() const

@@ -237,7 +237,7 @@ QStringList MsgTypeModel::getAllCodeNames() const
     return names;
 }
 
-QByteArray MsgTypeModel::parseToJSON() const
+QByteArray MsgTypeModel::ParseToJSON() const
 {
     QJsonArray jsonMsgsArr;
     for(const MsgCodeType &code : codeStore)
@@ -248,7 +248,7 @@ QByteArray MsgTypeModel::parseToJSON() const
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void MsgTypeModel::parseFromJSON(const QByteArray &jsonFile)
+void MsgTypeModel::ParseFromJSON(const QByteArray &jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
