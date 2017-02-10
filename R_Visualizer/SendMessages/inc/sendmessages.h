@@ -1,16 +1,17 @@
 #ifndef SENDMESSAGES_H
 #define SENDMESSAGES_H
 
-#include "msg.h"
-#include "can_packet.h"
-#include "sendmsgmodel.h"
-#include "idmodel.h"
-#include "msgtypemodel.h"
-#include "userrolemngr.h"
 #include <QWidget>
 #include <QCompleter>
 
 class MainWindow;
+class IDModel;
+class MsgTypeModel;
+
+#include "msg.h"
+#include "can_packet.h"
+#include "sendmsgmodel.h"
+#include "userrolemngr.h"
 
 namespace Ui {
 class SendMessages;
@@ -41,8 +42,6 @@ private:
     const IDModel &idModel;
     const MsgTypeModel &msgTypeModel;
     QStringList inputMasks;
-    QCompleter idCompleter;
-    QCompleter codeCompleter;
 
     int currentDataFormatIndex;
 

@@ -16,10 +16,7 @@
 
 MessageConfig::MessageConfig(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MessageConfig),
-    idModel(idModel),
-    msgTypeModel(msgTypeModel),
-  //filterTimestampStore(this)//ToDO
+    ui(new Ui::MessageConfig)
 {
     ui->setupUi(this);
 
@@ -65,7 +62,7 @@ void MessageConfig::initMsgTypeTableView()
     connect(&msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
 }
 
-const IDmodel &MessageConfig::getIDModel() const
+const IDModel &MessageConfig::getIDModel() const
 {
     return idModel;
 }
@@ -83,34 +80,6 @@ void MessageConfig::idAddFinished(const MsgIDType id, const QString &name, const
 void MessageConfig::msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
     emit sgnlMsgTypeAddFinished(code, codeName, messageFormat, color);
-}
-
-void MessageConfig::filterIDAdded(unsigned int pos)
-{
-    QModelIndex index = filterIDModel.index(pos);
-    qDebug() << "index row: " << index;
-    ui->idFilterlistView->edit(index);
-    //emit startEditFilterID(filterIDModel->index(pos));
-}
-
-void MessageConfig::slt_timestampFromChanged()
-{
-    qDebug() << ui->filterTimeStampFromDateTimeEdit->dateTime();
-    if(ui->filterTimeStampToDateTimeEdit->dateTime() < ui->filterTimeStampFromDateTimeEdit->dateTime())
-    {
-        ui->filterTimeStampToDateTimeEdit->setDateTime(ui->filterTimeStampFromDateTimeEdit->dateTime());
-    }
-    emit sgnl_timestampFromChanged(ui->filterTimeStampFromDateTimeEdit->dateTime());
-}
-
-void MessageConfig::slt_timestampToChanged()
-{
-    qDebug() << ui->filterTimeStampToDateTimeEdit->dateTime();
-    if(ui->filterTimeStampToDateTimeEdit->dateTime() < ui->filterTimeStampFromDateTimeEdit->dateTime())
-    {
-        ui->filterTimeStampFromDateTimeEdit->setDateTime(ui->filterTimeStampToDateTimeEdit->dateTime());
-    }
-    emit sgnl_timestampToChanged(ui->filterTimeStampToDateTimeEdit->dateTime());
 }
 
 void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
@@ -153,7 +122,7 @@ void MessageConfig::on_idLoadBtn_clicked()
     {
         //ToDO
         // read file content
-        idModel.parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        idModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1)
         // parse file
         // populate ui
     }
@@ -175,7 +144,7 @@ void MessageConfig::on_idStoreBtn_clicked()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(idModel.parseToJSON()); //ToDO check for error (-1)
+        jsonSaveFile.write(idModel.ParseToJson()); //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
@@ -218,7 +187,7 @@ void MessageConfig::on_msgTypeLoadBtn_clicked()
     {
         //ToDO
         // read file content
-        msgTypeModel.parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1)
         // parse file
         // populate ui
     }
@@ -240,7 +209,7 @@ void MessageConfig::on_msgTypeStoreBtn_clicked()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(msgTypeModel.parseToJSON()); //ToDO check for error (-1)
+        jsonSaveFile.write(msgTypeModel.ParseToJson()); //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
@@ -270,64 +239,3 @@ void MessageConfig::on_msgTypeRmvBtn_clicked()
     }
 }
 
-
-void MessageConfig::on_enableIDFilterPushButton_clicked()
-{
-    idFilterEnabled = !idFilterEnabled;
-    ui->enableIDFilterPushButton->setText((idFilterEnabled) ? QString("Disable") : QString("Enable"));
-    emit filterIDstateChange(idFilterEnabled);
-}
-
-void MessageConfig::on_addFilterIDPushButton_clicked()
-{
-    filterIDModel.addID(0x0);
-}
-
-void MessageConfig::on_rmvFilterIDPushButton_clicked()
-{
-//    QModelIndex selectedIndex = ui->idFilterlistView->selectionModel()->currentIndex();
-//    if(selectedIndex.isValid())
-//        this->filterIDModel->removeID(selectedIndex);
-
-    QItemSelectionModel *selectionModel = ui->idFilterlistView->selectionModel();
-    QModelIndexList selectionIndexList = selectionModel->selectedRows();
-    if(selectionIndexList.size())
-    {
-        filterIDModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
-    }
-}
-
-void MessageConfig::on_enableCodeFilterPushButton_clicked()
-{
-    codeFilterEnabled = !codeFilterEnabled;
-    ui->enableCodeFilterPushButton->setText((codeFilterEnabled) ? QString("Disable") : QString("Enable"));
-    emit filterCodestateChange(codeFilterEnabled);
-}
-
-void MessageConfig::on_addFilterCodePushButton_clicked()
-{
-    filterCodeModel.addCode(0x0);
-}
-
-void MessageConfig::on_rmvFilterCodePushButton_clicked()
-{
-    QModelIndex selectedIndex = ui->codeFilterlistView->selectionModel()->currentIndex();
-    if(selectedIndex.isValid())
-        filterCodeModel.removeCode(selectedIndex);
-}
-
-void MessageConfig::on_enableTimestampFromFilterPushButton_clicked()
-{
-    timeStampFilterFromEnabled = !timeStampFilterFromEnabled;
-    ui->enableTimestampFromFilterPushButton->setText((timeStampFilterFromEnabled) ? QString("Disable") : QString("Enable"));
-
-    emit filterTimestampFromStateChange(timeStampFilterFromEnabled);
-}
-
-void MessageConfig::on_enableTimestampToFilterPushButton_clicked()
-{
-    timeStampFilterToEnabled = !timeStampFilterToEnabled;
-    ui->enableTimestampToFilterPushButton->setText((timeStampFilterToEnabled) ? QString("Disable") : QString("Enable"));
-
-    emit filterTimestampToStateChange(timeStampFilterToEnabled);
-}

@@ -139,7 +139,7 @@ void MsgTypeRep::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &
 //    QSize sizeHint(option.rect.width(), (option.fontMetrics.size(0,QString("X")).height()*lineCount));
 
     QSizeF sizeHint(ItemText.size());
-    msg.setMsgSizeHint(sizeHint.toSize());
+//    msg.setMsgSizeHint(sizeHint.toSize());
 
     QRectF BoundingRect(option.rect.x(), option.rect.y(), sizeHint.width(), sizeHint.height());
 //    qDebug() << __PRETTY_FUNCTION__ << "Rects: " << option.rect << BoundingRect;

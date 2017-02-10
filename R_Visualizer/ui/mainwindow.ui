@@ -63,6 +63,8 @@
           <string>Test_1</string>
          </property>
         </widget>
+        <zorder>TestPB_1</zorder>
+        <zorder>frame</zorder>
        </widget>
       </widget>
      </widget>

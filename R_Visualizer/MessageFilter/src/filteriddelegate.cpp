@@ -20,7 +20,7 @@ void FilterIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
                 (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
 
     int id = index.data(Qt::DisplayRole).value<int>();
-    QColor itemBackground(this->idModel->getColorToID(id));
+    QColor itemBackground(idModel.getColorToID(id));
     if(itemBackground.isValid())
     {
         if(option.features & QStyleOptionViewItem::Alternate)
@@ -40,7 +40,7 @@ void FilterIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->fillRect(option.rect, background);
 
 
-    QString name = this->idModel->getNameToID(id);
+    QString name = idModel.getNameToID(id);
     if(name.isEmpty())
     {
         // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
@@ -63,7 +63,7 @@ QWidget *FilterIDDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         //NAME
         QLineEdit *textEdit = new QLineEdit(parent);
 
-        QCompleter *completer = new QCompleter(idModel->getAllIDNames(), textEdit);
+        QCompleter *completer = idModel.createIDCompleter(textEdit);
         completer->setCaseSensitivity(Qt::CaseInsensitive);
         textEdit->setCompleter(completer);
 
@@ -104,7 +104,7 @@ void FilterIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 
         if(!conversionOK)
         {
-            retrievedID = idModel->getIDToName(editorContent);
+            retrievedID = idModel.getIDToName(editorContent);
         }
         model->setData(index, retrievedID);
     }

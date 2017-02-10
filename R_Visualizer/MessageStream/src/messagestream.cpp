@@ -16,7 +16,7 @@ MessageStream::MessageStream(
             const FilterTimestampStore &msgStreamTimestampFilterModel,
             QWidget *parent
             ) :
-    QWidget(parent),
+    QFrame(parent),
     ui(new Ui::MessageStream),
     msgStreamIDModel(msgStreamIDModel),
     msgStreamMsgTypeModel(msgStreamMsgTypeModel),
@@ -31,6 +31,7 @@ MessageStream::MessageStream(
     /* dataDelegate(msgStreamMsgTypeModel, this) */
 {
     ui->setupUi(this);
+    setFrameStyle(QFrame::StyledPanel);
 
     // set the model of the message stream
     ui->msgStreamTV->setModel(&msgStreamModel);

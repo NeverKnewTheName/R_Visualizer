@@ -10,6 +10,9 @@
 
 #include <QWidget>
 
+class IDModel;
+class MsgTypeModel;
+
 #include "filteridstore.h"
 #include "filtercodestore.h"
 #include "filtertimestampstore.h"
@@ -143,9 +146,6 @@ private slots:
      */
     void on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDateTime &dateTime);
 
-    void slt_timestampToChanged(const QDateTime &newFromDateTime);
-    void slt_timestampFromChanged(const QDateTime &newToDateTime);
-
     /**
      * \brief This slot is called when the ID Filter add ID dialog commits its content
      * 
@@ -163,11 +163,11 @@ private:
     /**
      * \brief Initializes the ID filter
      */
-    void initFilterIDListView(const IDModel &idModel);
+    void initFilterIDListView();
     /**
      * \brief Initializes the Code filter
      */
-    void initFilterCodeListView(const MsgTypeModel &msgTypeModel);
+    void initFilterCodeListView();
     /**
      * \brief Initializes the Timestamp filter
      */
@@ -185,7 +185,10 @@ private:
     /**
      * \brief Contains the Timestamps to filter for by the Timestamp filter
      */
-    FilterTimestampStore filterTimestampStore;
+    FilterTimestampStore filterTimestampModel;
+
+    const IDModel &idModel;
+    const MsgTypeModel &msgTypeModel;
 };
 
 #endif // MESSAGEFILTER_H

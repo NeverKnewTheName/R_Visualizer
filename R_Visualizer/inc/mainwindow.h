@@ -156,7 +156,6 @@ private:
     Ui::MainWindow *ui; //!< The User Interface that was created by QT
     QString currentFileName;
     MsgStorage receivedMsgsStore;
-    SendMsgModel msgPcktModel;
 
     //Maybe use pointers and dynamic allocation here... QObject hierarchy and garbage collection...
     /*

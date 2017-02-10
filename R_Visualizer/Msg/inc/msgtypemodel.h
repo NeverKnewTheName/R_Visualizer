@@ -14,6 +14,7 @@
 #include <QAbstractTableModel>
 #include <QVector>
 #include <QStyleOptionViewItem>
+#include <QCompleter>
 
 /**
  * \brief The #MsgTypeModel class provides a model to hold Code to name, color, and message data parser mappings for #Msg
@@ -23,6 +24,18 @@ class MsgTypeModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
+    /**
+     * \brief Enumeration of the header columns for the #MsgTypeModel
+     */
+    enum HeaderCols
+    {
+        COL_CODE, //!< Column in which the #MsgCodeType is shown
+        COL_CODENAME, //!< Column in which the name mapping is shown
+        COL_MESSAGEFORMAT, //!< Column in which the message data parser code is shown
+        COL_COLOR, //!< Column in which the color mapping is shown
+        COL_NR_OF_COLS //!< Number of header colums for the #MsgTypeModel
+    };
+
     /**
      * \brief Constructs an empty #MsgTypeModel
      */
@@ -124,29 +137,20 @@ public:
     /**
      * \brief Parses the contents of the #MsgTypeModel to a JSON format QByteArray
      */
-    QByteArray ParseToJSON() const;
+    QByteArray ParseToJson() const;
     /**
      * \brief Parses the contents contents of a QByteArray that was previously saved by the #MsgTypeModel into the #MsgTypeModel
      */
-    void ParseFromJSON(const QByteArray &jsonFile);
+    void ParseFromJson(const QByteArray &jsonFile);
 
-    /**
-     * \brief Enumeration of the header columns for the #MsgTypeModel
-     */
-    enum HeaderCols
-    {
-        COL_CODE, //!< Column in which the #MsgCodeType is shown
-        COL_CODENAME, //!< Column in which the name mapping is shown
-        COL_MESSAGEFORMAT, //!< Column in which the message data parser code is shown
-        COL_COLOR, //!< Column in which the color mapping is shown
-        COL_NR_OF_COLS //!< Number of header colums for the #MsgTypeModel
-    };
 
 
     /**
      * \brief Paint a #Msg according to the code and the mappings contained in this #MsgTypeModel
      */
     void paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const;
+
+    QCompleter *createMsgTypeCompleter(QObject *parent = Q_NULLPTR) const;
 private:
     /**
      * \brief QVector containing all stored #MsgCodeTypes for which mappings exist in the #MsgTypeModel

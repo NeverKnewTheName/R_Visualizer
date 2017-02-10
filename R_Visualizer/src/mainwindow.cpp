@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     currentFileName(QString()),
     receivedMsgsStore(this),
-    msgPcktModel(this),
     currErrCntr(0),
     totalErrCntr(0),
     userRoleMngr(this),
@@ -64,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
             msgFilterWidget->getFilterTimestampModel(),
             this
             );
+    /* ui->horizontalLayout->insertWidget(0,msgStream); */
+    ui->splitter->insertWidget(0,msgStream);
     sndMsgsWidget = new SendMessages(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
     sysOvrvWidget = new SystemOverview(ui->configTabWidget);
     errLogViewDiag = new ErrorLogView(this);

@@ -5,6 +5,8 @@
 
 class MsgTypeModel;
 
+#include "msg.h"
+
 namespace Ui {
 class FilterCodeAddDialog;
 }

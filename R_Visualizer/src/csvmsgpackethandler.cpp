@@ -13,9 +13,9 @@ CsvMsgPacketHandler::~CsvMsgPacketHandler()
 
 }
 
-HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
+QVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
 {
-    HugeQVector<Msg> msgs;
+    QVector<Msg> msgs;
     QStringList msgsFromPacket = csvMsgPacketString.split("\n");
     QString codeLine = msgsFromPacket.at(0);
     msgsFromPacket.removeAt(0);
@@ -26,7 +26,7 @@ HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStr
     DataByteVect dataBytes;
     dataBytes.append(static_cast<quint8>(0xd));
     dataBytes.append(static_cast<quint8>(0x84));
-    msgs.append(new Msg(QDateTime(), static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(code.toInt(0,16)), dataBytes));
+    msgs.append(Msg(QDateTime(), static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(code.toInt(0,16)), dataBytes));
 
     for(auto &msg : msgsFromPacket )
     {
@@ -55,40 +55,40 @@ HugeQVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketStr
         qDebug() << "MsgData";
         qDebug() << "RecvID LOW:" << dataBytes.at(0);
         qDebug() << "RecvID HIGH:" << dataBytes.at(1);
-        msgs.append(new Msg(QDateTime(), static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(0x0B), dataBytes));
+        msgs.append(Msg(QDateTime(), static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(0x0B), dataBytes));
     }
     return msgs;
 }
 
-QString CsvMsgPacketHandler::parseToString(HugeQVector<Msg> msgs)
+QString CsvMsgPacketHandler::parseToString(QVector<Msg> msgs)
 {
     if(!msgs.size())
         return QString("");
 
-    QString csvFile = QString("0x").append(QString::number(msgs.at(0)->getCode(),16));
+    QString csvFile = QString("0x").append(QString::number(msgs.at(0).getCode(),16));
     csvFile.append(QString(";;;;;;;;;;;;;\n"));
     msgs.remove(0);
     int size = msgs.size();
     for(int i = 0; i < size; i++)
     {
-        Msg *msg = msgs.at(i);
-        PMsgDataStruc msgData = msg->getData();
+        const Msg &msg = msgs.at(i);
+        const MsgData &msgData = msg.getData();
 
         csvFile.append(QString("%1;%2;%3;%4;%5;%6;%7;%8;%9;%10;%11;%12;%13;%14\n")
-                       .arg((msgData->DataBytes.at(0) << 8) + msgData->DataBytes.at(1))     //1
-                       .arg((msgData->DataBytes.at(2) & 0x80) >> 7)              //2
-                       .arg((msgData->DataBytes.at(2) & 0x40) >> 6)              //3
-                       .arg((msgData->DataBytes.at(2) & 0x20) >> 5)              //4
-                       .arg((msgData->DataBytes.at(2) & 0x10) >> 4)              //5
-                       .arg((msgData->DataBytes.at(2) & 0x08) >> 3)              //6
-                       .arg((msgData->DataBytes.at(2) & 0x04) >> 2)              //7
-                       .arg((msgData->DataBytes.at(2) & 0x02) >> 1)              //8
-                       .arg((msgData->DataBytes.at(2) & 0x01))                   //9
-                       .arg((msgData->DataBytes.at(3) & 0x10) >> 4)              //10
-                       .arg((msgData->DataBytes.at(3) & 0x08) >> 3)              //11
-                       .arg((msgData->DataBytes.at(3) & 0x04) >> 2)              //12
-                       .arg((msgData->DataBytes.at(3) & 0x02) >> 1)              //13
-                       .arg((msgData->DataBytes.at(3) & 0x01))                   //14
+                       .arg((msgData.DataBytes.at(0) << 8) + msgData.DataBytes.at(1))     //1
+                       .arg((msgData.DataBytes.at(2) & 0x80) >> 7)              //2
+                       .arg((msgData.DataBytes.at(2) & 0x40) >> 6)              //3
+                       .arg((msgData.DataBytes.at(2) & 0x20) >> 5)              //4
+                       .arg((msgData.DataBytes.at(2) & 0x10) >> 4)              //5
+                       .arg((msgData.DataBytes.at(2) & 0x08) >> 3)              //6
+                       .arg((msgData.DataBytes.at(2) & 0x04) >> 2)              //7
+                       .arg((msgData.DataBytes.at(2) & 0x02) >> 1)              //8
+                       .arg((msgData.DataBytes.at(2) & 0x01))                   //9
+                       .arg((msgData.DataBytes.at(3) & 0x10) >> 4)              //10
+                       .arg((msgData.DataBytes.at(3) & 0x08) >> 3)              //11
+                       .arg((msgData.DataBytes.at(3) & 0x04) >> 2)              //12
+                       .arg((msgData.DataBytes.at(3) & 0x02) >> 1)              //13
+                       .arg((msgData.DataBytes.at(3) & 0x01))                   //14
                        );
     }
     return csvFile;

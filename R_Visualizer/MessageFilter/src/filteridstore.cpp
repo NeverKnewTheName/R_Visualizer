@@ -33,7 +33,7 @@ QVariant FilterIDStore::data(const QModelIndex &index, int role) const
         break;
     case Qt::CheckStateRole:
         break;
-    case Qt:UserRole: //UserRole is used for returning raw data for the IDDelegate
+    case Qt::UserRole: //UserRole is used for returning raw data for the IDDelegate
             return idStore.at(row);
             break;
     }
@@ -124,7 +124,7 @@ void FilterIDStore::removeID(const MsgIDType id)
 {
     int row = idStore.indexOf(id);
     QModelIndex tempIndex = index(row);
-    if(!tempIndexn.isValid())
+    if(!tempIndex.isValid())
     {
         return;
     }

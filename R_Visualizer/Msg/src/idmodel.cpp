@@ -5,9 +5,9 @@
 #include <QJsonArray>
 
 
-IDModel::IDModel(QObject *parent) : QAbstractTableModel(parent)
+IDModel::IDModel(QObject *parent) : 
+    QAbstractTableModel(parent)
 {
-
 }
 
 int IDModel::rowCount(const QModelIndex &parent) const
@@ -31,13 +31,25 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
 
     int row = index.row();
     int col = index.column();
+    const IDRep &idRepAtIndex = idPropStore.value(idStore.at(row));
 
     switch(role)
     {
     case Qt::DisplayRole:
-        if(col == COL_ID) return QString("0x%1").arg(idStore[row]/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        if(col == COL_NAME) return idPropStore.value(idStore[row]).getName();
-        if(col == COL_COLOR) return idPropStore.value(idStore[row]).getColor().name();
+        switch(col)
+        {
+        case COL_ID: 
+            return QString("0x%1")
+                .arg(idRepAtIndex.getId()/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+                // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
+            break;
+        case COL_NAME: 
+            return idRepAtIndex.getName();
+            break;
+        case COL_COLOR: 
+            return idRepAtIndex.getColor().name();
+            break;
+        }
         break;
     case Qt::FontRole:
         //        if(row == 0 && col == 0)
@@ -48,7 +60,7 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-        return QBrush(idPropStore.value(idStore[row]).getColor());
+        return QBrush(idRepAtIndex.getColor());
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -132,8 +144,16 @@ Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
 {
     int col = index.column();
 
-    if(col == COL_ID) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-    if((col == COL_NAME) || (col == COL_COLOR) ) return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    switch(col)
+    {
+        case COL_ID: 
+            return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+            break;
+        case COL_NAME: 
+        case COL_COLOR: 
+            return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+            break;
+    }
 
     return Qt::NoItemFlags;
 }
@@ -197,7 +217,7 @@ QColor IDModel::getColorToID(const MsgIDType id) const
     return QColor();
 }
 
-QByteArray IDModel::ParseToJSON() const
+QByteArray IDModel::ParseToJson() const
 {
     QJsonArray jsonMsgsArr;
     for(const MsgIDType &id : idStore)
@@ -208,7 +228,7 @@ QByteArray IDModel::ParseToJSON() const
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void IDModel::ParseFromJSON(const QByteArray &jsonFile)
+void IDModel::ParseFromJson(const QByteArray &jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
@@ -236,6 +256,11 @@ QStringList IDModel::getAllIDNames() const
 QCompleter *IDModel::createIDCompleter(QObject *parent) const
 {
     QCompleter *newIDCompleter = new QCompleter(parent);
+    /*
+     * Somehow the QCompleter wants a non-const pointer
+     * to a model... This does not make sense.. but HEY!
+     * I guess that's what's const_cast is for!
+     */
     newIDCompleter->setModel(const_cast<IDModel*>(this));
     newIDCompleter->setCompletionColumn(COL_NAME);
     newIDCompleter->setCompletionRole(Qt::DisplayRole);

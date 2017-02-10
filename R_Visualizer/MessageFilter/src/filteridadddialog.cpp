@@ -16,10 +16,10 @@ FilterIDAddDialog::FilterIDAddDialog(const IDModel &idModelForCompletion, QWidge
     /*
      * Set up the completer
      */
-    QCompleter *idCompleter = new QCompleter(idModelForCompletion->getAllIDNames(), this);
+    QCompleter *idCompleter = idModelForCompletion.createIDCompleter(ui->idNameLe);
     idCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->idNameLe->setCompleter(idCompleter);
-    connect(this, &FilterIDAddDialog::accepted, this &FilterIDAddDialog::readyToCommit);
+    connect(this, &FilterIDAddDialog::accepted, this, &FilterIDAddDialog::readyToCommit);
 }
 
 FilterIDAddDialog::~FilterIDAddDialog()
@@ -38,7 +38,7 @@ void FilterIDAddDialog::readyToCommit()
      */
     if(!conversionOK)
     {
-        retrievedID = idModelForCompletion->getIDToName(idNameText);
+        retrievedID = idModelForCompletion.getIDToName(idNameText);
     }
 
     emit commit(retrievedID);

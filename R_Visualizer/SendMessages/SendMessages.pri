@@ -7,11 +7,11 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/sendmessages.cpp
+    $$PWD/src/sendmessages.cpp \
     $$PWD/src/sendmsgmodel.cpp
 
 HEADERS  += \
-    $$PWD/inc/sendmessages.h
+    $$PWD/inc/sendmessages.h \
     $$PWD/inc/sendmsgmodel.h
 
 FORMS    += \

@@ -14,20 +14,23 @@
 #include <QMetaType>
 #include <QVector>
 
-#include <QSize>
-
 #include "msgstorable.h"
 
 typedef QVector<quint8> DataByteVect, *PDataByteVect;
 Q_DECLARE_METATYPE(DataByteVect)
 
-typedef struct _MsgData
+struct MsgData
 {
+    MsgData() : DataSizeInBytes(0){}
+    MsgData(const MsgData &other) : DataBytes(other.DataBytes), DataSizeInBytes(other.DataSizeInBytes){}
+    MsgData(const DataByteVect &dataBytes) : DataBytes(dataBytes), DataSizeInBytes(dataBytes.size()) {}
+    ~MsgData(){}
+
     DataByteVect DataBytes;
     unsigned int DataSizeInBytes;
-}MsgDataStruc, *PMsgDataStruc;
+};
 
-Q_DECLARE_METATYPE(MsgDataStruc)
+Q_DECLARE_METATYPE(MsgData);
 
 typedef quint16 MsgIDType;
 
@@ -82,7 +85,7 @@ public:
     MsgCodeType getCode() const;
     void setCode(const MsgCodeType value);
 
-    PMsgDataStruc getData();
+    MsgData getData() const;
     QByteArray getDataAsByteArray() const;
     void setData(const DataByteVect dataBytes);
     void setDataByte(const quint8 index, const quint8 dataByte);
@@ -93,23 +96,17 @@ public:
     void parseIN(QJsonObject jsonMsg);
     QJsonObject parseOUT() const;
 
-    MsgDataStruc getMsgData() const;
-
-    QSize getMsgSizeHint() const;
-
-    void setMsgSizeHint(const QSize &value);
-
+    MsgData getMsgData() const;
 
    /////////// IMsgStorable INTERFACE //////////////
    virtual QJsonObject ParseToJson() const;
    virtual void ParseFromJson(const QJsonObject &jsonObj);
 
 private:
-    QDateTime MsgTimestamp; //!< Timestamp of when the message was received
-    MsgIDType MsgID; //!< The ID that clearly identifies the sender of a message
-    MsgCodeType MsgCode; //!< The Code that clearly identifies the purpose of the message
-    MsgDataStruc MsgData; //!< Optional data accompaying the message
-    QSize msgSizeHint; //Size hint for painting... subject to removal -> OPTIMIZE //ToTHINK!
+    QDateTime msgTimestamp; //!< Timestamp of when the message was received
+    MsgIDType msgID; //!< The ID that clearly identifies the sender of a message
+    MsgCodeType msgCode; //!< The Code that clearly identifies the purpose of the message
+    MsgData msgData; //!< Optional data accompaying the message
 };
 
 Q_DECLARE_METATYPE(Msg)

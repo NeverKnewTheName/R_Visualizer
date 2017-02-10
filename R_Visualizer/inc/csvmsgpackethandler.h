@@ -9,9 +9,9 @@
 #ifndef CSVMSGPACKETHANDLER_H
 #define CSVMSGPACKETHANDLER_H
 
-#include "hugeqvector.h"
-#include "msg.h"
+/* #include "hugeqvector.h" */
 #include <QVector>
+#include "msg.h"
 
 //! Takes care of parsing #Msg packages in CSV file format
 /**
@@ -38,7 +38,7 @@ public:
      * 
      * \return #HugeQVector of #Msgs
      */
-    HugeQVector<Msg> parseCsvMsgPacket(QString &csvMsgPacketString);
+    QVector<Msg> parseCsvMsgPacket(QString &csvMsgPacketString);
 
     /**
      * \brief Parses a #HugeQVector of #Msgs to a CSV string
@@ -47,7 +47,7 @@ public:
      * 
      * \return QString that resembles the #Msgs as a CSV string
      */
-    QString parseToString(HugeQVector<Msg> msgs);
+    QString parseToString(QVector<Msg> msgs);
 
 private:
 };

@@ -9,6 +9,7 @@
 #define MESSAGESTREAM_H
 
 #include <QWidget>
+#include <QFrame>
 
 #include "msgstreammodel.h"
 /* #include "msgiddelegate.h" */
@@ -21,7 +22,7 @@ namespace Ui {
 class MessageStream;
 }
 
-class MessageStream : public QWidget
+class MessageStream : public QFrame
 {
     Q_OBJECT
 

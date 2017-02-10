@@ -10,36 +10,31 @@
  * @brief Initializes an empty Msg with invalid ID and Code as well as empty Data
  */
 Msg::Msg() :
-    MsgTimestamp(QDateTime()),
-    MsgID(0x0u),
-    MsgCode(0x0u),
-    MsgData({
-            DataByteVect(),
-            0u
-            }),
-    msgSizeHint(100,50)
+    msgTimestamp(QDateTime()),
+    msgID(0x0u),
+    msgCode(0x0u),
+    msgData(DataByteVect())
 {
 }
 
 Msg::Msg(const Msg &other) :
-    MsgTimestamp(other.getTimestamp()),
-    MsgID(other.getId()),
-    MsgCode(other.getCode()),
-    MsgData(other.getMsgData()),
-    msgSizeHint(other.getMsgSizeHint())
+    msgTimestamp(other.msgTimestamp),
+    msgID(other.msgID),
+    msgCode(other.msgCode),
+    msgData(other.msgData)
 {
 }
 
 Msg::Msg(const QJsonObject &jsonObj) :
-    MsgTimestamp(QDateTime::fromString(jsonObj["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"))),
-    MsgID(static_cast<MsgIDType>(jsonObj["MsgID"].toInt())),
-    MsgCode(static_cast<MsgCodeType>(jsonObj["MsgCode"].toInt()))
+    msgTimestamp(QDateTime::fromString(jsonObj["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"))),
+    msgID(static_cast<MsgIDType>(jsonObj["MsgID"].toInt())),
+    msgCode(static_cast<MsgCodeType>(jsonObj["MsgCode"].toInt()))
 {
     QJsonArray jsonData = jsonObj["MsgData"].toArray();
-    MsgData.DataSizeInBytes = jsonData.size();
+    msgData.DataSizeInBytes = jsonData.size();
     for(auto &&dataByteJson : jsonData)
     {
-        MsgData.DataBytes.append(static_cast<quint8>(dataByteJson.toInt()));
+        msgData.DataBytes.append(static_cast<quint8>(dataByteJson.toInt()));
     }
 }
 
@@ -52,14 +47,10 @@ Msg::Msg(const QJsonObject &jsonObj) :
  * @param[in] dataBytes Data bytes that were sent alongside the message
  */
 Msg::Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code, DataByteVect dataBytes) :
-    MsgTimestamp(timestamp),
-    MsgID(id),
-    MsgCode(code),
-    MsgData({
-            dataBytes,
-            dataBytes.size()
-            }),
-    msgSizeHint(100,50)
+    msgTimestamp(timestamp),
+    msgID(id),
+    msgCode(code),
+    msgData(dataBytes)
 {
 }
 
@@ -69,61 +60,61 @@ Msg::~Msg()
 
 QDateTime Msg::getTimestamp() const
 {
-    return MsgTimestamp;
+    return msgTimestamp;
 }
 
 void Msg::setTimestamp(const QDateTime &value)
 {
-    MsgTimestamp = value;
+    msgTimestamp = value;
 }
 
 MsgIDType Msg::getId() const
 {
-    return MsgID;
+    return msgID;
 }
 
 void Msg::setId(const MsgIDType value)
 {
-    MsgID = value;
+    msgID = value;
 }
 
 MsgCodeType Msg::getCode() const
 {
-    return MsgCode;
+    return msgCode;
 }
 
 void Msg::setCode(const MsgCodeType value)
 {
-    MsgCode = value;
+    msgCode = value;
 }
 
-PMsgDataStruc Msg::getData()
+MsgData Msg::getData() const
 {
-    return &MsgData;
+    return msgData;
 }
 
 QString Msg::getDataAsString() const
 {
     QString DataAsString("");
 
-    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    for(unsigned int i = 0; i < msgData.DataSizeInBytes; i++)
     {
         DataAsString.append(QString("0x%1 ")
-                            .arg(MsgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
+                            .arg(msgData.DataBytes.at(i)/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/));
     }
     return DataAsString.trimmed();
 }
 
 void Msg::parseIN(QJsonObject jsonMsg)
 {
-    MsgTimestamp = QDateTime::fromString(jsonMsg["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    MsgID = static_cast<MsgIDType>(jsonMsg["MsgID"].toInt());
-    MsgCode = static_cast<MsgCodeType>(jsonMsg["MsgCode"].toInt());
+    msgTimestamp = QDateTime::fromString(jsonMsg["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    msgID = static_cast<MsgIDType>(jsonMsg["MsgID"].toInt());
+    msgCode = static_cast<MsgCodeType>(jsonMsg["MsgCode"].toInt());
     QJsonArray jsonData = jsonMsg["MsgData"].toArray();
-    MsgData.DataSizeInBytes = jsonData.size();
-    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    msgData.DataSizeInBytes = jsonData.size();
+    for(unsigned int i = 0; i < msgData.DataSizeInBytes; i++)
     {
-        MsgData.DataBytes.append(static_cast<quint8>(jsonData.at(i).toInt()));
+        msgData.DataBytes.append(static_cast<quint8>(jsonData.at(i).toInt()));
     }
 }
 
@@ -132,43 +123,29 @@ QJsonObject Msg::parseOUT() const
     QJsonObject jsonMsg;
     QJsonArray  jsonData;
 
-    jsonMsg["MsgTimestamp"] = MsgTimestamp.toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    jsonMsg["MsgID"] = QJsonValue(static_cast<int>(MsgID));
-    jsonMsg["MsgCode"] = QJsonValue(static_cast<int>(MsgCode));
-    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    jsonMsg["MsgTimestamp"] = msgTimestamp.toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    jsonMsg["MsgID"] = QJsonValue(static_cast<int>(msgID));
+    jsonMsg["MsgCode"] = QJsonValue(static_cast<int>(msgCode));
+    for(unsigned int i = 0; i < msgData.DataSizeInBytes; i++)
     {
-        jsonData.append(QJsonValue(static_cast<int>(MsgData.DataBytes.at(i))));
+        jsonData.append(QJsonValue(static_cast<int>(msgData.DataBytes.at(i))));
     }
     jsonMsg["MsgData"] = jsonData;
 
     return jsonMsg;
 }
 
-MsgDataStruc Msg::getMsgData() const
+MsgData Msg::getMsgData() const
 {
-    return MsgData;
+    return msgData;
 }
 
-QSize Msg::getMsgSizeHint() const
-{
-    return msgSizeHint;
-}
-
-void Msg::setMsgSizeHint(const QSize &value)
-{
-    msgSizeHint = value;
-}
-
-/**
- * @brief Returns the Msg's MsgData as a QByteArray
- * @return MsgData as QByteArray
- */
 QByteArray Msg::getDataAsByteArray() const
 {
     QByteArray data;
-    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    for(unsigned int i = 0; i < msgData.DataSizeInBytes; i++)
     {
-        data.append(MsgData.DataBytes.at(i));
+        data.append(msgData.DataBytes.at(i));
     }
 
     return data;
@@ -176,18 +153,18 @@ QByteArray Msg::getDataAsByteArray() const
 
 void Msg::setData(const DataByteVect dataBytes)
 {
-    MsgData.DataBytes = dataBytes;
-    MsgData.DataSizeInBytes = dataBytes.size();
+    msgData.DataBytes = dataBytes;
+    msgData.DataSizeInBytes = dataBytes.size();
 }
 
 void Msg::setDataByte(const quint8 index, const quint8 dataByte)
 {
-    if(index > MsgData.DataSizeInBytes)
+    if(index > msgData.DataSizeInBytes)
     {
-        qDebug() << __FUNCTION__ << "Index not in range of MsgData";
+        qDebug() << __FUNCTION__ << "Index not in range of msgData";
     }
 
-    MsgData.DataBytes[index] = dataByte;
+    msgData.DataBytes[index] = dataByte;
 }
 
 
@@ -198,12 +175,12 @@ QJsonObject Msg::ParseToJson() const
     QJsonObject jsonMsg;
     QJsonArray  jsonData;
 
-    jsonMsg["MsgTimestamp"] = MsgTimestamp.toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    jsonMsg["MsgID"] = QJsonValue(static_cast<int>(MsgID));
-    jsonMsg["MsgCode"] = QJsonValue(static_cast<int>(MsgCode));
-    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    jsonMsg["MsgTimestamp"] = msgTimestamp.toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    jsonMsg["MsgID"] = QJsonValue(static_cast<int>(msgID));
+    jsonMsg["MsgCode"] = QJsonValue(static_cast<int>(msgCode));
+    for(unsigned int i = 0; i < msgData.DataSizeInBytes; i++)
     {
-        jsonData.append(QJsonValue(static_cast<int>(MsgData.DataBytes.at(i))));
+        jsonData.append(QJsonValue(static_cast<int>(msgData.DataBytes.at(i))));
     }
     jsonMsg["MsgData"] = jsonData;
 
@@ -212,14 +189,14 @@ QJsonObject Msg::ParseToJson() const
 
 void Msg::ParseFromJson(const QJsonObject &jsonObj)
 {
-    MsgTimestamp = QDateTime::fromString(jsonObj["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    MsgID = static_cast<MsgIDType>(jsonObj["MsgID"].toInt());
-    MsgCode = static_cast<MsgCodeType>(jsonObj["MsgCode"].toInt());
+    msgTimestamp = QDateTime::fromString(jsonObj["MsgTimestamp"].toString(),QString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    msgID = static_cast<MsgIDType>(jsonObj["MsgID"].toInt());
+    msgCode = static_cast<MsgCodeType>(jsonObj["MsgCode"].toInt());
     QJsonArray jsonData = jsonObj["MsgData"].toArray();
-    MsgData.DataSizeInBytes = jsonData.size();
-    for(unsigned int i = 0; i < MsgData.DataSizeInBytes; i++)
+    msgData.DataSizeInBytes = jsonData.size();
+    for(unsigned int i = 0; i < msgData.DataSizeInBytes; i++)
     {
-        MsgData.DataBytes.append(static_cast<quint8>(jsonData.at(i).toInt()));
+        msgData.DataBytes.append(static_cast<quint8>(jsonData.at(i).toInt()));
     }
 }
 

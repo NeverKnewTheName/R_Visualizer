@@ -1,7 +1,5 @@
 #include "sendmsgmodel.h"
 
-#include "msg.h"
-
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -12,30 +10,22 @@
 
 #include <QDebug>
 
-
-SendMsgModel::SendMsgModel(const size_t nrOfMessagesToDisplay,
-                   const FilterIDStore &filterIDModel,
-                   const FilterCodeStore &filterCodeModel,
-                   const FilterTimestampStore &filterTimestampModel,
-                   QObject *parent) :
-    QAbstractTableModel(parent),
-    NrOfMessagesToDisplay(nrOfMessagesToDisplay),
-    msgBuffer(nrOfMessagesToDisplay),
-    FilterIDModel(filterIDModel),
-    FilterCodeModel(filterCodeModel),
-    FilterTimestampModel(filterTimestampModel)
+SendMsgModel::SendMsgModel(
+                   QObject *parent
+                   ) :
+    QAbstractTableModel(parent)
 {
 }
 
 SendMsgModel::~SendMsgModel()
 {
-    this->clear();
+    clear();
 }
 
 int SendMsgModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return msgBuffer.size();
+    return msgPacketStorage.size();
 }
 
 int SendMsgModel::columnCount(const QModelIndex &parent) const
@@ -76,13 +66,13 @@ QVariant SendMsgModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
             case COL_ID:
-                return ;
+                /* return ; */
                 break;
             case COL_CODE:
-                return ;
+                /* return ; */
                 break;
             case COL_DATA:
-                return ;
+                /* return ; */
                 break;
         }
         break;
@@ -95,19 +85,19 @@ QVariant SendMsgModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
             case COL_ID:
-                return ;
+                return msgAtIndex.getId();
                 break;
             case COL_CODE:
-                return ;
+                return msgAtIndex.getCode();
                 break;
             case COL_DATA:
-                return ;
+                return QVariant::fromValue(msgAtIndex.getMsgData());
                 break;
         }
         break;
     case Qt::UserRole +1:  // return Data
         //ToTHINK!!! DO NOT USE ADDRESSES OF DATASTORAGE...
-        return QVariant::fromValue(static_cast<void*>(&msgAtIndex));
+        /* return QVariant::fromValue(static_cast<void*>(&(msgPacketStorage[row]))); */
         break;
     }
 
@@ -116,14 +106,21 @@ QVariant SendMsgModel::data(const QModelIndex &index, int role) const
 
 bool SendMsgModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    Q_UNUSED(index)
-    Q_UNUSED(value)
+    int row = index.row();
+    int col = index.column();
     //ToDO if msgs should be editable
     if (role == Qt::EditRole)
     {
-        //msgs.at(index.row()) = value.toString();
-
-        //emit editCompleted( result );
+        //ToDO
+        switch(col)
+        {
+            case COL_ID:
+                break;
+            case COL_CODE:
+                break;
+            case COL_DATA:
+                break;
+        }
     }
     return true;
 }
@@ -139,7 +136,7 @@ QVariant SendMsgModel::headerData(int section, Qt::Orientation orientation, int 
                 return QString("Name");
                 break;
             case COL_CODE:
-                return QString("Code");
+                return QString("Type");
                 break;
             case COL_DATA:
                 return QString("Data");
@@ -200,10 +197,11 @@ void SendMsgModel::clear()
     endResetModel();
 }
 
-QByteArray SendMsgModel::ParseToJSON()
+QByteArray SendMsgModel::ParseToJson()
 {
     QJsonArray jsonMsgsArr;
-    for(int i = 0; i < msgBuff.size();++i)
+    int msgPacketStorageSize = msgPacketStorage.size();
+    for(int i = 0; i < msgPacketStorageSize;++i)
     {
         const Msg &msg = msgPacketStorage.at(i);
         jsonMsgsArr.append(msg.parseOUT());
@@ -211,13 +209,34 @@ QByteArray SendMsgModel::ParseToJSON()
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void SendMsgModel::ParseFromJSON(const QByteArray &jsonFile)
+void SendMsgModel::ParseFromJson(const QByteArray &jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto&& item : jsonMsgsArr)
     {
-        const Msg &newMsg(item.toObject);
+        Msg newMsg(item.toObject());
         addMsg(newMsg);
     }
+}
+
+QVector<Msg> SendMsgModel::getMsgPacket() const
+{
+    QVector<Msg> msgPacket;
+    for(const Msg &msg : msgPacketStorage)
+    {
+        msgPacket.append(msg);
+    }
+    return msgPacket;
+}
+
+void SendMsgModel::setMsgPacket(const QVector<Msg> &msgPacket)
+{
+    clear();
+    beginResetModel();
+    for(const Msg &msg : msgPacket)
+    {
+        msgPacketStorage.append(msg);
+    }
+    endResetModel();
 }

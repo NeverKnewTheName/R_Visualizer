@@ -115,11 +115,11 @@ public:
     /**
      * \brief Parses the contents of the #IDModel to a JSON format QByteArray
      */
-    QByteArray ParseToJSON() const;
+    QByteArray ParseToJson() const;
     /**
      * \brief Parses the contents of a QByteArray that was previously saved by the #IDModel into the #IDModel
      */
-    void ParseFromJSON(const QByteArray &jsonFile);
+    void ParseFromJson(const QByteArray &jsonFile);
 
     /**
      * \brief Enumeration of the header columns for the #IDModel

@@ -12,6 +12,8 @@
 
 class IDModel;
 
+#include "msg.h"
+
 namespace Ui {
 class FilterIDAddDialog;
 }

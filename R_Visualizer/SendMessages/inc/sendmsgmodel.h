@@ -45,6 +45,8 @@ public:
      * \brief Retrieves Data from the #MsgStreamModel according to the provided role for the given index
      */
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
     /**
      * \brief Returns the HeaderData for the given section, orientation, and role
      * 
@@ -53,12 +55,18 @@ public:
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
+    void removeRow(int row, const QModelIndex &parent = QModelIndex());
+
     void addMsg(const Msg &newMsg);
 
     void clear();
 
     QByteArray ParseToJson();
     void ParseFromJson(const QByteArray &jsonFile);
+
+    QVector<Msg> getMsgPacket() const;
+    void setMsgPacket(const QVector<Msg> &msgPacket);
 
 private slots:
     void slt_addMsg(const Msg &newMsg);
@@ -77,8 +85,6 @@ signals:
 
 private:
     QVector<Msg> msgPacketStorage;
-    
-
 };
 
 #endif /* SENDMSGMODEL_H */

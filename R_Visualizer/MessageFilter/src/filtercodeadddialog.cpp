@@ -13,7 +13,7 @@ FilterCodeAddDialog::FilterCodeAddDialog( const MsgTypeModel &msgTypeModelForCom
 {
     ui->setupUi(this);
 
-    QCompleter *codeCompleter = new QCompleter(msgTypeModelForCompletion->getAllCodeNames(), this);
+    QCompleter *codeCompleter = msgTypeModelForCompletion.createMsgTypeCompleter(ui->codeTypeLe);
     codeCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->codeTypeLe->setCompleter(codeCompleter);
     connect(this, &FilterCodeAddDialog::accepted, this, &FilterCodeAddDialog::readyToCommit);
@@ -32,7 +32,7 @@ void FilterCodeAddDialog::readyToCommit()
 
     if(!conversionOK)
     {
-        retrievedCode = msgTypeModelForCompletion->getCodeToName(codeTypeText);
+        retrievedCode = msgTypeModelForCompletion.getCodeToName(codeTypeText);
     }
 
     emit commit(retrievedCode);

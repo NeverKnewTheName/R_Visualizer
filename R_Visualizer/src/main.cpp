@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         qRegisterMetaType <Data_PacketPtr>("Data_PacketPtr");
         qRegisterMetaType <Error_PacketPtr>("Error_PacketPtr");
         qRegisterMetaType <Msg>("Msg");
-        qRegisterMetaType <MsgDataStruc>("MsgDataStruc");
+        qRegisterMetaType <MsgData>("MsgData");
         qRegisterMetaType <DataByteVect>("DataByteVect");
         qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
 

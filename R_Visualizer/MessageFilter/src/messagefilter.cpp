@@ -5,6 +5,9 @@
 #include <QHeaderView>
 #include <QAbstractItemView>
 
+#include "idmodel.h"
+#include "msgtypemodel.h"
+
 #include "filteriddelegate.cpp"
 #include "filtermsgtypedelegate.cpp"
 
@@ -14,17 +17,19 @@
 MessageFilter::MessageFilter(
             const IDModel &idModel,
             const MsgTypeModel &msgTypeModel,
-            QWidget *parent = 0
+            QWidget *parent
         ) :
     QWidget(parent),
     ui(new Ui::MessageFilter),
     filterIDModel(),
     filterCodeModel(),
-    filterTimestampModel()
+    filterTimestampModel(),
+    idModel(idModel),
+    msgTypeModel(msgTypeModel)
 {
     ui->setupUi(this);
-    initFilterIDListView(idModel);
-    initFilterCodeListView(msgTypeModel);
+    initFilterIDListView();
+    initFilterCodeListView();
     initFilterTimestamp();
 
 }
@@ -35,7 +40,7 @@ MessageFilter::~MessageFilter()
 }
 
 
-void MessageFilter::initFilterIDListView(const IDModel &idModel)
+void MessageFilter::initFilterIDListView()
 {
     //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
     //    proxy->setSourceModel(&filterIDModel);
@@ -46,7 +51,7 @@ void MessageFilter::initFilterIDListView(const IDModel &idModel)
     ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->idFilterlistView->setAlternatingRowColors(true);
-    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(&idModel, ui->idFilterlistView));
+    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(idModel, ui->idFilterlistView));
 
     /* connect( */
     /*         &filterIDModel, */
@@ -56,7 +61,7 @@ void MessageFilter::initFilterIDListView(const IDModel &idModel)
     /*         ); */
 }
 
-void MessageFilter::initFilterCodeListView(const MsgTypeModel &msgTypeModel)
+void MessageFilter::initFilterCodeListView()
 {
     //    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
     //    proxy->setSourceModel(&filterCodeModel);
@@ -67,7 +72,7 @@ void MessageFilter::initFilterCodeListView(const MsgTypeModel &msgTypeModel)
     ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->codeFilterlistView->setAlternatingRowColors(true);
-    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(&msgTypeModel, ui->codeFilterlistView));
+    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(msgTypeModel, ui->codeFilterlistView));
 
     /* connect( */
     /*         &filterCodeModel, */
@@ -80,18 +85,18 @@ void MessageFilter::initFilterCodeListView(const MsgTypeModel &msgTypeModel)
 void MessageFilter::initFilterTimestamp()
 {
     //Init the model
-    filterTimestampModel.setTimestampFilterTo(ui->filterTimestampToDateTimeEdit->DateTime());
-    filterTimestampModel.setTimestampFilterFrom(ui->filterTimestampFromDateTimeEdit->DateTime());
+    filterTimestampModel.setTimestampFilterTo(ui->filterTimeStampToDateTimeEdit->dateTime());
+    filterTimestampModel.setTimestampFilterFrom(ui->filterTimeStampFromDateTimeEdit->dateTime());
 }
 
 const FilterIDStore &MessageFilter::getFilterIDModel() const
 {
-    return FilterIDModel;
+    return filterIDModel;
 }
 
 const FilterCodeStore &MessageFilter::getFilterCodeModel() const
 {
-    return FilterCodeModel;
+    return filterCodeModel;
 }
 
 const FilterTimestampStore &MessageFilter::getFilterTimestampModel() const
@@ -111,8 +116,8 @@ void MessageFilter::on_addFilterIDPushButton_clicked()
     /* idAddDialog->exec(); */
     
     FilterIDAddDialog *filterIDAddDiag = new FilterIDAddDialog(idModel, this);
-    connect(filterIDAdddialog, &FilterIDAddDialog::commit, this, &MessageFilter::filterIDCommit);
-    filterIDAddDiag.exec();
+    connect(filterIDAddDiag, &FilterIDAddDialog::commit, this, &MessageFilter::filterIDCommit);
+    filterIDAddDiag->exec();
     
     /* // Catch the QModelIndex of the newly created entry in the model */
     /* const QModelIndex &newlyAddedIDIndex = filterIDModel.addID(0x0); */
@@ -144,7 +149,7 @@ void MessageFilter::on_addFilterCodePushButton_clicked()
 {
     FilterCodeAddDialog *filterCodeAddDialog = new FilterCodeAddDialog(msgTypeModel, this);
     connect(filterCodeAddDialog, &FilterCodeAddDialog::commit, this, &MessageFilter::filterCodeCommit);
-    filterCodeAddDialog.exec();
+    filterCodeAddDialog->exec();
 }
 
 void MessageFilter::on_rmvFilterCodePushButton_clicked()
@@ -156,7 +161,7 @@ void MessageFilter::on_rmvFilterCodePushButton_clicked()
         filterCodeModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
 
-    emit sngl_CodeRemovedFromFilter();
+    emit sgnl_CodeRemovedFromFilter();
 }
 
 void MessageFilter::on_enableTimestampFromFilterCheckBox_toggled(bool checked)
@@ -166,12 +171,12 @@ void MessageFilter::on_enableTimestampFromFilterCheckBox_toggled(bool checked)
 
 void MessageFilter::on_filterTimeStampFromDateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
-    if(ui->filterTimestampToDateTimeEdit->dateTime() < dateTime)
+    if(ui->filterTimeStampToDateTimeEdit->dateTime() < dateTime)
     {
-        ui->filterTimestampToDateTimeEdit->setDateTime(dateTime);
+        ui->filterTimeStampToDateTimeEdit->setDateTime(dateTime);
     }
 
-    filterTimestampStore.setTimestampFilterFrom(dateTime);
+    filterTimestampModel.setTimestampFilterFrom(dateTime);
 
     emit sgnl_TimestampFromChanged();
 }
@@ -183,12 +188,12 @@ void MessageFilter::on_enableTimestampToFilterCheckBox_toggled(bool checked)
 
 void MessageFilter::on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
-    if(ui->filterTimestampFromDateTimeEdit->dateTime() > dateTime)
+    if(ui->filterTimeStampFromDateTimeEdit->dateTime() > dateTime)
     {
-        ui->filterTimestampFromDateTimeEdit->setDateTime(dateTime);
+        ui->filterTimeStampFromDateTimeEdit->setDateTime(dateTime);
     }
 
-    filterTimestampStore.setTimestampFilterTo(dateTime);
+    filterTimestampModel.setTimestampFilterTo(dateTime);
 
     emit sgnl_TimestampToChanged();
 }

@@ -1,9 +1,6 @@
 #include "sendmessages.h"
 #include "ui_sendmessages.h"
 
-/* #include "msgdelegate.h" */
-#include "csvmsgpackethandler.h"
-
 #include <QFile>
 #include <QFileDialog>
 #include <QJsonDocument>
@@ -11,18 +8,20 @@
 #include <QTimer>
 #include <QThread>
 
-#include <QCompleter>
-
 #include <QDebug>
+
+/* #include "msgdelegate.h" */
+#include "csvmsgpackethandler.h"
+#include "sendmsgmodel.h"
+#include "idmodel.h"
+#include "msgtypemodel.h"
+
 
 SendMessages::SendMessages(const IDModel &idModel, const MsgTypeModel &msgTypeModel, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SendMessages),
-    msgPcktModel(this),
     idModel(idModel),
-    msgTypeModel(msgTypeModel),
-    idCompleter(this),
-    codeCompleter(this)
+    msgTypeModel(msgTypeModel)
 {
     ui->setupUi(this);
     inputMasks << "\\0\\xhh hh hh hh hh hh hh"/*HEX*/
@@ -40,32 +39,23 @@ SendMessages::SendMessages(const IDModel &idModel, const MsgTypeModel &msgTypeMo
 
     // scroll to the bottom as soon as a new row is inserted by
     // connecting the signal, which is fired once a row is inserted, with the scrollToBottom slot
-    connect(&msgPcktModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::scrollToBottom);
-    connect(&msgPcktModel, &MsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
+    connect(&msgPcktModel, &SendMsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::scrollToBottom);
+    connect(&msgPcktModel, &SendMsgModel::rowsInserted, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
+    /*
+     * This is actually bad design... It would be better to encapsulate the represenation models into the
+     * SendMessagesModel. Let the model be responsible for updating the view!
+     */
     connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
     connect(&msgTypeModel, &MsgTypeModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
     connect(&idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::reset);
     connect(&idModel, &IDModel::internalModelChanged, ui->sndPcktTableView, &QTableView::resizeRowsToContents);
 
-    /*
-     * The QCompleter does net alter the model... I don't know why it does not take a const...
-     */
-    /* idCompleter.setModel(&(const_cast<IDModel &>(idModel))); */
-    /* idCompleter.setCompletionColumn(IDModel::COL_NAME); */
-    /* idCompleter.setCompletionRole(Qt::DisplayRole); */
-    /* idCompleter.setCaseSensitivity(Qt::CaseInsensitive); */
     QCompleter *newIDCompleter = idModel.createIDCompleter(ui->sndMsgIDLineEdit);
     ui->sndMsgIDLineEdit->setCompleter(newIDCompleter);
     connect(ui->sndMsgIDLineEdit, &QLineEdit::textChanged, this, &SendMessages::idChanged);
 
-    /*
-     * The QCompleter does net alter the model... I don't know why it does not take a const...
-     */
-    codeCompleter.setModel(&(const_cast<MsgTypeModel &>(msgTypeModel)));
-    codeCompleter.setCompletionColumn(MsgTypeModel::COL_CODENAME);
-    codeCompleter.setCompletionRole(Qt::DisplayRole);
-    codeCompleter.setCaseSensitivity(Qt::CaseInsensitive);
-    ui->sndMsgCodeLineEdit->setCompleter(&codeCompleter);
+    QCompleter *newCodeCompleter = msgTypeModel.createMsgTypeCompleter(ui->sndMsgCodeLineEdit);
+    ui->sndMsgCodeLineEdit->setCompleter(newCodeCompleter);
     connect(ui->sndMsgCodeLineEdit, &QLineEdit::textChanged, this, &SendMessages::codeChanged);
 }
 
@@ -313,10 +303,10 @@ void SendMessages::on_sndPcktLoadBtn_clicked()
         {
             CsvMsgPacketHandler csvMsgPacketParser;
             QString msgPacket = QString(csvOpenFile.readAll());
-            msgPcktModel.setMsgs(csvMsgPacketParser.parseCsvMsgPacket(msgPacket));
+            msgPcktModel.setMsgPacket(csvMsgPacketParser.parseCsvMsgPacket(msgPacket));
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
-            msgPcktModel.parseFromJSON(csvOpenFile.readAll());
+            msgPcktModel.ParseFromJson(csvOpenFile.readAll());
         }
     }
     csvOpenFile.close();
@@ -348,11 +338,11 @@ void SendMessages::on_sndPcktStoreBtn_clicked()
         if(!fileFormat.compare(QString("CSV File (*.csv)")))
         {
             CsvMsgPacketHandler csvMsgPacketParser;
-            csvSaveFile.write(csvMsgPacketParser.parseToString(msgPcktModel.getMsgs()).toUtf8()); //ToDO check for error (-1)
+            csvSaveFile.write(csvMsgPacketParser.parseToString(msgPcktModel.getMsgPacket()).toUtf8()); //ToDO check for error (-1)
             // close file
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
-            csvSaveFile.write(msgPcktModel.parseToJSON());
+            csvSaveFile.write(msgPcktModel.ParseToJson());
         }
     }
     csvSaveFile.flush(); //always flush after write!
@@ -428,13 +418,13 @@ void SendMessages::on_sndMsgSendBtn_clicked()
 
 void SendMessages::on_sndPcktSendBtn_clicked()
 {
-    HugeQVector<Msg> msgsToSend = msgPcktModel.getMsgs();
+    QVector<Msg> msgsToSend = msgPcktModel.getMsgPacket();
     int size = msgsToSend.size();
     for( int i = 0; i < size; i++)
     {
-        Msg *msg = msgsToSend.at(i);
+        const Msg &msg = msgsToSend.at(i);
         Data_Packet::Frame frame;
-        frame.ID_Standard = msg->getId();
+        frame.ID_Standard = msg.getId();
         //    if (ui->cbIDE->isChecked())
         //    {
         //        frame.IDE = 1;
@@ -450,10 +440,10 @@ void SendMessages::on_sndPcktSendBtn_clicked()
 
         frame.RTR = 0;
 
-        frame.DLC = msg->getData()->DataSizeInBytes + 1; // +1 for code
+        frame.DLC = msg.getData().DataSizeInBytes + 1; // +1 for code
 
-        DataByteVect dataToSend = msg->getData()->DataBytes;
-        dataToSend.prepend(static_cast<quint8>(msg->getCode()&0xFFu));
+        DataByteVect dataToSend = msg.getData().DataBytes;
+        dataToSend.prepend(static_cast<quint8>(msg.getCode()&0xFFu));
 
         frame.data.clear();
         for(quint8 byte : dataToSend)
@@ -549,3 +539,34 @@ void SendMessages::on_sndPcktRmvBtn_clicked()
     }
     //this->msgPcktModel->removeRow(ui->sndPcktTableView->selectionModel()->currentIndex().row());
 }
+
+void SendMessages::slt_IDRepAdded(const IDRep &addedIDRep)
+{
+}
+void SendMessages::slt_IDRepUpdated(const IDRep &changedIDRep)
+{
+}
+void SendMessages::slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved)
+{
+}
+void SendMessages::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
+{
+}
+void SendMessages::slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep)
+{
+}
+void SendMessages::slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved)
+{
+}
+/* void SendMessages::slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep)
+ * {
+ * }
+ */
+/* void SendMessages::slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep)
+ * {
+ * }
+ */
+/* void SendMessages::slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved)
+ * {
+ * }
+ */

@@ -78,7 +78,6 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
         break;
     case Qt::SizeHintRole:
 //        return QSize(100,40);
-        return msgAtIndex.getMsgSizeHint();
         break;
     case Qt::FontRole:
         break;
@@ -116,7 +115,7 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
                 return msgAtIndex.getCode();
                 break;
             case COL_DATA:
-                /* return msgAtIndex.getData(); */
+                return QVariant::fromValue(msgAtIndex.getMsgData());
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";

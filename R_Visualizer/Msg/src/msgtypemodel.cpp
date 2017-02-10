@@ -34,14 +34,28 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
 
     int row = index.row();
     int col = index.column();
+    const MsgTypeRep &msgTypeRepAtIndex = msgTypePropStore.value(codeStore.at(row));
 
     switch(role)
     {
     case Qt::DisplayRole:
-        if(col == COL_CODE) return QString("0x%1").arg(codeStore[row]/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
-        if(col == COL_CODENAME) return msgTypePropStore.value(codeStore[row]).getCodeName();
-        if(col == COL_MESSAGEFORMAT) return msgTypePropStore[codeStore[row]].getMessageFormat();
-        if(col == COL_COLOR) return msgTypePropStore[codeStore[row]].getColor().name();
+        switch(col)
+        {
+            case COL_CODE:
+                return QString("0x%1")
+                    .arg(msgTypeRepAtIndex.getCode()/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); 
+                // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
+                break;
+            case COL_CODENAME:
+                return msgTypeRepAtIndex.getCodeName();
+                break;
+            case COL_MESSAGEFORMAT:
+                return msgTypeRepAtIndex.getMessageFormat();
+                break;
+            case COL_COLOR:
+                return msgTypeRepAtIndex.getColor().name();
+                break;
+        }
         break;
     case Qt::FontRole:
         //        if(row == 0 && col == 0)
@@ -52,7 +66,7 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-        return QBrush(msgTypePropStore[codeStore[row]].getColor());
+        return QBrush(msgTypeRepAtIndex.getColor());
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -141,9 +155,17 @@ Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
 {
     int col = index.column();
 
-    if(col == COL_CODE) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-    if((col == COL_CODENAME) || ( col == COL_MESSAGEFORMAT ) || (col == COL_COLOR) ) return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-
+    switch(col)
+    {
+        case COL_CODE:
+            return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+            break;
+        case COL_CODENAME:
+        case COL_MESSAGEFORMAT:
+        case COL_COLOR:
+            return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+            break;
+    }
     return Qt::NoItemFlags;
 }
 
@@ -237,7 +259,7 @@ QStringList MsgTypeModel::getAllCodeNames() const
     return names;
 }
 
-QByteArray MsgTypeModel::ParseToJSON() const
+QByteArray MsgTypeModel::ParseToJson() const
 {
     QJsonArray jsonMsgsArr;
     for(const MsgCodeType &code : codeStore)
@@ -248,7 +270,7 @@ QByteArray MsgTypeModel::ParseToJSON() const
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
 
-void MsgTypeModel::ParseFromJSON(const QByteArray &jsonFile)
+void MsgTypeModel::ParseFromJson(const QByteArray &jsonFile)
 {
     this->clear();
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
@@ -261,4 +283,20 @@ void MsgTypeModel::ParseFromJSON(const QByteArray &jsonFile)
 void MsgTypeModel::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const
 {
     msgTypePropStore[code].paintMsgTypeRep(painter, option, msg);
+}
+
+QCompleter *MsgTypeModel::createMsgTypeCompleter(QObject *parent) const
+{
+    QCompleter *newMsgTypeCompleter = new QCompleter(parent);
+    /*
+     * Somehow the QCompleter wants a non-const pointer
+     * to a model... This does not make sense.. but HEY!
+     * I guess that's what's const_cast is for!
+     */
+    newMsgTypeCompleter->setModel(const_cast<MsgTypeModel*>(this));
+    newMsgTypeCompleter->setCompletionColumn(COL_CODENAME);
+    newMsgTypeCompleter->setCompletionRole(Qt::DisplayRole);
+    newMsgTypeCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    return newMsgTypeCompleter;
 }
