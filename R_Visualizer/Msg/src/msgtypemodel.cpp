@@ -181,6 +181,18 @@ void MsgTypeModel::add(const MsgTypeRep &msgTypeRep)
     //    emit internalModelChanged();
 }
 
+MsgTypeRep MsgTypeModel::getMsgTypeRepToCode(const MsgCodeType code) const
+{
+    if(contains(code))
+    {
+        return msgTypePropStore.value(code);
+    }
+    else
+    {
+        return MsgTypeRep(code);
+    }
+}
+
 void MsgTypeModel::clear()
 {
     // clearing all data is a reset of the model

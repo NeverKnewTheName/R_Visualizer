@@ -14,7 +14,7 @@ MsgTypeRep::MsgTypeRep() :
     code(0x0),
     codeName(QString("")),
     messageFormat(QString("")),
-    color(QColor(Qt::black))
+    color(Qt::black)
 {
 
 }
@@ -27,6 +27,15 @@ MsgTypeRep::MsgTypeRep(const MsgTypeRep &other) :
     color(other.getColor())
 {
 
+}
+
+MsgTypeRep::MsgTypeRep(const MsgCodeType code) :
+    isValidObj(true),
+    code(code),
+    codeName(QString("0x%1").arg(code, 4, 16, QLatin1Char('0'))),
+    messageFormat("#Data0# #Data1# #Data2# #Data3# #Data4# #Data5# #Data6#"),
+    color(Qt::white)
+{
 }
 
 MsgTypeRep::MsgTypeRep(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color) :

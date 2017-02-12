@@ -15,8 +15,9 @@
 /* #include "msgiddelegate.h" */
 /* #include "msgdatadelegate.h" */
 
-class IDModel;
-class MsgTypeModel;
+class MainWindow;
+class MessageConfig;
+class MessageFilter;
 
 namespace Ui {
 class MessageStream;
@@ -30,22 +31,14 @@ public:
     /**
      * \brief Constructs a new MessageStream object
      * 
-     * \param[in] msgStreamIDModel                  The #IDModel to use for the #MessageStream's #MsgIDDelegate
-     * \param[in] msgStreamMsgTypeModel                The #MsgTypeModel to use for the #MessageStream's #MsgDataDelegate
-     * \param[in] msgStreamIDFilterModel            The #FilterIDStore to use for filtering #MsgIDType in the #MessageStream
-     * \param[in] msgStreamCodeFilterModel          The #FilterCodeStore to use for filtering #MsgCodeType in the #MessageStream
-     * \param[in] msgStreamTimestampFilterModel     The #FilterTimestampStore to use for filtering #Msg according to timestamps in the #MessageStream
      * \param[in] parent                            The parent QWidget
      * 
      * This constructor constructs a new #MessageStream widget. The #IDModel and #MsgTypeModel are used for its delegates
      * to paint #Msg pretty. The various filter models are used to filter the displayed #Msg.
      */
     explicit MessageStream(
-            const IDModel &msgStreamIDModel,
-            const MsgTypeModel &msgStreamMsgTypeModel,
-            const FilterIDStore &msgStreamIDFilterModel,
-            const FilterCodeStore &msgStreamCodeFilterModel,
-            const FilterTimestampStore &msgStreamTimestampFilterModel,
+            const MessageConfig *msgConfig,
+            const MessageFilter *msgFilter,
             QWidget *parent = 0
             );
     /**
@@ -71,10 +64,18 @@ private slots:
     /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
     /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
 
+    /**
+     * \brief This slot is called when the scrollbar of the msgStreamTV changes
+     * 
+     * When the scrollbar reaches its max or min value further messages are fetched if available
+     */
+    void slt_MsgStreamViewScrollBarMoved(int position);
+
 private:
+    friend class MainWindow;
     Ui::MessageStream *ui;
-    const IDModel &msgStreamIDModel;
-    const MsgTypeModel &msgStreamMsgTypeModel;
+    const MessageConfig *msgConfig;
+    const MessageFilter *msgFilter;
     MsgStreamModel msgStreamModel;
     /* MsgIDDelegate idDelegate; */
     /* MsgDataDelegate dataDelegate; */

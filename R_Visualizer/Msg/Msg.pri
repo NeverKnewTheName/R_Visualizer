@@ -19,6 +19,7 @@ SOURCES += \
     # $$PWD/src/msgiddelegate.cpp \
     # $$PWD/src/msgdatadelegate.cpp \
     $$PWD/src/msgdatawidget.cpp \
+    $$PWD/src/prettymsg.cpp \
 
 HEADERS  += \
     $$PWD/inc/msg.h \
@@ -33,6 +34,7 @@ HEADERS  += \
     # $$PWD/inc/msgiddelegate.h \
     # $$PWD/inc/msgdatadelegate.h \
     $$PWD/inc/msgdatawidget.h \
+    $$PWD/inc/prettymsg.h \
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \

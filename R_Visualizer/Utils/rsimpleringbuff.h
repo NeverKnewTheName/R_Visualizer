@@ -151,6 +151,12 @@ public:
         return RBufBuffer.at(calcdIndex);
     }
 
+    T &at(const int index)
+    {
+        const int calcdIndex = (index + RBufStartIndex ) % RBufSize;
+        return RBufBuffer[calcdIndex];
+    }
+
     /**
      * \brief verfifies that a given value is contained in the ring buffer
      */

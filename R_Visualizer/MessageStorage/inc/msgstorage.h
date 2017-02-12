@@ -8,6 +8,8 @@
 #ifndef MSGSTORAGE_H
 #define MSGSTORAGE_H
 
+class MainWindow;
+
 #include <QObject>
 #include "msg.h"
 #include "datastorage.h"
@@ -73,6 +75,7 @@ private slots:
     void slt_addMsg(const Msg &newMsg);
 
 private:
+friend class MainWindow;
     DataStorage<Msg> msgStore;
 };
 

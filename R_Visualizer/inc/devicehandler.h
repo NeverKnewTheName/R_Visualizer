@@ -80,7 +80,7 @@ class DeviceHandler : public QThread
          */
         void sigPacketReceived(CAN_PacketPtr);
 
-        void sigMsgReceived(Msg *msg);
+        void sigMsgReceived(const Msg &msg);
         void sigErrorMsgReceived(ErrorLogEntry *errEntry);
         /**
          * @brief Signal that notifies the application of an error in the usb communication.
@@ -111,6 +111,7 @@ class DeviceHandler : public QThread
          * @param packet that will be transfered.
          */
         void sltSendPacket(CAN_PacketPtr packet);
+        void sltSendMsg(const Msg &msgToSend);
         /**
          * @brief Transfers a new filter ID to the Embedded-System
          *

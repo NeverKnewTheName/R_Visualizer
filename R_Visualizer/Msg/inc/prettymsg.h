@@ -16,17 +16,19 @@
 
 class IDRep;
 class MsgTypeRep;
-class MsgDataRep;
+/* class MsgDataRep; */
 
 #include "msg.h"
 
 class PrettyMsg : public Msg
 {
 public:
+    PrettyMsg();
+    PrettyMsg(
         const Msg &originalMsg,
         const IDRep &idRepresentation,
-        const MsgTypeRep &msgTypeRepresentation,
-        const MsgDataRep &msgDataRepresentation
+        const MsgTypeRep &msgTypeRepresentation
+        /* const MsgDataRep &msgDataRepresentation */
     );
     virtual ~PrettyMsg();
 
@@ -40,7 +42,8 @@ public:
 
     void changeIDRep(const IDRep &newIDRep);
     void changeMsgTypeRep(const MsgTypeRep &newMsgTypeRep);
-    void changeDataRep(const MsgDataRep &newMsgDataRep)
+    /* void changeDataRep(const MsgDataRep &newMsgDataRep) */
+
 private:
     QString msgIDName;
     QString msgCodeName;

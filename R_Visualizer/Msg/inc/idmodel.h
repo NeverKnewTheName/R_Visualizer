@@ -82,6 +82,17 @@ public:
      * \brief Adds a #IDRep mapping to the #IDModel
      */
     void add(const IDRep &idRep);
+
+    /**
+     * \brief Returns the #IDRep that is stored in the model for the given id
+     * 
+     * Queries the model for the provided id. 
+     * If there is an existing #IDRep associated with the id in the model,
+     * it is returned.
+     * If there is no existing #IDRep associated with the id in the model,
+     * a new default #IDRep for that id is returned.
+     */
+    IDRep getIDRepToID(const MsgIDType id) const;
     /**
      * \brief Clears the whole #IDModel for a fresh start
      */

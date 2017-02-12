@@ -138,18 +138,25 @@ private slots:
 
     void on_actionOpen_Error_Log_triggered();
 
-
     void messageReceived(CAN_PacketPtr ptr);
 
 private:
     void initDeviceHandler();
+    void connectDeviceHandler();
 
     void initMessageStream();
+    void connectMessageStream();
     void initTabs();
+    void connectSystemOverview();
+    void connectSendMessages();
+    void connectMessageConfig();
+    void connectMessageFilter();
 
     void initErrorLog();
+    void connectErrorLog();
 
     void initUserRoleManager();
+    void connectUserRoleManager();
 
     void initMsgsTableView();
 

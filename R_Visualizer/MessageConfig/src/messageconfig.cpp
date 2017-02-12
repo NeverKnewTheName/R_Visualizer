@@ -62,6 +62,16 @@ void MessageConfig::initMsgTypeTableView()
     connect(&msgTypeModel, &MsgTypeModel::rowsInserted, ui->msgTypeTableView, &QTableView::scrollToBottom);
 }
 
+PrettyMsg MessageConfig::prettifyMsg(const Msg &msg) const
+{
+    PrettyMsg prettifiedMsg(
+            msg,
+            idModel.getIDRepToID(msg.getId()),
+            msgTypeModel.getMsgTypeRepToCode(msg.getCode())
+            );
+   return prettifiedMsg;
+}
+
 const IDModel &MessageConfig::getIDModel() const
 {
     return idModel;
@@ -74,12 +84,14 @@ const MsgTypeModel &MessageConfig::getMsgTypeModel() const
 
 void MessageConfig::idAddFinished(const MsgIDType id, const QString &name, const QColor &color)
 {
-    emit sgnlIdAddFinished(id,name,color);
+    idModel.add(IDRep(id, name, color));
+    /* emit sgnlIdAddFinished(id,name,color); */
 }
 
 void MessageConfig::msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
-    emit sgnlMsgTypeAddFinished(code, codeName, messageFormat, color);
+    msgTypeModel.add(MsgTypeRep(code, codeName, messageFormat, color));
+    /* emit sgnlMsgTypeAddFinished(code, codeName, messageFormat, color); */
 }
 
 void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)

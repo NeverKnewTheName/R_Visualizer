@@ -44,6 +44,31 @@ public:
     ~MessageFilter();
 
     /**
+     * \brief Filters a #Msg according to all current filter settings
+     */
+    bool filterMsg(const Msg &msgToFilter) const;
+    /**
+     * \brief Filters a #Msg's ID according to the current ID filter settings
+     */
+    bool filterMsgID(const MsgIDType msgIDToFilter) const;
+    /**
+     * \brief Filters a #Msg's code according to the current code filter settings
+     */
+    bool filterMsgCode(const MsgCodeType msgCodeToFilter) const;
+    /**
+     * \brief Filters a #Msg's timestamp according to both timestamp filter settings
+     */
+    bool filterMsgTimestampSpan(const QDateTime &msgTimestamp) const;
+    /**
+     * \brief Filters a #Msg's timestamp according to the from timestamp filter
+     */
+    bool filterMsgTimestampFrom(const QDateTime &msgTimestamp) const;
+    /**
+     * \brief Filters a #Msg's timestamp according to the to timestamp filter
+     */
+    bool filterMsgTimestampTo(const QDateTime &msgTimestamp) const;
+
+    /**
      * \brief Returns a const reference the filterIDModel
      */
     const FilterIDStore &getFilterIDModel() const;
@@ -70,7 +95,7 @@ signals:
      */
     void sgnl_IDRemovedFromFilter();
     /**
-     * \brief This signal is emitted when teh Code filter is enabled/disabled
+     * \brief This signal is emitted when the Code filter is enabled/disabled
      */
     void sgnl_CodeFilterEnabled(bool enable);
     /**

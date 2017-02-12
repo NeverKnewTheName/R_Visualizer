@@ -56,4 +56,5 @@ bool MsgStorage::ParseFromJson(const QJsonArray &jsonMsgsArray)
 void MsgStorage::slt_addMsg(const Msg &newMsg)
 {
     msgStore.append(newMsg);
+    emit sgnl_MsgAdded(newMsg);
 }

@@ -32,6 +32,12 @@ public:
      */
     MsgTypeRep(const MsgTypeRep &other);
     /**
+     * \brief Constructs a plain #MsgTypeRep object for the given code
+     * 
+     * \param[in] code The code to construct the plain #MsgTypeRep for
+     */
+    MsgTypeRep(const MsgCodeType code);
+    /**
      * \brief Constructs a new #MsgTypeRep
      * 
      * \param[in] code The #MsgCodeType this mapping applies to

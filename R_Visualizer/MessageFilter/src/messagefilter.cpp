@@ -31,14 +31,12 @@ MessageFilter::MessageFilter(
     initFilterIDListView();
     initFilterCodeListView();
     initFilterTimestamp();
-
 }
 
 MessageFilter::~MessageFilter()
 {
     delete ui;
 }
-
 
 void MessageFilter::initFilterIDListView()
 {
@@ -52,13 +50,6 @@ void MessageFilter::initFilterIDListView()
     ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->idFilterlistView->setAlternatingRowColors(true);
     ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(idModel, ui->idFilterlistView));
-
-    /* connect( */
-    /*         &filterIDModel, */
-    /*         &FilterIDStore::rowAdded, */
-    /*         ui->idFilterlistView, */
-    /*         static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit) */
-    /*         ); */
 }
 
 void MessageFilter::initFilterCodeListView()
@@ -73,13 +64,6 @@ void MessageFilter::initFilterCodeListView()
     ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->codeFilterlistView->setAlternatingRowColors(true);
     ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(msgTypeModel, ui->codeFilterlistView));
-
-    /* connect( */
-    /*         &filterCodeModel, */
-    /*         &FilterCodeStore::rowAdded, */
-    /*         ui->codeFilterlistView, */
-    /*         static_cast<void (QListView::*)(const QModelIndex &)>(&QListView::edit) */
-    /*         ); */
 }
 
 void MessageFilter::initFilterTimestamp()
@@ -87,6 +71,81 @@ void MessageFilter::initFilterTimestamp()
     //Init the model
     filterTimestampModel.setTimestampFilterTo(ui->filterTimeStampToDateTimeEdit->dateTime());
     filterTimestampModel.setTimestampFilterFrom(ui->filterTimeStampFromDateTimeEdit->dateTime());
+}
+
+bool MessageFilter::filterMsg(const Msg &msgToFilter) const
+{
+    bool filterResult = true;
+
+    filterResult &= filterMsgID(msgToFilter.getId());
+    filterResult &= filterMsgCode(msgToFilter.getCode());
+    filterResult &= filterMsgTimestampSpan(msgToFilter.getTimestamp());
+
+    return filterResult;
+}
+
+bool MessageFilter::filterMsgID(const MsgIDType msgIDToFilter) const
+{
+    bool idFilterResult = true;
+    
+    if(ui->enableIDFilterCheckBox->isChecked())
+    {
+        idFilterResult &= filterIDModel.containsID(msgIDToFilter);
+    }
+
+    return idFilterResult;
+}
+
+bool MessageFilter::filterMsgCode(const MsgCodeType msgCodeToFilter) const
+{
+    bool codeFilterResult = true;
+
+    if(ui->enableCodeFilterCheckBox->isChecked())
+    {
+        codeFilterResult &= filterCodeModel.containsCode(msgCodeToFilter);
+    }
+
+    return codeFilterResult;
+}
+
+bool MessageFilter::filterMsgTimestampSpan(const QDateTime &msgTimestamp) const
+{
+    bool timestampFilterResult = true;
+
+    timestampFilterResult &= filterMsgTimestampFrom(msgTimestamp);
+    timestampFilterResult &= filterMsgTimestampTo(msgTimestamp);
+
+    return timestampFilterResult;
+}
+
+bool MessageFilter::filterMsgTimestampFrom(const QDateTime &msgTimestamp) const
+{
+    bool filterTimestampFromResult = true;
+
+    if(ui->enableTimestampFromFilterCheckBox->isChecked())
+    {
+        filterTimestampFromResult &= 
+            ui->filterTimeStampFromDateTimeEdit->dateTime()
+            <=
+            msgTimestamp;
+    }
+
+    return filterTimestampFromResult;
+}
+
+bool MessageFilter::filterMsgTimestampTo(const QDateTime &msgTimestamp) const
+{
+    bool filterTimestampToResult = true;
+
+    if(ui->enableTimestampToFilterCheckBox->isChecked())
+    {
+        filterTimestampToResult &= 
+            ui->filterTimeStampToDateTimeEdit->dateTime()
+            >=
+            msgTimestamp;
+    }
+
+    return filterTimestampToResult;
 }
 
 const FilterIDStore &MessageFilter::getFilterIDModel() const
@@ -111,22 +170,9 @@ void MessageFilter::on_enableIDFilterCheckBox_toggled(bool checked)
 
 void MessageFilter::on_addFilterIDPushButton_clicked()
 {
-    /* IDAddDialog *idAddDialog = new IDAddDialog(this); */
-    /* connect(idAddDialog, &IDAddDialog::commit, this, &MessageConfig::idAddFinished); */
-    /* idAddDialog->exec(); */
-    
     FilterIDAddDialog *filterIDAddDiag = new FilterIDAddDialog(idModel, this);
     connect(filterIDAddDiag, &FilterIDAddDialog::commit, this, &MessageFilter::filterIDCommit);
     filterIDAddDiag->exec();
-    
-    /* // Catch the QModelIndex of the newly created entry in the model */
-    /* const QModelIndex &newlyAddedIDIndex = filterIDModel.addID(0x0); */
-    /* // Issue an edit of the element */
-    /* ui->idFilterlistView->edit(newlyAddedIDIndex); */
-
-    /* filterIDModel.data(newlyAddedIDIndex); */
-
-    /* emit sgnl_IDAddedToFilter(); */
 }
 
 void MessageFilter::on_rmvFilterIDPushButton_clicked()
@@ -137,6 +183,7 @@ void MessageFilter::on_rmvFilterIDPushButton_clicked()
     {
         filterIDModel.removeRows(selectionIndexList.first().row(), selectionIndexList.size());
     }
+
     emit sgnl_IDRemovedFromFilter();
 }
 

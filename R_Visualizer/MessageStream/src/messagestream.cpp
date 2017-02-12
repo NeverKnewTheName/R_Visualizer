@@ -1,30 +1,31 @@
 #include "messagestream.h"
 #include "ui_messagestream.h"
 
+
+#include "messageconfig.h"
+#include "messagefilter.h"
+
 #include "idmodel.h"
 #include "msgtypemodel.h"
 #include "idrep.h"
 #include "msgtyperep.h"
 
 #include <QHeaderView>
+#include <QScrollBar>
+
+#include <QDebug>
 
 MessageStream::MessageStream(
-            const IDModel &msgStreamIDModel,
-            const MsgTypeModel &msgStreamMsgTypeModel,
-            const FilterIDStore &msgStreamIDFilterModel,
-            const FilterCodeStore &msgStreamCodeFilterModel,
-            const FilterTimestampStore &msgStreamTimestampFilterModel,
+            const MessageConfig *msgConfig,
+            const MessageFilter *msgFilter,
             QWidget *parent
             ) :
     QFrame(parent),
     ui(new Ui::MessageStream),
-    msgStreamIDModel(msgStreamIDModel),
-    msgStreamMsgTypeModel(msgStreamMsgTypeModel),
+    msgConfig(msgConfig),
+    msgFilter(msgFilter),
     msgStreamModel(
             50,
-            msgStreamIDFilterModel,
-            msgStreamCodeFilterModel,
-            msgStreamTimestampFilterModel,
             this
             )//,
     /* idDelegate(msgStreamIDModel, this), */
@@ -61,17 +62,24 @@ MessageStream::MessageStream(
     // Set the delegate for the message's Data
     /* ui->msgStreamTV->setItemDelegateForColumn(MsgStreamModel::COL_DATA, dataDelegate); */
 
-    connect(&msgStreamIDModel, &IDModel::sgnl_IDRepAdded, &msgStreamModel, &MsgStreamModel::slt_IDRepAdded);
-    connect(&msgStreamIDModel, &IDModel::sgnl_IDRepUpdated, &msgStreamModel, &MsgStreamModel::slt_IDRepUpdated);
-    connect(&msgStreamIDModel, &IDModel::sgnl_IDRepRemoved, &msgStreamModel, &MsgStreamModel::slt_IDRepRemoved);
+    //ToDO MessageConfig signal is not emitted...only the signal from the IDModel -> rewire!
+    connect(msgConfig, &MessageConfig::sgnl_IDRepAdded, &msgStreamModel, &MsgStreamModel::slt_IDRepAdded);
+    connect(msgConfig, &MessageConfig::sgnl_IDRepUpdated, &msgStreamModel, &MsgStreamModel::slt_IDRepUpdated);
+    connect(msgConfig, &MessageConfig::sgnl_IDRepRemoved, &msgStreamModel, &MsgStreamModel::slt_IDRepRemoved);
 
-    connect(&msgStreamMsgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepAdded, &msgStreamModel, &MsgStreamModel::slt_MsgTypeRepAdded);
-    connect(&msgStreamMsgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepUpdated, &msgStreamModel, &MsgStreamModel::slt_MsgTypeRepUpdated);
-    connect(&msgStreamMsgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepRemoved, &msgStreamModel, &MsgStreamModel::slt_MsgTypeRepRemoved);
+    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepAdded, &msgStreamModel, &MsgStreamModel::slt_MsgTypeRepAdded);
+    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepUpdated, &msgStreamModel, &MsgStreamModel::slt_MsgTypeRepUpdated);
+    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepRemoved, &msgStreamModel, &MsgStreamModel::slt_MsgTypeRepRemoved);
 
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepAdded, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepAdded); */
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepUpdated, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepUpdated); */
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepRemoved, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepRemoved); */
+
+
+    /*
+     * Configure the MessageStreamTV's Scrollbar to trigger fetching of further Msgs if any
+     */
+    connect(ui->msgStreamTV->verticalScrollBar(), &QScrollBar::valueChanged, this, &MessageStream::slt_MsgStreamViewScrollBarMoved);
 }
 
 MessageStream::~MessageStream()
@@ -81,6 +89,11 @@ MessageStream::~MessageStream()
 
 void MessageStream::appendMsg(const Msg &msgToAppend)
 {
+    if(msgFilter->filterMsg(msgToAppend))
+    {
+        const PrettyMsg &prettyMsgToAppend = msgConfig->prettifyMsg(msgToAppend);
+        msgStreamModel.appendMsg(prettyMsgToAppend);
+    }
 }
 
 void MessageStream::slt_ReceiveMsg(const Msg &receivedMsg)
@@ -132,3 +145,24 @@ void MessageStream::slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepW
 /* { */
 
 /* } */
+
+void MessageStream::slt_MsgStreamViewScrollBarMoved(int position)
+{
+    QScrollBar *viewVertScrollBar = ui->msgStreamTV->verticalScrollBar();
+
+    if(position >= viewVertScrollBar->maximum())
+    {
+        //Scrollbar is at the end of the view
+        qDebug() << "Scrollbar at max";
+    }
+    else if(position <= viewVertScrollBar->minimum())
+    {
+        //Scrollbar is at the start of the view
+        qDebug() << "Scrollbar at min";
+    }
+    else
+    {
+        //Scrollbar is somewhere in the middle
+        qDebug() << "Scrollbar somewhere in the middle";
+    }
+}

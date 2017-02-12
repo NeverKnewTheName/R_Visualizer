@@ -6,6 +6,8 @@
 #include "msgtypemodel.h"
 #include "userrolemngr.h"
 
+#include "prettymsg.h"
+
 class MainWindow;
 
 namespace Ui {
@@ -19,6 +21,8 @@ class MessageConfig : public QWidget
 public:
     explicit MessageConfig(QWidget *parent = 0);
     ~MessageConfig();
+
+    PrettyMsg prettifyMsg(const Msg &msg) const;
 
     const IDModel &getIDModel() const;
     const MsgTypeModel &getMsgTypeModel() const;
@@ -41,6 +45,15 @@ private:
 signals:
     void sgnlIdAddFinished(const MsgIDType id, const QString &name, const QColor &color);
     void sgnlMsgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
+    void sgnl_IDRepAdded(const IDRep &newIDRep);
+    void sgnl_IDRepUpdated(const IDRep &updatedIDRep);
+    void sgnl_IDRepRemoved(const MsgIDType relatedID);
+    void sgnl_MsgTypeRepAdded(const MsgTypeRep &newMsgType);
+    void sgnl_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgType);
+    void sgnl_MsgTypeRepRemoved(const MsgCodeType relatedCode);
+    /* void sgnl_MsgDataRepAdded(const MsgDataRep &newMsgData); */
+    /* void sgnl_MsgDataRepUpdated(const MsgDataRep &updatedMsgData); */
+    /* void sgnl_MsgDataRepRemoved(const MsgCodeType relatedCode); */
 
 private slots:
     void idAddFinished(const MsgIDType id, const QString &name, const QColor &color);

@@ -80,7 +80,7 @@ void DeviceHandler::run()
                     msgData.append(static_cast<quint8>(canData.at(i)));
                 }
 
-                Msg *msg = new Msg(timestamp, dataPtr->frame().ID_Standard, code, msgData);
+                Msg msg(timestamp, dataPtr->frame().ID_Standard, code, msgData);
                 emit sigMsgReceived(msg);
             }
                 break;
@@ -180,6 +180,43 @@ void DeviceHandler::sltSendPacket(CAN_PacketPtr packet)
         emit sigError(m_driver.getErrorString());
     }
 #endif
+}
+
+void DeviceHandler::sltSendMsg(const Msg &msgToSend)
+{
+    Data_Packet::Frame frame;
+
+    frame.ID_Standard = msgToSend.getId();
+    //    if (ui->cbIDE->isChecked())
+    //    {
+    //        frame.IDE = 1;
+    //        frame.SRR = 1;
+    //        frame.ID_Extended = ui->sbIDExt->value();
+    //    }
+    //    else
+    //    {
+    frame.IDE = 0;
+    frame.SRR = 0;
+    frame.ID_Extended = 0;
+    //    }
+
+    frame.RTR = 0;
+
+    const MsgData &dataToSend = msgToSend.getMsgData();
+
+    frame.DLC = dataToSend.DataSizeInBytes + 1; // + 1 for MsgCode
+
+    frame.data.clear();
+    frame.data.append(msgToSend.getCode() && 0xFF);
+    for(quint8 byte : dataToSend.DataBytes)
+    {
+        frame.data.append(byte);
+    }
+
+    CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
+    qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
+    sltSendPacket(packet);
+    //QTimer::singleShot(0,this, &SendMessages::emitSendMsg);
 }
 
 void DeviceHandler::sltSetFilterID(const quint32 filterID)

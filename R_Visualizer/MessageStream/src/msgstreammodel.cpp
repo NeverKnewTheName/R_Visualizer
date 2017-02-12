@@ -1,6 +1,8 @@
 #include "msgstreammodel.h"
 
 #include "msg.h"
+#include "idrep.h"
+#include "msgtyperep.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -15,17 +17,11 @@
 
 MsgStreamModel::MsgStreamModel(
         const size_t nrOfMessagesToDisplay,
-        const FilterIDStore &filterIDModel,
-        const FilterCodeStore &filterCodeModel,
-        const FilterTimestampStore &filterTimestampModel,
         QObject *parent
         ) :
     QAbstractTableModel(parent),
     NrOfMessagesToDisplay(nrOfMessagesToDisplay),
-    msgBuffer(nrOfMessagesToDisplay),
-    FilterIDModel(filterIDModel),
-    FilterCodeModel(filterCodeModel),
-    FilterTimestampModel(filterTimestampModel)
+    msgBuffer(nrOfMessagesToDisplay)
 {
 }
 
@@ -50,7 +46,7 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     int col = index.column();
-    const Msg &msgAtIndex = msgBuffer.at(row);
+    const PrettyMsg &msgAtIndex = msgBuffer.at(row);
 
     switch(role)
     {
@@ -62,15 +58,13 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
                 return msgAtIndex.getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
                 break;
             case COL_ID:
-                return msgAtIndex.getId();
+                return msgAtIndex.printIDName();
                 break;
             case COL_CODE:
-                return msgAtIndex.getCode();
+                return msgAtIndex.printCodeName();
                 break;
             case COL_DATA:
-                return QString("Code: 0x%1\nData: %2")
-                        .arg(msgAtIndex.getCode())
-                        .arg(msgAtIndex.getDataAsString());
+                return msgAtIndex.printDataString();
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
@@ -85,13 +79,15 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
             case COL_TIMESTAMP:
-
                 break;
             case COL_ID:
+                return QBrush(msgAtIndex.getIDColor());
                 break;
             case COL_CODE:
+                return QBrush(msgAtIndex.getCodeColor());
                 break;
             case COL_DATA:
+                return QBrush(msgAtIndex.getDataColor());
                 break;
         }
         //Background is drawn by delegate
@@ -156,16 +152,15 @@ QVariant MsgStreamModel::headerData(int section, Qt::Orientation orientation, in
         }
         else
         {
-            qDebug() << "Orientation not supported";
+            /* qDebug() << "Orientation not supported"; */
         }
     }
     return QVariant();
 }
 
-void MsgStreamModel::addMsg(const Msg &msg)
+void MsgStreamModel::appendMsg(const PrettyMsg &msg)
 {
     /*
-     * addMsg must validate if the incoming msg shall be displayed (filters)
      * If the msg is to be displayed it has to be evaluated whether the msgBuffer is
      * already filled. 
      * If it is not filled, the msg is simply appended and 
@@ -177,7 +172,6 @@ void MsgStreamModel::addMsg(const Msg &msg)
      * of all messages will kill the PERFORMANCE!
      */
 
-    //ToDO Apply filters!
     int newRow = msgBuffer.size();
     if(newRow >= NrOfMessagesToDisplay)
     {
@@ -192,10 +186,23 @@ void MsgStreamModel::addMsg(const Msg &msg)
         beginInsertRows(QModelIndex(),newRow,newRow);
         msgBuffer.append(msg);
         endInsertRows();
-        emit rowInvalidated(createIndex(newRow,2));
-        emit rowInvalidated(createIndex(newRow,1));
-        emit rowsAdded(1);
         emit rowAppended(newRow);
+    }
+}
+
+void MsgStreamModel::prependMsg(const PrettyMsg &msg)
+{
+    if(msgBuffer.size() >= NrOfMessagesToDisplay)
+    {
+        beginResetModel();
+        msgBuffer.prepend(msg);
+        endResetModel();
+    }
+    else
+    {
+        beginInsertRows(QModelIndex(), 0,0);
+        msgBuffer.prepend(msg);
+        endInsertRows();
     }
 }
 
@@ -230,23 +237,43 @@ void MsgStreamModel::ParseFromJson(const QByteArray &jsonFile)
     {
         //ToDO
         /* const Msg newMsg(item.toObject); */
-        /* addMsg(newMsg); */
+        /* appendMsg(newMsg); */
     }
 }
 
-void MsgStreamModel::messageReceived(const Msg &msg)
+void MsgStreamModel::messageReceived(const PrettyMsg &msg)
 {
-    addMsg(msg);
+    appendMsg(msg);
 }
 
 void MsgStreamModel::slt_IDRepAdded(const IDRep &addedIDRep)
 {
-
+    const MsgIDType id = addedIDRep.getId();
+    const int msgBuffSize = msgBuffer.size();
+    for(int i = 0; i < msgBuffSize; ++i)
+    {
+        PrettyMsg &msg = msgBuffer.at(i);
+        if(msg.getId() == id)
+        {
+            msg.changeIDRep(addedIDRep);
+            emit dataChanged(index(i,COL_ID),index(i,COL_ID));
+        }
+    }
 }
 
 void MsgStreamModel::slt_IDRepUpdated(const IDRep &changedIDRep)
 {
-
+    const MsgIDType id = changedIDRep.getId();
+    const int msgBuffSize = msgBuffer.size();
+    for(int i = 0; i < msgBuffSize; ++i)
+    {
+        PrettyMsg &msg = msgBuffer.at(i);
+        if(msg.getId() == id)
+        {
+            msg.changeIDRep(changedIDRep);
+            emit dataChanged(index(i,COL_ID),index(i,COL_ID));
+        }
+    }
 }
 
 void MsgStreamModel::slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved)

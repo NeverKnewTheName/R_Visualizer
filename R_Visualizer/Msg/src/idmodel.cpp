@@ -88,6 +88,7 @@ bool IDModel::setData(const QModelIndex &index, const QVariant &value, int role)
         if(col == COL_NAME) idPropStore[idStore[row]].setName(value.value<QString>());
         if(col == COL_COLOR) idPropStore[idStore[row]].setColor(value.value<QColor>());
         emit dataChanged(index, index);
+        emit sgnl_IDRepUpdated(idPropStore[idStore[row]]);
         return true;
         break;
     }
@@ -123,7 +124,9 @@ bool IDModel::removeRows(int row, int count, const QModelIndex &parent)
     if(modelSize || ((row+count) < modelSize))
     {
         while(count--)
+        {
             removeRow(row+count, parent);
+        }
         return true;
     }
     else
@@ -134,10 +137,12 @@ bool IDModel::removeRows(int row, int count, const QModelIndex &parent)
 
 void IDModel::removeRow(int row, const QModelIndex &parent)
 {
+    const MsgIDType relatedID = idStore.at(row);
     beginRemoveRows(parent, row, row);
-    idPropStore.remove(idStore.at(row));
+    idPropStore.remove(relatedID);
     idStore.remove(row);
     endRemoveRows();
+    emit sgnl_IDRepRemoved(relatedID);
 }
 
 Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
@@ -158,6 +163,17 @@ Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
     return Qt::NoItemFlags;
 }
 
+IDRep IDModel::getIDRepToID(const MsgIDType id) const
+{
+    if(contains(id))
+    {
+        return idPropStore.value(id);
+    }
+    else
+    {
+        return IDRep(id);
+    }
+}
 
 void IDModel::clear()
 {
@@ -195,6 +211,7 @@ void IDModel::add(const IDRep &idRep)
     idPropStore.remove(id);
     idPropStore.insertMulti(id, idRep); //idRep has no AssignmentOperator...thus we need to remove the Key and create a new one...
     endInsertRows();
+    emit sgnl_IDRepAdded(idRep);
 }
 
 QString IDModel::getNameToID(const MsgIDType id) const

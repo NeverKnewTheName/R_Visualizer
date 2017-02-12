@@ -94,6 +94,17 @@ public:
      * \brief Adds a #MsgTypeRep mapping to the #MsgTypeModel
      */
     void add(const MsgTypeRep &msgTypeRep);
+
+    /**
+     * \brief Returns the #MsgTypeRep that is stored in the model for the given code
+     * 
+     * Queries the model for the provided code. 
+     * If there is an existing #MsgTypeRep associated with the code in the model,
+     * it is returned.
+     * If there is no existing #MsgTypeRep associated with the code in the model,
+     * a new default #MsgTypeRep for that code is returned.
+     */
+    MsgTypeRep getMsgTypeRepToCode(const MsgCodeType code) const;
     /**
      * \brief Clears the whole #MsgTypeModel for a fresh start
      */

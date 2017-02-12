@@ -4,19 +4,28 @@
 #include "msgtyperep.h"
 /* #include "msgdatarep.h" */
 
+PrettyMsg::PrettyMsg() :
+    Msg(),
+    msgIDName(""),
+    msgCodeName(""),
+    msgIDColor(Qt::black),
+    msgCodeColor(Qt::black)
+{
+}
+
 PrettyMsg::PrettyMsg(
         const Msg &originalMsg,
         const IDRep &idRepresentation,
-        const MsgTypeRep &msgTypeRepresentation,
-        const MsgDataRep &msgDataRepresentation
+        const MsgTypeRep &msgTypeRepresentation
+        /* const MsgDataRep &msgDataRepresentation */
         ) :
     Msg(originalMsg),
     msgIDName(idRepresentation.getName()),
     msgCodeName(msgTypeRepresentation.getCodeName()),
-    msgDataString(msgDataRepresentation.getName()),
-    msgIDColor(idRepresentation.getColor())
-    msgCodeColor(msgTypeRepresentation.getColor()),
-    msgDataColor(msgDataRepresentation.getColor())
+    /* msgDataString(msgDataRepresentation.getName()), */
+    msgIDColor(idRepresentation.getColor()),
+    msgCodeColor(msgTypeRepresentation.getColor())
+    /* msgDataColor(msgDataRepresentation.getColor()) */
 {
 }
 
@@ -66,8 +75,8 @@ void PrettyMsg::changeMsgTypeRep(const MsgTypeRep &newMsgTypeRep)
     msgCodeColor = newMsgTypeRep.getColor();
 }
 
-void PrettyMsg::changeDataRep(const MsgDataRep &newMsgDataRep)
-{
-    msgDataString = newMsgDataRep.getName();
-    msgDataString = newMsgDataREp.getColor();
-}
+/* void PrettyMsg::changeDataRep(const MsgDataRep &newMsgDataRep) */
+/* { */
+/*     msgDataString = newMsgDataRep.getName(); */
+/*     msgDataString = newMsgDataREp.getColor(); */
+/* } */

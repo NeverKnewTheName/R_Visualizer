@@ -56,14 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
     /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
     msgFilterWidget = new MessageFilter(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
     msgStream = new MessageStream(
-            msgConfigWidget->getIDModel(),
-            msgConfigWidget->getMsgTypeModel(),
-            msgFilterWidget->getFilterIDModel(),
-            msgFilterWidget->getFilterCodeModel(),
-            msgFilterWidget->getFilterTimestampModel(),
+            msgConfigWidget,
+            msgFilterWidget,
             this
             );
-    /* ui->horizontalLayout->insertWidget(0,msgStream); */
     ui->splitter->insertWidget(0,msgStream);
     sndMsgsWidget = new SendMessages(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
     sysOvrvWidget = new SystemOverview(ui->configTabWidget);
@@ -79,7 +75,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /* connect(&msgConfigWidget, &MessageConfig::sgnlIdAddFinished, this, &MainWindow::idAddFinished); */
     /* connect(&msgConfigWidget, &MessageConfig::sgnlMsgTypeAddFinished, this, &MainWindow::msgTypeAddFinished); */
 
-
     /* obsolote */
     initMsgsTableView();
 
@@ -89,6 +84,17 @@ MainWindow::MainWindow(QWidget *parent) :
     initErrorLog();
     initUserRoleManager();
 
+    connect(&m_deviceHandler, &DeviceHandler::sigMsgReceived, &receivedMsgsStore, &MsgStorage::slt_addMsg, Qt::QueuedConnection);
+    connect(&receivedMsgsStore, &MsgStorage::sgnl_MsgAdded, msgStream, &MessageStream::slt_ReceiveMsg);
+    connectDeviceHandler();
+    connectMessageStream();
+    connectSystemOverview();
+    connectSendMessages();
+    connectMessageConfig();
+    connectMessageFilter();
+
+    connectErrorLog();
+    connectUserRoleManager();
 }
 
 MainWindow::~MainWindow()
@@ -98,20 +104,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::initDeviceHandler()
 {
+    ui->actionStop->setDisabled(true);
+    ui->actionStart->setDisabled(true);
+}
+
+void MainWindow::connectDeviceHandler()
+{
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, &m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
-
     connect(&m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
-
     /* connect(&m_deviceHandler, &DeviceHandler::sigMsgReceived, &msgModel, &MsgModel::messageReceived, Qt::QueuedConnection); */
     connect(this, &MainWindow::dataReceived, this->sysOvrvWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
     connect(&m_deviceHandler, &DeviceHandler::sigErrorMsgReceived, errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
     //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
     //    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
-    ui->actionStop->setDisabled(true);
-    ui->actionStart->setDisabled(true);
 }
 
 void MainWindow::initMessageStream()
+{
+}
+
+void MainWindow::connectMessageStream()
 {
 }
 
@@ -124,10 +136,30 @@ void MainWindow::initTabs()
     ui->configTabWidget->addTab(msgFilterWidget, QString("Message Stream Filter"));
 }
 
+void MainWindow::connectSystemOverview()
+{
+}
+
+void MainWindow::connectSendMessages()
+{
+}
+
+void MainWindow::connectMessageConfig()
+{
+}
+
+void MainWindow::connectMessageFilter()
+{
+}
+
 void MainWindow::initErrorLog()
 {
-    connect(ui->actionOpen_Error_Log, &QAction::triggered, errLogViewDiag, &ErrorLogView::show);
     ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
+}
+
+void MainWindow::connectErrorLog()
+{
+    connect(ui->actionOpen_Error_Log, &QAction::triggered, errLogViewDiag, &ErrorLogView::show);
 }
 
 void MainWindow::initUserRoleManager()
@@ -135,7 +167,10 @@ void MainWindow::initUserRoleManager()
     ui->actionSwitch_User_Role->setIcon(QIcon(":/GUI/Icons/Icons/UserAdmin-32.png"));
     ui->actionSwitch_User_Role->setToolTip(QString("Switch to Admin Role"));
     ui->actionSwitch_User_Role->setText(QString("Switch to Admin Role"));
+}
 
+void MainWindow::connectUserRoleManager()
+{
     connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
     connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::applyRole);
     connect(this, &MainWindow::switchUserRoles, sndMsgsWidget, &SendMessages::applyRole);
@@ -145,9 +180,11 @@ void MainWindow::initUserRoleManager()
     emit switchUserRoles(UserRoleMngr::NormalUserRole);
 }
 
-
 void MainWindow::on_actionNew_triggered()
 {
+    static int cntr = 0;
+    receivedMsgsStore.slt_addMsg(Msg(QDateTime::fromMSecsSinceEpoch(cntr),cntr,cntr,{cntr, cntr, cntr}));
+    ++cntr;
 /* #ifdef __DEBUG__ */
 /*     qDebug() << __PRETTY_FUNCTION__ << " - Triggered"; */
 /* #endif //__DEBUG__ */

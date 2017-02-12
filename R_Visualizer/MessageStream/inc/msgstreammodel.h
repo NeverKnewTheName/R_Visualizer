@@ -15,16 +15,13 @@
 
 #include "datastorage.h"
 #include "rsimpleringbuff.h"
+#include "prettymsg.h"
 
 #include <QAbstractTableModel>
 #include <QString>
 
-class Msg;
 class MainWindow;
 class MessageStream;
-class FilterIDStore;
-class FilterCodeStore;
-class FilterTimestampStore;
 
 class IDRep;
 class MsgTypeRep;
@@ -55,9 +52,6 @@ public:
      */
     MsgStreamModel(
              size_t nrOfMessagesToDisplay,
-             const FilterIDStore &filterIDModel,
-             const FilterCodeStore &filterCodeModel,
-             const FilterTimestampStore &filterTimestampModel,
              QObject *parent = Q_NULLPTR
              );
     /**
@@ -85,7 +79,15 @@ public:
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
-    void addMsg(const Msg &msg);
+    /**
+     * \brief Appends a #Msg to display to the #MsgStreamModel
+     */
+    void appendMsg(const PrettyMsg &msg);
+    /**
+     * \brief Prepends a #Msg to display to the #MsgStreamModel
+     */
+    void prependMsg(const PrettyMsg &msg);
+
     /**
      * \brief Clears the whole #MsgStreamModel for a fresh start
      * 
@@ -112,7 +114,7 @@ private slots:
     /**
      * \brief The #messageReceived slot shall be called whenever a new message that is to be displayed is received
      */
-    void messageReceived(const Msg &msg);
+    void messageReceived(const PrettyMsg &msg);
 
     void slt_IDRepAdded(const IDRep &addedIDRep);
     void slt_IDRepUpdated(const IDRep &changedIDRep);
@@ -144,12 +146,9 @@ private:
     /**
      * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
      */
-    RSimpleDestructiveRingBuff<Msg> msgBuffer;
+    RSimpleDestructiveRingBuff<PrettyMsg> msgBuffer;
     const size_t NrOfMessagesToDisplay;
-
-    const FilterIDStore &FilterIDModel;
-    const FilterCodeStore &FilterCodeModel;
-    const FilterTimestampStore &FilterTimestampModel;
+    size_t currentLastIndex;
 };
 
 #endif // MSGSTREAMMODEL_H
