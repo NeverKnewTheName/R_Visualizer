@@ -8,8 +8,10 @@ PrettyMsg::PrettyMsg() :
     Msg(),
     msgIDName(""),
     msgCodeName(""),
+    msgDataString(""),
     msgIDColor(Qt::black),
-    msgCodeColor(Qt::black)
+    msgCodeColor(Qt::black),
+    msgDataColor(Qt::black)
 {
 }
 
@@ -24,9 +26,10 @@ PrettyMsg::PrettyMsg(
     msgCodeName(msgTypeRepresentation.getCodeName()),
     /* msgDataString(msgDataRepresentation.getName()), */
     msgIDColor(idRepresentation.getColor()),
-    msgCodeColor(msgTypeRepresentation.getColor())
-    /* msgDataColor(msgDataRepresentation.getColor()) */
+    msgCodeColor(msgTypeRepresentation.getColor()),
+    msgDataColor(msgTypeRepresentation.getColor())
 {
+    msgDataString = QString("Msg\nMsg\nMsg\nMsg");
 }
 
 PrettyMsg::~PrettyMsg()
@@ -73,6 +76,7 @@ void PrettyMsg::changeMsgTypeRep(const MsgTypeRep &newMsgTypeRep)
 {
     msgCodeName = newMsgTypeRep.getCodeName();
     msgCodeColor = newMsgTypeRep.getColor();
+    msgDataColor = newMsgTypeRep.getColor();
 }
 
 /* void PrettyMsg::changeDataRep(const MsgDataRep &newMsgDataRep) */

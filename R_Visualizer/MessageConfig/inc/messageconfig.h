@@ -69,6 +69,19 @@ private slots:
     void on_msgTypeAddBtn_clicked();
     void on_idRmvBtn_clicked();
     void on_msgTypeRmvBtn_clicked();
+
+    void slt_IDRepAdded(const IDRep &newIDRep);
+    void slt_IDRepUpdated(const IDRep &updatedIDRep);
+    void slt_IDRepRemoved(const MsgIDType relatedID);
+
+    void slt_MsgTypeRepAdded(const MsgTypeRep &newMsgTypeRep);
+    void slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
+    void slt_MsgTypeRepRemoved(const MsgCodeType relatedCode);
+
+    /* void slt_MsgDataRepAdded(const MsgDataRep &newMsgDataRep); */
+    /* void slt_MsgDataRepUpdated(const MsgDataRep &updatedMsgDataRep); */
+    /* void slt_MsgDataRepRemoved(const MsgCodeType relatedCode); */
+
 };
 
 #endif // MESSAGECONFIG_H

@@ -95,7 +95,7 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
         if(col == COL_MESSAGEFORMAT ) msgTypePropStore[codeStore[row]].setMessageFormat(value.value<QString>());
         if(col == COL_COLOR) msgTypePropStore[codeStore[row]].setColor(value.value<QColor>());
         emit dataChanged(index, index);
-        //        emit internalModelChanged();
+        emit sgnl_MsgTypeRepUpdated(msgTypePropStore[codeStore[row]]);
         return true;
         break;
     }
@@ -134,7 +134,9 @@ bool MsgTypeModel::removeRows(int row, int count, const QModelIndex &parent)
     if(modelSize || ((row+count) < modelSize))
     {
         while(count--)
+        {
             removeRow(row+count, parent);
+        }
         return true;
     }
     else
@@ -145,10 +147,12 @@ bool MsgTypeModel::removeRows(int row, int count, const QModelIndex &parent)
 
 void MsgTypeModel::removeRow(int row, const QModelIndex &parent)
 {
+    const MsgCodeType relatedCode = codeStore.at(row);
     beginRemoveRows(parent, row, row);
-    msgTypePropStore.remove(codeStore.at(row));
+    msgTypePropStore.remove(relatedCode);
     codeStore.remove(row);
     endRemoveRows();
+    emit sgnl_MsgTypeRepRemoved(relatedCode);
 }
 
 Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
@@ -178,7 +182,7 @@ void MsgTypeModel::add(const MsgTypeRep &msgTypeRep)
     msgTypePropStore.remove(code);
     msgTypePropStore.insertMulti(code, msgTypeRep);
     endInsertRows();
-    //    emit internalModelChanged();
+    emit sgnl_MsgTypeRepAdded(msgTypeRep);
 }
 
 MsgTypeRep MsgTypeModel::getMsgTypeRepToCode(const MsgCodeType code) const

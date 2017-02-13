@@ -49,11 +49,13 @@ public:
     ~MessageStream();
 
     void appendMsg(const Msg &msgToAppend);
+    void prependMsg(const Msg &msgToPrepend);
 
 signals:
 
 private slots:
     void slt_ReceiveMsg(const Msg &receivedMsg);
+
     void slt_IDRepAdded(const IDRep &addedIDRep);
     void slt_IDRepUpdated(const IDRep &changedIDRep);
     void slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved);
@@ -63,6 +65,19 @@ private slots:
     /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
     /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
     /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
+
+    void slt_IDFilterEnabled(const bool enabled);
+    void slt_IDFilterAdded(const MsgIDType addedID);
+    void slt_IDFilterRemoved(const MsgIDType removedID);
+
+    void slt_MsgTypeFilterEnabled(const bool enabled);
+    void slt_MsgTypeFilterAdded(const MsgIDType addedCode);
+    void slt_MsgTypeFilterRemoved(const MsgIDType removedCode);
+
+    void slt_TimestampFromFilterEnabled(const bool enabled);
+    void slt_TimestampToFilterEnabled(const bool enabled);
+    void slt_TimestampFromChanged(const QDateTime &timestampFrom);
+    void slt_TimestampToChanged(const QDateTime &timestampTo);
 
     /**
      * \brief This slot is called when the scrollbar of the msgStreamTV changes

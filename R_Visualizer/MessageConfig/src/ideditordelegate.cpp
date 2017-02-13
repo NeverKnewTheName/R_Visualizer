@@ -82,7 +82,13 @@ void IDEditorDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 
 void IDEditorDelegate::commitAndCloseEditor()
 {
-    QColorDialog *editor = qobject_cast<QColorDialog *>(sender());
+    //CAN EIHTER BE A QLineEdit or a QColorDialog...
+    QWidget *editor = qobject_cast<QColorDialog *>(sender());
+    /* if(editor == Q_NULLPTR) */
+    /* { */
+    /*     //How did this happen?? */
+    /*     return; */
+    /* } */
     emit commitData(editor);
     emit closeEditor(editor);
 }

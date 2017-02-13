@@ -79,6 +79,9 @@ public:
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
+    void removeRow(int row, const QModelIndex &parent = QModelIndex());
+
     /**
      * \brief Appends a #Msg to display to the #MsgStreamModel
      */
@@ -117,14 +120,16 @@ private slots:
     void messageReceived(const PrettyMsg &msg);
 
     void slt_IDRepAdded(const IDRep &addedIDRep);
-    void slt_IDRepUpdated(const IDRep &changedIDRep);
-    void slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved);
+    void slt_IDRepUpdated(const IDRep &updatedIDRep);
+    void slt_IDRepRemoved(const MsgIDType relatedID);
+
     void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep);
-    void slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep);
-    void slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved);
+    void slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
+    void slt_MsgTypeRepRemoved(const MsgCodeType relatedCode);
+
     /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
-    /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
-    /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
+    /* void slt_MsgDataRepUpdated(const MsgDataRep &updatedMsgDataRep); */
+    /* void slt_MsgDataRepRemoved(const MsgCodeType relatedCode); */
 
 signals:
     /**
@@ -143,6 +148,10 @@ signals:
 private:
     friend class MainWindow;
     friend class MessageStream;
+
+    void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
+    void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
+    
     /**
      * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
      */

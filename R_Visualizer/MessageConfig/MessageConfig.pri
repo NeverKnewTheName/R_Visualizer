@@ -13,6 +13,10 @@ SOURCES += \
     $$PWD/src/msgtypeformatterdialog.cpp \
     $$PWD/src/idadddialog.cpp \
     $$PWD/src/msgtypeadddialog.cpp \
+    $$PWD/src/idmodel.cpp \
+    $$PWD/src/idrep.cpp \
+    $$PWD/src/msgtypemodel.cpp \
+    $$PWD/src/msgtyperep.cpp \
 
 HEADERS  += \
     $$PWD/inc/messageconfig.h \
@@ -21,6 +25,10 @@ HEADERS  += \
     $$PWD/inc/msgtypeformatterdialog.h \
     $$PWD/inc/idadddialog.h \
     $$PWD/inc/msgtypeadddialog.h \
+    $$PWD/inc/idmodel.h \
+    $$PWD/inc/idrep.h \
+    $$PWD/inc/msgtypemodel.h \
+    $$PWD/inc/msgtyperep.h \
 
 FORMS    += \
     $$PWD/ui/messageconfig.ui \

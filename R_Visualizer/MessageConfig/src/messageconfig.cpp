@@ -22,6 +22,14 @@ MessageConfig::MessageConfig(QWidget *parent) :
 
     this->initIDTableView();
     this->initMsgTypeTableView();
+
+    connect(&idModel, &IDModel::sgnl_IDRepAdded, this, &MessageConfig::slt_IDRepAdded);
+    connect(&idModel, &IDModel::sgnl_IDRepUpdated, this, &MessageConfig::slt_IDRepUpdated);
+    connect(&idModel, &IDModel::sgnl_IDRepRemoved, this, &MessageConfig::slt_IDRepRemoved);
+
+    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepAdded, this, &MessageConfig::slt_MsgTypeRepAdded);
+    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepUpdated, this, &MessageConfig::slt_MsgTypeRepUpdated);
+    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepRemoved, this, &MessageConfig::slt_MsgTypeRepRemoved);
 }
 
 MessageConfig::~MessageConfig()
@@ -251,3 +259,47 @@ void MessageConfig::on_msgTypeRmvBtn_clicked()
     }
 }
 
+void MessageConfig::slt_IDRepAdded(const IDRep &newIDRep)
+{
+    emit sgnl_IDRepAdded(newIDRep);
+}
+
+void MessageConfig::slt_IDRepUpdated(const IDRep &updatedIDRep)
+{
+    emit sgnl_IDRepUpdated(updatedIDRep);
+}
+
+void MessageConfig::slt_IDRepRemoved(const MsgIDType relatedID)
+{
+    emit sgnl_IDRepRemoved(relatedID);
+}
+
+void MessageConfig::slt_MsgTypeRepAdded(const MsgTypeRep &newMsgTypeRep)
+{
+    emit sgnl_MsgTypeRepAdded(newMsgTypeRep);
+}
+
+void MessageConfig::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep)
+{
+    emit sgnl_MsgTypeRepUpdated(updatedMsgTypeRep);
+}
+
+void MessageConfig::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
+{
+    emit sgnl_MsgTypeRepRemoved(relatedCode);
+}
+
+/* void MessageConfig::slt_MsgDataRepAdded(const MsgDataRep &newMsgDataRep) */
+/* { */
+/*     emit sgnl_MsgDataRepAdded(newMsgDataRep); */
+/* } */
+
+/* void MessageConfig::slt_MsgDataRepUpdated(const MsgDataRep &updatedMsgDataRep) */
+/* { */
+/*     emit sgnl_MsgDataRepUpdated(updatedMsgDataRep); */
+/* } */
+
+/* void MessageConfig::slt_MsgDataRepRemoved(const MsgCodeType relatedCode) */
+/* { */
+/*     emit sgnl_MsgDataRepRemoved(relatedCode); */
+/* } */

@@ -75,6 +75,8 @@ MessageStream::MessageStream(
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepUpdated, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepUpdated); */
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepRemoved, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepRemoved); */
 
+    connect(msgFilter, &MessageFilter::sgnl_IDFilterEnabled, this, &
+
 
     /*
      * Configure the MessageStreamTV's Scrollbar to trigger fetching of further Msgs if any
@@ -93,6 +95,15 @@ void MessageStream::appendMsg(const Msg &msgToAppend)
     {
         const PrettyMsg &prettyMsgToAppend = msgConfig->prettifyMsg(msgToAppend);
         msgStreamModel.appendMsg(prettyMsgToAppend);
+    }
+}
+
+void MessageStream::prependMsg(const Msg& msgToPrepend)
+{
+    if(msgFilter->filterMsg(msgToPrepend))
+    {
+        const Prettymsg &prettyMsgToPrepend = msgConfig->prettifyMsg(msgToPrepend);
+        msgStreamModel.prependMsg(prettyMsgToPrepend);
     }
 }
 

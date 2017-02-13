@@ -71,7 +71,20 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
         }
         break;
     case Qt::SizeHintRole:
-//        return QSize(100,40);
+        //ToDO Calculate sizes...
+        switch(col)
+        {
+            case COL_TIMESTAMP:
+                break;
+            case COL_ID:
+                break;
+            case COL_CODE:
+                break;
+            case COL_DATA:
+                break;
+            default:
+                qDebug() << "ERROR: " << "Unknown COLUMN";
+        }
         break;
     case Qt::FontRole:
         break;
@@ -156,6 +169,38 @@ QVariant MsgStreamModel::headerData(int section, Qt::Orientation orientation, in
         }
     }
     return QVariant();
+}
+
+bool MsgStreamModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    int msgBufferSize = msgBuffer.size();
+    if((row+count) < msgBuffSize)
+    {
+        while(count--)
+        {
+            removeRow(row, parent);
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void removeRows(int row, const QModelIndex &parent)
+{
+    int msgBuffSize = msgBuffer.size();
+    if(row < msgBuffSize)
+    {
+        beginRemoveRows(parent, row, row);
+        msgBuffer.remove(row);
+        endRemoveRows();
+    }
+    else
+    {
+        qDebug() << "Index of row to remove not in model!";
+    }
 }
 
 void MsgStreamModel::appendMsg(const PrettyMsg &msg)
@@ -246,54 +291,35 @@ void MsgStreamModel::messageReceived(const PrettyMsg &msg)
     appendMsg(msg);
 }
 
+
 void MsgStreamModel::slt_IDRepAdded(const IDRep &addedIDRep)
 {
-    const MsgIDType id = addedIDRep.getId();
-    const int msgBuffSize = msgBuffer.size();
-    for(int i = 0; i < msgBuffSize; ++i)
-    {
-        PrettyMsg &msg = msgBuffer.at(i);
-        if(msg.getId() == id)
-        {
-            msg.changeIDRep(addedIDRep);
-            emit dataChanged(index(i,COL_ID),index(i,COL_ID));
-        }
-    }
+    setIDRepForID(addedIDRep.getId(), addedIDRep);
 }
 
-void MsgStreamModel::slt_IDRepUpdated(const IDRep &changedIDRep)
+void MsgStreamModel::slt_IDRepUpdated(const IDRep &updatedIDRep)
 {
-    const MsgIDType id = changedIDRep.getId();
-    const int msgBuffSize = msgBuffer.size();
-    for(int i = 0; i < msgBuffSize; ++i)
-    {
-        PrettyMsg &msg = msgBuffer.at(i);
-        if(msg.getId() == id)
-        {
-            msg.changeIDRep(changedIDRep);
-            emit dataChanged(index(i,COL_ID),index(i,COL_ID));
-        }
-    }
+    setIDRepForID(updatedIDRep.getId(), updatedIDRep);
 }
 
-void MsgStreamModel::slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved)
+void MsgStreamModel::slt_IDRepRemoved(const MsgIDType relatedID)
 {
-
+    setIDRepForID(relatedID, IDRep(relatedID));
 }
 
 void MsgStreamModel::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
 {
-
+    setMsgTypeRepForCode(addedMsgTypeRep.getCode(), addedMsgTypeRep);
 }
 
-void MsgStreamModel::slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep)
+void MsgStreamModel::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep)
 {
-
+    setMsgTypeRepForCode(updatedMsgTypeRep.getCode(), updatedMsgTypeRep);
 }
 
-void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved)
+void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
 {
-
+    setMsgTypeRepForCode(relatedCode, MsgTypeRep(relatedCode));
 }
 
 /* void MsgStreamModel::slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep) */
@@ -301,12 +327,43 @@ void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRep
 
 /* } */
 
-/* void MsgStreamModel::slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep) */
+/* void MsgStreamModel::slt_MsgDataRepUpdated(const MsgDataRep &updatedMsgDataRep) */
 /* { */
 
 /* } */
 
-/* void MsgStreamModel::slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved) */
+/* void MsgStreamModel::slt_MsgDataRepRemoved(const MsgCodeType relatedCode) */
 /* { */
 
 /* } */
+
+void MsgStreamModel::setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet)
+{
+    const int msgBuffSize = msgBuffer.size();
+    for(int i = 0; i < msgBuffSize; ++i)
+    {
+        PrettyMsg &msg = msgBuffer.at(i);
+        if(msg.getId() == relatedID)
+        {
+            msg.changeIDRep(idRepToSet);
+            emit dataChanged(index(i,COL_ID),index(i,COL_ID), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
+        }
+    }
+}
+
+void MsgStreamModel::setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet)
+{
+    const int msgBuffSize = msgBuffer.size();
+    for(int i = 0; i < msgBuffSize; ++i)
+    {
+        PrettyMsg &msg = msgBuffer.at(i);
+        if(msg.getCode() == relatedCode)
+        {
+            //Since there is no special MsgTypeRep for the message anymore, use the plain one.
+            msg.changeMsgTypeRep(msgTypeRepToSet);
+            emit dataChanged(index(i,COL_CODE),index(i,COL_DATA), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
+            /* emit dataChanged(index(i,COL_CODE),index(i,COL_CODE), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole}); */
+            /* emit dataChanged(index(i,COL_DATA),index(i,COL_DATA), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole}); */
+        }
+    }
+}
