@@ -8,6 +8,9 @@
 #include <QBrush>
 #include <QTextEdit>
 
+#include "idrep.h"
+#include "msgtyperep.h"
+
 #include <QDebug>
 
 SendMsgModel::SendMsgModel(
@@ -38,7 +41,7 @@ QVariant SendMsgModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     int col = index.column();
-    const Msg &msgAtIndex = msgPacketStorage.at(row);
+    const PrettyMsg &msgAtIndex = msgPacketStorage.at(row);
 
     switch(role)
     {
@@ -47,13 +50,13 @@ QVariant SendMsgModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
             case COL_ID:
-                return msgAtIndex.getId();
+                return msgAtIndex.printIDName();
                 break;
             case COL_CODE:
-                return msgAtIndex.getCode();
+                return msgAtIndex.printCodeName();
                 break;
             case COL_DATA:
-                return msgAtIndex.getDataAsString();
+                return msgAtIndex.printDataString();
                 break;
         }
         break;
@@ -66,13 +69,13 @@ QVariant SendMsgModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
             case COL_ID:
-                /* return ; */
+                return QBrush(msgAtIndex.getIDColor());
                 break;
             case COL_CODE:
-                /* return ; */
+                return QBrush(msgAtIndex.getCodeColor());
                 break;
             case COL_DATA:
-                /* return ; */
+                return QBrush(msgAtIndex.getDataColor());
                 break;
         }
         break;
@@ -178,7 +181,7 @@ void SendMsgModel::removeRow(int row, const QModelIndex &parent)
     }
 }
 
-void SendMsgModel::addMsg(const Msg &msg)
+void SendMsgModel::appendMsg(const PrettyMsg &msg)
 {
     int newRow = msgPacketStorage.size();
     beginInsertRows(QModelIndex(),newRow,newRow);
@@ -197,46 +200,108 @@ void SendMsgModel::clear()
     endResetModel();
 }
 
-QByteArray SendMsgModel::ParseToJson()
-{
-    QJsonArray jsonMsgsArr;
-    int msgPacketStorageSize = msgPacketStorage.size();
-    for(int i = 0; i < msgPacketStorageSize;++i)
-    {
-        const Msg &msg = msgPacketStorage.at(i);
-        jsonMsgsArr.append(msg.parseOUT());
-    }
-    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
-}
+/* QByteArray SendMsgModel::ParseToJson() */
+/* { */
+/*     QJsonArray jsonMsgsArr; */
+/*     int msgPacketStorageSize = msgPacketStorage.size(); */
+/*     for(int i = 0; i < msgPacketStorageSize;++i) */
+/*     { */
+/*         const PrettyMsg &msg = msgPacketStorage.at(i); */
+/*         jsonMsgsArr.append(msg.parseOUT()); */
+/*     } */
+/*     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented); */
+/* } */
 
-void SendMsgModel::ParseFromJson(const QByteArray &jsonFile)
-{
-    this->clear();
-    QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
-    for(auto&& item : jsonMsgsArr)
-    {
-        Msg newMsg(item.toObject());
-        addMsg(newMsg);
-    }
-}
+/* void SendMsgModel::ParseFromJson(const QByteArray &jsonFile) */
+/* { */
+/*     this->clear(); */
+/*     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array(); */
+/*     for(auto&& item : jsonMsgsArr) */
+/*     { */
+/*         PrettyMsg newMsg(item.toObject()); */
+/*         appendMsg(newMsg); */
+/*     } */
+/* } */
 
-QVector<Msg> SendMsgModel::getMsgPacket() const
+QVector<PrettyMsg> SendMsgModel::getMsgPacket() const
 {
-    QVector<Msg> msgPacket;
-    for(const Msg &msg : msgPacketStorage)
+    QVector<PrettyMsg> msgPacket;
+    for(const PrettyMsg &msg : msgPacketStorage)
     {
         msgPacket.append(msg);
     }
     return msgPacket;
 }
 
-void SendMsgModel::setMsgPacket(const QVector<Msg> &msgPacket)
+void SendMsgModel::setMsgPacket(const QVector<PrettyMsg> &msgPacket)
 {
     clear();
     beginResetModel();
-    for(const Msg &msg : msgPacket)
+    for(const PrettyMsg &msg : msgPacket)
     {
         msgPacketStorage.append(msg);
     }
     endResetModel();
 }
+
+void SendMsgModel::slt_appendMsg(const PrettyMsg &newMsg)
+{
+    appendMsg(newMsg);
+}
+
+void SendMsgModel::slt_IDRepAdded(const IDRep &addedIDRep)
+{
+    setIDRepForID(addedIDRep.getId(),addedIDRep);
+}
+void SendMsgModel::slt_IDRepUpdated(const IDRep &updatedIDRep)
+{
+    setIDRepForID(updatedIDRep.getId(),updatedIDRep);
+}
+void SendMsgModel::slt_IDRepRemoved(const MsgIDType relatedID)
+{
+    setIDRepForID(relatedID, IDRep(relatedID));
+}
+void SendMsgModel::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
+{
+    setMsgTypeRepForCode(addedMsgTypeRep.getCode(), addedMsgTypeRep);
+}
+void SendMsgModel::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep)
+{
+    setMsgTypeRepForCode(updatedMsgTypeRep.getCode(), updatedMsgTypeRep);
+}
+void SendMsgModel::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
+{
+    setMsgTypeRepForCode(relatedCode, MsgTypeRep(relatedCode));
+}
+/* void SendMsgModel::slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
+/* void SendMsgModel::slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
+/* void SendMsgModel::slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
+
+void SendMsgModel::setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet)
+{
+    const int msgPacketStorageSize = msgPacketStorage.size();
+    for(int i = 0; i < msgPacketStorageSize; ++i)
+    {
+        PrettyMsg &msg = msgPacketStorage.at(i);
+        if(msg.getId() == relatedID)
+        {
+            msg.changeIDRep(idRepToSet);
+            emit dataChanged(index(i,COL_ID), index(i,COL_ID), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
+        }
+    }
+}
+
+void SendMsgModel::setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet)
+{
+    const int msgPacketStorageSize = msgPacketStorage.size();
+    for(int i = 0; i < msgPacketStorageSize; ++i)
+    {
+        PrettyMsg &msg = msgPacketStorage.at(i);
+        if(msg.getCode() == relatedCode)
+        {
+            msg.changeMsgTypeRep(msgTypeRepToSet);
+            emit dataChanged(index(i,COL_CODE), index(i,COL_CODE), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
+        }
+    }
+}
+

@@ -527,7 +527,7 @@ public:
 
                 MsgDataTempFile.close();
 
-                for(auto&& item : jsonMsgsArr)
+                for(const auto &item : jsonMsgsArr)
                 {
                     LastContainer.append(std::move(Msg(item.toObject())));
                 }
@@ -658,7 +658,9 @@ public:
 #endif
                 CurFileToParse.close();
 
-                for(auto &&tmpElement : tempArray)
+                //On Windows we somehow cannot use a non-const reference...
+                /* for(auto &&tmpElement : tempArray) */
+                for(const auto &tmpElement : tempArray)
                 {
                     msgsAsJsonObjsArray.append(tmpElement);
                 }
@@ -829,7 +831,7 @@ private:
 
         NewDataContainer.reserve(ContainerSize);
 
-        for(auto&& item : jsonMsgsArr)
+        for(const auto& item : jsonMsgsArr)
         {
             NewDataContainer.append(std::move(Msg(item.toObject())));
         }

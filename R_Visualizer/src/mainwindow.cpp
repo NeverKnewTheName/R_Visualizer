@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     msgConfigWidget = new MessageConfig(ui->configTabWidget);
     /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
+    /* msgFilterWidget = new MessageFilter(msgConfigWidget, ui->configTabWidget); */
     msgFilterWidget = new MessageFilter(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
     msgStream = new MessageStream(
             msgConfigWidget,
@@ -61,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this
             );
     ui->splitter->insertWidget(0,msgStream);
-    sndMsgsWidget = new SendMessages(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
+    sndMsgsWidget = new SendMessages(msgConfigWidget, ui->configTabWidget);
     sysOvrvWidget = new SystemOverview(ui->configTabWidget);
     errLogViewDiag = new ErrorLogView(this);
     /* MessageConfig provides IDModel and MsgTypeModel */

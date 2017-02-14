@@ -26,7 +26,7 @@
       <string>IDs</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="1">
+      <item row="5" column="2">
        <widget class="QPushButton" name="idStoreBtn">
         <property name="toolTip">
          <string>Save the current ID configuration (*.json) to a file</string>
@@ -36,7 +36,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="5" column="4">
        <widget class="QPushButton" name="idRmvBtn">
         <property name="toolTip">
          <string>Remove the selected entry from the current ID configuration.</string>
@@ -46,23 +46,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1" rowspan="2">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Minimum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>10</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="1">
+      <item row="5" column="1">
        <widget class="QPushButton" name="idLoadBtn">
         <property name="toolTip">
          <string>Load an ID configuration (*.json)</string>
@@ -72,20 +56,33 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="6">
-       <widget class="QTableView" name="idTableView">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ID configuration browser which shows all currently available IDs and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole ID configuration with the Load button or Add/Remove  IDs to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <item row="5" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-       </widget>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
-      <item row="2" column="1">
+      <item row="5" column="3">
        <widget class="QPushButton" name="idAddBtn">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new ID configuration entry to the current ID configuration. The ID configuration tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="text">
          <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="5" colspan="5">
+       <widget class="QTableView" name="idTableView">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ID configuration browser which shows all currently available IDs and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole ID configuration with the Load button or Add/Remove  IDs to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -104,27 +101,7 @@
       <string>Message Types</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
-      <item row="1" column="1">
-       <widget class="QPushButton" name="msgTypeStoreBtn">
-        <property name="toolTip">
-         <string>Save the current Message Type configuration (*.json) to a file</string>
-        </property>
-        <property name="text">
-         <string>Store</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="msgTypeAddBtn">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new Message Type configuration entry to the current Message Type configuration. The Message Type configuration tool is called&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Add</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
+      <item row="5" column="1">
        <widget class="QPushButton" name="msgTypeLoadBtn">
         <property name="toolTip">
          <string>Load an Message Type configuration (*.json)</string>
@@ -134,7 +111,27 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="5" column="3">
+       <widget class="QPushButton" name="msgTypeAddBtn">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new Message Type configuration entry to the current Message Type configuration. The Message Type configuration tool is called&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QPushButton" name="msgTypeStoreBtn">
+        <property name="toolTip">
+         <string>Save the current Message Type configuration (*.json) to a file</string>
+        </property>
+        <property name="text">
+         <string>Store</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
        <widget class="QPushButton" name="msgTypeRmvBtn">
         <property name="toolTip">
          <string>Remove the selected entry from the current Message Type configuration.</string>
@@ -144,28 +141,25 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="6">
+      <item row="5" column="0">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0" rowspan="5" colspan="5">
        <widget class="QTableView" name="msgTypeTableView">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message Type configuration browser which shows all currently available Message Types and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole Message Type configuration with the Load button or Add/Remove Message Types to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-      </item>
-      <item row="4" column="1" rowspan="2">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Minimum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>27</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>

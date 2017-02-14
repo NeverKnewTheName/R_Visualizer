@@ -23,6 +23,18 @@ public:
     ~MessageConfig();
 
     PrettyMsg prettifyMsg(const Msg &msg) const;
+    MsgIDType getIDToName(const QString &name) const;
+    QString getNameToID(const MsgIDType id) const;
+    QColor getColorToID(const MsgIDType id) const;
+    QColor getColorToIDName(const QString &name) const;
+    MsgCodeType getCodeToName(const QString &name) const;
+    QString getNameToCode(const MsgCodeType code) const;
+    QColor getColorToCode(const MsgCodeType code) const;
+    QColor getColorToCodeName(const QString &name) const;
+
+    QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR) const;
+    QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR) const;
+
 
     const IDModel &getIDModel() const;
     const MsgTypeModel &getMsgTypeModel() const;

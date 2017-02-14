@@ -4,7 +4,7 @@
 #include <QAbstractTableModel>
 #include <QString>
 
-#include "msg.h"
+#include "prettymsg.h"
 
 class IDRep;
 class MsgTypeRep;
@@ -58,25 +58,28 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     void removeRow(int row, const QModelIndex &parent = QModelIndex());
 
-    void addMsg(const Msg &newMsg);
+    void appendMsg(const PrettyMsg &newMsg);
 
     void clear();
 
-    QByteArray ParseToJson();
-    void ParseFromJson(const QByteArray &jsonFile);
+    /* QByteArray ParseToJson(); */
+    /* void ParseFromJson(const QByteArray &jsonFile); */
 
-    QVector<Msg> getMsgPacket() const;
-    void setMsgPacket(const QVector<Msg> &msgPacket);
+    QVector<PrettyMsg> getMsgPacket() const;
+    void setMsgPacket(const QVector<PrettyMsg> &msgPacket);
+
+    void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
+    void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
 
 private slots:
-    void slt_addMsg(const Msg &newMsg);
+    void slt_appendMsg(const PrettyMsg &newMsg);
 
     void slt_IDRepAdded(const IDRep &addedIDRep);
-    void slt_IDRepUpdated(const IDRep &changedIDRep);
-    void slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved);
+    void slt_IDRepUpdated(const IDRep &updatedIDRep);
+    void slt_IDRepRemoved(const MsgIDType relatedID);
     void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep);
-    void slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep);
-    void slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved);
+    void slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
+    void slt_MsgTypeRepRemoved(const MsgCodeType relatedCode);
     /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
     /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
     /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
@@ -84,7 +87,7 @@ private slots:
 signals:
 
 private:
-    QVector<Msg> msgPacketStorage;
+    QVector<PrettyMsg> msgPacketStorage;
 };
 
 #endif /* SENDMSGMODEL_H */

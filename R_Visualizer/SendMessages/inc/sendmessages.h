@@ -5,8 +5,7 @@
 #include <QCompleter>
 
 class MainWindow;
-class IDModel;
-class MsgTypeModel;
+class MessageConfig;
 
 #include "msg.h"
 #include "can_packet.h"
@@ -22,7 +21,9 @@ class SendMessages : public QWidget
     Q_OBJECT
 
 public:
-    explicit SendMessages(const IDModel &idModel, const MsgTypeModel &msgTypeModel, QWidget *parent = 0);
+    explicit SendMessages(
+            const MessageConfig *msgConfig,
+            QWidget *parent = 0);
     ~SendMessages();
 
 private:
@@ -39,9 +40,8 @@ private:
     Ui::SendMessages *ui;
     friend class MainWindow;
     SendMsgModel msgPcktModel; //MAYBE REFERENCE???
-    const IDModel &idModel;
-    const MsgTypeModel &msgTypeModel;
     QStringList inputMasks;
+    const MessageConfig *msgConfig;
 
     int currentDataFormatIndex;
 
@@ -64,12 +64,14 @@ private slots:
     void on_sndMsgMsgLineEdit_returnPressed();
     void on_sndPcktRmvBtn_clicked();
 
+    void slt_appendMsgToMsgPacket(const Msg &msg);
+
     void slt_IDRepAdded(const IDRep &addedIDRep);
-    void slt_IDRepUpdated(const IDRep &changedIDRep);
-    void slt_IDRepRemoved(const MsgIDType idWhoseIDRepWasRemoved);
+    void slt_IDRepUpdated(const IDRep &updatedIDRep);
+    void slt_IDRepRemoved(const MsgIDType relatedID);
     void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep);
-    void slt_MsgTypeRepUpdated(const MsgTypeRep &changedMsgTypeRep);
-    void slt_MsgTypeRepRemoved(const MsgCodeType codeWhoseMsgTypeRepWasRemoved);
+    void slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
+    void slt_MsgTypeRepRemoved(const MsgCodeType relatedCode);
     /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
     /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
     /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */

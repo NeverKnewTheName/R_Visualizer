@@ -80,6 +80,36 @@ PrettyMsg MessageConfig::prettifyMsg(const Msg &msg) const
    return prettifiedMsg;
 }
 
+MsgIDType MessageConfig::getIDToName(const QString &name) const
+{
+    return idModel.getIDToName(name);
+}
+
+QString MessageConfig::getNameToID(const MsgIDType id) const
+{
+    return idModel.getNameToID(id);
+}
+
+MsgCodeType MessageConfig::getCodeToName(const QString &name) const
+{
+    return msgTypeModel.getCodeToName(name);
+}
+
+QString MessageConfig::getNameToCode(const MsgCodeType code) const
+{
+    return msgTypeModel.getNameToCode(code);
+}
+
+QCompleter *MessageConfig::createIDNameCompleter(QObject *parent) const
+{
+    return idModel.createIDCompleter(parent);
+}
+
+QCompleter *MessageConfig::createCodeNameCompleter(QObject *parent) const
+{
+    return msgTypeModel.createMsgTypeCompleter(parent);
+}
+
 const IDModel &MessageConfig::getIDModel() const
 {
     return idModel;
