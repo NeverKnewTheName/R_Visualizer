@@ -75,7 +75,7 @@ MessageStream::MessageStream(
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepUpdated, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepUpdated); */
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepRemoved, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepRemoved); */
 
-    connect(msgFilter, &MessageFilter::sgnl_IDFilterEnabled, this, &
+    /* connect(msgFilter, &MessageFilter::sgnl_IDFilterEnabled, this, & */
 
 
     /*
@@ -102,7 +102,7 @@ void MessageStream::prependMsg(const Msg& msgToPrepend)
 {
     if(msgFilter->filterMsg(msgToPrepend))
     {
-        const Prettymsg &prettyMsgToPrepend = msgConfig->prettifyMsg(msgToPrepend);
+        const PrettyMsg &prettyMsgToPrepend = msgConfig->prettifyMsg(msgToPrepend);
         msgStreamModel.prependMsg(prettyMsgToPrepend);
     }
 }
@@ -177,3 +177,44 @@ void MessageStream::slt_MsgStreamViewScrollBarMoved(int position)
         qDebug() << "Scrollbar somewhere in the middle";
     }
 }
+
+void MessageStream::slt_IDFilterEnabled(const bool enabled)
+{
+}
+
+void MessageStream::slt_IDFilterAdded(const MsgIDType addedID)
+{
+}
+
+void MessageStream::slt_IDFilterRemoved(const MsgIDType removedID)
+{
+}
+
+void MessageStream::slt_MsgTypeFilterEnabled(const bool enabled)
+{
+}
+
+void MessageStream::slt_MsgTypeFilterAdded(const MsgCodeType addedCode)
+{
+}
+
+void MessageStream::slt_MsgTypeFilterRemoved(const MsgCodeType removedCode)
+{
+}
+
+void MessageStream::slt_TimestampFromFilterEnabled(const bool enabled)
+{
+}
+
+void MessageStream::slt_TimestampToFilterEnabled(const bool enabled)
+{
+}
+
+void MessageStream::slt_TimestampFilterFromChanged(const QDateTime &timestampFrom)
+{
+}
+
+void MessageStream::slt_TimestampFilterToChanged(const QDateTime &timestampTo)
+{
+}
+

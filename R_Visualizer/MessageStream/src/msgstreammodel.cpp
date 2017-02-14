@@ -173,7 +173,7 @@ QVariant MsgStreamModel::headerData(int section, Qt::Orientation orientation, in
 
 bool MsgStreamModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    int msgBufferSize = msgBuffer.size();
+    int msgBuffSize = msgBuffer.size();
     if((row+count) < msgBuffSize)
     {
         while(count--)
@@ -188,7 +188,7 @@ bool MsgStreamModel::removeRows(int row, int count, const QModelIndex &parent)
     }
 }
 
-void removeRows(int row, const QModelIndex &parent)
+void MsgStreamModel::removeRow(int row, const QModelIndex &parent)
 {
     int msgBuffSize = msgBuffer.size();
     if(row < msgBuffSize)

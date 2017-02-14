@@ -76,8 +76,8 @@ private slots:
 
     void slt_TimestampFromFilterEnabled(const bool enabled);
     void slt_TimestampToFilterEnabled(const bool enabled);
-    void slt_TimestampFromChanged(const QDateTime &timestampFrom);
-    void slt_TimestampToChanged(const QDateTime &timestampTo);
+    void slt_TimestampFilterFromChanged(const QDateTime &timestampFrom);
+    void slt_TimestampFilterToChanged(const QDateTime &timestampTo);
 
     /**
      * \brief This slot is called when the scrollbar of the msgStreamTV changes
