@@ -4,7 +4,11 @@
 #include <QObject>
 #include <QDateTime>
 
-class FilterTimestampStore : public QObject
+class FileParser;
+
+#include "fileparsable.h"
+
+class FilterTimestampStore : public QObject, public FileParsable
 {
     Q_OBJECT
 public:
@@ -18,6 +22,8 @@ public:
 
     QDateTime getTimestampFilterTo() const;
     void setTimestampFilterTo(const QDateTime &value);
+
+    void accept(FileParser *visitor);
 
 private:
     QDateTime timestampFilterFrom;

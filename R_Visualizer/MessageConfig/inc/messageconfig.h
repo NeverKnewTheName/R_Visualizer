@@ -7,14 +7,16 @@
 #include "userrolemngr.h"
 
 #include "prettymsg.h"
+#include "fileparsable.h"
 
 class MainWindow;
+class FileParser;
 
 namespace Ui {
 class MessageConfig;
 }
 
-class MessageConfig : public QWidget
+class MessageConfig : public QWidget, public FileParsable
 {
     Q_OBJECT
 
@@ -38,6 +40,8 @@ public:
 
     const IDModel &getIDModel() const;
     const MsgTypeModel &getMsgTypeModel() const;
+
+    void accept(FileParser *visitor);
 
 private:
     Ui::MessageConfig *ui;

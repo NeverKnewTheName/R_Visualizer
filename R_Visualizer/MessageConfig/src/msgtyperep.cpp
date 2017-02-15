@@ -9,6 +9,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 MsgTypeRep::MsgTypeRep() :
     isValidObj(false),
     code(0x0),
@@ -165,4 +167,9 @@ void MsgTypeRep::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &
 
 //    ItemText.drawContents(painter);
     painter->restore();
+}
+
+void MsgTypeRep::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

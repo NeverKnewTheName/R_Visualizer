@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 IDRep::IDRep() :
     isValidObj(false),
     id(0x0),
@@ -114,4 +116,9 @@ void IDRep::paintIDRep(QPainter *painter, const QStyleOptionViewItem &option) co
                 Qt::AlignCenter,
                 name);
     painter->restore();
+}
+
+void IDRep::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

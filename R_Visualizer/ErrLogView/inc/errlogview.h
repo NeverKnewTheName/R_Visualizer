@@ -11,16 +11,19 @@
 #ifndef ERRORLOGVIEW_H
 #define ERRORLOGVIEW_H
 
-#include "errlogmodel.h"
-
 #include <QDialog>
 #include <QAbstractButton>
+
+class FileParser;
+
+#include "errlogmodel.h"
+#include "fileparsable.h"
 
 namespace Ui {
 class ErrorLogView;
 }
 
-class ErrorLogView : public QDialog
+class ErrorLogView : public QDialog, public FileParsable
 {
     Q_OBJECT
 
@@ -30,6 +33,8 @@ public:
 
     ErrLogModel *getErrLogModel() const;
     void setErrLogModel(ErrLogModel *value);
+
+    void accept(FileParser *visitor);
 
 private slots:
 

@@ -12,10 +12,13 @@
 
 class IDModel;
 class MsgTypeModel;
+class FileParser;
 
 #include "filteridstore.h"
 #include "filtercodestore.h"
 #include "filtertimestampstore.h"
+
+#include "fileparsable.h"
 
 
 namespace Ui {
@@ -25,7 +28,7 @@ class MessageFilter;
 /**
  * \brief The #MessageFilter widget
  */
-class MessageFilter : public QWidget
+class MessageFilter : public QWidget, public FileParsable
 {
     Q_OBJECT
 
@@ -80,6 +83,8 @@ public:
      * \brief Returns a const reference to the filterTimestampModel
      */
     const FilterTimestampStore &getFilterTimestampModel() const;
+
+    void accept(FileParser *visitor);
 
 signals:
     /**

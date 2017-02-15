@@ -14,6 +14,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 
 MsgStreamModel::MsgStreamModel(
         const size_t nrOfMessagesToDisplay,
@@ -284,6 +286,11 @@ void MsgStreamModel::ParseFromJson(const QByteArray &jsonFile)
         /* const Msg newMsg(item.toObject); */
         /* appendMsg(newMsg); */
     }
+}
+
+void MsgStreamModel::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void MsgStreamModel::messageReceived(const PrettyMsg &msg)

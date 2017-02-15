@@ -8,6 +8,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 MsgTypeModel::MsgTypeModel(QObject *parent) : QAbstractTableModel(parent)
 {
 
@@ -315,4 +317,9 @@ QCompleter *MsgTypeModel::createMsgTypeCompleter(QObject *parent) const
     newMsgTypeCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
     return newMsgTypeCompleter;
+}
+
+void MsgTypeModel::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

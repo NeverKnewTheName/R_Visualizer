@@ -18,6 +18,11 @@
 #include "idrep.h"
 #include "msgtyperep.h"
 
+#include "fileparser.h"
+#include "csvoutparser.h"
+#include "csvinparser.h"
+#include "jsonoutparser.h"
+#include "jsoninparser.h"
 
 SendMessages::SendMessages(
         const MessageConfig *msgConfig,
@@ -70,6 +75,11 @@ SendMessages::SendMessages(
 SendMessages::~SendMessages()
 {
     delete ui;
+}
+
+void SendMessages::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 DataByteVect SendMessages::extractMsgData(QString msgDataString, int formatIndex)
@@ -312,7 +322,7 @@ void SendMessages::on_sndPcktLoadBtn_clicked()
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
             //ToDO CREATE MESSAGE PARSER (VISITOR PATTERN??)
-            msgPcktModel.ParseFromJson(csvOpenFile.readAll());
+            /* msgPcktModel.ParseFromJson(csvOpenFile.readAll()); */
         }
     }
     csvOpenFile.close();
@@ -349,7 +359,11 @@ void SendMessages::on_sndPcktStoreBtn_clicked()
             // close file
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
-            csvSaveFile.write(msgPcktModel.ParseToJson());
+            JsonOutParser *jsonOutParser = new JsonOutParser();
+            msgPcktModel.accept(jsonOutParser);
+            const QJsonDocument &msgPacketJsonSave = jsonOutParser->getJsonDocument();
+            qDebug() << msgPacketJsonSave.toJson();
+            csvSaveFile.write(msgPacketJsonSave.toJson());
         }
     }
     csvSaveFile.flush(); //always flush after write!

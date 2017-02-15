@@ -15,10 +15,20 @@
 #include "hugeqvector.h"
 
 class ErrorLogEntry;
+class FileParser;
 
-class ErrLogModel : public QAbstractTableModel
+#include "fileparsable.h"
+
+class ErrLogModel : public QAbstractTableModel, public FileParsable
 {
 public:
+    enum HeaderCols
+    {
+        COL_TIMESTAMP,
+        COL_DETAILS,
+        COL_NR_OF_COLS
+    };
+
     ErrLogModel(QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
@@ -29,12 +39,8 @@ public:
 
     void addErrEntry(ErrorLogEntry *errLogEntry);
 
-    enum HeaderCols
-    {
-        COL_TIMESTAMP,
-        COL_DETAILS,
-        COL_NR_OF_COLS
-    };
+    void accept(FileParser *visitor);
+
 private:
     HugeQVector<ErrorLogEntry> errLogStore;
     friend class MainWindow;

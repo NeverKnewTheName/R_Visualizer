@@ -16,7 +16,11 @@
 
 #include <QMetaType>
 
-class ErrorLogEntry
+class FileParser;
+
+#include "fileparsable.h"
+
+class ErrorLogEntry : public FileParsable
 {
 public:
     ErrorLogEntry();
@@ -28,6 +32,8 @@ public:
 
     QString getDetailString() const;
     void setDetailString(const QString &value);
+
+    void accept(FileParser *visitor);
 
 private:
     QDateTime timestamp;

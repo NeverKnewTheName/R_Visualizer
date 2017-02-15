@@ -17,13 +17,16 @@
 #include <QStyleOptionViewItem>
 #include <QCompleter>
 
+class FileParser;
+
 #include "msg.h"
 #include "idrep.h"
+#include "fileparsable.h"
 
 /**
  * \brief The #IDModel class provides a model to hold ID to name and color mappings for #Msg
  */
-class IDModel : public QAbstractTableModel
+class IDModel : public QAbstractTableModel, public FileParsable
 {
     Q_OBJECT
 
@@ -149,6 +152,8 @@ public:
     void paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const;
 
     QCompleter *createIDCompleter(QObject *parent = Q_NULLPTR) const;
+
+    void accept(FileParser *visitor);
 
 private:
     /**

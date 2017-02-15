@@ -8,7 +8,6 @@
 #ifndef MSGTYPEREP_H
 #define MSGTYPEREP_H
 
-#include "msg.h"
 
 #include <QJsonObject>
 #include <QString>
@@ -16,11 +15,15 @@
 #include <QPixmap>
 #include <QStyleOptionViewItem>
 
+class FileParser;
+
+#include "msg.h"
+#include "fileparsable.h"
 
 /**
  * \brief The #MsgTypeRep class contains all information necessary for displaying messages codes and data
  */
-class MsgTypeRep
+class MsgTypeRep : public FileParsable
 {
 public:
     /**
@@ -110,6 +113,8 @@ public:
      * \brief Issues a paint of the given #Msg according to this #MsgTypeRep
      */
     void paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, Msg &msg) const;
+
+    void accept(FileParser *visitor);
 
 private:
     /**

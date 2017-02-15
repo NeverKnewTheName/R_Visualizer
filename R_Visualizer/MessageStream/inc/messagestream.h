@@ -14,16 +14,19 @@
 #include "msgstreammodel.h"
 /* #include "msgiddelegate.h" */
 /* #include "msgdatadelegate.h" */
+#include "fileparsable.h"
 
 class MainWindow;
 class MessageConfig;
 class MessageFilter;
 
+class FileParser;
+
 namespace Ui {
 class MessageStream;
 }
 
-class MessageStream : public QFrame
+class MessageStream : public QFrame, public FileParsable
 {
     Q_OBJECT
 
@@ -31,6 +34,8 @@ public:
     /**
      * \brief Constructs a new MessageStream object
      * 
+     * \param[in] msgConfig     Used for mapping #Msg to #PrettyMsg
+     * \param[in] msgFilter     Used for filtering #Msg to display
      * \param[in] parent                            The parent QWidget
      * 
      * This constructor constructs a new #MessageStream widget. The #IDModel and #MsgTypeModel are used for its delegates
@@ -50,6 +55,8 @@ public:
 
     void appendMsg(const Msg &msgToAppend);
     void prependMsg(const Msg &msgToPrepend);
+
+    void accept(FileParser *visitor);
 
 signals:
 

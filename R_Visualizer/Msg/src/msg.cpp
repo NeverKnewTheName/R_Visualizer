@@ -4,6 +4,8 @@
 #include <QJsonArray>
 #include <QJsonValue>
 
+#include "fileparser.h"
+
 #include <QDebug>
 
 /**
@@ -201,3 +203,8 @@ void Msg::ParseFromJson(const QJsonObject &jsonObj)
 }
 
 ///////////// MsgStorable INTERFACE //////////////////////
+
+void Msg::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
+}

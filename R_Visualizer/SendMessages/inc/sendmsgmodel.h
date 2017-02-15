@@ -5,12 +5,14 @@
 #include <QString>
 
 #include "prettymsg.h"
+#include "fileparsable.h"
 
 class IDRep;
 class MsgTypeRep;
 /* class MsgDataRep; */
+class FileParser;
 
-class SendMsgModel : public QAbstractTableModel
+class SendMsgModel : public QAbstractTableModel, public FileParsable
 {
 public:
     enum HeaderCols
@@ -70,6 +72,8 @@ public:
 
     void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
     void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
+
+    void accept(FileParser *visitor);
 
 private slots:
     void slt_appendMsg(const PrettyMsg &newMsg);

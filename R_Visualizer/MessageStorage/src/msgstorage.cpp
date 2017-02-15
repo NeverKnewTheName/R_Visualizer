@@ -4,6 +4,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
+#include "fileparser.h"
+
 #include <QDebug>
 
 MsgStorage::MsgStorage(QObject *parent) :
@@ -51,6 +53,11 @@ bool MsgStorage::ParseFromJson(const QJsonArray &jsonMsgsArray)
     /* return msgStore.ParseFromJson(jsonMsgsArray); */
     qDebug() << "Parse from json currently not available in MsgStorage";
     return false;
+}
+
+void MsgStorage::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void MsgStorage::slt_addMsg(const Msg &newMsg)

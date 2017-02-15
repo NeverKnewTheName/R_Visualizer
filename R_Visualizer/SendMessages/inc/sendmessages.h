@@ -6,17 +6,19 @@
 
 class MainWindow;
 class MessageConfig;
+class FileParser;
 
 #include "msg.h"
 #include "can_packet.h"
 #include "sendmsgmodel.h"
 #include "userrolemngr.h"
+#include "fileparsable.h"
 
 namespace Ui {
 class SendMessages;
 }
 
-class SendMessages : public QWidget
+class SendMessages : public QWidget, public FileParsable
 {
     Q_OBJECT
 
@@ -25,6 +27,8 @@ public:
             const MessageConfig *msgConfig,
             QWidget *parent = 0);
     ~SendMessages();
+
+    void accept(FileParser *visitor);
 
 private:
     void convertMsgData(QString &msgDataString, int oldIndex, int newIndex);

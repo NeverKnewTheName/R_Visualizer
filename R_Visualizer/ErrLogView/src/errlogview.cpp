@@ -6,6 +6,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 ErrorLogView::ErrorLogView(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ErrorLogView)
@@ -31,6 +33,11 @@ ErrorLogView::ErrorLogView(QWidget *parent) :
 ErrorLogView::~ErrorLogView()
 {
     delete ui;
+}
+
+void ErrorLogView::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void ErrorLogView::on_savePB_clicked()

@@ -14,7 +14,9 @@
 #include <QMetaType>
 #include <QVector>
 
-#include "msgstorable.h"
+class FileParser;
+
+#include "fileparsable.h"
 
 typedef QVector<quint8> DataByteVect, *PDataByteVect;
 Q_DECLARE_METATYPE(DataByteVect)
@@ -53,7 +55,7 @@ typedef quint16 MsgCodeType;
  * The optional data is additional information that is used for the purpose of the message
  * 
  */
-class Msg : public IMsgStorable
+class Msg : public FileParsable
 {
 public:
     /**
@@ -101,6 +103,8 @@ public:
    /////////// IMsgStorable INTERFACE //////////////
    virtual QJsonObject ParseToJson() const;
    virtual void ParseFromJson(const QJsonObject &jsonObj);
+
+    void accept(FileParser *visitor);
 
 private:
     QDateTime msgTimestamp; //!< Timestamp of when the message was received

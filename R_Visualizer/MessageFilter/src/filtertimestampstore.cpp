@@ -1,6 +1,8 @@
 #include "filtertimestampstore.h"
 #include <QDebug>
 
+#include "fileparser.h"
+
 FilterTimestampStore::FilterTimestampStore(QObject *parent) : QObject(parent)
 {
 
@@ -46,4 +48,9 @@ void FilterTimestampStore::timestampToChanged(QDateTime dateTime)
 {
     this->timestampFilterTo = dateTime;
     emit internalModelChanged();
+}
+
+void FilterTimestampStore::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

@@ -9,16 +9,19 @@
 #define MSGSTORAGE_H
 
 class MainWindow;
+class FileParser;
 
 #include <QObject>
 #include "msg.h"
 #include "datastorage.h"
 
+#include "fileparsable.h"
+
 /**
  * \brief MsgStorage to store huge numbers of messages
  * 
  */
-class MsgStorage : public QObject
+class MsgStorage : public QObject, public FileParsable
 {
     Q_OBJECT
 public:
@@ -66,6 +69,9 @@ public:
      * \brief reads in a MsgStorage from a JSON document
      */
     bool ParseFromJson(const QJsonArray &jsonMsgsArray);
+
+    void accept(FileParser *visitor);
+
 
 signals:
     void sgnl_MsgAdded(const Msg &addedMsg);

@@ -8,7 +8,6 @@
 #ifndef IDREP_H
 #define IDREP_H
 
-#include "msg.h"
 
 #include <QJsonObject>
 #include <QString>
@@ -16,12 +15,17 @@
 #include <QPixmap>
 #include <QStyleOptionViewItem>
 
+class FileParser;
+
+#include "msg.h"
+#include "fileparsable.h"
+
 /**
  * \brief The IDRep class contains all information necessary for displaying a MsgID
  * 
  * The MsgID is displayed according to the name and color mapping
  */
-class IDRep
+class IDRep : public FileParsable
 {
 public:
     /**
@@ -105,6 +109,7 @@ public:
      */
     void paintIDRep(QPainter *painter, const QStyleOptionViewItem &option) const;
 
+    void accept(FileParser *visitor);
 private:
     /**
      * \brief Stores whether the #IDRep object is valid

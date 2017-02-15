@@ -12,9 +12,12 @@
 #include <QVector>
 #include <QString>
 
-#include "msg.h"
+class FileParser;
 
-class FilterIDStore : public QAbstractListModel
+#include "msg.h"
+#include "fileparsable.h"
+
+class FilterIDStore : public QAbstractListModel, public FileParsable
 {
     Q_OBJECT
 public:
@@ -62,6 +65,9 @@ public:
     void removeID(QModelIndex &index);
 
     bool containsID(const MsgIDType id) const;
+
+    void accept(FileParser *visitor);
+
 signals:
     void internalModelChanged();
     //void rowAdded(unsigned int pos);

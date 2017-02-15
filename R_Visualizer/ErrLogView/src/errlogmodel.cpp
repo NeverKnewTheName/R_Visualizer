@@ -4,6 +4,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 ErrLogModel::ErrLogModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
@@ -84,6 +86,11 @@ void ErrLogModel::addErrEntry(ErrorLogEntry *errLogEntry)
     endInsertRows();
 //    emit rowsAdded(1);
 //    emit rowAppended(newRow);
+}
+
+void ErrLogModel::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void ErrLogModel::errLogMsgReceived(ErrorLogEntry *errLogEntry)

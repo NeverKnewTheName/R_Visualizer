@@ -3,6 +3,8 @@
 #include <QBrush>
 #include <QDebug>
 
+#include "fileparser.h"
+
 FilterIDStore::FilterIDStore(QObject *parent) : QAbstractListModel(parent)
 {
 
@@ -134,4 +136,9 @@ void FilterIDStore::removeID(const MsgIDType id)
 bool FilterIDStore::containsID(const MsgIDType id) const
 {
     return idStore.contains(id);
+}
+
+void FilterIDStore::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

@@ -8,18 +8,21 @@
 #ifndef MSGTYPEMODEL_H
 #define MSGTYPEMODEL_H
 
-#include "msg.h"
-#include "msgtyperep.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
 #include <QStyleOptionViewItem>
 #include <QCompleter>
 
+class FileParser;
+
+#include "msg.h"
+#include "msgtyperep.h"
+
 /**
  * \brief The #MsgTypeModel class provides a model to hold Code to name, color, and message data parser mappings for #Msg
  */
-class MsgTypeModel : public QAbstractTableModel
+class MsgTypeModel : public QAbstractTableModel, public FileParsable
 {
     Q_OBJECT
 
@@ -162,6 +165,9 @@ public:
     void paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const;
 
     QCompleter *createMsgTypeCompleter(QObject *parent = Q_NULLPTR) const;
+
+    void accept(FileParser *visitor);
+
 private:
     /**
      * \brief QVector containing all stored #MsgCodeTypes for which mappings exist in the #MsgTypeModel

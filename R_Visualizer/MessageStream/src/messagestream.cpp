@@ -1,6 +1,8 @@
 #include "messagestream.h"
 #include "ui_messagestream.h"
 
+#include <QHeaderView>
+#include <QScrollBar>
 
 #include "messageconfig.h"
 #include "messagefilter.h"
@@ -10,8 +12,8 @@
 #include "idrep.h"
 #include "msgtyperep.h"
 
-#include <QHeaderView>
-#include <QScrollBar>
+#include "fileparser.h"
+
 
 #include <QDebug>
 
@@ -105,6 +107,11 @@ void MessageStream::prependMsg(const Msg& msgToPrepend)
         const PrettyMsg &prettyMsgToPrepend = msgConfig->prettifyMsg(msgToPrepend);
         msgStreamModel.prependMsg(prettyMsgToPrepend);
     }
+}
+
+void MessageStream::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void MessageStream::slt_ReceiveMsg(const Msg &receivedMsg)

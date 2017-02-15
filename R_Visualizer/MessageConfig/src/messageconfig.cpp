@@ -14,6 +14,8 @@
 
 #include <QSortFilterProxyModel>
 
+#include "fileparser.h"
+
 MessageConfig::MessageConfig(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MessageConfig)
@@ -90,6 +92,16 @@ QString MessageConfig::getNameToID(const MsgIDType id) const
     return idModel.getNameToID(id);
 }
 
+QColor MessageConfig::getColorToID(const MsgIDType id) const
+{
+    return idModel.getColorToID(id);
+}
+
+QColor MessageConfig::getColorToIDName(const QString &name) const
+{
+    return idModel.getColorToID(idModel.getIDToName(name));
+}
+
 MsgCodeType MessageConfig::getCodeToName(const QString &name) const
 {
     return msgTypeModel.getCodeToName(name);
@@ -98,6 +110,16 @@ MsgCodeType MessageConfig::getCodeToName(const QString &name) const
 QString MessageConfig::getNameToCode(const MsgCodeType code) const
 {
     return msgTypeModel.getNameToCode(code);
+}
+
+QColor MessageConfig::getColorToCode(const MsgCodeType code) const
+{
+    return msgTypeModel.getColorToCode(code);
+}
+
+QColor MessageConfig::getColorToCodeName(const QString &name) const
+{
+    return msgTypeModel.getColorToCode(msgTypeModel.getCodeToName(name));
 }
 
 QCompleter *MessageConfig::createIDNameCompleter(QObject *parent) const
@@ -118,6 +140,11 @@ const IDModel &MessageConfig::getIDModel() const
 const MsgTypeModel &MessageConfig::getMsgTypeModel() const
 {
     return msgTypeModel;
+}
+
+void MessageConfig::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void MessageConfig::idAddFinished(const MsgIDType id, const QString &name, const QColor &color)

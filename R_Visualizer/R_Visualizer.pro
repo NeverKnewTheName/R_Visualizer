@@ -55,6 +55,7 @@ win32 {
 
 include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
 include(Utils/Utils.pri)
+include(FileParser/FileParser.pri)
 include(Msg/Msg.pri)
 include(MessageStorage/MessageStorage.pri)
 include(MessageStream/MessageStream.pri)

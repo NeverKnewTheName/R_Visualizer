@@ -14,6 +14,8 @@
 #include "filteridadddialog.h"
 #include "filtercodeadddialog.h"
 
+#include "fileparser.h"
+
 MessageFilter::MessageFilter(
             const IDModel &idModel,
             const MsgTypeModel &msgTypeModel,
@@ -161,6 +163,11 @@ const FilterCodeStore &MessageFilter::getFilterCodeModel() const
 const FilterTimestampStore &MessageFilter::getFilterTimestampModel() const
 {
     return filterTimestampModel;
+}
+
+void MessageFilter::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }
 
 void MessageFilter::on_enableIDFilterCheckBox_toggled(bool checked)

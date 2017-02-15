@@ -10,6 +10,7 @@
 
 #include "idrep.h"
 #include "msgtyperep.h"
+#include "fileparser.h"
 
 #include <QDebug>
 
@@ -244,6 +245,11 @@ void SendMsgModel::setMsgPacket(const QVector<PrettyMsg> &msgPacket)
     endResetModel();
 }
 
+void SendMsgModel::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
+}
+
 void SendMsgModel::slt_appendMsg(const PrettyMsg &newMsg)
 {
     appendMsg(newMsg);
@@ -282,7 +288,7 @@ void SendMsgModel::setIDRepForID(const MsgIDType relatedID, const IDRep &idRepTo
     const int msgPacketStorageSize = msgPacketStorage.size();
     for(int i = 0; i < msgPacketStorageSize; ++i)
     {
-        PrettyMsg &msg = msgPacketStorage.at(i);
+        PrettyMsg &msg = msgPacketStorage[i];
         if(msg.getId() == relatedID)
         {
             msg.changeIDRep(idRepToSet);
@@ -296,7 +302,7 @@ void SendMsgModel::setMsgTypeRepForCode(const MsgCodeType relatedCode, const Msg
     const int msgPacketStorageSize = msgPacketStorage.size();
     for(int i = 0; i < msgPacketStorageSize; ++i)
     {
-        PrettyMsg &msg = msgPacketStorage.at(i);
+        PrettyMsg &msg = msgPacketStorage[i];
         if(msg.getCode() == relatedCode)
         {
             msg.changeMsgTypeRep(msgTypeRepToSet);

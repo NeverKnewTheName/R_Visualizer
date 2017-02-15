@@ -4,6 +4,8 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
+#include "fileparser.h"
+
 
 IDModel::IDModel(QObject *parent) : 
     QAbstractTableModel(parent)
@@ -284,4 +286,9 @@ QCompleter *IDModel::createIDCompleter(QObject *parent) const
     newIDCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
     return newIDCompleter;
+}
+
+void IDModel::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

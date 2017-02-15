@@ -3,6 +3,8 @@
 #include <QBrush>
 #include <QDebug>
 
+#include "fileparser.h"
+
 FilterCodeStore::FilterCodeStore(QObject *parent) : QAbstractListModel(parent)
 {
 
@@ -122,4 +124,9 @@ void FilterCodeStore::removeCode(const QModelIndex &index)
 bool FilterCodeStore::containsCode(const MsgCodeType code) const
 {
     return codeStore.contains(code);
+}
+
+void FilterCodeStore::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

@@ -13,21 +13,24 @@
 
 /* #include "hugeqvector.h" */
 
-#include "datastorage.h"
-#include "rsimpleringbuff.h"
-#include "prettymsg.h"
-
 #include <QAbstractTableModel>
 #include <QString>
 
 class MainWindow;
 class MessageStream;
+class FileParser;
 
 class IDRep;
 class MsgTypeRep;
 /* class MsgDataRep; */
 
-class MsgStreamModel : public QAbstractTableModel
+#include "datastorage.h"
+#include "rsimpleringbuff.h"
+#include "prettymsg.h"
+#include "fileparsable.h"
+
+
+class MsgStreamModel : public QAbstractTableModel, public FileParsable
 {
     Q_OBJECT
 
@@ -112,6 +115,8 @@ public:
      * \warning All contents that were in the #MsgStreamModel prior to calling this method are dropped!
      */
     void ParseFromJson(const QByteArray &jsonFile);
+
+    void accept(FileParser *visitor);
 
 private slots:
     /**

@@ -12,9 +12,12 @@
 #include <QVector>
 #include <QString>
 
-#include "msg.h"
+class FileParser;
 
-class FilterCodeStore : public QAbstractListModel
+#include "msg.h"
+#include "fileparsable.h"
+
+class FilterCodeStore : public QAbstractListModel, public FileParsable
 {
     Q_OBJECT
 public:
@@ -71,6 +74,8 @@ public:
      * \brief verifies whether the store contains the given code
      */
     bool containsCode(const MsgCodeType code) const;
+
+    void accept(FileParser *visitor);
 
 private:
     QModelIndex tempIndex;
