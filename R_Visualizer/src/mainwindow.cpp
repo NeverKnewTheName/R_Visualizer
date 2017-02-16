@@ -29,6 +29,11 @@
 #include <QScrollBar>
 #include <QHeaderView>
 
+#include "csvinparser.h"
+#include "csvoutparser.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
+
 #define __DEBUG__
 
 #ifdef __DEBUG__
@@ -238,6 +243,9 @@ void MainWindow::on_actionOpen_triggered()
     {
         //ToDO
         // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
+        receivedMsgsStore.accept(&jsonInParser);
         /* msgModel.parseFromJSON(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui
@@ -270,6 +278,10 @@ void MainWindow::on_actionSave_triggered()
         // extract ui content
         // parse content to file format
         // write to file
+        JsonOutParser jsonOutParser;
+        receivedMsgsStore.accept(&jsonOutParser);
+        /* jsonOutParser.getJsonDocument().toJson() */
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
         /* jsonSaveFile.write(msgModel.parseToJSON()); //ToDO check for error (-1) */
         // close file
     }

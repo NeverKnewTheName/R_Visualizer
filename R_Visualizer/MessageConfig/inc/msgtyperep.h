@@ -56,6 +56,8 @@ public:
      */
     MsgCodeType getCode() const;
 
+    void setCode(const MsgCodeType);
+
     /**
      * \brief Returns the name this #MsgTypeRep corresponds to
      */
@@ -124,7 +126,8 @@ private:
     /**
      * \brief The #MsgCodeType this #MsgTypeRep objects contains the mappings for
      */
-    const MsgCodeType code;  //ToDO MsgCodeType...
+    //ToTHINK keep const?
+    MsgCodeType code;  //ToDO MsgCodeType...
     /**
      * \brief The name that is mapped to the #MsgCodeType
      */

@@ -212,6 +212,16 @@ void MsgTypeModel::clear()
     //    emit internalModelChanged();
 }
 
+const int MsgTypeModel::size() const
+{
+    return codeStore.size();
+}
+
+const MsgTypeRep &MsgTypeModel::at(const int index) const
+{
+    return msgTypePropStore.value(codeStore.at(index));
+}
+
 bool MsgTypeModel::contains(const MsgCodeType MsgCode) const
 {
     return msgTypePropStore.contains(MsgCode);

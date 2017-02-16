@@ -138,6 +138,16 @@ bool FilterIDStore::containsID(const MsgIDType id) const
     return idStore.contains(id);
 }
 
+const int FilterIDStore::size() const
+{
+    return idStore.size();
+}
+
+const MsgIDType FilterIDStore::at(const int index) const
+{
+    return idStore.at(index);
+}
+
 void FilterIDStore::accept(FileParser *visitor)
 {
     visitor->visit(*this);

@@ -15,6 +15,20 @@ PrettyMsg::PrettyMsg() :
 {
 }
 
+PrettyMsg::PrettyMsg(const Msg &originalMsg) :
+    Msg(originalMsg)
+{
+    IDRep plainIDRep(originalMsg.getId());
+    MsgTypeRep plainMsgTypeRep(originalMsg.getCode());
+
+    msgIDName = plainIDRep.getName();
+    msgIDColor = plainIDRep.getColor();
+    msgCodeName = plainMsgTypeRep.getCodeName();
+    msgCodeColor = plainMsgTypeRep.getColor();
+    /* msgDataString = plainMsgTypeRep.getMsgDataAsString */
+    msgDataColor = plainMsgTypeRep.getColor();
+}
+
 PrettyMsg::PrettyMsg(
         const Msg &originalMsg,
         const IDRep &idRepresentation,

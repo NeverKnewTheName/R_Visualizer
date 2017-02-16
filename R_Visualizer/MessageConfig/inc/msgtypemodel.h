@@ -113,6 +113,10 @@ public:
      */
     void clear();
 
+    const int size() const;
+
+    const MsgTypeRep &at(const int index) const;
+
 
     /**
      * \brief Returns whether a given #MsgCodeType is contained in the #MsgTypeModel

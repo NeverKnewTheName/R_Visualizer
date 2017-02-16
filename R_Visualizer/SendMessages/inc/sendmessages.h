@@ -29,6 +29,8 @@ public:
     ~SendMessages();
 
     void accept(FileParser *visitor);
+    void updateMsgPacketModel();
+    void setMsgPacketModel(const SendMsgModel &newMsgPacketModel);
 
 private:
     void convertMsgData(QString &msgDataString, int oldIndex, int newIndex);

@@ -40,6 +40,12 @@ bool MsgStorage::isEmpty() const
     return msgStore.isEmpty();
 }
 
+void MsgStorage::appendMsg(const Msg &newMsg)
+{
+    msgStore.append(newMsg);
+    emit sgnl_MsgAdded(newMsg);
+}
+
 
 QJsonDocument MsgStorage::ParseToJson() const
 {
@@ -60,8 +66,12 @@ void MsgStorage::accept(FileParser *visitor)
     visitor->visit(*this);
 }
 
+QString MsgStorage::saveMsgStorage(const QString &saveLocation)
+{
+    return msgStore.saveDataStorage(saveLocation);
+}
+
 void MsgStorage::slt_addMsg(const Msg &newMsg)
 {
-    msgStore.append(newMsg);
-    emit sgnl_MsgAdded(newMsg);
+    appendMsg(newMsg);
 }

@@ -7,11 +7,15 @@
 
 #include "fileparser.h"
 
+#include <memory>
+
 class JsonInParser : public FileParser
 {
 public:
     JsonInParser();
     ~JsonInParser();
+
+    void setJsonDocument(const QJsonDocument &jsonDoc);
 
     void visit(MessageStream &visitor);
     void visit(MsgStreamModel &visitor);
@@ -37,7 +41,7 @@ public:
     void visit(ErrorLogEntry &visitor);
 
 private:
-    
+    std::unique_ptr<QJsonValue> currentJsonValuePtr;
 
 };
 

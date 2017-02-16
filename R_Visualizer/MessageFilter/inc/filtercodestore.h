@@ -75,6 +75,9 @@ public:
      */
     bool containsCode(const MsgCodeType code) const;
 
+    const int size() const;
+    const MsgCodeType at(const int index) const;
+
     void accept(FileParser *visitor);
 
 private:

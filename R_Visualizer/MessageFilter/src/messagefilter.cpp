@@ -4,6 +4,8 @@
 #include <QSortFilterProxyModel>
 #include <QHeaderView>
 #include <QAbstractItemView>
+#include <QFileDialog>
+#include <QJsonDocument>
 
 #include "idmodel.h"
 #include "msgtypemodel.h"
@@ -15,6 +17,10 @@
 #include "filtercodeadddialog.h"
 
 #include "fileparser.h"
+#include "csvinparser.h"
+#include "csvoutparser.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
 
 MessageFilter::MessageFilter(
             const IDModel &idModel,
@@ -170,6 +176,31 @@ void MessageFilter::accept(FileParser *visitor)
     visitor->visit(*this);
 }
 
+void MessageFilter::saveIDFilter(const QString &pathToFile, FileParser *openFileParser)
+{
+}
+
+void MessageFilter::saveCodeFilter(const QString &pathToFile, FileParser *openFileParser)
+{
+}
+
+void MessageFilter::saveTimestampFilter(const QString &pathToFile, FileParser *openFileParser)
+{
+}
+
+void MessageFilter::loadIDFilter(const QString &pathToFile, FileParser *openFileParser)
+{
+}
+
+void MessageFilter::loadCodeFilter(const QString &pathToFile, FileParser *openFileParser)
+{
+}
+
+void MessageFilter::loadTimestampFilter(const QString &pathToFile, FileParser *openFileParser)
+{
+}
+
+
 void MessageFilter::on_enableIDFilterCheckBox_toggled(bool checked)
 {
     emit sgnl_IDFilterEnabled(checked);
@@ -260,4 +291,147 @@ void MessageFilter::filterIDCommit(const MsgIDType idToCommit)
 void MessageFilter::filterCodeCommit(const MsgCodeType codeToCommit)
 {
     filterCodeModel.addCode(codeToCommit);
+}
+
+void MessageFilter::on_filterIDSaveBtn_clicked()
+{
+    QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save ID Filter as"), QString(), "JSON File (*.json)");
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        JsonOutParser jsonOutParser;
+        filterIDModel.accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson()); //ToDO check for error (-1)
+        /* jsonSaveFile.write(msgTypeModel.ParseToJson()); //ToDO check for error (-1) */
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
+}
+
+void MessageFilter::on_filterIDLoadBtn_clicked()
+{
+    QString openLoc = QFileDialog::getOpenFileName(this, QString("Open ID Filter Save File"), QString(), "JSON File (*.json)");
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
+        filterIDModel.accept(&jsonInParser);
+        /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
+        // parse file
+        // populate ui
+    }
+    // close file
+    jsonOpenFile.close();
+}
+
+void MessageFilter::on_filterCodeSaveBtn_clicked()
+{
+    QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save Code Filter as"), QString(), "JSON File (*.json)");
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        JsonOutParser jsonOutParser;
+        filterCodeModel.accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson()); //ToDO check for error (-1)
+        /* jsonSaveFile.write(msgTypeModel.ParseToJson()); //ToDO check for error (-1) */
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
+}
+
+void MessageFilter::on_filterCodeLoadBtn_clicked()
+{
+    QString openLoc = QFileDialog::getOpenFileName(this, QString("Open Code Filter Save File"), QString(), "JSON File (*.json)");
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
+        filterCodeModel.accept(&jsonInParser);
+        /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
+        // parse file
+        // populate ui
+    }
+    // close file
+    jsonOpenFile.close();
+}
+
+void MessageFilter::on_filterTimestampSaveBtn_clicked()
+{
+    QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save Timestamp Filter as"), QString(), "JSON File (*.json)");
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        JsonOutParser jsonOutParser;
+        filterTimestampModel.accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson()); //ToDO check for error (-1)
+        /* jsonSaveFile.write(msgTypeModel.ParseToJson()); //ToDO check for error (-1) */
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
+}
+
+void MessageFilter::on_filterTimestampLoadBtn_clicked()
+{
+    QString openLoc = QFileDialog::getOpenFileName(this, QString("Open Timestamp Filter Save File"), QString(), "JSON File (*.json)");
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
+        filterTimestampModel.accept(&jsonInParser);
+        /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
+        // parse file
+        // populate ui
+    }
+    // close file
+    jsonOpenFile.close();
+    ui->filterTimeStampToDateTimeEdit->setDateTime(filterTimestampModel.getTimestampFilterTo());
+    ui->filterTimeStampFromDateTimeEdit->setDateTime(filterTimestampModel.getTimestampFilterFrom());
 }

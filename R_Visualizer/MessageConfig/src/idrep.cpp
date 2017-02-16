@@ -14,10 +14,10 @@ IDRep::IDRep() :
 }
 
 IDRep::IDRep(const IDRep &other) :
-    isValidObj(other.isValid()),
-    id(other.getId()),
-    name(other.getName()),
-    color(other.getColor())
+    isValidObj(other.isValidObj),
+    id(other.id),
+    name(other.name),
+    color(other.color)
 {
 }
 
@@ -95,6 +95,11 @@ bool IDRep::operator==(const IDRep &other) const
 MsgIDType IDRep::getId() const
 {
     return id;
+}
+
+void IDRep::setId(const MsgIDType id)
+{
+    this->id = id;
 }
 
 void IDRep::paintIDRep(QPainter *painter, const QStyleOptionViewItem &option) const

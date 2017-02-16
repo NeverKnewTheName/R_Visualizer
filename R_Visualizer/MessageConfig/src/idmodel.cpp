@@ -189,6 +189,16 @@ void IDModel::clear()
     endResetModel();
 }
 
+const int IDModel::size() const
+{
+    return idStore.size();
+}
+
+const IDRep &IDModel::at(const int index) const
+{
+    return idPropStore.value(idStore.at(index));
+}
+
 bool IDModel::contains(const MsgIDType MsgID) const
 {
     return idStore.contains(MsgID);

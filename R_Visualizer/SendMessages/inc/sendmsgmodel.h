@@ -73,6 +73,10 @@ public:
     void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
     void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
 
+    const int size() const;
+    const PrettyMsg &at(const int index) const;
+    void updateMsg(const int index, const PrettyMsg &updatedMsg);
+
     void accept(FileParser *visitor);
 
 private slots:

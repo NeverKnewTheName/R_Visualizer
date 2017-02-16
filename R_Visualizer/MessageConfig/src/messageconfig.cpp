@@ -15,6 +15,10 @@
 #include <QSortFilterProxyModel>
 
 #include "fileparser.h"
+#include "csvinparser.h"
+#include "csvoutparser.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
 
 MessageConfig::MessageConfig(QWidget *parent) :
     QWidget(parent),
@@ -199,7 +203,10 @@ void MessageConfig::on_idLoadBtn_clicked()
     {
         //ToDO
         // read file content
-        idModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
+        idModel.accept(&jsonInParser);
+        /* idModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui
     }
@@ -221,7 +228,9 @@ void MessageConfig::on_idStoreBtn_clicked()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(idModel.ParseToJson()); //ToDO check for error (-1)
+        JsonOutParser jsonOutParser;
+        idModel.accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson()); //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
@@ -264,7 +273,10 @@ void MessageConfig::on_msgTypeLoadBtn_clicked()
     {
         //ToDO
         // read file content
-        msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1)
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
+        msgTypeModel.accept(&jsonInParser);
+        /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui
     }
@@ -286,7 +298,10 @@ void MessageConfig::on_msgTypeStoreBtn_clicked()
         // extract ui content
         // parse content to file format
         // write to file
-        jsonSaveFile.write(msgTypeModel.ParseToJson()); //ToDO check for error (-1)
+        JsonOutParser jsonOutParser;
+        msgTypeModel.accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson()); //ToDO check for error (-1)
+        /* jsonSaveFile.write(msgTypeModel.ParseToJson()); //ToDO check for error (-1) */
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!

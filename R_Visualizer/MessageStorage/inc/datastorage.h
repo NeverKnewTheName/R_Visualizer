@@ -25,13 +25,13 @@
  * \brief The ContainerID is the mapping of a container to a given DataStore in the DataStorage
  */
 struct ContainerID{
-    size_t ContainerNR; //!< ID of the given DataStore
-    size_t IndexInStore; //!< Index of the DataStore in the DataStorage
+    int ContainerNR; //!< ID of the given DataStore
+    int IndexInStore; //!< Index of the DataStore in the DataStorage
 
     /**
      * \brief Constructs a new ContainerID
      */
-    ContainerID(const size_t index = -1, const size_t indexInStore = -1) : ContainerNR(index), IndexInStore(indexInStore){}
+    ContainerID(const int index = -1, const int indexInStore = -1) : ContainerNR(index), IndexInStore(indexInStore){}
     /**
      * \brief compares the ContainerNR of two containers for equal
      * 
@@ -753,6 +753,97 @@ public:
         }
 
         return true;
+    }
+
+    QString saveDataStorage(const QString &saveLocation)
+    {
+        QString dataStoreSaveDirLocation = QString("%1")
+            .arg(QString("RDataStoreSave_%1").arg(DataStorageCntr));
+        QDir saveDir(saveLocation);
+        if(saveDir.exists(dataStoreSaveDirLocation))
+        {
+            //The directory exists... clear the directory!
+            saveDir.setPath(dataStoreSaveDirLocation);
+            saveDir.removeRecursively();
+            saveDir.setPath(saveLocation);
+        }
+        //The directory does not exist!
+        //Create the directory
+        saveDir.mkdir(dataStoreSaveDirLocation);
+        saveDir.setPath(dataStoreSaveDirLocation);
+
+        const int ContainerFileNamesSize = ContainerFileNames.size();
+        for(int i = 0; i < ContainerFileNamesSize; ++i)
+        {
+            const QString &currentFileNameToSave = ContainerFileNames.at(i);
+            QString saveFileName = QString("RDataStoreSaveJsonFile_%1.json").arg(i);
+            if(!QFile::copy(DataStorageTempDir.absoluteFilePath(currentFileNameToSave), saveDir.absoluteFilePath(saveFileName)))
+            {
+                qDebug() << "Could not copy file " 
+                    << DataStorageTempDir.absoluteFilePath(currentFileNameToSave)
+                    << " to file " 
+                    << saveDir.absoluteFilePath(saveFileName);
+            }
+            else
+            {
+                qDebug() << "DataStore save file to: " << saveDir.absoluteFilePath(saveFileName);
+            }
+        }
+
+        //ToDO Containers in ram...
+        for(int i = 0; (i < CurrentNrOfContainers) && (i < NrOfContainersToKeepInRAM); ++i)
+        {
+            QString ramContainerSaveFileLocation = saveDir.absoluteFilePath(
+                    QString("RDataStoreSaveRamContainer_%1")
+                    .arg(i)
+                    );
+            const DataContainer &curDataContainer = DataStore.at(
+                    ContainerInRAMIndexMapping.at(i).IndexInStore
+                    );
+            QJsonArray curDataContainerJsonArray;
+            for(const auto &data : curDataContainer)
+            {
+                curDataContainerJsonArray.append(data.parseOUT());
+            }
+
+            QFile curContainerSaveFile(saveDir.absoluteFilePath(ramContainerSaveFileLocation));
+            if(!curContainerSaveFile.open(QIODevice::WriteOnly))
+            {
+                qDebug() << "Cannot open save file for container in ram nr. " << i;
+            }
+            else
+            {
+                curContainerSaveFile.write(QJsonDocument(curDataContainerJsonArray).toJson());
+                qDebug() << "Container in ram nr. " << i << " saved in file: " << saveDir.absoluteFilePath(ramContainerSaveFileLocation);
+            }
+            curContainerSaveFile.flush();
+            curContainerSaveFile.close();
+        }
+
+        QString lastContainerSaveFileLocation = saveDir.absoluteFilePath(
+                QString("RDataStoreSaveLastContainer")
+                );
+        QJsonArray lastContainerJsonArray;
+
+        for(const auto &data : LastContainer)
+        {
+            lastContainerJsonArray.append(data.parseOUT());
+        }
+
+        QFile lastContainerSaveFile(saveDir.absoluteFilePath(lastContainerSaveFileLocation));
+        if(!lastContainerSaveFile.open(QIODevice::WriteOnly))
+        {
+            qDebug() << "Cannot open save file for last container";
+        }
+        else
+        {
+            lastContainerSaveFile.write(QJsonDocument(lastContainerJsonArray).toJson());
+            qDebug() << "Saved LastContainer to file: " << saveDir.absoluteFilePath(lastContainerSaveFileLocation);
+        }
+        lastContainerSaveFile.flush();
+        lastContainerSaveFile.close();
+
+        return saveDir.path();
     }
 
 private:

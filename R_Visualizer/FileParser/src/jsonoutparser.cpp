@@ -73,6 +73,17 @@ void JsonOutParser::visit(MsgStreamModel &visitor)
 
 void JsonOutParser::visit(MsgStorage &visitor)
 {
+    QJsonArray tempJsonArray;
+    /* tempJsonObject["MsgStorageSaveLocation"] = QJsonValue(visitor.saveMsgStorage(QString(""))); */
+    /* currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
+    const int msgStorageSize = visitor.size();
+    for(int i = 0; i < msgStorageSize; ++i)
+    {
+        Msg msg = visitor.at(i);
+        msg.accept(this);
+        tempJsonArray.append(*currentJsonValuePtr);
+    }
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray));
 }
 
 void JsonOutParser::visit(SendMessages &visitor)
@@ -116,18 +127,49 @@ void JsonOutParser::visit(MessageConfig &visitor)
 
 void JsonOutParser::visit(IDModel &visitor)
 {
+    QJsonArray tempJsonArray;
+    const int idModelSize = visitor.size();
+    for(int i = 0; i < idModelSize; ++i)
+    {
+        IDRep idRep = visitor.at(i);
+        idRep.accept(this);
+        tempJsonArray.append(*currentJsonValuePtr);
+    }
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray));
 }
 
 void JsonOutParser::visit(IDRep &visitor)
 {
+    QJsonObject tempJsonObject;
+    tempJsonObject["IDRepID"] = static_cast<int>(visitor.getId());
+    tempJsonObject["IDRepName"] = visitor.getName();
+    tempJsonObject["IDRepColor"] = visitor.getColor().name();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
 }
 
 void JsonOutParser::visit(MsgTypeModel &visitor)
 {
+    QJsonArray tempJsonArray;
+    const int msgTypeModelSize = visitor.size();
+    for(int i = 0; i < msgTypeModelSize; ++i)
+    {
+        MsgTypeRep msgTypeRep = visitor.at(i);
+        msgTypeRep.accept(this);
+        tempJsonArray.append(*currentJsonValuePtr);
+    }
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray));
 }
 
 void JsonOutParser::visit(MsgTypeRep &visitor)
 {
+    QJsonObject tempJsonObject;
+    tempJsonObject["MsgTypeRepCode"] = static_cast<int>(visitor.getCode());
+    tempJsonObject["MsgTypeRepName"] = visitor.getCodeName();
+    tempJsonObject["MsgTypeRepMessageFormat"] = visitor.getMessageFormat();
+    tempJsonObject["MsgTypeRepColor"] = visitor.getColor().name();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
 }
 
 void JsonOutParser::visit(MessageFilter &visitor)
@@ -136,14 +178,39 @@ void JsonOutParser::visit(MessageFilter &visitor)
 
 void JsonOutParser::visit(FilterIDStore &visitor)
 {
+    QJsonArray tempJsonArray;
+
+    const int filterIDStoreSize = visitor.size();
+    for(int i = 0; i < filterIDStoreSize; ++i)
+    {
+        QJsonObject tempJsonObject;
+        tempJsonObject["FilterID"] = QJsonValue(static_cast<int>(visitor.at(i)));
+        tempJsonArray.append(tempJsonObject);
+    }
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray));
 }
 
 void JsonOutParser::visit(FilterCodeStore &visitor)
 {
+    QJsonArray tempJsonArray;
+
+    const int filterCodeStoreSize = visitor.size();
+    for(int i = 0; i < filterCodeStoreSize; ++i)
+    {
+        QJsonObject tempJsonObject;
+        tempJsonObject["FilterCode"] = QJsonValue(static_cast<int>(visitor.at(i)));
+        tempJsonArray.append(tempJsonObject);
+    }
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray));
 }
 
 void JsonOutParser::visit(FilterTimestampStore &visitor)
 {
+    QJsonObject tempJsonObject;
+    tempJsonObject["FilterTimestampFrom"] = QJsonValue(visitor.getTimestampFilterFrom().toString("dd.MM.yyyy - hh:mm:ss.zzz"));
+    tempJsonObject["FilterTimestampTo"] = QJsonValue(visitor.getTimestampFilterTo().toString("dd.MM.yyyy - hh:mm:ss.zzz"));
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
 }
 
 void JsonOutParser::visit(SystemOverview &visitor)

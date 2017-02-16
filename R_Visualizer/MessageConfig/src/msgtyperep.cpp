@@ -22,11 +22,11 @@ MsgTypeRep::MsgTypeRep() :
 }
 
 MsgTypeRep::MsgTypeRep(const MsgTypeRep &other) :
-    isValidObj(other.isValid()),
-    code(other.getCode()),
-    codeName(other.getCodeName()),
-    messageFormat(other.getMessageFormat()),
-    color(other.getColor())
+    isValidObj(other.isValidObj),
+    code(other.code),
+    codeName(other.codeName),
+    messageFormat(other.messageFormat),
+    color(other.color)
 {
 
 }
@@ -53,6 +53,11 @@ MsgTypeRep::MsgTypeRep(const MsgCodeType code, const QString &codeName, const QS
 MsgCodeType MsgTypeRep::getCode() const
 {
     return code;
+}
+
+void MsgTypeRep::setCode(const MsgCodeType code)
+{
+    this->code = code;
 }
 
 

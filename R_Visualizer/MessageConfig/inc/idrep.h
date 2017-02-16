@@ -104,6 +104,8 @@ public:
      */
     MsgIDType getId() const;
 
+    void setId(const MsgIDType id);
+
     /**
      * \brief Issues a paint of the given ID according to the stored name and color information
      */
@@ -118,7 +120,8 @@ private:
     /**
      * \brief The #MsgIDType this #IDRep object contains the mappings for
      */
-    const MsgIDType id;
+    //ToTHINK Keep const?
+    MsgIDType id;
     /**
      * \brief The name that is mapped to the id
      */

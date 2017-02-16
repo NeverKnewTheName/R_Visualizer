@@ -101,6 +101,10 @@ public:
      */
     void clear();
 
+    const int size() const;
+
+    const IDRep &at(const int index) const;
+
     /**
      * \brief Returns whether a given #MsgIDType is contained in the #IDModel
      */

@@ -126,6 +126,16 @@ bool FilterCodeStore::containsCode(const MsgCodeType code) const
     return codeStore.contains(code);
 }
 
+const int FilterCodeStore::size() const
+{
+    return codeStore.size();
+}
+
+const MsgCodeType FilterCodeStore::at(const int index) const
+{
+    return codeStore.at(index);
+}
+
 void FilterCodeStore::accept(FileParser *visitor)
 {
     visitor->visit(*this);

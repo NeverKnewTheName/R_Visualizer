@@ -82,6 +82,25 @@ void SendMessages::accept(FileParser *visitor)
     visitor->visit(*this);
 }
 
+void SendMessages::updateMsgPacketModel()
+{
+    const int msgPacketModelSize = msgPcktModel.size();
+    for(int i = 0; i < msgPacketModelSize; ++i)
+    {
+        msgPcktModel.updateMsg(i, msgConfig->prettifyMsg(msgPcktModel.at(i)));
+    }
+}
+
+void SendMessages::setMsgPacketModel(const SendMsgModel &newMsgPacketModel)
+{
+    msgPcktModel.clear();
+    QVector<PrettyMsg> msgs(newMsgPacketModel.getMsgPacket());
+    for(const PrettyMsg &msg : msgs)
+    {
+        slt_appendMsgToMsgPacket(msg);
+    }
+}
+
 DataByteVect SendMessages::extractMsgData(QString msgDataString, int formatIndex)
 {
     DataByteVect extractedDataBytes;
@@ -313,6 +332,7 @@ void SendMessages::on_sndPcktLoadBtn_clicked()
     {
         //ToDO
         // read file content
+        msgPcktModel.clear();
         if(!fileFormat.compare(QString("CSV File (*.csv)")))
         {
             CsvMsgPacketHandler csvMsgPacketParser;
@@ -323,6 +343,11 @@ void SendMessages::on_sndPcktLoadBtn_clicked()
         {
             //ToDO CREATE MESSAGE PARSER (VISITOR PATTERN??)
             /* msgPcktModel.ParseFromJson(csvOpenFile.readAll()); */
+            JsonInParser jsonInParser;
+            jsonInParser.setJsonDocument(QJsonDocument::fromJson(csvOpenFile.readAll()));
+            msgPcktModel.accept(&jsonInParser);
+            updateMsgPacketModel();
+            /* setMsgPacketModel(newMsgModel); */
         }
     }
     csvOpenFile.close();
@@ -359,9 +384,9 @@ void SendMessages::on_sndPcktStoreBtn_clicked()
             // close file
         } else if(!fileFormat.compare(QString("JSON File (*.json)")))
         {
-            JsonOutParser *jsonOutParser = new JsonOutParser();
-            msgPcktModel.accept(jsonOutParser);
-            const QJsonDocument &msgPacketJsonSave = jsonOutParser->getJsonDocument();
+            JsonOutParser jsonOutParser;
+            msgPcktModel.accept(&jsonOutParser);
+            const QJsonDocument &msgPacketJsonSave = jsonOutParser.getJsonDocument();
             qDebug() << msgPacketJsonSave.toJson();
             csvSaveFile.write(msgPacketJsonSave.toJson());
         }

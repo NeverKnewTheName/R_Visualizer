@@ -311,3 +311,17 @@ void SendMsgModel::setMsgTypeRepForCode(const MsgCodeType relatedCode, const Msg
     }
 }
 
+const int SendMsgModel::size() const
+{
+    return msgPacketStorage.size();
+}
+
+const PrettyMsg &SendMsgModel::at(const int index) const
+{
+    return msgPacketStorage.at(index);
+}
+
+void SendMsgModel::updateMsg(const int index, const PrettyMsg &updatedMsg)
+{
+    msgPacketStorage.replace(index, updatedMsg);
+}

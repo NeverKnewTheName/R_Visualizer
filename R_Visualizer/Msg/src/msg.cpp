@@ -153,10 +153,11 @@ QByteArray Msg::getDataAsByteArray() const
     return data;
 }
 
-void Msg::setData(const DataByteVect dataBytes)
+void Msg::setData(const DataByteVect &dataBytes)
 {
-    msgData.DataBytes = dataBytes;
-    msgData.DataSizeInBytes = dataBytes.size();
+    msgData = MsgData(dataBytes);
+    /* msgData.DataBytes = dataBytes; */
+    /* msgData.DataSizeInBytes = dataBytes.size(); */
 }
 
 void Msg::setDataByte(const quint8 index, const quint8 dataByte)

@@ -61,6 +61,8 @@ public:
      */
     bool isEmpty() const;
 
+    void appendMsg(const Msg &newMsg);
+
     /**
      * \brief parses the whole MsgStorage to a JSON document
      */
@@ -72,6 +74,7 @@ public:
 
     void accept(FileParser *visitor);
 
+    QString saveMsgStorage(const QString &saveLocation);
 
 signals:
     void sgnl_MsgAdded(const Msg &addedMsg);

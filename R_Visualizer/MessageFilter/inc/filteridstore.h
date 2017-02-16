@@ -64,6 +64,9 @@ public:
     void removeID(const MsgIDType id);
     void removeID(QModelIndex &index);
 
+    const int size() const;
+    const MsgIDType at(const int index) const;
+
     bool containsID(const MsgIDType id) const;
 
     void accept(FileParser *visitor);

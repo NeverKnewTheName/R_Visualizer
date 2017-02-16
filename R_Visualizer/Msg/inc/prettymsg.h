@@ -24,6 +24,7 @@ class PrettyMsg : public Msg
 {
 public:
     PrettyMsg();
+    PrettyMsg(const Msg &originalMsg);
     PrettyMsg(
         const Msg &originalMsg,
         const IDRep &idRepresentation,

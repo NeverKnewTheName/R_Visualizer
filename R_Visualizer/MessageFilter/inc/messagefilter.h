@@ -189,6 +189,18 @@ private slots:
      */
     void filterCodeCommit(const MsgCodeType codeToCommit);
 
+    void on_filterIDSaveBtn_clicked();
+
+    void on_filterIDLoadBtn_clicked();
+
+    void on_filterCodeSaveBtn_clicked();
+
+    void on_filterCodeLoadBtn_clicked();
+
+    void on_filterTimestampSaveBtn_clicked();
+
+    void on_filterTimestampLoadBtn_clicked();
+
 private:
     /**
      * \brief Initializes the ID filter
@@ -202,6 +214,13 @@ private:
      * \brief Initializes the Timestamp filter
      */
     void initFilterTimestamp();
+
+    void saveIDFilter(const QString &pathToFile, FileParser *saveFileParser);
+    void saveCodeFilter(const QString &pathToFile, FileParser *saveFileParser);
+    void saveTimestampFilter(const QString &pathToFile, FileParser *saveFileParser);
+    void loadIDFilter(const QString &pathToFile, FileParser *openFileParser);
+    void loadCodeFilter(const QString &pathToFile, FileParser *openFileParser);
+    void loadTimestampFilter(const QString &pathToFile, FileParser *openFileParser);
 
     Ui::MessageFilter *ui;
     /**
