@@ -31,8 +31,8 @@ private:
 signals:
     void internalModelChanged();
 public slots:
-    void timestampFromChanged(QDateTime dateTime);
-    void timestampToChanged(QDateTime dateTime);
+    void timestampFromChanged(const QDateTime &dateTime);
+    void timestampToChanged(const QDateTime &dateTime);
 };
 
 #endif // FILTERTIMESTAMPSTORE_H

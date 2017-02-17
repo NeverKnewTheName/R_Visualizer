@@ -31,19 +31,19 @@ public:
     /**
      * \brief Returns the current row count/number of elements in the store
      */
-    int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     /**
      * \brief Returns the data of the given index corresponding to the given role
      */
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     /**
      * \brief returns the data for the header (of the table)
      */
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     /**
      * \brief Sets the data for the given index to the given value corresponding to the given role
      */
-    bool setData(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
     /**
      * \brief returns the ItemFlags for the given index
      */
@@ -62,7 +62,7 @@ public:
      */
     QModelIndex addID(const MsgIDType id);
     void removeID(const MsgIDType id);
-    void removeID(QModelIndex &index);
+    void removeID(const QModelIndex &index);
 
     const int size() const;
     const MsgIDType at(const int index) const;
@@ -74,7 +74,7 @@ public:
 signals:
     void internalModelChanged();
     //void rowAdded(unsigned int pos);
-    void rowAdded(QModelIndex &index);
+    void rowAdded(const QModelIndex &index);
 public slots:
 
 private:

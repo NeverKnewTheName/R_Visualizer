@@ -31,19 +31,19 @@ public:
     /**
      * \brief Returns the current row count/number of elements in the store
      */
-    int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     /**
      * \brief Returns the data of the given index corresponding to the given role
      */
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     /**
      * \brief returns the data for the header (of the table)
      */
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     /**
      * \brief Sets the data for the given index to the given value corresponding to the given role
      */
-    bool setData(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
     /**
      * \brief returns the ItemFlags for the given index
      */
@@ -81,7 +81,6 @@ public:
     void accept(FileParser *visitor);
 
 private:
-    QModelIndex tempIndex;
     QVector<MsgCodeType> codeStore;
 
 signals:
@@ -93,7 +92,7 @@ signals:
      * 
      * \note The parameter index contains the current index of the newly added row.
      */
-    void rowAdded(QModelIndex &index);
+    void rowAdded(const QModelIndex &index);
 
 public slots:
 };

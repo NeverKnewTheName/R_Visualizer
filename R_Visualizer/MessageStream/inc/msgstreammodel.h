@@ -54,7 +54,7 @@ public:
      * \brief Constructs an empty #MsgStreamModel for use with a MessageStream
      */
     MsgStreamModel(
-             size_t nrOfMessagesToDisplay,
+             const size_t nrOfMessagesToDisplay,
              QObject *parent = Q_NULLPTR
              );
     /**
