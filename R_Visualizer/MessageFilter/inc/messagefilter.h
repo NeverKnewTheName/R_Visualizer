@@ -10,8 +10,7 @@
 
 #include <QWidget>
 
-class IDModel;
-class MsgTypeModel;
+class MessageConfig;
 class FileParser;
 
 #include "filteridstore.h"
@@ -36,12 +35,11 @@ public:
     /**
      * \brief Constructs a #MessageFilter object
      * 
-     * \param[in] idModel The #IDModel that is used for autocompletion and name to #MsgIDType resolution
-     * \param[in] msgTypeModel The #MsgTypeModel that is used for autocompletion and name to #MsgCodeType resolution
+     * \param[in] msgConfig     Used for mapping #MsgIDType and #MsgCodeType to names and colors
+     * \param[in] parent        The parent QWidget
      */
     explicit MessageFilter(
-            const IDModel &idModel,
-            const MsgTypeModel &msgTypeModel,
+            const MessageConfig *msgConfig,
             QWidget *parent = 0
             );
     ~MessageFilter();
@@ -236,8 +234,7 @@ private:
      */
     FilterTimestampStore filterTimestampModel;
 
-    const IDModel &idModel;
-    const MsgTypeModel &msgTypeModel;
+    const MessageConfig *msgConfig;
 };
 
 #endif // MESSAGEFILTER_H

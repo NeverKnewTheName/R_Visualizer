@@ -42,6 +42,7 @@ public:
      *       be up to date...
      */
     Msg at(const size_t index);
+    /* Msg at(const size_t index) const; */
 
     Msg operator[](const size_t index);
 

@@ -183,7 +183,7 @@ public:
      */
     T operator[](const typename DataContainer::size_type index)
     {
-     return at(index);
+        return at(index);
     }
 
     /**

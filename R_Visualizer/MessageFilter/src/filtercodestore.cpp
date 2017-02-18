@@ -98,7 +98,7 @@ void FilterCodeStore::addCode(const MsgCodeType code)
     beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(code);
     endInsertRows();
-    tempIndex = this->index(codeStore.size()-1);
+    const QModelIndex &tempIndex = this->index(codeStore.size()-1);
     qDebug() << "Code:" << tempIndex.row();
     emit rowAdded(tempIndex);
 }
@@ -108,7 +108,7 @@ void FilterCodeStore::addCode(const QString &codeString)
     beginInsertRows(QModelIndex(), codeStore.size(), codeStore.size());
     codeStore.append(codeString.toUInt());
     endInsertRows();
-    tempIndex = this->index(codeStore.size()-1);
+    const QModelIndex &tempIndex = this->index(codeStore.size()-1);
     qDebug() << "Code:" << tempIndex.row();
     emit rowAdded(tempIndex);
 }

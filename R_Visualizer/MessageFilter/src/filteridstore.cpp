@@ -113,7 +113,7 @@ QModelIndex FilterIDStore::addID(const MsgIDType id)
     return tempIndex;
 }
 
-void FilterIDStore::removeID(QModelIndex &index)
+void FilterIDStore::removeID(const QModelIndex &index)
 {
     beginRemoveRows(QModelIndex(),index.row(), index.row());
     idStore.remove(index.row());

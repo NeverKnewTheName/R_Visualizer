@@ -4,19 +4,19 @@
 #include <QString>
 #include <QCompleter>
 
-#include "idmodel.h"
+#include "messageconfig.h"
 
-FilterIDAddDialog::FilterIDAddDialog(const IDModel &idModelForCompletion, QWidget *parent) :
+FilterIDAddDialog::FilterIDAddDialog(const MessageConfig *msgConfig, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FilterIDAddDialog),
-    idModelForCompletion(idModelForCompletion)
+    msgConfig(msgConfig)
 {
     ui->setupUi(this);
 
     /*
      * Set up the completer
      */
-    QCompleter *idCompleter = idModelForCompletion.createIDCompleter(ui->idNameLe);
+    QCompleter *idCompleter = msgConfig->createIDNameCompleter(ui->idNameLe);
     idCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->idNameLe->setCompleter(idCompleter);
     connect(this, &FilterIDAddDialog::accepted, this, &FilterIDAddDialog::readyToCommit);
@@ -38,7 +38,7 @@ void FilterIDAddDialog::readyToCommit()
      */
     if(!conversionOK)
     {
-        retrievedID = idModelForCompletion.getIDToName(idNameText);
+        retrievedID = msgConfig->getIDToName(idNameText);
     }
 
     emit commit(retrievedID);

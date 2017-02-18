@@ -4,9 +4,11 @@
 #include <QCompleter>
 #include <QPainter>
 
-FilterMsgTypeDelegate::FilterMsgTypeDelegate(const MsgTypeModel &msgTypeModel, QWidget *parent) :
+#include "messageconfig.h"
+
+FilterMsgTypeDelegate::FilterMsgTypeDelegate(const MessageConfig *msgConfig, QWidget *parent) :
     QStyledItemDelegate(parent),
-    msgTypeModel(msgTypeModel)
+    msgConfig(msgConfig)
 {
 
 }
@@ -19,7 +21,7 @@ void FilterMsgTypeDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
                 (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
 
     int code = index.data(Qt::DisplayRole).value<int>();
-    QColor itemBackground(msgTypeModel.getColorToCode(code));
+    QColor itemBackground(msgConfig->getColorToCode(code));
     if(itemBackground.isValid())
     {
         if(option.features & QStyleOptionViewItem::Alternate)
@@ -39,7 +41,7 @@ void FilterMsgTypeDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     painter->fillRect(option.rect, background);
 
 
-    QString name = msgTypeModel.getNameToCode(code);
+    QString name = msgConfig->getNameToCode(code);
     if(name.isEmpty())
     {
         // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
@@ -63,7 +65,7 @@ QWidget *FilterMsgTypeDelegate::createEditor(QWidget *parent, const QStyleOption
         //NAME
         QLineEdit *textEdit = new QLineEdit(parent);
 
-        QCompleter *completer = msgTypeModel.createMsgTypeCompleter(textEdit);
+        QCompleter *completer = msgConfig->createCodeNameCompleter(textEdit);
         completer->setCaseSensitivity(Qt::CaseInsensitive);
         textEdit->setCompleter(completer);
 
@@ -99,7 +101,7 @@ void FilterMsgTypeDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 
         if(!conversionOK)
         {
-            retrievedCode = msgTypeModel.getCodeToName(editorContent);
+            retrievedCode = msgConfig->getCodeToName(editorContent);
         }
         model->setData(index, retrievedCode);
     }

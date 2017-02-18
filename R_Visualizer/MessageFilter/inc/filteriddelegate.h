@@ -10,7 +10,7 @@
 class FilterIDDelegate : public QStyledItemDelegate
 {
 public:
-    FilterIDDelegate(const IDModel &idModel, QWidget *parent = 0);
+    FilterIDDelegate(const MessageConfig *msgConfig, QWidget *parent = 0);
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -18,7 +18,7 @@ public:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const Q_DECL_OVERRIDE;
 
 private:
-    const IDModel &idModel;
+    const MessageConfig *msgConfig;
     QStringList availableIDNames;
 
 private slots:

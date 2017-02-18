@@ -4,16 +4,16 @@
 #include <QString>
 #include <QCompleter>
 
-#include "msgtypemodel.h"
+#include "messageconfig.h"
 
-FilterCodeAddDialog::FilterCodeAddDialog( const MsgTypeModel &msgTypeModelForCompletion, QWidget *parent) :
+FilterCodeAddDialog::FilterCodeAddDialog( const MessageConfig *msgConfig, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FilterCodeAddDialog),
-    msgTypeModelForCompletion(msgTypeModelForCompletion)
+    msgConfig(msgConfig)
 {
     ui->setupUi(this);
 
-    QCompleter *codeCompleter = msgTypeModelForCompletion.createMsgTypeCompleter(ui->codeTypeLe);
+    QCompleter *codeCompleter = msgConfig->createCodeNameCompleter(ui->codeTypeLe);
     codeCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->codeTypeLe->setCompleter(codeCompleter);
     connect(this, &FilterCodeAddDialog::accepted, this, &FilterCodeAddDialog::readyToCommit);
@@ -32,7 +32,7 @@ void FilterCodeAddDialog::readyToCommit()
 
     if(!conversionOK)
     {
-        retrievedCode = msgTypeModelForCompletion.getCodeToName(codeTypeText);
+        retrievedCode = msgConfig->getCodeToName(codeTypeText);
     }
 
     emit commit(retrievedCode);

@@ -6,9 +6,11 @@
 
 #include <QDebug>
 
-FilterIDDelegate::FilterIDDelegate(const IDModel &idModel, QWidget *parent) :
+#include "messageconfig.h"
+
+FilterIDDelegate::FilterIDDelegate(const MessageConfig *msgConfig, QWidget *parent) :
     QStyledItemDelegate(parent),
-    idModel(idModel)
+    msgConfig(msgConfig)
 {
 }
 
@@ -20,7 +22,7 @@ void FilterIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
                 (option.features & QStyleOptionViewItem::Alternate) ? QPalette::AlternateBase : QPalette::Base);
 
     int id = index.data(Qt::DisplayRole).value<int>();
-    QColor itemBackground(idModel.getColorToID(id));
+    QColor itemBackground(msgConfig->getColorToID(id));
     if(itemBackground.isValid())
     {
         if(option.features & QStyleOptionViewItem::Alternate)
@@ -40,7 +42,7 @@ void FilterIDDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->fillRect(option.rect, background);
 
 
-    QString name = idModel.getNameToID(id);
+    QString name = msgConfig->getNameToID(id);
     if(name.isEmpty())
     {
         // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
@@ -63,7 +65,7 @@ QWidget *FilterIDDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         //NAME
         QLineEdit *textEdit = new QLineEdit(parent);
 
-        QCompleter *completer = idModel.createIDCompleter(textEdit);
+        QCompleter *completer = msgConfig->createIDNameCompleter(textEdit);
         completer->setCaseSensitivity(Qt::CaseInsensitive);
         textEdit->setCompleter(completer);
 
@@ -104,7 +106,7 @@ void FilterIDDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 
         if(!conversionOK)
         {
-            retrievedID = idModel.getIDToName(editorContent);
+            retrievedID = msgConfig->getIDToName(editorContent);
         }
         model->setData(index, retrievedID);
     }

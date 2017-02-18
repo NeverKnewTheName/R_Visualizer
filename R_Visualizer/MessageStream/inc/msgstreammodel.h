@@ -94,6 +94,10 @@ public:
      */
     void prependMsg(const PrettyMsg &msg);
 
+    const PrettyMsg &at(const int index) const;
+
+    int size() const;
+
     /**
      * \brief Clears the whole #MsgStreamModel for a fresh start
      * 
@@ -115,6 +119,9 @@ public:
      * \warning All contents that were in the #MsgStreamModel prior to calling this method are dropped!
      */
     void ParseFromJson(const QByteArray &jsonFile);
+
+    void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
+    void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
 
     void accept(FileParser *visitor);
 
@@ -154,8 +161,6 @@ private:
     friend class MainWindow;
     friend class MessageStream;
 
-    void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
-    void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
     
     /**
      * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream

@@ -60,10 +60,14 @@ MainWindow::MainWindow(QWidget *parent) :
     msgConfigWidget = new MessageConfig(ui->configTabWidget);
     /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
     /* msgFilterWidget = new MessageFilter(msgConfigWidget, ui->configTabWidget); */
-    msgFilterWidget = new MessageFilter(msgConfigWidget->getIDModel(), msgConfigWidget->getMsgTypeModel(), ui->configTabWidget);
+    msgFilterWidget = new MessageFilter(
+            msgConfigWidget,
+            ui->configTabWidget
+            );
     msgStream = new MessageStream(
             msgConfigWidget,
             msgFilterWidget,
+            receivedMsgsStore,
             this
             );
     ui->splitter->insertWidget(0,msgStream);
@@ -91,7 +95,6 @@ MainWindow::MainWindow(QWidget *parent) :
     initUserRoleManager();
 
     connect(&m_deviceHandler, &DeviceHandler::sigMsgReceived, &receivedMsgsStore, &MsgStorage::slt_addMsg, Qt::QueuedConnection);
-    connect(&receivedMsgsStore, &MsgStorage::sgnl_MsgAdded, msgStream, &MessageStream::slt_ReceiveMsg);
     connectDeviceHandler();
     connectMessageStream();
     connectSystemOverview();

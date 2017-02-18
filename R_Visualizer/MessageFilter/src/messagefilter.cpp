@@ -7,8 +7,7 @@
 #include <QFileDialog>
 #include <QJsonDocument>
 
-#include "idmodel.h"
-#include "msgtypemodel.h"
+#include "messageconfig.h"
 
 #include "filteriddelegate.cpp"
 #include "filtermsgtypedelegate.cpp"
@@ -23,8 +22,7 @@
 #include "jsonoutparser.h"
 
 MessageFilter::MessageFilter(
-            const IDModel &idModel,
-            const MsgTypeModel &msgTypeModel,
+            const MessageConfig *msgConfig,
             QWidget *parent
         ) :
     QWidget(parent),
@@ -32,8 +30,7 @@ MessageFilter::MessageFilter(
     filterIDModel(),
     filterCodeModel(),
     filterTimestampModel(),
-    idModel(idModel),
-    msgTypeModel(msgTypeModel)
+    msgConfig(msgConfig)
 {
     ui->setupUi(this);
     initFilterIDListView();
@@ -57,7 +54,7 @@ void MessageFilter::initFilterIDListView()
     ui->idFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->idFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->idFilterlistView->setAlternatingRowColors(true);
-    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(idModel, ui->idFilterlistView));
+    ui->idFilterlistView->setItemDelegate(new FilterIDDelegate(msgConfig, ui->idFilterlistView));
 }
 
 void MessageFilter::initFilterCodeListView()
@@ -71,7 +68,7 @@ void MessageFilter::initFilterCodeListView()
     ui->codeFilterlistView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->codeFilterlistView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->codeFilterlistView->setAlternatingRowColors(true);
-    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(msgTypeModel, ui->codeFilterlistView));
+    ui->codeFilterlistView->setItemDelegate(new FilterMsgTypeDelegate(msgConfig, ui->codeFilterlistView));
 }
 
 void MessageFilter::initFilterTimestamp()
@@ -208,7 +205,7 @@ void MessageFilter::on_enableIDFilterCheckBox_toggled(bool checked)
 
 void MessageFilter::on_addFilterIDPushButton_clicked()
 {
-    FilterIDAddDialog *filterIDAddDiag = new FilterIDAddDialog(idModel, this);
+    FilterIDAddDialog *filterIDAddDiag = new FilterIDAddDialog(msgConfig, this);
     connect(filterIDAddDiag, &FilterIDAddDialog::commit, this, &MessageFilter::filterIDCommit);
     filterIDAddDiag->exec();
 }
@@ -232,7 +229,7 @@ void MessageFilter::on_enableCodeFilterCheckBox_toggled(bool checked)
 
 void MessageFilter::on_addFilterCodePushButton_clicked()
 {
-    FilterCodeAddDialog *filterCodeAddDialog = new FilterCodeAddDialog(msgTypeModel, this);
+    FilterCodeAddDialog *filterCodeAddDialog = new FilterCodeAddDialog(msgConfig, this);
     connect(filterCodeAddDialog, &FilterCodeAddDialog::commit, this, &MessageFilter::filterCodeCommit);
     filterCodeAddDialog->exec();
 }
@@ -286,11 +283,13 @@ void MessageFilter::on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDate
 void MessageFilter::filterIDCommit(const MsgIDType idToCommit)
 {
     filterIDModel.addID(idToCommit);
+    emit sgnl_IDAddedToFilter();
 }
 
 void MessageFilter::filterCodeCommit(const MsgCodeType codeToCommit)
 {
     filterCodeModel.addCode(codeToCommit);
+    emit sgnl_CodeAddedToFilter();
 }
 
 void MessageFilter::on_filterIDSaveBtn_clicked()
@@ -332,6 +331,7 @@ void MessageFilter::on_filterIDLoadBtn_clicked()
         JsonInParser jsonInParser;
         jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
         filterIDModel.accept(&jsonInParser);
+        emit sgnl_IDFilterEnabled(ui->enableIDFilterCheckBox->isChecked());
         /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui
@@ -379,6 +379,7 @@ void MessageFilter::on_filterCodeLoadBtn_clicked()
         JsonInParser jsonInParser;
         jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
         filterCodeModel.accept(&jsonInParser);
+        emit sgnl_CodeFilterEnabled(ui->enableCodeFilterCheckBox->isChecked());
         /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui
@@ -426,6 +427,8 @@ void MessageFilter::on_filterTimestampLoadBtn_clicked()
         JsonInParser jsonInParser;
         jsonInParser.setJsonDocument(QJsonDocument::fromJson(jsonOpenFile.readAll()));
         filterTimestampModel.accept(&jsonInParser);
+        emit sgnl_TimestampFilterFromEnabled(ui->enableTimestampFromFilterCheckBox->isChecked());
+        emit sgnl_TimestampFilterToEnabled(ui->enableTimestampToFilterCheckBox->isChecked());
         /* msgTypeModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui

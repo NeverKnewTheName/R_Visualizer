@@ -14,8 +14,8 @@ class FilterTimestampStore : public QObject, public FileParsable
 public:
     explicit FilterTimestampStore(QObject *parent = 0);
 
-    bool isValidTimestampFrom(QDateTime &timestamp) const;
-    bool isValidTimestampTo(QDateTime &timestamp) const;
+    bool isValidTimestampFrom(const QDateTime &timestamp) const;
+    bool isValidTimestampTo(const QDateTime &timestamp) const;
 
     QDateTime getTimestampFilterFrom() const;
     void setTimestampFilterFrom(const QDateTime &value);

@@ -10,7 +10,7 @@
 
 #include <QDialog>
 
-class IDModel;
+class MessageConfig;
 
 #include "msg.h"
 
@@ -26,10 +26,10 @@ public:
     /**
      * \brief Constructs a new FilterIDAddDialog object
      * 
-     * \param[in] idModelForCompletion This #IDModel is used for the autocompletion feature
+     * \param[in] msgConfig This #IDModel is used for the autocompletion feature
      * \param[in] parent The parent widget of this dialog
      */
-    explicit FilterIDAddDialog(const IDModel &idModelForCompletion, QWidget *parent = 0);
+    explicit FilterIDAddDialog(const MessageConfig *msgConfig, QWidget *parent = 0);
     ~FilterIDAddDialog();
 
 private:
@@ -37,7 +37,7 @@ private:
     /**
      * \brief The #IDModel that is used for the autocompletion feature and name to #MsgIDType resolution
      */
-    const IDModel &idModelForCompletion;
+    const MessageConfig *msgConfig;
 
 signals:
     /**

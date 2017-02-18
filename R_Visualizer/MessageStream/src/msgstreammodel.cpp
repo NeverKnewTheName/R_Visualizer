@@ -253,6 +253,16 @@ void MsgStreamModel::prependMsg(const PrettyMsg &msg)
     }
 }
 
+const PrettyMsg &MsgStreamModel::at(const int index) const
+{
+    return msgBuffer.at(index);
+}
+
+int MsgStreamModel::size() const
+{
+    return msgBuffer.size();
+}
+
 void MsgStreamModel::clear()
 {
     // clearing all data is a reset of the model

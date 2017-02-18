@@ -19,6 +19,11 @@ Msg MsgStorage::at(const size_t index)
     return msgStore.at(index);
 }
 
+/* Msg MsgStorage::at(const size_t index) const */
+/* { */
+/*     return msgStore.at(index); */
+/* } */
+
 Msg MsgStorage::operator[](const size_t index)
 {
     return msgStore[index];

@@ -1,13 +1,13 @@
 #ifndef FILTERMSGTYPEDELEGATE_H
 #define FILTERMSGTYPEDELEGATE_H
 
-#include "msgtypemodel.h"
 #include <QStyledItemDelegate>
+class MessageConfig;
 
 class FilterMsgTypeDelegate : public QStyledItemDelegate
 {
 public:
-    FilterMsgTypeDelegate(const MsgTypeModel &msgTypeModel, QWidget *parent = 0);
+    FilterMsgTypeDelegate(const MessageConfig *msgConfig, QWidget *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -15,7 +15,7 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index) const Q_DECL_OVERRIDE;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const Q_DECL_OVERRIDE;
 private:
-    const MsgTypeModel &msgTypeModel;
+    const MessageConfig *msgConfig;
 
 private slots:
     void commitAndCloseEditor();
