@@ -55,6 +55,7 @@ flags = [
     '-I', './R_Visualizer/SystemOverview/inc',
     '-I', './R_Visualizer/SystemOverview/SysOvrvObj/inc',
     '-I', './R_Visualizer/SystemOverview/SysOvrvTrigger/inc',
+    '-I', './R_Visualizer/Utils/inc',
     '-I', './R_Visualizer_Utilities',
     '-I', '.',
     '-I', '/usr/include/x86_64-linux-gnu/qt5',

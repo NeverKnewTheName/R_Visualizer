@@ -1,25 +1,32 @@
 #ifndef SYSOVERVIEWGRAPHICSVIEW_H
 #define SYSOVERVIEWGRAPHICSVIEW_H
 
-#include "sysovrvobjectstore.h"
+class QPointF;
+class QContextMenuEvent;
 
 #include <QGraphicsView>
+
+class SysOvrvObject;
 
 class SysOverviewGraphicsView : public QGraphicsView
 {
 public:
-    SysOverviewGraphicsView(QWidget *parent = 0);
+    SysOverviewGraphicsView(QWidget *parent = Q_NULLPTR);
 
     void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
 
-    SysOvrvObject *getCurrentObject() const;
-    SysOvrvObjectStore *getObjectStore() const;
-    const QPointF &GetCurrentMousePos() const;
+    SysOvrvObject *getObjAtPos(const QPointF &pos) const;
+
+    void enableEditing(const bool enable);
 
 private:
-    SysOvrvObjectStore *sysOvrvObjStore;
-    SysOvrvObject *currentObject;
-    QPointF currentMousePos;
+    bool editingEnabled;
+
+signals:
+    void sgnl_addObjRequest(const QPointF &pos);
+    void sgnl_updateObjRequest(SysOvrvObject *obj);
+    void sgnl_removeObjRequest(SysOvrvObject *obj);
+    void sgnl_duplicateObjRequest(SysOvrvObject *obj);
 };
 
 #endif // SYSOVERVIEWGRAPHICSVIEW_H

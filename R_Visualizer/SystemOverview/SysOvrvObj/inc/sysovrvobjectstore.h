@@ -18,24 +18,25 @@ public:
     QHash<QString, SysOvrvObject *> getObjectStore() const;
     void addMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj);
     void removeMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj);
+
+    void addObject(SysOvrvObject *obj);
+    void removeObject(SysOvrvObject *obj);
+    void updateObject(SysOvrvObject *obj);
+
 private:
     QHash<QString, SysOvrvObject*> objectStore;
     QHash<MsgIDType, QHash<MsgCodeType, QVector<SysOvrvObject*>>> msgParserStore;
     QPointF curObjPos;
 
 signals:
-    void objectAddedToStore(SysOvrvObject *addedObject, QPointF &pos);
+    void objectAddedToStore(SysOvrvObject *addedObject);
     void objectRemovedFromStore(SysOvrvObject *removedObject);
 
 public slots:
-    void addObject();
-    void rmvObject();
-    void updtObject();
-    void duplicateObject();
-    void addObjToStore(SysOvrvObject *objToAdd);
-    void removeObject(SysOvrvObject *objToRmv);
-    void updateObject(SysOvrvObject *objToUpdt);
-    void receiveMessage(Data_PacketPtr ptr);
+    void slt_addObject(SysOvrvObject *objToAdd);
+    void slt_removeObject(SysOvrvObject *objToRmv);
+    void slt_updateObject(SysOvrvObject *objToUpdt);
+    void slt_receiveMessage(const Msg &newMsg);
 };
 
 #endif // SYSOVRVOBJECTSTORE_H

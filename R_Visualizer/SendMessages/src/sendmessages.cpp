@@ -63,13 +63,8 @@ SendMessages::SendMessages(
     connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepUpdated, this, &SendMessages::slt_MsgTypeRepUpdated);
     connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepRemoved, this, &SendMessages::slt_MsgTypeRepRemoved);
 
-    QCompleter *newIDCompleter = msgConfig->createIDNameCompleter(ui->sndMsgIDLineEdit);
-    ui->sndMsgIDLineEdit->setCompleter(newIDCompleter);
-    connect(ui->sndMsgIDLineEdit, &QLineEdit::textChanged, this, &SendMessages::idChanged);
-
-    QCompleter *newCodeCompleter = msgConfig->createCodeNameCompleter(ui->sndMsgCodeLineEdit);
-    ui->sndMsgCodeLineEdit->setCompleter(newCodeCompleter);
-    connect(ui->sndMsgCodeLineEdit, &QLineEdit::textChanged, this, &SendMessages::codeChanged);
+    ui->sndMsgIDLineEdit->setMsgConfig(msgConfig);
+    ui->sndMsgCodeLineEdit->setMsgConfig(msgConfig);
 }
 
 SendMessages::~SendMessages()

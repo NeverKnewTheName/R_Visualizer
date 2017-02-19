@@ -1,7 +1,6 @@
 #include "systemoverview.h"
 #include "ui_systemoverview.h"
 
-#include "sysoverviewgraphicsview.h"
 
 #include <QWheelEvent>
 #include <QScrollBar>
@@ -9,21 +8,29 @@
 
 #include <QDebug>
 
-SystemOverview::SystemOverview(QWidget *parent) :
+#include "messageconfig.h"
+#include "sysovrvobjectstore.h"
+#include "sysoverviewgraphicsview.h"
+
+#include "sysovrvobjectdialog.h"
+
+SystemOverview::SystemOverview(const MessageConfig *msgConfig, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemOverview),
+    msgConfig(msgConfig),
     SystemOverviewScene(this),
+    sysOvrvObjStore(this),
     kbrdModifiers(Qt::ControlModifier)
 {
     ui->setupUi(this);
-    this->initVisualizerGraphicsView();
+    /* this->initVisualizerGraphicsView(); */
+    ui->visualizerGraphicsView->setScene(&SystemOverviewScene);
 
-    connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectAddedToStore, this, &SystemOverview::addNewObject);
-    connect(ui->visualizerGraphicsView->getObjectStore(), &SysOvrvObjectStore::objectRemovedFromStore, this, &SystemOverview::removeObject);
+    connect(ui->visualizerGraphicsView, &SysOverviewGraphicsView::sgnl_addObjRequest, this, &SystemOverview::slt_addNewObject);
+    connect(ui->visualizerGraphicsView, &SysOverviewGraphicsView::sgnl_removeObjRequest, this, &SystemOverview::slt_removeObject);
+    connect(ui->visualizerGraphicsView, &SysOverviewGraphicsView::sgnl_updateObjRequest, this, &SystemOverview::slt_updateObject);
+    connect(ui->visualizerGraphicsView, &SysOverviewGraphicsView::sgnl_duplicateObjRequest, this, &SystemOverview::slt_duplicateObject);
 
-    QScrollBar *scroller;
-    scroller = ui->visualizerGraphicsView->horizontalScrollBar();
-    scroller = ui->visualizerGraphicsView->verticalScrollBar();
 }
 
 SystemOverview::~SystemOverview()
@@ -93,17 +100,28 @@ void SystemOverview::initVisualizerGraphicsView()
     //    scene->setSceneRect(QRectF(QPointF(0,0),
     //                               ui->visualizerGraphicsView->maximumViewportSize()));
     //set the graphicsview to the newly created scene
-    ui->visualizerGraphicsView->setScene(&SystemOverviewScene);
 }
 
-void SystemOverview::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
+void SystemOverview::slt_applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 {
-
+    switch(roleToSwitchTo)
+    {
+        case UserRoleMngr::AdminRole:
+            ui->visualizerGraphicsView->enableEditing(true);
+            break;
+        case UserRoleMngr::UserRole:
+            ui->visualizerGraphicsView->enableEditing(false);
+            break;
+        default:
+            ui->visualizerGraphicsView->enableEditing(false);
+            break;
+    }
 }
 
-void SystemOverview::newMessage(Data_PacketPtr ptr)
+void SystemOverview::slt_newMessage(const Msg &newMsg)
 {
-    ui->visualizerGraphicsView->getObjectStore()->receiveMessage(ptr);
+    qDebug() << "SystemOverview received msg from ID:  " << newMsg.getId() << " with code: " << msg.getCode();
+    /* ui->visualizerGraphicsView->getObjectStore()->receiveMessage(ptr); */
 //    QDateTime timeStamp = ptr->timestamp();
 //    const MsgIDType id = ptr->frame().ID_Standard;
 //    QByteArray canData = ptr->frame().data;
@@ -119,16 +137,44 @@ void SystemOverview::newMessage(Data_PacketPtr ptr)
 //        //            this->square->update();
 //    }
 //    //SystemOverview::repaint();
+//    
 }
 
-void SystemOverview::addNewObject(SysOvrvObject *obj, QPointF &pos)
+void SystemOverview::slt_addNewObject(const QPointF &pos)
 {
-    SystemOverviewScene.addItem(obj);
-    qDebug() << "Item: " << obj->getObjName() << " added to scene at pos: " << pos;
-    obj->setPos(pos);
+    SysOvrvObjectDialog addSysOvrvObjectDialog;
+    connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, [=](SysOvrvObject *obj){
+            SystemOverviewScene.addItem(obj);
+            qDebug() << "Item: " << obj->getObjName() << " added to scene at pos: " << pos;
+            obj->setPos(pos);
+            });
+    addSysOvrvObjectDialog.exec();
 }
 
-void SystemOverview::removeObject(SysOvrvObject *obj)
+void SystemOverview::slt_removeObject(SysOvrvObject *obj)
 {
+    if(obj == nullptr)
+    {
+        return;
+    }
     SystemOverviewScene.removeItem(obj);
+    sysOvrvObjStore.removeObject(obj);
+    delete obj;
+}
+
+void SystemOverview::slt_updateObject(SysOvrvObject *obj)
+{
+    if(obj == nullptr)
+    {
+        return;
+    }
+    sysOvrvObjStore.updateObject(obj);
+}
+
+void SystemOverview::slt_duplicateObject(SysOvrvObject *obj)
+{
+    if(obj == nullptr)
+    {
+        return;
+    }
 }
