@@ -1,0 +1,120 @@
+{
+    "ChildObjs": [
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#00ff00",
+            "ObjName": "Sensor1",
+            "ObjPos": [
+                12,
+                203
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                47,
+                44
+            ],
+            "Textlabels": [
+            ]
+        },
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#00ff00",
+            "ObjName": "Sensor1",
+            "ObjPos": [
+                221,
+                202
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                47,
+                44
+            ],
+            "Textlabels": [
+            ]
+        },
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#ffaa00",
+            "ObjName": "Sensor1",
+            "ObjPos": [
+                339,
+                200
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                47,
+                44
+            ],
+            "Textlabels": [
+            ]
+        },
+        {
+            "ChildObjs": [
+            ],
+            "ObjColor": "#ff0000",
+            "ObjName": "Sensor1",
+            "ObjPos": [
+                110,
+                200
+            ],
+            "ObjShape": 0,
+            "ObjSize": [
+                47,
+                44
+            ],
+            "Textlabels": [
+            ]
+        }
+    ],
+    "ObjColor": "#a0a0a4",
+    "ObjName": "DevBoard_1",
+    "ObjPos": [
+        -2607,
+        -567
+    ],
+    "ObjShape": 0,
+    "ObjSize": [
+        405,
+        251
+    ],
+    "Textlabels": [
+        {
+            "TextLablePos": [
+                -3,
+                -24
+            ],
+            "TextLableText": "DevBoard_1"
+        },
+        {
+            "TextLablePos": [
+                17,
+                179
+            ],
+            "TextLableText": "Sensor_1"
+        },
+        {
+            "TextLablePos": [
+                112,
+                179
+            ],
+            "TextLableText": "Sensor_2"
+        },
+        {
+            "TextLablePos": [
+                219,
+                177
+            ],
+            "TextLableText": "Sensor_3"
+        },
+        {
+            "TextLablePos": [
+                338,
+                178
+            ],
+            "TextLableText": "Sensor_4"
+        }
+    ]
+}
