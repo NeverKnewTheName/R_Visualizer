@@ -109,7 +109,7 @@ void SystemOverview::slt_applyRole(UserRoleMngr::UserRole roleToSwitchTo)
         case UserRoleMngr::AdminRole:
             ui->visualizerGraphicsView->enableEditing(true);
             break;
-        case UserRoleMngr::UserRole:
+        case UserRoleMngr::NormalUserRole:
             ui->visualizerGraphicsView->enableEditing(false);
             break;
         default:
@@ -120,7 +120,7 @@ void SystemOverview::slt_applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 
 void SystemOverview::slt_newMessage(const Msg &newMsg)
 {
-    qDebug() << "SystemOverview received msg from ID:  " << newMsg.getId() << " with code: " << msg.getCode();
+    qDebug() << "SystemOverview received msg from ID:  " << newMsg.getId() << " with code: " << newMsg.getCode();
     /* ui->visualizerGraphicsView->getObjectStore()->receiveMessage(ptr); */
 //    QDateTime timeStamp = ptr->timestamp();
 //    const MsgIDType id = ptr->frame().ID_Standard;

@@ -16,9 +16,9 @@ public:
     EllipseSysOvrvObject(SysOvrvObject &&original);
     ~EllipseSysOvrvObject();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
-    SysOvrvObject::QbjShapeType getShape() const;
+    SysOvrvObject::ObjShapeType getShape() const;
 };
 
 #endif /* ELLIPSESYSOVRVOBJECT_H */

@@ -9,12 +9,16 @@ private:
     
 
 public:
-    CircleSysOvrvObject();
+    CircleSysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
+    CircleSysOvrvObject(const CircleSysOvrvObject &other);
+    CircleSysOvrvObject(CircleSysOvrvObject &&other);
+    CircleSysOvrvObject(const SysOvrvObject &original);
+    CircleSysOvrvObject(SysOvrvObject &&original);
     ~CircleSysOvrvObject();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
-    SysOvrvObject::QbjShapeType getShape() const;
+    SysOvrvObject::ObjShapeType getShape() const;
 };
 
 #endif /* CIRCLESYSOVRVOBJECT_H */

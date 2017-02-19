@@ -39,7 +39,7 @@ SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
 
 SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
     ResizableGraphicsItem(ToCopy.parentItem()),
-    localObjCntr(objCntr++),
+    localObjCntr(ToCopy.localObjCntr),
     m_BoundingRect(ToCopy.m_BoundingRect),
     objName(ToCopy.objName),
     myColor(ToCopy.myColor),
@@ -101,7 +101,7 @@ SysOvrvObject::SysOvrvObject(SysOvrvObject &&ToMove) :
 SysOvrvObject::~SysOvrvObject()
 {
     //Invalidate Parent (if any..)
-    this->setParentItem(Q_NULLPTR);
+    /* this->setParentItem(Q_NULLPTR); */
     qDebug() << "(SysOvrvObject::~SysOvrvObject): deleted obj: " << getHashedName();
 }
 
@@ -153,9 +153,8 @@ QRectF SysOvrvObject::boundingRect() const
 
 void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-    painter->drawPixmap(boundingRect(), ObjPixMap, ObjPixMap.rect());
+    /* ResizableGraphicsItem::paint(painter, option, widget); */
+    /* painter->drawPixmap(boundingRect(), ObjPixMap, ObjPixMap.rect()); */
 }
 
 int SysOvrvObject::type() const
@@ -180,7 +179,8 @@ QColor SysOvrvObject::getMyColor() const
 void SysOvrvObject::setMyColor(const QColor &value)
 {
     myColor = QColor(value);
-    updateShape();
+    update();
+    /* updateShape(); */
 }
 
 QString SysOvrvObject::getObjName() const
@@ -191,6 +191,7 @@ QString SysOvrvObject::getObjName() const
 void SysOvrvObject::setObjName(const QString &value)
 {
     objName = QString(value);
+    update();
 }
 
 void SysOvrvObject::loadImageFromFile(QWidget *parent)
@@ -202,31 +203,31 @@ void SysOvrvObject::loadImageFromFile(QWidget *parent)
 void SysOvrvObject::loadImageFromFile(const QString &FilePath)
 {
     ObjPixMap = QPixmap(FilePath);
-    updateShape();
+    update();
 }
 
 void SysOvrvObject::setShape(SysOvrvObject::ObjShapeType shape)
 {
-    shapeType = shape;
+    /* shapeType = shape; */
 
-    if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
-    {
-        if(m_BoundingRect.width() > m_BoundingRect.height())
-        {
-            m_BoundingRect.setHeight(m_BoundingRect.width());
-        }
-        else
-        {
-            m_BoundingRect.setWidth(m_BoundingRect.height());
-        }
-    }
+    /* if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE */
+    /* { */
+    /*     if(m_BoundingRect.width() > m_BoundingRect.height()) */
+    /*     { */
+    /*         m_BoundingRect.setHeight(m_BoundingRect.width()); */
+    /*     } */
+    /*     else */
+    /*     { */
+    /*         m_BoundingRect.setWidth(m_BoundingRect.height()); */
+    /*     } */
+    /* } */
 
-    updateShape();
+    /* updateShape(); */
 }
 
 SysOvrvObject::ObjShapeType SysOvrvObject::getShape() const
 {
-    return shapeType;
+    /* return shapeType; */
 }
 
 SysOvrvTextLabel * SysOvrvObject::addLabel()
@@ -248,7 +249,7 @@ SysOvrvTextLabel * SysOvrvObject::addLabel(SysOvrvTextLabel *label)
     return label;
 }
 
-SysOvrvTextLabel *SysOvrvObject::addLabel(const QString &text, qreal x, qreal y)
+SysOvrvTextLabel *SysOvrvObject::addLabel(const QString &text, const qreal x, const qreal y)
 {
     if(text.isEmpty())
         return NULL;
@@ -352,7 +353,9 @@ void SysOvrvObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         SysOvrvObject * parent = dynamic_cast<SysOvrvObject *>(this->parentItem());
         if(parent != Q_NULLPTR)
+        {
             parent->mouseMoveEvent(event);
+        }
     }
     else
     {
@@ -474,71 +477,71 @@ void SysOvrvObject::setObjPixMap(const QPixmap &value)
 
 void SysOvrvObject::updateShape(const QRectF &rect)
 {
-    if(shapeType == ObjShape_Image)
-    {
-        //        ObjPixMap = QPixmap(FilePath);
-    }
-    else
-    {
-        if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE
-        {
-            if(m_BoundingRect.width() > m_BoundingRect.height())
-            {
-                setHeight(m_BoundingRect.width());
-            }
-            else
-            {
-                setWidth(m_BoundingRect.height());
-            }
-        }
+    /* if(shapeType == ObjShape_Image) */
+    /* { */
+    /*     //        ObjPixMap = QPixmap(FilePath); */
+    /* } */
+    /* else */
+    /* { */
+    /*     if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE */
+    /*     { */
+    /*         if(m_BoundingRect.width() > m_BoundingRect.height()) */
+    /*         { */
+    /*             setHeight(m_BoundingRect.width()); */
+    /*         } */
+    /*         else */
+    /*         { */
+    /*             setWidth(m_BoundingRect.height()); */
+    /*         } */
+    /*     } */
 
 
-        QRect boundRect = m_BoundingRect.toRect();
-        ObjPixMap = QPixmap(boundRect.size());
-        ObjPixMap.fill(Qt::transparent);
+    /*     QRect boundRect = m_BoundingRect.toRect(); */
+    /*     ObjPixMap = QPixmap(boundRect.size()); */
+    /*     ObjPixMap.fill(Qt::transparent); */
 
-        QPainter painter(&ObjPixMap);
-        boundRect.setWidth(boundRect.width() - painter.pen().width());
-        boundRect.setHeight(boundRect.height() - painter.pen().width());
-        QBrush brush(myColor);
+    /*     QPainter painter(&ObjPixMap); */
+    /*     boundRect.setWidth(boundRect.width() - painter.pen().width()); */
+    /*     boundRect.setHeight(boundRect.height() - painter.pen().width()); */
+    /*     QBrush brush(myColor); */
 
-        if(this->isSelected()/* || (isChildObject && parentItem() != NULL && parentItem()->isSelected())*/) //ToTHINK visualize children also as selected??
-        {
-            brush.setColor(myColor.darker());
-        }
+    // /*     if(this->isSelected()/1* || (isChildObject && parentItem() != NULL && parentItem()->isSelected())*/) //ToTHINK visualize children also as selected?? */
+    /*     { */
+    /*         brush.setColor(myColor.darker()); */
+    /*     } */
 
-        painter.setBrush(brush);
-        //        painter.setRenderHint(QPainter::Antialiasing);
+    /*     painter.setBrush(brush); */
+    /*     //        painter.setRenderHint(QPainter::Antialiasing); */
 
-        switch(shapeType)
-        {
-        case ObjShape_Rectangle: // Rect
-        case ObjShape_Square: // Square
-            painter.drawRect(boundRect);
-            break;
-        case ObjShape_Ellipse:
-        case ObjShape_Circle: // Circle
-            painter.drawEllipse(boundRect);
-            break;
-        case ObjShape_Triangle: // Triangle
-        {
-            QPainterPath path;
-            QPointF rectTopMiddle((boundRect.right() - boundRect.left()) / 2, boundRect.top());
-            path.moveTo(rectTopMiddle);
-            path.lineTo(boundRect.right(), boundRect.bottom());
-            path.lineTo(boundRect.left(), boundRect.bottom());
-            path.lineTo(rectTopMiddle);
-            painter.drawPath(path);
-        }
-            break;
-        case ObjShape_Image:
-            break;
-        default:
-            break;
-        }
-    }
-    initResizeCorners(boundingRect());
-    ResizableGraphicsItem::update(rect);
+    /*     switch(shapeType) */
+    /*     { */
+    /*     case ObjShape_Rectangle: // Rect */
+    /*     case ObjShape_Square: // Square */
+    /*         painter.drawRect(boundRect); */
+    /*         break; */
+    /*     case ObjShape_Ellipse: */
+    /*     case ObjShape_Circle: // Circle */
+    /*         painter.drawEllipse(boundRect); */
+    /*         break; */
+    /*     case ObjShape_Triangle: // Triangle */
+    /*     { */
+    /*         QPainterPath path; */
+    /*         QPointF rectTopMiddle((boundRect.right() - boundRect.left()) / 2, boundRect.top()); */
+    /*         path.moveTo(rectTopMiddle); */
+    /*         path.lineTo(boundRect.right(), boundRect.bottom()); */
+    /*         path.lineTo(boundRect.left(), boundRect.bottom()); */
+    /*         path.lineTo(rectTopMiddle); */
+    /*         painter.drawPath(path); */
+        /* } */
+        /*     break; */
+        /* case ObjShape_Image: */
+        /*     break; */
+        /* default: */
+        /*     break; */
+        /* } */
+    /* } */
+    /* initResizeCorners(boundingRect()); */
+    /* ResizableGraphicsItem::update(rect); */
 }
 
 void SysOvrvObject::setParentSysOvrvObj(SysOvrvObject *parentSysOvrvObj)
@@ -675,6 +678,7 @@ void SysOvrvObject::resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qre
 void SysOvrvObject::setWidth(const qreal newWidth)
 {
     m_BoundingRect.setWidth(newWidth);
+    update();
 }
 
 qreal SysOvrvObject::getWidth() const
@@ -684,8 +688,8 @@ qreal SysOvrvObject::getWidth() const
 
 void SysOvrvObject::setHeight(const qreal newHeight)
 {
-
     m_BoundingRect.setHeight(newHeight);
+    update();
 }
 
 qreal SysOvrvObject::getHeight() const

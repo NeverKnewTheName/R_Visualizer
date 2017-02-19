@@ -10,6 +10,8 @@ class SysOvrvObject;
 
 class SysOverviewGraphicsView : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     SysOverviewGraphicsView(QWidget *parent = Q_NULLPTR);
 

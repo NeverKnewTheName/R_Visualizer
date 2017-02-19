@@ -6,12 +6,16 @@
 class ImageSysOvrvObject : public SysOvrvObject
 {
 public:
-    ImageSysOvrvObject();
+    ImageSysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
+    ImageSysOvrvObject(const ImageSysOvrvObject &other);
+    ImageSysOvrvObject(ImageSysOvrvObject &&other);
+    ImageSysOvrvObject(const SysOvrvObject &original);
+    ImageSysOvrvObject(SysOvrvObject &&original);
     ~ImageSysOvrvObject();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
-    SysOvrvObject::QbjShapeType getShape() const;
+    SysOvrvObject::ObjShapeType getShape() const;
 };
 
 #endif /* IMAGESYSOVRVOBJECT_H */

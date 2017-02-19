@@ -3,18 +3,22 @@
 
 #include "sysovrvobject.h"
 
-class Trianglesysovrvobject : public SysOvrvObject
+class TriangleSysOvrvObject : public SysOvrvObject
 {
 private:
     
 
 public:
-    Trianglesysovrvobject();
-    ~Trianglesysovrvobject();
+    TriangleSysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
+    TriangleSysOvrvObject(const TriangleSysOvrvObject &other);
+    TriangleSysOvrvObject(TriangleSysOvrvObject &&other);
+    TriangleSysOvrvObject(const SysOvrvObject &original);
+    TriangleSysOvrvObject(SysOvrvObject &&original);
+    ~TriangleSysOvrvObject();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
-    SysOvrvObject::QbjShapeType getShape() const;
+    SysOvrvObject::ObjShapeType getShape() const;
 };
 
 #endif /* TRIANGLESYSOVRVOBJECT_H */

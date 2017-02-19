@@ -24,6 +24,7 @@ class FileParser;
 class MsgStorage : public QObject, public FileParsable
 {
     Q_OBJECT
+
 public:
     /**
      * @brief Constructs a MsgStorage object with the given metrics

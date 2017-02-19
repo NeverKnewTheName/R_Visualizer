@@ -17,6 +17,7 @@ SOURCES += \
     $$PWD/src/imagesysovrvobject.cpp \
     $$PWD/src/sysovrvobjectdialog.cpp \
     $$PWD/src/resizerectcorner.cpp \
+    $$PWD/src/resizeablegraphicsitem.cpp \
     $$PWD/src/sysovrvtextlabel.cpp \
     $$PWD/src/sysovrvobjcontainer.cpp \
     $$PWD/src/triggerablesysovrvobj.cpp
@@ -32,6 +33,7 @@ HEADERS  += \
     $$PWD/inc/imagesysovrvobject.h \
     $$PWD/inc/sysovrvobjectdialog.h \
     $$PWD/inc/resizerectcorner.h \
+    $$PWD/inc/resizeablegraphicsitem.h \
     $$PWD/inc/sysovrvtextlabel.h \
     $$PWD/inc/sysovrvobjcontainer.h \
     $$PWD/inc/triggerablesysovrvobj.h

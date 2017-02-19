@@ -72,7 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
             );
     ui->splitter->insertWidget(0,msgStream);
     sndMsgsWidget = new SendMessages(msgConfigWidget, ui->configTabWidget);
-    sysOvrvWidget = new SystemOverview(ui->configTabWidget);
+    sysOvrvWidget = new SystemOverview(
+            msgConfigWidget,
+            ui->configTabWidget
+            );
     errLogViewDiag = new ErrorLogView(this);
     /* MessageConfig provides IDModel and MsgTypeModel */
     /*
@@ -95,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initUserRoleManager();
 
     connect(&m_deviceHandler, &DeviceHandler::sigMsgReceived, &receivedMsgsStore, &MsgStorage::slt_addMsg, Qt::QueuedConnection);
+    connect(&receivedMsgsStore, &MsgStorage::sgnl_MsgAdded, sysOvrvWidget, &SystemOverview::slt_newMessage);
     connectDeviceHandler();
     connectMessageStream();
     connectSystemOverview();
@@ -122,7 +126,7 @@ void MainWindow::connectDeviceHandler()
     connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, &m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
     connect(&m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
     /* connect(&m_deviceHandler, &DeviceHandler::sigMsgReceived, &msgModel, &MsgModel::messageReceived, Qt::QueuedConnection); */
-    connect(this, &MainWindow::dataReceived, this->sysOvrvWidget, &SystemOverview::newMessage, Qt::QueuedConnection);
+    /* connect(this, &MainWindow::dataReceived, this->sysOvrvWidget, &SystemOverview::newMessage, Qt::QueuedConnection); */
     connect(&m_deviceHandler, &DeviceHandler::sigErrorMsgReceived, errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
     //    connect(ui->actionStart, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStartCapture);
     //    connect(ui->actionStop, &QAction::triggered, m_deviceHandler, &DeviceHandler::sltStopCapture);
@@ -181,7 +185,7 @@ void MainWindow::initUserRoleManager()
 void MainWindow::connectUserRoleManager()
 {
     connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
-    connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::applyRole);
+    connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::slt_applyRole);
     connect(this, &MainWindow::switchUserRoles, sndMsgsWidget, &SendMessages::applyRole);
     connect(this, &MainWindow::switchUserRoles, msgConfigWidget, &MessageConfig::applyRole);
     connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);

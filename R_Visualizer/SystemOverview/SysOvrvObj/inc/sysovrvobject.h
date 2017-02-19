@@ -6,7 +6,7 @@
 #include <QImage>
 #include <QPixmap>
 
-#include "resizerectcorner.h"
+#include "resizeablegraphicsitem.h"
 #include "sysovrvtextlabel.h"
 #include "sysovrvtrigger.h"
 #include "msg.h"
@@ -38,7 +38,7 @@ public:
     static QStringList getShapesAsStringList();
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
     int type() const;
 
 
@@ -66,12 +66,14 @@ public:
      * \note This function will call \ref updateShape to force a redrawing of the internal QPixMap
      *
      */
+    //DEPRECATED
     void setShape(ObjShapeType shape);
     /**
      * @brief getShape Returns the current shape of the \ref SysOvrvObject as a \ref ObjShapeType
      * @return Current shape as a \ref ObjShapeType
      */
-    ObjShapeType getShape() const;
+    //DEPRECATED
+    virtual ObjShapeType getShape() const;
 
     /**
      * @brief addLabel adds a new \ref SysOvrvTextLabel to the \ref SysOvrvObject by creating a new \ref SysOvrvTextLabel
@@ -91,7 +93,8 @@ public:
      * @param y
      * @return
      */
-    SysOvrvTextLabel * addLabel(const QString &text, qreal x, qreal y);
+    SysOvrvTextLabel * addLabel(const QString &text, const qreal x, const qreal y);
+    //DEPRECATED
     void removeLabel(SysOvrvTextLabel *label);
 
     /**
@@ -156,7 +159,5 @@ public:
     void setHeight(const qreal newHeight);
     qreal getHeight() const;
 };
-
-
 
 #endif // SYSOVRVOBJECT_H

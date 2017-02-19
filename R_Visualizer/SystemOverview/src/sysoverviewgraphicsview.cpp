@@ -60,7 +60,7 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
 SysOvrvObject *SysOverviewGraphicsView::getObjAtPos(const QPointF &pos) const
 {
-    SysOvrvObject *currentObject = itemAt(pos);
+    SysOvrvObject *currentObject = qgraphicsitem_cast<SysOvrvObject*>(itemAt(mapFromScene(pos)));
 
     while(currentObject != Q_NULLPTR)
     {
