@@ -7,27 +7,27 @@
 #include <QDebug>
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(QGraphicsItem *parent) :
-    SysOvrvObject(parent)
+    SysOvrvObjDerivationHelper(parent)
 {
 }
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(const EllipseSysOvrvObject &other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(EllipseSysOvrvObject &&other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(const SysOvrvObject &original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
@@ -37,7 +37,7 @@ EllipseSysOvrvObject::~EllipseSysOvrvObject()
 
 void EllipseSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    SysOvrvObject::paint(painter, option, widget);
+    SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
     QBrush colorBrush(getMyColor());
     painter->save();

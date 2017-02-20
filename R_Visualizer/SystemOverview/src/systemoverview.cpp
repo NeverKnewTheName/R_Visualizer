@@ -143,7 +143,7 @@ void SystemOverview::slt_newMessage(const Msg &newMsg)
 void SystemOverview::slt_addNewObject(const QPointF &pos)
 {
     SysOvrvObjectDialog addSysOvrvObjectDialog;
-    connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::commit, [=](SysOvrvObject *obj){
+    connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::sgnl_commit, [=](SysOvrvObject *obj){
             SystemOverviewScene.addItem(obj);
             qDebug() << "Item: " << obj->getObjName() << " added to scene at pos: " << pos;
             obj->setPos(pos);

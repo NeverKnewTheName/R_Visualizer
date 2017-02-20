@@ -7,27 +7,27 @@
 #include <QDebug>
 
 SquareSysOvrvObject::SquareSysOvrvObject(QGraphicsItem *parent) :
-    SysOvrvObject(parent)
+    SysOvrvObjDerivationHelper(parent)
 {
 }
 
 SquareSysOvrvObject::SquareSysOvrvObject(const SquareSysOvrvObject &other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 SquareSysOvrvObject::SquareSysOvrvObject(SquareSysOvrvObject &&other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 SquareSysOvrvObject::SquareSysOvrvObject(const SysOvrvObject &original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
 SquareSysOvrvObject::SquareSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
@@ -37,7 +37,7 @@ SquareSysOvrvObject::~SquareSysOvrvObject()
 
 void SquareSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    SysOvrvObject::paint(painter, option, widget);
+    SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
     QBrush colorBrush(getMyColor());
 

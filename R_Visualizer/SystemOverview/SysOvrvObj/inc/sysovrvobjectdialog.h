@@ -36,25 +36,23 @@ private:
     void setupDialog();
 
 signals:
-    void commit(SysOvrvObject *obj);
+    void sgnl_commit(SysOvrvObject *obj);
 
 private slots:
     void on_addPropertyBtn_clicked();
-
     void on_rmvPropertyBtn_clicked();
-
     void on_edtPropertyBtn_clicked();
-
     void on_buttonBox_clicked(QAbstractButton *button);
-
     void on_edtTriggerBtn_clicked();
 
-    void objectShapeChanged(int index);
-    void addObjectToObject(SysOvrvObject *obj);
-    void focusChanged(QGraphicsItem *newItem, QGraphicsItem *oldItem);
-    void selectionChanged();
+    void slt_objectShapeChanged(int index);
+    void slt_addObjectToObject(SysOvrvObject *obj);
+    void slt_focusChanged(QGraphicsItem *newItem, QGraphicsItem *oldItem);
+    void slt_selectionChanged();
+
     void on_OpenColorPicker_clicked();
-    void colorChanged(const QColor &newColor);
+    void slt_colorChanged(const QColor &newColor);
+
     void on_pushButton_clicked();
     void on_objectNameLE_textEdited(const QString &arg1);
     void on_addLblBtn_clicked();

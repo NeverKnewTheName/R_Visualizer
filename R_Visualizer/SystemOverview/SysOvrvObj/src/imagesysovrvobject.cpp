@@ -7,27 +7,27 @@
 #include <QDebug>
 
 ImageSysOvrvObject::ImageSysOvrvObject(QGraphicsItem *parent) :
-    SysOvrvObject(parent)
+    SysOvrvObjDerivationHelper(parent)
 {
 }
 
 ImageSysOvrvObject::ImageSysOvrvObject(const ImageSysOvrvObject &other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 ImageSysOvrvObject::ImageSysOvrvObject(ImageSysOvrvObject &&other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 ImageSysOvrvObject::ImageSysOvrvObject(const SysOvrvObject &original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
 ImageSysOvrvObject::ImageSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
@@ -35,8 +35,9 @@ ImageSysOvrvObject::~ImageSysOvrvObject()
 {
 }
 
-void ImageSysOvrvObject::paint(QPainter *paint, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void ImageSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    SysOvrvObjDerivationHelper::paint(painter, option, widget);
 }
 
 SysOvrvObject::ObjShapeType ImageSysOvrvObject::getShape() const

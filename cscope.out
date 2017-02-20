@@ -1,4 +1,4 @@
-cscope 15 $HOME/QtWrkSpc/R_Visualizer_Build               0000776337
+cscope 15 $HOME/QtWrkSpc/R_Visualizer_Build               0000781405
 	@CAN_Analyser_USB_Driver/can_packet.cpp
 
 1 
@@ -44159,11 +44159,11 @@ QObjeù
 Q_OBJECT
 
 
-27 
+28 
 	gpublic
 :
 
-32 
+33 
 MsgStÜage
 (
 QObjeù
@@ -44173,7 +44173,7 @@ QObjeù
 Q_NULLPTR
 );
 
-44 
+45 
 Msg
  
 ©
@@ -44183,7 +44183,7 @@ size_t
 šdex
 );
 
-47 
+48 
 Msg
  
 	gİ”©Ü
@@ -44193,21 +44193,21 @@ size_t
 	gšdex
 );
 
-54 
+55 
 ş—r
 ();
 
-59 
+60 
 size
 () const;
 
-63 
+64 
 boŞ
  
 isEm±y
 () const;
 
-65 
+66 
 ­³ndMsg
 (cÚ¡ 
 Msg
@@ -44215,13 +44215,13 @@ Msg
 ÃwMsg
 );
 
-70 
+71 
 QJsÚDocum’t
  
 P¬£ToJsÚ
 () const;
 
-74 
+75 
 boŞ
  
 P¬£FromJsÚ
@@ -44231,7 +44231,7 @@ QJsÚA¼ay
 jsÚMsgsA¼ay
 );
 
-76 
+77 
 acû±
 (
 FeP¬£r
@@ -44239,7 +44239,7 @@ FeP¬£r
 vis™Ü
 );
 
-78 
+79 
 QSŒšg
  
 §veMsgStÜage
@@ -44247,11 +44247,11 @@ QSŒšg
 §veLoÿtiÚ
 );
 
-80 
+81 
 	gsigÇls
 :
 
-81 
+82 
 sgÆ_MsgAdded
 (cÚ¡ 
 Msg
@@ -44259,17 +44259,17 @@ Msg
 addedMsg
 );
 
-82 
+83 
 sgÆ_StÜeCË¬ed
 ();
 
-84 
+85 
 ´iv©e
  
 	g¦Ùs
 :
 
-85 
+86 
 ¦t_addMsg
 (cÚ¡ 
 Msg
@@ -44277,11 +44277,11 @@ Msg
 ÃwMsg
 );
 
-87 
+88 
 	g´iv©e
 :
 
-88 
+89 
 ä›nd
  
 şass
@@ -44289,7 +44289,7 @@ Msg
 MašWšdow
 ;
 
-89 
+90 
 	gD©aStÜage
 <
 	gMsg
@@ -60346,7 +60346,7 @@ Q_DECL_OVERRIDE
 21 
 SysOvrvObjeù
 ::
-QbjSh­eTy³
+ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
@@ -60448,7 +60448,7 @@ Q_DECL_OVERRIDE
 21 
 SysOvrvObjeù
 ::
-QbjSh­eTy³
+ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
@@ -60546,7 +60546,7 @@ Q_DECL_OVERRIDE
 18 
 SysOvrvObjeù
 ::
-QbjSh­eTy³
+ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
@@ -60648,7 +60648,7 @@ Q_DECL_OVERRIDE
 21 
 SysOvrvObjeù
 ::
-QbjSh­eTy³
+ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
@@ -60806,32 +60806,6 @@ boŞ
 31 
 public
 :
-
-32 
-QReùF
- 
-	$boundšgReù
-() const;
-
-33 
-	`·št
-(
-QPaš‹r
- *
-·š‹r
-, cÚ¡ 
-QStyËO±iÚG¿phicsI‹m
- *
-İtiÚ
-, 
-QWidg‘
- *
-widg‘
-);
-
-34 
-	$ty³
-() const;
 
 35 
 	}
@@ -61052,14 +61026,10 @@ SysOvrvObjeù
 
 
 8 
-´iv©e
-:
-
-11 
 public
 :
 
-12 
+9 
 Squ¬eSysOvrvObjeù
 (
 QG¿phicsI‹m
@@ -61069,19 +61039,19 @@ QG¿phicsI‹m
 Q_NULLPTR
 );
 
-13 
+10 
 Squ¬eSysOvrvObjeù
 (cÚ¡ Squ¬eSysOvrvObjeù &
 Ùh”
 );
 
-14 
+11 
 Squ¬eSysOvrvObjeù
 (Squ¬eSysOvrvObjeù &&
 Ùh”
 );
 
-15 
+12 
 Squ¬eSysOvrvObjeù
 (cÚ¡ 
 SysOvrvObjeù
@@ -61089,7 +61059,7 @@ SysOvrvObjeù
 Üigš®
 );
 
-16 
+13 
 Squ¬eSysOvrvObjeù
 (
 SysOvrvObjeù
@@ -61097,11 +61067,11 @@ SysOvrvObjeù
 Üigš®
 );
 
-17 ~
+14 ~
 Squ¬eSysOvrvObjeù
 ();
 
-19 
+16 
 	$·št
 (
 QPaš‹r
@@ -61121,13 +61091,17 @@ Q_NULLPTR
 Q_DECL_OVERRIDE
 ;
 
-21 
+18 
 SysOvrvObjeù
 ::
-QbjSh­eTy³
+ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
+
+19 
+´iv©e
+:
 
 	@R_Visualizer/SystemOverview/SysOvrvObj/inc/sysovrvobjcontainer.h
 
@@ -61353,7 +61327,7 @@ QSŒšg
 FeP©h
 );
 
-69 
+70 
 	`£tSh­e
 (
 ObjSh­eTy³
@@ -61361,19 +61335,21 @@ ObjSh­eTy³
 sh­e
 );
 
-74 
+76 
+vœtu®
+ 
 ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
 
-80 
+82 
 SysOvrvTextLab–
  * 
 	`addLab–
 ();
 
-86 
+88 
 SysOvrvTextLab–
  * 
 	`addLab–
@@ -61381,7 +61357,7 @@ SysOvrvTextLab–
 Ïb–
 );
 
-94 
+96 
 SysOvrvTextLab–
  * 
 	`addLab–
@@ -61389,15 +61365,15 @@ SysOvrvTextLab–
 QSŒšg
  &
 ‹xt
-, 
+, cÚ¡ 
 q»®
  
 x
-, q»® 
+, cÚ¡ q»® 
 y
 );
 
-95 
+98 
 	`»moveLab–
 (
 SysOvrvTextLab–
@@ -61405,7 +61381,7 @@ SysOvrvTextLab–
 Ïb–
 );
 
-105 
+108 
 SysOvrvObjeù
  *
 	`du¶iÿ‹
@@ -61415,7 +61391,7 @@ SysOvrvObjeù
 Q_NULLPTR
 );
 
-107 
+110 
 	`£tAsChd
 (
 boŞ
@@ -61423,13 +61399,13 @@ boŞ
 isChd
 );
 
-108 
+111 
 boŞ
  
 	$isAChd
 () const;
 
-110 
+113 
 QVeùÜ
 <
 SysOvrvObjeù
@@ -61437,7 +61413,7 @@ SysOvrvObjeù
 	`g‘ChidSysOvrvObjeùs
 ();
 
-112 
+115 
 	$mou£MoveEv’t
 (
 QG¿phicsSûÃMou£Ev’t
@@ -61447,19 +61423,19 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-113 
+116 
 QSŒšg
  
 	$g‘HashedName
 () const;
 
-115 
+118 
 QBy‹A¼ay
  
 	$·r£ToJsÚ
 () const;
 
-116 
+119 
 	`·r£FromJsÚ
 (
 QBy‹A¼ay
@@ -61467,13 +61443,13 @@ QBy‹A¼ay
 jsÚBy‹A¼ay
 );
 
-118 
+121 
 QPixm­
  
 	$g‘ObjPixM­
 () const;
 
-119 
+122 
 	`£tObjPixM­
 (cÚ¡ 
 QPixm­
@@ -61481,7 +61457,7 @@ QPixm­
 v®ue
 );
 
-122 
+125 
 	`£tP¬’tSysOvrvObj
 (
 SysOvrvObjeù
@@ -61489,7 +61465,7 @@ SysOvrvObjeù
 ·»ÁSysOvrvObj
 );
 
-124 
+127 
 	`’abËEd™
 (
 boŞ
@@ -61499,7 +61475,7 @@ boŞ
 Œue
 );
 
-125 
+128 
 	`’abËChd»nEd™
 (
 boŞ
@@ -61509,67 +61485,67 @@ boŞ
 Œue
 );
 
-127 
+130 
 ´iv©e
 :
 
-128 
+131 
 objCÁr
 ;
 
-129 cÚ¡ 
+132 cÚ¡ 
 loÿlObjCÁr
 ;
 
-130 
+133 
 QReùF
  
 m_BoundšgReù
 ;
 
-131 
+134 
 QSŒšg
  
 objName
 ;
 
-132 
+135 
 QCŞÜ
  
 myCŞÜ
 ;
 
-133 
+136 
 ObjSh­eTy³
  
 sh­eTy³
 ;
 
-134 
+137 
 boŞ
  
 isChdObjeù
 ;
 
-135 
+138 
 boŞ
  
 isEd™abË
 ;
 
-136 
+139 
 boŞ
  
 doubËClicked
 ;
 
-137 
+140 
 QPixm­
  
 ObjPixM­
 ;
 
-139 
+142 
 	`upd©eSh­e
 (cÚ¡ 
 QReùF
@@ -61579,15 +61555,15 @@ QReùF
 	`QReùF
 ());
 
-140 
+143 
 	`£tupSysOvrvObjeù
 ();
 
-142 
+145 
 ´Ùeùed
 :
 
-143 
+146 
 	$mou£P»ssEv’t
 (
 QG¿phicsSûÃMou£Ev’t
@@ -61597,7 +61573,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-144 
+147 
 	$mou£R–—£Ev’t
 (
 QG¿phicsSûÃMou£Ev’t
@@ -61607,7 +61583,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-145 
+148 
 	$mou£DoubËClickEv’t
 (
 QG¿phicsSûÃMou£Ev’t
@@ -61617,7 +61593,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-146 
+149 
 	$focusInEv’t
 (
 QFocusEv’t
@@ -61627,7 +61603,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-147 
+150 
 	$focusOutEv’t
 (
 QFocusEv’t
@@ -61637,7 +61613,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-148 
+151 
 	$hov”EÁ”Ev’t
 (
 QG¿phicsSûÃHov”Ev’t
@@ -61647,7 +61623,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-149 
+152 
 	$hov”L—veEv’t
 (
 QG¿phicsSûÃHov”Ev’t
@@ -61657,11 +61633,11 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-152 
+155 
 public
 :
 
-153 
+156 
 	`»size
 (
 ResizeReùCÜÃr
@@ -61677,7 +61653,7 @@ x
 y
 );
 
-154 
+157 
 	`£tWidth
 (cÚ¡ 
 q»®
@@ -61685,13 +61661,13 @@ q»®
 ÃwWidth
 );
 
-155 
+158 
 q»®
  
 	$g‘Width
 () const;
 
-156 
+159 
 	`£tHeight
 (cÚ¡ 
 q»®
@@ -61699,13 +61675,13 @@ q»®
 ÃwHeight
 );
 
-157 
+160 
 q»®
  
 	$g‘Height
 () const;
 
-158 
+161 
 	}
 };
 
@@ -61858,7 +61834,7 @@ sigÇls
 :
 
 39 
-	`comm™
+	`sgÆ_comm™
 (
 SysOvrvObjeù
  *
@@ -61875,15 +61851,15 @@ obj
 	`Ú_addPrİ”tyBŠ_şicked
 ();
 
-44 
+43 
 	`Ú_rmvPrİ”tyBŠ_şicked
 ();
 
-46 
+44 
 	`Ú_edtPrİ”tyBŠ_şicked
 ();
 
-48 
+45 
 	`Ú_bu‰ÚBox_şicked
 (
 QAb¡¿ùBu‰Ú
@@ -61891,26 +61867,26 @@ QAb¡¿ùBu‰Ú
 bu‰Ú
 );
 
-50 
+46 
 	`Ú_edtTrigg”BŠ_şicked
 ();
 
-52 
-	`objeùSh­eChªged
+48 
+	`¦t_objeùSh­eChªged
 (
 šdex
 );
 
-53 
-	`addObjeùToObjeù
+49 
+	`¦t_addObjeùToObjeù
 (
 SysOvrvObjeù
  *
 obj
 );
 
-54 
-	`focusChªged
+50 
+	`¦t_focusChªged
 (
 QG¿phicsI‹m
  *
@@ -61919,27 +61895,27 @@ QG¿phicsI‹m
 ŞdI‹m
 );
 
-55 
-	`£ËùiÚChªged
+51 
+	`¦t_£ËùiÚChªged
 ();
 
-56 
+53 
 	`Ú_O³nCŞÜPick”_şicked
 ();
 
-57 
-	`cŞÜChªged
+54 
+	`¦t_cŞÜChªged
 (cÚ¡ 
 QCŞÜ
  &
 ÃwCŞÜ
 );
 
-58 
+56 
 	`Ú_pushBu‰Ú_şicked
 ();
 
-59 
+57 
 	`Ú_objeùNameLE_‹xtEd™ed
 (cÚ¡ 
 QSŒšg
@@ -61947,7 +61923,7 @@ QSŒšg
 ¬g1
 );
 
-60 
+58 
 	`Ú_addLblBŠ_şicked
 ();
 
@@ -61985,7 +61961,133 @@ SYSOVRVOBJECTSTORE_H
 	gMsg
 ;
 
-12 şas 
+12 
+	sTrigg”Id’tif›r
+
+
+14 cÚ¡ 
+MsgIDTy³
+ 
+	mid
+;
+
+15 cÚ¡ 
+MsgCodeTy³
+ 
+	mcode
+;
+
+16 
+Trigg”Id’tif›r
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+, cÚ¡ 
+MsgCodeTy³
+ 
+code
+) :
+
+17 
+id
+(id),
+
+18 
+code
+(code)
+
+21 
+Trigg”Id’tif›r
+(cÚ¡ Trigg”Id’tif›¸&
+Ùh”
+) :
+
+22 
+id
+(
+Ùh”
+.id),
+
+23 
+code
+(
+Ùh”
+.code)
+
+26 
+boŞ
+ 
+	mİ”©Ü
+==(cÚ¡ 
+Trigg”Id’tif›r
+ &
+Ùh”
+)
+
+28  ((
+id
+ =ğ
+Ùh”
+.idè&& (
+code
+ == other.code));
+
+33 
+šlše
+ 
+boŞ
+ 
+	gİ”©Ü
+==(cÚ¡ 
+Trigg”Id’tif›r
+ &
+Œigg”ID1
+, cÚ¡ 
+	gTrigg”Id’tif›r
+ &
+	gŒigg”ID2
+)
+
+35  
+	gŒigg”ID1
+ =ğ
+Œigg”ID2
+;
+
+38 
+šlše
+ 
+ušt
+ 
+	$qHash
+(cÚ¡ 
+Trigg”Id’tif›r
+ &
+key
+, 
+ušt
+ 
+£ed
+)
+
+40  ((
+key
+.
+id
+ << (8*(
+MsgCodeTy³
+))è& key.
+code
+è+ 
+£ed
+;
+
+41 
+	}
+}
+
+45 şas 
 	cSysOvrvObjeùStÜe
  : 
 public
@@ -61993,15 +62095,15 @@ public
 QObjeù
 
 
-14 
+47 
 Q_OBJECT
 
 
-15 
+49 
 public
 :
 
-16 
+50 
 ex¶ic™
  
 SysOvrvObjeùStÜe
@@ -62011,17 +62113,15 @@ QObjeù
 ·»Á
  = 0);
 
-18 
-	mQHash
+52 
+	mQVeùÜ
 <
-	mQSŒšg
-, 
 	mSysOvrvObjeù
  *> 
 	$g‘ObjeùStÜe
 () const;
 
-19 
+53 
 	`addMe§geToW©ch
 (cÚ¡ 
 MsgIDTy³
@@ -62037,7 +62137,7 @@ SysOvrvObjeù
 »Ï‹dSysOvrvObj
 );
 
-20 
+54 
 	`»moveMe§geToW©ch
 (cÚ¡ 
 MsgIDTy³
@@ -62053,7 +62153,7 @@ SysOvrvObjeù
 »Ï‹dSysOvrvObj
 );
 
-22 
+56 
 	`addObjeù
 (
 SysOvrvObjeù
@@ -62061,7 +62161,7 @@ SysOvrvObjeù
 obj
 );
 
-23 
+57 
 	`»moveObjeù
 (
 SysOvrvObjeù
@@ -62069,7 +62169,7 @@ SysOvrvObjeù
 obj
 );
 
-24 
+58 
 	`upd©eObjeù
 (
 SysOvrvObjeù
@@ -62077,67 +62177,65 @@ SysOvrvObjeù
 obj
 );
 
-26 
+60 
 ´iv©e
 :
 
-27 
-QHash
+61 
+QVeùÜ
 <
-QSŒšg
-, 
 SysOvrvObjeù
 *> 
 objeùStÜe
 ;
 
-28 
+62 
 QHash
 <
-MsgIDTy³
-, QHash<
-MsgCodeTy³
+Trigg”Id’tif›r
 , 
 QVeùÜ
 <
 SysOvrvObjeù
-*>>> 
-msgP¬£rStÜe
+*>> 
+objeùTrigg”StÜe
 ;
 
-29 
-QPoštF
- 
-curObjPos
-;
-
-31 
+64 
 sigÇls
 :
 
-32 
-	`objeùAddedToStÜe
+65 
+	`sgÆ_objeùAddedToStÜe
 (
 SysOvrvObjeù
  *
 addedObjeù
 );
 
-33 
-	`objeùRemovedFromStÜe
+66 
+	`sgÆ_objeùRemovedFromStÜe
 (
 SysOvrvObjeù
  *
 »movedObjeù
 );
 
-35 
+68 
 public
  
 ¦Ùs
 :
 
-36 
+69 
+	`¦t_»ûiveMes§ge
+(cÚ¡ 
+Msg
+ &
+ÃwMsg
+);
+
+71 
 	`¦t_addObjeù
 (
 SysOvrvObjeù
@@ -62145,7 +62243,7 @@ SysOvrvObjeù
 objToAdd
 );
 
-37 
+72 
 	`¦t_»moveObjeù
 (
 SysOvrvObjeù
@@ -62153,20 +62251,12 @@ SysOvrvObjeù
 objToRmv
 );
 
-38 
+73 
 	`¦t_upd©eObjeù
 (
 SysOvrvObjeù
  *
 objToUpdt
-);
-
-39 
-	`¦t_»ûiveMes§ge
-(cÚ¡ 
-Msg
- &
-ÃwMsg
 );
 
 	@R_Visualizer/SystemOverview/SysOvrvObj/inc/sysovrvtextlabel.h
@@ -62458,7 +62548,7 @@ Q_DECL_OVERRIDE
 21 
 SysOvrvObjeù
 ::
-QbjSh­eTy³
+ObjSh­eTy³
  
 	$g‘Sh­e
 () const;
@@ -62482,10 +62572,22 @@ TRIGGERABLESYSOVRVOBJ_H
 "
 
 3 
+	~<QPaš‹r
+>
+
+4 
+	~<QBrush
+>
+
+5 
+	~<QPoštF
+>
+
+7 
 	~<QDebug
 >
 
-5 
+9 
 	gCœşeSysOvrvObjeù
 ::
 	$CœşeSysOvrvObjeù
@@ -62495,17 +62597,17 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-6 
+10 
 	$SysOvrvObjeù
 (
 ·»Á
 )
 
-8 
+12 
 	}
 }
 
-10 
+14 
 CœşeSysOvrvObjeù
 ::
 	$CœşeSysOvrvObjeù
@@ -62514,18 +62616,18 @@ CœşeSysOvrvObjeù
  &
 Ùh”
 ) :
-
-11 
-	$SysOvrvObjeù
-(
-Ùh”
-)
-
-13 
-	}
-}
 
 15 
+	$SysOvrvObjeù
+(
+Ùh”
+)
+
+17 
+	}
+}
+
+19 
 CœşeSysOvrvObjeù
 ::
 	$CœşeSysOvrvObjeù
@@ -62535,17 +62637,17 @@ CœşeSysOvrvObjeù
 Ùh”
 ) :
 
-16 
+20 
 	$SysOvrvObjeù
 (
 Ùh”
 )
 
-18 
+22 
 	}
 }
 
-20 
+24 
 CœşeSysOvrvObjeù
 ::
 	$CœşeSysOvrvObjeù
@@ -62555,17 +62657,17 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-21 
+25 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-23 
+27 
 	}
 }
 
-25 
+29 
 CœşeSysOvrvObjeù
 ::
 	$CœşeSysOvrvObjeù
@@ -62575,17 +62677,27 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-26 
+30 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-28 
+32 
 	}
 }
 
-30 
+34 
+CœşeSysOvrvObjeù
+::~
+	$CœşeSysOvrvObjeù
+()
+
+36 
+	}
+}
+
+38 
 CœşeSysOvrvObjeù
 ::
 	$·št
@@ -62603,7 +62715,7 @@ QWidg‘
 widg‘
 )
 
-32 
+40 
 SysOvrvObjeù
 ::
 	`·št
@@ -62615,7 +62727,7 @@ SysOvrvObjeù
 widg‘
 );
 
-33 
+41 
 QReùF
  
 boundReù
@@ -62623,7 +62735,7 @@ boundReù
 	`boundšgReù
 ();
 
-34 
+42 
 QBrush
  
 	`cŞÜBrush
@@ -62631,13 +62743,13 @@ QBrush
 	`g‘MyCŞÜ
 ());
 
-35 
+43 
 ·š‹r
-.
+->
 	`§ve
 ();
 
-37 
+45 
 ·š‹r
 ->
 	`£tBrush
@@ -62645,7 +62757,7 @@ QBrush
 cŞÜBrush
 );
 
-38 
+46 
 ·š‹r
 ->
 	`d¿wEÎ£
@@ -62653,17 +62765,17 @@ cŞÜBrush
 boundReù
 );
 
-40 
+48 
 ·š‹r
-.
+->
 	`»¡Üe
 ();
 
-41 
+49 
 	}
 }
 
-43 
+51 
 	gSysOvrvObjeù
 ::
 ObjSh­eTy³
@@ -62673,13 +62785,13 @@ CœşeSysOvrvObjeù
 	$g‘Sh­e
 () const
 
-45  
+53  
 SysOvrvObjeù
 ::
 ObjSh­e_Cœşe
 ;
 
-46 
+54 
 	}
 }
 
@@ -62690,10 +62802,22 @@ ObjSh­e_Cœşe
 "
 
 3 
+	~<QPaš‹r
+>
+
+4 
+	~<QBrush
+>
+
+5 
+	~<QPoštF
+>
+
+7 
 	~<QDebug
 >
 
-5 
+9 
 	gEÎ£SysOvrvObjeù
 ::
 	$EÎ£SysOvrvObjeù
@@ -62703,17 +62827,17 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-6 
+10 
 	$SysOvrvObjeù
 (
 ·»Á
 )
 
-8 
+12 
 	}
 }
 
-10 
+14 
 EÎ£SysOvrvObjeù
 ::
 	$EÎ£SysOvrvObjeù
@@ -62722,18 +62846,18 @@ EÎ£SysOvrvObjeù
  &
 Ùh”
 ) :
-
-11 
-	$SysOvrvObjeù
-(
-Ùh”
-)
-
-13 
-	}
-}
 
 15 
+	$SysOvrvObjeù
+(
+Ùh”
+)
+
+17 
+	}
+}
+
+19 
 EÎ£SysOvrvObjeù
 ::
 	$EÎ£SysOvrvObjeù
@@ -62743,17 +62867,17 @@ EÎ£SysOvrvObjeù
 Ùh”
 ) :
 
-16 
+20 
 	$SysOvrvObjeù
 (
 Ùh”
 )
 
-18 
+22 
 	}
 }
 
-20 
+24 
 EÎ£SysOvrvObjeù
 ::
 	$EÎ£SysOvrvObjeù
@@ -62763,17 +62887,17 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-21 
+25 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-23 
+27 
 	}
 }
 
-25 
+29 
 EÎ£SysOvrvObjeù
 ::
 	$EÎ£SysOvrvObjeù
@@ -62783,17 +62907,27 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-26 
+30 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-28 
+32 
 	}
 }
 
-30 
+34 
+EÎ£SysOvrvObjeù
+::~
+	$EÎ£SysOvrvObjeù
+()
+
+36 
+	}
+}
+
+38 
 EÎ£SysOvrvObjeù
 ::
 	$·št
@@ -62811,7 +62945,7 @@ QWidg‘
 widg‘
 )
 
-32 
+40 
 SysOvrvObjeù
 ::
 	`·št
@@ -62823,7 +62957,7 @@ SysOvrvObjeù
 widg‘
 );
 
-33 
+41 
 QReùF
  
 boundReù
@@ -62831,7 +62965,7 @@ boundReù
 	`boundšgReù
 ();
 
-34 
+42 
 QBrush
  
 	`cŞÜBrush
@@ -62839,13 +62973,13 @@ QBrush
 	`g‘MyCŞÜ
 ());
 
-35 
+43 
 ·š‹r
-.
+->
 	`§ve
 ();
 
-37 
+45 
 ·š‹r
 ->
 	`£tBrush
@@ -62853,7 +62987,7 @@ QBrush
 cŞÜBrush
 );
 
-38 
+46 
 ·š‹r
 ->
 	`d¿wEÎ£
@@ -62861,17 +62995,17 @@ cŞÜBrush
 boundReù
 );
 
-40 
+48 
 ·š‹r
-.
+->
 	`»¡Üe
 ();
 
-41 
+49 
 	}
 }
 
-43 
+51 
 	gSysOvrvObjeù
 ::
 ObjSh­eTy³
@@ -62881,13 +63015,13 @@ EÎ£SysOvrvObjeù
 	$g‘Sh­e
 () const
 
-45  
+53  
 SysOvrvObjeù
 ::
 ObjSh­e_EÎ£
 ;
 
-46 
+54 
 	}
 }
 
@@ -62898,10 +63032,22 @@ ObjSh­e_EÎ£
 "
 
 3 
+	~<QPaš‹r
+>
+
+4 
+	~<QBrush
+>
+
+5 
+	~<QPoštF
+>
+
+7 
 	~<QDebug
 >
 
-5 
+9 
 	gImageSysOvrvObjeù
 ::
 	$ImageSysOvrvObjeù
@@ -62911,17 +63057,17 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-6 
+10 
 	$SysOvrvObjeù
 (
 ·»Á
 )
 
-8 
+12 
 	}
 }
 
-10 
+14 
 ImageSysOvrvObjeù
 ::
 	$ImageSysOvrvObjeù
@@ -62930,18 +63076,18 @@ ImageSysOvrvObjeù
  &
 Ùh”
 ) :
-
-11 
-	$SysOvrvObjeù
-(
-Ùh”
-)
-
-13 
-	}
-}
 
 15 
+	$SysOvrvObjeù
+(
+Ùh”
+)
+
+17 
+	}
+}
+
+19 
 ImageSysOvrvObjeù
 ::
 	$ImageSysOvrvObjeù
@@ -62951,17 +63097,17 @@ ImageSysOvrvObjeù
 Ùh”
 ) :
 
-16 
+20 
 	$SysOvrvObjeù
 (
 Ùh”
 )
 
-18 
+22 
 	}
 }
 
-20 
+24 
 ImageSysOvrvObjeù
 ::
 	$ImageSysOvrvObjeù
@@ -62971,17 +63117,17 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-21 
+25 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-23 
+27 
 	}
 }
 
-25 
+29 
 ImageSysOvrvObjeù
 ::
 	$ImageSysOvrvObjeù
@@ -62991,17 +63137,27 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-26 
+30 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-28 
+32 
 	}
 }
 
-30 
+34 
+ImageSysOvrvObjeù
+::~
+	$ImageSysOvrvObjeù
+()
+
+36 
+	}
+}
+
+38 
 ImageSysOvrvObjeù
 ::
 	$·št
@@ -63019,11 +63175,11 @@ QWidg‘
 widg‘
 )
 
-32 
+40 
 	}
 }
 
-34 
+42 
 	gSysOvrvObjeù
 ::
 ObjSh­eTy³
@@ -63033,13 +63189,13 @@ ImageSysOvrvObjeù
 	$g‘Sh­e
 () const
 
-36  
+44  
 SysOvrvObjeù
 ::
 ObjSh­e_Image
 ;
 
-37 
+45 
 	}
 }
 
@@ -63050,10 +63206,22 @@ ObjSh­e_Image
 "
 
 3 
+	~<QPaš‹r
+>
+
+4 
+	~<QBrush
+>
+
+5 
+	~<QPoštF
+>
+
+7 
 	~<QDebug
 >
 
-5 
+9 
 	gReùSysOvrvObjeù
 ::
 	$ReùSysOvrvObjeù
@@ -63063,17 +63231,17 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-6 
+10 
 	$SysOvrvObjeù
 (
 ·»Á
 )
 
-8 
+12 
 	}
 }
 
-10 
+14 
 ReùSysOvrvObjeù
 ::
 	$ReùSysOvrvObjeù
@@ -63082,18 +63250,18 @@ ReùSysOvrvObjeù
  &
 Ùh”
 ) :
-
-11 
-	$SysOvrvObjeù
-(
-Ùh”
-)
-
-13 
-	}
-}
 
 15 
+	$SysOvrvObjeù
+(
+Ùh”
+)
+
+17 
+	}
+}
+
+19 
 ReùSysOvrvObjeù
 ::
 	$ReùSysOvrvObjeù
@@ -63103,17 +63271,17 @@ ReùSysOvrvObjeù
 Ùh”
 ) :
 
-16 
+20 
 	$SysOvrvObjeù
 (
 Ùh”
 )
 
-18 
+22 
 	}
 }
 
-20 
+24 
 ReùSysOvrvObjeù
 ::
 	$ReùSysOvrvObjeù
@@ -63123,17 +63291,17 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-21 
+25 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-23 
+27 
 	}
 }
 
-25 
+29 
 ReùSysOvrvObjeù
 ::
 	$ReùSysOvrvObjeù
@@ -63143,17 +63311,27 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-26 
+30 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-28 
+32 
 	}
 }
 
-30 
+34 
+ReùSysOvrvObjeù
+::~
+	$ReùSysOvrvObjeù
+()
+
+36 
+	}
+}
+
+38 
 ReùSysOvrvObjeù
 ::
 	$·št
@@ -63171,7 +63349,7 @@ QWidg‘
 widg‘
 )
 
-32 
+40 
 SysOvrvObjeù
 ::
 	`·št
@@ -63183,7 +63361,7 @@ SysOvrvObjeù
 widg‘
 );
 
-33 
+41 
 QReùF
  
 boundReù
@@ -63191,7 +63369,7 @@ boundReù
 	`boundšgReù
 ();
 
-34 
+42 
 QBrush
  
 	`cŞÜBrush
@@ -63199,13 +63377,13 @@ QBrush
 	`g‘MyCŞÜ
 ());
 
-35 
+43 
 ·š‹r
-.
+->
 	`§ve
 ();
 
-37 
+45 
 ·š‹r
 ->
 	`£tBrush
@@ -63213,7 +63391,7 @@ QBrush
 cŞÜBrush
 );
 
-38 
+46 
 ·š‹r
 ->
 	`d¿wReù
@@ -63221,17 +63399,17 @@ cŞÜBrush
 boundReù
 );
 
-40 
+48 
 ·š‹r
-.
+->
 	`»¡Üe
 ();
 
-41 
+49 
 	}
 }
 
-43 
+51 
 	gSysOvrvObjeù
 ::
 ObjSh­eTy³
@@ -63241,13 +63419,13 @@ ReùSysOvrvObjeù
 	$g‘Sh­e
 () const
 
-45  
+53  
 SysOvrvObjeù
 ::
 ObjSh­e_ReùªgË
 ;
 
-46 
+54 
 	}
 }
 
@@ -63258,18 +63436,22 @@ ObjSh­e_ReùªgË
 "
 
 3 
-	~<QG¿phicsSûÃMou£Ev’t
+	~<QPaš‹r
 >
 
 4 
+	~<QG¿phicsSûÃMou£Ev’t
+>
+
+5 
 	~<QCursÜ
 >
 
-6 
+7 
 	~<QDebug
 >
 
-8 
+9 
 	gResizabËG¿phicsI‹m
 ::
 	$ResizabËG¿phicsI‹m
@@ -63279,17 +63461,17 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-9 
+10 
 	`QG¿phicsI‹m
 (
 ·»Á
 ),
 
-10 
+11 
 »sizeCÜÃrs
 {
 
-11 
+12 
 	`ResizeReùCÜÃr
 (
 ResizeReùCÜÃr
@@ -63299,7 +63481,7 @@ tİLeáCÜÃr
 this
 ),
 
-12 
+13 
 	`ResizeReùCÜÃr
 (
 ResizeReùCÜÃr
@@ -63309,7 +63491,7 @@ bÙtomLeáCÜÃr
 this
 ),
 
-13 
+14 
 	`ResizeReùCÜÃr
 (
 ResizeReùCÜÃr
@@ -63319,7 +63501,7 @@ tİRightCÜÃr
 this
 ),
 
-14 
+15 
 	`ResizeReùCÜÃr
 (
 ResizeReùCÜÃr
@@ -63329,94 +63511,32 @@ bÙtomRightCÜÃr
 this
 )
 
-15 
+16 
 	}
 },
 
-16 
+17 
 	$»sizeEÇbËd
 (
 Œue
 )
 
-18 
+19 
 	}
 }
 
-20 
+21 
 	gResizabËG¿phicsI‹m
 ::~
 	$ResizabËG¿phicsI‹m
 ()
 
-23 
+24 
 	}
 }
 
-25 
-QReùF
- 
+35 
 ResizabËG¿phicsI‹m
-::
-	$boundšgReù
-() const
-
-27 
-	}
-}
-
-29 
-ResizabËG¿phicsI‹m
-::
-	$·št
-(
-QPaš‹r
- *
-·š‹r
-, cÚ¡ 
-QStyËO±iÚG¿phicsI‹m
- *
-İtiÚ
-, 
-QWidg‘
- *
-widg‘
- = 
-Q_NULLPTR
-)
-
-31 
-QG¿phicsI‹m
-::
-	`·št
-(
-·š‹r
-, 
-İtiÚ
-, 
-widg‘
-);
-
-32 
-	}
-}
-
-34 
-	gResizabËG¿phicsI‹m
-::
-	$ty³
-() const
-
-36  
-Ty³
-;
-
-37 
-	}
-}
-
-39 
-	gResizabËG¿phicsI‹m
 ::
 	$»size
 (
@@ -63433,23 +63553,23 @@ x
 y
 )
 
-41 if(!
+37 if(!
 »sizeEÇbËd
 )
 
-47 
+43 
 q»®
  
 di¡X
  = 0;
 
-48 
+44 
 q»®
  
 di¡Y
  = 0;
 
-50 
+46 
 q»®
  
 ŞdWidth
@@ -63457,7 +63577,7 @@ q»®
 	`g‘Width
 ();
 
-51 
+47 
 q»®
  
 ŞdHeigth
@@ -63465,29 +63585,29 @@ q»®
 	`g‘Height
 ();
 
-52 
+48 
 q»®
  
 ÃwWidth
  = 0;
 
-53 
+49 
 q»®
  
 ÃwHeight
  = 0;
 
-55 
+51 
 AnchÜPošt
 )
 
-57 
+53 
 ResizeReùCÜÃr
 ::
 tİLeáCÜÃr
 :
 
-58 
+54 
 ÃwWidth
  = 
 ŞdWidth
@@ -63495,7 +63615,7 @@ tİLeáCÜÃr
 x
 ;
 
-59 
+55 
 ÃwHeight
  = 
 ŞdHeigth
@@ -63503,25 +63623,25 @@ x
 y
 ;
 
-60 
+56 
 di¡X
  = 
 x
 ;
 
-61 
+57 
 di¡Y
  = 
 y
 ;
 
-63 
+59 
 ResizeReùCÜÃr
 ::
 bÙtomLeáCÜÃr
 :
 
-64 
+60 
 ÃwWidth
  = 
 ŞdWidth
@@ -63529,9 +63649,31 @@ bÙtomLeáCÜÃr
 x
 ;
 
-65 
+61 
 di¡X
  = 
+x
+;
+
+62 
+ÃwHeight
+ = 
+ŞdHeigth
+ + 
+y
+;
+
+64 
+ResizeReùCÜÃr
+::
+tİRightCÜÃr
+:
+
+65 
+ÃwWidth
+ = 
+ŞdWidth
+ + 
 x
 ;
 
@@ -63539,45 +63681,23 @@ x
 ÃwHeight
  = 
 ŞdHeigth
- + 
-y
-;
-
-68 
-ResizeReùCÜÃr
-::
-tİRightCÜÃr
-:
-
-69 
-ÃwWidth
- = 
-ŞdWidth
- + 
-x
-;
-
-70 
-ÃwHeight
- = 
-ŞdHeigth
  - 
 y
 ;
 
-71 
+67 
 di¡Y
  = 
 y
 ;
 
-73 
+69 
 ResizeReùCÜÃr
 ::
 bÙtomRightCÜÃr
 :
 
-74 
+70 
 ÃwWidth
  = 
 ŞdWidth
@@ -63585,7 +63705,7 @@ bÙtomRightCÜÃr
 x
 ;
 
-75 
+71 
 ÃwHeight
  = 
 ŞdHeigth
@@ -63593,7 +63713,7 @@ x
 y
 ;
 
-78 
+74 
 di¡X
  = 
 di¡Y
@@ -63603,59 +63723,59 @@ di¡Y
 ÃwHeight
  = 0;
 
-79 
+75 
 	`qDebug
 () << "INVALID CORNER?!";
 
-82 
+78 
 	`´•¬eGeom‘ryChªge
 ();
 
-83 if(
+79 if(
 ÃwWidth
  <= 0.1)
 
-85 
+81 
 di¡X
  = 0;
 
-86 
+82 
 ÃwWidth
  = 0;
 
-88 if(
+84 if(
 ÃwWidth
  > 0 )
 
-90 
+86 
 	`£tWidth
 (
 ÃwWidth
 );
 
-92 if(
+88 if(
 ÃwHeight
  <= 0.1)
 
-94 
+90 
 di¡Y
  = 0;
 
-95 
+91 
 ÃwHeight
  = 0;
 
-97 if(
+93 if(
 ÃwHeight
  > 0 )
 
-99 
+95 
 	`£tHeight
 (
 ÃwHeight
 );
 
-102 
+98 
 	`moveBy
 (
 di¡X
@@ -63663,17 +63783,17 @@ di¡X
 di¡Y
 );
 
-103 
+99 
 	`š™ResizeCÜÃrs
 (
 	`boundšgReù
 ());
 
-104 
+100 
 	}
 }
 
-106 
+102 
 	gResizabËG¿phicsI‹m
 ::
 	$’abËResizšg
@@ -63683,17 +63803,17 @@ boŞ
 isOn
 )
 
-108 
+104 
 »sizeEÇbËd
  = 
 isOn
 ;
 
-109 if(
+105 if(
 isOn
 )
 
-111 
+107 
 ResizeReùCÜÃr
  &
 cÜÃr
@@ -63701,7 +63821,7 @@ cÜÃr
 »sizeCÜÃrs
 )
 
-113 
+109 
 cÜÃr
 .
 	`£tVisibË
@@ -63709,7 +63829,7 @@ cÜÃr
 Œue
 );
 
-118 
+114 
 ResizeReùCÜÃr
  &
 cÜÃr
@@ -63717,7 +63837,7 @@ cÜÃr
 »sizeCÜÃrs
 )
 
-120 
+116 
 cÜÃr
 .
 	`£tVisibË
@@ -63725,11 +63845,11 @@ cÜÃr
 çl£
 );
 
-123 
+119 
 	}
 }
 
-125 
+121 
 boŞ
  
 	gResizabËG¿phicsI‹m
@@ -63737,15 +63857,15 @@ boŞ
 	$g‘ResizeEÇbËd
 () const
 
-127  
+123  
 »sizeEÇbËd
 ;
 
-128 
+124 
 	}
 }
 
-130 
+126 
 	gResizabËG¿phicsI‹m
 ::
 	$š™ResizeCÜÃrs
@@ -63755,7 +63875,7 @@ QReùF
 boundšgReù
 )
 
-132 
+128 
 »sizeCÜÃrs
 [0].
 	`£tPos™iÚ
@@ -63765,7 +63885,7 @@ boundšgReù
 	`tİLeá
 ());
 
-133 
+129 
 »sizeCÜÃrs
 [1].
 	`£tPos™iÚ
@@ -63775,7 +63895,7 @@ boundšgReù
 	`bÙtomLeá
 ());
 
-134 
+130 
 »sizeCÜÃrs
 [2].
 	`£tPos™iÚ
@@ -63785,7 +63905,7 @@ boundšgReù
 	`tİRight
 ());
 
-135 
+131 
 »sizeCÜÃrs
 [3].
 	`£tPos™iÚ
@@ -63795,7 +63915,7 @@ boundšgReù
 	`bÙtomRight
 ());
 
-136 
+132 
 	}
 }
 
@@ -64234,10 +64354,22 @@ Ty³
 "
 
 3 
+	~<QPaš‹r
+>
+
+4 
+	~<QBrush
+>
+
+5 
+	~<QPoštF
+>
+
+7 
 	~<QDebug
 >
 
-5 
+9 
 	gSqu¬eSysOvrvObjeù
 ::
 	$Squ¬eSysOvrvObjeù
@@ -64247,17 +64379,17 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-6 
+10 
 	$SysOvrvObjeù
 (
 ·»Á
 )
 
-8 
+12 
 	}
 }
 
-10 
+14 
 Squ¬eSysOvrvObjeù
 ::
 	$Squ¬eSysOvrvObjeù
@@ -64266,18 +64398,18 @@ Squ¬eSysOvrvObjeù
  &
 Ùh”
 ) :
-
-11 
-	$SysOvrvObjeù
-(
-Ùh”
-)
-
-13 
-	}
-}
 
 15 
+	$SysOvrvObjeù
+(
+Ùh”
+)
+
+17 
+	}
+}
+
+19 
 Squ¬eSysOvrvObjeù
 ::
 	$Squ¬eSysOvrvObjeù
@@ -64287,17 +64419,17 @@ Squ¬eSysOvrvObjeù
 Ùh”
 ) :
 
-16 
+20 
 	$SysOvrvObjeù
 (
 Ùh”
 )
 
-18 
+22 
 	}
 }
 
-20 
+24 
 Squ¬eSysOvrvObjeù
 ::
 	$Squ¬eSysOvrvObjeù
@@ -64307,17 +64439,17 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-21 
+25 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-23 
+27 
 	}
 }
 
-25 
+29 
 Squ¬eSysOvrvObjeù
 ::
 	$Squ¬eSysOvrvObjeù
@@ -64327,17 +64459,27 @@ SysOvrvObjeù
 Üigš®
 ) :
 
-26 
+30 
 	$SysOvrvObjeù
 (
 Üigš®
 )
 
-28 
+32 
 	}
 }
 
-30 
+34 
+Squ¬eSysOvrvObjeù
+::~
+	$Squ¬eSysOvrvObjeù
+()
+
+36 
+	}
+}
+
+38 
 Squ¬eSysOvrvObjeù
 ::
 	$·št
@@ -64355,7 +64497,7 @@ QWidg‘
 widg‘
 )
 
-32 
+40 
 SysOvrvObjeù
 ::
 	`·št
@@ -64367,7 +64509,7 @@ SysOvrvObjeù
 widg‘
 );
 
-33 
+41 
 QReùF
  
 boundReù
@@ -64375,7 +64517,7 @@ boundReù
 	`boundšgReù
 ();
 
-34 
+42 
 QBrush
  
 	`cŞÜBrush
@@ -64383,13 +64525,13 @@ QBrush
 	`g‘MyCŞÜ
 ());
 
-35 
+44 
 ·š‹r
-.
+->
 	`§ve
 ();
 
-37 
+46 
 ·š‹r
 ->
 	`£tBrush
@@ -64397,7 +64539,7 @@ QBrush
 cŞÜBrush
 );
 
-38 
+47 
 ·š‹r
 ->
 	`d¿wReù
@@ -64405,17 +64547,17 @@ cŞÜBrush
 boundReù
 );
 
-40 
+49 
 ·š‹r
-.
+->
 	`»¡Üe
 ();
 
-41 
+50 
 	}
 }
 
-43 
+52 
 	gSysOvrvObjeù
 ::
 ObjSh­eTy³
@@ -64425,13 +64567,13 @@ Squ¬eSysOvrvObjeù
 	$g‘Sh­e
 () const
 
-45  
+54  
 SysOvrvObjeù
 ::
 ObjSh­e_Squ¬e
 ;
 
-46 
+55 
 	}
 }
 
@@ -64620,8 +64762,10 @@ ToCİy
 42 
 	`loÿlObjCÁr
 (
-objCÁr
-++),
+ToCİy
+.
+loÿlObjCÁr
+),
 
 43 
 	`m_BoundšgReù
@@ -65189,18 +65333,6 @@ QWidg‘
 widg‘
 )
 
-156 
-ResizabËG¿phicsI‹m
-::
-	`·št
-(
-·š‹r
-, 
-İtiÚ
-, 
-widg‘
-);
-
 158 
 	}
 }
@@ -65294,14 +65426,14 @@ v®ue
 );
 
 182 
-	`upd©eSh­e
+	`upd©e
 ();
 
-183 
+184 
 	}
 }
 
-185 
+186 
 QSŒšg
  
 	gSysOvrvObjeù
@@ -65309,15 +65441,15 @@ QSŒšg
 	$g‘ObjName
 () const
 
-187  
+188  
 objName
 ;
 
-188 
+189 
 	}
 }
 
-190 
+191 
 	gSysOvrvObjeù
 ::
 	$£tObjName
@@ -65327,7 +65459,7 @@ QSŒšg
 v®ue
 )
 
-192 
+193 
 objName
  = 
 	`QSŒšg
@@ -65335,11 +65467,15 @@ objName
 v®ue
 );
 
-193 
+194 
+	`upd©e
+();
+
+195 
 	}
 }
 
-195 
+197 
 	gSysOvrvObjeù
 ::
 	$lßdImageFromFe
@@ -65349,7 +65485,7 @@ QWidg‘
 ·»Á
 )
 
-197 
+199 
 QSŒšg
  
 FeP©h
@@ -65363,17 +65499,17 @@ QFeDŸlog
 	`QSŒšg
 ("Open Image"), QString(), "Images (*.bmp *.jpg *.png)");
 
-198 
+200 
 	`lßdImageFromFe
 (
 FeP©h
 );
 
-199 
+201 
 	}
 }
 
-201 
+203 
 	gSysOvrvObjeù
 ::
 	$lßdImageFromFe
@@ -65383,7 +65519,7 @@ QSŒšg
 FeP©h
 )
 
-203 
+205 
 ObjPixM­
  = 
 	`QPixm­
@@ -65391,15 +65527,15 @@ ObjPixM­
 FeP©h
 );
 
-204 
-	`upd©eSh­e
+206 
+	`upd©e
 ();
 
-205 
+207 
 	}
 }
 
-207 
+209 
 	gSysOvrvObjeù
 ::
 	$£tSh­e
@@ -65411,79 +65547,31 @@ ObjSh­eTy³
 sh­e
 )
 
-209 
-sh­eTy³
- = 
-sh­e
-;
-
-211 if(
-sh­eTy³
- =ğ
-ObjSh­e_Squ¬e
- || sh­eTy³ =ğ
-ObjSh­e_Cœşe
-)
-
-213 if(
-m_BoundšgReù
-.
-	`width
-(è> m_BoundšgReù.
-	`height
-())
-
-215 
-m_BoundšgReù
-.
-	`£tHeight
-(m_BoundšgReù.
-	`width
-());
-
-219 
-m_BoundšgReù
-.
-	`£tWidth
-(m_BoundšgReù.
-	`height
-());
-
-223 
-	`upd©eSh­e
-();
-
-224 
+226 
 	}
 }
 
-226 
-	gSysOvrvObjeù
-::
-ObjSh­eTy³
- 
+228 
 SysOvrvObjeù
 ::
+ObjSh­eTy³
+ SysOvrvObjeù::
 	$g‘Sh­e
 () const
 
-228  
-sh­eTy³
-;
-
-229 
+231 
 	}
 }
 
-231 
+233 
 SysOvrvTextLab–
  * 
-	gSysOvrvObjeù
+SysOvrvObjeù
 ::
 	$addLab–
 ()
 
-233 
+235 
 SysOvrvTextLab–
  *
 ÃwÏb–
@@ -65495,13 +65583,13 @@ SysOvrvTextLab–
 this
 );
 
-234 
+236 
 ÃwÏb–
 ->
 	`‹xtEd™
 ();
 
-235 if(
+237 if(
 ÃwÏb–
 ->
 	`‹xt
@@ -65509,17 +65597,17 @@ this
 	`isEm±y
 ())
 
-237 
+239 
 d–‘e
  
 ÃwÏb–
 ;
 
-238  
+240  
 Q_NULLPTR
 ;
 
-240 
+242 
 ÃwÏb–
 ->
 	`£tEd™abË
@@ -65527,15 +65615,15 @@ Q_NULLPTR
 Œue
 );
 
-241  
+243  
 ÃwÏb–
 ;
 
-242 
+244 
 	}
 }
 
-244 
+246 
 SysOvrvTextLab–
  * 
 	gSysOvrvObjeù
@@ -65547,7 +65635,7 @@ SysOvrvTextLab–
 Ïb–
 )
 
-246 
+248 
 Ïb–
 ->
 	`£tP¬’tI‹m
@@ -65555,15 +65643,15 @@ SysOvrvTextLab–
 this
 );
 
-247  
+249  
 Ïb–
 ;
 
-248 
+250 
 	}
 }
 
-250 
+252 
 SysOvrvTextLab–
  *
 	gSysOvrvObjeù
@@ -65573,25 +65661,25 @@ SysOvrvTextLab–
 QSŒšg
  &
 ‹xt
-, 
+, cÚ¡ 
 q»®
  
 x
-, q»® 
+, cÚ¡ q»® 
 y
 )
 
-252 if(
+254 if(
 ‹xt
 .
 	`isEm±y
 ())
 
-253  
+255  
 NULL
 ;
 
-254 
+256 
 SysOvrvTextLab–
  *
 ÃwÏb–
@@ -65603,7 +65691,7 @@ SysOvrvTextLab–
 this
 );
 
-255 
+257 
 ÃwÏb–
 ->
 	`£tText
@@ -65611,7 +65699,7 @@ this
 ‹xt
 );
 
-256 
+258 
 ÃwÏb–
 ->
 	`£tPos
@@ -65621,7 +65709,7 @@ x
 y
 );
 
-257 
+259 
 ÃwÏb–
 ->
 	`£tEd™abË
@@ -65629,15 +65717,15 @@ y
 Œue
 );
 
-258  
+260  
 ÃwÏb–
 ;
 
-259 
+261 
 	}
 }
 
-261 
+263 
 	gSysOvrvObjeù
 ::
 	$»moveLab–
@@ -65647,11 +65735,11 @@ SysOvrvTextLab–
 Ïb–
 )
 
-264 
+266 
 	}
 }
 
-266 
+268 
 SysOvrvObjeù
  *SysOvrvObjeù::
 	$du¶iÿ‹
@@ -65661,7 +65749,7 @@ SysOvrvObjeù
 ·»ÁObj
 )
 
-268 
+270 
 SysOvrvObjeù
  *
 du¶iÿ‹dObjeù
@@ -65673,13 +65761,13 @@ du¶iÿ‹dObjeù
 this
 );
 
-269 if(
+271 if(
 ·»ÁObj
  !ğ
 Q_NULLPTR
 )
 
-271 
+273 
 du¶iÿ‹dObjeù
 ->
 	`£tP¬’tI‹m
@@ -65687,15 +65775,15 @@ du¶iÿ‹dObjeù
 ·»ÁObj
 );
 
-273  
+275  
 du¶iÿ‹dObjeù
 ;
 
-274 
+276 
 	}
 }
 
-276 
+278 
 	gSysOvrvObjeù
 ::
 	$£tAsChd
@@ -65705,7 +65793,7 @@ boŞ
 isChd
 )
 
-278 
+280 
 this
 ->
 isChdObjeù
@@ -65713,17 +65801,17 @@ isChdObjeù
 isChd
 ;
 
-279 
+281 
 	`’abËEd™
 (!
 isChd
 );
 
-280 
+282 
 	}
 }
 
-282 
+284 
 boŞ
  
 	gSysOvrvObjeù
@@ -65731,15 +65819,15 @@ boŞ
 	$isAChd
 () const
 
-284  
+286  
 isChdObjeù
 ;
 
-285 
+287 
 	}
 }
 
-310 
+312 
 	gQVeùÜ
 <
 	gSysOvrvObjeù
@@ -65747,7 +65835,7 @@ isChdObjeù
 	$g‘ChidSysOvrvObjeùs
 ()
 
-312 
+314 
 QVeùÜ
 <
 SysOvrvObjeù
@@ -65755,7 +65843,7 @@ SysOvrvObjeù
 chdSysOvrvObjs
 ;
 
-313 
+315 
 QLi¡
 <
 QG¿phicsI‹m
@@ -65765,7 +65853,7 @@ chd»n
 	`chdI‹ms
 ();
 
-314  
+316  
 QG¿phicsI‹m
  * cÚ¡ 
 chd
@@ -65773,7 +65861,7 @@ chd
 chd»n
 )
 
-316 
+318 
 SysOvrvObjeù
  *
 ChdSysOvrvObj
@@ -65783,13 +65871,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-317 if(
+319 if(
 ChdSysOvrvObj
  !ğ
 Q_NULLPTR
 )
 
-319 
+321 
 chdSysOvrvObjs
 .
 	`­³nd
@@ -65797,15 +65885,15 @@ chdSysOvrvObjs
 ChdSysOvrvObj
 );
 
-322  
+324  
 chdSysOvrvObjs
 ;
 
-323 
+325 
 	}
 }
 
-325 
+327 
 	gSysOvrvObjeù
 ::
 	$mou£P»ssEv’t
@@ -65815,13 +65903,13 @@ QG¿phicsSûÃMou£Ev’t
 ev’t
 )
 
-327 
+329 
 	`Q_UNUSED
 (
 ev’t
 )
 
-328 
+330 
 	`£tCursÜ
 (
 	`QCursÜ
@@ -65831,11 +65919,11 @@ Qt
 Clo£dHªdCursÜ
 ));
 
-329 
+331 
 	}
 }
 
-331 
+333 
 	gSysOvrvObjeù
 ::
 	$mou£R–—£Ev’t
@@ -65845,13 +65933,13 @@ QG¿phicsSûÃMou£Ev’t
 ev’t
 )
 
-333 
+335 
 	`Q_UNUSED
 (
 ev’t
 )
 
-334 
+336 
 	`£tCursÜ
 (
 	`QCursÜ
@@ -65861,25 +65949,25 @@ Qt
 O³nHªdCursÜ
 ));
 
-335 if(
+337 if(
 doubËClicked
 )
 
-337 
+339 
 doubËClicked
  = 
 çl£
 ;
 
-338 
+340 
 	`qDebug
 () << "MouseRelease DoubleClicked";
 
-340 
+342 
 	}
 }
 
-342 
+344 
 	gSysOvrvObjeù
 ::
 	$mou£DoubËClickEv’t
@@ -65889,23 +65977,23 @@ QG¿phicsSûÃMou£Ev’t
 ev’t
 )
 
-344 
+346 
 	`Q_UNUSED
 (
 ev’t
 )
 
-345 
+347 
 doubËClicked
  = 
 Œue
 ;
 
-346 
+348 
 	}
 }
 
-348 
+350 
 	gSysOvrvObjeù
 ::
 	$mou£MoveEv’t
@@ -65915,13 +66003,13 @@ QG¿phicsSûÃMou£Ev’t
 ev’t
 )
 
-350 if(
+352 if(
 this
 ->
 isChdObjeù
 )
 
-352 
+354 
 SysOvrvObjeù
  * 
 ·»Á
@@ -65933,13 +66021,13 @@ this
 	`·»ÁI‹m
 ());
 
-353 if(
+355 if(
 ·»Á
  !ğ
 Q_NULLPTR
 )
 
-355 
+357 
 ·»Á
 ->
 	`mou£MoveEv’t
@@ -65947,7 +66035,7 @@ Q_NULLPTR
 ev’t
 );
 
-360 
+362 
 q»®
  
 di¡X
@@ -65961,7 +66049,7 @@ ev’t
 	`Ï¡Pos
 ().x();
 
-361 
+363 
 q»®
  
 di¡Y
@@ -65975,7 +66063,7 @@ ev’t
 	`Ï¡Pos
 ().y();
 
-362 
+364 
 	`moveBy
 (
 di¡X
@@ -65983,7 +66071,7 @@ di¡X
 di¡Y
 );
 
-364 
+366 
 ResizabËG¿phicsI‹m
 ::
 	`mou£MoveEv’t
@@ -65991,11 +66079,11 @@ ResizabËG¿phicsI‹m
 ev’t
 );
 
-365 
+367 
 	}
 }
 
-367 
+369 
 QSŒšg
  
 	gSysOvrvObjeù
@@ -66003,7 +66091,7 @@ QSŒšg
 	$g‘HashedName
 () const
 
-369  
+371  
 	`QSŒšg
 ("%1__%2").
 	`¬g
@@ -66015,11 +66103,11 @@ objName
 loÿlObjCÁr
 );
 
-370 
+372 
 	}
 }
 
-372 
+374 
 QBy‹A¼ay
  
 	gSysOvrvObjeù
@@ -66027,37 +66115,37 @@ QBy‹A¼ay
 	$·r£ToJsÚ
 () const
 
-374 
+376 
 QJsÚObjeù
  
 jsÚSysOvrvObj
 ;
 
-375 
+377 
 QJsÚA¼ay
  
 objSize
 ;
 
-376 
+378 
 QJsÚA¼ay
  
 objPos
 ;
 
-377 
+379 
 QJsÚA¼ay
  
 objChd»n
 ;
 
-378 
+380 
 QJsÚA¼ay
  
 objÏb–s
 ;
 
-380 
+382 
 jsÚSysOvrvObj
 ["ObjName"] = 
 this
@@ -66065,7 +66153,7 @@ this
 	`g‘ObjName
 ();
 
-381 
+383 
 jsÚSysOvrvObj
 ["ObjCŞÜ"] = 
 this
@@ -66079,7 +66167,7 @@ QCŞÜ
 HexRgb
 );
 
-382 
+384 
 jsÚSysOvrvObj
 ["ObjSh­e"] = 
 this
@@ -66087,7 +66175,7 @@ this
 	`g‘Sh­e
 ();
 
-383 
+385 
 objSize
 .
 	`­³nd
@@ -66101,7 +66189,7 @@ m_BoundšgReù
 	`width
 ())));
 
-384 
+386 
 objSize
 .
 	`­³nd
@@ -66115,13 +66203,13 @@ m_BoundšgReù
 	`height
 ())));
 
-385 
+387 
 jsÚSysOvrvObj
 ["ObjSize"] = 
 objSize
 ;
 
-386 
+388 
 objPos
 .
 	`­³nd
@@ -66133,7 +66221,7 @@ objPos
 	`x
 ())));
 
-387 
+389 
 objPos
 .
 	`­³nd
@@ -66145,13 +66233,13 @@ objPos
 	`y
 ())));
 
-388 
+390 
 jsÚSysOvrvObj
 ["ObjPos"] = 
 objPos
 ;
 
-389 
+391 
 QLi¡
 <
 QG¿phicsI‹m
@@ -66161,7 +66249,7 @@ chd»n
 	`chdI‹ms
 ();
 
-390 
+392 
 QG¿phicsI‹m
  *
 chd
@@ -66169,7 +66257,7 @@ chd
 chd»n
 )
 
-392 
+394 
 SysOvrvObjeù
  *
 sysOvrvChd
@@ -66179,13 +66267,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-393 if(
+395 if(
 sysOvrvChd
  !ğ
 Q_NULLPTR
 )
 
-395 
+397 
 objChd»n
 .
 	`­³nd
@@ -66201,7 +66289,7 @@ sysOvrvChd
 	`objeù
 ());
 
-399 
+401 
 SysOvrvTextLab–
  *
 ChdTextLab–
@@ -66211,13 +66299,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-400 if(
+402 if(
 ChdTextLab–
  !ğ
 Q_NULLPTR
 )
 
-402 
+404 
 objÏb–s
 .
 	`­³nd
@@ -66233,19 +66321,19 @@ ChdTextLab–
 	`objeù
 ());
 
-406 
+408 
 jsÚSysOvrvObj
 ["ChdObjs"] = 
 objChd»n
 ;
 
-407 
+409 
 jsÚSysOvrvObj
 ["Texab–s"] = 
 objÏb–s
 ;
 
-408  
+410  
 	`QJsÚDocum’t
 (
 jsÚSysOvrvObj
@@ -66253,11 +66341,11 @@ jsÚSysOvrvObj
 	`toJsÚ
 ();
 
-409 
+411 
 	}
 }
 
-411 
+413 
 	gSysOvrvObjeù
 ::
 	$·r£FromJsÚ
@@ -66267,7 +66355,7 @@ QBy‹A¼ay
 jsÚBy‹A¼ay
 )
 
-413 
+415 
 QJsÚObjeù
  
 jsÚSysOvrvObj
@@ -66281,7 +66369,7 @@ jsÚBy‹A¼ay
 	`objeù
 ();
 
-414 
+416 
 QJsÚA¼ay
  
 objSize
@@ -66291,7 +66379,7 @@ jsÚSysOvrvObj
 	`toA¼ay
 ();
 
-415 
+417 
 QJsÚA¼ay
  
 objPos
@@ -66301,7 +66389,7 @@ jsÚSysOvrvObj
 	`toA¼ay
 ();
 
-416 
+418 
 QJsÚA¼ay
  
 objChd»n
@@ -66311,7 +66399,7 @@ jsÚSysOvrvObj
 	`toA¼ay
 ();
 
-417 
+419 
 QJsÚA¼ay
  
 objÏb–s
@@ -66321,47 +66409,47 @@ jsÚSysOvrvObj
 	`toA¼ay
 ();
 
-419 if(
+421 if(
 objSize
 .
 	`size
 () != 2)
 
-421 
+423 
 	`qDebug
 () << "Invalid size…arameter ObjSize in JSON file";
 
-424 if(
+426 if(
 objPos
 .
 	`size
 () != 2)
 
-426 
+428 
 	`qDebug
 () << "Invalid size…arameter ObjPos in JSON file";
 
-429 if(!
+431 if(!
 jsÚSysOvrvObj
 ["ObjName"].
 	`isSŒšg
 ())
 
-431 
+433 
 	`qDebug
 () << "Invalid…arameter ObjName in JSON file";
 
-434 if(!
+436 if(!
 jsÚSysOvrvObj
 ["ObjCŞÜ"].
 	`isSŒšg
 ())
 
-436 
+438 
 	`qDebug
 () << "Invalid…arameter ObjColor in JSON file";
 
-440 
+442 
 this
 ->
 	`£tObjName
@@ -66371,7 +66459,7 @@ jsÚSysOvrvObj
 	`toSŒšg
 ());
 
-441 
+443 
 this
 ->
 	`£tMyCŞÜ
@@ -66387,7 +66475,7 @@ jsÚSysOvrvObj
 	`toSŒšg
 ())));
 
-442 
+444 
 this
 ->
 	`£tSh­e
@@ -66401,7 +66489,7 @@ jsÚSysOvrvObj
 	`toIÁ
 ()));
 
-444 
+446 
 this
 ->
 	`£tWidth
@@ -66415,7 +66503,7 @@ objSize
 	`toDoubË
 (100)));
 
-445 
+447 
 this
 ->
 	`£tHeight
@@ -66429,7 +66517,7 @@ objSize
 	`toDoubË
 (100)));
 
-447 
+449 
 this
 ->
 	`£tPos
@@ -66443,7 +66531,7 @@ objPos
 	`toDoubË
 ()),static_cast<qreal>(objPos[1].toDouble()));
 
-449 
+451 
 QJsÚV®ueRef
  
 jsÚChdObj
@@ -66451,7 +66539,7 @@ jsÚChdObj
 objChd»n
 )
 
-451 
+453 
 SysOvrvObjeù
  *
 chdObj
@@ -66463,7 +66551,7 @@ chdObj
 this
 );
 
-452 
+454 
 QBy‹A¼ay
  
 jsÚP¬£d
@@ -66477,7 +66565,7 @@ jsÚChdObj
 	`toJsÚ
 ();
 
-453 
+455 
 chdObj
 ->
 	`·r£FromJsÚ
@@ -66485,7 +66573,7 @@ chdObj
 jsÚP¬£d
 );
 
-455 
+457 
 chdObj
 ->
 	`£tAsChd
@@ -66493,7 +66581,7 @@ chdObj
 Œue
 );
 
-457 
+459 
 QJsÚV®ueRef
  
 jsÚTexab–sV®ue
@@ -66501,7 +66589,7 @@ jsÚTexab–sV®ue
 objÏb–s
 )
 
-459 
+461 
 SysOvrvTextLab–
  *
 ‹xab–
@@ -66513,7 +66601,7 @@ SysOvrvTextLab–
 this
 );
 
-460 
+462 
 QBy‹A¼ay
  
 jsÚP¬£d
@@ -66527,7 +66615,7 @@ jsÚTexab–sV®ue
 	`toJsÚ
 ();
 
-461 
+463 
 ‹xab–
 ->
 	`·r£FromJsÚ
@@ -66535,7 +66623,7 @@ jsÚTexab–sV®ue
 jsÚP¬£d
 );
 
-462 
+464 
 this
 ->
 	`addLab–
@@ -66543,11 +66631,11 @@ this
 ‹xab–
 );
 
-464 
+466 
 	}
 }
 
-466 
+468 
 QPixm­
  
 	gSysOvrvObjeù
@@ -66555,15 +66643,15 @@ QPixm­
 	$g‘ObjPixM­
 () const
 
-468  
+470  
 ObjPixM­
 ;
 
-469 
+471 
 	}
 }
 
-471 
+473 
 	gSysOvrvObjeù
 ::
 	$£tObjPixM­
@@ -66573,17 +66661,17 @@ QPixm­
 v®ue
 )
 
-473 
+475 
 ObjPixM­
  = 
 v®ue
 ;
 
-474 
+476 
 	}
 }
 
-476 
+478 
 	gSysOvrvObjeù
 ::
 	$upd©eSh­e
@@ -66593,11 +66681,11 @@ QReùF
 »ù
 )
 
-543 
+545 
 	}
 }
 
-545 
+547 
 SysOvrvObjeù
 ::
 	$£tP¬’tSysOvrvObj
@@ -66607,17 +66695,17 @@ SysOvrvObjeù
 ·»ÁSysOvrvObj
 )
 
-548 
+550 
 	`£tP¬’tI‹m
 (
 ·»ÁSysOvrvObj
 );
 
-549 
+551 
 	}
 }
 
-551 
+553 
 	gSysOvrvObjeù
 ::
 	$’abËEd™
@@ -66627,25 +66715,25 @@ boŞ
 ’abË
 )
 
-553 
+555 
 isEd™abË
  = 
 ’abË
 ;
 
-554 
+556 
 	`š™ResizeCÜÃrs
 (
 m_BoundšgReù
 );
 
-555 
+557 
 	`’abËResizšg
 (
 ’abË
 );
 
-557 
+559 
 QLi¡
 <
 QG¿phicsI‹m
@@ -66655,7 +66743,7 @@ chd»n
 	`chdI‹ms
 ();
 
-558 
+560 
 QG¿phicsI‹m
  *
 chd
@@ -66663,7 +66751,7 @@ chd
 chd»n
 )
 
-560 
+562 
 SysOvrvObjeù
  *
 sysOvrvChd
@@ -66673,13 +66761,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-561 if(
+563 if(
 sysOvrvChd
  !ğ
 Q_NULLPTR
 )
 
-563 
+565 
 sysOvrvChd
 ->
 	`’abËEd™
@@ -66687,7 +66775,7 @@ sysOvrvChd
 ’abË
 );
 
-566 
+568 
 SysOvrvTextLab–
  * 
 sysOvrvTextLab–
@@ -66697,13 +66785,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-567 if(
+569 if(
 sysOvrvTextLab–
  !ğ
 Q_NULLPTR
 )
 
-569 
+571 
 sysOvrvTextLab–
 ->
 	`£tEd™abË
@@ -66711,11 +66799,11 @@ sysOvrvTextLab–
 ’abË
 );
 
-573 
+575 
 	}
 }
 
-575 
+577 
 	gSysOvrvObjeù
 ::
 	$’abËChd»nEd™
@@ -66725,7 +66813,7 @@ boŞ
 ’abË
 )
 
-577 
+579 
 QLi¡
 <
 QG¿phicsI‹m
@@ -66735,7 +66823,7 @@ chd»n
 	`chdI‹ms
 ();
 
-578 
+580 
 QG¿phicsI‹m
  *
 chd
@@ -66743,7 +66831,7 @@ chd
 chd»n
 )
 
-580 
+582 
 SysOvrvObjeù
  *
 sysOvrvChd
@@ -66753,13 +66841,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-581 if(
+583 if(
 sysOvrvChd
  !ğ
 Q_NULLPTR
 )
 
-583 
+585 
 sysOvrvChd
 ->
 	`’abËEd™
@@ -66767,11 +66855,11 @@ sysOvrvChd
 ’abË
 );
 
-586 
+588 
 	}
 }
 
-588 
+590 
 	gSysOvrvObjeù
 ::
 	$focusInEv’t
@@ -66781,7 +66869,7 @@ QFocusEv’t
 ev’t
 )
 
-590 
+592 
 QLi¡
 <
 QG¿phicsI‹m
@@ -66791,7 +66879,7 @@ chd»n
 	`chdI‹ms
 ();
 
-591 
+593 
 QG¿phicsI‹m
  *
 chd
@@ -66799,7 +66887,7 @@ chd
 chd»n
 )
 
-593 
+595 
 SysOvrvObjeù
  *
 sysOvrvChd
@@ -66809,13 +66897,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-594 if(
+596 if(
 sysOvrvChd
  !ğ
 Q_NULLPTR
 )
 
-596 
+598 
 sysOvrvChd
 ->
 	`focusInEv’t
@@ -66823,21 +66911,21 @@ sysOvrvChd
 ev’t
 );
 
-599 
+601 
 	`£tS–eùed
 (
 Œue
 );
 
-600 
+602 
 	`upd©eSh­e
 ();
 
-601 
+603 
 	}
 }
 
-603 
+605 
 	gSysOvrvObjeù
 ::
 	$focusOutEv’t
@@ -66847,7 +66935,7 @@ QFocusEv’t
 ev’t
 )
 
-605 
+607 
 QLi¡
 <
 QG¿phicsI‹m
@@ -66857,7 +66945,7 @@ chd»n
 	`chdI‹ms
 ();
 
-606 
+608 
 QG¿phicsI‹m
  *
 chd
@@ -66865,7 +66953,7 @@ chd
 chd»n
 )
 
-608 
+610 
 SysOvrvObjeù
  *
 sysOvrvChd
@@ -66875,13 +66963,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-609 if(
+611 if(
 sysOvrvChd
  !ğ
 Q_NULLPTR
 )
 
-611 
+613 
 sysOvrvChd
 ->
 	`focusOutEv’t
@@ -66889,21 +66977,21 @@ sysOvrvChd
 ev’t
 );
 
-614 
+616 
 	`£tS–eùed
 (
 çl£
 );
 
-615 
+617 
 	`upd©eSh­e
 ();
 
-616 
+618 
 	}
 }
 
-618 
+620 
 	gSysOvrvObjeù
 ::
 	$hov”EÁ”Ev’t
@@ -66913,13 +67001,13 @@ QG¿phicsSûÃHov”Ev’t
 ev’t
 )
 
-620 
+622 
 	`Q_UNUSED
 (
 ev’t
 )
 
-621 
+623 
 	`£tCursÜ
 (
 	`QCursÜ
@@ -66929,11 +67017,11 @@ Qt
 O³nHªdCursÜ
 ));
 
-622 
+624 
 	}
 }
 
-624 
+626 
 	gSysOvrvObjeù
 ::
 	$hov”L—veEv’t
@@ -66943,13 +67031,13 @@ QG¿phicsSûÃHov”Ev’t
 ev’t
 )
 
-626 
+628 
 	`Q_UNUSED
 (
 ev’t
 )
 
-627 
+629 
 	`£tCursÜ
 (
 	`QCursÜ
@@ -66959,11 +67047,11 @@ Qt
 A¼owCursÜ
 ));
 
-628 
+630 
 	}
 }
 
-630 
+632 
 	gSysOvrvObjeù
 ::
 	$»size
@@ -66981,7 +67069,7 @@ x
 y
 )
 
-633 if(
+635 if(
 sh­eTy³
  =ğ
 SysOvrvObjeù
@@ -66991,13 +67079,13 @@ ObjSh­e_Cœşe
 ObjSh­e_Squ¬e
 )
 
-636 if((
+638 if((
 x
 >0 ? x : -xè> (
 y
 >0 ? y : -y))
 
-638 if(
+640 if(
 AnchÜPošt
  =ğ
 ResizeReùCÜÃr
@@ -67007,19 +67095,19 @@ bÙtomLeáCÜÃr
 tİRightCÜÃr
 )
 
-640 
+642 
 y
  = -
 x
 ;
 
-644 
+646 
 y
  = 
 x
 ;
 
-649 if(
+651 if(
 AnchÜPošt
  =ğ
 ResizeReùCÜÃr
@@ -67029,19 +67117,19 @@ bÙtomLeáCÜÃr
 tİRightCÜÃr
 )
 
-651 
+653 
 x
  = -
 y
 ;
 
-655 
+657 
 x
  = 
 y
 ;
 
-659 
+661 
 QLi¡
 <
 QG¿phicsI‹m
@@ -67051,7 +67139,7 @@ chd»n
 	`chdI‹ms
 ();
 
-660 
+662 
 QG¿phicsI‹m
  * cÚ¡ 
 chd
@@ -67059,7 +67147,7 @@ chd
 chd»n
 )
 
-662 
+664 
 SysOvrvObjeù
  * 
 SysOvrvChd
@@ -67069,13 +67157,13 @@ dyÇmic_ÿ¡
 chd
 );
 
-663 if(
+665 if(
 SysOvrvChd
  !ğ
 Q_NULLPTR
 )
 
-665 
+667 
 q»®
  
 xPos
@@ -67085,7 +67173,7 @@ SysOvrvChd
 	`x
 ();
 
-666 
+668 
 q»®
  
 yPos
@@ -67095,7 +67183,7 @@ SysOvrvChd
 	`y
 ();
 
-667 
+669 
 SysOvrvChd
 ->
 	`»size
@@ -67107,7 +67195,7 @@ x
 y
 );
 
-668 
+670 
 SysOvrvChd
 ->
 	`£tPos
@@ -67117,7 +67205,7 @@ xPos
 yPos
 );
 
-671 
+673 
 ResizabËG¿phicsI‹m
 ::
 	`»size
@@ -67129,15 +67217,15 @@ x
 y
 );
 
-673 
+675 
 	`upd©eSh­e
 ();
 
-674 
+676 
 	}
 }
 
-676 
+678 
 	gSysOvrvObjeù
 ::
 	$£tWidth
@@ -67147,7 +67235,7 @@ q»®
 ÃwWidth
 )
 
-678 
+680 
 m_BoundšgReù
 .
 	`£tWidth
@@ -67155,11 +67243,15 @@ m_BoundšgReù
 ÃwWidth
 );
 
-679 
+681 
+	`upd©e
+();
+
+682 
 	}
 }
 
-681 
+684 
 q»®
  
 	gSysOvrvObjeù
@@ -67167,17 +67259,17 @@ q»®
 	$g‘Width
 () const
 
-683  
+686  
 m_BoundšgReù
 .
 	`width
 ();
 
-684 
+687 
 	}
 }
 
-686 
+689 
 	gSysOvrvObjeù
 ::
 	$£tHeight
@@ -67187,7 +67279,7 @@ q»®
 ÃwHeight
 )
 
-689 
+691 
 m_BoundšgReù
 .
 	`£tHeight
@@ -67195,11 +67287,15 @@ m_BoundšgReù
 ÃwHeight
 );
 
-690 
+692 
+	`upd©e
+();
+
+693 
 	}
 }
 
-692 
+695 
 q»®
  
 	gSysOvrvObjeù
@@ -67207,13 +67303,13 @@ q»®
 	$g‘Height
 () const
 
-694  
+697  
 m_BoundšgReù
 .
 	`height
 ();
 
-695 
+698 
 	}
 }
 
@@ -67236,26 +67332,50 @@ m_BoundšgReù
 "
 
 7 
+	~"squ¬esysovrvobjeù.h
+"
+
+8 
+	~"»ùsysovrvobjeù.h
+"
+
+9 
+	~"cœşesysovrvobjeù.h
+"
+
+10 
+	~"–l£sysovrvobjeù.h
+"
+
+11 
+	~"ŒŸngËsysovrvobjeù.h
+"
+
+12 
+	~"imagesysovrvobjeù.h
+"
+
+14 
 	~<QCŞÜDŸlog
 >
 
-8 
+15 
 	~<QFe
 >
 
-9 
+16 
 	~<QFeDŸlog
 >
 
-10 
+17 
 	~<QJsÚDocum’t
 >
 
-11 
+18 
 	~<QDebug
 >
 
-13 
+20 
 	gSysOvrvObjeùDŸlog
 ::
 	$SysOvrvObjeùDŸlog
@@ -67265,13 +67385,13 @@ QWidg‘
 ·»Á
 ) :
 
-14 
+21 
 	`QDŸlog
 (
 ·»Á
 ),
 
-15 
+22 
 	`ui
 (
 Ãw
@@ -67281,7 +67401,7 @@ Ui
 SysOvrvObjeùDŸlog
 ),
 
-16 
+23 
 	`m_curSysOvrvObjeù
 (
 Ãw
@@ -67289,19 +67409,19 @@ SysOvrvObjeùDŸlog
 	`SysOvrvObjeù
 ()),
 
-17 
+24 
 	`m_focu£dI‹m
 (
-NULL
+Q_NULLPTR
 ),
 
-18 
+25 
 	$upd©eExi¡šg
 (
 çl£
 )
 
-20 
+27 
 m_jsÚObjSave
  = 
 m_curSysOvrvObjeù
@@ -67309,7 +67429,7 @@ m_curSysOvrvObjeù
 	`·r£ToJsÚ
 ();
 
-21 
+28 
 ui
 ->
 	`£tupUi
@@ -67317,13 +67437,13 @@ ui
 this
 );
 
-22 
+29 
 this
 ->
 	`£tupDŸlog
 ();
 
-23 
+30 
 m_curSysOvrvObjeù
 ->
 	`’abËEd™
@@ -67331,11 +67451,11 @@ m_curSysOvrvObjeù
 Œue
 );
 
-24 
+31 
 	}
 }
 
-26 
+33 
 	gSysOvrvObjeùDŸlog
 ::
 	$SysOvrvObjeùDŸlog
@@ -67349,13 +67469,13 @@ QWidg‘
 ·»Á
 ) :
 
-27 
+34 
 	`QDŸlog
 (
 ·»Á
 ),
 
-28 
+35 
 	`ui
 (
 Ãw
@@ -67365,25 +67485,25 @@ Ui
 SysOvrvObjeùDŸlog
 ),
 
-29 
+36 
 	`m_curSysOvrvObjeù
 (
 objeù
 ),
 
-30 
+37 
 	`m_focu£dI‹m
 (
-NULL
+Q_NULLPTR
 ),
 
-31 
+38 
 	$upd©eExi¡šg
 (
 Œue
 )
 
-33 
+40 
 m_jsÚObjSave
  = 
 m_curSysOvrvObjeù
@@ -67391,7 +67511,7 @@ m_curSysOvrvObjeù
 	`·r£ToJsÚ
 ();
 
-34 
+41 
 ui
 ->
 	`£tupUi
@@ -67399,13 +67519,13 @@ ui
 this
 );
 
-35 
+42 
 this
 ->
 	`£tupDŸlog
 ();
 
-36 
+43 
 m_curSysOvrvObjeù
 ->
 	`’abËEd™
@@ -67413,7 +67533,7 @@ m_curSysOvrvObjeù
 Œue
 );
 
-37 autØ
+44 autØ
 chdObj
  : 
 m_curSysOvrvObjeù
@@ -67421,7 +67541,7 @@ m_curSysOvrvObjeù
 	`g‘ChidSysOvrvObjeùs
 ())
 
-39 
+46 
 chdObj
 ->
 	`£tAsChd
@@ -67429,45 +67549,47 @@ chdObj
 çl£
 );
 
-41 
+48 
 	}
 }
 
-43 
+50 
 	gSysOvrvObjeùDŸlog
 ::~
 	$SysOvrvObjeùDŸlog
 ()
 
-45 
+52 
 	`qDebug
 (è<< 
 __PRETTY_FUNCTION__
 ;
 
-46 
+53 
 d–‘e
  
 ui
 ;
 
-47 
+54 
 	}
 }
 
-49 
+56 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_addPrİ”tyBŠ_şicked
 ()
 
-51 
+58 
 SysOvrvObjeùDŸlog
  
-addSysOvrvObjeùDŸlog
-;
+	`addSysOvrvObjeùDŸlog
+(
+this
+);
 
-52 
+59 
 	`cÚÃù
 (&
 addSysOvrvObjeùDŸlog
@@ -67478,36 +67600,36 @@ comm™
 , 
 this
 , &SysOvrvObjeùDŸlog::
-addObjeùToObjeù
+¦t_addObjeùToObjeù
 );
 
-53 
+60 
 addSysOvrvObjeùDŸlog
 .
 	`exec
 ();
 
-54 
+61 
 	}
 }
 
-56 
+63 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_rmvPrİ”tyBŠ_şicked
 ()
 
-58 if((
+65 if((
 m_focu£dI‹m
  =ğ
-NULL
+Q_NULLPTR
 è|| (m_focu£dI‹m =ğ
 this
 ->
 m_curSysOvrvObjeù
 ))
 
-61 
+70 
 	`qDebug
 (è<< "Focu£d i‹m: " << 
 m_focu£dI‹m
@@ -67515,39 +67637,39 @@ m_focu£dI‹m
 	`g‘ObjName
 ();
 
-63 
+72 
 d–‘e
  
 m_focu£dI‹m
 ;
 
-64 
+73 
 m_focu£dI‹m
  = 
-NULL
+Q_NULLPTR
 ;
 
-65 
+74 
 	}
 }
 
-67 
+76 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_edtPrİ”tyBŠ_şicked
 ()
 
-69 if((
+78 if((
 m_focu£dI‹m
  =ğ
-NULL
+Q_NULLPTR
 è|| (m_focu£dI‹m =ğ
 this
 ->
 m_curSysOvrvObjeù
 ))
 
-72 
+83 
 	`qDebug
 (è<< "Focu£d i‹m: " << 
 m_focu£dI‹m
@@ -67555,21 +67677,17 @@ m_focu£dI‹m
 	`g‘ObjName
 ();
 
-74 
+85 
 SysOvrvObjeùDŸlog
- *
-addSysOvrvObjeùDŸlog
- = 
-Ãw
  
-	`SysOvrvObjeùDŸlog
+	`addSysOvrvObjeùDŸlog
 (
 m_focu£dI‹m
 );
 
-75 
+86 
 	`cÚÃù
-(
+(&
 addSysOvrvObjeùDŸlog
 , &
 SysOvrvObjeùDŸlog
@@ -67578,48 +67696,12 @@ comm™
 , 
 this
 , &SysOvrvObjeùDŸlog::
-addObjeùToObjeù
-);
-
-76 
-addSysOvrvObjeùDŸlog
-->
-	`exec
-();
-
-77 
-	}
-}
-
-79 
-	gSysOvrvObjeùDŸlog
-::
-	$Ú_edtTrigg”BŠ_şicked
-()
-
-81 if(
-m_focu£dI‹m
- =ğ
-NULL
-)
-
-85 
-SysOvrvObjTrigg”DŸlog
- *
-Œigg”DŸg
- = 
-Ãw
- 
-	`SysOvrvObjTrigg”DŸlog
-(
-m_focu£dI‹m
-, 
-this
+¦t_addObjeùToObjeù
 );
 
 87 
-Œigg”DŸg
-->
+addSysOvrvObjeùDŸlog
+.
 	`exec
 ();
 
@@ -67630,12 +67712,44 @@ this
 90 
 	gSysOvrvObjeùDŸlog
 ::
-	$objeùSh­eChªged
+	$Ú_edtTrigg”BŠ_şicked
+()
+
+92 if(
+m_focu£dI‹m
+ =ğ
+Q_NULLPTR
+)
+
+98 
+SysOvrvObjTrigg”DŸlog
+ 
+	`Œigg”DŸg
+(
+m_focu£dI‹m
+, 
+this
+);
+
+100 
+Œigg”DŸg
+.
+	`exec
+();
+
+101 
+	}
+}
+
+103 
+	gSysOvrvObjeùDŸlog
+::
+	$¦t_objeùSh­eChªged
 (
 šdex
 )
 
-92 
+105 
 ¡©ic_ÿ¡
 <
 SysOvrvObjeù
@@ -67645,13 +67759,21 @@ ObjSh­eTy³
 šdex
 ))
 
-94 
+107 
 SysOvrvObjeù
 ::
 ObjSh­e_ReùªgË
 :
 
-95 
+108 
+m_curSysOvrvObjeù
+ = 
+Ãw
+ 
+	`ReùSysOvrvObjeù
+(m_curSysOvrvObject);
+
+109 
 m_curSysOvrvObjeù
 ->
 	`£tSh­e
@@ -67661,13 +67783,21 @@ SysOvrvObjeù
 ObjSh­e_ReùªgË
 );
 
-97 
+111 
 SysOvrvObjeù
 ::
 ObjSh­e_Squ¬e
 :
 
-98 
+112 
+m_curSysOvrvObjeù
+ = 
+Ãw
+ 
+	`Squ¬eSysOvrvObjeù
+(m_curSysOvrvObject);
+
+113 
 m_curSysOvrvObjeù
 ->
 	`£tSh­e
@@ -67677,13 +67807,21 @@ SysOvrvObjeù
 ObjSh­e_Squ¬e
 );
 
-100 
+115 
 SysOvrvObjeù
 ::
 ObjSh­e_EÎ£
 :
 
-101 
+116 
+m_curSysOvrvObjeù
+ = 
+Ãw
+ 
+	`EÎ£SysOvrvObjeù
+(m_curSysOvrvObject);
+
+117 
 m_curSysOvrvObjeù
 ->
 	`£tSh­e
@@ -67693,13 +67831,21 @@ SysOvrvObjeù
 ObjSh­e_EÎ£
 );
 
-103 
+119 
 SysOvrvObjeù
 ::
 ObjSh­e_Cœşe
 :
 
-104 
+120 
+m_curSysOvrvObjeù
+ = 
+Ãw
+ 
+	`CœşeSysOvrvObjeù
+(m_curSysOvrvObject);
+
+121 
 m_curSysOvrvObjeù
 ->
 	`£tSh­e
@@ -67709,13 +67855,21 @@ SysOvrvObjeù
 ObjSh­e_Cœşe
 );
 
-106 
+123 
 SysOvrvObjeù
 ::
 ObjSh­e_TrŸngË
 :
 
-107 
+124 
+m_curSysOvrvObjeù
+ = 
+Ãw
+ 
+	`TrŸngËSysOvrvObjeù
+(m_curSysOvrvObject);
+
+125 
 m_curSysOvrvObjeù
 ->
 	`£tSh­e
@@ -67725,19 +67879,27 @@ SysOvrvObjeù
 ObjSh­e_TrŸngË
 );
 
-109 
+127 
 SysOvrvObjeù
 ::
 ObjSh­e_Image
 :
 
-110 
+128 
+m_curSysOvrvObjeù
+ = 
+Ãw
+ 
+	`ImageSysOvrvObjeù
+(m_curSysOvrvObject);
+
+129 
 m_curSysOvrvObjeù
 ->
 	`lßdImageFromFe
 ();
 
-111 
+130 
 m_curSysOvrvObjeù
 ->
 	`£tSh­e
@@ -67747,21 +67909,21 @@ SysOvrvObjeù
 ObjSh­e_Image
 );
 
-116 
+135 
 	}
 }
 
-118 
+137 
 	gSysOvrvObjeùDŸlog
 ::
-	$addObjeùToObjeù
+	$¦t_addObjeùToObjeù
 (
 SysOvrvObjeù
  *
 obj
 )
 
-121 
+140 
 obj
 ->
 	`£tPos
@@ -67771,13 +67933,13 @@ m_curSysOvrvObjeù
 	`pos
 ());
 
-122 
+141 
 obj
 ->
 	`moveBy
 (10,10);
 
-123 
+142 
 obj
 ->
 	`£tP¬’tI‹m
@@ -67785,20 +67947,18 @@ obj
 m_curSysOvrvObjeù
 );
 
-124 
-this
-->
+143 
 	`upd©e
 ();
 
-125 
+144 
 	}
 }
 
-127 
+146 
 	gSysOvrvObjeùDŸlog
 ::
-	$focusChªged
+	$¦t_focusChªged
 (
 QG¿phicsI‹m
  *
@@ -67807,19 +67967,19 @@ QG¿phicsI‹m
 ŞdI‹m
 )
 
-129 
+148 
 	`Q_UNUSED
 (
 ŞdI‹m
 )
 
-131 if(
+150 if(
 ÃwI‹m
  !ğ
 Q_NULLPTR
 )
 
-132 
+152 
 m_focu£dI‹m
  = 
 dyÇmic_ÿ¡
@@ -67829,23 +67989,23 @@ SysOvrvObjeù
 ÃwI‹m
 );
 
-133 
+154 
 	}
 }
 
-135 
+156 
 	gSysOvrvObjeùDŸlog
 ::
-	$£ËùiÚChªged
+	$¦t_£ËùiÚChªged
 ()
 
-137 if(!
+158 if(!
 SysOvrvSûÃ
 .
 	`isAùive
 ())
 
-141 
+162 
 QLi¡
 <
 QG¿phicsI‹m
@@ -67857,19 +68017,19 @@ SysOvrvSûÃ
 	`£ËùedI‹ms
 ();
 
-142 if(
+163 if(
 £ËùedI‹ms
 .
 	`isEm±y
 ())
 
-144 
+165 
 m_focu£dI‹m
  = 
 Q_NULLPTR
 ;
 
-148 
+169 
 m_focu£dI‹m
  = 
 dyÇmic_ÿ¡
@@ -67881,11 +68041,11 @@ SysOvrvObjeù
 	`©
 (0));
 
-150 
+171 
 	}
 }
 
-152 
+173 
 SysOvrvObjeù
  *
 	gSysOvrvObjeùDŸlog
@@ -67893,15 +68053,15 @@ SysOvrvObjeù
 	$curSysOvrvObjeù
 () const
 
-154  
+175  
 m_curSysOvrvObjeù
 ;
 
-155 
+176 
 	}
 }
 
-157 
+178 
 	gSysOvrvObjeùDŸlog
 ::
 	$£tCurSysOvrvObjeù
@@ -67911,23 +68071,23 @@ SysOvrvObjeù
 curSysOvrvObjeù
 )
 
-159 
+180 
 m_curSysOvrvObjeù
  = 
 curSysOvrvObjeù
 ;
 
-160 
+181 
 	}
 }
 
-162 
+183 
 	gSysOvrvObjeùDŸlog
 ::
 	$£tupDŸlog
 ()
 
-164 
+185 
 QSŒšgLi¡
  
 	`™ems
@@ -67941,7 +68101,7 @@ SysOvrvObjeù
 	`g‘Sh­esAsSŒšgLi¡
 ()));
 
-166 
+187 
 ui
 ->
 objeùSh­eComboBox
@@ -67951,7 +68111,7 @@ objeùSh­eComboBox
 ™ems
 );
 
-167 
+188 
 ui
 ->
 objeùSh­eComboBox
@@ -67963,7 +68123,7 @@ m_curSysOvrvObjeù
 	`g‘Sh­e
 ());
 
-168 
+189 
 ui
 ->
 ObjeùCŞÜLE
@@ -67981,7 +68141,7 @@ m_curSysOvrvObjeù
 	`Çme
 ()));
 
-169 
+190 
 ui
 ->
 ObjeùCŞÜLE
@@ -67995,7 +68155,7 @@ m_curSysOvrvObjeù
 	`Çme
 ());
 
-170 
+191 
 ui
 ->
 objeùNameLE
@@ -68007,7 +68167,7 @@ m_curSysOvrvObjeù
 	`g‘ObjName
 ());
 
-172 
+193 
 	`cÚÃù
 (
 ui
@@ -68024,10 +68184,10 @@ this
 , &
 SysOvrvObjeùDŸlog
 ::
-objeùSh­eChªged
+¦t_objeùSh­eChªged
 );
 
-174 
+195 
 SysOvrvSûÃ
 .
 	`addI‹m
@@ -68037,7 +68197,7 @@ this
 m_curSysOvrvObjeù
 );
 
-176 
+197 
 	`cÚÃù
 (&
 SysOvrvSûÃ
@@ -68050,10 +68210,10 @@ this
 , &
 SysOvrvObjeùDŸlog
 ::
-focusChªged
+¦t_focusChªged
 );
 
-178 
+199 
 ui
 ->
 objeùVisu®iz”G¿phicsV›w
@@ -68063,11 +68223,11 @@ objeùVisu®iz”G¿phicsV›w
 SysOvrvSûÃ
 );
 
-179 
+200 
 	}
 }
 
-181 
+202 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_bu‰ÚBox_şicked
@@ -68077,7 +68237,7 @@ QAb¡¿ùBu‰Ú
 bu‰Ú
 )
 
-183 
+204 
 ui
 ->
 bu‰ÚBox
@@ -68087,13 +68247,13 @@ bu‰ÚBox
 bu‰Ú
 ))
 
-185 
+206 
 QDŸlogBu‰ÚBox
 ::
 Acû±RŞe
 :
 
-186 
+207 
 ui
 ->
 bu‰ÚBox
@@ -68103,13 +68263,13 @@ bu‰ÚBox
 bu‰Ú
 ))
 
-188 
+209 
 QDŸlogBu‰ÚBox
 ::
 Ok
 :
 
-189 if(
+210 if(
 ui
 ->
 objeùNameLE
@@ -68119,7 +68279,7 @@ objeùNameLE
 	`isEm±y
 ())
 
-191 
+212 
 ui
 ->
 objeùNameLE
@@ -68127,7 +68287,7 @@ objeùNameLE
 	`£tFocus
 ();
 
-194 
+215 
 SysOvrvSûÃ
 .
 	`»moveI‹m
@@ -68135,7 +68295,7 @@ SysOvrvSûÃ
 m_curSysOvrvObjeù
 );
 
-195 
+216 
 this
 ->
 m_curSysOvrvObjeù
@@ -68149,7 +68309,7 @@ objeùNameLE
 	`‹xt
 ());
 
-196 autØ
+217 autØ
 chdObj
  : 
 m_curSysOvrvObjeù
@@ -68157,7 +68317,7 @@ m_curSysOvrvObjeù
 	`g‘ChidSysOvrvObjeùs
 ())
 
-198 
+219 
 chdObj
 ->
 	`£tAsChd
@@ -68165,27 +68325,27 @@ chdObj
 Œue
 );
 
-200 
+221 
 em™
  
-	`comm™
+	`sgÆ_comm™
 (
 this
 ->
 m_curSysOvrvObjeù
 );
 
-201 
+222 
 	`acû±
 ();
 
-203 
+224 
 QDŸlogBu‰ÚBox
 ::
 Save
 :
 
-204 if(
+225 if(
 ui
 ->
 objeùNameLE
@@ -68195,7 +68355,7 @@ objeùNameLE
 	`isEm±y
 ())
 
-206 
+227 
 ui
 ->
 objeùNameLE
@@ -68203,11 +68363,11 @@ objeùNameLE
 	`£tFocus
 ();
 
-209 
+230 
 	`qDebug
 () << "Accept: Save SysOvrvObj";
 
-211 
+232 
 QSŒšg
  
 §veLoc
@@ -68221,13 +68381,13 @@ this
 	`QSŒšg
 ("Save‡s"), QString(), "JSON File (*.json)");
 
-212 
+233 
 	`qDebug
 (è<< 
 §veLoc
 ;
 
-213 
+234 
 QFe
  
 	`jsÚSaveFe
@@ -68235,7 +68395,7 @@ QFe
 §veLoc
 );
 
-214 if(!
+235 if(!
 jsÚSaveFe
 .
 	`İ’
@@ -68245,7 +68405,7 @@ QIODeviû
 Wr™eOÆy
 )) {
 
-215 
+236 
 	`qDebug
 (è<< "”rÜ o³ÀftØ§ve: " << 
 jsÚSaveFe
@@ -68253,7 +68413,7 @@ jsÚSaveFe
 	`feName
 ();
 
-222 
+243 
 jsÚSaveFe
 .
 	`wr™e
@@ -68263,29 +68423,29 @@ m_curSysOvrvObjeù
 	`·r£ToJsÚ
 ());
 
-225 
+246 
 jsÚSaveFe
 .
 	`æush
 ();
 
-226 
+247 
 jsÚSaveFe
 .
 	`şo£
 ();
 
-229 
+250 
 QDŸlogBu‰ÚBox
 ::
 O³n
 :
 
-230 
+251 
 	`qDebug
 () << "Accept: Open SysOvrvObj";
 
-232 
+253 
 QSŒšg
  
 İ’Loc
@@ -68299,13 +68459,13 @@ this
 	`QSŒšg
 ("Open"), QString(), "JSON File (*.json)");
 
-233 
+254 
 	`qDebug
 (è<< 
 İ’Loc
 ;
 
-234 
+255 
 QFe
  
 	`jsÚO³nFe
@@ -68313,7 +68473,7 @@ QFe
 İ’Loc
 );
 
-235 if(!
+256 if(!
 jsÚO³nFe
 .
 	`İ’
@@ -68325,7 +68485,7 @@ R—dOÆy
 Text
 )) {
 
-236 
+257 
 	`qDebug
 (è<< "”rÜ o³nšg: " << 
 jsÚO³nFe
@@ -68333,7 +68493,7 @@ jsÚO³nFe
 	`feName
 ();
 
-241 
+262 
 SysOvrvSûÃ
 .
 	`»moveI‹m
@@ -68341,13 +68501,13 @@ SysOvrvSûÃ
 m_curSysOvrvObjeù
 );
 
-242 
+263 
 d–‘e
  
 m_curSysOvrvObjeù
 ;
 
-243 
+264 
 m_curSysOvrvObjeù
  = 
 Ãw
@@ -68355,7 +68515,7 @@ m_curSysOvrvObjeù
 	`SysOvrvObjeù
 ();
 
-245 
+266 
 QBy‹A¼ay
  
 jsÚSysOvrvObj
@@ -68365,7 +68525,7 @@ jsÚO³nFe
 	`»adAÎ
 ();
 
-246 
+267 
 m_curSysOvrvObjeù
 ->
 	`·r£FromJsÚ
@@ -68373,7 +68533,7 @@ m_curSysOvrvObjeù
 jsÚSysOvrvObj
 );
 
-247 
+268 
 m_curSysOvrvObjeù
 ->
 	`’abËResizšg
@@ -68381,7 +68541,7 @@ m_curSysOvrvObjeù
 Œue
 );
 
-248 autØ
+269 autØ
 chdObj
  : 
 m_curSysOvrvObjeù
@@ -68389,7 +68549,7 @@ m_curSysOvrvObjeù
 	`g‘ChidSysOvrvObjeùs
 ())
 
-250 
+271 
 chdObj
 ->
 	`£tAsChd
@@ -68397,7 +68557,7 @@ chdObj
 çl£
 );
 
-252 
+273 
 ui
 ->
 ObjeùCŞÜLE
@@ -68415,7 +68575,7 @@ m_curSysOvrvObjeù
 	`Çme
 ()));
 
-253 
+274 
 ui
 ->
 ObjeùCŞÜLE
@@ -68429,7 +68589,7 @@ m_curSysOvrvObjeù
 	`Çme
 ());
 
-254 
+275 
 ui
 ->
 objeùNameLE
@@ -68441,7 +68601,7 @@ m_curSysOvrvObjeù
 	`g‘ObjName
 ());
 
-255 
+276 
 ui
 ->
 objeùSh­eComboBox
@@ -68453,7 +68613,7 @@ m_curSysOvrvObjeù
 	`g‘Sh­e
 ());
 
-256 
+277 
 SysOvrvSûÃ
 .
 	`addI‹m
@@ -68461,13 +68621,13 @@ SysOvrvSûÃ
 m_curSysOvrvObjeù
 );
 
-259 
+280 
 jsÚO³nFe
 .
 	`şo£
 ();
 
-263 
+284 
 	`qDebug
 (è<< "Inv®id bu‰Ú: " << 
 ui
@@ -68479,13 +68639,13 @@ bu‰ÚBox
 bu‰Ú
 );
 
-267 
+288 
 QDŸlogBu‰ÚBox
 ::
 RejeùRŞe
 :
 
-268 
+289 
 SysOvrvSûÃ
 .
 	`»moveI‹m
@@ -68493,17 +68653,17 @@ SysOvrvSûÃ
 m_curSysOvrvObjeù
 );
 
-269 if(
+290 if(
 upd©eExi¡šg
 )
 
-271 
+292 
 d–‘e
  
 m_curSysOvrvObjeù
 ;
 
-273 
+294 
 m_curSysOvrvObjeù
  = 
 Ãw
@@ -68511,7 +68671,7 @@ m_curSysOvrvObjeù
 	`SysOvrvObjeù
 ();
 
-274 
+295 
 m_curSysOvrvObjeù
 ->
 	`·r£FromJsÚ
@@ -68519,31 +68679,31 @@ m_curSysOvrvObjeù
 m_jsÚObjSave
 );
 
-275 
+296 
 em™
  
-	`comm™
+	`sgÆ_comm™
 (
 m_curSysOvrvObjeù
 );
 
-279 
+300 
 d–‘e
  
 m_curSysOvrvObjeù
 ;
 
-281 
+302 
 	`»jeù
 ();
 
-283 
+304 
 QDŸlogBu‰ÚBox
 ::
 Re£tRŞe
 :
 
-284 
+305 
 SysOvrvSûÃ
 .
 	`»moveI‹m
@@ -68551,13 +68711,13 @@ SysOvrvSûÃ
 m_curSysOvrvObjeù
 );
 
-285 
+306 
 d–‘e
  
 m_curSysOvrvObjeù
 ;
 
-286 
+307 
 m_curSysOvrvObjeù
  = 
 Ãw
@@ -68565,7 +68725,7 @@ m_curSysOvrvObjeù
 	`SysOvrvObjeù
 ();
 
-287 
+308 
 m_curSysOvrvObjeù
 ->
 	`·r£FromJsÚ
@@ -68573,7 +68733,7 @@ m_curSysOvrvObjeù
 m_jsÚObjSave
 );
 
-288 
+309 
 m_curSysOvrvObjeù
 ->
 	`’abËResizšg
@@ -68581,7 +68741,7 @@ m_curSysOvrvObjeù
 Œue
 );
 
-289 
+310 
 ui
 ->
 ObjeùCŞÜLE
@@ -68599,7 +68759,7 @@ m_curSysOvrvObjeù
 	`Çme
 ()));
 
-290 
+311 
 ui
 ->
 ObjeùCŞÜLE
@@ -68613,7 +68773,7 @@ m_curSysOvrvObjeù
 	`Çme
 ());
 
-291 
+312 
 ui
 ->
 objeùNameLE
@@ -68625,7 +68785,7 @@ m_curSysOvrvObjeù
 	`g‘ObjName
 ());
 
-292 
+313 
 ui
 ->
 objeùSh­eComboBox
@@ -68637,7 +68797,7 @@ m_curSysOvrvObjeù
 	`g‘Sh­e
 ());
 
-294 
+315 
 SysOvrvSûÃ
 .
 	`addI‹m
@@ -68645,17 +68805,17 @@ SysOvrvSûÃ
 m_curSysOvrvObjeù
 );
 
-299 
+320 
 	}
 }
 
-301 
+322 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_O³nCŞÜPick”_şicked
 ()
 
-303 
+324 
 QCŞÜDŸlog
  *
 cŞÜPick”
@@ -68671,7 +68831,7 @@ m_curSysOvrvObjeù
 this
 );
 
-304 
+325 
 	`cÚÃù
 (
 cŞÜPick”
@@ -68684,30 +68844,30 @@ this
 , &
 SysOvrvObjeùDŸlog
 ::
-cŞÜChªged
+¦t_cŞÜChªged
 );
 
-305 
+326 
 cŞÜPick”
 ->
 	`exec
 ();
 
-306 
+327 
 	}
 }
 
-308 
+329 
 	gSysOvrvObjeùDŸlog
 ::
-	$cŞÜChªged
+	$¦t_cŞÜChªged
 (cÚ¡ 
 QCŞÜ
  &
 ÃwCŞÜ
 )
 
-310 
+331 
 	`qDebug
 (è<< "CŞÜ…icked: " << 
 ÃwCŞÜ
@@ -68715,7 +68875,7 @@ QCŞÜ
 	`Çme
 ();
 
-311 
+332 
 ui
 ->
 ObjeùCŞÜLE
@@ -68731,7 +68891,7 @@ ObjeùCŞÜLE
 	`Çme
 ()));
 
-312 
+333 
 ui
 ->
 ObjeùCŞÜLE
@@ -68743,7 +68903,7 @@ ObjeùCŞÜLE
 	`Çme
 ());
 
-313 
+334 
 m_curSysOvrvObjeù
 ->
 	`£tMyCŞÜ
@@ -68753,23 +68913,23 @@ m_curSysOvrvObjeù
 ÃwCŞÜ
 ));
 
-314 
+335 
 	}
 }
 
-316 
+337 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_pushBu‰Ú_şicked
 ()
 
-318 if(
+339 if(
 m_focu£dI‹m
  =ğ
 Q_NULLPTR
 )
 
-321 
+344 
 SysOvrvObjeù
 * 
 du¶iÿ‹ObjP¬’t
@@ -68778,10 +68938,10 @@ m_focu£dI‹m
  =ğ
 m_curSysOvrvObjeù
 è? m_focu£dI‹m : 
-NULL
+Q_NULLPTR
 ;
 
-322 
+345 
 SysOvrvObjeù
 * 
 du¶iÿ‹dObjeù
@@ -68793,7 +68953,7 @@ m_focu£dI‹m
 du¶iÿ‹ObjP¬’t
 );
 
-324 
+347 
 du¶iÿ‹ObjP¬’t
  = 
 dyÇmic_ÿ¡
@@ -68805,13 +68965,13 @@ du¶iÿ‹dObjeù
 	`·»ÁI‹m
 ());
 
-325 if(
+348 if(
 du¶iÿ‹ObjP¬’t
  =ğ
 Q_NULLPTR
 )
 
-329 
+352 
 du¶iÿ‹dObjeù
 ->
 	`£tPos
@@ -68821,13 +68981,13 @@ du¶iÿ‹ObjP¬’t
 	`pos
 ());
 
-330 
+353 
 du¶iÿ‹dObjeù
 ->
 	`moveBy
 (10,10);
 
-337 
+360 
 du¶iÿ‹dObjeù
 ->
 	`£tAsChd
@@ -68835,11 +68995,11 @@ du¶iÿ‹dObjeù
 çl£
 );
 
-338 
+361 
 	}
 }
 
-340 
+363 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_objeùNameLE_‹xtEd™ed
@@ -68849,7 +69009,7 @@ QSŒšg
 ¬g1
 )
 
-342 
+365 
 m_curSysOvrvObjeù
 ->
 	`£tObjName
@@ -68857,23 +69017,23 @@ m_curSysOvrvObjeù
 ¬g1
 );
 
-343 
+366 
 	}
 }
 
-345 
+368 
 	gSysOvrvObjeùDŸlog
 ::
 	$Ú_addLblBŠ_şicked
 ()
 
-347 
+370 
 m_curSysOvrvObjeù
 ->
 	`addLab–
 ();
 
-348 
+371 
 	}
 }
 
@@ -68914,13 +69074,11 @@ QObjeù
 }
 
 13 
-QHash
+QVeùÜ
 <
-QSŒšg
-, 
-	gSysOvrvObjeù
+SysOvrvObjeù
  *> 
-	gSysOvrvObjeùStÜe
+SysOvrvObjeùStÜe
 ::
 	$g‘ObjeùStÜe
 () const
@@ -68952,20 +69110,28 @@ SysOvrvObjeù
 )
 
 20 
+Trigg”Id’tif›r
+ 
+	`Œigg”Id’tif›r
+(
+id
+,
+code
+);
+
+21 
 QVeùÜ
 <
 SysOvrvObjeù
 *>
 objVeùÜ
  = 
-msgP¬£rStÜe
+objeùTrigg”StÜe
 [
-id
-][
-code
+Œigg”Id’tif›r
 ];
 
-21 if(
+22 if(
 objVeùÜ
 .
 	`cÚšs
@@ -68973,7 +69139,21 @@ objVeùÜ
 »Ï‹dSysOvrvObj
 ))
 
-23 
+24 
+	`qDebug
+(è<< "ThobjeùTrigg”StÜdÛ ®»ady cÚšhSysOvrvObjeù: " << 
+»Ï‹dSysOvrvObj
+->
+	`g‘ObjName
+()
+
+25 << " fÜhŒigg” w™h id " << 
+id
+ << "‡nd cod" << 
+code
+;
+
+28 
 objVeùÜ
 .
 	`­³nd
@@ -68981,11 +69161,11 @@ objVeùÜ
 »Ï‹dSysOvrvObj
 );
 
-24 
+29 
 	}
 }
 
-26 
+31 
 	gSysOvrvObjeùStÜe
 ::
 	$»moveMe§geToW©ch
@@ -69003,21 +69183,29 @@ SysOvrvObjeù
 »Ï‹dSysOvrvObj
 )
 
-28 
+33 
+Trigg”Id’tif›r
+ 
+	`Œigg”Id’tif›r
+(
+id
+,
+code
+);
+
+34 
 QVeùÜ
 <
 SysOvrvObjeù
 *>
 objVeùÜ
  = 
-msgP¬£rStÜe
+objeùTrigg”StÜe
 [
-id
-][
-code
+Œigg”Id’tif›r
 ];
 
-29 if(
+36 if(!
 objVeùÜ
 .
 	`cÚšs
@@ -69025,7 +69213,21 @@ objVeùÜ
 »Ï‹dSysOvrvObj
 ))
 
-31 
+38 
+	`qDebug
+(è<< "objeùTrigg”StÜdÛ nÙ cÚšhSysOvrvObjeù: " << 
+»Ï‹dSysOvrvObj
+->
+	`g‘ObjName
+()
+
+39 << " fÜhŒigg” w™h id " << 
+id
+ << "‡nd cod" << 
+code
+;
+
+43 
 objVeùÜ
 .
 	`»moveAÎ
@@ -69033,503 +69235,209 @@ objVeùÜ
 »Ï‹dSysOvrvObj
 );
 
-32 if(
+45 if(
 objVeùÜ
 .
 	`isEm±y
 ())
 
-33 
-msgP¬£rStÜe
-[
+47 
+	`qDebug
+(è<< "ThobjeùVeùÜ i em±y,h”efÜ»movid " << 
 id
-].
-	`»move
-(
+ << "‡nd cod" << 
 code
-);
 
-34 if(
-msgP¬£rStÜe
-[
-id
-].
-	`isEm±y
-())
 
-35 
-msgP¬£rStÜe
+49 
+objeùTrigg”StÜe
 .
 	`»move
 (
-id
+Œigg”Id’tif›r
 );
 
-36 
+51 
 	}
 }
 
-38 
+53 
 	gSysOvrvObjeùStÜe
 ::
 	$addObjeù
-()
-
-40 
-SysOvrvObjeùDŸlog
- 
-addSysOvrvObjeùDŸlog
-;
-
-41 
-	`cÚÃù
-(&
-addSysOvrvObjeùDŸlog
-, &
-SysOvrvObjeùDŸlog
-::
-comm™
-, 
-this
-, &
-SysOvrvObjeùStÜe
-::
-addObjToStÜe
-);
-
-42 
-curObjPos
- = 
-¡©ic_ÿ¡
-<
-SysOv”v›wG¿phicsV›w
-*>(
-	`·»Á
-())->
-	`G‘Cu¼’tMou£Pos
-();
-
-43 
-addSysOvrvObjeùDŸlog
-.
-	`exec
-();
-
-44 
-	}
-}
-
-46 
-	gSysOvrvObjeùStÜe
-::
-	$rmvObjeù
-()
-
-48 
+(
 SysOvrvObjeù
  *
-curObj
- = 
-¡©ic_ÿ¡
-<
-SysOv”v›wG¿phicsV›w
-*>(
-	`·»Á
-())->
-	`g‘Cu¼’tObjeù
-();
-
-50 if(
-curObj
- =ğ
-NULL
+obj
 )
 
-52 
-	`»moveObjeù
-(
-curObj
-);
+55 if(
+obj
+ =ğ
+nuÎ±r
+)
 
-53 
-d–‘e
- 
-curObj
-;
-
-54 
-	}
-}
-
-56 
-	gSysOvrvObjeùStÜe
-::
-	$updtObjeù
-()
-
-58 
-SysOvrvObjeù
- *
-curObj
- = 
-¡©ic_ÿ¡
-<
-SysOv”v›wG¿phicsV›w
-*>(
-	`·»Á
-())->
-	`g‘Cu¼’tObjeù
-();
+57 
+	`qDebug
+() << "Nullptr…assedo‡ddObject!";
 
 60 if(
-curObj
- =ğ
-NULL
-)
-
-71 
-curObj
-->
-	`’abËResizšg
-(
-Œue
-);
-
-72 
-curObjPos
- = 
-curObj
-->
-	`pos
-();
-
-73 
-	`upd©eObjeù
-(
-curObj
-);
-
-74 
-	}
-}
-
-76 
-	gSysOvrvObjeùStÜe
-::
-	$du¶iÿ‹Objeù
-()
-
-78 
-SysOvrvObjeù
- *
-curObj
- = 
-¡©ic_ÿ¡
-<
-SysOv”v›wG¿phicsV›w
-*>(
-	`·»Á
-())->
-	`g‘Cu¼’tObjeù
-();
-
-79 if(
-curObj
- =ğ
-NULL
-)
-
-81 
-curObjPos
- = 
-curObj
-->
-	`pos
-();
-
-82 
-SysOvrvObjeù
- *
-ÃwObj
- = 
-curObj
-->
-	`du¶iÿ‹
-();
-
-83 
-ÃwObj
-->
-	`£tAsChd
-(
-çl£
-);
-
-84 
-this
-->
 objeùStÜe
-[
-ÃwObj
-->
-	`g‘HashedName
-()] =‚ewObj;
+.
+	`cÚšs
+(
+obj
+))
 
-85 
+62 
 	`qDebug
-(è<< "G¿phicsI‹m‡dded: " << 
-ÃwObj
+(è<< "ObjeùStÜ®»ady cÚšs: " << 
+obj
 ->
 	`g‘ObjName
 ();
 
-87 
-ÃwObj
-->
-	`’abËResizšg
-(
-çl£
-);
-
-88 
-em™
- 
-this
-->
-	`objeùAddedToStÜe
-(
-ÃwObj
-,
-curObjPos
-);
-
-89 
-	}
-}
-
-91 
-	gSysOvrvObjeùStÜe
-::
-	$addObjToStÜe
-(
-SysOvrvObjeù
- *
-objToAdd
-)
-
-93 
-this
-->
+65 
 objeùStÜe
-[
-objToAdd
-->
-	`g‘HashedName
-()] = objToAdd;
-
-94 
-	`qDebug
-(è<< "G¿phicsI‹m‡dded: " << 
-objToAdd
-->
-	`g‘ObjName
-();
-
-95 
-	`discÚÃù
+.
+	`­³nd
 (
-qobjeù_ÿ¡
-<
-SysOvrvObjeùDŸlog
- *>(
-	`£nd”
-()), &SysOvrvObjeùDŸlog::
-comm™
-, 
-this
-, &
-SysOvrvObjeùStÜe
-::
-addObjToStÜe
+obj
 );
 
-96 
-d–‘e
- 
-	`£nd”
-();
-
-106 
-objToAdd
-->
-	`’abËResizšg
-(
-çl£
-);
-
-107 
+67 
 em™
  
-this
-->
-	`objeùAddedToStÜe
+	`sgÆ_objeùAddedToStÜe
 (
-objToAdd
-,
-curObjPos
+obj
 );
 
-108 
+68 
 	}
 }
 
-110 
+70 
 	gSysOvrvObjeùStÜe
 ::
 	$»moveObjeù
 (
 SysOvrvObjeù
  *
-objToRmv
+obj
 )
 
-112 
-this
-->
+72 if(
+obj
+ =ğ
+nuÎ±r
+)
+
+74 
+	`qDebug
+() << "Nullptr…assedo„mvObject!";
+
+77 if(
 objeùStÜe
 .
-	`»move
+	`cÚšs
 (
-objToRmv
-->
-	`g‘HashedName
-());
+obj
+))
 
-122 
-em™
- 
-this
+79 
+	`qDebug
+(è<< "ObjeùStÜdÛ nÙ cÚš: " << 
+obj
 ->
-	`objeùRemovedFromStÜe
+	`g‘ObjName
+();
+
+82 
+objeùStÜe
+.
+	`»moveAÎ
 (
-objToRmv
+obj
 );
 
-123 
+84 
+em™
+ 
+	`sgÆ_objeùRemovedFromStÜe
+(
+obj
+);
+
+87 
 	}
 }
 
-125 
+89 
 	gSysOvrvObjeùStÜe
 ::
 	$upd©eObjeù
 (
 SysOvrvObjeù
  *
-objToUpdt
+obj
 )
 
-127 ifĞ
-objToUpdt
- !ğ
-Q_NULLPTR
+91 if(
+obj
+ =ğ
+nuÎ±r
 )
 
-129 
-	`»moveObjeù
-(
-objToUpdt
-);
+93 
+	`qDebug
+() << "Nullptr…assedo updtObject!";
 
-130 
-SysOvrvObjeùDŸlog
- 
-	`addSysOvrvObjeùDŸlog
-(
-objToUpdt
-);
-
-131 
-	`cÚÃù
-(&
-addSysOvrvObjeùDŸlog
-, &
-SysOvrvObjeùDŸlog
-::
-comm™
-, 
-this
-, &
-SysOvrvObjeùStÜe
-::
-addObjToStÜe
-);
-
-132 
-addSysOvrvObjeùDŸlog
-.
-	`exec
-();
-
-134 
+108 
 	}
 }
 
-136 
+170 
 	gSysOvrvObjeùStÜe
 ::
-	$»ûiveMes§ge
-(
-D©a_Pack‘PŒ
- 
-±r
+	$¦t_»ûiveMes§ge
+(cÚ¡ 
+Msg
+ &
+ÃwMsg
 )
 
-139 
-QD©eTime
- 
-timeSmp
- = 
-±r
-->
-	`time¡amp
-();
-
-140 cÚ¡ 
+172 cÚ¡ 
 MsgIDTy³
  
 id
  = 
-±r
-->
-	`äame
-().
-ID_Snd¬d
-;
+ÃwMsg
+.
+	`g‘Id
+();
 
-141 
-QBy‹A¼ay
- 
-ÿnD©a
- = 
-±r
-->
-	`äame
-().
-d©a
-;
-
-143 cÚ¡ 
+173 cÚ¡ 
 MsgCodeTy³
  
 code
  = 
-ÿnD©a
+ÃwMsg
 .
-	`©
-(0);
+	`g‘Code
+();
 
-145 
+174 cÚ¡ 
+Trigg”Id’tif›r
+ 
+	`Œigg”Id’tif›r
+(
+id
+,
+code
+);
+
+176 
 	`qDebug
 (è<< "SysOvrvObjeùStÜe::»ûiveMes§g" << 
 id
@@ -69537,39 +69445,95 @@ id
 code
 ;
 
-148 if(!
-msgP¬£rStÜe
+179 if(!
+objeùTrigg”StÜe
 .
 	`cÚšs
 (
-id
+Œigg”Id’tif›r
 ))
 
-151 if(!
-msgP¬£rStÜe
-[
+181 
+	`qDebug
+(è<< "ojbeùTrigg”StÜdÛ nÙ cÚšrigg” fÜ id " << 
 id
-].
-	`cÚšs
-(
+ << "‡nd cod" << 
 code
-))
+;
 
-154 
+185 cÚ¡ 
 QVeùÜ
 <
 SysOvrvObjeù
- *> 
+ *> &
 »Ï‹dSysOvrvObjs
  = 
-msgP¬£rStÜe
+objeùTrigg”StÜe
 [
-id
-][
-code
+Œigg”Id’tif›r
 ];
 
-169 
+200 
+	}
+}
+
+202 
+	gSysOvrvObjeùStÜe
+::
+	$¦t_addObjeù
+(
+SysOvrvObjeù
+ *
+objToAdd
+)
+
+204 
+	`addObjeù
+(
+objToAdd
+);
+
+205 
+	}
+}
+
+207 
+	gSysOvrvObjeùStÜe
+::
+	$¦t_»moveObjeù
+(
+SysOvrvObjeù
+ *
+objToRmv
+)
+
+209 
+	`»moveObjeù
+(
+objToRmv
+);
+
+210 
+	}
+}
+
+212 
+	gSysOvrvObjeùStÜe
+::
+	$¦t_upd©eObjeù
+(
+SysOvrvObjeù
+ *
+objToUpdt
+)
+
+214 
+	`upd©eObjeù
+(
+objToUpdt
+);
+
+215 
 	}
 }
 
@@ -70344,10 +70308,26 @@ ev’t
 "
 
 3 
+	~<QPaš‹r
+>
+
+4 
+	~<QBrush
+>
+
+5 
+	~<QPaš‹rP©h
+>
+
+6 
+	~<QPoštF
+>
+
+8 
 	~<QDebug
 >
 
-5 
+10 
 	gTrŸngËSysOvrvObjeù
 ::
 	$TrŸngËSysOvrvObjeù
@@ -70357,30 +70337,10 @@ QG¿phicsI‹m
 ·»Á
 ) :
 
-6 
-	$SysOvrvObjeù
-(
-·»Á
-)
-
-8 
-	}
-}
-
-10 
-TrŸngËSysOvrvObjeù
-::
-	$TrŸngËSysOvrvObjeù
-(cÚ¡ 
-TrŸngËSysOvrvObjeù
- &
-Ùh”
-) :
-
 11 
 	$SysOvrvObjeù
 (
-Ùh”
+·»Á
 )
 
 13 
@@ -70391,9 +70351,9 @@ TrŸngËSysOvrvObjeù
 TrŸngËSysOvrvObjeù
 ::
 	$TrŸngËSysOvrvObjeù
-(
+(cÚ¡ 
 TrŸngËSysOvrvObjeù
- &&
+ &
 Ùh”
 ) :
 
@@ -70411,16 +70371,16 @@ TrŸngËSysOvrvObjeù
 TrŸngËSysOvrvObjeù
 ::
 	$TrŸngËSysOvrvObjeù
-(cÚ¡ 
-SysOvrvObjeù
- &
-Üigš®
+(
+TrŸngËSysOvrvObjeù
+ &&
+Ùh”
 ) :
 
 21 
 	$SysOvrvObjeù
 (
-Üigš®
+Ùh”
 )
 
 23 
@@ -70431,9 +70391,9 @@ SysOvrvObjeù
 TrŸngËSysOvrvObjeù
 ::
 	$TrŸngËSysOvrvObjeù
-(
+(cÚ¡ 
 SysOvrvObjeù
- &&
+ &
 Üigš®
 ) :
 
@@ -70447,7 +70407,37 @@ SysOvrvObjeù
 	}
 }
 
-30 
+30 
+TrŸngËSysOvrvObjeù
+::
+	$TrŸngËSysOvrvObjeù
+(
+SysOvrvObjeù
+ &&
+Üigš®
+) :
+
+31 
+	$SysOvrvObjeù
+(
+Üigš®
+)
+
+33 
+	}
+}
+
+35 
+TrŸngËSysOvrvObjeù
+::~
+	$TrŸngËSysOvrvObjeù
+()
+
+37 
+	}
+}
+
+39 
 TrŸngËSysOvrvObjeù
 ::
 	$·št
@@ -70465,7 +70455,7 @@ QWidg‘
 widg‘
 )
 
-32 
+41 
 SysOvrvObjeù
 ::
 	`·št
@@ -70477,7 +70467,7 @@ SysOvrvObjeù
 widg‘
 );
 
-33 
+42 
 QReùF
  
 boundReù
@@ -70485,7 +70475,7 @@ boundReù
 	`boundšgReù
 ();
 
-34 
+43 
 QBrush
  
 	`cŞÜBrush
@@ -70493,7 +70483,7 @@ QBrush
 	`g‘MyCŞÜ
 ());
 
-36 
+45 
 QPoštF
  
 	`»ùTİMiddË
@@ -70507,7 +70497,7 @@ boundReù
 	`tİ
 ());
 
-37 
+46 
 QPaš‹rP©h
  
 	`·th
@@ -70515,7 +70505,7 @@ QPaš‹rP©h
 »ùTİMiddË
 );
 
-39 
+48 
 ·th
 .
 	`lšeTo
@@ -70525,7 +70515,7 @@ boundReù
 	`bÙtomRight
 ());
 
-40 
+49 
 ·th
 .
 	`lšeTo
@@ -70535,7 +70525,7 @@ boundReù
 	`bÙtomLeá
 ());
 
-41 
+50 
 ·th
 .
 	`lšeTo
@@ -70543,13 +70533,13 @@ boundReù
 »ùTİMiddË
 );
 
-43 
+52 
 ·š‹r
-.
+->
 	`§ve
 ();
 
-45 
+54 
 ·š‹r
 ->
 	`£tBrush
@@ -70557,7 +70547,7 @@ boundReù
 cŞÜBrush
 );
 
-46 
+55 
 ·š‹r
 ->
 	`d¿wP©h
@@ -70565,17 +70555,17 @@ cŞÜBrush
 ·th
 );
 
-48 
+57 
 ·š‹r
-.
+->
 	`»¡Üe
 ();
 
-49 
+58 
 	}
 }
 
-51 
+60 
 	gSysOvrvObjeù
 ::
 ObjSh­eTy³
@@ -70585,13 +70575,13 @@ TrŸngËSysOvrvObjeù
 	$g‘Sh­e
 () const
 
-53  
+62  
 SysOvrvObjeù
 ::
 ObjSh­e_TrŸngË
 ;
 
-54 
+63 
 	}
 }
 
@@ -74734,10 +74724,14 @@ QG¿phicsV›w
 
 
 13 
+Q_OBJECT
+
+
+15 
 public
 :
 
-14 
+16 
 SysOv”v›wG¿phicsV›w
 (
 QWidg‘
@@ -74747,7 +74741,7 @@ QWidg‘
 Q_NULLPTR
 );
 
-16 
+18 
 	$cÚ‹xtM’uEv’t
 (
 QCÚ‹xtM’uEv’t
@@ -74757,7 +74751,7 @@ ev’t
 Q_DECL_OVERRIDE
 ;
 
-18 
+20 
 SysOvrvObjeù
  *
 	$g‘ObjAtPos
@@ -74767,7 +74761,7 @@ QPoštF
 pos
 ) const;
 
-20 
+22 
 	`’abËEd™šg
 (cÚ¡ 
 boŞ
@@ -74775,21 +74769,21 @@ boŞ
 ’abË
 );
 
-22 
+24 
 ´iv©e
 :
 
-23 
+25 
 boŞ
  
 ed™šgEÇbËd
 ;
 
-25 
+27 
 sigÇls
 :
 
-26 
+28 
 	`sgÆ_addObjReque¡
 (cÚ¡ 
 QPoštF
@@ -74797,7 +74791,7 @@ QPoštF
 pos
 );
 
-27 
+29 
 	`sgÆ_upd©eObjReque¡
 (
 SysOvrvObjeù
@@ -74805,7 +74799,7 @@ SysOvrvObjeù
 obj
 );
 
-28 
+30 
 	`sgÆ_»moveObjReque¡
 (
 SysOvrvObjeù
@@ -74813,7 +74807,7 @@ SysOvrvObjeù
 obj
 );
 
-29 
+31 
 	`sgÆ_du¶iÿ‹ObjReque¡
 (
 SysOvrvObjeù
@@ -75360,10 +75354,14 @@ SysOvrvObjeù
  *
 cu¼’tObjeù
  = 
+qg¿phics™em_ÿ¡
+<SysOvrvObjeù*>(
 	`™emAt
 (
+	`m­FromSûÃ
+(
 pos
-);
+)));
 
 65 
 cu¼’tObjeù
@@ -75869,9 +75867,7 @@ Msg
 ÃwMsg
 .
 	`g‘Id
-(è<< " w™h code: " << 
-msg
-.
+(è<< " w™h code: " <<‚ewMsg.
 	`g‘Code
 ();
 
@@ -105303,6 +105299,738 @@ _a
 	gQT_END_MOC_NAMESPACE
 
 
+	@build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sysoverviewgraphicsview.cpp
+
+9 
+	~"../../../R_Visu®iz”/Sy¡emOv”v›w/šc/sysov”v›wg¿phicsv›w.h
+"
+
+10 
+	~<QtCÜe/qby‹¬¿y.h
+>
+
+11 
+	~<QtCÜe/qm‘©y³.h
+>
+
+12 #ià!
+defšed
+(
+Q_MOC_OUTPUT_REVISION
+)
+
+14 #–ià
+Q_MOC_OUTPUT_REVISION
+ != 67
+
+20 
+QT_BEGIN_MOC_NAMESPACE
+
+
+21 
+	sqt_m‘a_¡ršgd©a_SysOv”v›wG¿phicsV›w_t
+ {
+
+22 
+QBy‹A¼ayD©a
+ 
+	md©a
+[9];
+
+23 
+	m¡ršgd©a0
+[136];
+
+25 
+	#QT_MOC_LITERAL
+(
+idx
+, 
+ofs
+, 
+Ën
+) \
+
+26 
+	`Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET
+(
+Ën
+, \
+
+27 
+	`q±rdiff
+(
+	`off£tof
+(
+qt_m‘a_¡ršgd©a_SysOv”v›wG¿phicsV›w_t
+, 
+¡ršgd©a0
+è+ 
+ofs
+ \
+
+28 - 
+idx
+ * (
+QBy‹A¼ayD©a
+)) \
+
+29 )
+
+	)
+
+30 cÚ¡ 
+qt_m‘a_¡ršgd©a_SysOv”v›wG¿phicsV›w_t
+ 
+	gqt_m‘a_¡ršgd©a_SysOv”v›wG¿phicsV›w
+ = {
+
+32 
+QT_MOC_LITERAL
+(0, 0, 23),
+
+33 
+QT_MOC_LITERAL
+(1, 24, 18),
+
+34 
+QT_MOC_LITERAL
+(2, 43, 0),
+
+35 
+QT_MOC_LITERAL
+(3, 44, 3),
+
+36 
+QT_MOC_LITERAL
+(4, 48, 21),
+
+37 
+QT_MOC_LITERAL
+(5, 70, 14),
+
+38 
+QT_MOC_LITERAL
+(6, 85, 3),
+
+39 
+QT_MOC_LITERAL
+(7, 89, 21),
+
+40 
+QT_MOC_LITERAL
+(8, 111, 24)
+
+48 #undeà
+QT_MOC_LITERAL
+
+
+50 cÚ¡ 
+ušt
+ 
+	gqt_m‘a_d©a_SysOv”v›wG¿phicsV›w
+[] = {
+
+70 
+QM‘aTy³
+::
+Void
+, QM‘aTy³::
+QPoštF
+, 3,
+
+71 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 5, 6,
+
+72 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 5, 6,
+
+73 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 5, 6,
+
+78 
+	gSysOv”v›wG¿phicsV›w
+::
+	$qt_¡©ic_m‘aÿÎ
+(
+QObjeù
+ *
+_o
+, 
+QM‘aObjeù
+::
+C®l
+ 
+_c
+, 
+_id
+, **
+_a
+)
+
+80 ià(
+_c
+ =ğ
+QM‘aObjeù
+::
+InvokeM‘aM‘hod
+) {
+
+81 
+SysOv”v›wG¿phicsV›w
+ *
+_t
+ = 
+¡©ic_ÿ¡
+<SysOv”v›wG¿phicsV›w *>(
+_o
+);
+
+82 
+	`Q_UNUSED
+(
+_t
+)
+
+83 
+_id
+) {
+
+84 0: 
+_t
+->
+	`sgÆ_addObjReque¡
+((*
+»š‹½»t_ÿ¡
+< cÚ¡ 
+	`QPoštF
+(*)>(
+_a
+[1]))); ;
+
+85 1: 
+_t
+->
+	`sgÆ_upd©eObjReque¡
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+86 2: 
+_t
+->
+	`sgÆ_»moveObjReque¡
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+87 3: 
+_t
+->
+	`sgÆ_du¶iÿ‹ObjReque¡
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+90 } ià(
+_c
+ =ğ
+QM‘aObjeù
+::
+IndexOfM‘hod
+) {
+
+91 *
+»suÉ
+ = 
+»š‹½»t_ÿ¡
+<*>(
+_a
+[0]);
+
+92 **
+func
+ = 
+»š‹½»t_ÿ¡
+<**>(
+_a
+[1]);
+
+94 (
+	tSysOv”v›wG¿phicsV›w
+::*
+	t_t
+)(cÚ¡ 
+	tQPoštF
+ & );
+
+95 ià(*
+»š‹½»t_ÿ¡
+<
+_t
+ *>(
+func
+è=ğ
+¡©ic_ÿ¡
+<_t>(&
+SysOv”v›wG¿phicsV›w
+::
+sgÆ_addObjReque¡
+)) {
+
+96 *
+»suÉ
+ = 0;
+
+101 (
+	tSysOv”v›wG¿phicsV›w
+::*
+	t_t
+)(
+	tSysOvrvObjeù
+ * );
+
+102 ià(*
+»š‹½»t_ÿ¡
+<
+_t
+ *>(
+func
+è=ğ
+¡©ic_ÿ¡
+<_t>(&
+SysOv”v›wG¿phicsV›w
+::
+sgÆ_upd©eObjReque¡
+)) {
+
+103 *
+»suÉ
+ = 1;
+
+108 (
+	tSysOv”v›wG¿phicsV›w
+::*
+	t_t
+)(
+	tSysOvrvObjeù
+ * );
+
+109 ià(*
+»š‹½»t_ÿ¡
+<
+_t
+ *>(
+func
+è=ğ
+¡©ic_ÿ¡
+<_t>(&
+SysOv”v›wG¿phicsV›w
+::
+sgÆ_»moveObjReque¡
+)) {
+
+110 *
+»suÉ
+ = 2;
+
+115 (
+	tSysOv”v›wG¿phicsV›w
+::*
+	t_t
+)(
+	tSysOvrvObjeù
+ * );
+
+116 ià(*
+»š‹½»t_ÿ¡
+<
+_t
+ *>(
+func
+è=ğ
+¡©ic_ÿ¡
+<_t>(&
+SysOv”v›wG¿phicsV›w
+::
+sgÆ_du¶iÿ‹ObjReque¡
+)) {
+
+117 *
+»suÉ
+ = 3;
+
+122 
+	}
+}
+
+124 cÚ¡ 
+QM‘aObjeù
+ 
+	gSysOv”v›wG¿phicsV›w
+::
+¡©icM‘aObjeù
+ = {
+
+125 { &
+QG¿phicsV›w
+::
+¡©icM‘aObjeù
+, 
+qt_m‘a_¡ršgd©a_SysOv”v›wG¿phicsV›w
+.
+d©a
+,
+
+126 
+qt_m‘a_d©a_SysOv”v›wG¿phicsV›w
+, 
+qt_¡©ic_m‘aÿÎ
+, 
+Q_NULLPTR
+, Q_NULLPTR}
+
+130 cÚ¡ 
+QM‘aObjeù
+ *
+	gSysOv”v›wG¿phicsV›w
+::
+	$m‘aObjeù
+() const
+
+132  
+QObjeù
+::
+d_±r
+->
+m‘aObjeù
+ ? QObjeù::d_±r->
+	`dyÇmicM‘aObjeù
+(è: &
+¡©icM‘aObjeù
+;
+
+133 
+	}
+}
+
+135 *
+	gSysOv”v›wG¿phicsV›w
+::
+	$qt_m‘aÿ¡
+(cÚ¡ *
+_şÇme
+)
+
+137 ià(!
+_şÇme
+è 
+Q_NULLPTR
+;
+
+138 ià(!
+	`¡rcmp
+(
+_şÇme
+, 
+qt_m‘a_¡ršgd©a_SysOv”v›wG¿phicsV›w
+.
+¡ršgd©a0
+))
+
+139  
+¡©ic_ÿ¡
+<*>(
+cÚ¡_ÿ¡
+< 
+SysOv”v›wG¿phicsV›w
+*>(
+this
+));
+
+140  
+QG¿phicsV›w
+::
+	`qt_m‘aÿ¡
+(
+_şÇme
+);
+
+141 
+	}
+}
+
+143 
+	gSysOv”v›wG¿phicsV›w
+::
+	$qt_m‘aÿÎ
+(
+QM‘aObjeù
+::
+C®l
+ 
+_c
+, 
+_id
+, **
+_a
+)
+
+145 
+_id
+ = 
+QG¿phicsV›w
+::
+	`qt_m‘aÿÎ
+(
+_c
+, _id, 
+_a
+);
+
+146 ià(
+_id
+ < 0)
+
+147  
+_id
+;
+
+148 ià(
+_c
+ =ğ
+QM‘aObjeù
+::
+InvokeM‘aM‘hod
+) {
+
+149 ià(
+_id
+ < 4)
+
+150 
+	`qt_¡©ic_m‘aÿÎ
+(
+this
+, 
+_c
+, 
+_id
+, 
+_a
+);
+
+151 
+_id
+ -= 4;
+
+152 } ià(
+_c
+ =ğ
+QM‘aObjeù
+::
+Regi¡”M‘hodArgum’tM‘aTy³
+) {
+
+153 ià(
+_id
+ < 4)
+
+154 *
+»š‹½»t_ÿ¡
+<*>(
+_a
+[0]) = -1;
+
+155 
+_id
+ -= 4;
+
+157  
+_id
+;
+
+158 
+	}
+}
+
+161 
+	gSysOv”v›wG¿phicsV›w
+::
+	$sgÆ_addObjReque¡
+(cÚ¡ 
+QPoštF
+ & 
+_t1
+)
+
+163 *
+_a
+[] = { 
+Q_NULLPTR
+, 
+cÚ¡_ÿ¡
+<*>(
+»š‹½»t_ÿ¡
+<cÚ¡ *>(&
+_t1
+)) };
+
+164 
+QM‘aObjeù
+::
+	`aùiv©e
+(
+this
+, &
+¡©icM‘aObjeù
+, 0, 
+_a
+);
+
+165 
+	}
+}
+
+168 
+	gSysOv”v›wG¿phicsV›w
+::
+	$sgÆ_upd©eObjReque¡
+(
+SysOvrvObjeù
+ * 
+_t1
+)
+
+170 *
+_a
+[] = { 
+Q_NULLPTR
+, 
+cÚ¡_ÿ¡
+<*>(
+»š‹½»t_ÿ¡
+<cÚ¡ *>(&
+_t1
+)) };
+
+171 
+QM‘aObjeù
+::
+	`aùiv©e
+(
+this
+, &
+¡©icM‘aObjeù
+, 1, 
+_a
+);
+
+172 
+	}
+}
+
+175 
+	gSysOv”v›wG¿phicsV›w
+::
+	$sgÆ_»moveObjReque¡
+(
+SysOvrvObjeù
+ * 
+_t1
+)
+
+177 *
+_a
+[] = { 
+Q_NULLPTR
+, 
+cÚ¡_ÿ¡
+<*>(
+»š‹½»t_ÿ¡
+<cÚ¡ *>(&
+_t1
+)) };
+
+178 
+QM‘aObjeù
+::
+	`aùiv©e
+(
+this
+, &
+¡©icM‘aObjeù
+, 2, 
+_a
+);
+
+179 
+	}
+}
+
+182 
+	gSysOv”v›wG¿phicsV›w
+::
+	$sgÆ_du¶iÿ‹ObjReque¡
+(
+SysOvrvObjeù
+ * 
+_t1
+)
+
+184 *
+_a
+[] = { 
+Q_NULLPTR
+, 
+cÚ¡_ÿ¡
+<*>(
+»š‹½»t_ÿ¡
+<cÚ¡ *>(&
+_t1
+)) };
+
+185 
+QM‘aObjeù
+::
+	`aùiv©e
+(
+this
+, &
+¡©icM‘aObjeù
+, 3, 
+_a
+);
+
+186 
+	}
+}
+
+187 
+	gQT_END_MOC_NAMESPACE
+
+
 	@build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sysovrvobjectdialog.cpp
 
 9 
@@ -106171,11 +106899,11 @@ QT_BEGIN_MOC_NAMESPACE
 QBy‹A¼ayD©a
  
 	md©a
-[22];
+[16];
 
 23 
 	m¡ršgd©a0
-[265];
+[219];
 
 25 
 	#QT_MOC_LITERAL
@@ -106227,159 +106955,111 @@ QT_MOC_LITERAL
 
 33 
 QT_MOC_LITERAL
-(1, 19, 18),
+(1, 19, 23),
 
 34 
 QT_MOC_LITERAL
-(2, 38, 0),
+(2, 43, 0),
 
 35 
 QT_MOC_LITERAL
-(3, 39, 14),
+(3, 44, 14),
 
 36 
 QT_MOC_LITERAL
-(4, 54, 11),
+(4, 59, 11),
 
 37 
 QT_MOC_LITERAL
-(5, 66, 8),
+(5, 71, 27),
 
 38 
 QT_MOC_LITERAL
-(6, 75, 3),
+(6, 99, 13),
 
 39 
 QT_MOC_LITERAL
-(7, 79, 22),
+(7, 113, 18),
 
 40 
 QT_MOC_LITERAL
-(8, 102, 13),
+(8, 132, 3),
 
 41 
 QT_MOC_LITERAL
-(9, 116, 9),
+(9, 136, 6),
 
 42 
 QT_MOC_LITERAL
-(10, 126, 9),
+(10, 143, 13),
 
 43 
 QT_MOC_LITERAL
-(11, 136, 10),
+(11, 157, 8),
 
 44 
 QT_MOC_LITERAL
-(12, 147, 15),
+(12, 166, 16),
 
 45 
 QT_MOC_LITERAL
-(13, 163, 13),
+(13, 183, 8),
 
 46 
 QT_MOC_LITERAL
-(14, 177, 8),
+(14, 192, 16),
 
 47 
 QT_MOC_LITERAL
-(15, 186, 12),
+(15, 209, 9)
 
-48 
-QT_MOC_LITERAL
-(16, 199, 8),
-
-49 
-QT_MOC_LITERAL
-(17, 208, 12),
-
-50 
-QT_MOC_LITERAL
-(18, 221, 9),
-
-51 
-QT_MOC_LITERAL
-(19, 231, 14),
-
-52 
-QT_MOC_LITERAL
-(20, 246, 14),
-
-53 
-QT_MOC_LITERAL
-(21, 261, 3)
-
-65 #undeà
+57 #undeà
 QT_MOC_LITERAL
 
 
-67 cÚ¡ 
+59 cÚ¡ 
 ušt
  
 	gqt_m‘a_d©a_SysOvrvObjeùStÜe
 [] = {
 
-95 
+83 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 3, 0x80000000 | 5, 4, 6,
+, 0x80000000 | 3, 4,
 
-96 
+84 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 3, 8,
+, 0x80000000 | 3, 6,
 
-99 
+87 
 QM‘aTy³
 ::
 Void
-,
+, 0x80000000 | 8, 9,
 
-100 
+88 
 QM‘aTy³
 ::
 Void
-,
+, 0x80000000 | 3, 11,
 
-101 
+89 
 QM‘aTy³
 ::
 Void
-,
+, 0x80000000 | 3, 13,
 
-102 
+90 
 QM‘aTy³
 ::
 Void
-,
+, 0x80000000 | 3, 15,
 
-103 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 3, 14,
-
-104 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 3, 16,
-
-105 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 3, 18,
-
-106 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 20, 21,
-
-111 
+95 
 	gSysOvrvObjeùStÜe
 ::
 	$qt_¡©ic_m‘aÿÎ
@@ -106399,7 +107079,7 @@ _id
 _a
 )
 
-113 ià(
+97 ià(
 _c
  =ğ
 QM‘aObjeù
@@ -106407,7 +107087,7 @@ QM‘aObjeù
 InvokeM‘aM‘hod
 ) {
 
-114 
+98 
 SysOvrvObjeùStÜe
  *
 _t
@@ -106417,34 +107097,20 @@ _t
 _o
 );
 
-115 
+99 
 	`Q_UNUSED
 (
 _t
 )
 
-116 
+100 
 _id
 ) {
 
-117 0: 
+101 0: 
 _t
 ->
-	`objeùAddedToStÜe
-((*
-»š‹½»t_ÿ¡
-< 
-SysOvrvObjeù
-*(*)>(
-_a
-[1])),(*»š‹½»t_ÿ¡< 
-	`QPoštF
-(*)>(_a[2]))); ;
-
-118 1: 
-_t
-->
-	`objeùRemovedFromStÜe
+	`sgÆ_objeùAddedToStÜe
 ((*
 »š‹½»t_ÿ¡
 < 
@@ -106453,34 +107119,10 @@ SysOvrvObjeù
 _a
 [1]))); ;
 
-119 2: 
+102 1: 
 _t
 ->
-	`addObjeù
-(); ;
-
-120 3: 
-_t
-->
-	`rmvObjeù
-(); ;
-
-121 4: 
-_t
-->
-	`updtObjeù
-(); ;
-
-122 5: 
-_t
-->
-	`du¶iÿ‹Objeù
-(); ;
-
-123 6: 
-_t
-->
-	`addObjToStÜe
+	`sgÆ_objeùRemovedFromStÜe
 ((*
 »š‹½»t_ÿ¡
 < 
@@ -106489,43 +107131,55 @@ SysOvrvObjeù
 _a
 [1]))); ;
 
-124 7: 
+103 2: 
 _t
 ->
-	`»moveObjeù
+	`¦t_»ûiveMes§ge
 ((*
 »š‹½»t_ÿ¡
-< 
-SysOvrvObjeù
-*(*)>(
-_a
-[1]))); ;
-
-125 8: 
-_t
-->
-	`upd©eObjeù
-((*
-»š‹½»t_ÿ¡
-< 
-SysOvrvObjeù
-*(*)>(
-_a
-[1]))); ;
-
-126 9: 
-_t
-->
-	`»ûiveMes§ge
-((*
-»š‹½»t_ÿ¡
-< 
-	`D©a_Pack‘PŒ
+< cÚ¡ 
+	`Msg
 (*)>(
 _a
 [1]))); ;
 
-129 } ià(
+104 3: 
+_t
+->
+	`¦t_addObjeù
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+105 4: 
+_t
+->
+	`¦t_»moveObjeù
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+106 5: 
+_t
+->
+	`¦t_upd©eObjeù
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+109 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -106533,39 +107187,39 @@ QM‘aObjeù
 Regi¡”M‘hodArgum’tM‘aTy³
 ) {
 
-130 
+110 
 _id
 ) {
 
-131 : *
+111 : *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]) = -1; ;
 
-133 *
+113 *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [1])) {
 
-134 : *
+114 : *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]) = -1; ;
 
-136 *
+116 *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]èğ
 qRegi¡”M‘aTy³
 < 
-D©a_Pack‘PŒ
+Msg
  >(); ;
 
-140 } ià(
+120 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -106573,7 +107227,7 @@ QM‘aObjeù
 IndexOfM‘hod
 ) {
 
-141 *
+121 *
 »suÉ
  = 
 »š‹½»t_ÿ¡
@@ -106581,7 +107235,7 @@ IndexOfM‘hod
 _a
 [0]);
 
-142 **
+122 **
 func
  = 
 »š‹½»t_ÿ¡
@@ -106589,35 +107243,7 @@ func
 _a
 [1]);
 
-144 (
-	tSysOvrvObjeùStÜe
-::*
-	t_t
-)(
-	tSysOvrvObjeù
- * , 
-	tQPoštF
- & );
-
-145 ià(*
-»š‹½»t_ÿ¡
-<
-_t
- *>(
-func
-è=ğ
-¡©ic_ÿ¡
-<_t>(&
-SysOvrvObjeùStÜe
-::
-objeùAddedToStÜe
-)) {
-
-146 *
-»suÉ
- = 0;
-
-151 (
+124 (
 	tSysOvrvObjeùStÜe
 ::*
 	t_t
@@ -106625,7 +107251,7 @@ objeùAddedToStÜe
 	tSysOvrvObjeù
  * );
 
-152 ià(*
+125 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -106636,18 +107262,44 @@ func
 <_t>(&
 SysOvrvObjeùStÜe
 ::
-objeùRemovedFromStÜe
+sgÆ_objeùAddedToStÜe
 )) {
 
-153 *
+126 *
+»suÉ
+ = 0;
+
+131 (
+	tSysOvrvObjeùStÜe
+::*
+	t_t
+)(
+	tSysOvrvObjeù
+ * );
+
+132 ià(*
+»š‹½»t_ÿ¡
+<
+_t
+ *>(
+func
+è=ğ
+¡©ic_ÿ¡
+<_t>(&
+SysOvrvObjeùStÜe
+::
+sgÆ_objeùRemovedFromStÜe
+)) {
+
+133 *
 »suÉ
  = 1;
 
-158 
+138 
 	}
 }
 
-160 cÚ¡ 
+140 cÚ¡ 
 QM‘aObjeù
  
 	gSysOvrvObjeùStÜe
@@ -106655,7 +107307,7 @@ QM‘aObjeù
 ¡©icM‘aObjeù
  = {
 
-161 { &
+141 { &
 QObjeù
 ::
 ¡©icM‘aObjeù
@@ -106665,7 +107317,7 @@ qt_m‘a_¡ršgd©a_SysOvrvObjeùStÜe
 d©a
 ,
 
-162 
+142 
 qt_m‘a_d©a_SysOvrvObjeùStÜe
 , 
 qt_¡©ic_m‘aÿÎ
@@ -106673,7 +107325,7 @@ qt_¡©ic_m‘aÿÎ
 Q_NULLPTR
 , Q_NULLPTR}
 
-166 cÚ¡ 
+146 cÚ¡ 
 QM‘aObjeù
  *
 	gSysOvrvObjeùStÜe
@@ -106681,7 +107333,7 @@ QM‘aObjeù
 	$m‘aObjeù
 () const
 
-168  
+148  
 QObjeù
 ::
 d_±r
@@ -106693,11 +107345,11 @@ m‘aObjeù
 ¡©icM‘aObjeù
 ;
 
-169 
+149 
 	}
 }
 
-171 *
+151 *
 	gSysOvrvObjeùStÜe
 ::
 	$qt_m‘aÿ¡
@@ -106705,13 +107357,13 @@ m‘aObjeù
 _şÇme
 )
 
-173 ià(!
+153 ià(!
 _şÇme
 è 
 Q_NULLPTR
 ;
 
-174 ià(!
+154 ià(!
 	`¡rcmp
 (
 _şÇme
@@ -106721,7 +107373,7 @@ qt_m‘a_¡ršgd©a_SysOvrvObjeùStÜe
 ¡ršgd©a0
 ))
 
-175  
+155  
 ¡©ic_ÿ¡
 <*>(
 cÚ¡_ÿ¡
@@ -106731,7 +107383,7 @@ SysOvrvObjeùStÜe
 this
 ));
 
-176  
+156  
 QObjeù
 ::
 	`qt_m‘aÿ¡
@@ -106739,11 +107391,11 @@ QObjeù
 _şÇme
 );
 
-177 
+157 
 	}
 }
 
-179 
+159 
 	gSysOvrvObjeùStÜe
 ::
 	$qt_m‘aÿÎ
@@ -106759,7 +107411,7 @@ _id
 _a
 )
 
-181 
+161 
 _id
  = 
 QObjeù
@@ -106771,15 +107423,15 @@ _c
 _a
 );
 
-182 ià(
+162 ià(
 _id
  < 0)
 
-183  
+163  
 _id
 ;
 
-184 ià(
+164 ià(
 _c
  =ğ
 QM‘aObjeù
@@ -106787,11 +107439,11 @@ QM‘aObjeù
 InvokeM‘aM‘hod
 ) {
 
-185 ià(
+165 ià(
 _id
- < 10)
+ < 6)
 
-186 
+166 
 	`qt_¡©ic_m‘aÿÎ
 (
 this
@@ -106803,11 +107455,11 @@ _id
 _a
 );
 
-187 
+167 
 _id
- -= 10;
+ -= 6;
 
-188 } ià(
+168 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -106815,11 +107467,11 @@ QM‘aObjeù
 Regi¡”M‘hodArgum’tM‘aTy³
 ) {
 
-189 ià(
+169 ià(
 _id
- < 10)
+ < 6)
 
-190 
+170 
 	`qt_¡©ic_m‘aÿÎ
 (
 this
@@ -106831,33 +107483,29 @@ _id
 _a
 );
 
-191 
+171 
 _id
- -= 10;
+ -= 6;
 
-193  
+173  
 _id
 ;
 
-194 
+174 
 	}
 }
 
-197 
+177 
 	gSysOvrvObjeùStÜe
 ::
-	$objeùAddedToStÜe
+	$sgÆ_objeùAddedToStÜe
 (
 SysOvrvObjeù
  * 
 _t1
-, 
-QPoštF
- & 
-_t2
 )
 
-199 *
+179 *
 _a
 [] = { 
 Q_NULLPTR
@@ -106867,11 +107515,9 @@ cÚ¡_ÿ¡
 »š‹½»t_ÿ¡
 <cÚ¡ *>(&
 _t1
-)), cÚ¡_ÿ¡<*>Ôeš‹½»t_ÿ¡<cÚ¡ *>(&
-_t2
 )) };
 
-200 
+180 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -106883,21 +107529,21 @@ this
 _a
 );
 
-201 
+181 
 	}
 }
 
-204 
+184 
 	gSysOvrvObjeùStÜe
 ::
-	$objeùRemovedFromStÜe
+	$sgÆ_objeùRemovedFromStÜe
 (
 SysOvrvObjeù
  * 
 _t1
 )
 
-206 *
+186 *
 _a
 [] = { 
 Q_NULLPTR
@@ -106909,7 +107555,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-207 
+187 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -106921,11 +107567,11 @@ this
 _a
 );
 
-208 
+188 
 	}
 }
 
-209 
+189 
 	gQT_END_MOC_NAMESPACE
 
 
@@ -108259,11 +108905,11 @@ QT_BEGIN_MOC_NAMESPACE
 QBy‹A¼ayD©a
  
 	md©a
-[14];
+[15];
 
 23 
 	m¡ršgd©a0
-[152];
+[188];
 
 25 
 	#QT_MOC_LITERAL
@@ -108315,91 +108961,109 @@ QT_MOC_LITERAL
 
 33 
 QT_MOC_LITERAL
-(1, 15, 9),
+(1, 15, 13),
 
 34 
 QT_MOC_LITERAL
-(2, 25, 0),
+(2, 29, 0),
 
 35 
 QT_MOC_LITERAL
-(3, 26, 22),
+(3, 30, 22),
 
 36 
 QT_MOC_LITERAL
-(4, 49, 14),
+(4, 53, 14),
 
 37 
 QT_MOC_LITERAL
-(5, 64, 10),
+(5, 68, 14),
 
 38 
 QT_MOC_LITERAL
-(6, 75, 14),
+(6, 83, 3),
 
 39 
 QT_MOC_LITERAL
-(7, 90, 3),
+(7, 87, 6),
 
 40 
 QT_MOC_LITERAL
-(8, 94, 12),
+(8, 94, 16),
 
 41 
 QT_MOC_LITERAL
-(9, 107, 14),
+(9, 111, 3),
 
 42 
 QT_MOC_LITERAL
-(10, 122, 3),
+(10, 115, 16),
 
 43 
 QT_MOC_LITERAL
-(11, 126, 8),
+(11, 132, 14),
 
 44 
 QT_MOC_LITERAL
-(12, 135, 3),
+(12, 147, 3),
 
 45 
 QT_MOC_LITERAL
-(13, 139, 12)
+(13, 151, 16),
 
-54 #undeà
+46 
+QT_MOC_LITERAL
+(14, 168, 19)
+
+55 #undeà
 QT_MOC_LITERAL
 
 
-56 cÚ¡ 
+57 cÚ¡ 
 ušt
  
 	gqt_m‘a_d©a_Sy¡emOv”v›w
 [] = {
 
-76 
+79 
 QM‘aTy³
 ::
 Void
 , 0x80000000 | 3, 4,
 
-77 
+80 
 QM‘aTy³
 ::
 Void
 , 0x80000000 | 6, 7,
 
-78 
+81 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 9, 0x80000000 | 11, 10, 12,
+, QM‘aTy³::
+QPoštF
+, 9,
 
-79 
+82 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 9, 10,
+, 0x80000000 | 11, 12,
 
-84 
+83 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 11, 12,
+
+84 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 11, 12,
+
+89 
 	gSy¡emOv”v›w
 ::
 	$qt_¡©ic_m‘aÿÎ
@@ -108419,7 +109083,7 @@ _id
 _a
 )
 
-86 ià(
+91 ià(
 _c
  =ğ
 QM‘aObjeù
@@ -108427,7 +109091,7 @@ QM‘aObjeù
 InvokeM‘aM‘hod
 ) {
 
-87 
+92 
 Sy¡emOv”v›w
  *
 _t
@@ -108437,20 +109101,20 @@ _t
 _o
 );
 
-88 
+93 
 	`Q_UNUSED
 (
 _t
 )
 
-89 
+94 
 _id
 ) {
 
-90 0: 
+95 0: 
 _t
 ->
-	`­¶yRŞe
+	`¦t_­¶yRŞe
 ((*
 »š‹½»t_ÿ¡
 < 
@@ -108461,36 +109125,34 @@ U£rRŞeMngr
 _a
 [1]))); ;
 
-91 1: 
+96 1: 
 _t
 ->
-	`ÃwMes§ge
+	`¦t_ÃwMes§ge
 ((*
 »š‹½»t_ÿ¡
-< 
-	`D©a_Pack‘PŒ
+< cÚ¡ 
+	`Msg
 (*)>(
 _a
 [1]))); ;
 
-92 2: 
+97 2: 
 _t
 ->
-	`addNewObjeù
+	`¦t_addNewObjeù
 ((*
 »š‹½»t_ÿ¡
-< 
-SysOvrvObjeù
-*(*)>(
-_a
-[1])),(*»š‹½»t_ÿ¡< 
+< cÚ¡ 
 	`QPoštF
-(*)>(_a[2]))); ;
+(*)>(
+_a
+[1]))); ;
 
-93 3: 
+98 3: 
 _t
 ->
-	`»moveObjeù
+	`¦t_»moveObjeù
 ((*
 »š‹½»t_ÿ¡
 < 
@@ -108499,7 +109161,31 @@ SysOvrvObjeù
 _a
 [1]))); ;
 
-96 } ià(
+99 4: 
+_t
+->
+	`¦t_upd©eObjeù
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+100 5: 
+_t
+->
+	`¦t_du¶iÿ‹Objeù
+((*
+»š‹½»t_ÿ¡
+< 
+SysOvrvObjeù
+*(*)>(
+_a
+[1]))); ;
+
+103 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -108507,43 +109193,43 @@ QM‘aObjeù
 Regi¡”M‘hodArgum’tM‘aTy³
 ) {
 
-97 
+104 
 _id
 ) {
 
-98 : *
+105 : *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]) = -1; ;
 
-100 *
+107 *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [1])) {
 
-101 : *
+108 : *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]) = -1; ;
 
-103 *
+110 *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]èğ
 qRegi¡”M‘aTy³
 < 
-D©a_Pack‘PŒ
+Msg
  >(); ;
 
-108 
+115 
 	}
 }
 
-110 cÚ¡ 
+117 cÚ¡ 
 QM‘aObjeù
  
 	gSy¡emOv”v›w
@@ -108551,7 +109237,7 @@ QM‘aObjeù
 ¡©icM‘aObjeù
  = {
 
-111 { &
+118 { &
 QWidg‘
 ::
 ¡©icM‘aObjeù
@@ -108561,7 +109247,7 @@ qt_m‘a_¡ršgd©a_Sy¡emOv”v›w
 d©a
 ,
 
-112 
+119 
 qt_m‘a_d©a_Sy¡emOv”v›w
 , 
 qt_¡©ic_m‘aÿÎ
@@ -108569,7 +109255,7 @@ qt_¡©ic_m‘aÿÎ
 Q_NULLPTR
 , Q_NULLPTR}
 
-116 cÚ¡ 
+123 cÚ¡ 
 QM‘aObjeù
  *
 	gSy¡emOv”v›w
@@ -108577,7 +109263,7 @@ QM‘aObjeù
 	$m‘aObjeù
 () const
 
-118  
+125  
 QObjeù
 ::
 d_±r
@@ -108589,11 +109275,11 @@ m‘aObjeù
 ¡©icM‘aObjeù
 ;
 
-119 
+126 
 	}
 }
 
-121 *
+128 *
 	gSy¡emOv”v›w
 ::
 	$qt_m‘aÿ¡
@@ -108601,13 +109287,13 @@ m‘aObjeù
 _şÇme
 )
 
-123 ià(!
+130 ià(!
 _şÇme
 è 
 Q_NULLPTR
 ;
 
-124 ià(!
+131 ià(!
 	`¡rcmp
 (
 _şÇme
@@ -108617,7 +109303,7 @@ qt_m‘a_¡ršgd©a_Sy¡emOv”v›w
 ¡ršgd©a0
 ))
 
-125  
+132  
 ¡©ic_ÿ¡
 <*>(
 cÚ¡_ÿ¡
@@ -108627,7 +109313,7 @@ Sy¡emOv”v›w
 this
 ));
 
-126  
+133  
 QWidg‘
 ::
 	`qt_m‘aÿ¡
@@ -108635,11 +109321,11 @@ QWidg‘
 _şÇme
 );
 
-127 
+134 
 	}
 }
 
-129 
+136 
 	gSy¡emOv”v›w
 ::
 	$qt_m‘aÿÎ
@@ -108655,7 +109341,7 @@ _id
 _a
 )
 
-131 
+138 
 _id
  = 
 QWidg‘
@@ -108667,15 +109353,15 @@ _c
 _a
 );
 
-132 ià(
+139 ià(
 _id
  < 0)
 
-133  
+140  
 _id
 ;
 
-134 ià(
+141 ià(
 _c
  =ğ
 QM‘aObjeù
@@ -108683,11 +109369,11 @@ QM‘aObjeù
 InvokeM‘aM‘hod
 ) {
 
-135 ià(
+142 ià(
 _id
- < 4)
+ < 6)
 
-136 
+143 
 	`qt_¡©ic_m‘aÿÎ
 (
 this
@@ -108699,11 +109385,11 @@ _id
 _a
 );
 
-137 
+144 
 _id
- -= 4;
+ -= 6;
 
-138 } ià(
+145 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -108711,11 +109397,11 @@ QM‘aObjeù
 Regi¡”M‘hodArgum’tM‘aTy³
 ) {
 
-139 ià(
+146 ià(
 _id
- < 4)
+ < 6)
 
-140 
+147 
 	`qt_¡©ic_m‘aÿÎ
 (
 this
@@ -108727,19 +109413,19 @@ _id
 _a
 );
 
-141 
+148 
 _id
- -= 4;
+ -= 6;
 
-143  
+150  
 _id
 ;
 
-144 
+151 
 	}
 }
 
-145 
+152 
 	gQT_END_MOC_NAMESPACE
 
 
@@ -127631,8 +128317,8 @@ Ui_Tem¶©eV®ueEv®u©ÜC»©ÜWidg‘
 1
 .
 0
-220
-12680
+221
+12771
 CAN_Analyser_USB_Driver/can_packet.cpp
 CAN_Analyser_USB_Driver/can_packet.h
 CAN_Analyser_USB_Driver/data_packet.cpp
@@ -127824,6 +128510,7 @@ build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_msgtypeeditordele
 build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_msgtypeformatterdialog.cpp
 build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_msgtypemodel.cpp
 build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sendmessages.cpp
+build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sysoverviewgraphicsview.cpp
 build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sysovrvobjectdialog.cpp
 build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sysovrvobjectstore.cpp
 build-R_Visualizer_Build-Desktop-Debug/R_Visualizer/.build/moc_sysovrvobjtriggerdialog.cpp

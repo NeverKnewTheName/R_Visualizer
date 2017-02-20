@@ -1,9 +1,9 @@
 #ifndef TRIANGLESYSOVRVOBJECT_H
 #define TRIANGLESYSOVRVOBJECT_H
 
-#include "sysovrvobject.h"
+#include "sysovrvobjderivationhelper.h"
 
-class TriangleSysOvrvObject : public SysOvrvObject
+class TriangleSysOvrvObject : public SysOvrvObjDerivationHelper<TriangleSysOvrvObject>
 {
 private:
     

@@ -1,9 +1,9 @@
 #ifndef ELLIPSESYSOVRVOBJECT_H
 #define ELLIPSESYSOVRVOBJECT_H
 
-#include "sysovrvobject.h"
+#include "sysovrvobjderivationhelper.h"
 
-class EllipseSysOvrvObject : public SysOvrvObject
+class EllipseSysOvrvObject : public SysOvrvObjDerivationHelper<EllipseSysOvrvObject>
 {
 private:
     
@@ -19,6 +19,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
     SysOvrvObject::ObjShapeType getShape() const;
+
 };
 
 #endif /* ELLIPSESYSOVRVOBJECT_H */

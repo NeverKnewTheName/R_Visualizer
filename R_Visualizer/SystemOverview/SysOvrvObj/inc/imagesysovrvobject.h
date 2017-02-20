@@ -1,9 +1,9 @@
 #ifndef IMAGESYSOVRVOBJECT_H
 #define IMAGESYSOVRVOBJECT_H
 
-#include "sysovrvobject.h"
+#include "sysovrvobjderivationhelper.h"
 
-class ImageSysOvrvObject : public SysOvrvObject
+class ImageSysOvrvObject : public SysOvrvObjDerivationHelper<ImageSysOvrvObject>
 {
 public:
     ImageSysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
@@ -16,6 +16,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
     SysOvrvObject::ObjShapeType getShape() const;
+
 };
 
 #endif /* IMAGESYSOVRVOBJECT_H */

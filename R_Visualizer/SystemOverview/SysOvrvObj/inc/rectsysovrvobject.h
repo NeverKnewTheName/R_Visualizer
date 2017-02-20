@@ -1,9 +1,9 @@
 #ifndef RECTSYSOVRVOBJECT_H
 #define RECTSYSOVRVOBJECT_H
 
-#include "sysovrvobject.h"
+#include "sysovrvobjderivationhelper.h"
 
-class RectSysOvrvObject : public SysOvrvObject
+class RectSysOvrvObject : public SysOvrvObjDerivationHelper<RectSysOvrvObject>
 {
 private:
     
@@ -19,6 +19,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
     SysOvrvObject::ObjShapeType getShape() const;
+
 };
 
 #endif /* RECTSYSOVRVOBJECT_H */

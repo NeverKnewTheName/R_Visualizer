@@ -11,15 +11,17 @@ public:
     enum { Type = UserType + 4 };
     typedef enum _CornerPos
     {
-        topLeftCorner,
-        bottomLeftCorner,
-        topRightCorner,
-        bottomRightCorner,
+        TopLeftCorner,
+        BottomLeftCorner,
+        TopRightCorner,
+        BottomRightCorner,
         TotalNrOfCorners
     } CornerPos;
 
-    ResizeRectCorner(CornerPos cornerPos, qreal size = 10, ResizableGraphicsItem *parent = Q_NULLPTR);
-    ResizeRectCorner(ResizeRectCorner &&ToMove);
+    ResizeRectCorner(const CornerPos cornerPos, const qreal size = 10, ResizableGraphicsItem *parent = Q_NULLPTR);
+    ResizeRectCorner(const ResizeRectCorner &other);
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
     CornerPos getCornerPos() const;
     void setCornerPos(CornerPos cornerPos);

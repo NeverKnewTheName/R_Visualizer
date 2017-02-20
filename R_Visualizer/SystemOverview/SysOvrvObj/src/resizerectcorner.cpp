@@ -1,13 +1,13 @@
 #include "resizerectcorner.h"
-#include "sysovrvobject.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QCursor>
+#include <QPainter>
 
 #include "resizeablegraphicsitem.h"
 
 #include <QDebug>
 
-ResizeRectCorner::ResizeRectCorner(CornerPos cornerPos, qreal size, ResizableGraphicsItem *parent) :
+ResizeRectCorner::ResizeRectCorner(const CornerPos cornerPos, const qreal size, ResizableGraphicsItem *parent) :
     QGraphicsRectItem(parent),
     cornerPos(cornerPos),
     cornerSize(size)
@@ -16,13 +16,19 @@ ResizeRectCorner::ResizeRectCorner(CornerPos cornerPos, qreal size, ResizableGra
     setAcceptHoverEvents(true);
 }
 
-ResizeRectCorner::ResizeRectCorner(ResizeRectCorner &&ToMove) :
-    QGraphicsRectItem(ToMove.parentItem()),
-    cornerPos(ToMove.cornerPos),
-    cornerSize(ToMove.cornerSize)
+ResizeRectCorner::ResizeRectCorner(const ResizeRectCorner &other) :
+    QGraphicsRectItem(other.parentItem()),
+    cornerPos(std::move(other.cornerPos)),
+    cornerSize(std::move(other.cornerSize))
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setAcceptHoverEvents(true);
+}
+
+void ResizeRectCorner::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QGraphicsRectItem::paint(painter, option, widget);
+    painter->drawEllipse(QRectF(100,100,10,10));
 }
 
 void ResizeRectCorner::setCornerPos(ResizeRectCorner::CornerPos cornerPos)
@@ -68,16 +74,16 @@ void ResizeRectCorner::setPosition(const QPointF &pos)
 {
     switch(cornerPos)
     {
-    case topLeftCorner:
+    case TopLeftCorner:
         setRect(pos.x()-cornerSize,pos.y()-cornerSize,cornerSize,cornerSize);
         break;
-    case bottomLeftCorner:
+    case BottomLeftCorner:
         setRect(pos.x()-cornerSize,pos.y(),cornerSize,cornerSize);
         break;
-    case topRightCorner:
+    case TopRightCorner:
         setRect(pos.x(),pos.y()-cornerSize,cornerSize,cornerSize);
         break;
-    case bottomRightCorner:
+    case BottomRightCorner:
         setRect(pos.x(),pos.y(),cornerSize,cornerSize);
         break;
     default:

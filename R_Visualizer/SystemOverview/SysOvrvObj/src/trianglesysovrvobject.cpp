@@ -8,27 +8,27 @@
 #include <QDebug>
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(QGraphicsItem *parent) :
-    SysOvrvObject(parent)
+    SysOvrvObjDerivationHelper(parent)
 {
 }
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(const TriangleSysOvrvObject &other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(TriangleSysOvrvObject &&other) :
-    SysOvrvObject(other)
+    SysOvrvObjDerivationHelper(other)
 {
 }
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(const SysOvrvObject &original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObject(original)
+    SysOvrvObjDerivationHelper(original)
 {
 }
 
@@ -38,7 +38,7 @@ TriangleSysOvrvObject::~TriangleSysOvrvObject()
 
 void TriangleSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    SysOvrvObject::paint(painter, option, widget);
+    SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
     QBrush colorBrush(getMyColor());
 
@@ -61,4 +61,3 @@ SysOvrvObject::ObjShapeType TriangleSysOvrvObject::getShape() const
 {
     return SysOvrvObject::ObjShape_Triangle;
 }
-

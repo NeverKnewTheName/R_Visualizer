@@ -8,14 +8,28 @@
 
 ResizableGraphicsItem::ResizableGraphicsItem(QGraphicsItem *parent) :
     QGraphicsItem(parent),
-    resizeCorners{
-        ResizeRectCorner(ResizeRectCorner::topLeftCorner, 10, this),
-        ResizeRectCorner(ResizeRectCorner::bottomLeftCorner, 10, this),
-        ResizeRectCorner(ResizeRectCorner::topRightCorner, 10, this),
-        ResizeRectCorner(ResizeRectCorner::bottomRightCorner, 10, this)
-        },
+    resizeCorners(10, this),
     resizeEnabled(true)
 {
+    /* initResizeCorners(); */
+}
+
+ResizableGraphicsItem::ResizableGraphicsItem(const ResizableGraphicsItem &other) :
+    QGraphicsItem(other.parentItem()),
+    resizeCorners(other.resizeCorners),
+    resizeEnabled(other.resizeEnabled)
+{
+    resizeCorners.setParentItem(this);
+    /* initResizeCorners(); */
+}
+
+ResizableGraphicsItem::ResizableGraphicsItem(ResizableGraphicsItem &&other) :
+    QGraphicsItem(other.parentItem()),
+    resizeCorners(std::move(other.resizeCorners)),
+    resizeEnabled(other.resizeEnabled)
+{
+    resizeCorners.setParentItem(this);
+    /* initResizeCorners(); */
 }
 
 ResizableGraphicsItem::~ResizableGraphicsItem()
@@ -32,7 +46,7 @@ ResizableGraphicsItem::~ResizableGraphicsItem()
 /*     /1* QGraphicsItem::paint(painter, option, widget); *1/ */
 /* } */
 
-void ResizableGraphicsItem::resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y)
+void ResizableGraphicsItem::resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y)
 {
     if(!resizeEnabled)
     {
@@ -50,23 +64,23 @@ void ResizableGraphicsItem::resize(ResizeRectCorner::CornerPos AnchorPoint, qrea
 
     switch(AnchorPoint)
     {
-    case ResizeRectCorner::topLeftCorner:
+    case ResizeRectCorner::TopLeftCorner:
         newWidth = oldWidth - x;
         newHeight = oldHeigth - y;
         distX = x;
         distY = y;
         break;
-    case ResizeRectCorner::bottomLeftCorner:
+    case ResizeRectCorner::BottomLeftCorner:
         newWidth = oldWidth - x;
         distX = x;
         newHeight = oldHeigth + y;
         break;
-    case ResizeRectCorner::topRightCorner:
+    case ResizeRectCorner::TopRightCorner:
         newWidth = oldWidth + x;
         newHeight = oldHeigth - y;
         distY = y;
         break;
-    case ResizeRectCorner::bottomRightCorner:
+    case ResizeRectCorner::BottomRightCorner:
         newWidth = oldWidth + x;
         newHeight = oldHeigth + y;
         break;
@@ -96,26 +110,13 @@ void ResizableGraphicsItem::resize(ResizeRectCorner::CornerPos AnchorPoint, qrea
     }
 
     moveBy(distX,distY);
-    initResizeCorners(boundingRect());
+    resizeCorners.setPosition(boundingRect());
 }
 
 void ResizableGraphicsItem::enableResizing(bool isOn)
 {
     resizeEnabled = isOn;
-    if(isOn)
-    {
-       for(ResizeRectCorner &corner : resizeCorners)
-       {
-           corner.setVisible(true);
-       }
-    }
-    else
-    {
-        for(ResizeRectCorner &corner : resizeCorners)
-        {
-            corner.setVisible(false);
-        }
-    }
+    resizeCorners.setVisible(isOn);
 }
 
 bool ResizableGraphicsItem::getResizeEnabled() const
@@ -123,11 +124,8 @@ bool ResizableGraphicsItem::getResizeEnabled() const
     return resizeEnabled;
 }
 
-void ResizableGraphicsItem::initResizeCorners(const QRectF &boundingRect)
+void ResizableGraphicsItem::initResizeCorners()
 {
-    resizeCorners[0].setPosition(boundingRect.topLeft());
-    resizeCorners[1].setPosition(boundingRect.bottomLeft());
-    resizeCorners[2].setPosition(boundingRect.topRight());
-    resizeCorners[3].setPosition(boundingRect.bottomRight());
+    resizeCorners.setPosition(boundingRect());
 }
 

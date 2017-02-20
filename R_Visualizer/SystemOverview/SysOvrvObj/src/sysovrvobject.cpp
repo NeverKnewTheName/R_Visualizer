@@ -29,16 +29,15 @@ SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     myColor(std::move(QColor(Qt::gray))),
     shapeType(ObjShape_Rectangle),
     isChildObject(false),
-    isEditable(true),
+    isEditable(false),
     doubleClicked(false)
 {
-    initResizeCorners(m_BoundingRect);
     setupSysOvrvObject();
-    enableEdit(true);
+    enableEdit(isEditable);
 }
 
 SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
-    ResizableGraphicsItem(ToCopy.parentItem()),
+    ResizableGraphicsItem(ToCopy),
     localObjCntr(ToCopy.localObjCntr),
     m_BoundingRect(ToCopy.m_BoundingRect),
     objName(ToCopy.objName),
@@ -54,7 +53,7 @@ SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
         SysOvrvObject * const ChildSysOvrvObj = dynamic_cast<SysOvrvObject*>(child);
         if(ChildSysOvrvObj != Q_NULLPTR)
         {
-            SysOvrvObject *childCopy = new SysOvrvObject(*ChildSysOvrvObj);
+            SysOvrvObject *childCopy = ChildSysOvrvObj->clone();
             childCopy->setParentItem(this);
             continue;
         }
@@ -67,19 +66,17 @@ SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
         }
     }
     setPos(ToCopy.pos());
-    initResizeCorners(m_BoundingRect);
     enableResizing(ToCopy.getResizeEnabled());
     setupSysOvrvObject();
     enableEdit(isEditable);
 }
 
 SysOvrvObject::SysOvrvObject(SysOvrvObject &&ToMove) :
-    ResizableGraphicsItem(ToMove.parentItem()),
+    ResizableGraphicsItem(ToMove),
     localObjCntr(ToMove.localObjCntr),
     m_BoundingRect(std::move(ToMove.m_BoundingRect)),
     objName(std::move(ToMove.objName)),
     myColor(std::move(ToMove.myColor)),
-    shapeType(ToMove.shapeType),
     isChildObject(ToMove.isChildObject),
     isEditable(ToMove.isEditable),
     doubleClicked(ToMove.doubleClicked)
@@ -91,7 +88,6 @@ SysOvrvObject::SysOvrvObject(SysOvrvObject &&ToMove) :
     }
 
     setPos(ToMove.pos());
-    initResizeCorners(m_BoundingRect);
     enableResizing(ToMove.getResizeEnabled());
     setupSysOvrvObject();
     enableEdit(isEditable);
@@ -168,7 +164,8 @@ void SysOvrvObject::setupSysOvrvObject()
     setFlag(ItemSendsScenePositionChanges);
     setFlag(ItemIsFocusable);
     setFlag(ItemIsSelectable);
-    updateShape();
+    initResizeCorners();
+    update();
 }
 
 QColor SysOvrvObject::getMyColor() const
@@ -267,7 +264,7 @@ void SysOvrvObject::removeLabel(SysOvrvTextLabel *label)
 
 SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
 {
-    SysOvrvObject *duplicatedObject = new SysOvrvObject(*this);
+    SysOvrvObject *duplicatedObject = clone();
     if(parentObj != Q_NULLPTR)
     {
         duplicatedObject->setParentItem(parentObj);
@@ -364,6 +361,9 @@ void SysOvrvObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         moveBy(distX,distY);
     }
     ResizableGraphicsItem::mouseMoveEvent(event);
+    //ToDO Outsource method 
+    //Move corners in ResizableGraphicsItem...
+    /* initResizeCorners(); */
 }
 
 QString SysOvrvObject::getHashedName() const
@@ -450,11 +450,11 @@ void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
 
     for(QJsonValueRef jsonChildObj : objChildren)
     {
-        SysOvrvObject *childObj = new SysOvrvObject(this);
-        QByteArray jsonParsed = QJsonDocument(jsonChildObj.toObject()).toJson();
-        childObj->parseFromJson(jsonParsed);
-        //        this->addChildSysOvrvItem(childObj);
-        childObj->setAsChild(true);
+        //ToDO...let the parsing happen in the derived classes!
+        /* SysOvrvObject *childObj = new SysOvrvObject(this); */
+        /* QByteArray jsonParsed = QJsonDocument(jsonChildObj.toObject()).toJson(); */
+        /* childObj->parseFromJson(jsonParsed); */
+        /* childObj->setAsChild(true); */
     }
     for(QJsonValueRef jsonTextlabelsValue : objlabels)
     {
@@ -540,7 +540,7 @@ void SysOvrvObject::updateShape(const QRectF &rect)
         /*     break; */
         /* } */
     /* } */
-    /* initResizeCorners(boundingRect()); */
+    /* initResizeCorners(); */
     /* ResizableGraphicsItem::update(rect); */
 }
 
@@ -553,8 +553,8 @@ void SysOvrvObject::setParentSysOvrvObj(SysOvrvObject *parentSysOvrvObj)
 void SysOvrvObject::enableEdit(bool enable)
 {
     isEditable = enable;
-    initResizeCorners(m_BoundingRect);
     enableResizing(enable);
+    initResizeCorners();
 
     QList<QGraphicsItem *> children = childItems();
     for(QGraphicsItem *child : children)
@@ -629,35 +629,8 @@ void SysOvrvObject::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     setCursor(QCursor(Qt::ArrowCursor));
 }
 
-void SysOvrvObject::resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y)
+void SysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y)
 {
-
-    if(shapeType == SysOvrvObject::ObjShape_Circle || shapeType == SysOvrvObject::ObjShape_Square)
-    {
-
-        if((x>0 ? x : -x) > (y>0 ? y : -y))
-        {
-            if(AnchorPoint == ResizeRectCorner::bottomLeftCorner || AnchorPoint == ResizeRectCorner::topRightCorner)
-            {
-                y = -x;
-            }
-            else
-            {
-                y = x;
-            }
-        }
-        else
-        {
-            if(AnchorPoint == ResizeRectCorner::bottomLeftCorner || AnchorPoint == ResizeRectCorner::topRightCorner)
-            {
-                x = -y;
-            }
-            else
-            {
-                x = y;
-            }
-        }
-    }
     QList<QGraphicsItem*> children = childItems();
     for(QGraphicsItem * const child : children)
     {
@@ -671,8 +644,7 @@ void SysOvrvObject::resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qre
         }
     }
     ResizableGraphicsItem::resize(AnchorPoint, x, y);
-
-    updateShape();
+    update();
 }
 
 void SysOvrvObject::setWidth(const qreal newWidth)

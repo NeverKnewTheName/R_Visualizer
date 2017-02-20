@@ -34,6 +34,9 @@ public:
     SysOvrvObject(SysOvrvObject &&ToMove);
     virtual ~SysOvrvObject();
 
+    virtual SysOvrvObject *clone() const = 0;
+    virtual SysOvrvObject *move() = 0;
+
     static QString translateObjShapeTypeToString(ObjShapeType type);
     static QStringList getShapesAsStringList();
 
@@ -153,11 +156,11 @@ protected:
 
     // ResizableGraphicsItem interface
 public:
-    void resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y);
-    void setWidth(const qreal newWidth);
-    qreal getWidth() const;
-    void setHeight(const qreal newHeight);
-    qreal getHeight() const;
+    virtual void resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y) Q_DECL_OVERRIDE;
+    virtual void setWidth(const qreal newWidth) Q_DECL_OVERRIDE;
+    virtual qreal getWidth() const Q_DECL_OVERRIDE;
+    virtual void setHeight(const qreal newHeight) Q_DECL_OVERRIDE;
+    virtual qreal getHeight() const Q_DECL_OVERRIDE;
 };
 
 #endif // SYSOVRVOBJECT_H
