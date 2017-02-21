@@ -17,18 +17,28 @@ CircleSysOvrvObject::CircleSysOvrvObject(const CircleSysOvrvObject &other) :
 }
 
 CircleSysOvrvObject::CircleSysOvrvObject(CircleSysOvrvObject &&other) :
-    SysOvrvObjDerivationHelper(other)
+    SysOvrvObjDerivationHelper(std::move(other))
 {
 }
 
 CircleSysOvrvObject::CircleSysOvrvObject(const SysOvrvObject &original) :
     SysOvrvObjDerivationHelper(original)
 {
+    const qreal x = getWidth();
+    const qreal y = getHeight();
+    const qreal newDimension = (x+y)/2;
+    setHeight(newDimension);
+    setWidth(newDimension);
 }
 
 CircleSysOvrvObject::CircleSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObjDerivationHelper(original)
+    SysOvrvObjDerivationHelper(std::move(original))
 {
+    const qreal x = getWidth();
+    const qreal y = getHeight();
+    const qreal newDimension = (x+y)/2;
+    setHeight(newDimension);
+    setWidth(newDimension);
 }
 
 CircleSysOvrvObject::~CircleSysOvrvObject()
@@ -39,7 +49,13 @@ void CircleSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsIte
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getMyColor());
+    QBrush colorBrush(getObjColor());
+
+    /* if(option->isSelected()) */
+    /* { */
+    /*     colorBrush = QBrush(getObjColor().darker()); */
+    /* } */
+
     painter->save();
 
     painter->setBrush(colorBrush);

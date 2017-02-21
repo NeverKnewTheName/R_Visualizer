@@ -25,9 +25,8 @@ SysOvrvObject::SysOvrvObject(QGraphicsItem *parent) :
     ResizableGraphicsItem(parent),
     localObjCntr(objCntr++),
     m_BoundingRect(0,0,100,100),
-    objName(std::move(QString(""))),
-    myColor(std::move(QColor(Qt::gray))),
-    shapeType(ObjShape_Rectangle),
+    objName(""),
+    objColor(Qt::gray),
     isChildObject(false),
     isEditable(false),
     doubleClicked(false)
@@ -41,8 +40,7 @@ SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
     localObjCntr(ToCopy.localObjCntr),
     m_BoundingRect(ToCopy.m_BoundingRect),
     objName(ToCopy.objName),
-    myColor(ToCopy.myColor),
-    shapeType(ToCopy.shapeType),
+    objColor(ToCopy.objColor),
     isChildObject(ToCopy.isChildObject),
     isEditable(ToCopy.isEditable),
     doubleClicked(ToCopy.doubleClicked)
@@ -72,11 +70,11 @@ SysOvrvObject::SysOvrvObject(const SysOvrvObject &ToCopy) :
 }
 
 SysOvrvObject::SysOvrvObject(SysOvrvObject &&ToMove) :
-    ResizableGraphicsItem(ToMove),
+    ResizableGraphicsItem(std::move(ToMove)),
     localObjCntr(ToMove.localObjCntr),
     m_BoundingRect(std::move(ToMove.m_BoundingRect)),
     objName(std::move(ToMove.objName)),
-    myColor(std::move(ToMove.myColor)),
+    objColor(std::move(ToMove.objColor)),
     isChildObject(ToMove.isChildObject),
     isEditable(ToMove.isEditable),
     doubleClicked(ToMove.doubleClicked)
@@ -150,7 +148,6 @@ QRectF SysOvrvObject::boundingRect() const
 void SysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     /* ResizableGraphicsItem::paint(painter, option, widget); */
-    /* painter->drawPixmap(boundingRect(), ObjPixMap, ObjPixMap.rect()); */
 }
 
 int SysOvrvObject::type() const
@@ -164,20 +161,17 @@ void SysOvrvObject::setupSysOvrvObject()
     setFlag(ItemSendsScenePositionChanges);
     setFlag(ItemIsFocusable);
     setFlag(ItemIsSelectable);
-    initResizeCorners();
-    update();
 }
 
-QColor SysOvrvObject::getMyColor() const
+QColor SysOvrvObject::getObjColor() const
 {
-    return this->myColor;
+    return this->objColor;
 }
 
-void SysOvrvObject::setMyColor(const QColor &value)
+void SysOvrvObject::setObjColor(const QColor &value)
 {
-    myColor = QColor(value);
+    objColor = QColor(value);
     update();
-    /* updateShape(); */
 }
 
 QString SysOvrvObject::getObjName() const
@@ -189,42 +183,6 @@ void SysOvrvObject::setObjName(const QString &value)
 {
     objName = QString(value);
     update();
-}
-
-void SysOvrvObject::loadImageFromFile(QWidget *parent)
-{
-    QString FilePath = QFileDialog::getOpenFileName(parent, QString("Open Image"), QString(), "Images (*.bmp *.jpg *.png)");
-    loadImageFromFile(FilePath);
-}
-
-void SysOvrvObject::loadImageFromFile(const QString &FilePath)
-{
-    ObjPixMap = QPixmap(FilePath);
-    update();
-}
-
-void SysOvrvObject::setShape(SysOvrvObject::ObjShapeType shape)
-{
-    /* shapeType = shape; */
-
-    /* if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE */
-    /* { */
-    /*     if(m_BoundingRect.width() > m_BoundingRect.height()) */
-    /*     { */
-    /*         m_BoundingRect.setHeight(m_BoundingRect.width()); */
-    /*     } */
-    /*     else */
-    /*     { */
-    /*         m_BoundingRect.setWidth(m_BoundingRect.height()); */
-    /*     } */
-    /* } */
-
-    /* updateShape(); */
-}
-
-SysOvrvObject::ObjShapeType SysOvrvObject::getShape() const
-{
-    /* return shapeType; */
 }
 
 SysOvrvTextLabel * SysOvrvObject::addLabel()
@@ -275,7 +233,7 @@ SysOvrvObject *SysOvrvObject::duplicate(SysOvrvObject *parentObj)
 void SysOvrvObject::setAsChild(bool isChild)
 {
     this->isChildObject = isChild;
-    enableEdit(!isChild);
+    /* enableEdit(!isChild); */
 }
 
 bool SysOvrvObject::isAChild() const
@@ -306,7 +264,7 @@ bool SysOvrvObject::isAChild() const
 //    return child;
 //}
 
-QVector<SysOvrvObject *> SysOvrvObject::getChidSysOvrvObjects()
+QVector<SysOvrvObject *> SysOvrvObject::getChildSysOvrvObjects()
 {
     QVector<SysOvrvObject *> childSysOvrvObjs;
     QList<QGraphicsItem*> children = childItems();
@@ -380,8 +338,7 @@ QByteArray SysOvrvObject::parseToJson() const
     QJsonArray objlabels;
 
     jsonSysOvrvObj["ObjName"] = this->getObjName();
-    jsonSysOvrvObj["ObjColor"] = this->getMyColor().name(QColor::HexRgb);
-    jsonSysOvrvObj["ObjShape"] = this->getShape();
+    jsonSysOvrvObj["ObjColor"] = this->getObjColor().name(QColor::HexRgb);
     objSize.append(QJsonValue(static_cast<double>(m_BoundingRect.width())));
     objSize.append(QJsonValue(static_cast<double>(m_BoundingRect.height())));
     jsonSysOvrvObj["ObjSize"] = objSize;
@@ -440,8 +397,7 @@ void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
     }
 
     this->setObjName(jsonSysOvrvObj["ObjName"].toString());
-    this->setMyColor(std::move(QColor(jsonSysOvrvObj["ObjColor"].toString())));
-    this->setShape(static_cast<ObjShapeType>(jsonSysOvrvObj["ObjShape"].toInt()));
+    this->setObjColor(std::move(QColor(jsonSysOvrvObj["ObjColor"].toString())));
 
     this->setWidth(static_cast<qreal>(objSize[0].toDouble(100)));
     this->setHeight(static_cast<qreal>(objSize[1].toDouble(100)));
@@ -465,85 +421,7 @@ void SysOvrvObject::parseFromJson(QByteArray &jsonByteArray)
     }
 }
 
-QPixmap SysOvrvObject::getObjPixMap() const
-{
-    return ObjPixMap;
-}
-
-void SysOvrvObject::setObjPixMap(const QPixmap &value)
-{
-    ObjPixMap = value;
-}
-
-void SysOvrvObject::updateShape(const QRectF &rect)
-{
-    /* if(shapeType == ObjShape_Image) */
-    /* { */
-    /*     //        ObjPixMap = QPixmap(FilePath); */
-    /* } */
-    /* else */
-    /* { */
-    /*     if(shapeType == ObjShape_Square || shapeType == ObjShape_Circle)//SQUARE || CIRCLE */
-    /*     { */
-    /*         if(m_BoundingRect.width() > m_BoundingRect.height()) */
-    /*         { */
-    /*             setHeight(m_BoundingRect.width()); */
-    /*         } */
-    /*         else */
-    /*         { */
-    /*             setWidth(m_BoundingRect.height()); */
-    /*         } */
-    /*     } */
-
-
-    /*     QRect boundRect = m_BoundingRect.toRect(); */
-    /*     ObjPixMap = QPixmap(boundRect.size()); */
-    /*     ObjPixMap.fill(Qt::transparent); */
-
-    /*     QPainter painter(&ObjPixMap); */
-    /*     boundRect.setWidth(boundRect.width() - painter.pen().width()); */
-    /*     boundRect.setHeight(boundRect.height() - painter.pen().width()); */
-    /*     QBrush brush(myColor); */
-
-    // /*     if(this->isSelected()/1* || (isChildObject && parentItem() != NULL && parentItem()->isSelected())*/) //ToTHINK visualize children also as selected?? */
-    /*     { */
-    /*         brush.setColor(myColor.darker()); */
-    /*     } */
-
-    /*     painter.setBrush(brush); */
-    /*     //        painter.setRenderHint(QPainter::Antialiasing); */
-
-    /*     switch(shapeType) */
-    /*     { */
-    /*     case ObjShape_Rectangle: // Rect */
-    /*     case ObjShape_Square: // Square */
-    /*         painter.drawRect(boundRect); */
-    /*         break; */
-    /*     case ObjShape_Ellipse: */
-    /*     case ObjShape_Circle: // Circle */
-    /*         painter.drawEllipse(boundRect); */
-    /*         break; */
-    /*     case ObjShape_Triangle: // Triangle */
-    /*     { */
-    /*         QPainterPath path; */
-    /*         QPointF rectTopMiddle((boundRect.right() - boundRect.left()) / 2, boundRect.top()); */
-    /*         path.moveTo(rectTopMiddle); */
-    /*         path.lineTo(boundRect.right(), boundRect.bottom()); */
-    /*         path.lineTo(boundRect.left(), boundRect.bottom()); */
-    /*         path.lineTo(rectTopMiddle); */
-    /*         painter.drawPath(path); */
-        /* } */
-        /*     break; */
-        /* case ObjShape_Image: */
-        /*     break; */
-        /* default: */
-        /*     break; */
-        /* } */
-    /* } */
-    /* initResizeCorners(); */
-    /* ResizableGraphicsItem::update(rect); */
-}
-
+//DEPRECATED
 void SysOvrvObject::setParentSysOvrvObj(SysOvrvObject *parentSysOvrvObj)
 {
     //    parentSysOvrvObj->addChildSysOvrvItem(this);
@@ -554,17 +432,16 @@ void SysOvrvObject::enableEdit(bool enable)
 {
     isEditable = enable;
     enableResizing(enable);
-    initResizeCorners();
 
     QList<QGraphicsItem *> children = childItems();
     for(QGraphicsItem *child : children)
     {
-        SysOvrvObject *sysOvrvChild = dynamic_cast<SysOvrvObject*>(child);
-        if(sysOvrvChild != Q_NULLPTR)
-        {
-            sysOvrvChild->enableEdit(enable);
-            continue;
-        }
+        /* SysOvrvObject *sysOvrvChild = dynamic_cast<SysOvrvObject*>(child); */
+        /* if(sysOvrvChild != Q_NULLPTR) */
+        /* { */
+        /*     sysOvrvChild->enableEdit(enable); */
+        /*     continue; */
+        /* } */
         SysOvrvTextLabel * sysOvrvTextLabel = dynamic_cast<SysOvrvTextLabel *>(child);
         if(sysOvrvTextLabel != Q_NULLPTR)
         {
@@ -599,7 +476,7 @@ void SysOvrvObject::focusInEvent(QFocusEvent *event)
         }
     }
     setSelected(true);
-    updateShape();
+    update();
 }
 
 void SysOvrvObject::focusOutEvent(QFocusEvent *event)
@@ -614,7 +491,7 @@ void SysOvrvObject::focusOutEvent(QFocusEvent *event)
         }
     }
     setSelected(false);
-    updateShape();
+    update();
 }
 
 void SysOvrvObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -637,10 +514,9 @@ void SysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal 
         SysOvrvObject * SysOvrvChild = dynamic_cast<SysOvrvObject*>(child);
         if(SysOvrvChild != Q_NULLPTR)
         {
-            qreal xPos = SysOvrvChild->x();
-            qreal yPos = SysOvrvChild->y();
+            const QPointF &childPos = SysOvrvChild->pos();
             SysOvrvChild->resize(AnchorPoint, x, y);
-            SysOvrvChild->setPos(xPos, yPos);
+            SysOvrvChild->setPos(childPos);
         }
     }
     ResizableGraphicsItem::resize(AnchorPoint, x, y);

@@ -4,6 +4,7 @@
 #include <QBrush>
 #include <QPainterPath>
 #include <QPointF>
+#include <QStyleOptionGraphicsItem>
 
 #include <QDebug>
 
@@ -18,7 +19,7 @@ TriangleSysOvrvObject::TriangleSysOvrvObject(const TriangleSysOvrvObject &other)
 }
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(TriangleSysOvrvObject &&other) :
-    SysOvrvObjDerivationHelper(other)
+    SysOvrvObjDerivationHelper(std::move(other))
 {
 }
 
@@ -28,7 +29,7 @@ TriangleSysOvrvObject::TriangleSysOvrvObject(const SysOvrvObject &original) :
 }
 
 TriangleSysOvrvObject::TriangleSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObjDerivationHelper(original)
+    SysOvrvObjDerivationHelper(std::move(original))
 {
 }
 
@@ -40,7 +41,12 @@ void TriangleSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsI
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getMyColor());
+    QBrush colorBrush(getObjColor());
+
+    /* if(option->isSelected()) */
+    /* { */
+    /*     colorBrush = QBrush(getObjColor().darker()); */
+    /* } */
 
     QPointF rectTopMiddle((boundRect.right() - boundRect.left()) / 2, boundRect.top());
     QPainterPath path(rectTopMiddle);

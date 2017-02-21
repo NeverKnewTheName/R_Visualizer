@@ -3,6 +3,8 @@
 
 #include "sysovrvobjderivationhelper.h"
 
+#include <QPixmap>
+
 class ImageSysOvrvObject : public SysOvrvObjDerivationHelper<ImageSysOvrvObject>
 {
 public:
@@ -13,9 +15,16 @@ public:
     ImageSysOvrvObject(SysOvrvObject &&original);
     ~ImageSysOvrvObject();
 
+    void loadImageFromFile(const QString &filePath);
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
     SysOvrvObject::ObjShapeType getShape() const;
+
+    QByteArray saveObjPixmap() const;
+    void loadObjPixmap(const QByteArray &savedPixmap);
+private:
+    QPixmap objPixMap;
 
 };
 

@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QBrush>
 #include <QPointF>
+#include <QStyleOptionGraphicsItem>
 
 #include <QDebug>
 
@@ -17,7 +18,7 @@ RectSysOvrvObject::RectSysOvrvObject(const RectSysOvrvObject &other) :
 }
 
 RectSysOvrvObject::RectSysOvrvObject(RectSysOvrvObject &&other) :
-    SysOvrvObjDerivationHelper(other)
+    SysOvrvObjDerivationHelper(std::move(other))
 {
 }
 
@@ -27,7 +28,7 @@ RectSysOvrvObject::RectSysOvrvObject(const SysOvrvObject &original) :
 }
 
 RectSysOvrvObject::RectSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObjDerivationHelper(original)
+    SysOvrvObjDerivationHelper(std::move(original))
 {
 }
 
@@ -39,7 +40,13 @@ void RectSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getMyColor());
+    QBrush colorBrush(getObjColor());
+
+    /* if(option->isSelected()) */
+    /* { */
+    /*     colorBrush = QBrush(getObjColor().darker()); */
+    /* } */
+
     painter->save();
 
     painter->setBrush(colorBrush);

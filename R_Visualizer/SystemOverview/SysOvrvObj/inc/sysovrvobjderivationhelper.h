@@ -19,7 +19,7 @@ public:
     //Copy constructor
     SysOvrvObjDerivationHelper(const SysOvrvObject &other) : SysOvrvObject(other){}
     //Move constructor
-    SysOvrvObjDerivationHelper(SysOvrvObject &&other) : SysOvrvObject(other){}
+    SysOvrvObjDerivationHelper(SysOvrvObject &&other) : SysOvrvObject(std::move(other)){}
 
     virtual SysOvrvObject *clone() const
     {

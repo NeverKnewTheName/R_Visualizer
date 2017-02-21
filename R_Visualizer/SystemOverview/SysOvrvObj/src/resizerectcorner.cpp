@@ -8,27 +8,29 @@
 #include <QDebug>
 
 ResizeRectCorner::ResizeRectCorner(const CornerPos cornerPos, const qreal size, ResizableGraphicsItem *parent) :
-    QGraphicsRectItem(parent),
+    QGraphicsRectItem(QRectF(0,0,size,size), parent),
     cornerPos(cornerPos),
     cornerSize(size)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setAcceptHoverEvents(true);
+    /* qDebug() << __PRETTY_FUNCTION__ << " CornerPos: " << cornerPos << " size: " << cornerSize; */
 }
 
 ResizeRectCorner::ResizeRectCorner(const ResizeRectCorner &other) :
     QGraphicsRectItem(other.parentItem()),
-    cornerPos(std::move(other.cornerPos)),
-    cornerSize(std::move(other.cornerSize))
+    cornerPos(other.cornerPos),
+    cornerSize(other.cornerSize)
 {
-    setFlag(QGraphicsItem::ItemIsMovable);
-    setAcceptHoverEvents(true);
+    setFlags(other.flags());
+    setAcceptHoverEvents(other.acceptHoverEvents());
+    
+    /* qDebug() << __PRETTY_FUNCTION__ << " CornerPos: " << cornerPos << " size: " << cornerSize; */
 }
 
 void ResizeRectCorner::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QGraphicsRectItem::paint(painter, option, widget);
-    painter->drawEllipse(QRectF(100,100,10,10));
 }
 
 void ResizeRectCorner::setCornerPos(ResizeRectCorner::CornerPos cornerPos)
@@ -72,22 +74,29 @@ void ResizeRectCorner::setCornerSize(const qreal &value)
 
 void ResizeRectCorner::setPosition(const QPointF &pos)
 {
+    /* qDebug() << __PRETTY_FUNCTION__ << " passed pos: " << pos; */
+    /* qDebug() << "CornerPos: " << cornerPos; */
     switch(cornerPos)
     {
     case TopLeftCorner:
-        setRect(pos.x()-cornerSize,pos.y()-cornerSize,cornerSize,cornerSize);
+        setPos(pos.x()-cornerSize,pos.y()-cornerSize);
+        /* setRect(pos.x()-cornerSize,pos.y()-cornerSize,cornerSize,cornerSize); */
         break;
     case BottomLeftCorner:
-        setRect(pos.x()-cornerSize,pos.y(),cornerSize,cornerSize);
+        setPos(pos.x()-cornerSize,pos.y());
+        /* setRect(pos.x()-cornerSize,pos.y(),cornerSize,cornerSize); */
         break;
     case TopRightCorner:
-        setRect(pos.x(),pos.y()-cornerSize,cornerSize,cornerSize);
+        setPos(pos.x(),pos.y()-cornerSize);
+        /* setRect(pos.x(),pos.y()-cornerSize,cornerSize,cornerSize); */
         break;
     case BottomRightCorner:
-        setRect(pos.x(),pos.y(),cornerSize,cornerSize);
+        setPos(pos.x(),pos.y());
+        /* setRect(pos.x(),pos.y(),cornerSize,cornerSize); */
         break;
     default:
-        setRect(0,0,cornerSize,cornerSize);
+        /* setRect(0,0,cornerSize,cornerSize); */
+        break;
     }
 }
 

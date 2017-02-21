@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QBrush>
 #include <QPointF>
+#include <QStyleOptionGraphicsItem>
 
 #include <QDebug>
 
@@ -17,7 +18,7 @@ EllipseSysOvrvObject::EllipseSysOvrvObject(const EllipseSysOvrvObject &other) :
 }
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(EllipseSysOvrvObject &&other) :
-    SysOvrvObjDerivationHelper(other)
+    SysOvrvObjDerivationHelper(std::move(other))
 {
 }
 
@@ -27,7 +28,7 @@ EllipseSysOvrvObject::EllipseSysOvrvObject(const SysOvrvObject &original) :
 }
 
 EllipseSysOvrvObject::EllipseSysOvrvObject(SysOvrvObject &&original) :
-    SysOvrvObjDerivationHelper(original)
+    SysOvrvObjDerivationHelper(std::move(original))
 {
 }
 
@@ -39,7 +40,13 @@ void EllipseSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getMyColor());
+    QBrush colorBrush(getObjColor());
+
+    /* if(option->isSelected()) */
+    /* { */
+    /*     colorBrush = QBrush(getObjColor().darker()); */
+    /* } */
+
     painter->save();
 
     painter->setBrush(colorBrush);

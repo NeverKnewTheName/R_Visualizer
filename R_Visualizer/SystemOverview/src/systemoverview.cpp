@@ -142,7 +142,7 @@ void SystemOverview::slt_newMessage(const Msg &newMsg)
 
 void SystemOverview::slt_addNewObject(const QPointF &pos)
 {
-    SysOvrvObjectDialog addSysOvrvObjectDialog;
+    SysOvrvObjectDialog addSysOvrvObjectDialog(this);
     connect(&addSysOvrvObjectDialog, &SysOvrvObjectDialog::sgnl_commit, [=](SysOvrvObject *obj){
             SystemOverviewScene.addItem(obj);
             qDebug() << "Item: " << obj->getObjName() << " added to scene at pos: " << pos;
@@ -168,7 +168,17 @@ void SystemOverview::slt_updateObject(SysOvrvObject *obj)
     {
         return;
     }
+    SysOvrvObjectDialog updateSysOvrvObjectDialog(obj, this);
+
+    const QPointF &retrievedPos = obj->pos();
+
+    connect(&updateSysOvrvObjectDialog, &SysOvrvObjectDialog::sgnl_commit, [=](SysOvrvObject *obj){
     sysOvrvObjStore.updateObject(obj);
+            SystemOverviewScene.addItem(obj);
+            obj->setPos(retrievedPos);
+            sysOvrvObjStore.updateObject(obj);
+            });
+    updateSysOvrvObjectDialog.exec();
 }
 
 void SystemOverview::slt_duplicateObject(SysOvrvObject *obj)
@@ -177,4 +187,9 @@ void SystemOverview::slt_duplicateObject(SysOvrvObject *obj)
     {
         return;
     }
+    SysOvrvObject *duplicatedObj = obj->clone();
+    duplicatedObj->setParentItem(Q_NULLPTR);
+    SystemOverviewScene.addItem(duplicatedObj);
+    duplicatedObj->moveBy(10,10);
+    sysOvrvObjStore.addObject(duplicatedObj);
 }

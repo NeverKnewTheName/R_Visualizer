@@ -17,6 +17,8 @@ public:
 
     SysOvrvObject::ObjShapeType getShape() const;
 
+    void resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y) Q_DECL_OVERRIDE;
+
 private:
     
 

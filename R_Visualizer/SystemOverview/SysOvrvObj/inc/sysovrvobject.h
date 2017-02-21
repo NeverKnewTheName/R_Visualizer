@@ -45,38 +45,14 @@ public:
     int type() const;
 
 
-    QColor getMyColor() const;
-    void setMyColor(const QColor &value);
+    QColor getObjColor() const;
+    QColor getCurObjColor() const;
+    void setObjColor(const QColor &value);
 
     QString getObjName() const;
     void setObjName(const QString &value);
 
-    /**
-     * @brief loadImageFromFile loads an image file into the \ref SysOvrvObject that is selected via an file open dialog
-     * @param parent The QWidget the file open dialog shall be spawned in
-     */
-    void loadImageFromFile(QWidget *parent = Q_NULLPTR);
-    /**
-     * @brief loadImageFromFile loads an image file into the \ref SysOvrvObject specified by the FilePath
-     * @param FilePath Path to the image file to load
-     */
-    void loadImageFromFile(const QString &FilePath);
-
-    /**
-     * @brief setShape sets the shape of the \ref SysOvrvObject to the specified shape
-     * @param shape Shape to set the \ref SysOvrvObject to
-     *
-     * \note This function will call \ref updateShape to force a redrawing of the internal QPixMap
-     *
-     */
-    //DEPRECATED
-    void setShape(ObjShapeType shape);
-    /**
-     * @brief getShape Returns the current shape of the \ref SysOvrvObject as a \ref ObjShapeType
-     * @return Current shape as a \ref ObjShapeType
-     */
-    //DEPRECATED
-    virtual ObjShapeType getShape() const;
+    virtual ObjShapeType getShape() const = 0;
 
     /**
      * @brief addLabel adds a new \ref SysOvrvTextLabel to the \ref SysOvrvObject by creating a new \ref SysOvrvTextLabel
@@ -113,17 +89,13 @@ public:
     void setAsChild(bool isChild);
     bool isAChild() const;
 
-    QVector<SysOvrvObject *> getChidSysOvrvObjects();
+    QVector<SysOvrvObject *> getChildSysOvrvObjects();
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     QString getHashedName() const;
 
     QByteArray parseToJson() const;
     void parseFromJson(QByteArray &jsonByteArray);
-
-    QPixmap getObjPixMap() const;
-    void setObjPixMap(const QPixmap &value);
-
 
     void setParentSysOvrvObj(SysOvrvObject *parentSysOvrvObj);
 
@@ -135,14 +107,11 @@ private:
     const unsigned int localObjCntr;
     QRectF m_BoundingRect;
     QString objName;
-    QColor myColor;
-    ObjShapeType shapeType;
+    QColor objColor;
     bool isChildObject;
     bool isEditable;
     bool doubleClicked;
-    QPixmap ObjPixMap;
 
-    void updateShape(const QRectF &rect = QRectF());
     void setupSysOvrvObject();
 
 protected:

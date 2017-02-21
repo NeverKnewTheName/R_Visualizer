@@ -20,7 +20,7 @@
 SysOvrvObjectDialog::SysOvrvObjectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SysOvrvObjectDialog),
-    m_curSysOvrvObject(new SquareSysOvrvObject()),
+    m_curSysOvrvObject(new RectSysOvrvObject()),
     m_focusedItem(Q_NULLPTR),
     updateExisting(false)
 {
@@ -41,9 +41,11 @@ SysOvrvObjectDialog::SysOvrvObjectDialog(SysOvrvObject *object, QWidget *parent)
     ui->setupUi(this);
     this->setupDialog();
     m_curSysOvrvObject->enableEdit(true);
-    for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+    QVector<SysOvrvObject *> children = m_curSysOvrvObject->getChildSysOvrvObjects();
+    for(auto childObj : children)
     {
         childObj->setAsChild(false);
+        childObj->enableEdit(true);
     }
 }
 
@@ -109,23 +111,24 @@ void SysOvrvObjectDialog::slt_objectShapeChanged(int index)
     switch(static_cast<SysOvrvObject::ObjShapeType>(index))
     {
     case SysOvrvObject::ObjShape_Rectangle:
-        m_curSysOvrvObject = new RectSysOvrvObject(std::move(m_curSysOvrvObject));
+        m_curSysOvrvObject = new RectSysOvrvObject(std::move(*m_curSysOvrvObject));
         break;
     case SysOvrvObject::ObjShape_Square:
-        m_curSysOvrvObject = new SquareSysOvrvObject(std::move(m_curSysOvrvObject));
+        m_curSysOvrvObject = new SquareSysOvrvObject(std::move(*m_curSysOvrvObject));
         break;
     case SysOvrvObject::ObjShape_Ellipse:
-        m_curSysOvrvObject = new EllipseSysOvrvObject(std::move(m_curSysOvrvObject));
+        m_curSysOvrvObject = new EllipseSysOvrvObject(std::move(*m_curSysOvrvObject));
         break;
     case SysOvrvObject::ObjShape_Circle:
-        m_curSysOvrvObject = new CircleSysOvrvObject(std::move(m_curSysOvrvObject));
+        m_curSysOvrvObject = new CircleSysOvrvObject(std::move(*m_curSysOvrvObject));
         break;
     case SysOvrvObject::ObjShape_Triangle:
-        m_curSysOvrvObject = new TriangleSysOvrvObject(std::move(m_curSysOvrvObject));
+        m_curSysOvrvObject = new TriangleSysOvrvObject(std::move(*m_curSysOvrvObject));
         break;
     case SysOvrvObject::ObjShape_Image:
-        m_curSysOvrvObject = new ImageSysOvrvObject(std::move(m_curSysOvrvObject));
-        m_curSysOvrvObject->loadImageFromFile();
+        m_curSysOvrvObject = new ImageSysOvrvObject(std::move(*m_curSysOvrvObject));
+        //ToDO open file dialog.. pick file .. call method
+        /* m_curSysOvrvObject->loadImageFromFile(); */
         break;
     default:
         curObjSave = Q_NULLPTR;
@@ -143,7 +146,7 @@ void SysOvrvObjectDialog::slt_objectShapeChanged(int index)
 void SysOvrvObjectDialog::slt_addObjectToObject(SysOvrvObject *obj)
 {
 //    m_curSysOvrvObject->addChildSysOvrvItem(obj);
-    obj->setPos(m_curSysOvrvObject->pos());
+    /* obj->setPos(m_curSysOvrvObject->pos()); */
     obj->moveBy(10,10);
     obj->setParentItem(m_curSysOvrvObject);
     update();
@@ -192,8 +195,8 @@ void SysOvrvObjectDialog::setupDialog()
 
     ui->objectShapeComboBox->addItems(items);
     ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
-    ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
-    ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
+    ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getObjColor().name()));
+    ui->ObjectColorLE->setText(m_curSysOvrvObject->getObjColor().name());
     ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
 
     connect(ui->objectShapeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SysOvrvObjectDialog::slt_objectShapeChanged);
@@ -220,11 +223,13 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
             }
             SysOvrvScene.removeItem(m_curSysOvrvObject);
             this->m_curSysOvrvObject->setObjName(ui->objectNameLE->text());
-            for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+            for(auto childObj : m_curSysOvrvObject->getChildSysOvrvObjects())
             {
                 childObj->setAsChild(true);
+                childObj->enableEdit(false);
             }
-            emit sgnl_commit(this->m_curSysOvrvObject);
+            m_curSysOvrvObject->enableEdit(false);
+            emit sgnl_commit(m_curSysOvrvObject);
             accept();
             break;
         case QDialogButtonBox::Save:
@@ -271,13 +276,14 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
                 // read file content
                 QByteArray jsonSysOvrvObj = jsonOpenFile.readAll();
                 m_curSysOvrvObject->parseFromJson(jsonSysOvrvObj); //ToDO check for error (-1)
-                m_curSysOvrvObject->enableResizing(true);
-                for(auto childObj : m_curSysOvrvObject->getChidSysOvrvObjects())
+                m_curSysOvrvObject->enableEdit(true);
+                for(auto childObj : m_curSysOvrvObject->getChildSysOvrvObjects())
                 {
                     childObj->setAsChild(false);
+                    childObj->enableEdit(true);
                 }
-                ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
-                ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
+                ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getObjColor().name()));
+                ui->ObjectColorLE->setText(m_curSysOvrvObject->getObjColor().name());
                 ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
                 ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
                 SysOvrvScene.addItem(m_curSysOvrvObject);
@@ -313,8 +319,8 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
         m_curSysOvrvObject = new SquareSysOvrvObject();
         m_curSysOvrvObject->parseFromJson(m_jsonObjSave);
         m_curSysOvrvObject->enableResizing(true);
-        ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getMyColor().name()));
-        ui->ObjectColorLE->setText(m_curSysOvrvObject->getMyColor().name());
+        ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getObjColor().name()));
+        ui->ObjectColorLE->setText(m_curSysOvrvObject->getObjColor().name());
         ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
         ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
 
@@ -327,7 +333,7 @@ void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
 
 void SysOvrvObjectDialog::on_OpenColorPicker_clicked()
 {
-    QColorDialog *colorPicker = new QColorDialog(m_curSysOvrvObject->getMyColor(), this);
+    QColorDialog *colorPicker = new QColorDialog(m_curSysOvrvObject->getObjColor(), this);
     connect(colorPicker, &QColorDialog::colorSelected, this, &SysOvrvObjectDialog::slt_colorChanged);
     colorPicker->exec();
 }
@@ -337,7 +343,7 @@ void SysOvrvObjectDialog::slt_colorChanged(const QColor &newColor)
     qDebug() << "Color picked: " << newColor.name();
     ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(newColor.name()));
     ui->ObjectColorLE->setText(newColor.name());
-    m_curSysOvrvObject->setMyColor(QColor(newColor));
+    m_curSysOvrvObject->setObjColor(QColor(newColor));
 }
 
 void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
@@ -357,13 +363,13 @@ void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
     }
     duplicatedObject->setPos(duplicateObjParent->pos());
     duplicatedObject->moveBy(10,10);
+    duplicatedObject->enableEdit(true);
 //    //The parent of the duplicated object shall always be the current object that is being edited by the current dialog!
 //    if(duplicateObjParent != Q_NULLPTR)
 //    {
 //        duplicateObjParent->removeChildSysOvrvItem(duplicatedObject);
 //    }
 //    m_curSysOvrvObject->addChildSysOvrvItem(duplicatedObject);
-    duplicatedObject->setAsChild(false);
 }
 
 void SysOvrvObjectDialog::on_objectNameLE_textEdited(const QString &arg1)

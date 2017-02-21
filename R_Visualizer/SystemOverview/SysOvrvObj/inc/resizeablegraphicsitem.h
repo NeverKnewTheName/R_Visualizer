@@ -3,104 +3,8 @@
 
 #include <QGraphicsItem>
 
+#include "resizecornermanager.h"
 #include "resizerectcorner.h"
-
-struct Corners
-{
-    Corners(const qreal size, ResizableGraphicsItem *parent = Q_NULLPTR) :
-        cornerTopLeft(new ResizeRectCorner(ResizeRectCorner::TopLeftCorner, size, parent)),
-        cornerBottomLeft(new ResizeRectCorner(ResizeRectCorner::BottomLeftCorner, size, parent)),
-        cornerTopRight(new ResizeRectCorner(ResizeRectCorner::TopRightCorner, size, parent)),
-        cornerBottomRight(new ResizeRectCorner(ResizeRectCorner::BottomRightCorner, size, parent))
-    {
-
-    }
-
-    Corners(const Corners &other) :
-        cornerTopLeft(new ResizeRectCorner(*other.cornerTopLeft)),
-        cornerBottomLeft(new ResizeRectCorner(*other.cornerBottomLeft)),
-        cornerTopRight(new ResizeRectCorner(*other.cornerTopRight)),
-        cornerBottomRight(new ResizeRectCorner(*other.cornerBottomRight))
-    {
-    }
-
-    Corners(Corners &&other) :
-        cornerTopLeft(other.cornerTopLeft),
-        cornerBottomLeft(other.cornerBottomLeft),
-        cornerTopRight(other.cornerTopRight),
-        cornerBottomRight(other.cornerBottomRight)
-    {
-        other.cornerTopLeft = Q_NULLPTR;
-        other.cornerBottomLeft= Q_NULLPTR;
-        other.cornerTopRight = Q_NULLPTR;
-        other.cornerBottomRight = Q_NULLPTR;
-    }
-
-    void setParentItem(QGraphicsItem *parent = Q_NULLPTR)
-    {
-        if(cornerTopLeft != Q_NULLPTR)
-            cornerTopLeft->setParentItem(parent);
-
-        if(cornerBottomLeft != Q_NULLPTR)
-            cornerBottomLeft->setParentItem(parent);
-
-        if(cornerTopRight != Q_NULLPTR)
-            cornerTopRight->setParentItem(parent);
-
-        if(cornerBottomRight != Q_NULLPTR)
-            cornerBottomRight->setParentItem(parent);
-    }
-
-    void setPosition(const QRectF &boundingRect)
-    {
-        if(cornerTopLeft != Q_NULLPTR)
-            cornerTopLeft->setPos(boundingRect.topLeft());
-
-        if(cornerBottomLeft != Q_NULLPTR)
-            cornerBottomLeft->setPos(boundingRect.bottomLeft());
-
-        if(cornerTopRight != Q_NULLPTR)
-            cornerTopRight->setPos(boundingRect.topRight());
-
-        if(cornerBottomRight != Q_NULLPTR)
-            cornerBottomRight->setPos(boundingRect.bottomRight());
-    }
-
-    void setVisible(const bool isVisible = true)
-    {
-        if(cornerTopLeft != Q_NULLPTR)
-            cornerTopLeft->setVisible(isVisible);
-
-        if(cornerBottomLeft != Q_NULLPTR)
-            cornerBottomLeft->setVisible(isVisible);
-
-        if(cornerTopRight != Q_NULLPTR)
-            cornerTopRight->setVisible(isVisible);
-
-        if(cornerBottomRight != Q_NULLPTR)
-            cornerBottomRight->setVisible(isVisible);
-    }
-
-    ~Corners()
-    {
-        if(cornerTopLeft != Q_NULLPTR)
-            delete cornerTopLeft;
-
-        if(cornerBottomLeft != Q_NULLPTR)
-            delete cornerBottomLeft;
-
-        if(cornerTopRight != Q_NULLPTR)
-            delete cornerTopRight;
-
-        if(cornerBottomRight != Q_NULLPTR)
-            delete cornerBottomRight;
-    }
-
-    ResizeRectCorner *cornerTopLeft;
-    ResizeRectCorner *cornerBottomLeft;
-    ResizeRectCorner *cornerTopRight;
-    ResizeRectCorner *cornerBottomRight;
-};
 
 class ResizableGraphicsItem : public QGraphicsItem
 {
@@ -137,8 +41,10 @@ public:
     ResizableGraphicsItem(ResizableGraphicsItem &&other);
     virtual ~ResizableGraphicsItem();
 
+    virtual void update(const QRectF &rect = QRectF());
+
     virtual void resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y);
-    virtual void enableResizing(bool isOn = true);
+    void enableResizing(bool isOn = true);
     bool getResizeEnabled() const;
 
     virtual void setWidth(const qreal newWidth) = 0;
@@ -152,7 +58,7 @@ public:
 
 private:
     //PROBLEM: ResizeCorners are not displayed... problably positioning problem... investigate! //ToDO !!!
-    Corners resizeCorners;
+    ResizeCornerManager resizeCorners;
     /* ResizeRectCorner resizeCorners[4]; */
     bool resizeEnabled;
 

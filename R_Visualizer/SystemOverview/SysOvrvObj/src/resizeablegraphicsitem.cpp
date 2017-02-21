@@ -9,7 +9,7 @@
 ResizableGraphicsItem::ResizableGraphicsItem(QGraphicsItem *parent) :
     QGraphicsItem(parent),
     resizeCorners(10, this),
-    resizeEnabled(true)
+    resizeEnabled(false)
 {
     /* initResizeCorners(); */
 }
@@ -20,7 +20,6 @@ ResizableGraphicsItem::ResizableGraphicsItem(const ResizableGraphicsItem &other)
     resizeEnabled(other.resizeEnabled)
 {
     resizeCorners.setParentItem(this);
-    /* initResizeCorners(); */
 }
 
 ResizableGraphicsItem::ResizableGraphicsItem(ResizableGraphicsItem &&other) :
@@ -29,12 +28,17 @@ ResizableGraphicsItem::ResizableGraphicsItem(ResizableGraphicsItem &&other) :
     resizeEnabled(other.resizeEnabled)
 {
     resizeCorners.setParentItem(this);
-    /* initResizeCorners(); */
 }
 
 ResizableGraphicsItem::~ResizableGraphicsItem()
 {
 
+}
+
+void ResizableGraphicsItem::update(const QRectF &rect)
+{
+    QGraphicsItem::update(rect);
+    resizeCorners.update(rect);
 }
 
 /* QRectF ResizableGraphicsItem::boundingRect() const */
@@ -110,7 +114,7 @@ void ResizableGraphicsItem::resize(const ResizeRectCorner::CornerPos AnchorPoint
     }
 
     moveBy(distX,distY);
-    resizeCorners.setPosition(boundingRect());
+    update();
 }
 
 void ResizableGraphicsItem::enableResizing(bool isOn)
@@ -126,6 +130,6 @@ bool ResizableGraphicsItem::getResizeEnabled() const
 
 void ResizableGraphicsItem::initResizeCorners()
 {
-    resizeCorners.setPosition(boundingRect());
+    //DEPRECATED
 }
 
