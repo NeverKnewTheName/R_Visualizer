@@ -41,12 +41,7 @@ void TriangleSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsI
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getObjColor());
-
-    /* if(option->isSelected()) */
-    /* { */
-    /*     colorBrush = QBrush(getObjColor().darker()); */
-    /* } */
+    QBrush colorBrush(getCurObjColor());
 
     QPointF rectTopMiddle((boundRect.right() - boundRect.left()) / 2, boundRect.top());
     QPainterPath path(rectTopMiddle);

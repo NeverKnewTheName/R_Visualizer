@@ -49,7 +49,7 @@ void CircleSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsIte
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getObjColor());
+    QBrush colorBrush(getCurObjColor());
 
     /* if(option->isSelected()) */
     /* { */
@@ -71,8 +71,12 @@ SysOvrvObject::ObjShapeType CircleSysOvrvObject::getShape() const
 
 void CircleSysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y)
 {
-    if((x>0 ? x : -x) > (y>0 ? y : -y))
+    const qreal xAbs = (x>0 ? x : -x);
+    const qreal yAbs = (y>0 ? y : -y);
+
+    if( xAbs > yAbs )
     {
+        x /= 2;
         if(
                 AnchorPoint == ResizeRectCorner::BottomLeftCorner || 
                 AnchorPoint == ResizeRectCorner::TopRightCorner
@@ -87,6 +91,7 @@ void CircleSysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, 
     }
     else
     {
+        y /= 2;
         if(
                 AnchorPoint == ResizeRectCorner::BottomLeftCorner || 
                 AnchorPoint == ResizeRectCorner::TopRightCorner
@@ -99,5 +104,6 @@ void CircleSysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, 
             x = y;
         }
     }
+
     SysOvrvObjDerivationHelper::resize(AnchorPoint, x, y);
 }

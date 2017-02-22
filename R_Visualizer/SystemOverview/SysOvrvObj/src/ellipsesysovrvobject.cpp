@@ -40,12 +40,7 @@ void EllipseSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getObjColor());
-
-    /* if(option->isSelected()) */
-    /* { */
-    /*     colorBrush = QBrush(getObjColor().darker()); */
-    /* } */
+    QBrush colorBrush(getCurObjColor());
 
     painter->save();
 

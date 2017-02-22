@@ -127,8 +127,18 @@ void SysOvrvObjectDialog::slt_objectShapeChanged(int index)
         break;
     case SysOvrvObject::ObjShape_Image:
         m_curSysOvrvObject = new ImageSysOvrvObject(std::move(*m_curSysOvrvObject));
-        //ToDO open file dialog.. pick file .. call method
-        /* m_curSysOvrvObject->loadImageFromFile(); */
+        {
+            ImageSysOvrvObject *tmpImageSysOvrvObj = dynamic_cast<ImageSysOvrvObject*>(m_curSysOvrvObject);
+            if(tmpImageSysOvrvObj == Q_NULLPTR) return;
+
+            const QString &filePath = QFileDialog::getOpenFileName(
+                    this,
+                    QString("Open Image File"),
+                    QString(),
+                    "Images (*.bmp *.jpg *.png)"
+                    );
+            tmpImageSysOvrvObj->loadImageFromFile(filePath);
+        }
         break;
     default:
         curObjSave = Q_NULLPTR;
@@ -380,4 +390,19 @@ void SysOvrvObjectDialog::on_objectNameLE_textEdited(const QString &arg1)
 void SysOvrvObjectDialog::on_addLblBtn_clicked()
 {
     m_curSysOvrvObject->addLabel();
+}
+
+void SysOvrvObjectDialog::on_colorTransparentCheckBox_toggled(bool checked)
+{
+    ui->OpenColorPicker->setEnabled(!checked);
+    ui->ObjectColorLE->setEnabled(!checked);
+
+    if(checked)
+    {
+        m_curSysOvrvObject->setObjColor(Qt::transparent);
+    }
+    else
+    {
+        m_curSysOvrvObject->setObjColor(QColor(ui->ObjectColorLE->text()));
+    }
 }

@@ -56,6 +56,7 @@ private slots:
     void on_pushButton_clicked();
     void on_objectNameLE_textEdited(const QString &arg1);
     void on_addLblBtn_clicked();
+    void on_colorTransparentCheckBox_toggled(bool checked);
 };
 
 #endif // SYSOVRVOBJECTDIALOG_H

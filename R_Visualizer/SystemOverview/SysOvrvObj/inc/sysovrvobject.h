@@ -54,6 +54,8 @@ public:
 
     virtual ObjShapeType getShape() const = 0;
 
+    void selectObject(const bool isSelected = true);
+
     /**
      * @brief addLabel adds a new \ref SysOvrvTextLabel to the \ref SysOvrvObject by creating a new \ref SysOvrvTextLabel
      * @return Returns the newly created \ref SysOvrvTextLabel

@@ -168,6 +168,18 @@ QColor SysOvrvObject::getObjColor() const
     return this->objColor;
 }
 
+QColor SysOvrvObject::getCurObjColor() const
+{
+    if(isSelected())
+    {
+        return getObjColor().darker();
+    }
+    else
+    {
+        return getObjColor();
+    }
+}
+
 void SysOvrvObject::setObjColor(const QColor &value)
 {
     objColor = QColor(value);
@@ -182,6 +194,21 @@ QString SysOvrvObject::getObjName() const
 void SysOvrvObject::setObjName(const QString &value)
 {
     objName = QString(value);
+    update();
+}
+
+void SysOvrvObject::selectObject(const bool isSelected)
+{
+    QList<QGraphicsItem *> children = childItems();
+    for(QGraphicsItem *child : children)
+    {
+        SysOvrvObject *sysOvrvChild = dynamic_cast<SysOvrvObject*>(child);
+        if(sysOvrvChild != Q_NULLPTR)
+        {
+            sysOvrvChild->selectObject(isSelected);
+        }
+    }
+    setSelected(isSelected);
     update();
 }
 
@@ -466,32 +493,24 @@ void SysOvrvObject::enableChildrenEdit(bool enable)
 
 void SysOvrvObject::focusInEvent(QFocusEvent *event)
 {
-    QList<QGraphicsItem *> children = childItems();
-    for(QGraphicsItem *child : children)
+    if(isChildObject)
     {
-        SysOvrvObject *sysOvrvChild = dynamic_cast<SysOvrvObject*>(child);
-        if(sysOvrvChild != Q_NULLPTR)
+        SysOvrvObject *parentObject = dynamic_cast<SysOvrvObject*>(parentItem());
+        if(parentObject != Q_NULLPTR)
         {
-            sysOvrvChild->focusInEvent(event);
+            parentObject->focusInEvent(event);
         }
+        return;
     }
-    setSelected(true);
-    update();
+    else
+    {
+        selectObject(true);
+    }
 }
 
 void SysOvrvObject::focusOutEvent(QFocusEvent *event)
 {
-    QList<QGraphicsItem *> children = childItems();
-    for(QGraphicsItem *child : children)
-    {
-        SysOvrvObject *sysOvrvChild = dynamic_cast<SysOvrvObject*>(child);
-        if(sysOvrvChild != Q_NULLPTR)
-        {
-            sysOvrvChild->focusOutEvent(event);
-        }
-    }
-    setSelected(false);
-    update();
+    selectObject(false);
 }
 
 void SysOvrvObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

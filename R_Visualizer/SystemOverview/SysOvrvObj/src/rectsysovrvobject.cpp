@@ -40,12 +40,7 @@ void RectSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getObjColor());
-
-    /* if(option->isSelected()) */
-    /* { */
-    /*     colorBrush = QBrush(getObjColor().darker()); */
-    /* } */
+    QBrush colorBrush(getCurObjColor());
 
     painter->save();
 

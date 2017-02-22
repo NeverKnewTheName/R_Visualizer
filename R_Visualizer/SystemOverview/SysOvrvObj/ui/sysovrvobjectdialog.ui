@@ -55,6 +55,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="colorTransparentCheckBox">
+         <property name="text">
+          <string>Transparent</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>

@@ -50,12 +50,7 @@ void SquareSysOvrvObject::paint(QPainter *painter, const QStyleOptionGraphicsIte
 {
     SysOvrvObjDerivationHelper::paint(painter, option, widget);
     QRectF boundRect = boundingRect();
-    QBrush colorBrush(getObjColor());
-
-    /* if(option->isSelected()) */
-    /* { */
-    /*     colorBrush = QBrush(getObjColor().darker()); */
-    /* } */
+    QBrush colorBrush(getCurObjColor());
 
     painter->save();
 
@@ -70,10 +65,15 @@ SysOvrvObject::ObjShapeType SquareSysOvrvObject::getShape() const
     return SysOvrvObject::ObjShape_Square;
 }
 
+//maybe abstract in another superclass for quadratic shapes...
 void SquareSysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y)
 {
-    if((x>0 ? x : -x) > (y>0 ? y : -y))
+    const qreal xAbs = (x>0 ? x : -x);
+    const qreal yAbs = (y>0 ? y : -y);
+
+    if( xAbs > yAbs )
     {
+        x /= 2;
         if(
                 AnchorPoint == ResizeRectCorner::BottomLeftCorner || 
                 AnchorPoint == ResizeRectCorner::TopRightCorner
@@ -88,6 +88,7 @@ void SquareSysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, 
     }
     else
     {
+        y /= 2;
         if(
                 AnchorPoint == ResizeRectCorner::BottomLeftCorner || 
                 AnchorPoint == ResizeRectCorner::TopRightCorner
@@ -100,5 +101,6 @@ void SquareSysOvrvObject::resize(const ResizeRectCorner::CornerPos AnchorPoint, 
             x = y;
         }
     }
+
     SysOvrvObjDerivationHelper::resize(AnchorPoint, x, y);
 }
