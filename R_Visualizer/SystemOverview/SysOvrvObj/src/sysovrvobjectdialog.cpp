@@ -205,9 +205,9 @@ void SysOvrvObjectDialog::setupDialog()
 
     ui->objectShapeComboBox->addItems(items);
     ui->objectShapeComboBox->setCurrentIndex(m_curSysOvrvObject->getShape());
-    ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(m_curSysOvrvObject->getObjColor().name()));
-    ui->ObjectColorLE->setText(m_curSysOvrvObject->getObjColor().name());
     ui->objectNameLE->setText(m_curSysOvrvObject->getObjName());
+    
+    setupColorChooser();
 
     connect(ui->objectShapeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SysOvrvObjectDialog::slt_objectShapeChanged);
 
@@ -216,6 +216,18 @@ void SysOvrvObjectDialog::setupDialog()
     connect(&SysOvrvScene, &QGraphicsScene::focusItemChanged, this, &SysOvrvObjectDialog::slt_focusChanged);
 
     ui->objectVisualizerGraphicsView->setScene(&SysOvrvScene);
+}
+
+void SysOvrvObjectDialog::setupColorChooser()
+{
+    const QColor &objColor = m_curSysOvrvObject->getObjColor();
+
+    ui->transparencySpinBox->setValue(objColor.alphaF()*100);
+
+    ui->ObjectColorLE->setStyleSheet(
+            QString("QLineEdit { background: %1; }").arg(objColor.name())
+            );
+    ui->ObjectColorLE->setText(m_curSysOvrvObject->getObjColor().name());
 }
 
 void SysOvrvObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
@@ -351,9 +363,10 @@ void SysOvrvObjectDialog::on_OpenColorPicker_clicked()
 void SysOvrvObjectDialog::slt_colorChanged(const QColor &newColor)
 {
     qDebug() << "Color picked: " << newColor.name();
-    ui->ObjectColorLE->setStyleSheet(QString("QLineEdit { background: %1; }").arg(newColor.name()));
-    ui->ObjectColorLE->setText(newColor.name());
-    m_curSysOvrvObject->setObjColor(QColor(newColor));
+    QColor colorToSet(newColor);
+    colorToSet.setAlphaF(ui->transparencySpinBox->value()/100);
+    m_curSysOvrvObject->setObjColor(colorToSet);
+    setupColorChooser();
 }
 
 void SysOvrvObjectDialog::on_pushButton_clicked() //duplicate
@@ -392,17 +405,11 @@ void SysOvrvObjectDialog::on_addLblBtn_clicked()
     m_curSysOvrvObject->addLabel();
 }
 
-void SysOvrvObjectDialog::on_colorTransparentCheckBox_toggled(bool checked)
+void SysOvrvObjectDialog::on_transparencySpinBox_valueChanged(double arg1)
 {
-    ui->OpenColorPicker->setEnabled(!checked);
-    ui->ObjectColorLE->setEnabled(!checked);
+    QColor colorToSet(m_curSysOvrvObject->getObjColor());
 
-    if(checked)
-    {
-        m_curSysOvrvObject->setObjColor(Qt::transparent);
-    }
-    else
-    {
-        m_curSysOvrvObject->setObjColor(QColor(ui->ObjectColorLE->text()));
-    }
+    colorToSet.setAlphaF(arg1/100);
+
+    m_curSysOvrvObject->setObjColor(colorToSet);
 }

@@ -72,32 +72,49 @@ void ResizeRectCorner::setCornerSize(const qreal &value)
     cornerSize = value;
 }
 
-void ResizeRectCorner::setPosition(const QPointF &pos)
+void ResizeRectCorner::updatePosition()
 {
-    /* qDebug() << __PRETTY_FUNCTION__ << " passed pos: " << pos; */
-    /* qDebug() << "CornerPos: " << cornerPos; */
+    ResizableGraphicsItem *parent = dynamic_cast<ResizableGraphicsItem *>(parentItem());
+
+    if(parent == Q_NULLPTR)
+    {
+        return;
+    }
+
+    const QRectF &parentBoundingRect = parent->boundingRect();
+
     switch(cornerPos)
     {
     case TopLeftCorner:
-        setPos(pos.x()-cornerSize,pos.y()-cornerSize);
-        /* setRect(pos.x()-cornerSize,pos.y()-cornerSize,cornerSize,cornerSize); */
+        {
+            const QPointF &pos = parentBoundingRect.topLeft();
+            setPos(pos.x()-cornerSize,pos.y()-cornerSize);
+        }
         break;
     case BottomLeftCorner:
-        setPos(pos.x()-cornerSize,pos.y());
-        /* setRect(pos.x()-cornerSize,pos.y(),cornerSize,cornerSize); */
+        {
+            const QPointF &pos = parentBoundingRect.bottomLeft();
+            setPos(pos.x()-cornerSize,pos.y());
+        }
         break;
     case TopRightCorner:
-        setPos(pos.x(),pos.y()-cornerSize);
-        /* setRect(pos.x(),pos.y()-cornerSize,cornerSize,cornerSize); */
+        {
+            const QPointF &pos = parentBoundingRect.topRight();
+            setPos(pos.x(),pos.y()-cornerSize);
+        }
         break;
     case BottomRightCorner:
-        setPos(pos.x(),pos.y());
-        /* setRect(pos.x(),pos.y(),cornerSize,cornerSize); */
+        {
+            const QPointF &pos = parentBoundingRect.bottomRight();
+            setPos(pos.x(),pos.y());
+        }
         break;
     default:
         /* setRect(0,0,cornerSize,cornerSize); */
         break;
     }
+
+    update();
 }
 
 qreal ResizeRectCorner::getCornerSize()

@@ -58,7 +58,7 @@ ResizeCornerManager::~ResizeCornerManager()
         delete cornerBottomRight;
 }
 
-void ResizeCornerManager::update(const QRectF rect)
+void ResizeCornerManager::update(const QRectF &rect)
 {
     /* qDebug() << __PRETTY_FUNCTION__; */
     if(parentItem == Q_NULLPTR)
@@ -70,28 +70,28 @@ void ResizeCornerManager::update(const QRectF rect)
 
     if(cornerTopLeft != Q_NULLPTR)
     {
-        cornerTopLeft->setPosition(boundingRect.topLeft());
+        cornerTopLeft->updatePosition();
         cornerTopLeft->update(rect);
         /* qDebug() << "CornerTopLeft: " << cornerTopLeft->boundingRect(); */
     }
 
     if(cornerBottomLeft != Q_NULLPTR)
     {
-        cornerBottomLeft->setPosition(boundingRect.bottomLeft());
+        cornerBottomLeft->updatePosition();
         cornerBottomLeft->update(rect);
         /* qDebug() << "CornerBottomLeft: " << cornerBottomLeft->boundingRect(); */
     }
 
     if(cornerTopRight != Q_NULLPTR)
     {
-        cornerTopRight->setPosition(boundingRect.topRight());
+        cornerTopRight->updatePosition();
         cornerTopRight->update(rect);
         /* qDebug() << "CornerTopRight: " << cornerTopRight->boundingRect(); */
     }
 
     if(cornerBottomRight != Q_NULLPTR)
     {
-        cornerBottomRight->setPosition(boundingRect.bottomRight());
+        cornerBottomRight->updatePosition();
         cornerBottomRight->update(rect);
         /* qDebug() << "CornerBottomRight: " << cornerBottomRight->boundingRect(); */
     }

@@ -29,7 +29,7 @@ public:
     qreal getCornerSize();
     void setCornerSize(const qreal &value);
 
-    void setPosition(const QPointF &pos);
+    void updatePosition();
 
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;

@@ -210,6 +210,12 @@ void JsonInParser::visit(SystemOverview &visitor)
 
 void JsonInParser::visit(SysOvrvObject &visitor)
 {
+    const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
+    SysOvrvObject::ObjShapeType shape = static_cast<SysOvrvObject::ObjShapeType>(
+            tempJsonObject["ObjShape"]
+            );
+    /* SysOvrvObject *newSysOvrvObject */
+    //DANG IT! Inheritance model does not work here...
 }
 
 void JsonInParser::visit(SysOvrvTextLabel &visitor)

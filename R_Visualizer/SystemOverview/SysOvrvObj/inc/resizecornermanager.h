@@ -17,7 +17,7 @@ public:
 
     ~ResizeCornerManager();
 
-    void update(const QRectF rect = QRectF());
+    void update(const QRectF &rect = QRectF());
 
     void setParentItem(ResizableGraphicsItem *parent = Q_NULLPTR);
 

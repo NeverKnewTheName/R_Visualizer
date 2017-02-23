@@ -219,10 +219,60 @@ void JsonOutParser::visit(SystemOverview &visitor)
 
 void JsonOutParser::visit(SysOvrvObject &visitor)
 {
+    QJsonObject tempJsonObject;
+    tempJsonObject["ObjName"] = visitor.getObjName();
+    tempJsonObject["ObjShape"] = static_cast<int>(visitor.getShape());
+
+    const QColor &objColor = visitor.getObjColor();
+    tempJsonObject["ObjColor"] = objColor.name(QColor::HexArgb);
+
+    QJsonObject objSizeJsonObj;
+    const QRectF &objBoundingRect = visitor.boundingRect();
+    objSizeJsonObj["ObjWidth"] = static_cast<double>(objBoundingRect.width());
+    objSizeJsonObj["ObjHeight"] = static_cast<double>(objBoundingRect.height());
+    tempJsonObject["ObjSize"] = objSizeJsonObj;
+
+    OJsonObject objPosJsonObj;
+    objSizeJsonObj["XPos"] = static_cast<double>(visitor.x());
+    objSizeJsonObj["YPos"] = static_cast<double>(visitor.y());
+    tempJsonObject["ObjPos"] = objPosJsonObj;
+
+    QJsonArray objChildObjectsJsonArray;
+    OJsonArray objLabelsJsonArray;
+
+    QList<QGraphicsItem *> children = visitor.childItems();
+
+    for(QGraphicsItem *child : children)
+    {
+        SysOvrvObject *sysOvrvObjChild = dynamic_cast<SysOvrvObject *>(child);
+        if(sysOvrvObjChild != Q_NULLPTR)
+        {
+            sysOvrvObjChild->accept(this);
+            objChildObjectsJsonArray.append(*currentJsonValuePtr);
+            continue;
+        }
+        SysOvrvTextLabel *sysOvrvTextLabel = dynamic_cast<SysOvrvTextLabel *>(child);
+        if(sysOvrvTextLabel != Q_NULLPTR)
+        {
+            sysOvrvTextLabel->accept(this);
+            objLabelsJsonArray.append(*currentJsonValuePtr);
+            continue;
+        }
+    }
+
+    tempJsonObject["ObjChildObjects"] = objChildObjectsJsonArray;
+    tempJsonObject["ObjLabels"] = objLabelsJsonArray;
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
 }
 
 void JsonOutParser::visit(SysOvrvTextLabel &visitor)
 {
+    QJsonObject tempJsonObject;
+
+    tempJsonObject["SysOvrvTextLabel"] = QString("TestLabel");
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
 }
 
 void JsonOutParser::visit(SysOvrvTrigger &visitor)

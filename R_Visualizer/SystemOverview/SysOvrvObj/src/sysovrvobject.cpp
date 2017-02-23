@@ -165,14 +165,19 @@ void SysOvrvObject::setupSysOvrvObject()
 
 QColor SysOvrvObject::getObjColor() const
 {
-    return this->objColor;
+    return objColor;
 }
 
 QColor SysOvrvObject::getCurObjColor() const
 {
     if(isSelected())
     {
-        return getObjColor().darker();
+        QColor objColor(getObjColor());
+        if(objColor.alphaF()<0.1)
+        {
+            objColor.setAlphaF(0.1);
+        }
+        return objColor.darker();
     }
     else
     {
@@ -500,7 +505,6 @@ void SysOvrvObject::focusInEvent(QFocusEvent *event)
         {
             parentObject->focusInEvent(event);
         }
-        return;
     }
     else
     {

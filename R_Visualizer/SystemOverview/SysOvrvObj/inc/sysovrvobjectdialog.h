@@ -34,6 +34,7 @@ private:
     bool updateExisting;
 
     void setupDialog();
+    void setupColorChooser();
 
 signals:
     void sgnl_commit(SysOvrvObject *obj);
@@ -56,7 +57,7 @@ private slots:
     void on_pushButton_clicked();
     void on_objectNameLE_textEdited(const QString &arg1);
     void on_addLblBtn_clicked();
-    void on_colorTransparentCheckBox_toggled(bool checked);
+    void on_transparencySpinBox_valueChanged(double arg1);
 };
 
 #endif // SYSOVRVOBJECTDIALOG_H
