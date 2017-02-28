@@ -28,6 +28,7 @@ public:
         ObjShape_Image,
         NR_of_ObjShapes
     }ObjShapeType;
+    /* Q_ENUM(_ObjShapeType) */
 
     SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
     SysOvrvObject(const SysOvrvObject &ToCopy);
