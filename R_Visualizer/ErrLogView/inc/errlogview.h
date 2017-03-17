@@ -17,13 +17,13 @@
 class FileParser;
 
 #include "errlogmodel.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 namespace Ui {
 class ErrorLogView;
 }
 
-class ErrorLogView : public QDialog, public FileParsable
+class ErrorLogView : public QDialog, public IFileParsable
 {
     Q_OBJECT
 

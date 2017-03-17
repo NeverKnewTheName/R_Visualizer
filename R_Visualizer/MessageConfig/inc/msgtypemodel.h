@@ -18,11 +18,12 @@ class FileParser;
 
 #include "msg.h"
 #include "msgtyperep.h"
+#include "IFileParsable.h"
 
 /**
  * \brief The #MsgTypeModel class provides a model to hold Code to name, color, and message data parser mappings for #Msg
  */
-class MsgTypeModel : public QAbstractTableModel, public FileParsable
+class MsgTypeModel : public QAbstractTableModel, public IFileParsable
 {
     Q_OBJECT
 

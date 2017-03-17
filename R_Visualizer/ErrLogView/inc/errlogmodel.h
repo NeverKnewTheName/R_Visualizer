@@ -17,9 +17,9 @@
 class ErrorLogEntry;
 class FileParser;
 
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
-class ErrLogModel : public QAbstractTableModel, public FileParsable
+class ErrLogModel : public QAbstractTableModel, public IFileParsable
 {
 public:
     enum HeaderCols

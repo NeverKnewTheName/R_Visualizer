@@ -25,10 +25,16 @@ HEADERS  += \
     $$PWD/inc/msgtypeformatterdialog.h \
     $$PWD/inc/idadddialog.h \
     $$PWD/inc/msgtypeadddialog.h \
+    $$PWD/inc/IIDMappingModel.h \
     $$PWD/inc/idmodel.h \
+    $$PWD/inc/IMsgIDRep.h \
     $$PWD/inc/idrep.h \
+    $$PWD/inc/IMsgCodeMappingModel.h \
     $$PWD/inc/msgtypemodel.h \
+    $$PWD/inc/IMsgCodeRep.h \
     $$PWD/inc/msgtyperep.h \
+    $$PWD/inc/IMsgDataMappingModel.h \
+    $$PWD/inc/IMsgDataRep.h \
 
 FORMS    += \
     $$PWD/ui/messageconfig.ui \

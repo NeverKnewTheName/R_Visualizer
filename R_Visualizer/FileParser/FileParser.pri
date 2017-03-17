@@ -14,7 +14,7 @@ SOURCES += \
     $$PWD/src/csvoutparser.cpp \
 
 HEADERS  += \
-    $$PWD/inc/fileparsable.h \
+    $$PWD/inc/IFileParsable.h \
     $$PWD/inc/fileparser.h \
     $$PWD/inc/jsoninparser.h \
     $$PWD/inc/jsonoutparser.h \

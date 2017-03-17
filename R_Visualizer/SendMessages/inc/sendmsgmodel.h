@@ -5,14 +5,14 @@
 #include <QString>
 
 #include "prettymsg.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 class IDRep;
 class MsgTypeRep;
 /* class MsgDataRep; */
 class FileParser;
 
-class SendMsgModel : public QAbstractTableModel, public FileParsable
+class SendMsgModel : public QAbstractTableModel, public IFileParsable
 {
 public:
     enum HeaderCols

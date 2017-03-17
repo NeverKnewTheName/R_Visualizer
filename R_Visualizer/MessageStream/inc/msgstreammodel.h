@@ -27,10 +27,10 @@ class MsgTypeRep;
 #include "datastorage.h"
 #include "rsimpleringbuff.h"
 #include "prettymsg.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 
-class MsgStreamModel : public QAbstractTableModel, public FileParsable
+class MsgStreamModel : public QAbstractTableModel, public IFileParsable
 {
     Q_OBJECT
 

@@ -6,9 +6,9 @@
 
 class FileParser;
 
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
-class FilterTimestampStore : public QObject, public FileParsable
+class FilterTimestampStore : public QObject, public IFileParsable
 {
     Q_OBJECT
 public:

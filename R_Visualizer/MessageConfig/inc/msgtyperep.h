@@ -18,12 +18,12 @@
 class FileParser;
 
 #include "msg.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 /**
  * \brief The #MsgTypeRep class contains all information necessary for displaying messages codes and data
  */
-class MsgTypeRep : public FileParsable
+class MsgTypeRep : public IFileParsable
 {
 public:
     /**

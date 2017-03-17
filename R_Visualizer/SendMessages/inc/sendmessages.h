@@ -12,13 +12,13 @@ class FileParser;
 #include "can_packet.h"
 #include "sendmsgmodel.h"
 #include "userrolemngr.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 namespace Ui {
 class SendMessages;
 }
 
-class SendMessages : public QWidget, public FileParsable
+class SendMessages : public QWidget, public IFileParsable
 {
     Q_OBJECT
 

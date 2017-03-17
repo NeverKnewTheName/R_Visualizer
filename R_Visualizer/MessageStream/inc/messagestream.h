@@ -14,7 +14,7 @@
 #include "msgstreammodel.h"
 /* #include "msgiddelegate.h" */
 /* #include "msgdatadelegate.h" */
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 class MainWindow;
 class MessageConfig;
@@ -27,7 +27,7 @@ namespace Ui {
 class MessageStream;
 }
 
-class MessageStream : public QFrame, public FileParsable
+class MessageStream : public QFrame, public IFileParsable
 {
     Q_OBJECT
 

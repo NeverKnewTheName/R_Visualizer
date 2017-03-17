@@ -29,13 +29,13 @@ MessageConfig::MessageConfig(QWidget *parent) :
     this->initIDTableView();
     this->initMsgTypeTableView();
 
-    connect(&idModel, &IDModel::sgnl_IDRepAdded, this, &MessageConfig::slt_IDRepAdded);
-    connect(&idModel, &IDModel::sgnl_IDRepUpdated, this, &MessageConfig::slt_IDRepUpdated);
-    connect(&idModel, &IDModel::sgnl_IDRepRemoved, this, &MessageConfig::slt_IDRepRemoved);
+    connect(&idModel, &IDModel::sgnl_IDRepAdded, this, &MessageConfig::sgnl_IDRepAdded);
+    connect(&idModel, &IDModel::sgnl_IDRepUpdated, this, &MessageConfig::sgnl_IDRepUpdated);
+    connect(&idModel, &IDModel::sgnl_IDRepRemoved, this, &MessageConfig::sgnl_IDRepRemoved);
 
-    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepAdded, this, &MessageConfig::slt_MsgTypeRepAdded);
-    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepUpdated, this, &MessageConfig::slt_MsgTypeRepUpdated);
-    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepRemoved, this, &MessageConfig::slt_MsgTypeRepRemoved);
+    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepAdded, this, &MessageConfig::sgnl_MsgTypeRepAdded);
+    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepUpdated, this, &MessageConfig::sgnl_MsgTypeRepUpdated);
+    connect(&msgTypeModel, &MsgTypeModel::sgnl_MsgTypeRepRemoved, this, &MessageConfig::sgnl_MsgTypeRepRemoved);
 }
 
 MessageConfig::~MessageConfig()

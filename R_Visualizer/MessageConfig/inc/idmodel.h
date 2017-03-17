@@ -21,12 +21,12 @@ class FileParser;
 
 #include "msg.h"
 #include "idrep.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 /**
  * \brief The #IDModel class provides a model to hold ID to name and color mappings for #Msg
  */
-class IDModel : public QAbstractTableModel, public FileParsable
+class IDModel : public QAbstractTableModel, public IFileParsable
 {
     Q_OBJECT
 

@@ -1,6 +1,6 @@
 /**
- * @file	errorlogentry.h
- * @author	Christian Neuberger
+ * @file    errorlogentry.h
+ * @author  Christian Neuberger
  *
  * \brief Represents one entry of the error log.
  *
@@ -18,9 +18,9 @@
 
 class FileParser;
 
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
-class ErrorLogEntry : public FileParsable
+class ErrorLogEntry : public IFileParsable
 {
 public:
     ErrorLogEntry();

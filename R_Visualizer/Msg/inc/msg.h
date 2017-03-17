@@ -16,7 +16,7 @@
 
 class FileParser;
 
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 typedef QVector<quint8> DataByteVect, *PDataByteVect;
 Q_DECLARE_METATYPE(DataByteVect)
@@ -55,7 +55,7 @@ typedef quint16 MsgCodeType;
  * The optional data is additional information that is used for the purpose of the message
  * 
  */
-class Msg : public FileParsable
+class Msg : public IFileParsable
 {
 public:
     /**

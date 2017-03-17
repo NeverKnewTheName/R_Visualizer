@@ -15,13 +15,13 @@ class FileParser;
 #include "msg.h"
 #include "datastorage.h"
 
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 /**
  * \brief MsgStorage to store huge numbers of messages
  * 
  */
-class MsgStorage : public QObject, public FileParsable
+class MsgStorage : public QObject, public IFileParsable
 {
     Q_OBJECT
 

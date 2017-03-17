@@ -17,7 +17,7 @@ class FileParser;
 #include "filtercodestore.h"
 #include "filtertimestampstore.h"
 
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 
 namespace Ui {
@@ -27,7 +27,7 @@ class MessageFilter;
 /**
  * \brief The #MessageFilter widget
  */
-class MessageFilter : public QWidget, public FileParsable
+class MessageFilter : public QWidget, public IFileParsable
 {
     Q_OBJECT
 

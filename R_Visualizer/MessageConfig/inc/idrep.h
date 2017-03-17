@@ -18,14 +18,14 @@
 class FileParser;
 
 #include "msg.h"
-#include "fileparsable.h"
+#include "IFileParsable.h"
 
 /**
  * \brief The IDRep class contains all information necessary for displaying a MsgID
  * 
  * The MsgID is displayed according to the name and color mapping
  */
-class IDRep : public FileParsable
+class IDRep : public IFileParsable
 {
 public:
     /**
