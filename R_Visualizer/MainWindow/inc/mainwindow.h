@@ -34,8 +34,8 @@ class ErrorLogView;
  */
 #include "msgstorage.h" // Model for the MessageStream Widget
 #include "sendmsgmodel.h" // Model for the SendMessages Widget
-#include "idmodel.h" // ID Model for the MessageConfig Widget
-#include "msgtypemodel.h" // MessageType Model for the MessageConfig Widget
+//#include "idmodel.h" // ID Model for the MessageConfig Widget
+//#include "msgtypemodel.h" // MessageType Model for the MessageConfig Widget
 
 #include "userrolemngr.h"
 

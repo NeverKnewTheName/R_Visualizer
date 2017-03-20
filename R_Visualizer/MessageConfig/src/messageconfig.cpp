@@ -190,6 +190,11 @@ void MessageConfig::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
     }
 }
 
+void MessageConfig::slt_ApplyRole(UserRoleMngr::UserRole roleToApply)
+{
+    applyRole(roleToApply);
+}
+
 
 void MessageConfig::on_idLoadBtn_clicked()
 {
@@ -216,7 +221,6 @@ void MessageConfig::on_idLoadBtn_clicked()
 
 void MessageConfig::on_idStoreBtn_clicked()
 {
-
     QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save as"), QString(), "JSON File (*.json)");
     qDebug() << saveLoc;
     QFile jsonSaveFile(saveLoc);

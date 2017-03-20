@@ -4,15 +4,15 @@
 /*
  * MainWindow Widgets
  */
-#include "messageconfig.h"
+//#include "messageconfig.h"
 #include "messagefilter.h"
 #include "messagestream.h"
 #include "sendmessages.h"
 #include "systemoverview.h"
 
-#include "msgdelegate.h"
-#include "msgiddelegate.h"
-#include "msgdatadelegate.h"
+//#include "msgdelegate.h"
+//#include "msgiddelegate.h"
+//#include "msgdatadelegate.h"
 #include "filteridstore.h"
 
 #include "errlogview.h"
@@ -57,7 +57,12 @@ MainWindow::MainWindow(QWidget *parent) :
      * would be better, but we cannot tell whether the ui is already set up at this stage...
      * Thus we initialize these widgets here after the ui->setupUI call.
      */
-    msgConfigWidget = new MessageConfig(ui->configTabWidget);
+    //msgConfigWidget = new MessageConfig(ui->configTabWidget);
+#include "MsgIDMappingModel.h"
+#include "MsgIDMappingStore.h"
+    MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(ui->configTabWidget);
+    msgIDMappingWidget->setModel(new MsgIDMappingModel(new MsgIDMappingStore(), msgIDMappingWidget));
+    ui->configTabWidget->addTab(msgIDMappingWidget, QString("MsgIDMappingWidget"));
     /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
     /* msgFilterWidget = new MessageFilter(msgConfigWidget, ui->configTabWidget); */
     msgFilterWidget = new MessageFilter(
@@ -139,7 +144,7 @@ void MainWindow::initTabs()
     //Set up Tabs in order
     ui->configTabWidget->addTab(sysOvrvWidget, QString("System Overview"));
     ui->configTabWidget->addTab(sndMsgsWidget, QString("Send Messages"));
-    ui->configTabWidget->addTab(msgConfigWidget, QString("Message Configuration"));
+    //ui->configTabWidget->addTab(msgConfigWidget, QString("Message Configuration"));
     ui->configTabWidget->addTab(msgFilterWidget, QString("Message Stream Filter"));
 }
 

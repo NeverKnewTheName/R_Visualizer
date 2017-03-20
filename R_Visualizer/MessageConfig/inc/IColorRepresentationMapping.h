@@ -6,12 +6,10 @@
 class IColorRepresentationMapping
 {
 public:
-    IColorRepresentationMapping();
-    virtual ~IColorRepresentationMapping();
+    virtual ~IColorRepresentationMapping(){}
 
-    QColor getColorRepresentation() const = 0;
-    void setColorRepresentation(const QColor &colorRepresentation) = 0;
-
+    virtual QColor getColorRepresentation() const = 0;
+    virtual void setColorRepresentation(const QColor &colorRepresentation) = 0;
 };
 
 #endif /* ICOLORREPRESENTATIONMAPPING_H */

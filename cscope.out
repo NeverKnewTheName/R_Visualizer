@@ -1,4 +1,4 @@
-cscope 15 $HOME/QtWrkSpc/R_Visualizer_Build               0000798181
+cscope 15 $HOME/QtWrkSpc/R_Visualizer_Build               0000803513
 	@CAN_Analyser_USB_Driver/can_packet.cpp
 
 1 
@@ -29742,28 +29742,32 @@ ICOLORREPRESENTATIONMAPPING_H
 :
 
 9 
-ICŞÜR•»£Á©iÚM­pšg
-();
-
-10 
-	mvœtu®
+vœtu®
  ~
-ICŞÜR•»£Á©iÚM­pšg
-();
+	$ICŞÜR•»£Á©iÚM­pšg
+(){}
 
-12 
+11 
+vœtu®
+ 
 QCŞÜ
  
 	$g‘CŞÜR•»£Á©iÚ
 () const = 0;
 
-13 
+12 
+vœtu®
+ 
 	`£tCŞÜR•»£Á©iÚ
 (cÚ¡ 
 QCŞÜ
  &
 cŞÜR•»£Á©iÚ
 ) = 0;
+
+13 
+	}
+};
 
 	@R_Visualizer/MessageConfig/inc/IMapping.h
 
@@ -29832,24 +29836,18 @@ IMESSAGECONFIG_H
 
 
 11 
-	m´iv©e
+	mpublic
 :
+
+12 
+vœtu®
+ ~
+	$IMes§geCÚfig
+(){}
 
 14 
-public
-:
-
-15 
-IMes§geCÚfig
-();
-
-16 
-	mvœtu®
- ~
-IMes§geCÚfig
-();
-
-18 
+vœtu®
+ 
 P»‰yMsg
  
 	$´‘tifyMsg
@@ -29859,7 +29857,9 @@ Msg
 msg
 ) const = 0;
 
-20 
+16 
+vœtu®
+ 
 MsgIDTy³
  
 	$g‘IDToName
@@ -29869,7 +29869,9 @@ QSŒšg
 Çme
 ) const = 0;
 
-21 
+17 
+vœtu®
+ 
 QSŒšg
  
 	$g‘NameToID
@@ -29879,7 +29881,9 @@ MsgIDTy³
 id
 ) const = 0;
 
-22 
+18 
+vœtu®
+ 
 QCŞÜ
  
 	$g‘CŞÜToID
@@ -29889,7 +29893,9 @@ MsgIDTy³
 id
 ) const = 0;
 
-23 
+19 
+vœtu®
+ 
 QCŞÜ
  
 	$g‘CŞÜToIDName
@@ -29899,19 +29905,25 @@ QSŒšg
 Çme
 ) const = 0;
 
-24 
+20 
+vœtu®
+ 
 QCom¶‘”
  *
 	$ü—‹IDNameCom¶‘”
 (
+
+21 
 QObjeù
  *
 ·»Á
  = 
 Q_NULLPTR
-) const = 0;
 
-26 
+
+24 
+vœtu®
+ 
 MsgCodeTy³
  
 	$g‘CodeToName
@@ -29921,7 +29933,9 @@ QSŒšg
 Çme
 ) const = 0;
 
-27 
+25 
+vœtu®
+ 
 QSŒšg
  
 	$g‘NameToCode
@@ -29931,7 +29945,9 @@ MsgCodeTy³
 code
 ) const = 0;
 
-28 
+26 
+vœtu®
+ 
 QCŞÜ
  
 	$g‘CŞÜToCode
@@ -29941,7 +29957,9 @@ MsgCodeTy³
 code
 ) const = 0;
 
-29 
+27 
+vœtu®
+ 
 QCŞÜ
  
 	$g‘CŞÜToCodeName
@@ -29951,77 +29969,137 @@ QSŒšg
 Çme
 ) const = 0;
 
-30 
+28 
+vœtu®
+ 
 QCom¶‘”
  *
 	$ü—‹CodeNameCom¶‘”
 (
+
+29 
 QObjeù
  *
 ·»Á
  = 
 Q_NULLPTR
-) const = 0;
+
 
 32 
 sigÇls
 :
 
-33 
-	`sgÆ_IDR•Added
+33 
+vœtu®
+ 
+	`sgÆ_MsgIDR•Added
 (cÚ¡ 
-IDR•
+IMsgIDR•
  &
-ÃwIDR•
+ÃwMsgIDR•
 ) = 0;
 
-34 
-	`sgÆ_IDR•Upd©ed
+34 
+vœtu®
+ 
+	`sgÆ_MsgIDR•Upd©ed
 (cÚ¡ 
-IDR•
+IMsgIDR•
  &
-upd©edIDR•
+upd©edMsgIDR•
 ) = 0;
 
-35 
-	`sgÆ_IDR•Removed
+35 
+vœtu®
+ 
+	`sgÆ_MsgIDR•Removed
 (cÚ¡ 
 MsgIDTy³
  
 »Ï‹dID
 ) = 0;
 
-37 
-	`sgÆ_MsgTy³R•Added
+37 
+vœtu®
+ 
+	`sgÆ_MsgCodeR•Added
 (cÚ¡ 
-MsgTy³R•
+IMsgCodeR•
  &
-ÃwMsgTy³R•
+ÃwMsgCodeR•
 ) = 0;
 
-38 
-	`sgÆ_MsgTy³R•Upd©ed
-(cÚ¡ 
-MsgTy³R•
- &
-upd©edMsgTy³R•
-) = 0;
+38 
+vœtu®
+ 
+	`sgÆ_MsgCodeR•Upd©ed
+(
 
-39 
-	`sgÆ_MsgTy³R•Removed
+39 cÚ¡ 
+IMsgCodeR•
+ &
+upd©edMsgCodeR•
+
+
+41 
+vœtu®
+ 
+	`sgÆ_MsgCodeR•Removed
 (cÚ¡ 
 MsgCodeTy³
  
 »Ï‹dCode
 ) = 0;
 
-41 
+43 
+vœtu®
+ 
+	`sgÆ_MsgD©aR•Added
+(cÚ¡ 
+IMsgD©aR•
+ &
+ÃwMsgD©aR•
+) = 0;
+
+44 
+vœtu®
+ 
+	`sgÆ_MsgD©aR•Upd©ed
+(
+
+45 cÚ¡ 
+IMsgD©aR•
+ &
+upd©edMsgD©aR•
+
+
+47 
+vœtu®
+ 
+	`sgÆ_MsgD©aR•Removed
+(
+
+48 cÚ¡ 
+MsgIDTy³
+ 
+»Ï‹dID
+,
+
+49 cÚ¡ 
+MsgCodeTy³
+ 
+»Ï‹dCode
+
+
+52 
 ´iv©e
  
 ¦Ùs
 :
 
-42 
+53 
+vœtu®
+ 
 	`¦t_AµlyRŞe
 (
 U£rRŞeMngr
@@ -30030,6 +30108,10 @@ U£rRŞe
  
 rŞeToAµly
 ) = 0;
+
+54 
+	}
+};
 
 	@R_Visualizer/MessageConfig/inc/IMsgCodeMappingModel.h
 
@@ -30184,26 +30266,18 @@ IMSGCODEREP_H
 	)
 
 4 
-	~<QSŒšg
->
-
-5 
-	~<QCŞÜ
->
-
-7 
 	~"msg.h
 "
 
-8 
+5 
 	~"IPÏšTextAlŸsM­pšg.h
 "
 
-9 
+6 
 	~"ICŞÜR•»£Á©iÚM­pšg.h
 "
 
-11 
+8 
 şass
  
 	gIMsgCodeR•
@@ -30215,27 +30289,23 @@ IPÏšTextAlŸsM­pšg
 	gICŞÜR•»£Á©iÚM­pšg
 
 
-13 
+10 
 	gpublic
 :
 
-14 
-IMsgCodeR•
-();
-
-15 
-	gvœtu®
+11 
+vœtu®
  ~
 IMsgCodeR•
-();
+(){}
 
-17 
+13 
 MsgCodeTy³
  
 g‘Code
 () const = 0;
 
-18 
+14 
 £tCode
 (cÚ¡ 
 MsgCodeTy³
@@ -30302,22 +30372,22 @@ IMSGDATAREP_H
 :
 
 11 
-IMsgD©aR•
-();
-
-12 
-	mvœtu®
+vœtu®
  ~
-IMsgD©aR•
-();
+	$IMsgD©aR•
+(){}
 
-14 
+13 
+vœtu®
+ 
 MsgIDTy³
  
 	$g‘MsgID
 () const = 0;
 
-15 
+14 
+vœtu®
+ 
 	`£tMsgID
 (cÚ¡ 
 MsgIDTy³
@@ -30325,13 +30395,17 @@ MsgIDTy³
 id
 ) = 0;
 
-17 
+16 
+vœtu®
+ 
 MsgCodeTy³
  
 	$g‘MsgCode
 () const = 0;
 
-18 
+17 
+vœtu®
+ 
 	`£tMsgCode
 (cÚ¡ 
 MsgCodeTy³
@@ -30339,13 +30413,17 @@ MsgCodeTy³
 code
 ) = 0;
 
-20 
+19 
+vœtu®
+ 
 QSŒšg
  
 	$g‘FÜm©SŒšg
 () const = 0;
 
-21 
+20 
+vœtu®
+ 
 	`£tFÜm©SŒšg
 (cÚ¡ 
 QSŒšg
@@ -30353,7 +30431,9 @@ QSŒšg
 fÜm©SŒšg
 ) = 0;
 
-23 
+22 
+vœtu®
+ 
 QSŒšg
  
 	$·r£MsgD©a
@@ -30362,6 +30442,10 @@ MsgD©a
  &
 msgD©a
 ) const = 0;
+
+23 
+	}
+};
 
 	@R_Visualizer/MessageConfig/inc/IMsgIDMappingModel.h
 
@@ -30383,33 +30467,37 @@ IIDMODEL_H
 	~<QCŞÜ
 >
 
-7 
+6 
+	~<QCom¶‘”
+>
+
+8 
 	~"msg.h
 "
 
-8 
+9 
 	~"IMsgID»p.h
 "
 
-10 şas 
+11 şas 
 	cIMsgIDM­pšgMod–
 
 
-12 
+13 
 	mpublic
 :
 
-13 
+14 
 IMsgIDM­pšgMod–
 ();
 
-14 
+15 
 	mvœtu®
  ~
 IMsgIDM­pšgMod–
 ();
 
-16 
+17 
 IDR•
  
 	$g‘IDR•ToID
@@ -30419,7 +30507,7 @@ MsgIDTy³
 id
 ) const = 0;
 
-17 
+18 
 QSŒšg
  
 	$g‘NameToID
@@ -30429,7 +30517,7 @@ MsgIDTy³
 id
 ) const = 0;
 
-18 
+19 
 MsgIDTy³
  
 	$g‘IDToName
@@ -30439,7 +30527,7 @@ QSŒšg
 Çme
 ) const = 0;
 
-19 
+20 
 QCŞÜ
  
 	$g‘CŞÜToID
@@ -30449,7 +30537,7 @@ MsgIDTy³
 id
 ) const = 0;
 
-21 
+22 
 boŞ
  
 	$cÚšs
@@ -30459,7 +30547,7 @@ MsgIDTy³
 id
 ) const = 0;
 
-23 
+24 
 QCom¶‘”
  *
 	$ü—‹IDCom¶‘”
@@ -30471,11 +30559,11 @@ QObjeù
 Q_NULLPTR
 ) const = 0;
 
-25 
+26 
 sigÇls
 :
 
-26 
+27 
 	`sgÆ_IDR•Added
 (cÚ¡ 
 IDR•
@@ -30483,7 +30571,7 @@ IDR•
 ÃwIDR•
 ) = 0;
 
-27 
+28 
 	`sgÆ_IDR•Upd©ed
 (cÚ¡ 
 IDR•
@@ -30491,13 +30579,175 @@ IDR•
 upd©edIDR•
 ) = 0;
 
-28 
+29 
 	`sgÆ_IDR•Upd©ed
 (cÚ¡ 
 MsgIDTy³
  
 »Ï‹dID
 ) = 0;
+
+	@R_Visualizer/MessageConfig/inc/IMsgIDMappingStore.h
+
+1 #iâdeà
+IMSGIDMAPPINGSTORE_H
+
+
+2 
+	#IMSGIDMAPPINGSTORE_H
+
+
+	)
+
+4 
+	~<QSŒšg
+>
+
+5 
+	~<QCŞÜ
+>
+
+6 
+	~<QCom¶‘”
+>
+
+8 
+	~"IMsgIDR•.h
+"
+
+10 şas 
+	cIMsgIDM­pšgStÜe
+
+
+12 
+	mpublic
+:
+
+13 
+vœtu®
+ ~
+	$IMsgIDM­pšgStÜe
+(){}
+
+15 
+vœtu®
+ 
+MsgIDTy³
+ 
+	$g‘MsgIDToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const = 0;
+
+16 
+vœtu®
+ 
+QSŒšg
+ 
+	$g‘NameToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const = 0;
+
+17 
+vœtu®
+ 
+QCŞÜ
+ 
+	$g‘CŞÜToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const = 0;
+
+18 
+vœtu®
+ 
+QCŞÜ
+ 
+	$g‘CŞÜToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const = 0;
+
+20 
+vœtu®
+ 
+boŞ
+ 
+	$cÚšsMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const = 0;
+
+22 
+vœtu®
+ 
+IMsgIDR•
+ 
+	$g‘MsgIDR•ToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const = 0;
+
+24 
+vœtu®
+ 
+QCom¶‘”
+ *
+	$ü—‹MsgIDM­pšgCom¶‘”
+(
+
+25 
+QObjeù
+ *
+·»Á
+ = 
+Q_NULLPTR
+
+
+28 
+sigÇls
+:
+
+29 
+	`sgÆ_MsgIDR•Added
+(cÚ¡ 
+IMsgIDR•
+ &
+ÃwMsgIDR•
+) = 0;
+
+30 
+	`sgÆ_MsgIDR•Upd©ed
+(cÚ¡ 
+IMsgIDR•
+ &
+upd©edMsgIDR•
+) = 0;
+
+31 
+	`sgÆ_MsgIDR•Removed
+(cÚ¡ 
+MsgIDTy³
+ 
+»Ï‹dID
+) = 0;
+
+32 
+	}
+};
 
 	@R_Visualizer/MessageConfig/inc/IMsgIDRep.h
 
@@ -30512,29 +30762,21 @@ IIDREP_H
 	)
 
 4 
-	~<QSŒšg
->
-
-5 
-	~<QCŞÜ
->
-
-7 
 	~"msg.h
 "
 
-8 
+5 
 	~"IPÏšTextAlŸsM­pšg.h
 "
 
-9 
+6 
 	~"ICŞÜR•»£Á©iÚM­pšg.h
 "
 
-11 
+8 
 şass
  
-	gIIDR•
+	gIMsgIDR•
  : 
 public
  
@@ -30543,27 +30785,27 @@ ICŞÜR•»£Á©iÚM­pšg
 	gIPÏšTextAlŸsM­pšg
 
 
-13 
+10 
 	gpublic
 :
 
-14 
-IIDR•
-();
-
-15 
-	gvœtu®
+11 
+vœtu®
  ~
-IIDR•
-();
+IMsgIDR•
+(){}
 
-17 
+13 
+vœtu®
+ 
 MsgIDTy³
  
 g‘ID
 () const = 0;
 
-18 
+14 
+vœtu®
+ 
 £tID
 (cÚ¡ 
 MsgIDTy³
@@ -30596,28 +30838,394 @@ IPLAINTEXTALIASMAPPING_H
 :
 
 9 
-IPÏšTextAlŸsM­pšg
-();
-
-10 
-	mvœtu®
+vœtu®
  ~
-IPÏšTextAlŸsM­pšg
-();
+	$IPÏšTextAlŸsM­pšg
+(){}
 
-12 
+11 
+vœtu®
+ 
 QSŒšg
  
 	$g‘PÏšTextAlŸs
 () const = 0;
 
-13 
+12 
+vœtu®
+ 
 	`£tPÏšTextAlŸs
 (cÚ¡ 
 QSŒšg
  &
 ¶ašTextAlŸs
 ) = 0;
+
+13 
+	}
+};
+
+	@R_Visualizer/MessageConfig/inc/MsgCodeMappingWidget.h
+
+1 #iâdeà
+MSGCODEMAPPINGWIDGET_H
+
+
+2 
+	#MSGCODEMAPPINGWIDGET_H
+
+
+	)
+
+4 
+	~<QWidg‘
+>
+
+6 
+Çme¥aû
+ 
+	gUi
+ {
+
+7 
+şass
+ 
+	gMsgCodeM­pšgWidg‘
+;
+
+10 şas 
+	cMsgCodeM­pšgWidg‘
+ : 
+public
+ 
+QWidg‘
+
+
+12 
+Q_OBJECT
+
+
+14 
+public
+:
+
+15 
+ex¶ic™
+ 
+MsgCodeM­pšgWidg‘
+(
+QWidg‘
+ *
+·»Á
+ = 0);
+
+16 ~
+MsgCodeM­pšgWidg‘
+();
+
+18 
+´iv©e
+ 
+	m¦Ùs
+:
+
+19 
+Ú_msgCodeStÜeBŠ_şicked
+();
+
+21 
+Ú_msgCodeLßdBŠ_şicked
+();
+
+23 
+Ú_msgCodeRemoveBŠ_şicked
+();
+
+25 
+Ú_msgCodeAddBŠ_şicked
+();
+
+27 
+	m´iv©e
+:
+
+28 
+Ui
+::
+MsgCodeM­pšgWidg‘
+ *
+ui
+;
+
+	@R_Visualizer/MessageConfig/inc/MsgCodeRep.h
+
+8 #iâdeà
+MSGTYPEREP_H
+
+
+9 
+	#MSGTYPEREP_H
+
+
+	)
+
+11 
+	~<QSŒšg
+>
+
+12 
+	~<QCŞÜ
+>
+
+14 
+şass
+ 
+	gFeP¬£r
+;
+
+16 
+	~"msg.h
+"
+
+17 
+	~"IMsgCodeR•.h
+"
+
+18 
+	~"IFeP¬§bË.h
+"
+
+23 
+şass
+ 
+	gMsgCodeR•
+ : 
+public
+ 
+IMsgCodeR•
+,…ubliø
+	gIFeP¬§bË
+
+
+25 
+	gpublic
+:
+
+29 
+MsgCodeR•
+();
+
+33 
+MsgCodeR•
+(cÚ¡ MsgCodeR• &
+Ùh”
+);
+
+39 
+MsgCodeR•
+(cÚ¡ 
+MsgCodeTy³
+ 
+code
+);
+
+49 
+MsgCodeR•
+(cÚ¡ 
+MsgCodeTy³
+ 
+code
+, cÚ¡ 
+QSŒšg
+ &
+codeName
+, cÚ¡ 
+QCŞÜ
+ &
+cŞÜ
+);
+
+54 
+MsgCodeTy³
+ 
+g‘Code
+() const;
+
+56 
+£tCode
+(cÚ¡ 
+MsgCodeTy³
+);
+
+61 
+QSŒšg
+ 
+g‘PÏšTextAlŸs
+() const;
+
+65 
+£tPÏšTextAlŸs
+(cÚ¡ 
+QSŒšg
+ &
+¶ašTextAlŸs
+);
+
+79 
+QCŞÜ
+ 
+g‘CŞÜR•»£Á©iÚ
+() const;
+
+83 
+£tCŞÜR•»£Á©iÚ
+(cÚ¡ 
+QCŞÜ
+ &
+cŞÜR•»£Á©iÚ
+);
+
+88 
+boŞ
+ 
+	gİ”©Ü
+==(cÚ¡ 
+MsgCodeR•
+ &
+Ùh”
+) const;
+
+93 
+QSŒšg
+ 
+g‘MsgD©aAsSŒšg
+(
+Msg
+ &
+msg
+);
+
+95 
+acû±
+(
+FeP¬£r
+ *
+vis™Ü
+);
+
+97 
+	g´iv©e
+:
+
+101 
+MsgCodeTy³
+ 
+code
+;
+
+105 
+QSŒšg
+ 
+	gcodeName
+;
+
+113 
+QCŞÜ
+ 
+	gcŞÜ
+;
+
+	@R_Visualizer/MessageConfig/inc/MsgDataMappingWidget.h
+
+1 #iâdeà
+MSGDATAMAPPINGWIDGET_H
+
+
+2 
+	#MSGDATAMAPPINGWIDGET_H
+
+
+	)
+
+4 
+	~<QWidg‘
+>
+
+6 
+Çme¥aû
+ 
+	gUi
+ {
+
+7 
+şass
+ 
+	gMsgD©aM­pšgWidg‘
+;
+
+10 şas 
+	cMsgD©aM­pšgWidg‘
+ : 
+public
+ 
+QWidg‘
+
+
+12 
+Q_OBJECT
+
+
+14 
+public
+:
+
+15 
+ex¶ic™
+ 
+MsgD©aM­pšgWidg‘
+(
+QWidg‘
+ *
+·»Á
+ = 0);
+
+16 ~
+MsgD©aM­pšgWidg‘
+();
+
+18 
+´iv©e
+ 
+	m¦Ùs
+:
+
+19 
+Ú_msgD©aStÜeBŠ_şicked
+();
+
+21 
+Ú_msgD©aLßdBŠ_şicked
+();
+
+23 
+Ú_msgD©aRemoveBŠ_şicked
+();
+
+25 
+Ú_msgD©aAddBŠ_şicked
+();
+
+27 
+	m´iv©e
+:
+
+28 
+Ui
+::
+MsgD©aM­pšgWidg‘
+ *
+ui
+;
 
 	@R_Visualizer/MessageConfig/inc/MsgDataModel.h
 
@@ -30652,6 +31260,622 @@ MsgD©aMod–
  ~
 MsgD©aMod–
 ();
+
+	@R_Visualizer/MessageConfig/inc/MsgDataRep.h
+
+1 #iâdeà
+MSGDATAREP_H
+
+
+2 
+	#MSGDATAREP_H
+
+
+	)
+
+4 
+	~"IMsgD©aR•.h
+"
+
+5 
+	~"IFeP¬§bË.h
+"
+
+7 
+şass
+ 
+	gMsgD©aR•
+ : 
+public
+ 
+IMsgD©aR•
+,…ubliø
+	gIFeP¬§bË
+
+
+9 
+	gpublic
+:
+
+10 
+MsgD©aR•
+();
+
+12 
+MsgD©aR•
+(cÚ¡ MsgD©aR• &
+Ùh”
+);
+
+14 
+MsgD©aR•
+(
+
+15 cÚ¡ 
+MsgIDTy³
+ 
+msgID
+,
+
+16 cÚ¡ 
+MsgCodeTy³
+ 
+msgCode
+,
+
+17 cÚ¡ 
+QSŒšg
+ &
+fÜm©SŒšg
+
+
+19 
+	gvœtu®
+ ~
+MsgD©aR•
+();
+
+21 
+MsgIDTy³
+ 
+g‘MsgID
+() const;
+
+22 
+£tMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+);
+
+24 
+MsgCodeTy³
+ 
+g‘MsgCode
+() const;
+
+25 
+£tMsgCode
+(cÚ¡ 
+MsgCodeTy³
+ 
+msgCode
+);
+
+27 
+QSŒšg
+ 
+g‘FÜm©SŒšg
+() const;
+
+28 
+£tFÜm©SŒšg
+(cÚ¡ 
+QSŒšg
+ &
+fÜm©SŒšg
+);
+
+30 
+QSŒšg
+ 
+·r£MsgD©a
+(cÚ¡ 
+MsgD©a
+ &
+msgD©a
+) const;
+
+32 
+	g´iv©e
+:
+
+33 
+MsgIDTy³
+ 
+msgID
+;
+
+35 
+MsgCodeTy³
+ 
+	gmsgCode
+;
+
+37 
+QSŒšg
+ 
+	gfÜm©SŒšg
+;
+
+	@R_Visualizer/MessageConfig/inc/MsgIDMappingStore.h
+
+1 #iâdeà
+MSGIDMAPPINGSTORE_H
+
+
+2 
+	#MSGIDMAPPINGSTORE_H
+
+
+	)
+
+4 
+	~"IMsgIDM­pšgStÜe.h
+"
+
+6 şas 
+	cMsgIDM­pšgStÜe
+
+
+8 
+	mpublic
+:
+
+9 
+MsgIDM­pšgStÜe
+();
+
+10 
+	mvœtu®
+ ~
+MsgIDM­pšgStÜe
+();
+
+12 
+MsgIDTy³
+ 
+	$g‘MsgIDToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const;
+
+13 
+QSŒšg
+ 
+	$g‘NameToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const;
+
+14 
+QCŞÜ
+ 
+	$g‘CŞÜToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const;
+
+15 
+QCŞÜ
+ 
+	$g‘CŞÜToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const;
+
+17 
+boŞ
+ 
+	$cÚšsMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const;
+
+19 
+IMsgIDR•
+ 
+	$g‘MsgIDR•ToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const;
+
+21 
+QCom¶‘”
+ *
+	$ü—‹MsgIDM­pšgCom¶‘”
+(
+
+22 
+QObjeù
+ *
+·»Á
+ = 
+Q_NULLPTR
+
+
+25 
+sigÇls
+:
+
+26 
+	`sgÆ_MsgIDR•Added
+(cÚ¡ 
+IMsgIDR•
+ &
+ÃwMsgIDR•
+) = 0;
+
+27 
+	`sgÆ_MsgIDR•Upd©ed
+(cÚ¡ 
+IMsgIDR•
+ &
+upd©edMsgIDR•
+) = 0;
+
+28 
+	`sgÆ_MsgIDR•Removed
+(cÚ¡ 
+MsgIDTy³
+ 
+»Ï‹dID
+) = 0;
+
+30 
+´iv©e
+:
+
+	@R_Visualizer/MessageConfig/inc/MsgIDMappingWidget.h
+
+1 #iâdeà
+MSGIDMAPPINGWIDGET_H
+
+
+2 
+	#MSGIDMAPPINGWIDGET_H
+
+
+	)
+
+4 
+	~<QWidg‘
+>
+
+6 
+	~"IMsgIDR•.h
+"
+
+7 
+	~"IMsgIDM­pšgStÜe.h
+"
+
+9 
+Çme¥aû
+ 
+	gUi
+ {
+
+10 
+şass
+ 
+	gMsgIDM­pšgWidg‘
+;
+
+13 şas 
+	cMsgIDM­pšgWidg‘
+ : 
+public
+ 
+QWidg‘
+
+
+15 
+Q_OBJECT
+
+
+17 
+public
+:
+
+18 
+ex¶ic™
+ 
+MsgIDM­pšgWidg‘
+(
+QWidg‘
+ *
+·»Á
+ = 0);
+
+19 ~
+MsgIDM­pšgWidg‘
+();
+
+21 
+´iv©e
+ 
+	m¦Ùs
+:
+
+22 
+Ú_idStÜeBŠ_şicked
+();
+
+23 
+Ú_idLßdBŠ_şicked
+();
+
+24 
+Ú_idRmvBŠ_şicked
+();
+
+25 
+Ú_idAddBŠ_şicked
+();
+
+27 
+¦t_ş—r
+();
+
+28 
+¦t_MsgIDR•AddFšished
+(cÚ¡ 
+IMsgIDR•
+ &
+addedMsgIDR•
+);
+
+29 
+	msigÇls
+:
+
+30 
+¢gl_M­pšgsChªged
+();
+
+31 
+sgÆ_MsgIDR•Added
+(cÚ¡ 
+IMsgIDR•
+ &
+ÃwMsgIDR•
+);
+
+32 
+sgÆ_MsgIDR•Upd©ed
+(cÚ¡ 
+IMsgIDR•
+ &
+upd©edMsgIDR•
+);
+
+33 
+sgÆ_MsgIDR•Removed
+(cÚ¡ 
+MsgIDTy³
+ 
+»Ï‹dID
+);
+
+35 
+	m´iv©e
+:
+
+36 
+Ui
+::
+MsgIDM­pšgWidg‘
+ *
+ui
+;
+
+37 
+IMsgIDM­pšgStÜe
+ *
+	mmsgIDM­pšgStÜe
+;
+
+39 
+­³ndMsgIDM­pšg
+(cÚ¡ 
+IMsgIDR•
+ &
+msgIDR•ToAdd
+);
+
+	@R_Visualizer/MessageConfig/inc/MsgIDRep.h
+
+8 #iâdeà
+IDREP_H
+
+
+9 
+	#IDREP_H
+
+
+	)
+
+12 
+	~<QSŒšg
+>
+
+13 
+	~<QCŞÜ
+>
+
+15 
+şass
+ 
+	gFeP¬£r
+;
+
+17 
+	~"msg.h
+"
+
+18 
+	~"IMsgIDR•.h
+"
+
+19 
+	~"IFeP¬§bË.h
+"
+
+26 
+şass
+ 
+	gMsgIDR•
+ : 
+public
+ 
+IMsgIDR•
+,…ubliø
+	gIFeP¬§bË
+
+
+28 
+	gpublic
+:
+
+32 
+MsgIDR•
+();
+
+36 
+MsgIDR•
+(cÚ¡ MsgIDR•& 
+Ùh”
+);
+
+45 
+MsgIDR•
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+);
+
+54 
+MsgIDR•
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+, cÚ¡ 
+QSŒšg
+ &
+Çme
+, cÚ¡ 
+QCŞÜ
+ &
+cŞÜ
+);
+
+59 
+MsgIDTy³
+ 
+g‘ID
+() const;
+
+64 
+£tID
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+);
+
+70 
+QSŒšg
+ 
+g‘PÏšTextAlŸs
+() const;
+
+76 
+£tPÏšTextAlŸs
+(cÚ¡ 
+QSŒšg
+ &
+¶ašTextAlŸs
+);
+
+82 
+QCŞÜ
+ 
+g‘CŞÜR•»£Á©iÚ
+() const;
+
+88 
+£tCŞÜR•»£Á©iÚ
+(cÚ¡ 
+QCŞÜ
+ &
+cŞÜR•»£Á©iÚ
+);
+
+95 
+boŞ
+ 
+	gİ”©Ü
+==(cÚ¡ 
+MsgIDR•
+ &
+Ùh”
+) const;
+
+97 
+acû±
+(
+FeP¬£r
+ *
+vis™Ü
+);
+
+99 
+	g´iv©e
+:
+
+103 
+MsgIDTy³
+ 
+id
+;
+
+107 
+QSŒšg
+ 
+	gÇme
+;
+
+111 
+QCŞÜ
+ 
+	gcŞÜ
+;
 
 	@R_Visualizer/MessageConfig/inc/idadddialog.h
 
@@ -31323,234 +32547,6 @@ MsgIDTy³
 »Ï‹dID
 );
 
-	@R_Visualizer/MessageConfig/inc/idrep.h
-
-8 #iâdeà
-IDREP_H
-
-
-9 
-	#IDREP_H
-
-
-	)
-
-12 
-	~<QJsÚObjeù
->
-
-13 
-	~<QSŒšg
->
-
-14 
-	~<QCŞÜ
->
-
-15 
-	~<QPixm­
->
-
-16 
-	~<QStyËO±iÚV›wI‹m
->
-
-18 
-şass
- 
-	gFeP¬£r
-;
-
-20 
-	~"msg.h
-"
-
-21 
-	~"IFeP¬§bË.h
-"
-
-28 şas 
-	cIDR•
- : 
-public
- 
-IFeP¬§bË
-
-
-30 
-public
-:
-
-34 
-IDR•
-();
-
-38 
-IDR•
-(cÚ¡ IDR•& 
-Ùh”
-);
-
-47 
-IDR•
-(cÚ¡ 
-MsgIDTy³
- 
-id
-);
-
-56 
-IDR•
-(cÚ¡ 
-MsgIDTy³
- 
-id
-, cÚ¡ 
-QSŒšg
- &
-Çme
-, cÚ¡ 
-QCŞÜ
- &
-cŞÜ
-);
-
-61 
-QSŒšg
- 
-	$g‘Name
-() const;
-
-65 
-	`£tName
-(cÚ¡ 
-QSŒšg
- &
-v®ue
-);
-
-70 
-QCŞÜ
- 
-	$g‘CŞÜ
-() const;
-
-74 
-	`£tCŞÜ
-(cÚ¡ 
-QCŞÜ
- &
-v®ue
-);
-
-79 
-IDR•
- 
-	`ü—‹ObjFromJsÚ
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-);
-
-83 
-	`·r£IN
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-);
-
-87 
-QJsÚObjeù
- 
-	$·r£OUT
-() const;
-
-92 
-boŞ
- 
-	$isV®id
-() const;
-
-98 
-boŞ
- 
-İ”©Ü
-==(cÚ¡ 
-IDR•
- &
-Ùh”
-) const;
-
-105 
-MsgIDTy³
- 
-	$g‘Id
-() const;
-
-107 
-	`£tId
-(cÚ¡ 
-MsgIDTy³
- 
-id
-);
-
-112 
-	$·štIDR•
-(
-QPaš‹r
- *
-·š‹r
-, cÚ¡ 
-QStyËO±iÚV›wI‹m
- &
-İtiÚ
-) const;
-
-114 
-	`acû±
-(
-FeP¬£r
- *
-vis™Ü
-);
-
-115 
-´iv©e
-:
-
-119 
-boŞ
- 
-isV®idObj
-;
-
-124 
-MsgIDTy³
- 
-id
-;
-
-128 
-QSŒšg
- 
-Çme
-;
-
-132 
-QCŞÜ
- 
-cŞÜ
-;
-
-136 
-QPixm­
- 
-IDR•Pixm­
-;
-
 	@R_Visualizer/MessageConfig/inc/messageconfig.h
 
 1 #iâdeà
@@ -31584,34 +32580,38 @@ MESSAGECONFIG_H
 "
 
 10 
+	~"IMes§geCÚfig.h
+"
+
+11 
 	~"IFeP¬§bË.h
 "
 
-12 
+13 
 şass
  
 	gMašWšdow
 ;
 
-13 
+14 
 şass
  
 	gFeP¬£r
 ;
 
-15 
+16 
 Çme¥aû
  
 	gUi
  {
 
-16 
+17 
 şass
  
 	gMes§geCÚfig
 ;
 
-19 
+20 
 şass
  
 	gMes§geCÚfig
@@ -31620,18 +32620,20 @@ public
  
 QWidg‘
 ,…ubliø
+	gIMes§geCÚfig
+,…ubliø
 	gIFeP¬§bË
 
 
-21 
+22 
 Q_OBJECT
 
 
-23 
+24 
 	gpublic
 :
 
-24 
+25 
 ex¶ic™
  
 Mes§geCÚfig
@@ -31641,11 +32643,11 @@ QWidg‘
 ·»Á
  = 0);
 
-25 ~
+26 ~
 Mes§geCÚfig
 ();
 
-27 
+28 
 P»‰yMsg
  
 ´‘tifyMsg
@@ -31655,7 +32657,7 @@ Msg
 msg
 ) const;
 
-28 
+30 
 MsgIDTy³
  
 g‘IDToName
@@ -31665,7 +32667,7 @@ QSŒšg
 Çme
 ) const;
 
-29 
+31 
 QSŒšg
  
 g‘NameToID
@@ -31675,7 +32677,7 @@ MsgIDTy³
 id
 ) const;
 
-30 
+32 
 QCŞÜ
  
 g‘CŞÜToID
@@ -31685,7 +32687,7 @@ MsgIDTy³
 id
 ) const;
 
-31 
+33 
 QCŞÜ
  
 g‘CŞÜToIDName
@@ -31695,47 +32697,7 @@ QSŒšg
 Çme
 ) const;
 
-32 
-MsgCodeTy³
- 
-g‘CodeToName
-(cÚ¡ 
-QSŒšg
- &
-Çme
-) const;
-
-33 
-QSŒšg
- 
-g‘NameToCode
-(cÚ¡ 
-MsgCodeTy³
- 
-code
-) const;
-
 34 
-QCŞÜ
- 
-g‘CŞÜToCode
-(cÚ¡ 
-MsgCodeTy³
- 
-code
-) const;
-
-35 
-QCŞÜ
- 
-g‘CŞÜToCodeName
-(cÚ¡ 
-QSŒšg
- &
-Çme
-) const;
-
-37 
 QCom¶‘”
  *
 ü—‹IDNameCom¶‘”
@@ -31747,7 +32709,47 @@ QObjeù
 Q_NULLPTR
 ) const;
 
+36 
+MsgCodeTy³
+ 
+g‘CodeToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const;
+
+37 
+QSŒšg
+ 
+g‘NameToCode
+(cÚ¡ 
+MsgCodeTy³
+ 
+code
+) const;
+
 38 
+QCŞÜ
+ 
+g‘CŞÜToCode
+(cÚ¡ 
+MsgCodeTy³
+ 
+code
+) const;
+
+39 
+QCŞÜ
+ 
+g‘CŞÜToCodeName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const;
+
+40 
 QCom¶‘”
  *
 ü—‹CodeNameCom¶‘”
@@ -31759,19 +32761,19 @@ QObjeù
 Q_NULLPTR
 ) const;
 
-41 cÚ¡ 
+43 cÚ¡ 
 	gIDMod–
  &
 g‘IDMod–
 () const;
 
-42 cÚ¡ 
+44 cÚ¡ 
 	gMsgTy³Mod–
  &
 g‘MsgTy³Mod–
 () const;
 
-44 
+46 
 acû±
 (
 FeP¬£r
@@ -31779,11 +32781,11 @@ FeP¬£r
 vis™Ü
 );
 
-46 
+48 
 	g´iv©e
 :
 
-47 
+49 
 Ui
 ::
 Mes§geCÚfig
@@ -31791,15 +32793,15 @@ Mes§geCÚfig
 ui
 ;
 
-48 
+50 
 š™IDTabËV›w
 ();
 
-49 
+51 
 š™MsgTy³TabËV›w
 ();
 
-51 
+53 
 ä›nd
  
 şass
@@ -31807,47 +32809,47 @@ ui
 	gMašWšdow
 ;
 
-53 
+55 
 IDMod–
  
 	gidMod–
 ;
 
-54 
+56 
 MsgTy³Mod–
  
 	gmsgTy³Mod–
 ;
 
-56 
+58 
 boŞ
  
 	gidF‹rEÇbËd
 ;
 
-57 
+59 
 boŞ
  
 	gcodeF‹rEÇbËd
 ;
 
-58 
+60 
 boŞ
  
 	gtimeSmpF‹rFromEÇbËd
 ;
 
-59 
+61 
 boŞ
  
 	gtimeSmpF‹rToEÇbËd
 ;
 
-61 
+63 
 	gsigÇls
 :
 
-62 
+64 
 sgÆIdAddFšished
 (cÚ¡ 
 MsgIDTy³
@@ -31863,7 +32865,7 @@ QCŞÜ
 cŞÜ
 );
 
-63 
+65 
 sgÆMsgTy³AddFšished
 (cÚ¡ 
 MsgCodeTy³
@@ -31881,61 +32883,95 @@ QCŞÜ
 cŞÜ
 );
 
-64 
-sgÆ_IDR•Added
+67 
+sgÆ_MsgIDR•Added
 (cÚ¡ 
-IDR•
+IMsgIDR•
  &
-ÃwIDR•
+ÃwMsgIDR•
 );
 
-65 
-sgÆ_IDR•Upd©ed
+68 
+sgÆ_MsgIDR•Upd©ed
 (cÚ¡ 
-IDR•
+IMsgIDR•
  &
-upd©edIDR•
+upd©edMsgIDR•
 );
 
-66 
-sgÆ_IDR•Removed
+69 
+sgÆ_MsgIDR•Removed
 (cÚ¡ 
 MsgIDTy³
  
 »Ï‹dID
 );
 
-67 
-sgÆ_MsgTy³R•Added
+71 
+sgÆ_MsgCodeR•Added
 (cÚ¡ 
-MsgTy³R•
+IMsgCodeR•
  &
-ÃwMsgTy³
+ÃwMsgCodeR•
 );
 
-68 
-sgÆ_MsgTy³R•Upd©ed
+72 
+sgÆ_MsgCodeR•Upd©ed
 (cÚ¡ 
-MsgTy³R•
+IMsgCodeR•
  &
-upd©edMsgTy³
+upd©edMsgCodeR•
 );
 
-69 
-sgÆ_MsgTy³R•Removed
+73 
+sgÆ_MsgCodeR•Removed
 (cÚ¡ 
 MsgCodeTy³
  
 »Ï‹dCode
 );
 
-74 
+75 
+sgÆ_MsgD©aR•Added
+(cÚ¡ 
+IMsgD©aR•
+ &
+ÃwMsgD©aR•
+);
+
+76 
+sgÆ_MsgD©aR•Upd©ed
+(
+
+77 cÚ¡ 
+IMsgD©aR•
+ &
+upd©edMsgD©aR•
+
+
+79 
+sgÆ_MsgD©aR•Removed
+(
+
+80 cÚ¡ 
+MsgIDTy³
+ 
+»Ï‹dID
+,
+
+81 cÚ¡ 
+MsgCodeTy³
+ 
+»Ï‹dCode
+
+
+87 
 ´iv©e
  
 	g¦Ùs
 :
 
-75 
+88 
 idAddFšished
 (cÚ¡ 
 MsgIDTy³
@@ -31951,7 +32987,7 @@ QCŞÜ
 cŞÜ
 );
 
-76 
+89 
 msgTy³AddFšished
 (cÚ¡ 
 MsgCodeTy³
@@ -31969,7 +33005,7 @@ QCŞÜ
 cŞÜ
 );
 
-78 
+91 
 ­¶yRŞe
 (
 U£rRŞeMngr
@@ -31979,39 +33015,49 @@ U£rRŞe
 rŞeToSw™chTo
 );
 
-80 
+92 
+¦t_AµlyRŞe
+(
+U£rRŞeMngr
+::
+U£rRŞe
+ 
+rŞeToAµly
+);
+
+94 
 Ú_idStÜeBŠ_şicked
 ();
 
-81 
+95 
 Ú_idLßdBŠ_şicked
 ();
 
-82 
+96 
 Ú_msgTy³StÜeBŠ_şicked
 ();
 
-83 
+97 
 Ú_msgTy³LßdBŠ_şicked
 ();
 
-84 
+98 
 Ú_idAddBŠ_şicked
 ();
 
-85 
+99 
 Ú_msgTy³AddBŠ_şicked
 ();
 
-86 
+100 
 Ú_idRmvBŠ_şicked
 ();
 
-87 
+101 
 Ú_msgTy³RmvBŠ_şicked
 ();
 
-89 
+103 
 ¦t_IDR•Added
 (cÚ¡ 
 IDR•
@@ -32019,7 +33065,7 @@ IDR•
 ÃwIDR•
 );
 
-90 
+104 
 ¦t_IDR•Upd©ed
 (cÚ¡ 
 IDR•
@@ -32027,7 +33073,7 @@ IDR•
 upd©edIDR•
 );
 
-91 
+105 
 ¦t_IDR•Removed
 (cÚ¡ 
 MsgIDTy³
@@ -32035,7 +33081,7 @@ MsgIDTy³
 »Ï‹dID
 );
 
-93 
+107 
 ¦t_MsgTy³R•Added
 (cÚ¡ 
 MsgTy³R•
@@ -32043,7 +33089,7 @@ MsgTy³R•
 ÃwMsgTy³R•
 );
 
-94 
+108 
 ¦t_MsgTy³R•Upd©ed
 (cÚ¡ 
 MsgTy³R•
@@ -32051,7 +33097,7 @@ MsgTy³R•
 upd©edMsgTy³R•
 );
 
-95 
+109 
 ¦t_MsgTy³R•Removed
 (cÚ¡ 
 MsgCodeTy³
@@ -32989,84 +34035,234 @@ MsgCodeTy³
 »Ï‹dCode
 );
 
-	@R_Visualizer/MessageConfig/inc/msgtyperep.h
+	@R_Visualizer/MessageConfig/src/MsgCodeMappingWidget.cpp
 
-8 #iâdeà
-MSGTYPEREP_H
-
-
-9 
-	#MSGTYPEREP_H
-
-
-	)
-
-12 
-	~<QJsÚObjeù
->
-
-13 
-	~<QSŒšg
->
-
-14 
-	~<QCŞÜ
->
-
-15 
-	~<QPixm­
->
-
-16 
-	~<QStyËO±iÚV›wI‹m
->
-
-18 
-şass
- 
-	gFeP¬£r
-;
-
-20 
-	~"msg.h
+1 
+	~"MsgCodeM­pšgWidg‘.h
 "
 
-21 
-	~"IFeP¬§bË.h
+2 
+	~"ui_msgcodem­pšgwidg‘.h
 "
 
-26 şas 
-	cMsgTy³R•
- : 
-public
+4 
+	gMsgCodeM­pšgWidg‘
+::
+	$MsgCodeM­pšgWidg‘
+(
+QWidg‘
+ *
+·»Á
+) :
+
+5 
+	`QWidg‘
+(
+·»Á
+),
+
+6 
+	$ui
+(
+Ãw
  
-IFeP¬§bË
+Ui
+::
+MsgCodeM­pšgWidg‘
+)
 
-
-28 
-public
-:
-
-32 
-MsgTy³R•
-();
-
-36 
-MsgTy³R•
-(cÚ¡ MsgTy³R• &
-Ùh”
+8 
+ui
+->
+	`£tupUi
+(
+this
 );
 
-42 
-MsgTy³R•
+9 
+	}
+}
+
+11 
+	gMsgCodeM­pšgWidg‘
+::~
+	$MsgCodeM­pšgWidg‘
+()
+
+13 
+d–‘e
+ 
+ui
+;
+
+14 
+	}
+}
+
+16 
+	gMsgCodeM­pšgWidg‘
+::
+	$Ú_msgCodeStÜeBŠ_şicked
+()
+
+19 
+	}
+}
+
+21 
+MsgCodeM­pšgWidg‘
+::
+	$Ú_msgCodeLßdBŠ_şicked
+()
+
+24 
+	}
+}
+
+26 
+MsgCodeM­pšgWidg‘
+::
+	$Ú_msgCodeRemoveBŠ_şicked
+()
+
+29 
+	}
+}
+
+31 
+MsgCodeM­pšgWidg‘
+::
+	$Ú_msgCodeAddBŠ_şicked
+()
+
+34 
+	}
+}
+
+	@R_Visualizer/MessageConfig/src/MsgCodeRep.cpp
+
+1 
+	~"MsgCodeR•.h
+"
+
+3 
+	~<QDebug
+>
+
+5 
+	~"f•¬£r.h
+"
+
+7 
+	gMsgCodeR•
+::
+	$MsgCodeR•
+() :
+
+8 
+	`code
+(0x0),
+
+9 
+	`codeName
+(
+	`QSŒšg
+("")),
+
+10 
+	$cŞÜ
+(
+Qt
+::
+bÏck
+)
+
+12 
+	}
+}
+
+14 
+MsgCodeR•
+::
+	$MsgCodeR•
+(cÚ¡ 
+MsgCodeR•
+ &
+Ùh”
+) :
+
+15 
+	`code
+(
+Ùh”
+.
+code
+),
+
+16 
+	`codeName
+(
+Ùh”
+.
+codeName
+),
+
+17 
+	$cŞÜ
+(
+Ùh”
+.
+cŞÜ
+)
+
+19 
+	}
+}
+
+21 
+	gMsgCodeR•
+::
+	$MsgCodeR•
 (cÚ¡ 
 MsgCodeTy³
  
 code
-);
+) :
 
-52 
-MsgTy³R•
+22 
+	`code
+(
+code
+),
+
+23 
+	`codeName
+(
+	`QSŒšg
+("0x%1").
+	`¬g
+(
+code
+, 4, 16, 
+	`QL©š1Ch¬
+('0'))),
+
+25 
+	$cŞÜ
+(
+Qt
+::
+wh™e
+)
+
+27 
+	}
+}
+
+29 
+MsgCodeR•
+::
+	$MsgCodeR•
 (cÚ¡ 
 MsgCodeTy³
  
@@ -33075,181 +34271,1075 @@ code
 QSŒšg
  &
 codeName
-, cÚ¡ QSŒšg &
-mes§geFÜm©
-, cÚ¡ 
+,cÚ¡ 
 QCŞÜ
  &
 cŞÜ
-);
+) :
 
-57 
+30 
+	`code
+(
+code
+),
+
+31 
+	`codeName
+(
+codeName
+),
+
+32 
+	$cŞÜ
+(
+cŞÜ
+)
+
+34 
+	}
+}
+
+36 
 MsgCodeTy³
  
+	gMsgCodeR•
+::
 	$g‘Code
-() const;
+() const
 
-59 
-	`£tCode
+38  
+code
+;
+
+39 
+	}
+}
+
+41 
+	gMsgCodeR•
+::
+	$£tCode
 (cÚ¡ 
 MsgCodeTy³
-);
+ 
+code
+)
 
-64 
+43 
+this
+->
+code
+ = code;
+
+44 
+	}
+}
+
+47 
 QSŒšg
  
-	$g‘CodeName
-() const;
+	gMsgCodeR•
+::
+	$g‘PÏšTextAlŸs
+() const
 
-68 
-	`£tCodeName
+49  
+codeName
+;
+
+50 
+	}
+}
+
+52 
+	gMsgCodeR•
+::
+	$£tPÏšTextAlŸs
 (cÚ¡ 
 QSŒšg
  &
-v®ue
-);
+¶ašTextAlŸs
+)
 
-73 
-QSŒšg
- 
-	$g‘Mes§geFÜm©
-() const;
+54 
+this
+->
+codeName
+ = 
+¶ašTextAlŸs
+;
 
-77 
-	`£tMes§geFÜm©
-(cÚ¡ 
-QSŒšg
- &
-v®ue
-);
+55 
+	}
+}
 
-82 
+67 
 QCŞÜ
  
-	$g‘CŞÜ
-() const;
+	gMsgCodeR•
+::
+	$g‘CŞÜR•»£Á©iÚ
+() const
 
-86 
-	`£tCŞÜ
+69  
+cŞÜ
+;
+
+70 
+	}
+}
+
+72 
+	gMsgCodeR•
+::
+	$£tCŞÜR•»£Á©iÚ
 (cÚ¡ 
 QCŞÜ
  &
-v®ue
-);
+cŞÜR•»£Á©iÚ
+)
 
-91 
-MsgTy³R•
- 
-	`ü—‹ObjFromJsÚ
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-);
+74 
+this
+->
+cŞÜ
+ = 
+cŞÜR•»£Á©iÚ
+;
 
-95 
-	`·r£IN
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-);
+75 
+	}
+}
 
-99 
-QJsÚObjeù
- 
-	$·r£OUT
-() const;
-
-104 
+77 
 boŞ
  
-	$isV®id
-() const;
-
-108 
-boŞ
- 
+	gMsgCodeR•
+::
 İ”©Ü
 ==(cÚ¡ 
-MsgTy³R•
+MsgCodeR•
  &
 Ùh”
-) const;
+) const
 
-113 
-QSŒšg
- 
-	`g‘MsgD©aAsSŒšg
-(
-Msg
- &
-msg
-);
+79  (
+this
+->
+code
+ =ğ
+Ùh”
+.
+g‘Code
+());
 
-117 
-	$·štMsgTy³R•
-(
-QPaš‹r
- *
-·š‹r
-, cÚ¡ 
-QStyËO±iÚV›wI‹m
- &
-İtiÚ
-, 
-Msg
- &
-msg
-) const;
-
-119 
-	`acû±
+87 
+	gMsgCodeR•
+::
+	$acû±
 (
 FeP¬£r
  *
 vis™Ü
+)
+
+89 
+vis™Ü
+->
+	`vis™
+(*
+this
 );
 
-121 
-´iv©e
-:
+90 
+	}
+}
 
-125 
-boŞ
+	@R_Visualizer/MessageConfig/src/MsgDataMappingWidget.cpp
+
+1 
+	~"MsgD©aM­pšgWidg‘.h
+"
+
+2 
+	~"ui_msgd©am­pšgwidg‘.h
+"
+
+4 
+	gMsgD©aM­pšgWidg‘
+::
+	$MsgD©aM­pšgWidg‘
+(
+QWidg‘
+ *
+·»Á
+) :
+
+5 
+	`QWidg‘
+(
+·»Á
+),
+
+6 
+	$ui
+(
+Ãw
  
-isV®idObj
+Ui
+::
+MsgD©aM­pšgWidg‘
+)
+
+8 
+ui
+->
+	`£tupUi
+(
+this
+);
+
+9 
+	}
+}
+
+11 
+	gMsgD©aM­pšgWidg‘
+::~
+	$MsgD©aM­pšgWidg‘
+()
+
+13 
+d–‘e
+ 
+ui
 ;
 
-130 
+14 
+	}
+}
+
+16 
+	gMsgD©aM­pšgWidg‘
+::
+	$Ú_msgD©aStÜeBŠ_şicked
+()
+
+19 
+	}
+}
+
+21 
+MsgD©aM­pšgWidg‘
+::
+	$Ú_msgD©aLßdBŠ_şicked
+()
+
+24 
+	}
+}
+
+26 
+MsgD©aM­pšgWidg‘
+::
+	$Ú_msgD©aRemoveBŠ_şicked
+()
+
+29 
+	}
+}
+
+31 
+MsgD©aM­pšgWidg‘
+::
+	$Ú_msgD©aAddBŠ_şicked
+()
+
+34 
+	}
+}
+
+	@R_Visualizer/MessageConfig/src/MsgDataRep.cpp
+
+1 
+	~"MsgD©aR•.h
+"
+
+3 
+	gMsgD©aR•
+::
+	$MsgD©aR•
+()
+
+5 
+	}
+}
+
+7 
+MsgD©aR•
+::
+	$MsgD©aR•
+(cÚ¡ 
+MsgD©aR•
+ &
+Ùh”
+) :
+
+8 
+	`msgID
+(
+Ùh”
+.
+msgID
+),
+
+9 
+	`msgCode
+(
+Ùh”
+.
+msgCode
+),
+
+10 
+	$fÜm©SŒšg
+(
+Ùh”
+.
+fÜm©SŒšg
+)
+
+12 
+	}
+}
+
+14 
+	gMsgD©aR•
+::
+	$MsgD©aR•
+(
+
+15 cÚ¡ 
+MsgIDTy³
+ 
+msgID
+,
+
+16 cÚ¡ 
 MsgCodeTy³
  
-code
+msgCode
+,
+
+17 cÚ¡ 
+QSŒšg
+ &
+fÜm©SŒšg
+
+
+19 
+	`msgID
+(
+msgID
+),
+
+20 
+	`msgCode
+(
+msgCode
+),
+
+21 
+	$fÜm©SŒšg
+(
+fÜm©SŒšg
+)
+
+23 
+	}
+}
+
+25 
+	gMsgD©aR•
+::~
+	$MsgD©aR•
+()
+
+27 
+	}
+}
+
+29 
+MsgIDTy³
+ 
+MsgD©aR•
+::
+	$g‘MsgID
+() const
+
+31  
+msgID
 ;
 
-134 
+32 
+	}
+}
+
+34 
+	gMsgD©aR•
+::
+	$£tMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+)
+
+36 
+this
+->
+msgID
+ = msgID;
+
+37 
+	}
+}
+
+39 
+MsgCodeTy³
+ 
+	gMsgD©aR•
+::
+	$g‘MsgCode
+() const
+
+41  
+msgCode
+;
+
+42 
+	}
+}
+
+44 
+	gMsgD©aR•
+::
+	$£tMsgCode
+(cÚ¡ 
+MsgCodeTy³
+ 
+msgCode
+)
+
+46 
+this
+->
+msgCode
+ = msgCode;
+
+47 
+	}
+}
+
+49 
 QSŒšg
  
-codeName
+	gMsgD©aR•
+::
+	$g‘FÜm©SŒšg
+() const
+
+51  
+fÜm©SŒšg
 ;
 
-138 
+52 
+	}
+}
+
+54 
+	gMsgD©aR•
+::
+	$£tFÜm©SŒšg
+(cÚ¡ 
+QSŒšg
+ &
+fÜm©SŒšg
+)
+
+56 
+this
+->
+fÜm©SŒšg
+ = formatString;
+
+57 
+	}
+}
+
+59 
 QSŒšg
  
-mes§geFÜm©
-;
+	gMsgD©aR•
+::
+	$·r£MsgD©a
+(cÚ¡ 
+MsgD©a
+ &
+msgD©a
+) const
 
-142 
+61  
+	`QSŒšg
+("P¬£dMsgD©a: %1").
+	`¬g
+(
+fÜm©SŒšg
+);
+
+62 
+	}
+}
+
+	@R_Visualizer/MessageConfig/src/MsgIDMappingStore.cpp
+
+1 
+	~"MsgIDM­pšgStÜe.h
+"
+
+3 
+	gMsgIDM­pšgStÜe
+::
+	$MsgIDM­pšgStÜe
+()
+
+5 
+	}
+}
+
+7 
+vœtu®
+ ~
+MsgIDM­pšgStÜe
+::
+	$MsgIDM­pšgStÜe
+()
+
+9 
+	}
+}
+
+11 
+MsgIDTy³
+ 
+MsgIDM­pšgStÜe
+::
+	$g‘MsgIDToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const
+
+13 
+	}
+}
+
+15 
+QSŒšg
+ 
+MsgIDM­pšgStÜe
+::
+	$g‘NameToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const
+
+17 
+	}
+}
+
+19 
 QCŞÜ
  
+MsgIDM­pšgStÜe
+::
+	$g‘CŞÜToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const
+
+21 
+	}
+}
+
+23 
+QCŞÜ
+ 
+MsgIDM­pšgStÜe
+::
+	$g‘CŞÜToName
+(cÚ¡ 
+QSŒšg
+ &
+Çme
+) const
+
+25 
+	}
+}
+
+27 
+boŞ
+ 
+MsgIDM­pšgStÜe
+::
+	$cÚšsMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const
+
+29 
+	}
+}
+
+31 
+IMsgIDR•
+ 
+MsgIDM­pšgStÜe
+::
+	$g‘MsgIDR•ToMsgID
+(cÚ¡ 
+MsgIDTy³
+ 
+msgID
+) const
+
+33 
+	}
+}
+
+35 
+QCom¶‘”
+ *
+MsgIDM­pšgStÜe
+::
+	$ü—‹MsgIDM­pšgCom¶‘”
+(
+
+36 
+QObjeù
+ *
+·»Á
+ = 
+Q_NULLPTR
+
+
+39 
+	}
+}
+
+	@R_Visualizer/MessageConfig/src/MsgIDMappingWidget.cpp
+
+1 
+	~"MsgIDM­pšgWidg‘.h
+"
+
+2 
+	~"ui_msgidm­pšgwidg‘.h
+"
+
+4 
+	gMsgIDM­pšgWidg‘
+::
+	$MsgIDM­pšgWidg‘
+(
+QWidg‘
+ *
+·»Á
+) :
+
+5 
+	`QWidg‘
+(
+·»Á
+),
+
+6 
+	$ui
+(
+Ãw
+ 
+Ui
+::
+MsgIDM­pšgWidg‘
+)
+
+8 
+ui
+->
+	`£tupUi
+(
+this
+);
+
+9 
+	}
+}
+
+11 
+	gMsgIDM­pšgWidg‘
+::~
+	$MsgIDM­pšgWidg‘
+()
+
+13 
+d–‘e
+ 
+ui
+;
+
+14 
+	}
+}
+
+16 
+	gMsgIDM­pšgWidg‘
+::
+	$Ú_idStÜeBŠ_şicked
+()
+
+19 
+	}
+}
+
+21 
+MsgIDM­pšgWidg‘
+::
+	$Ú_idLßdBŠ_şicked
+()
+
+24 
+	}
+}
+
+26 
+MsgIDM­pšgWidg‘
+::
+	$Ú_idRmvBŠ_şicked
+()
+
+29 
+	}
+}
+
+31 
+MsgIDM­pšgWidg‘
+::
+	$Ú_idAddBŠ_şicked
+()
+
+34 
+	}
+}
+
+	@R_Visualizer/MessageConfig/src/MsgIDRep.cpp
+
+1 
+	~"MsgIDR•.h
+"
+
+2 
+	~<QDebug
+>
+
+4 
+	~"f•¬£r.h
+"
+
+6 
+	gMsgIDR•
+::
+	$MsgIDR•
+() :
+
+7 
+	`id
+(0x0),
+
+8 
+	`Çme
+(""),
+
+9 
+	$cŞÜ
+(
+Qt
+::
+wh™e
+)
+
+11 
+	}
+}
+
+13 
+MsgIDR•
+::
+	$MsgIDR•
+(cÚ¡ 
+MsgIDR•
+ &
+Ùh”
+) :
+
+14 
+	`id
+(
+Ùh”
+.
+id
+),
+
+15 
+	`Çme
+(
+Ùh”
+.
+Çme
+),
+
+16 
+	$cŞÜ
+(
+Ùh”
+.
+cŞÜ
+)
+
+18 
+	}
+}
+
+20 
+	gMsgIDR•
+::
+	$MsgIDR•
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+) :
+
+21 
+	`id
+(
+id
+),
+
+22 
+	`Çme
+(
+	`QSŒšg
+("0x%1").
+	`¬g
+(
+id
+, 4, 16, 
+	`QL©š1Ch¬
+('0'))),
+
+23 
+	$cŞÜ
+(
+Qt
+::
+wh™e
+)
+
+25 
+	}
+}
+
+27 
+MsgIDR•
+::
+	$MsgIDR•
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+, cÚ¡ 
+QSŒšg
+ &
+Çme
+, cÚ¡ 
+QCŞÜ
+ &
+cŞÜ
+) :
+
+28 
+	`id
+(
+id
+),
+
+29 
+	`Çme
+(
+Çme
+),
+
+30 
+	$cŞÜ
+(
+cŞÜ
+)
+
+32 
+	}
+}
+
+34 
+	gMsgIDR•
+::
+	$£tID
+(cÚ¡ 
+MsgIDTy³
+ 
+id
+)
+
+36 
+this
+->
+id
+ = id;
+
+37 
+	}
+}
+
+39 
+MsgIDTy³
+ 
+	gMsgIDR•
+::
+	$g‘ID
+() const
+
+41  
+id
+;
+
+42 
+	}
+}
+
+44 
+QSŒšg
+ 
+	gMsgIDR•
+::
+	$g‘PÏšTextAlŸs
+() const
+
+46  
+Çme
+;
+
+47 
+	}
+}
+
+49 
+	gMsgIDR•
+::
+	$£tPÏšTextAlŸs
+(cÚ¡ 
+QSŒšg
+ &
+¶ašTextAlŸs
+)
+
+51 
+this
+->
+Çme
+ = 
+¶ašTextAlŸs
+;
+
+52 
+	}
+}
+
+54 
+QCŞÜ
+ 
+	gMsgIDR•
+::
+	$g‘CŞÜR•»£Á©iÚ
+() const
+
+56  
 cŞÜ
 ;
 
-146 
-QSize
- 
-MsgTy³R•SizeHšt
+57 
+	}
+}
+
+59 
+	gMsgIDR•
+::
+	$£tCŞÜR•»£Á©iÚ
+(cÚ¡ 
+QCŞÜ
+ &
+cŞÜR•»£Á©iÚ
+)
+
+61 
+this
+->
+cŞÜ
+ = 
+cŞÜR•»£Á©iÚ
 ;
+
+62 
+	}
+}
+
+64 
+	gMsgIDR•
+::
+	$acû±
+(
+FeP¬£r
+ *
+vis™Ü
+)
+
+66 
+vis™Ü
+->
+	`vis™
+(*
+this
+);
+
+67 
+	}
+}
 
 	@R_Visualizer/MessageConfig/src/idadddialog.cpp
 
@@ -35379,578 +37469,6 @@ this
 	}
 }
 
-	@R_Visualizer/MessageConfig/src/idrep.cpp
-
-1 
-	~"id»p.h
-"
-
-2 
-	~<QPaš‹r
->
-
-4 
-	~<QDebug
->
-
-6 
-	~"f•¬£r.h
-"
-
-8 
-	gIDR•
-::
-	$IDR•
-() :
-
-9 
-	`isV®idObj
-(
-çl£
-),
-
-10 
-	`id
-(0x0),
-
-11 
-	`Çme
-(""),
-
-12 
-	$cŞÜ
-(
-Qt
-::
-wh™e
-)
-
-14 
-	}
-}
-
-16 
-IDR•
-::
-	$IDR•
-(cÚ¡ 
-IDR•
- &
-Ùh”
-) :
-
-17 
-	`isV®idObj
-(
-Ùh”
-.
-isV®idObj
-),
-
-18 
-	`id
-(
-Ùh”
-.
-id
-),
-
-19 
-	`Çme
-(
-Ùh”
-.
-Çme
-),
-
-20 
-	$cŞÜ
-(
-Ùh”
-.
-cŞÜ
-)
-
-22 
-	}
-}
-
-24 
-	gIDR•
-::
-	$IDR•
-(cÚ¡ 
-MsgIDTy³
- 
-id
-) :
-
-25 
-	`isV®idObj
-(
-Œue
-),
-
-26 
-	`id
-(
-id
-),
-
-27 
-	`Çme
-(
-	`QSŒšg
-("0x%1").
-	`¬g
-(
-id
-, 4, 16, 
-	`QL©š1Ch¬
-('0'))),
-
-28 
-	$cŞÜ
-(
-Qt
-::
-wh™e
-)
-
-30 
-	}
-}
-
-32 
-IDR•
-::
-	$IDR•
-(cÚ¡ 
-MsgIDTy³
- 
-id
-, cÚ¡ 
-QSŒšg
- &
-Çme
-, cÚ¡ 
-QCŞÜ
- &
-cŞÜ
-) :
-
-33 
-	`isV®idObj
-(
-Œue
-),
-
-34 
-	`id
-(
-id
-),
-
-35 
-	`Çme
-(
-Çme
-),
-
-36 
-	$cŞÜ
-(
-cŞÜ
-)
-
-38 
-	}
-}
-
-40 
-QSŒšg
- 
-	gIDR•
-::
-	$g‘Name
-() const
-
-42  
-Çme
-;
-
-43 
-	}
-}
-
-45 
-	gIDR•
-::
-	$£tName
-(cÚ¡ 
-QSŒšg
- &
-v®ue
-)
-
-47 
-Çme
- = 
-v®ue
-;
-
-48 
-	}
-}
-
-50 
-QCŞÜ
- 
-	gIDR•
-::
-	$g‘CŞÜ
-() const
-
-52  
-cŞÜ
-;
-
-53 
-	}
-}
-
-55 
-	gIDR•
-::
-	$£tCŞÜ
-(cÚ¡ 
-QCŞÜ
- &
-v®ue
-)
-
-57 
-cŞÜ
- = 
-v®ue
-;
-
-58 
-	}
-}
-
-60 
-IDR•
- 
-	gIDR•
-::
-	$ü—‹ObjFromJsÚ
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-)
-
-62  
-	`IDR•
-(
-¡©ic_ÿ¡
-<
-MsgIDTy³
->(
-jsÚMsg
-["id"].
-	`toIÁ
-()), jsÚMsg["Çme"].
-	`toSŒšg
-(), 
-	`QCŞÜ
-(jsonMsg["color"].toString()));
-
-63 
-	}
-}
-
-65 
-	gIDR•
-::
-	$·r£IN
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-)
-
-67 
-this
-->
-Çme
- = 
-jsÚMsg
-["Çme"].
-	`toSŒšg
-();
-
-68 
-this
-->
-cŞÜ
- = 
-	`QCŞÜ
-(
-jsÚMsg
-["cŞÜ"].
-	`toSŒšg
-());
-
-69 
-	}
-}
-
-71 
-QJsÚObjeù
- 
-	gIDR•
-::
-	$·r£OUT
-() const
-
-73 
-QJsÚObjeù
- 
-jsÚMsg
-;
-
-74 
-jsÚMsg
-["id"] = 
-¡©ic_ÿ¡
-<>(
-this
-->
-id
-);
-
-75 
-jsÚMsg
-["Çme"] = 
-this
-->
-Çme
-;
-
-76 
-jsÚMsg
-["cŞÜ"] = 
-this
-->
-cŞÜ
-.
-	`Çme
-();
-
-77  
-jsÚMsg
-;
-
-78 
-	}
-}
-
-80 
-boŞ
- 
-	gIDR•
-::
-	$isV®id
-() const
-
-82  
-isV®idObj
-;
-
-83 
-	}
-}
-
-85 
-boŞ
- 
-	gIDR•
-::
-İ”©Ü
-==(cÚ¡ 
-IDR•
- &
-Ùh”
-) const
-
-87  (
-this
-->
-id
- =ğ
-Ùh”
-.
-g‘Id
-());
-
-95 
-MsgIDTy³
- 
-	gIDR•
-::
-	$g‘Id
-() const
-
-97  
-id
-;
-
-98 
-	}
-}
-
-100 
-	gIDR•
-::
-	$£tId
-(cÚ¡ 
-MsgIDTy³
- 
-id
-)
-
-102 
-this
-->
-id
- = id;
-
-103 
-	}
-}
-
-105 
-	gIDR•
-::
-	$·štIDR•
-(
-QPaš‹r
- *
-·š‹r
-, cÚ¡ 
-QStyËO±iÚV›wI‹m
- &
-İtiÚ
-) const
-
-111 
-·š‹r
-->
-	`§ve
-();
-
-113 
-·š‹r
-->
-	`£tFÚt
-(
-İtiÚ
-.
-fÚt
-);
-
-114 
-·š‹r
-->
-	`£tR’d”Hšt
-(
-QPaš‹r
-::
-TextAÁŸlŸsšg
-);
-
-117 
-·š‹r
-->
-	`flReù
-(
-İtiÚ
-.
-»ù
-, (İtiÚ.
-ã©u»s
- & 
-QStyËO±iÚV›wI‹m
-::
-AÉ”Ç‹
-è? 
-cŞÜ
-.
-	`d¬k”
-(100) : color);
-
-118 
-·š‹r
-->
-	`d¿wText
-(
-
-119 
-İtiÚ
-.
-»ù
-,
-
-120 
-Qt
-::
-TextWÜdW¿p
- |
-
-121 
-Qt
-::
-AlignC’‹r
-,
-
-122 
-Çme
-);
-
-123 
-·š‹r
-->
-	`»¡Üe
-();
-
-124 
-	}
-}
-
-126 
-	gIDR•
-::
-	$acû±
-(
-FeP¬£r
- *
-vis™Ü
-)
-
-128 
-vis™Ü
-->
-	`vis™
-(*
-this
-);
-
-129 
-	}
-}
-
 	@R_Visualizer/MessageConfig/src/messageconfig.cpp
 
 1 
@@ -37051,13 +38569,35 @@ Ed™KeyP»s£d
 	}
 }
 
-194 
+193 
+	gMes§geCÚfig
+::
+	$¦t_AµlyRŞe
+(
+U£rRŞeMngr
+::
+U£rRŞe
+ 
+rŞeToAµly
+)
+
+195 
+	`­¶yRŞe
+(
+rŞeToAµly
+);
+
+196 
+	}
+}
+
+199 
 	gMes§geCÚfig
 ::
 	$Ú_idLßdBŠ_şicked
 ()
 
-196 
+201 
 QSŒšg
  
 İ’Loc
@@ -37071,13 +38611,13 @@ this
 	`QSŒšg
 ("Open"), QString(), "JSON File (*.json)");
 
-197 
+202 
 	`qDebug
 (è<< 
 İ’Loc
 ;
 
-198 
+203 
 QFe
  
 	`jsÚO³nFe
@@ -37085,7 +38625,7 @@ QFe
 İ’Loc
 );
 
-199 if(!
+204 if(!
 jsÚO³nFe
 .
 	`İ’
@@ -37097,7 +38637,7 @@ R—dOÆy
 Text
 )) {
 
-200 
+205 
 	`qDebug
 (è<< "”rÜ o³nšg: " << 
 jsÚO³nFe
@@ -37105,13 +38645,13 @@ jsÚO³nFe
 	`feName
 ();
 
-206 
+211 
 JsÚInP¬£r
  
 jsÚInP¬£r
 ;
 
-207 
+212 
 jsÚInP¬£r
 .
 	`£tJsÚDocum’t
@@ -37125,7 +38665,7 @@ jsÚO³nFe
 	`»adAÎ
 ()));
 
-208 
+213 
 idMod–
 .
 	`acû±
@@ -37133,23 +38673,23 @@ idMod–
 jsÚInP¬£r
 );
 
-214 
+219 
 jsÚO³nFe
 .
 	`şo£
 ();
 
-215 
+220 
 	}
 }
 
-217 
+222 
 	gMes§geCÚfig
 ::
 	$Ú_idStÜeBŠ_şicked
 ()
 
-220 
+225 
 QSŒšg
  
 §veLoc
@@ -37163,13 +38703,13 @@ this
 	`QSŒšg
 ("Save‡s"), QString(), "JSON File (*.json)");
 
-221 
+226 
 	`qDebug
 (è<< 
 §veLoc
 ;
 
-222 
+227 
 QFe
  
 	`jsÚSaveFe
@@ -37177,7 +38717,7 @@ QFe
 §veLoc
 );
 
-223 if(!
+228 if(!
 jsÚSaveFe
 .
 	`İ’
@@ -37187,7 +38727,7 @@ QIODeviû
 Wr™eOÆy
 )) {
 
-224 
+229 
 	`qDebug
 (è<< "”rÜ o³ÀftØ§ve: " << 
 jsÚSaveFe
@@ -37195,13 +38735,13 @@ jsÚSaveFe
 	`feName
 ();
 
-231 
+236 
 JsÚOutP¬£r
  
 jsÚOutP¬£r
 ;
 
-232 
+237 
 idMod–
 .
 	`acû±
@@ -37209,7 +38749,7 @@ idMod–
 jsÚOutP¬£r
 );
 
-233 
+238 
 jsÚSaveFe
 .
 	`wr™e
@@ -37221,29 +38761,29 @@ jsÚOutP¬£r
 	`toJsÚ
 ());
 
-236 
+241 
 jsÚSaveFe
 .
 	`æush
 ();
 
-237 
+242 
 jsÚSaveFe
 .
 	`şo£
 ();
 
-238 
+243 
 	}
 }
 
-241 
+246 
 	gMes§geCÚfig
 ::
 	$Ú_idAddBŠ_şicked
 ()
 
-243 
+248 
 IDAddDŸlog
  *
 idAddDŸlog
@@ -37255,7 +38795,7 @@ idAddDŸlog
 this
 );
 
-244 
+249 
 	`cÚÃù
 (
 idAddDŸlog
@@ -37271,23 +38811,23 @@ Mes§geCÚfig
 idAddFšished
 );
 
-245 
+250 
 idAddDŸlog
 ->
 	`exec
 ();
 
-246 
+251 
 	}
 }
 
-248 
+253 
 	gMes§geCÚfig
 ::
 	$Ú_idRmvBŠ_şicked
 ()
 
-250 
+255 
 QMod–IndexLi¡
  
 £ËùiÚ
@@ -37301,7 +38841,7 @@ idTabËV›w
 	`£ËùedRows
 ();
 
-256 
+261 
 QI‹mS–eùiÚMod–
  *
 £ËùiÚMod–
@@ -37313,7 +38853,7 @@ idTabËV›w
 	`£ËùiÚMod–
 ();
 
-257 
+262 
 QMod–IndexLi¡
  
 £ËùiÚIndexLi¡
@@ -37323,13 +38863,13 @@ QMod–IndexLi¡
 	`£ËùedRows
 ();
 
-258 if(
+263 if(
 £ËùiÚIndexLi¡
 .
 	`size
 ())
 
-260 
+265 
 idMod–
 .
 	`»moveRows
@@ -37343,17 +38883,17 @@ idMod–
 	`size
 ());
 
-262 
+267 
 	}
 }
 
-264 
+269 
 	gMes§geCÚfig
 ::
 	$Ú_msgTy³LßdBŠ_şicked
 ()
 
-266 
+271 
 QSŒšg
  
 İ’Loc
@@ -37367,13 +38907,13 @@ this
 	`QSŒšg
 ("Open"), QString(), "JSON File (*.json)");
 
-267 
+272 
 	`qDebug
 (è<< 
 İ’Loc
 ;
 
-268 
+273 
 QFe
  
 	`jsÚO³nFe
@@ -37381,7 +38921,7 @@ QFe
 İ’Loc
 );
 
-269 if(!
+274 if(!
 jsÚO³nFe
 .
 	`İ’
@@ -37393,7 +38933,7 @@ R—dOÆy
 Text
 )) {
 
-270 
+275 
 	`qDebug
 (è<< "”rÜ o³nšg: " << 
 jsÚO³nFe
@@ -37401,13 +38941,13 @@ jsÚO³nFe
 	`feName
 ();
 
-276 
+281 
 JsÚInP¬£r
  
 jsÚInP¬£r
 ;
 
-277 
+282 
 jsÚInP¬£r
 .
 	`£tJsÚDocum’t
@@ -37421,7 +38961,7 @@ jsÚO³nFe
 	`»adAÎ
 ()));
 
-278 
+283 
 msgTy³Mod–
 .
 	`acû±
@@ -37429,23 +38969,23 @@ msgTy³Mod–
 jsÚInP¬£r
 );
 
-284 
+289 
 jsÚO³nFe
 .
 	`şo£
 ();
 
-285 
+290 
 	}
 }
 
-287 
+292 
 	gMes§geCÚfig
 ::
 	$Ú_msgTy³StÜeBŠ_şicked
 ()
 
-289 
+294 
 QSŒšg
  
 §veLoc
@@ -37459,13 +38999,13 @@ this
 	`QSŒšg
 ("Save‡s"), QString(), "JSON File (*.json)");
 
-290 
+295 
 	`qDebug
 (è<< 
 §veLoc
 ;
 
-291 
+296 
 QFe
  
 	`jsÚSaveFe
@@ -37473,7 +39013,7 @@ QFe
 §veLoc
 );
 
-292 if(!
+297 if(!
 jsÚSaveFe
 .
 	`İ’
@@ -37483,7 +39023,7 @@ QIODeviû
 Wr™eOÆy
 )) {
 
-293 
+298 
 	`qDebug
 (è<< "”rÜ o³ÀftØ§ve: " << 
 jsÚSaveFe
@@ -37491,13 +39031,13 @@ jsÚSaveFe
 	`feName
 ();
 
-301 
+306 
 JsÚOutP¬£r
  
 jsÚOutP¬£r
 ;
 
-302 
+307 
 msgTy³Mod–
 .
 	`acû±
@@ -37505,7 +39045,7 @@ msgTy³Mod–
 jsÚOutP¬£r
 );
 
-303 
+308 
 jsÚSaveFe
 .
 	`wr™e
@@ -37517,29 +39057,29 @@ jsÚOutP¬£r
 	`toJsÚ
 ());
 
-307 
+312 
 jsÚSaveFe
 .
 	`æush
 ();
 
-308 
+313 
 jsÚSaveFe
 .
 	`şo£
 ();
 
-309 
+314 
 	}
 }
 
-311 
+316 
 	gMes§geCÚfig
 ::
 	$Ú_msgTy³AddBŠ_şicked
 ()
 
-313 
+318 
 MsgTy³AddDŸlog
  *
 msgTy³AddDŸlogg
@@ -37551,7 +39091,7 @@ msgTy³AddDŸlogg
 this
 );
 
-314 
+319 
 	`cÚÃù
 (
 msgTy³AddDŸlogg
@@ -37567,23 +39107,23 @@ Mes§geCÚfig
 msgTy³AddFšished
 );
 
-315 
+320 
 msgTy³AddDŸlogg
 ->
 	`exec
 ();
 
-316 
+321 
 	}
 }
 
-318 
+323 
 	gMes§geCÚfig
 ::
 	$Ú_msgTy³RmvBŠ_şicked
 ()
 
-326 
+331 
 QI‹mS–eùiÚMod–
  *
 £ËùiÚMod–
@@ -37595,7 +39135,7 @@ msgTy³TabËV›w
 	`£ËùiÚMod–
 ();
 
-327 
+332 
 QMod–IndexLi¡
  
 £ËùiÚIndexLi¡
@@ -37605,13 +39145,13 @@ QMod–IndexLi¡
 	`£ËùedRows
 ();
 
-328 if(
+333 if(
 £ËùiÚIndexLi¡
 .
 	`size
 ())
 
-330 
+335 
 msgTy³Mod–
 .
 	`»moveRows
@@ -37625,11 +39165,11 @@ msgTy³Mod–
 	`size
 ());
 
-332 
+337 
 	}
 }
 
-334 
+339 
 	gMes§geCÚfig
 ::
 	$¦t_IDR•Added
@@ -37639,34 +39179,12 @@ IDR•
 ÃwIDR•
 )
 
-336 
+341 
 em™
  
 	`sgÆ_IDR•Added
 (
 ÃwIDR•
-);
-
-337 
-	}
-}
-
-339 
-	gMes§geCÚfig
-::
-	$¦t_IDR•Upd©ed
-(cÚ¡ 
-IDR•
- &
-upd©edIDR•
-)
-
-341 
-em™
- 
-	`sgÆ_IDR•Upd©ed
-(
-upd©edIDR•
 );
 
 342 
@@ -37676,19 +39194,19 @@ upd©edIDR•
 344 
 	gMes§geCÚfig
 ::
-	$¦t_IDR•Removed
+	$¦t_IDR•Upd©ed
 (cÚ¡ 
-MsgIDTy³
- 
-»Ï‹dID
+IDR•
+ &
+upd©edIDR•
 )
 
 346 
 em™
  
-	`sgÆ_IDR•Removed
+	`sgÆ_IDR•Upd©ed
 (
-»Ï‹dID
+upd©edIDR•
 );
 
 347 
@@ -37698,19 +39216,19 @@ em™
 349 
 	gMes§geCÚfig
 ::
-	$¦t_MsgTy³R•Added
+	$¦t_IDR•Removed
 (cÚ¡ 
-MsgTy³R•
- &
-ÃwMsgTy³R•
+MsgIDTy³
+ 
+»Ï‹dID
 )
 
 351 
 em™
  
-	`sgÆ_MsgTy³R•Added
+	`sgÆ_IDR•Removed
 (
-ÃwMsgTy³R•
+»Ï‹dID
 );
 
 352 
@@ -37720,19 +39238,19 @@ em™
 354 
 	gMes§geCÚfig
 ::
-	$¦t_MsgTy³R•Upd©ed
+	$¦t_MsgTy³R•Added
 (cÚ¡ 
 MsgTy³R•
  &
-upd©edMsgTy³R•
+ÃwMsgTy³R•
 )
 
 356 
 em™
  
-	`sgÆ_MsgTy³R•Upd©ed
+	`sgÆ_MsgTy³R•Added
 (
-upd©edMsgTy³R•
+ÃwMsgTy³R•
 );
 
 357 
@@ -37742,6 +39260,28 @@ upd©edMsgTy³R•
 359 
 	gMes§geCÚfig
 ::
+	$¦t_MsgTy³R•Upd©ed
+(cÚ¡ 
+MsgTy³R•
+ &
+upd©edMsgTy³R•
+)
+
+361 
+em™
+ 
+	`sgÆ_MsgTy³R•Upd©ed
+(
+upd©edMsgTy³R•
+);
+
+362 
+	}
+}
+
+364 
+	gMes§geCÚfig
+::
 	$¦t_MsgTy³R•Removed
 (cÚ¡ 
 MsgCodeTy³
@@ -37749,7 +39289,7 @@ MsgCodeTy³
 »Ï‹dCode
 )
 
-361 
+366 
 em™
  
 	`sgÆ_MsgTy³R•Removed
@@ -37757,7 +39297,7 @@ em™
 »Ï‹dCode
 );
 
-362 
+367 
 	}
 }
 
@@ -40870,786 +42410,6 @@ this
 );
 
 335 
-	}
-}
-
-	@R_Visualizer/MessageConfig/src/msgtyperep.cpp
-
-1 
-	~"msgty³»p.h
-"
-
-3 
-	~<QJsÚDocum’t
->
-
-4 
-	~<QJsÚA¼ay
->
-
-6 
-	~<QPaš‹r
->
-
-8 
-	~<QTextDocum’t
->
-
-10 
-	~<QDebug
->
-
-12 
-	~"f•¬£r.h
-"
-
-14 
-	gMsgTy³R•
-::
-	$MsgTy³R•
-() :
-
-15 
-	`isV®idObj
-(
-çl£
-),
-
-16 
-	`code
-(0x0),
-
-17 
-	`codeName
-(
-	`QSŒšg
-("")),
-
-18 
-	`mes§geFÜm©
-(
-	`QSŒšg
-("")),
-
-19 
-	$cŞÜ
-(
-Qt
-::
-bÏck
-)
-
-22 
-	}
-}
-
-24 
-MsgTy³R•
-::
-	$MsgTy³R•
-(cÚ¡ 
-MsgTy³R•
- &
-Ùh”
-) :
-
-25 
-	`isV®idObj
-(
-Ùh”
-.
-isV®idObj
-),
-
-26 
-	`code
-(
-Ùh”
-.
-code
-),
-
-27 
-	`codeName
-(
-Ùh”
-.
-codeName
-),
-
-28 
-	`mes§geFÜm©
-(
-Ùh”
-.
-mes§geFÜm©
-),
-
-29 
-	$cŞÜ
-(
-Ùh”
-.
-cŞÜ
-)
-
-32 
-	}
-}
-
-34 
-	gMsgTy³R•
-::
-	$MsgTy³R•
-(cÚ¡ 
-MsgCodeTy³
- 
-code
-) :
-
-35 
-	`isV®idObj
-(
-Œue
-),
-
-36 
-	`code
-(
-code
-),
-
-37 
-	`codeName
-(
-	`QSŒšg
-("0x%1").
-	`¬g
-(
-code
-, 4, 16, 
-	`QL©š1Ch¬
-('0'))),
-
-38 
-	`mes§geFÜm©
-("#Data0# #Data1# #Data2# #Data3# #Data4# #Data5# #Data6#"),
-
-39 
-	$cŞÜ
-(
-Qt
-::
-wh™e
-)
-
-41 
-	}
-}
-
-43 
-MsgTy³R•
-::
-	$MsgTy³R•
-(cÚ¡ 
-MsgCodeTy³
- 
-code
-, cÚ¡ 
-QSŒšg
- &
-codeName
-, cÚ¡ QSŒšg &
-mes§geFÜm©
-, cÚ¡ 
-QCŞÜ
- &
-cŞÜ
-) :
-
-44 
-	`isV®idObj
-(
-Œue
-),
-
-45 
-	`code
-(
-code
-),
-
-46 
-	`codeName
-(
-codeName
-),
-
-47 
-	`mes§geFÜm©
-(
-mes§geFÜm©
-),
-
-48 
-	$cŞÜ
-(
-cŞÜ
-)
-
-51 
-	}
-}
-
-53 
-MsgCodeTy³
- 
-	gMsgTy³R•
-::
-	$g‘Code
-() const
-
-55  
-code
-;
-
-56 
-	}
-}
-
-58 
-	gMsgTy³R•
-::
-	$£tCode
-(cÚ¡ 
-MsgCodeTy³
- 
-code
-)
-
-60 
-this
-->
-code
- = code;
-
-61 
-	}
-}
-
-64 
-QSŒšg
- 
-	gMsgTy³R•
-::
-	$g‘CodeName
-() const
-
-66  
-codeName
-;
-
-67 
-	}
-}
-
-69 
-	gMsgTy³R•
-::
-	$£tCodeName
-(cÚ¡ 
-QSŒšg
- &
-v®ue
-)
-
-71 
-codeName
- = 
-v®ue
-;
-
-72 
-	}
-}
-
-74 
-QSŒšg
- 
-	gMsgTy³R•
-::
-	$g‘Mes§geFÜm©
-() const
-
-76  
-mes§geFÜm©
-;
-
-77 
-	}
-}
-
-79 
-	gMsgTy³R•
-::
-	$£tMes§geFÜm©
-(cÚ¡ 
-QSŒšg
- &
-v®ue
-)
-
-81 
-mes§geFÜm©
- = 
-v®ue
-;
-
-82 
-	}
-}
-
-84 
-QCŞÜ
- 
-	gMsgTy³R•
-::
-	$g‘CŞÜ
-() const
-
-86  
-cŞÜ
-;
-
-87 
-	}
-}
-
-89 
-	gMsgTy³R•
-::
-	$£tCŞÜ
-(cÚ¡ 
-QCŞÜ
- &
-v®ue
-)
-
-91 
-cŞÜ
- = 
-v®ue
-;
-
-92 
-	}
-}
-
-94 
-MsgTy³R•
- 
-	gMsgTy³R•
-::
-	$ü—‹ObjFromJsÚ
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-)
-
-96  
-	`MsgTy³R•
-(
-
-97 
-¡©ic_ÿ¡
-<cÚ¡ 
-MsgCodeTy³
->(
-jsÚMsg
-["code"].
-	`toIÁ
-()),
-
-98 
-jsÚMsg
-["codeName"].
-	`toSŒšg
-(),
-
-99 
-jsÚMsg
-["mes§geFÜm©"].
-	`toSŒšg
-(),
-
-100 
-	`QCŞÜ
-(
-jsÚMsg
-["cŞÜ"].
-	`toSŒšg
-())
-
-102 
-	}
-}
-
-104 
-	gMsgTy³R•
-::
-	$·r£IN
-(cÚ¡ 
-QJsÚObjeù
- &
-jsÚMsg
-)
-
-107 
-this
-->
-codeName
- = 
-jsÚMsg
-["codeName"].
-	`toSŒšg
-();
-
-108 
-this
-->
-mes§geFÜm©
- = 
-jsÚMsg
-["mes§geFÜm©"].
-	`toSŒšg
-();
-
-109 
-this
-->
-cŞÜ
- = 
-	`QCŞÜ
-(
-jsÚMsg
-["cŞÜ"].
-	`toSŒšg
-());
-
-110 
-	}
-}
-
-112 
-QJsÚObjeù
- 
-	gMsgTy³R•
-::
-	$·r£OUT
-() const
-
-114 
-QJsÚObjeù
- 
-jsÚMsg
-;
-
-115 
-jsÚMsg
-["code"] = 
-¡©ic_ÿ¡
-<>(
-this
-->
-code
-);
-
-116 
-jsÚMsg
-["codeName"] = 
-this
-->
-codeName
-;
-
-117 
-jsÚMsg
-["mes§geFÜm©"] = 
-this
-->
-mes§geFÜm©
-;
-
-118 
-jsÚMsg
-["cŞÜ"] = 
-this
-->
-cŞÜ
-.
-	`Çme
-();
-
-119  
-jsÚMsg
-;
-
-120 
-	}
-}
-
-122 
-boŞ
- 
-	gMsgTy³R•
-::
-	$isV®id
-() const
-
-124  
-isV®idObj
-;
-
-125 
-	}
-}
-
-127 
-boŞ
- 
-	gMsgTy³R•
-::
-İ”©Ü
-==(cÚ¡ 
-MsgTy³R•
- &
-Ùh”
-) const
-
-129  (
-this
-->
-code
- =ğ
-Ùh”
-.
-g‘Code
-());
-
-132 
-QSŒšg
- 
-	gMsgTy³R•
-::
-	$g‘MsgD©aAsSŒšg
-(
-Msg
- &
-msg
-)
-
-134  
-msg
-.
-	`g‘D©aAsSŒšg
-();
-
-135 
-	}
-}
-
-137 
-	gMsgTy³R•
-::
-	$·štMsgTy³R•
-(
-QPaš‹r
- *
-·š‹r
-, cÚ¡ 
-QStyËO±iÚV›wI‹m
- &
-İtiÚ
-, 
-Msg
- &
-msg
-) const
-
-139 
-QTextDocum’t
- 
-	`I‹mText
-(
-	`QSŒšg
-("Code: %1\nData:\n0x%2 0x%3 0x%4 \n0x%5 0x%6 0x%7 0x%8")
-
-140 .
-	`¬g
-(
-code
-)
-
-141 .
-	`¬g
-(()10)
-
-142 .
-	`¬g
-(()11)
-
-143 .
-	`¬g
-(()12)
-
-144 .
-	`¬g
-(()13)
-
-145 .
-	`¬g
-(()14)
-
-146 .
-	`¬g
-(()15)
-
-147 .
-	`¬g
-(()16));
-
-149 
-I‹mText
-.
-	`£tTextWidth
-(
-İtiÚ
-.
-»ù
-.
-	`width
-());
-
-157 
-QSizeF
- 
-	`sizeHšt
-(
-I‹mText
-.
-	`size
-());
-
-160 
-QReùF
- 
-	`BoundšgReù
-(
-İtiÚ
-.
-»ù
-.
-	`x
-(), o±iÚ.»ù.
-	`y
-(), 
-sizeHšt
-.
-	`width
-(), sizeHšt.
-	`height
-());
-
-165 
-·š‹r
-->
-	`§ve
-();
-
-167 
-·š‹r
-->
-	`flReù
-(
-BoundšgReù
-, (
-İtiÚ
-.
-ã©u»s
- & 
-QStyËO±iÚV›wI‹m
-::
-AÉ”Ç‹
-è? 
-cŞÜ
-.
-	`d¬k”
-(100) : color);
-
-168 
-·š‹r
-->
-	`£tR’d”Hšt
-(
-QPaš‹r
-::
-TextAÁŸlŸsšg
-);
-
-170 
-·š‹r
-->
-	`Œª¦©e
-Ğ
-BoundšgReù
-.
-	`tİLeá
-() );
-
-171 
-I‹mText
-.
-	`d¿wCÚ‹Ás
-Ğ
-·š‹r
-, 
-BoundšgReù
-.
-	`Œª¦©ed
-Ğ-BoundšgReù.
-	`tİLeá
-() ) );
-
-174 
-·š‹r
-->
-	`»¡Üe
-();
-
-175 
-	}
-}
-
-177 
-	gMsgTy³R•
-::
-	$acû±
-(
-FeP¬£r
- *
-vis™Ü
-)
-
-179 
-vis™Ü
-->
-	`vis™
-(*
-this
-);
-
-180 
 	}
 }
 
@@ -97683,11 +98443,11 @@ QT_BEGIN_MOC_NAMESPACE
 QBy‹A¼ayD©a
  
 	md©a
-[47];
+[49];
 
 23 
 	m¡ršgd©a0
-[738];
+[764];
 
 25 
 	#QT_MOC_LITERAL
@@ -97859,79 +98619,87 @@ QT_MOC_LITERAL
 
 63 
 QT_MOC_LITERAL
-(31, 407, 21),
+(31, 407, 13),
 
 64 
 QT_MOC_LITERAL
-(32, 429, 20),
+(32, 421, 11),
 
 65 
 QT_MOC_LITERAL
-(33, 450, 26),
+(33, 433, 21),
 
 66 
 QT_MOC_LITERAL
-(34, 477, 25),
+(34, 455, 20),
 
 67 
 QT_MOC_LITERAL
-(35, 503, 19),
+(35, 476, 26),
 
 68 
 QT_MOC_LITERAL
-(36, 523, 24),
+(36, 503, 25),
 
 69 
 QT_MOC_LITERAL
-(37, 548, 19),
+(37, 529, 19),
 
 70 
 QT_MOC_LITERAL
-(38, 568, 24),
+(38, 549, 24),
 
 71 
 QT_MOC_LITERAL
-(39, 593, 14),
+(39, 574, 19),
 
 72 
 QT_MOC_LITERAL
-(40, 608, 16),
+(40, 594, 24),
 
 73 
 QT_MOC_LITERAL
-(41, 625, 16),
+(41, 619, 14),
 
 74 
 QT_MOC_LITERAL
-(42, 642, 19),
+(42, 634, 16),
 
 75 
 QT_MOC_LITERAL
-(43, 662, 13),
+(43, 651, 16),
 
 76 
 QT_MOC_LITERAL
-(44, 676, 21),
+(44, 668, 19),
 
 77 
 QT_MOC_LITERAL
-(45, 698, 17),
+(45, 688, 13),
 
 78 
 QT_MOC_LITERAL
-(46, 716, 21)
+(46, 702, 21),
 
-102 #undeà
+79 
+QT_MOC_LITERAL
+(47, 724, 17),
+
+80 
+QT_MOC_LITERAL
+(48, 742, 21)
+
+105 #undeà
 QT_MOC_LITERAL
 
 
-104 cÚ¡ 
+107 cÚ¡ 
 ušt
  
 	gqt_m‘a_d©a_Mes§geCÚfig
 [] = {
 
-147 
+151 
 QM‘aTy³
 ::
 Void
@@ -97940,54 +98708,54 @@ QSŒšg
 , QM‘aTy³::
 QCŞÜ
 , 4, 5, 6,
-
-148 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 8, QM‘aTy³::
-QSŒšg
-, QM‘aTy³::QSŒšg, QM‘aTy³::
-QCŞÜ
-, 9, 10, 11, 6,
-
-149 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 13, 14,
-
-150 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 13, 16,
-
-151 
-QM‘aTy³
-::
-Void
-, 0x80000000 | 3, 18,
 
 152 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 20, 21,
+, 0x80000000 | 8, QM‘aTy³::
+QSŒšg
+, QM‘aTy³::QSŒšg, QM‘aTy³::
+QCŞÜ
+, 9, 10, 11, 6,
 
 153 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 20, 23,
+, 0x80000000 | 13, 14,
 
 154 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 8, 25,
+, 0x80000000 | 13, 16,
+
+155 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 3, 18,
+
+156 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 20, 21,
 
 157 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 20, 23,
+
+158 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 8, 25,
+
+161 
 QM‘aTy³
 ::
 Void
@@ -97997,7 +98765,7 @@ QSŒšg
 QCŞÜ
 , 4, 5, 6,
 
-158 
+162 
 QM‘aTy³
 ::
 Void
@@ -98007,41 +98775,17 @@ QSŒšg
 QCŞÜ
 , 9, 10, 11, 6,
 
-159 
+163 
 QM‘aTy³
 ::
 Void
 , 0x80000000 | 29, 30,
 
-160 
-QM‘aTy³
-::
-Void
-,
-
-161 
-QM‘aTy³
-::
-Void
-,
-
-162 
-QM‘aTy³
-::
-Void
-,
-
-163 
-QM‘aTy³
-::
-Void
-,
-
 164 
 QM‘aTy³
 ::
 Void
-,
+, 0x80000000 | 29, 32,
 
 165 
 QM‘aTy³
@@ -98065,39 +98809,69 @@ Void
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 13, 14,
+,
 
 169 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 13, 16,
+,
 
 170 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 3, 18,
+,
 
 171 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 20, 43,
+,
 
 172 
 QM‘aTy³
 ::
 Void
-, 0x80000000 | 20, 45,
+,
 
 173 
 QM‘aTy³
 ::
 Void
+, 0x80000000 | 13, 14,
+
+174 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 13, 16,
+
+175 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 3, 18,
+
+176 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 20, 45,
+
+177 
+QM‘aTy³
+::
+Void
+, 0x80000000 | 20, 47,
+
+178 
+QM‘aTy³
+::
+Void
 , 0x80000000 | 8, 25,
 
-178 
+183 
 	gMes§geCÚfig
 ::
 	$qt_¡©ic_m‘aÿÎ
@@ -98117,7 +98891,7 @@ _id
 _a
 )
 
-180 ià(
+185 ià(
 _c
  =ğ
 QM‘aObjeù
@@ -98125,7 +98899,7 @@ QM‘aObjeù
 InvokeM‘aM‘hod
 ) {
 
-181 
+186 
 Mes§geCÚfig
  *
 _t
@@ -98135,17 +98909,17 @@ _t
 _o
 );
 
-182 
+187 
 	`Q_UNUSED
 (
 _t
 )
 
-183 
+188 
 _id
 ) {
 
-184 0: 
+189 0: 
 _t
 ->
 	`sgÆIdAddFšished
@@ -98161,7 +98935,7 @@ _a
 	`QCŞÜ
 (*)>(_a[3]))); ;
 
-185 1: 
+190 1: 
 _t
 ->
 	`sgÆMsgTy³AddFšished
@@ -98177,7 +98951,7 @@ _a
 	`QCŞÜ
 (*)>(_a[4]))); ;
 
-186 2: 
+191 2: 
 _t
 ->
 	`sgÆ_IDR•Added
@@ -98189,7 +98963,7 @@ _t
 _a
 [1]))); ;
 
-187 3: 
+192 3: 
 _t
 ->
 	`sgÆ_IDR•Upd©ed
@@ -98201,7 +98975,7 @@ _t
 _a
 [1]))); ;
 
-188 4: 
+193 4: 
 _t
 ->
 	`sgÆ_IDR•Removed
@@ -98213,7 +98987,7 @@ _t
 _a
 [1]))); ;
 
-189 5: 
+194 5: 
 _t
 ->
 	`sgÆ_MsgTy³R•Added
@@ -98225,7 +98999,7 @@ _t
 _a
 [1]))); ;
 
-190 6: 
+195 6: 
 _t
 ->
 	`sgÆ_MsgTy³R•Upd©ed
@@ -98237,7 +99011,7 @@ _t
 _a
 [1]))); ;
 
-191 7: 
+196 7: 
 _t
 ->
 	`sgÆ_MsgTy³R•Removed
@@ -98249,7 +99023,7 @@ _t
 _a
 [1]))); ;
 
-192 8: 
+197 8: 
 _t
 ->
 	`idAddFšished
@@ -98265,7 +99039,7 @@ _a
 	`QCŞÜ
 (*)>(_a[3]))); ;
 
-193 9: 
+198 9: 
 _t
 ->
 	`msgTy³AddFšished
@@ -98281,7 +99055,7 @@ _a
 	`QCŞÜ
 (*)>(_a[4]))); ;
 
-194 10: 
+199 10: 
 _t
 ->
 	`­¶yRŞe
@@ -98295,55 +99069,69 @@ U£rRŞeMngr
 _a
 [1]))); ;
 
-195 11: 
+200 11: 
+_t
+->
+	`¦t_AµlyRŞe
+((*
+»š‹½»t_ÿ¡
+< 
+U£rRŞeMngr
+::
+	`U£rRŞe
+(*)>(
+_a
+[1]))); ;
+
+201 12: 
 _t
 ->
 	`Ú_idStÜeBŠ_şicked
 (); ;
 
-196 12: 
+202 13: 
 _t
 ->
 	`Ú_idLßdBŠ_şicked
 (); ;
 
-197 13: 
+203 14: 
 _t
 ->
 	`Ú_msgTy³StÜeBŠ_şicked
 (); ;
 
-198 14: 
+204 15: 
 _t
 ->
 	`Ú_msgTy³LßdBŠ_şicked
 (); ;
 
-199 15: 
+205 16: 
 _t
 ->
 	`Ú_idAddBŠ_şicked
 (); ;
 
-200 16: 
+206 17: 
 _t
 ->
 	`Ú_msgTy³AddBŠ_şicked
 (); ;
 
-201 17: 
+207 18: 
 _t
 ->
 	`Ú_idRmvBŠ_şicked
 (); ;
 
-202 18: 
+208 19: 
 _t
 ->
 	`Ú_msgTy³RmvBŠ_şicked
 (); ;
 
-203 19: 
+209 20: 
 _t
 ->
 	`¦t_IDR•Added
@@ -98355,7 +99143,7 @@ _t
 _a
 [1]))); ;
 
-204 20: 
+210 21: 
 _t
 ->
 	`¦t_IDR•Upd©ed
@@ -98367,7 +99155,7 @@ _t
 _a
 [1]))); ;
 
-205 21: 
+211 22: 
 _t
 ->
 	`¦t_IDR•Removed
@@ -98379,7 +99167,7 @@ _t
 _a
 [1]))); ;
 
-206 22: 
+212 23: 
 _t
 ->
 	`¦t_MsgTy³R•Added
@@ -98391,7 +99179,7 @@ _t
 _a
 [1]))); ;
 
-207 23: 
+213 24: 
 _t
 ->
 	`¦t_MsgTy³R•Upd©ed
@@ -98403,7 +99191,7 @@ _t
 _a
 [1]))); ;
 
-208 24: 
+214 25: 
 _t
 ->
 	`¦t_MsgTy³R•Removed
@@ -98415,7 +99203,7 @@ _t
 _a
 [1]))); ;
 
-211 } ià(
+217 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -98423,7 +99211,7 @@ QM‘aObjeù
 IndexOfM‘hod
 ) {
 
-212 *
+218 *
 »suÉ
  = 
 »š‹½»t_ÿ¡
@@ -98431,7 +99219,7 @@ IndexOfM‘hod
 _a
 [0]);
 
-213 **
+219 **
 func
  = 
 »š‹½»t_ÿ¡
@@ -98439,7 +99227,7 @@ func
 _a
 [1]);
 
-215 (
+221 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98451,7 +99239,7 @@ _a
 	tQCŞÜ
  & );
 
-216 ià(*
+222 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98465,11 +99253,11 @@ Mes§geCÚfig
 sgÆIdAddFšished
 )) {
 
-217 *
+223 *
 »suÉ
  = 0;
 
-222 (
+228 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98481,7 +99269,7 @@ sgÆIdAddFšished
 	tQCŞÜ
  & );
 
-223 ià(*
+229 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98495,11 +99283,11 @@ Mes§geCÚfig
 sgÆMsgTy³AddFšished
 )) {
 
-224 *
+230 *
 »suÉ
  = 1;
 
-229 (
+235 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98507,7 +99295,7 @@ sgÆMsgTy³AddFšished
 	tIDR•
  & );
 
-230 ià(*
+236 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98521,11 +99309,11 @@ Mes§geCÚfig
 sgÆ_IDR•Added
 )) {
 
-231 *
+237 *
 »suÉ
  = 2;
 
-236 (
+242 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98533,7 +99321,7 @@ sgÆ_IDR•Added
 	tIDR•
  & );
 
-237 ià(*
+243 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98547,11 +99335,11 @@ Mes§geCÚfig
 sgÆ_IDR•Upd©ed
 )) {
 
-238 *
+244 *
 »suÉ
  = 3;
 
-243 (
+249 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98559,7 +99347,7 @@ sgÆ_IDR•Upd©ed
 	tMsgIDTy³
  );
 
-244 ià(*
+250 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98573,11 +99361,11 @@ Mes§geCÚfig
 sgÆ_IDR•Removed
 )) {
 
-245 *
+251 *
 »suÉ
  = 4;
 
-250 (
+256 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98585,7 +99373,7 @@ sgÆ_IDR•Removed
 	tMsgTy³R•
  & );
 
-251 ià(*
+257 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98599,11 +99387,11 @@ Mes§geCÚfig
 sgÆ_MsgTy³R•Added
 )) {
 
-252 *
+258 *
 »suÉ
  = 5;
 
-257 (
+263 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98611,7 +99399,7 @@ sgÆ_MsgTy³R•Added
 	tMsgTy³R•
  & );
 
-258 ià(*
+264 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98625,11 +99413,11 @@ Mes§geCÚfig
 sgÆ_MsgTy³R•Upd©ed
 )) {
 
-259 *
+265 *
 »suÉ
  = 6;
 
-264 (
+270 (
 	tMes§geCÚfig
 ::*
 	t_t
@@ -98637,7 +99425,7 @@ sgÆ_MsgTy³R•Upd©ed
 	tMsgCodeTy³
  );
 
-265 ià(*
+271 ià(*
 »š‹½»t_ÿ¡
 <
 _t
@@ -98651,15 +99439,15 @@ Mes§geCÚfig
 sgÆ_MsgTy³R•Removed
 )) {
 
-266 *
+272 *
 »suÉ
  = 7;
 
-271 
+277 
 	}
 }
 
-273 cÚ¡ 
+279 cÚ¡ 
 QM‘aObjeù
  
 	gMes§geCÚfig
@@ -98667,7 +99455,7 @@ QM‘aObjeù
 ¡©icM‘aObjeù
  = {
 
-274 { &
+280 { &
 QWidg‘
 ::
 ¡©icM‘aObjeù
@@ -98677,7 +99465,7 @@ qt_m‘a_¡ršgd©a_Mes§geCÚfig
 d©a
 ,
 
-275 
+281 
 qt_m‘a_d©a_Mes§geCÚfig
 , 
 qt_¡©ic_m‘aÿÎ
@@ -98685,7 +99473,7 @@ qt_¡©ic_m‘aÿÎ
 Q_NULLPTR
 , Q_NULLPTR}
 
-279 cÚ¡ 
+285 cÚ¡ 
 QM‘aObjeù
  *
 	gMes§geCÚfig
@@ -98693,7 +99481,7 @@ QM‘aObjeù
 	$m‘aObjeù
 () const
 
-281  
+287  
 QObjeù
 ::
 d_±r
@@ -98705,11 +99493,11 @@ m‘aObjeù
 ¡©icM‘aObjeù
 ;
 
-282 
+288 
 	}
 }
 
-284 *
+290 *
 	gMes§geCÚfig
 ::
 	$qt_m‘aÿ¡
@@ -98717,13 +99505,13 @@ m‘aObjeù
 _şÇme
 )
 
-286 ià(!
+292 ià(!
 _şÇme
 è 
 Q_NULLPTR
 ;
 
-287 ià(!
+293 ià(!
 	`¡rcmp
 (
 _şÇme
@@ -98733,7 +99521,7 @@ qt_m‘a_¡ršgd©a_Mes§geCÚfig
 ¡ršgd©a0
 ))
 
-288  
+294  
 ¡©ic_ÿ¡
 <*>(
 cÚ¡_ÿ¡
@@ -98743,13 +99531,31 @@ Mes§geCÚfig
 this
 ));
 
-289 ià(!
+295 ià(!
+	`¡rcmp
+(
+_şÇme
+, "IMessageConfig"))
+
+296  
+¡©ic_ÿ¡
+< 
+IMes§geCÚfig
+*>(
+cÚ¡_ÿ¡
+< 
+Mes§geCÚfig
+*>(
+this
+));
+
+297 ià(!
 	`¡rcmp
 (
 _şÇme
 , "IFileParsable"))
 
-290  
+298  
 ¡©ic_ÿ¡
 < 
 IFeP¬§bË
@@ -98761,7 +99567,7 @@ Mes§geCÚfig
 this
 ));
 
-291  
+299  
 QWidg‘
 ::
 	`qt_m‘aÿ¡
@@ -98769,11 +99575,11 @@ QWidg‘
 _şÇme
 );
 
-292 
+300 
 	}
 }
 
-294 
+302 
 	gMes§geCÚfig
 ::
 	$qt_m‘aÿÎ
@@ -98789,7 +99595,7 @@ _id
 _a
 )
 
-296 
+304 
 _id
  = 
 QWidg‘
@@ -98801,15 +99607,15 @@ _c
 _a
 );
 
-297 ià(
+305 ià(
 _id
  < 0)
 
-298  
+306  
 _id
 ;
 
-299 ià(
+307 ià(
 _c
  =ğ
 QM‘aObjeù
@@ -98817,11 +99623,11 @@ QM‘aObjeù
 InvokeM‘aM‘hod
 ) {
 
-300 ià(
+308 ià(
 _id
- < 25)
+ < 26)
 
-301 
+309 
 	`qt_¡©ic_m‘aÿÎ
 (
 this
@@ -98833,11 +99639,11 @@ _id
 _a
 );
 
-302 
+310 
 _id
- -= 25;
+ -= 26;
 
-303 } ià(
+311 } ià(
 _c
  =ğ
 QM‘aObjeù
@@ -98845,29 +99651,29 @@ QM‘aObjeù
 Regi¡”M‘hodArgum’tM‘aTy³
 ) {
 
-304 ià(
+312 ià(
 _id
- < 25)
+ < 26)
 
-305 *
+313 *
 »š‹½»t_ÿ¡
 <*>(
 _a
 [0]) = -1;
 
-306 
+314 
 _id
- -= 25;
+ -= 26;
 
-308  
+316  
 _id
 ;
 
-309 
+317 
 	}
 }
 
-312 
+320 
 	gMes§geCÚfig
 ::
 	$sgÆIdAddFšished
@@ -98885,7 +99691,7 @@ QCŞÜ
 _t3
 )
 
-314 *
+322 *
 _a
 [] = { 
 Q_NULLPTR
@@ -98901,7 +99707,7 @@ _t2
 _t3
 )) };
 
-315 
+323 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -98913,11 +99719,11 @@ this
 _a
 );
 
-316 
+324 
 	}
 }
 
-319 
+327 
 	gMes§geCÚfig
 ::
 	$sgÆMsgTy³AddFšished
@@ -98937,7 +99743,7 @@ QCŞÜ
 _t4
 )
 
-321 *
+329 *
 _a
 [] = { 
 Q_NULLPTR
@@ -98955,7 +99761,7 @@ _t3
 _t4
 )) };
 
-322 
+330 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -98967,11 +99773,11 @@ this
 _a
 );
 
-323 
+331 
 	}
 }
 
-326 
+334 
 	gMes§geCÚfig
 ::
 	$sgÆ_IDR•Added
@@ -98981,7 +99787,7 @@ IDR•
 _t1
 )
 
-328 *
+336 *
 _a
 [] = { 
 Q_NULLPTR
@@ -98993,7 +99799,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-329 
+337 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -99005,11 +99811,11 @@ this
 _a
 );
 
-330 
+338 
 	}
 }
 
-333 
+341 
 	gMes§geCÚfig
 ::
 	$sgÆ_IDR•Upd©ed
@@ -99019,7 +99825,7 @@ IDR•
 _t1
 )
 
-335 *
+343 *
 _a
 [] = { 
 Q_NULLPTR
@@ -99031,7 +99837,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-336 
+344 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -99043,11 +99849,11 @@ this
 _a
 );
 
-337 
+345 
 	}
 }
 
-340 
+348 
 	gMes§geCÚfig
 ::
 	$sgÆ_IDR•Removed
@@ -99057,7 +99863,7 @@ MsgIDTy³
 _t1
 )
 
-342 *
+350 *
 _a
 [] = { 
 Q_NULLPTR
@@ -99069,7 +99875,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-343 
+351 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -99081,11 +99887,11 @@ this
 _a
 );
 
-344 
+352 
 	}
 }
 
-347 
+355 
 	gMes§geCÚfig
 ::
 	$sgÆ_MsgTy³R•Added
@@ -99095,7 +99901,7 @@ MsgTy³R•
 _t1
 )
 
-349 *
+357 *
 _a
 [] = { 
 Q_NULLPTR
@@ -99107,7 +99913,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-350 
+358 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -99119,11 +99925,11 @@ this
 _a
 );
 
-351 
+359 
 	}
 }
 
-354 
+362 
 	gMes§geCÚfig
 ::
 	$sgÆ_MsgTy³R•Upd©ed
@@ -99133,7 +99939,7 @@ MsgTy³R•
 _t1
 )
 
-356 *
+364 *
 _a
 [] = { 
 Q_NULLPTR
@@ -99145,7 +99951,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-357 
+365 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -99157,11 +99963,11 @@ this
 _a
 );
 
-358 
+366 
 	}
 }
 
-361 
+369 
 	gMes§geCÚfig
 ::
 	$sgÆ_MsgTy³R•Removed
@@ -99171,7 +99977,7 @@ MsgCodeTy³
 _t1
 )
 
-363 *
+371 *
 _a
 [] = { 
 Q_NULLPTR
@@ -99183,7 +99989,7 @@ cÚ¡_ÿ¡
 _t1
 )) };
 
-364 
+372 
 QM‘aObjeù
 ::
 	`aùiv©e
@@ -99195,11 +100001,11 @@ this
 _a
 );
 
-365 
+373 
 	}
 }
 
-366 
+374 
 	gQT_END_MOC_NAMESPACE
 
 
@@ -131061,8 +131867,8 @@ Ui_Tem¶©eV®ueEv®u©ÜC»©ÜWidg‘
 1
 .
 0
-236
-13695
+247
+14273
 CAN_Analyser_USB_Driver/can_packet.cpp
 CAN_Analyser_USB_Driver/can_packet.h
 CAN_Analyser_USB_Driver/data_packet.cpp
@@ -131112,29 +131918,40 @@ R_Visualizer/MessageConfig/inc/IMsgCodeRep.h
 R_Visualizer/MessageConfig/inc/IMsgDataMappingModel.h
 R_Visualizer/MessageConfig/inc/IMsgDataRep.h
 R_Visualizer/MessageConfig/inc/IMsgIDMappingModel.h
+R_Visualizer/MessageConfig/inc/IMsgIDMappingStore.h
 R_Visualizer/MessageConfig/inc/IMsgIDRep.h
 R_Visualizer/MessageConfig/inc/IPlainTextAliasMapping.h
+R_Visualizer/MessageConfig/inc/MsgCodeMappingWidget.h
+R_Visualizer/MessageConfig/inc/MsgCodeRep.h
+R_Visualizer/MessageConfig/inc/MsgDataMappingWidget.h
 R_Visualizer/MessageConfig/inc/MsgDataModel.h
+R_Visualizer/MessageConfig/inc/MsgDataRep.h
+R_Visualizer/MessageConfig/inc/MsgIDMappingStore.h
+R_Visualizer/MessageConfig/inc/MsgIDMappingWidget.h
+R_Visualizer/MessageConfig/inc/MsgIDRep.h
 R_Visualizer/MessageConfig/inc/idadddialog.h
 R_Visualizer/MessageConfig/inc/ideditordelegate.h
 R_Visualizer/MessageConfig/inc/idmodel.h
-R_Visualizer/MessageConfig/inc/idrep.h
 R_Visualizer/MessageConfig/inc/messageconfig.h
 R_Visualizer/MessageConfig/inc/msgtypeadddialog.h
 R_Visualizer/MessageConfig/inc/msgtypeeditordelegate.h
 R_Visualizer/MessageConfig/inc/msgtypeformatterdialog.h
 R_Visualizer/MessageConfig/inc/msgtypemodel.h
-R_Visualizer/MessageConfig/inc/msgtyperep.h
+R_Visualizer/MessageConfig/src/MsgCodeMappingWidget.cpp
+R_Visualizer/MessageConfig/src/MsgCodeRep.cpp
+R_Visualizer/MessageConfig/src/MsgDataMappingWidget.cpp
+R_Visualizer/MessageConfig/src/MsgDataRep.cpp
+R_Visualizer/MessageConfig/src/MsgIDMappingStore.cpp
+R_Visualizer/MessageConfig/src/MsgIDMappingWidget.cpp
+R_Visualizer/MessageConfig/src/MsgIDRep.cpp
 R_Visualizer/MessageConfig/src/idadddialog.cpp
 R_Visualizer/MessageConfig/src/ideditordelegate.cpp
 R_Visualizer/MessageConfig/src/idmodel.cpp
-R_Visualizer/MessageConfig/src/idrep.cpp
 R_Visualizer/MessageConfig/src/messageconfig.cpp
 R_Visualizer/MessageConfig/src/msgtypeadddialog.cpp
 R_Visualizer/MessageConfig/src/msgtypeeditordelegate.cpp
 R_Visualizer/MessageConfig/src/msgtypeformatterdialog.cpp
 R_Visualizer/MessageConfig/src/msgtypemodel.cpp
-R_Visualizer/MessageConfig/src/msgtyperep.cpp
 R_Visualizer/MessageFilter/inc/filtercodeadddialog.h
 R_Visualizer/MessageFilter/inc/filtercodestore.h
 R_Visualizer/MessageFilter/inc/filteridadddialog.h

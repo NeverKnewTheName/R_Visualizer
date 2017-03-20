@@ -2,7 +2,8 @@
 #define MESSAGECONFIG_H
 
 #include <QWidget>
-#include "idmodel.h"
+/* #include "idmodel.h" */
+#include "MsgIDMappingWidget.h"
 #include "msgtypemodel.h"
 #include "userrolemngr.h"
 
@@ -63,12 +64,23 @@ private:
 signals:
     void sgnlIdAddFinished(const MsgIDType id, const QString &name, const QColor &color);
     void sgnlMsgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
-    void sgnl_IDRepAdded(const IDRep &newIDRep);
-    void sgnl_IDRepUpdated(const IDRep &updatedIDRep);
-    void sgnl_IDRepRemoved(const MsgIDType relatedID);
-    void sgnl_MsgTypeRepAdded(const MsgTypeRep &newMsgType);
-    void sgnl_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgType);
-    void sgnl_MsgTypeRepRemoved(const MsgCodeType relatedCode);
+
+    void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
+    void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
+    void sgnl_MsgIDRepRemoved(const MsgIDType relatedID);
+
+    void sgnl_MsgCodeRepAdded(const IMsgCodeRep &newMsgCodeRep);
+    void sgnl_MsgCodeRepUpdated(const IMsgCodeRep &updatedMsgCodeRep);
+    void sgnl_MsgCodeRepRemoved(const MsgCodeType relatedCode);
+
+    void sgnl_MsgDataRepAdded(const IMsgDataRep &newMsgDataRep);
+    void sgnl_MsgDataRepUpdated(
+            const IMsgDataRep &updatedMsgDataRep
+            );
+    void sgnl_MsgDataRepRemoved(
+            const MsgIDType relatedID,
+            const MsgCodeType relatedCode
+            );
     /* void sgnl_MsgDataRepAdded(const MsgDataRep &newMsgData); */
     /* void sgnl_MsgDataRepUpdated(const MsgDataRep &updatedMsgData); */
     /* void sgnl_MsgDataRepRemoved(const MsgCodeType relatedCode); */
@@ -78,6 +90,7 @@ private slots:
     void msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
 
     void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
+    void slt_ApplyRole(UserRoleMngr::UserRole roleToApply);
 
     void on_idStoreBtn_clicked();
     void on_idLoadBtn_clicked();

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MsgDataMappingWidget</class>
+ <widget class="QWidget" name="MsgDataMappingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBox_9">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>MsgData Mapping</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="5" column="0">
+       <spacer name="StoreLoadSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="5" column="3">
+       <widget class="QPushButton" name="msgDataLoadBtn">
+        <property name="toolTip">
+         <string>Load an ID configuration (*.json)</string>
+        </property>
+        <property name="text">
+         <string>Load</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="5" colspan="6">
+       <widget class="QTableView" name="msgDataTableView">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ID configuration browser which shows all currently available IDs and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole ID configuration with the Load button or Add/Remove  IDs to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QPushButton" name="msgDataStoreBtn">
+        <property name="toolTip">
+         <string>Save the current ID configuration (*.json) to a file</string>
+        </property>
+        <property name="text">
+         <string>Store</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QPushButton" name="msgDataAddBtn">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new ID configuration entry to the current ID configuration. The ID configuration tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QPushButton" name="msgDataRemoveBtn">
+        <property name="toolTip">
+         <string>Remove the selected entry from the current ID configuration.</string>
+        </property>
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <spacer name="RemoveAddSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

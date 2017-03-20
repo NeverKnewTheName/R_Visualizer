@@ -6,12 +6,10 @@
 class IPlainTextAliasMapping
 {
 public:
-    IPlainTextAliasMapping();
-    virtual ~IPlainTextAliasMapping();
+    virtual ~IPlainTextAliasMapping(){}
 
-    QString getPlainTextAlias() const = 0;
-    void setPlainTextAlias(const QString &plainTextAlias) = 0;
-
+    virtual QString getPlainTextAlias() const = 0;
+    virtual void setPlainTextAlias(const QString &plainTextAlias) = 0;
 };
 
 #endif /* IPLAINTEXTALIASMAPPING_H */

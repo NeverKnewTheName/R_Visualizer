@@ -8,19 +8,18 @@
 class IMsgDataRep
 {
 public:
-    IMsgDataRep();
-    virtual ~IMsgDataRep();
+    virtual ~IMsgDataRep(){}
 
-    MsgIDType getMsgID() const = 0;
-    void setMsgID(const MsgIDType id) = 0;
+    virtual MsgIDType getMsgID() const = 0;
+    virtual void setMsgID(const MsgIDType id) = 0;
 
-    MsgCodeType getMsgCode() const = 0;
-    void setMsgCode(const MsgCodeType code) = 0;
+    virtual MsgCodeType getMsgCode() const = 0;
+    virtual void setMsgCode(const MsgCodeType code) = 0;
 
-    QString getFormatString() const = 0;
-    void setFormatString(const QString &formatString) = 0;
+    virtual QString getFormatString() const = 0;
+    virtual void setFormatString(const QString &formatString) = 0;
 
-    QString parseMsgData(const MsgData &msgData) const = 0;
+    virtual QString parseMsgData(const MsgData &msgData) const = 0;
 };
 
 #endif /* IMSGDATAREP_H */
