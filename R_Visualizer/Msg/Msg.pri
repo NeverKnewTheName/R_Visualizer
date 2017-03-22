@@ -18,6 +18,7 @@ SOURCES += \
     $$PWD/src/prettymsg.cpp \
 
 HEADERS  += \
+    $$PWD/inc/MsgFieldType.h \
     $$PWD/inc/msg.h \
     # $$PWD/inc/msgmodel.h \
     # $$PWD/inc/msgdelegate.h \
