@@ -1,3 +1,10 @@
+/**
+ * @file filteriddelegate.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief A delegate for message ids in the message id filter
+ */
 #ifndef FILTERIDDELEGATE_H
 #define FILTERIDDELEGATE_H
 
@@ -7,6 +14,9 @@
 #include <QStringList>
 
 
+/**
+ * \brief The FilterIDDelegate
+ */
 class FilterIDDelegate : public QStyledItemDelegate
 {
 public:

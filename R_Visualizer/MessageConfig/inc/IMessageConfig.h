@@ -1,3 +1,10 @@
+/**
+ * \file IMessageConfig.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief An interface for the Message Config Module
+ */
 #ifndef IMESSAGECONFIG_H
 #define IMESSAGECONFIG_H
 
@@ -6,6 +13,9 @@
 
 #include "prettymsg.h"
 
+/**
+ * \brief The IMessageConfig interface
+ */
 class IMessageConfig
 {
 public:

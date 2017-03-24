@@ -1,9 +1,19 @@
+/**
+ * \file MsgDataRep.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Representation of message data
+ */
 #ifndef MSGDATAREP_H
 #define MSGDATAREP_H
 
 #include "IMsgDataRep.h"
 #include "IFileParsable.h"
 
+/**
+ * \brief The MsgDataRep
+ */
 class MsgDataRep : public IMsgDataRep, public IFileParsable
 {
 public:

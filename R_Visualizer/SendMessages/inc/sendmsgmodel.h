@@ -1,3 +1,10 @@
+/**
+ * @file sendmsgmodel.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief Provides a model for Msg for the SendMessages Module
+ */
 #ifndef SENDMSGMODEL_H
 #define SENDMSGMODEL_H
 
@@ -12,6 +19,9 @@ class MsgTypeRep;
 /* class MsgDataRep; */
 class FileParser;
 
+/**
+ * @brief The SendMsgModel
+ */
 class SendMsgModel : public QAbstractTableModel, public IFileParsable
 {
 public:

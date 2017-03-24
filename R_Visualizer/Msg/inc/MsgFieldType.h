@@ -178,6 +178,8 @@ private:
  * \note Types that need special functions for implicit casts to T, QString,
  * bool, or QColor need to derive from #MsgFieldTypeTemplate in the manner this
  * class does!
+ * 
+ * \note Fields need to typedef to this class with their respective type
  */
 template<typename T>
 class MsgFieldType : public MsgFieldTypeTemplate<T, MsgFieldType<T>>
@@ -186,20 +188,9 @@ public:
     explicit MsgFieldType() :
         MsgID<T,MsgFieldType<T>>()
     {}
-    explicit MsgFieldType(const T &id) :
-        MsgID<T,MsgFieldType<T>>(id)
+    explicit MsgFieldType(const T &field) :
+        MsgID<T,MsgFieldType<T>>(field)
     {}
 };
-
-typedef quint16 MsgIDPrimitiveType;
-typedef MsgFieldType<MsgIDPrimitiveType> MsgID;
-
-typedef quint16 MsgCodePrimitiveType;
-typedef MsgFieldType<MsgCodePrimitiveType> MsgCode;
-
-typedef quint8 MsgDataBytePrimitiveType;
-typedef MsgFieldType<MsgDataBytePrimitiveType> MsgDataByte;
-
-typedef QVector<MsgDataByte> MsgDataByteVect;
 
 #endif /* MSGFIELDTYPE_H */

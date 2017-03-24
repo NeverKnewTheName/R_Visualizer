@@ -1,3 +1,8 @@
+/**
+ * \file msgtypeaddialog.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ */
 #ifndef MSGTYPEADDDIALOG_H
 #define MSGTYPEADDDIALOG_H
 
@@ -7,6 +12,9 @@ namespace Ui {
 class MsgTypeAddDialog;
 }
 
+/**
+ * @brief The MsgTypeAddDialog
+ */
 class MsgTypeAddDialog : public QDialog
 {
     Q_OBJECT

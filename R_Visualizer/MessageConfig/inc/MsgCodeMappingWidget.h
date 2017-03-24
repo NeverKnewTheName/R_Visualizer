@@ -1,3 +1,10 @@
+/**
+ * \file MsgCodeMappingWidget.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides a gui widget to manage message code mappings
+ */
 #ifndef MSGCODEMAPPINGWIDGET_H
 #define MSGCODEMAPPINGWIDGET_H
 
@@ -7,6 +14,9 @@ namespace Ui {
 class MsgCodeMappingWidget;
 }
 
+/**
+ * \brief The MsgCodeMappingWidget
+ */
 class MsgCodeMappingWidget : public QWidget
 {
     Q_OBJECT

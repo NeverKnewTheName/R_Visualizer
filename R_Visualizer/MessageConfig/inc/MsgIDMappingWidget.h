@@ -1,3 +1,10 @@
+/**
+ * \file MsgIDMappingWidget.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides a gui widget to manage message id mappings
+ */
 #ifndef MSGIDMAPPINGWIDGET_H
 #define MSGIDMAPPINGWIDGET_H
 
@@ -10,6 +17,9 @@ namespace Ui {
 class MsgIDMappingWidget;
 }
 
+/**
+ * \brief The MsgIDMappingWidget
+ */
 class MsgIDMappingWidget : public QWidget
 {
     Q_OBJECT

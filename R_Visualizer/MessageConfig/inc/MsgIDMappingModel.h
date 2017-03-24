@@ -1,3 +1,10 @@
+/**
+ * \file MsgIDMappingModel.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief A model that manages message id mappings
+ */
 #ifndef MSGIDMAPPINGMODEL_H
 #define MSGIDMAPPINGMODEL_H
 
@@ -12,6 +19,9 @@
 
 class FileParser;
 
+/**
+ * \brief The MsgIDMappingModel
+ */
 class MsgIDMappingModel : public QAbstractTableModel, public IMsgIDMappingModel,
     public IFileParsable
 {

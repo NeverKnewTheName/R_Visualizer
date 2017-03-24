@@ -1,3 +1,10 @@
+/**
+ * \file IMsgIDMappingModel.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides an interface for models storing message id mappings
+ */
 #ifndef IMSGIDMAPPINGMODEL_H
 #define IMSGIDMAPPINGMODEL_H
 
@@ -8,6 +15,9 @@
 #include "msg.h"
 #include "IMsgIDRep.h"
 
+/**
+ * \brief The IMsgIDMappingModel interface
+ */
 class IMsgIDMappingModel
 {
 public:

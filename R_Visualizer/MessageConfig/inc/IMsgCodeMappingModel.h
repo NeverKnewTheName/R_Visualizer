@@ -1,3 +1,10 @@
+/**
+ * \file IMsgCodeMappingModel.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides an interface for storing message code mappings
+ */
 #ifndef IMSGCODEMODEL_H
 #define IMSGCODEMODEL_H
 
@@ -8,6 +15,9 @@
 #include "msg.h"
 #include "IMsgCodeRep.h"
 
+/**
+ * \brief The IMsgCodeMappingModel interface
+ */
 class IMsgCodeMappingModel
 {
 public:

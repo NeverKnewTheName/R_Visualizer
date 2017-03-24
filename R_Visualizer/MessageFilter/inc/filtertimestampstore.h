@@ -1,3 +1,10 @@
+/**
+ * @file filtertimestampstore.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief A Store for timestamps for the message timestamp filter
+ */
 #ifndef FILTERTIMESTAMPSTORE_H
 #define FILTERTIMESTAMPSTORE_H
 
@@ -8,6 +15,9 @@ class FileParser;
 
 #include "IFileParsable.h"
 
+/**
+ * @brief The FilterTimestampStore
+ */
 class FilterTimestampStore : public QObject, public IFileParsable
 {
     Q_OBJECT

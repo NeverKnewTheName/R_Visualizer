@@ -1,3 +1,10 @@
+/**
+ * @file filtermsgtypedelegate.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief A Delegate for message codes for the message code filter widget
+ */
 #ifndef FILTERMSGTYPEDELEGATE_H
 #define FILTERMSGTYPEDELEGATE_H
 

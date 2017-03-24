@@ -1,3 +1,10 @@
+/**
+ * \file IMsgDataRep.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides an interface for a message data mapping
+ */
 #ifndef IMSGDATAREP_H
 #define IMSGDATAREP_H
 
@@ -5,6 +12,9 @@
 
 #include "msg.h"
 
+/**
+ * \brief The IMsgDataRep interface
+ */
 class IMsgDataRep
 {
 public:

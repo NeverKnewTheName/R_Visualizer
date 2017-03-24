@@ -1,3 +1,10 @@
+/**
+ * \file MsgDataMappingWidget.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides a gui widget to manage message data mappings
+ */
 #ifndef MSGDATAMAPPINGWIDGET_H
 #define MSGDATAMAPPINGWIDGET_H
 
@@ -7,6 +14,9 @@ namespace Ui {
 class MsgDataMappingWidget;
 }
 
+/**
+ * \brief The MsgDataMappingWidget
+ */
 class MsgDataMappingWidget : public QWidget
 {
     Q_OBJECT

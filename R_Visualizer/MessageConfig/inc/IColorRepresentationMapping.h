@@ -1,8 +1,19 @@
+/**
+ * \file IColorRepresentationMapping.h
+ * \author Christian Neuberger
+ * \date 2017-03-20
+ * 
+ * \brief Provides an interface for classes that have or provide a color
+ * representation
+ */
 #ifndef ICOLORREPRESENTATIONMAPPING_H
 #define ICOLORREPRESENTATIONMAPPING_H
 
 #include <QColor>
 
+/**
+ * \brief The IColorRepresentationMapping interface
+ */
 class IColorRepresentationMapping
 {
 public:

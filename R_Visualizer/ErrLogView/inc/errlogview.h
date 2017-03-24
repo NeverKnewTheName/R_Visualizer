@@ -1,11 +1,9 @@
 /**
- * @file	errorlogview.h
- * @author	Christian Neuberger
+ * @file    errorlogview.h
+ * @author  Christian Neuberger
+ * \date    2016-03-20
  *
  * \brief Class to interact with the Error Log View Dialog
- *
- *
- *
  */
 
 #ifndef ERRORLOGVIEW_H
@@ -23,6 +21,9 @@ namespace Ui {
 class ErrorLogView;
 }
 
+/**
+ * \brief The ErrorLogView
+ */
 class ErrorLogView : public QDialog, public IFileParsable
 {
     Q_OBJECT

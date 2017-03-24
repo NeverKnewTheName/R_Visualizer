@@ -33,7 +33,6 @@ public:
     );
     virtual ~PrettyMsg();
 
-    //ToTHINK ...maybe return references instead??
     QString printIDName() const;
     QColor getIDColor() const;
     QString printCodeName() const;

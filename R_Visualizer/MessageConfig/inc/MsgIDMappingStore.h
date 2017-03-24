@@ -1,3 +1,10 @@
+/**
+ * \file MsgIDMappingStore.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief A Store for message id mappings
+ */
 #ifndef MSGIDMAPPINGSTORE_H
 #define MSGIDMAPPINGSTORE_H
 
@@ -6,6 +13,9 @@
 
 #include <QHash>
 
+/**
+ * @brief The MsgIDMappingStore
+ */
 class MsgIDMappingStore
 {
 public:

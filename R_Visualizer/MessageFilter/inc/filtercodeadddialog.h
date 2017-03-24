@@ -1,3 +1,10 @@
+/**
+ * \file filtercodeadddialog.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * @brief A Dialog for inputting message codes as filter criteria
+ */
 #ifndef FILTERCODEADDDIALOG_H
 #define FILTERCODEADDDIALOG_H
 
@@ -11,6 +18,9 @@ namespace Ui {
 class FilterCodeAddDialog;
 }
 
+/**
+ * @brief The FilterCodeAddDialog
+ */
 class FilterCodeAddDialog : public QDialog
 {
     Q_OBJECT

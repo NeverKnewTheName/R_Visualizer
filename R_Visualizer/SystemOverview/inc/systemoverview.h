@@ -1,3 +1,10 @@
+/**
+ * @file systemoverview.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief The System Overview Module
+ */
 #ifndef SYSTEMOVERVIEW_H
 #define SYSTEMOVERVIEW_H
 

@@ -1,3 +1,10 @@
+/**
+ * @file codelineedit.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief Provides a QLineEdit specific for entering message codes
+ */
 #ifndef CODELINEEDIT_H
 #define CODELINEEDIT_H
 
@@ -8,6 +15,9 @@ class MessageConfig;
 
 #include "msg.h"
 
+/**
+ * @brief The CodeLineEdit
+ */
 class CodeLineEdit : public QLineEdit
 {
 public:

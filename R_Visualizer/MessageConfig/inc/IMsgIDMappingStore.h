@@ -1,3 +1,10 @@
+/**
+ * \file IMsgIDMappingStore.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Provides an interface for message id mapping stores
+ */
 #ifndef IMSGIDMAPPINGSTORE_H
 #define IMSGIDMAPPINGSTORE_H
 
@@ -6,6 +13,9 @@
 
 #include "IMsgIDRep.h"
 
+/**
+ * \brief The IMsgIDMappingStore interface
+ */
 class IMsgIDMappingStore
 {
 public:

@@ -1,11 +1,9 @@
 /**
- * @file	errorlogmodel.h
- * @author	Christian Neuberger
+ * \file    errorlogmodel.h
+ * \author  Christian Neuberger
+ * \date 2016-03-20
  *
  * \brief Model that maintains the Error Log.
- *
- *
- *
  */
 
 #ifndef ERRLOGMODEL_H
@@ -19,6 +17,9 @@ class FileParser;
 
 #include "IFileParsable.h"
 
+/**
+ * @brief The ErrLogModel
+ */
 class ErrLogModel : public QAbstractTableModel, public IFileParsable
 {
 public:

@@ -1,3 +1,11 @@
+/**
+ * \file messageconfig.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief The Message Config Module provides means to customize the visual
+ * appearance of message fields in the whole application
+ */
 #ifndef MESSAGECONFIG_H
 #define MESSAGECONFIG_H
 
@@ -18,6 +26,9 @@ namespace Ui {
 class MessageConfig;
 }
 
+/**
+ * \brief The Message Config Module
+ */
 class MessageConfig : public QWidget, public IMessageConfig, public IFileParsable
 {
     Q_OBJECT

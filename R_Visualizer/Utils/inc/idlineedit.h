@@ -1,3 +1,10 @@
+/**
+ * @file idlineedit.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief Provides a QLineEdit specific for entering messages ids
+ */
 #ifndef IDLINEEDIT_H
 #define IDLINEEDIT_H
 
@@ -8,6 +15,9 @@ class MessageConfig;
 
 #include "msg.h"
 
+/**
+ * @brief The IDLineEdit
+ */
 class IDLineEdit : public QLineEdit
 {
 public:

@@ -1,3 +1,10 @@
+/**
+ * @file sendmessages.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief The Send Messages Module
+ */
 #ifndef SENDMESSAGES_H
 #define SENDMESSAGES_H
 
@@ -18,6 +25,9 @@ namespace Ui {
 class SendMessages;
 }
 
+/**
+ * @brief The SendMessages
+ */
 class SendMessages : public QWidget, public IFileParsable
 {
     Q_OBJECT
