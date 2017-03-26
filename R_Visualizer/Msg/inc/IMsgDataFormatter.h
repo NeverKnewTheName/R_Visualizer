@@ -21,6 +21,7 @@ class IMsgDataFormatter
 public:
     virtual ~IMsgDataFormatter(){}
 
+    std::unique_ptr<IMsgDataFormatter> clone() const = 0;
     /**
      * \brief Parses the data field of a message to a QString
      * 
@@ -36,6 +37,30 @@ public:
      * the whole message is passed as a parameter.
      */
     virtual QColor parseMsgDataToColor(const IMsg &msgToParse) const = 0;
+};
+
+/**
+ * @brief Typedef to unique_ptr for #IMsgDataFormatter
+ */
+using IMsgDataFormatterUniqPtr = std::unique_ptr<IMsgDataFormatter>;
+
+/**
+ * @brief CRTP Copy helper for #IMsgDataFormatter
+ */
+template<class Derived>
+class MsgDataFormatterCRTPHelper : public IMsgDataFormatter
+{
+public:
+    /**
+     * @brief Clones the current #IMsgDataFormatter derivate whilst conserving
+     * its type
+     */
+    IMsgDataFormatterUniqPtr clone() const
+    {
+        return IMsgDataFormatterUniqPtr(
+                new Derived(static_cast<const Derived &>(*this))
+                );
+    }
 };
 
 #endif /* IMSGDATAFORMATTER_H */

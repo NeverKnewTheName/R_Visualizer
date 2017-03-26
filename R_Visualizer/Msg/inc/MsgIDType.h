@@ -17,7 +17,9 @@ typedef quint16 MsgIDPrimitiveType;
 /**
  * \brief Typedef to the actual true typedef class for a message ID
  */
-typedef MsgFieldType<MsgIDPrimitiveType> MsgIDType;
+/* typedef MsgFieldType<MsgIDPrimitiveType> MsgIDType; */
+
+CREATE_OPAQUE_MSG_FIELD_TYPE(MsgIDPrimitiveType, MsgIDType)
 
 
 #endif /* MSGIDTYPE_H */

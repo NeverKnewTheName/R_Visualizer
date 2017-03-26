@@ -10,8 +10,14 @@
 
 #include <QString>
 #include <QColor>
+#include <QCompleter>
 
 #include "prettymsg.h"
+#include "userrolemngr.h"
+
+class IMsgIDRep;
+class IMsgCodeRep;
+class IMsgDataRep;
 
 /**
  * \brief The IMessageConfig interface
@@ -21,20 +27,30 @@ class IMessageConfig
 public:
     virtual ~IMessageConfig(){}
 
-    virtual PrettyMsg prettifyMsg(const Msg &msg) const = 0;
+    /**
+     * @brief Returns a unique_ptr to the prettified message
+     * 
+     * @note The template parameter BaseClass must be specialized in the
+     * implementation classes to match the used derivate of #IPrettyMsg
+     */
+    template<class BaseClass>
+    IPrettyMsgUniqPtr<BaseClass> prettifyMsg(
+            const IMsg &msgToPrettify
+            ) const = 0;
+    /* virtual PrettyMsg prettifyMsg(const Msg &msg) const = 0; */
 
-    virtual MsgIDType getIDToName(const QString &name) const = 0;
-    virtual QString getNameToID(const MsgIDType id) const = 0;
-    virtual QColor getColorToID(const MsgIDType id) const = 0;
-    virtual QColor getColorToIDName(const QString &name) const = 0;
+    /* virtual MsgIDType getIDToName(const QString &name) const = 0; */
+    /* virtual QString getNameToID(const MsgIDType id) const = 0; */
+    /* virtual QColor getColorToID(const MsgIDType id) const = 0; */
+    /* virtual QColor getColorToIDName(const QString &name) const = 0; */
     virtual QCompleter *createIDNameCompleter(
             QObject *parent = Q_NULLPTR
             ) const = 0;
 
-    virtual MsgCodeType getCodeToName(const QString &name) const = 0;
-    virtual QString getNameToCode(const MsgCodeType code) const = 0;
-    virtual QColor getColorToCode(const MsgCodeType code) const = 0;
-    virtual QColor getColorToCodeName(const QString &name) const = 0;
+    /* virtual MsgCodeType getCodeToName(const QString &name) const = 0; */
+    /* virtual QString getNameToCode(const MsgCodeType code) const = 0; */
+    /* virtual QColor getColorToCode(const MsgCodeType code) const = 0; */
+    /* virtual QColor getColorToCodeName(const QString &name) const = 0; */
     virtual QCompleter *createCodeNameCompleter(
             QObject *parent = Q_NULLPTR
             ) const = 0;

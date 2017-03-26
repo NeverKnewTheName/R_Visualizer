@@ -8,6 +8,8 @@
 #ifndef IMSG_H
 #define IMSG_H
 
+#include <memory>
+
 #include "IFileParsable.h"
 
 #include "MsgIDType.h"
@@ -21,6 +23,11 @@ class IMsg : public IFileParsable
 {
 public:
     virtual ~IMsg(){}
+
+    /**
+     * @brief IMsg CRTP copy helper
+     */
+    virtual std::unique_ptr<IMsg> cloneMsg() const = 0;
 
     /**
      * \brief Set the message's ID
@@ -48,6 +55,18 @@ public:
      * \brief Retrieve the message's data
      */
     virtual const MsgDataType getMsgData() const = 0;
+};
+
+typedef std::unique_ptr<IMsg> IMsgUniqPtr;
+
+template<class Derived>
+class IMsgCRTPHelper : public IMsg
+{
+public:
+    virtual IMsgUniqPtr cloneMsg() const
+    {
+        return IMsgUniqPtr(new Derived(static_cast<const Derived&>(*this)));
+    }
 };
 
 #endif /* IMSG_H */

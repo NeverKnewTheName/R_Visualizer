@@ -7,7 +7,8 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/messageconfig.cpp \
+    # $$PWD/src/messageconfig.cpp \
+    $$PWD/src/MessageConfig.cpp \
     $$PWD/src/ideditordelegate.cpp \
     $$PWD/src/msgtypeeditordelegate.cpp \
     $$PWD/src/msgtypeformatterdialog.cpp \
@@ -19,11 +20,13 @@ SOURCES += \
     $$PWD/src/MsgCodeRep.cpp \
     $$PWD/src/MsgIDMappingWidget.cpp \
     $$PWD/src/MsgCodeMappingWidget.cpp \
-    $$PWD/src/MsgDataMappingWidget.cpp
+    $$PWD/src/MsgDataMappingWidget.cpp \
+    $$PWD/src/MessageConfigWidget.cpp
 
 HEADERS  += \
     $$PWD/inc/IMessageConfig.h \
-    $$PWD/inc/messageconfig.h \
+    # $$PWD/inc/messageconfig.h \
+    $$PWD/inc/MessageConfig.h \
     $$PWD/inc/ideditordelegate.h \
     $$PWD/inc/msgtypeeditordelegate.h \
     $$PWD/inc/msgtypeformatterdialog.h \
@@ -47,7 +50,8 @@ HEADERS  += \
     $$PWD/inc/IMsgDataMappingModel.h \
     $$PWD/inc/IMsgDataRep.h \
     $$PWD/inc/MsgDataRep.h \
-    $$PWD/inc/MsgDataMappingWidget.h
+    $$PWD/inc/MsgDataMappingWidget.h \
+    $$PWD/inc/MessageConfigWidget.h
 
 FORMS    += \
     $$PWD/ui/messageconfig.ui \
@@ -56,4 +60,5 @@ FORMS    += \
     $$PWD/ui/msgtypeformatterdialog.ui \
     $$PWD/ui/msgidmappingwidget.ui \
     $$PWD/ui/msgcodemappingwidget.ui \
-    $$PWD/ui/msgdatamappingwidget.ui
+    $$PWD/ui/msgdatamappingwidget.ui \
+    $$PWD/ui/messageconfigwidget.ui

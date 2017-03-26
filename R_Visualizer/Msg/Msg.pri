@@ -7,27 +7,24 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/msg.cpp \
-    # $$PWD/src/msgmodel.cpp \
-    # $$PWD/src/msgdelegate.cpp \
+    $$PWD/src/Msg.cpp \
     $$PWD/src/msgtableview.cpp \
-    # $$PWD/src/msgdisplaywidget.cpp \
-    # $$PWD/src/msgiddelegate.cpp \
-    # $$PWD/src/msgdatadelegate.cpp \
     $$PWD/src/msgdatawidget.cpp \
-    $$PWD/src/prettymsg.cpp \
+    $$PWD/src/Prettymsg.cpp \
 
 HEADERS  += \
     $$PWD/inc/MsgFieldType.h \
-    $$PWD/inc/msg.h \
-    # $$PWD/inc/msgmodel.h \
-    # $$PWD/inc/msgdelegate.h \
-    $$PWD/inc/msgtableview.h \
-    # $$PWD/inc/msgdisplaywidget.h \
-    # $$PWD/inc/msgiddelegate.h \
-    # $$PWD/inc/msgdatadelegate.h \
-    $$PWD/inc/msgdatawidget.h \
-    $$PWD/inc/prettymsg.h \
+    $$PWD/inc/IMsgFieldType.h \
+    $$PWD/inc/MsgIDType.h \
+    $$PWD/inc/MsgCodeType.h \
+    $$PWD/inc/MsgDataType.h \
+    $$PWD/inc/IMsgDataFormatter.h \ #Should be in MessageConfig
+    $$PWD/inc/IMsg.h \
+    $$PWD/inc/ITimestampedMsg.h \
+    $$PWD/inc/TimestampedMsg.h \
+    $$PWD/inc/Msg.h \
+    $$PWD/inc/IPrettymsg.h \
+    $$PWD/inc/Prettymsg.h \
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \

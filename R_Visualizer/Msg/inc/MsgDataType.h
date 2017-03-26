@@ -21,7 +21,9 @@ typedef quint8 MsgDataBytePrimitiveType;
  * \brief Typedef to the actual true typedef class for a single data byte of a
  * message's data field
  */
-typedef MsgFieldType<MsgDataBytePrimitiveType> MsgDataByteType;
+/* typedef MsgFieldType<MsgDataBytePrimitiveType> MsgDataByteType; */
+
+CREATE_OPAQUE_MSG_FIELD_TYPE(MsgDataBytePrimitiveType, MsgDataByteType)
 
 /**
  * \brief Typedef for a message's data

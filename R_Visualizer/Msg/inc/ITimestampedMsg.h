@@ -9,6 +9,7 @@
 #define ITIMESTAMPEDMSG_H
 
 #include <QDateTime>
+#include <memory>
 
 #include "IMsg.h"
 
@@ -22,6 +23,19 @@ public:
 
     virtual void setTimestamp(const QDateTime &newTimestamp) = 0;
     virtual const QDateTime getTimestamp() const = 0;
+};
+
+typedef std::unique_ptr<ITimestampedMsg> ITimestampedMsgUniqPtr;
+
+template<class Derived>
+class ITimestampedMsgCRTPHelper : public ITimestampedMsg
+{
+public:
+    virtual IMsgUniqPtr cloneMsg() const
+    {
+        return IMsgUniqPtr(new Derived(static_cast<const Derived&>(*this)));
+    }
+
 };
 
 #endif /* ITIMESTAMPEDMSG_H */
