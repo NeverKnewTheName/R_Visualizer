@@ -30,6 +30,6 @@ CREATE_OPAQUE_MSG_FIELD_TYPE(MsgDataBytePrimitiveType, MsgDataByteType)
  * 
  * \note This groups the indiviual data bytes of the data field
  */
-typedef QVector<MsgDataByte> MsgDataType;
+typedef QVector<MsgDataByteType> MsgDataType;
 
 #endif /* MSGDATATYPE_H */

@@ -12,7 +12,7 @@ class MainWindow;
 class FileParser;
 
 #include <QObject>
-#include "msg.h"
+#include "Msg.h"
 #include "datastorage.h"
 
 #include "IFileParsable.h"

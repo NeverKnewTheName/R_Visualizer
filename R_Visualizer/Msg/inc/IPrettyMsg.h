@@ -105,7 +105,7 @@ using IPrettyMsgUniqPtr = std::unique_ptr<IPrettyMsg<BaseClass>>;
  * by creating a template for every Derivate. Dynamic Dispatch!
  */
 template<class Derivate, class BaseClass>
-class PrettyMsgCloneable : IPrettyMsg<BaseClass>
+class PrettyMsgCloneable : public IPrettyMsg<BaseClass>
 {
 public:
     /**

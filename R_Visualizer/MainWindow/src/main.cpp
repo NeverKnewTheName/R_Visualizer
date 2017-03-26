@@ -14,6 +14,12 @@
 /* #include "datastorage.h" */
 // // // DEBUG // // //
 
+#include "IMsgIDMapping.h"
+#include "MsgIDMapping.h"
+#include "IMsgCodeMapping.h"
+#include "MsgCodeMapping.h"
+#include "IMsgDataMapping.h"
+#include "MsgDataMapping.h"
 #include "IMessageConfig.h"
 #include "MessageConfig.h"
 #include "IMsgIDMappingModel.h"
@@ -35,9 +41,19 @@ int main(int argc, char *argv[])
 
     /* MainWindow w; */
 
-    IMessageConfig *messageConfig = new MessageConfig();
+    IMsgIDMapping *msgIDMapping = new MsgIDMapping();
+    IMsgCodeMapping *msgCodeMapping = new MsgCodeMapping();
+    IMsgDataMapping *msgDataMapping = new MsgDataMapping();
+
+
+    IMessageConfig *messageConfig = new MessageConfig(
+            msgIDMapping,
+            msgCodeMapping,
+            msgDataMapping,
+            &a
+            );
     MessageConfigWidget *messageConfigWidget = new MessageConfigWidget(
-            /* messageConfig */
+            messageConfig
             );
     IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
     IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(

@@ -1,20 +1,73 @@
+/**
+ * @file MessageConfig.h
+ * @author Christian Neuberger
+ * @date 2017-03-27
+ * 
+ * @brief The basic implementation of the Message Configuration module
+ */
 #ifndef MESSAGECONFIG_H
 #define MESSAGECONFIG_H
+
+#include <QObject>
 
 #include "IMessageConfig.h"
 #include "IMsg.h"
 #include "IPrettyMsg.h"
 
-class MessageConfig : public IMessageConfig
+#include "userrolemngr.h"
+
+class IMsgIDMapping;
+class IMsgCodeMapping;
+class IMsgDataMapping;
+
+/**
+ * @brief The MessageConfig module
+ */
+class MessageConfig : public QObject, public IMessageConfig
 {
 public:
-    MessageConfig();
+    MessageConfig(
+            IMsgIDMapping *msgIDMapping,
+            IMsgCodeMapping *msgCodeMapping,
+            IMsgDataMapping *msgDataMapping,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~MessageConfig();
 
-    template<class BaseClass>
-    IPrettyMsgUniqPtr<BaseClass> prettifyMsg(const IMsg &msgToPrettify) const;
+    IPrettyMsgUniqPtr<IMsg> prettifyMsg(
+            const IMsg &msgToPrettify
+            ) const;
+    IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
+            const ITimestampedMsg &timestampedMsgToPrettify
+            ) const;
+
+    QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR) const;
+    QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR) const;
+
+    //ToTHINK DEPRECATED?
+    void accept(FileParser *visitor);
+
+signals:
+    /**
+     * @brief This signal is emitted when a mapping is changed
+     * 
+     * The singal is emitted with the corresponding mappingType whenever a new
+     * entry is added, an existing entry is updated, or an existing entry is
+     * removed.
+     * 
+     * @param[out] mappingType Type of the mapping that has changed
+     */
+    void sgnl_MappingChanged(
+            const IMessageConfig::MessageMappingTypes mappingType
+            );
+
+private slots:
+    void slt_ApplyRole(UserRoleMngr::UserRole roleToApply);
+
 private:
-    
+    IMsgIDMapping *msgIDMapping;
+    IMsgCodeMapping *msgCodeMapping;
+    IMsgDataMapping *msgDataMapping;
 
 };
 
