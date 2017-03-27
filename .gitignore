@@ -1,4 +1,4 @@
-/build-*
+/build*
 /Docu/*
 *.pro.user*
 *.swp

@@ -41,6 +41,11 @@ public:
             const ITimestampedMsg &timestampedMsgToPrettify
             ) const;
 
+    QCompleter *createAliasCompleterForMapping(
+            const IMessageConfig::MessageMappingTypes mappingType
+            );
+
+    //ToTHINK Deprecated
     QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR) const;
     QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR) const;
 
@@ -60,6 +65,17 @@ signals:
     void sgnl_MappingChanged(
             const IMessageConfig::MessageMappingTypes mappingType
             );
+
+    /**
+     * @brief Propagated signal that widgets or mappings can connect to in
+     * order to receive changes in the user-role
+     * 
+     * This signal is emitted as a response to receiving a user-role change
+     * from the #UserRoleMngr
+     */
+    virtual void sgnl_PropagateUserRole(
+            const UserRoleMngr::UserRole roleToApply
+            ) = 0;
 
 private slots:
     void slt_ApplyRole(UserRoleMngr::UserRole roleToApply);

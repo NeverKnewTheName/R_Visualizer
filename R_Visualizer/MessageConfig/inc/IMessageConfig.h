@@ -61,20 +61,20 @@ public:
     virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
             const ITimestampedMsg &timestampedMsgToPrettify
             ) const = 0;
-    /* virtual PrettyMsg prettifyMsg(const Msg &msg) const = 0; */
 
-    /* virtual MsgIDType getIDToName(const QString &name) const = 0; */
-    /* virtual QString getNameToID(const MsgIDType id) const = 0; */
-    /* virtual QColor getColorToID(const MsgIDType id) const = 0; */
-    /* virtual QColor getColorToIDName(const QString &name) const = 0; */
+    /**
+     * @brief Generic QCompleter generator function for mappings
+     */
+    virtual QCompleter *createAliasCompleterForMapping(
+            const MessageMappingTypes mappingType
+            ) = 0;
+
+    //ToTHINK Deprecated
     virtual QCompleter *createIDNameCompleter(
             QObject *parent = Q_NULLPTR
             ) const = 0;
 
-    /* virtual MsgCodeType getCodeToName(const QString &name) const = 0; */
-    /* virtual QString getNameToCode(const MsgCodeType code) const = 0; */
-    /* virtual QColor getColorToCode(const MsgCodeType code) const = 0; */
-    /* virtual QColor getColorToCodeName(const QString &name) const = 0; */
+    //ToTHINK Deprecated
     virtual QCompleter *createCodeNameCompleter(
             QObject *parent = Q_NULLPTR
             ) const = 0;
@@ -93,24 +93,16 @@ signals:
             const IMessageConfig::MessageMappingTypes mappingType
             ) = 0;
 
-    /* virtual void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep) = 0; */
-    /* virtual void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep) = 0; */
-    /* virtual void sgnl_MsgIDRepRemoved(const MsgIDType relatedID) = 0; */
-
-    /* virtual void sgnl_MsgCodeRepAdded(const IMsgCodeRep &newMsgCodeRep) = 0; */
-    /* virtual void sgnl_MsgCodeRepUpdated( */
-    /*         const IMsgCodeRep &updatedMsgCodeRep */
-    /*         ) = 0; */
-    /* virtual void sgnl_MsgCodeRepRemoved(const MsgCodeType relatedCode) = 0; */
-
-    /* virtual void sgnl_MsgDataRepAdded(const IMsgDataRep &newMsgDataRep) = 0; */
-    /* virtual void sgnl_MsgDataRepUpdated( */
-    /*         const IMsgDataRep &updatedMsgDataRep */
-    /*         ) = 0; */
-    /* virtual void sgnl_MsgDataRepRemoved( */
-    /*         const MsgIDType relatedID, */
-    /*         const MsgCodeType relatedCode */
-    /*         ) = 0; */
+    /**
+     * @brief Propagated signal that widgets or mappings can connect to in
+     * order to receive changes in the user-role
+     * 
+     * This signal is emitted as a response to receiving a user-role change
+     * from the #UserRoleMngr
+     */
+    virtual void sgnl_PropagateUserRole(
+            const UserRoleMngr::UserRole roleToApply
+            ) = 0;
 
 private slots:
     virtual void slt_ApplyRole(UserRoleMngr::UserRole roleToApply) = 0;
