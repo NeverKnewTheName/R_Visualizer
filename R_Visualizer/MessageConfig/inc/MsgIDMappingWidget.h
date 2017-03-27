@@ -40,7 +40,7 @@ private slots:
     void slt_clear();
     void slt_MsgIDRepAddFinished(const IMsgIDRep &addedMsgIDRep);
 signals:
-    void sngl_MappingsChanged();
+    void sgnl_MappingsChanged();
     void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
     void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
     void sgnl_MsgIDRepRemoved(const MsgIDType relatedID);

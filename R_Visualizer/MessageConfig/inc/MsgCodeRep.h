@@ -64,15 +64,6 @@ public:
      */
     void setPlainTextAlias(const QString &plainTextAlias);
 
-    /* /** */
-    /*  * \brief Returns the message data parser code this #MsgCodeRep corresponds to */
-    /*  *1/ */
-    /* QString getMessageFormat() const; */
-    /* /** */
-    /*  * \brief Sets the message data parser code this #MsgCodeRep corresponds to */
-    /*  *1/ */
-    /* void setMessageFormat(const QString &value); */
-
     /**
      * \brief Returns the color this #MsgCodeRep corresponds to
      */
@@ -82,17 +73,20 @@ public:
      */
     void setColorRepresentation(const QColor &colorRepresentation);
 
+    void accept(FileParser *visitor);
+
     /**
      * \brief Copares this #MsgCodeRep to another for equality
      */
     bool operator==(const MsgCodeRep &other) const;
 
     /**
-     * \brief Returns the string representation of a #Msg according to this #MsgCodeRep
+     * @brief qHash implementation to use #MsgCodeRep as a QHash key
      */
-    QString getMsgDataAsString(Msg &msg);
-
-    void accept(FileParser *visitor);
+    friend uint qHash(const MsgCodeRep &key, uint seed)
+    {
+        return qHash(key.code, seed);
+    }
 
 private:
     /**

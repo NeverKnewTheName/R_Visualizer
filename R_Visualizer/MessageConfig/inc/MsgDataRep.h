@@ -38,6 +38,21 @@ public:
 
     QString parseMsgData(const IMsg &msg) const;
 
+    friend inline bool operator==(const MsgDataRep &lhs, const MsgDataRep &rhs) const;
+
+    /**
+     * @brief qHash implementation to use #MsgDataRep as a QHash key
+     */
+    friend uint qHash(const MsgDataRep &key, uint seed)
+    {
+        return qHash(
+            static_cast<uint>(static_cast<MsgIDType::type>(key.msgID)) || (
+            static_cast<uint>(static_cast<MsgCodeType::type>(key.msgCode))
+            << ( 8 * sizeof(MsgCodeType::type))),
+            seed);
+    }
+
+    void accept(FileParser *visitor);
 private:
     MsgIDType msgID;
     MsgCodeType msgCode;

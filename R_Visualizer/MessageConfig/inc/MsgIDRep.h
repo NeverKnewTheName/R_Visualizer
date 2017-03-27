@@ -94,7 +94,16 @@ public:
      */
     bool operator==(const MsgIDRep &other) const;
 
+    /**
+     * @brief qHash implementation to use #MsgIDRep as a QHash key
+     */
+    friend uint qHash(const MsgIDRep &key, uint seed)
+    {
+        return qHash(key.id, seed);
+    }
+
     void accept(FileParser *visitor);
+
 
 private:
     /**
