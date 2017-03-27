@@ -13,7 +13,7 @@
 /* #include "msgdelegate.h" */
 #include "csvmsgpackethandler.h"
 #include "sendmsgmodel.h"
-#include "messageconfig.h"
+#include "MessageConfig.h"
 
 #include "idrep.h"
 #include "msgtyperep.h"
@@ -181,7 +181,7 @@ DataByteVect SendMessages::extractMsgData(QString msgDataString, int formatIndex
     return extractedDataBytes;
 }
 
-QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
+QString SendMessages::createMsgData(MsgDataType msgDataBytes, int formatIndex)
 {
     QString newMsgDataString;
 
@@ -191,8 +191,8 @@ QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
         newMsgDataString.append("0x");
         for( auto &byte : msgDataBytes )
         {
-            quint8 _8bitByte = byte;
-            newMsgDataString.append(QString("%1").arg((uint)_8bitByte,2,16,QLatin1Char('0')));
+            MsgDataByteType _8bitByte(byte);
+            newMsgDataString.append(QString("%1").arg(static_cast<QString>(_8bitByte)));
             newMsgDataString.append(" ");
         }
         break;
@@ -200,8 +200,8 @@ QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
     {
         for( auto &byte : msgDataBytes )
         {
-            quint8 _8bitByte = byte;
-            newMsgDataString.append(QString("%1").arg((uint)_8bitByte,3,10));
+            MsgDataByteType _8bitByte(byte);
+            newMsgDataString.append(QString("%1").arg(static_cast<DataByteType::type>(_8bitByte),3,10));
             newMsgDataString.append(" ");
         }
     }
@@ -214,7 +214,7 @@ QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
         while(cntr < maxSize)
         {
             int shift = (((maxSize-1) - cntr)*0x8u);
-            qulonglong data = ((quint8)msgDataBytes.at(cntr));
+            qulonglong data = (static_cast<MsgDataByteType::type>(msgDataBytes.at(cntr)));
             value += (data << shift);
             qDebug() << "Value" << value << "Counter" << cntr << "Shift" << shift << "Data Byte" << data;
             cntr++;
@@ -226,8 +226,8 @@ QString SendMessages::createMsgData(DataByteVect msgDataBytes, int formatIndex)
         newMsgDataString.append("0b");
         for( auto &byte : msgDataBytes )
         {
-            quint8 _8bitByte = byte;
-            newMsgDataString.append(QString("%1").arg((uint)_8bitByte,8,2,QLatin1Char('0')));
+            MsgDataByteType _8bitByte(byte);
+            newMsgDataString.append(QString("%1").arg(static_cast<DataByteType::type>(_8bitByte),8,2,QLatin1Char('0')));
             newMsgDataString.append(" ");
         }
         break;

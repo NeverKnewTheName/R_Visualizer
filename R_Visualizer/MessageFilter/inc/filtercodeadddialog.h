@@ -12,7 +12,7 @@
 
 class MessageConfig;
 
-#include "msg.h"
+#include "Msg.h"
 
 namespace Ui {
 class FilterCodeAddDialog;

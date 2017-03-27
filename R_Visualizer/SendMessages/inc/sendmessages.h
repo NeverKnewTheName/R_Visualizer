@@ -15,7 +15,7 @@ class MainWindow;
 class MessageConfig;
 class FileParser;
 
-#include "msg.h"
+#include "Msg.h"
 #include "can_packet.h"
 #include "sendmsgmodel.h"
 #include "userrolemngr.h"
@@ -47,8 +47,8 @@ private:
     void initMsgPacketTableView();
     void emitSendMsg();
 
-    DataByteVect extractMsgData(QString msgDataString, int formatIndex);
-    QString createMsgData(DataByteVect msgDataBytes, int formatIndex);
+    MsgDataType extractMsgData(QString msgDataString, int formatIndex);
+    QString createMsgData(MsgDataType msgDataBytes, int formatIndex);
 
     qulonglong parseToNumber(QString numericalString);
     QString parseToString(qulonglong number);

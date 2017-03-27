@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QJsonDocument>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 
 #include "filteriddelegate.cpp"
 #include "filtermsgtypedelegate.cpp"

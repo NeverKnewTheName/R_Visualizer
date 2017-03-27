@@ -3,7 +3,7 @@
 #include <QString>
 #include <QColor>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 
 #include <QDebug>
 

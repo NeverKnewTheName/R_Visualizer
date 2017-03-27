@@ -17,7 +17,7 @@
  */
 /* #include "messagestream.h" */
 class MessageStream;
-/* #include "messageconfig.h" */
+/* #include "MessageConfig.h" */
 class MessageConfig;
 /* #include "messagefilter.h" */
 class MessageFilter;

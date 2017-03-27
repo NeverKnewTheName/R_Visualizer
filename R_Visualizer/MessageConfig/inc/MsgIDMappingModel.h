@@ -10,7 +10,6 @@
 
 #include "IMsgIDMappingModel.h"
 #include "IMsgIDMappingStore.h"
-#include "IFileParsable.h"
 
 #include "IMsgIDRep.h"
 
@@ -22,8 +21,7 @@ class FileParser;
 /**
  * \brief The MsgIDMappingModel
  */
-class MsgIDMappingModel : public QAbstractTableModel, public IMsgIDMappingModel,
-    public IFileParsable
+class MsgIDMappingModel : public QAbstractTableModel, public IMsgIDMappingModel
 {
 public:
     /**
@@ -135,6 +133,10 @@ public:
     // \ IFileParsable Implementation \ //
 
 signals:
+    void sgnl_MappingAdded(const MsgIDType relatedID);
+    void sgnl_MappingUpdated(const MsgIDType relatedID);
+    void sgnl_MappingRemoved(const MsgIDType relatedID);
+
     void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
     void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
     void sgnl_MsgIDRepRemoved(const MsgIDType relatedMsgID);

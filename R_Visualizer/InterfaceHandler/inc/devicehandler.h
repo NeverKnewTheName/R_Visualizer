@@ -18,7 +18,7 @@
 #include <QTimer>
 #include <devicedriver.h>
 
-#include "msg.h"
+#include "Msg.h"
 #include "errorlogentry.h"
 
 /** \addtogroup Group_BasicApplication

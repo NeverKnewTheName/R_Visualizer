@@ -12,7 +12,7 @@
 #include <QColor>
 #include <QCompleter>
 
-#include "msg.h"
+#include "Msg.h"
 #include "IMsgCodeRep.h"
 
 /**

@@ -46,17 +46,12 @@ void MsgDataRep::setMsgCode(const MsgCodeType msgCode)
     this->msgCode = msgCode;
 }
 
-QString MsgDataRep::getFormatString() const
+void MsgDataRep::setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter)
 {
-    return formatString;
+    this->msgDataFormatter = msgDataFormatter;
 }
 
-void MsgDataRep::setFormatString(const QString &formatString)
-{
-    this->formatString = formatString;
-}
-
-QString MsgDataRep::parseMsgData(const MsgData &msgData) const
+QString MsgDataRep::parseMsgData(const IMsg &msg) const
 {
     return QString("ParsedMsgData: %1").arg(formatString);
 }

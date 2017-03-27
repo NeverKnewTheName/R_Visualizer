@@ -4,7 +4,7 @@
 /*
  * MainWindow Widgets
  */
-//#include "messageconfig.h"
+//#include "MessageConfig.h"
 #include "messagefilter.h"
 #include "messagestream.h"
 #include "sendmessages.h"
@@ -58,11 +58,9 @@ MainWindow::MainWindow(QWidget *parent) :
      * Thus we initialize these widgets here after the ui->setupUI call.
      */
     //msgConfigWidget = new MessageConfig(ui->configTabWidget);
-#include "MsgIDMappingModel.h"
-#include "MsgIDMappingStore.h"
-    MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(ui->configTabWidget);
-    msgIDMappingWidget->setModel(new MsgIDMappingModel(new MsgIDMappingStore(), msgIDMappingWidget));
-    ui->configTabWidget->addTab(msgIDMappingWidget, QString("MsgIDMappingWidget"));
+    /* MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(ui->configTabWidget); */
+    /* msgIDMappingWidget->setModel(new MsgIDMappingModel(new MsgIDMappingStore(), msgIDMappingWidget)); */
+    /* ui->configTabWidget->addTab(msgIDMappingWidget, QString("MsgIDMappingWidget")); */
     /* MessageFilter provides FilterIDModel, FilterCodeModel, and FilterTimestampModel */
     /* msgFilterWidget = new MessageFilter(msgConfigWidget, ui->configTabWidget); */
     msgFilterWidget = new MessageFilter(
@@ -186,7 +184,7 @@ void MainWindow::connectUserRoleManager()
     connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
     connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::slt_applyRole);
     connect(this, &MainWindow::switchUserRoles, sndMsgsWidget, &SendMessages::applyRole);
-    connect(this, &MainWindow::switchUserRoles, msgConfigWidget, &MessageConfig::applyRole);
+    /* connect(this, &MainWindow::switchUserRoles, msgConfigWidget, &MessageConfig::applyRole); */
     connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
 
     emit switchUserRoles(UserRoleMngr::NormalUserRole);
@@ -195,7 +193,7 @@ void MainWindow::connectUserRoleManager()
 void MainWindow::on_actionNew_triggered()
 {
     static int cntr = 0;
-    receivedMsgsStore.slt_addMsg(Msg(QDateTime::fromMSecsSinceEpoch(cntr),cntr,cntr,{cntr, cntr, cntr}));
+    //receivedMsgsStore.slt_addMsg(Msg(QDateTime::fromMSecsSinceEpoch(cntr),cntr,cntr,{cntr, cntr, cntr}));
     ++cntr;
 /* #ifdef __DEBUG__ */
 /*     qDebug() << __PRETTY_FUNCTION__ << " - Triggered"; */
@@ -402,14 +400,14 @@ void MainWindow::initMsgsTableView()
 
 void MainWindow::idAddFinished(const MsgIDType id, const QString &name, const QColor &color)
 {
-    IDRep IdRepToAdd(id, name, color);
+    /* IDRep IdRepToAdd(id, name, color); */
     /* idModel.add(IdRepToAdd); */
 }
 
 
 void MainWindow::msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color)
 {
-    MsgTypeRep MsgTypeRepToAdd(code, codeName, messageFormat, color);
+    /* MsgTypeRep MsgTypeRepToAdd(code, codeName, messageFormat, color); */
     /* msgTypeModel.add(MsgTypeRepToAdd); */
 }
 

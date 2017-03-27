@@ -1,5 +1,7 @@
 #include "Msg.h"
 
+#include "fileparser.h"
+
 Msg::Msg() :
         msgID(),
         msgCode(),
@@ -62,4 +64,7 @@ const MsgDataType Msg::getMsgData() const
     return msgData;
 }
 
-
+void Msg::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
+}

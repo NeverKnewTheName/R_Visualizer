@@ -13,7 +13,7 @@
 
 class MessageConfig;
 
-#include "msg.h"
+#include "Msg.h"
 
 /**
  * @brief The CodeLineEdit

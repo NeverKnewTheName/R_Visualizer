@@ -8,14 +8,18 @@
 #ifndef IMSGDATAREP_H
 #define IMSGDATAREP_H
 
+#include <memory>
+
 #include <QString>
 
-#include "msg.h"
+#include "IMsg.h"
+#include "IFileParsable.h"
+#include "IMsgDataFormatter.h"
 
 /**
  * \brief The IMsgDataRep interface
  */
-class IMsgDataRep
+class IMsgDataRep : public IFileParsable
 {
 public:
     virtual ~IMsgDataRep(){}
@@ -26,10 +30,29 @@ public:
     virtual MsgCodeType getMsgCode() const = 0;
     virtual void setMsgCode(const MsgCodeType code) = 0;
 
-    virtual QString getFormatString() const = 0;
-    virtual void setFormatString(const QString &formatString) = 0;
+    virtual void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter);
 
-    virtual QString parseMsgData(const MsgData &msgData) const = 0;
+    virtual QString parseMsgData(const IMsg &msg) const = 0;
+};
+
+/**
+ * @brief Typedef of unique_ptr to #IMsgDataRep
+ */
+typedef std::unique_ptr<IMsgDataRep> IMsgDataRepUniqPtr;
+
+/**
+ * @brief CRTP copy helper for #IMsgDataRep
+ */
+template<class Derived>
+class MsgDataRepCRTPHelper : public IMsgDataRep
+{
+public:
+    virtual IMsgDataRepUniqPtr cloneMsgDataRep() const
+    {
+        return IMsgDataRepUniqPtr(
+                new Derived(static_cast<const Derived&>(*this))
+                );
+    }
 };
 
 #endif /* IMSGDATAREP_H */

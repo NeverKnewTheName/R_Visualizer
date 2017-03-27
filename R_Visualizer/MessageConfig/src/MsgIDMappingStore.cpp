@@ -84,7 +84,7 @@ bool MsgIDMappingStore::contains(const IMsgIDRep &msgIDRep) const
 
 void MsgIDMappingStore::addMsgIDMapping(const IMsgIDRep &msgIDRepToAdd)
 {
-    msgIDRepStore.insert(msgIDRepToAdd.getID(), msgIDRepToAdd);
+    msgIDRepStore.insert(msgIDRepToAdd.getID(), msgIDRepToAdd.cloneMsgIDRep());
 }
 
 void MsgIDMappingStore::removeMsgIDMapping(const MsgIDType relatedMsgID)

@@ -19,7 +19,7 @@ class MainWindow;
 class MessageConfig;
 
 #include "userrolemngr.h"
-#include "msg.h"
+#include "Msg.h"
 #include "sysovrvobjectstore.h"
 #include "sysovrvobject.h"
 

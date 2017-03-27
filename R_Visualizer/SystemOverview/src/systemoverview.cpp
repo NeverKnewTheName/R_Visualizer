@@ -8,7 +8,7 @@
 
 #include <QDebug>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 #include "sysovrvobjectstore.h"
 #include "sysoverviewgraphicsview.h"
 

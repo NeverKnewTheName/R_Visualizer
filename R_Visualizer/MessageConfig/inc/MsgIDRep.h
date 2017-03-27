@@ -14,7 +14,7 @@
 
 class FileParser;
 
-#include "msg.h"
+#include "Msg.h"
 #include "IMsgIDRep.h"
 #include "IFileParsable.h"
 
@@ -23,7 +23,7 @@ class FileParser;
  * 
  * The MsgID is displayed according to the name and color mapping
  */
-class MsgIDRep : public IMsgIDRep, public IFileParsable
+class MsgIDRep : public MsgIDRepCRTPHelper<MsgIDRep>
 {
 public:
     /**

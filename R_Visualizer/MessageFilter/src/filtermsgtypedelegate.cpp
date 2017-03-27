@@ -4,7 +4,7 @@
 #include <QCompleter>
 #include <QPainter>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 
 FilterMsgTypeDelegate::FilterMsgTypeDelegate(const MessageConfig *msgConfig, QWidget *parent) :
     QStyledItemDelegate(parent),

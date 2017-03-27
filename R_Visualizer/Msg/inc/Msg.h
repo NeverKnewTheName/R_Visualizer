@@ -13,6 +13,8 @@
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
 
+class FileParser;
+
 /**
  * @brief The Msg
  */
@@ -36,6 +38,8 @@ public:
 
     void setMsgData(const MsgDataType &msgData);
     const MsgDataType getMsgData() const;
+
+    void accept(FileParser *visitor);
 
 private:
     MsgIDType msgID;

@@ -40,10 +40,10 @@ private slots:
     void slt_clear();
     void slt_MsgIDRepAddFinished(const IMsgIDRep &addedMsgIDRep);
 signals:
-    sngl_MappingsChanged();
-    sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
-    sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
-    sgnl_MsgIDRepRemoved(const MsgIDType relatedID);
+    void sngl_MappingsChanged();
+    void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
+    void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
+    void sgnl_MsgIDRepRemoved(const MsgIDType relatedID);
 
 private:
     Ui::MsgIDMappingWidget *ui;

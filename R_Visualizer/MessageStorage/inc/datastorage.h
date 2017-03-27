@@ -17,7 +17,7 @@
 #include "rsimpleringbuff.h"
 
 //ToDELETE... needed because no interface yet..
-#include "msg.h"
+#include "Msg.h"
 #include <QDebug>
 #define  PRINT_MSGS_AS_JSON
 

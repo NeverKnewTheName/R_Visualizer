@@ -9,7 +9,7 @@
 #include "resizeablegraphicsitem.h"
 #include "sysovrvtextlabel.h"
 #include "sysovrvtrigger.h"
-#include "msg.h"
+#include "Msg.h"
 
 /**
  * @brief The SysOvrvObject class is a graphical object that represents a part of the system or is a part of another object.

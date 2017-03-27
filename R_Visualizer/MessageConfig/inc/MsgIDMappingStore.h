@@ -16,7 +16,7 @@
 /**
  * @brief The MsgIDMappingStore
  */
-class MsgIDMappingStore
+class MsgIDMappingStore : public IMsgIDMappingStore
 {
 public:
     MsgIDMappingStore();
@@ -27,7 +27,7 @@ public:
     /* QColor getColorToMsgID(const MsgIDType msgID) const; */
     /* QColor getColorToName(const QString &name) const; */
 
-    const IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType msgID) const;
+    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType msgID) const;
     IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType msgID);
 
     bool contains(const MsgIDType msgID) const;
@@ -39,7 +39,7 @@ public:
     void clear();
 
 private:
-    QHash<MsgIDType, IMsgIDRep> msgIDRepStore;
+    QHash<MsgIDType, IMsgIDRepUniqPtr> msgIDRepStore;
 };
 
 #endif /* MSGIDMAPPINGSTORE_H */

@@ -6,7 +6,7 @@
 
 #include <QDebug>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 
 FilterIDDelegate::FilterIDDelegate(const MessageConfig *msgConfig, QWidget *parent) :
     QStyledItemDelegate(parent),

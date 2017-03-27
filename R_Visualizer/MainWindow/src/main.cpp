@@ -2,7 +2,7 @@
 #include <QApplication>
 
 /* #include "can_packet.h" */
-/* #include "msg.h" */
+/* #include "Msg.h" */
 /* #include "errorlogentry.h" */
 
 // // // DEBUG // // //
@@ -23,7 +23,10 @@
 #include "IMessageConfig.h"
 #include "MessageConfig.h"
 #include "IMsgIDMappingModel.h"
+#include "MsgIDMappingModel.h"
 #include "IMsgIDMappingStore.h"
+#include "MsgIDMappingStore.h"
+#include "MsgIDMappingWidget.h"
 
 #include "MessageConfigWidget.h"
 
@@ -59,11 +62,11 @@ int main(int argc, char *argv[])
     IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
             msgIDMappingStore
             );
-    MsgIDMappingWidget msgIDMappingWidget = new MsgIDMappingWidget(
+    MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(
             msgIDMappingModel,
             messageConfigWidget
             );
-    messageConfigWidget->appendMappingWidget();
+    /* messageConfigWidget->appendMappingWidget(); */
 
     /* MessageFilter *messageFilterWidget = new MessageFilter(); */
     /* MessageStream *messageStreamWidget; */

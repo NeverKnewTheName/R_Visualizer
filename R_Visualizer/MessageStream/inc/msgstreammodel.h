@@ -26,7 +26,7 @@ class MsgTypeRep;
 
 #include "datastorage.h"
 #include "rsimpleringbuff.h"
-#include "prettymsg.h"
+#include "PrettyMsg.h"
 #include "IFileParsable.h"
 
 

@@ -16,7 +16,7 @@
 
 class FileParser;
 
-#include "msg.h"
+#include "Msg.h"
 #include "msgtyperep.h"
 #include "IFileParsable.h"
 

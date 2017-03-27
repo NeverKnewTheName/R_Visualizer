@@ -14,7 +14,7 @@
 
 class FileParser;
 
-#include "msg.h"
+#include "Msg.h"
 #include "IFileParsable.h"
 
 class FilterCodeStore : public QAbstractListModel, public IFileParsable

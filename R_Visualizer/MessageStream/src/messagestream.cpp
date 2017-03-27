@@ -4,7 +4,7 @@
 #include <QHeaderView>
 #include <QScrollBar>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 #include "messagefilter.h"
 #include "msgstorage.h"
 

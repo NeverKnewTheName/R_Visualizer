@@ -4,7 +4,7 @@
 #include <QString>
 #include <QCompleter>
 
-#include "messageconfig.h"
+#include "MessageConfig.h"
 
 FilterIDAddDialog::FilterIDAddDialog(const MessageConfig *msgConfig, QWidget *parent) :
     QDialog(parent),

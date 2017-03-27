@@ -9,12 +9,12 @@
 #define MSGDATAREP_H
 
 #include "IMsgDataRep.h"
-#include "IFileParsable.h"
+#include "IMsgDataFormatter.h"
 
 /**
  * \brief The MsgDataRep
  */
-class MsgDataRep : public IMsgDataRep, public IFileParsable
+class MsgDataRep : public MsgDataRepCRTPHelper<MsgDataRep>
 {
 public:
     MsgDataRep();
@@ -24,7 +24,7 @@ public:
     MsgDataRep(
             const MsgIDType msgID,
             const MsgCodeType msgCode,
-            const QString &formatString
+            IMsgDataFormatter *msgDataFormatter
             );
     virtual ~MsgDataRep();
 
@@ -34,17 +34,14 @@ public:
     MsgCodeType getMsgCode() const;
     void setMsgCode(const MsgCodeType msgCode);
 
-    QString getFormatString() const;
-    void setFormatString(const QString &formatString);
+    void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter);
 
-    QString parseMsgData(const MsgData &msgData) const;
+    QString parseMsgData(const IMsg &msg) const;
 
 private:
     MsgIDType msgID;
-
     MsgCodeType msgCode;
-
-    QString formatString;
+    IMsgDataFormatter *msgDataFormatter;
 };
 
 #endif /* MSGDATAREP_H */

@@ -25,7 +25,7 @@ SOURCES += \
 
 HEADERS  += \
     $$PWD/inc/IMessageConfig.h \
-    # $$PWD/inc/messageconfig.h \
+    # $$PWD/inc/MessageConfig.h \
     $$PWD/inc/MessageConfig.h \
     $$PWD/inc/ideditordelegate.h \
     $$PWD/inc/msgtypeeditordelegate.h \

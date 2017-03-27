@@ -13,14 +13,14 @@
 
 class FileParser;
 
-#include "msg.h"
+#include "Msg.h"
 #include "IMsgCodeRep.h"
 #include "IFileParsable.h"
 
 /**
  * \brief The #MsgCodeRep class contains all information necessary for displaying messages codes and data
  */
-class MsgCodeRep : public IMsgCodeRep, public IFileParsable
+class MsgCodeRep : public MsgCodeRepCRTPHelper<MsgCodeRep>
 {
 public:
     /**

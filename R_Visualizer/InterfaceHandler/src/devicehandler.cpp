@@ -1,7 +1,7 @@
 #include "devicehandler.h"
 #define TIMER_INTERVAL 1000
 
-#include "msg.h"
+#include "Msg.h"
 #include "errorlogentry.h"
 
 #include <QByteArray>

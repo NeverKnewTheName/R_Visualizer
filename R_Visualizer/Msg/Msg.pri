@@ -23,8 +23,8 @@ HEADERS  += \
     $$PWD/inc/ITimestampedMsg.h \
     $$PWD/inc/TimestampedMsg.h \
     $$PWD/inc/Msg.h \
-    $$PWD/inc/IPrettymsg.h \
-    $$PWD/inc/Prettymsg.h \
+    $$PWD/inc/IPrettyMsg.h \
+    $$PWD/inc/PrettyMsg.h \
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \

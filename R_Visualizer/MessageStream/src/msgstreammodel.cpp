@@ -1,6 +1,6 @@
 #include "msgstreammodel.h"
 
-#include "msg.h"
+#include "Msg.h"
 #include "idrep.h"
 #include "msgtyperep.h"
 

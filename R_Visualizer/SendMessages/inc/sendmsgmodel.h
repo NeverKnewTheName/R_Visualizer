@@ -11,7 +11,7 @@
 #include <QAbstractTableModel>
 #include <QString>
 
-#include "prettymsg.h"
+#include "PrettyMsg.h"
 #include "IFileParsable.h"
 
 class IDRep;

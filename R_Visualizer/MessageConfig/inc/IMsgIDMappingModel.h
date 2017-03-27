@@ -12,13 +12,14 @@
 #include <QColor>
 #include <QCompleter>
 
-#include "msg.h"
+#include "Msg.h"
 #include "IMsgIDRep.h"
+#include "IFileParsable.h"
 
 /**
  * \brief The IMsgIDMappingModel interface
  */
-class IMsgIDMappingModel
+class IMsgIDMappingModel : public IFileParsable
 {
 public:
     virtual ~IMsgIDMappingModel(){}

@@ -37,7 +37,7 @@ inline bool operator==(const TriggerIdentifier &triggerID1, const TriggerIdentif
 
 inline uint qHash(const TriggerIdentifier &key, uint seed)
 {
-    return ((key.id << (8*sizeof(MsgCodeType))) & key.code) + seed;
+    return ((static_cast<MsgIDType::type>(key.id) << (8*sizeof(MsgCodeType::type))) & static_cast<MsgCodeType::type>(key.code)) + seed;
 }
 
 
