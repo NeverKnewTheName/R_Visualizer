@@ -14,7 +14,7 @@ MsgStorage::MsgStorage(QObject *parent) :
 {
 }
 
-Msg MsgStorage::at(const size_t index)
+TimestampedMsg MsgStorage::at(const size_t index)
 {
     return msgStore.at(index);
 }
@@ -24,7 +24,7 @@ Msg MsgStorage::at(const size_t index)
 /*     return msgStore.at(index); */
 /* } */
 
-Msg MsgStorage::operator[](const size_t index)
+TimestampedMsg MsgStorage::operator[](const size_t index)
 {
     return msgStore[index];
 }
@@ -45,7 +45,7 @@ bool MsgStorage::isEmpty() const
     return msgStore.isEmpty();
 }
 
-void MsgStorage::appendMsg(const Msg &newMsg)
+void MsgStorage::appendMsg(const TimestampedMsg &newMsg)
 {
     msgStore.append(newMsg);
     emit sgnl_MsgAdded(newMsg);
@@ -76,7 +76,7 @@ QString MsgStorage::saveMsgStorage(const QString &saveLocation)
     return msgStore.saveDataStorage(saveLocation);
 }
 
-void MsgStorage::slt_addMsg(const Msg &newMsg)
+void MsgStorage::slt_addMsg(const TimestampedMsg &newMsg)
 {
     appendMsg(newMsg);
 }

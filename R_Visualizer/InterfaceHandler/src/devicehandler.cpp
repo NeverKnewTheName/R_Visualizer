@@ -1,7 +1,14 @@
 #include "devicehandler.h"
 #define TIMER_INTERVAL 1000
 
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
 #include "Msg.h"
+#include "TimestampedMsg.h"
 #include "errorlogentry.h"
 
 #include <QByteArray>
@@ -70,18 +77,19 @@ void DeviceHandler::run()
             {
                 Data_PacketPtr dataPtr = qSharedPointerDynamicCast<Data_Packet>(ptr);
 
-                DataByteVect msgData;
+                MsgDataType msgData;
 
                 QByteArray canData = dataPtr->frame().data;
                 MsgCodeType code = static_cast<MsgCodeType>(canData.at(0) & 0xFFu);
 
                 for(int i = 1; i < canData.size(); i++)
                 {
-                    msgData.append(static_cast<quint8>(canData.at(i)));
+                    msgData.append(MsgDataByteType(canData.at(i)));
                 }
 
-                Msg msg(timestamp, dataPtr->frame().ID_Standard, code, msgData);
-                emit sigMsgReceived(msg);
+                Msg msg(MsgIDType(dataPtr->frame().ID_Standard), MsgCodeType(code), msgData);
+                TimestampedMsg timestampedMsg(msg,timestamp);
+                emit sigMsgReceived(timestampedMsg);
             }
                 break;
             case CAN_Packet::Error_Frame:
@@ -186,7 +194,7 @@ void DeviceHandler::sltSendMsg(const Msg &msgToSend)
 {
     Data_Packet::Frame frame;
 
-    frame.ID_Standard = msgToSend.getId();
+    frame.ID_Standard = msgToSend.getMsgID().getPrimitiveData();
     //    if (ui->cbIDE->isChecked())
     //    {
     //        frame.IDE = 1;
@@ -202,15 +210,15 @@ void DeviceHandler::sltSendMsg(const Msg &msgToSend)
 
     frame.RTR = 0;
 
-    const MsgData &dataToSend = msgToSend.getMsgData();
+    const MsgDataType &dataToSend = msgToSend.getMsgData();
 
-    frame.DLC = dataToSend.DataSizeInBytes + 1; // + 1 for MsgCode
+    frame.DLC = dataToSend.size() + 1; // + 1 for MsgCode
 
     frame.data.clear();
-    frame.data.append(msgToSend.getCode() && 0xFF);
-    for(quint8 byte : dataToSend.DataBytes)
+    frame.data.append(MsgDataByteType(msgToSend.getMsgCode().getPrimitiveData() && 0xFF).getPrimitiveData());
+    for(const MsgDataByteType &byte : dataToSend)
     {
-        frame.data.append(byte);
+        frame.data.append(byte.getPrimitiveData());
     }
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());

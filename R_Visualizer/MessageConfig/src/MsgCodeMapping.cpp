@@ -1,13 +1,32 @@
 #include "MsgCodeMapping.h"
 
+#include "IMsgCodeMappingStore.h"
 
-MsgCodeMapping::MsgCodeMapping()
+MsgCodeMapping::MsgCodeMapping(IMsgCodeMappingStore *msgCodeMappingStore) :
+    msgCodeMappingStore(msgCodeMappingStore)
 {
 }
 
 MsgCodeMapping::~MsgCodeMapping()
 {
 }
+
+MsgCodeType MsgCodeMapping::getMsgCodeToAlias(const QString &alias) const
+{
+}
+
+QString MsgCodeMapping::getAliasToMsgCode(const MsgCodeType &msgCode) const
+{
+}
+
+QColor MsgCodeMapping::getColorToMsgCode(const MsgCodeType &msgCode) const
+{
+}
+
+QColor MsgCodeMapping::getColorToAlias(const QString &alias) const
+{
+}
+
 
 IPrettyMsgUniqPtr<IMsg> MsgCodeMapping::prettifyMsg(
        IPrettyMsgUniqPtr<IMsg> msgToPrettify
@@ -29,8 +48,13 @@ IPrettyMsgUniqPtr<ITimestampedMsg> MsgCodeMapping::prettifyMsg(
     return std::move(msgToPrettify);
 }
 
-QCompleter *createCodeNameCompleter(
-        QObject *parent = Q_NULLPTR
-        ) const
+/* QCompleter *createCodeNameCompleter( */
+/*         QObject *parent = Q_NULLPTR */
+/*         ) const */
+/* { */
+/* } */
+
+void MsgCodeMapping::accept(FileParser *visitor)
 {
+    visitor->visit(*this);
 }

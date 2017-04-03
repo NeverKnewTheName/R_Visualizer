@@ -16,10 +16,11 @@ public:
     void visit(SendMsgModel &visitor);
     void visit(Msg &visitor);
     void visit(MessageConfig &visitor);
-    void visit(IDModel &visitor);
-    void visit(IDRep &visitor);
-    void visit(MsgTypeModel &visitor);
-    void visit(MsgTypeRep &visitor);
+    /* void visit(IDModel &visitor); */
+    void visit(MsgIDRep &visitor);
+    /* void visit(MsgTypeModel &visitor); */
+    void visit(MsgCodeRep &visitor);
+    void visit(MsgDataRep &visitor);
     void visit(MessageFilter &visitor);
     void visit(FilterIDStore &visitor);
     void visit(FilterCodeStore &visitor);

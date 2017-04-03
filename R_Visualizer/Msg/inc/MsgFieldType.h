@@ -66,17 +66,120 @@ public:
      * @brief Assignment operator that assign the value of other's field to
      * this object
      */
-    const MsgFieldTypeTemplate<T,OpaqueT> &operator =(const MsgFieldTypeTemplate<T,OpaqueT> &other)
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator =(
+            const MsgFieldTypeTemplate<T,OpaqueT> &other
+            )
     {
         this->field = other.field;
         return *this;
     }
 
     /**
+     * @brief Addition Operator that adds this MsgField with rhs and stores
+     * the result in this object
+     */
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator +=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        this->field += rhs.field;
+        return *this;
+    }
+
+    /**
+     * @brief Addition Operator that adds lhs with rhs and returns the result
+     */
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator +(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        lhs += rhs;
+        return lhs;
+    }
+
+    /**
+     * @brief Subtraction Operator that subtracts rhs from this MsgField and
+     * stores the result in this object
+     */
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator -=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        this->field -= rhs.field;
+        return *this;
+    }
+
+    /**
+     * @brief Subtraction Operator that subtracts rhs from lhs and returns the
+     * result
+     */
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator -(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        lhs -= rhs;
+        return lhs;
+    }
+
+    /**
+     * @brief Multiplication Operator that mulitplies this MsgField with rhs and
+     * stores the result in this object
+     */
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator *=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        this->field *= rhs.field;
+        return *this;
+    }
+
+    /**
+     * @brief Multiplication Operator that mulitplies lhs with rhs and returns
+     * the result
+     */
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator *(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        lhs *= rhs;
+        return lhs;
+    }
+
+    /**
+     * @brief Division Operator that divides this MsgField by rhs and
+     * stores the result in this object
+     */
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator /=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        this->field /= rhs.field;
+        return *this;
+    }
+
+    /**
+     * @brief Division Operator that divides lhs by rhs and returns
+     * the result
+     */
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator /(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
+    {
+        lhs /= rhs;
+        return lhs;
+    }
+
+    /**
      * @brief OR-Assignment operator that ORs this MsgField with rhs and stores
      * the result in this object
      */
-    const MsgFieldTypeTemplate<T,OpaqueT> &operator |=(const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator |=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         this->field |= rhs.field;
         return *this;
@@ -85,26 +188,35 @@ public:
     /**
      * @brief OR-Operator that ORs lhs with rhs and returns the result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator |(MsgFieldTypeTemplate<T,OpaqueT> lhs, const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator |(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         lhs |= rhs;
         return lhs;
     }
 
     /**
-     * @brief OR-Operator that ORs lhs with an rhs of type T and returns the result
+     * @brief OR-Operator that ORs lhs with an rhs of type T and returns the
+     * result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator |(MsgFieldTypeTemplate<T,OpaqueT> lhs, const T &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator |(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const T &rhs
+            )
     {
         return MsgFieldTypeTemplate<T,OpaqueT>(lhs.field | rhs);
     }
 
 
     /**
-     * @brief AND-Assignment operator that ANDs this MsgField with rhs and stores
-     * the result in this object
+     * @brief AND-Assignment operator that ANDs this MsgField with rhs and
+     * stores the result in this object
      */
-    const MsgFieldTypeTemplate<T,OpaqueT> &operator &=(const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator &=
+        (const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+         )
     {
         this->field &= rhs.field;
         return *this;
@@ -113,26 +225,35 @@ public:
     /**
      * @brief AND-Operator that ANDs lhs with rhs and returns the result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator &(MsgFieldTypeTemplate<T,OpaqueT> lhs, const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator &(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         lhs &= rhs;
         return lhs;
     }
 
     /**
-     * @brief AND-Operator that ANDs lhs with an rhs of type T and returns the result
+     * @brief AND-Operator that ANDs lhs with an rhs of type T and returns the
+     * result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator &(MsgFieldTypeTemplate<T,OpaqueT> lhs, const T &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator &(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const T &rhs
+            )
     {
         return MsgFieldTypeTemplate<T,OpaqueT>(lhs.field & rhs);
     }
 
 
     /**
-     * @brief XOR-Assignment operator that XORs this MsgField with rhs and stores
-     * the result in this object
+     * @brief XOR-Assignment operator that XORs this MsgField with rhs and
+     * stores the result in this object
      */
-    const MsgFieldTypeTemplate<T,OpaqueT> &operator ^=(const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    const MsgFieldTypeTemplate<T,OpaqueT> &operator ^=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         this->field ^= rhs.field;
         return *this;
@@ -141,16 +262,23 @@ public:
     /**
      * @brief XOR-Operator that XORs lhs with rhs and returns the result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator ^(MsgFieldTypeTemplate<T,OpaqueT> lhs, const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator ^(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         lhs ^= rhs;
         return lhs;
     }
 
     /**
-     * @brief XOR-Operator that XORs lhs with an rhs of type T and returns the result
+     * @brief XOR-Operator that XORs lhs with an rhs of type T and returns the
+     * result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator ^(MsgFieldTypeTemplate<T,OpaqueT> lhs, const T &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator ^(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const T &rhs
+            )
     {
         return MsgFieldTypeTemplate<T,OpaqueT>(lhs.field ^ rhs);
     }
@@ -190,7 +318,10 @@ public:
      * @brief Right-Shift operator that shifts lhs's field rhs times to the
      * right and returns a new MsgField as the result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator>>(MsgFieldTypeTemplate<T,OpaqueT> lhs,const int &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator>>(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const int &rhs
+            )
     {
         lhs >>= rhs;
         return lhs;
@@ -210,7 +341,10 @@ public:
      * @brief Left-Shift operator that shifts lhs's field rhs times to the
      * left and returns a new MsgField as the result
      */
-    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator<<(MsgFieldTypeTemplate<T,OpaqueT> lhs,const int &rhs)
+    friend inline MsgFieldTypeTemplate<T,OpaqueT> operator<<(
+            MsgFieldTypeTemplate<T,OpaqueT> lhs,
+            const int &rhs
+            )
     {
         lhs <<= rhs;
         return lhs;
@@ -223,7 +357,10 @@ public:
      * 
      * \note Also needed for QHash!
      */
-    friend inline bool operator==(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator==(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return lhs.field == rhs.field;
     }
@@ -232,7 +369,10 @@ public:
      * @brief Unequal Operator to compare two MsgField objects of the same type
      * for unequalness
      */
-    friend inline bool operator!=(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator!=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return !operator==(lhs,rhs);
     }
@@ -242,7 +382,10 @@ public:
      * @brief Lesser operator to compare two MsgField objects for which is
      * lesser
      */
-    friend inline bool operator<(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator<(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return lhs.field < rhs.field;
     }
@@ -251,7 +394,10 @@ public:
      * @brief Greater operator to compare two MsgField objects for which is
      * greater
      */
-    friend inline bool operator>(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator>(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return operator<(rhs,lhs);
     }
@@ -260,7 +406,10 @@ public:
      * @brief Lesser-Or-Equal operator to compare two MsgField objects for which 
      * is lesser or if they are equal
      */
-    friend inline bool operator<=(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator<=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return !operator>(lhs,rhs);
     }
@@ -269,7 +418,10 @@ public:
      * @brief Greater-Or-Equal operator to compare two MsgField objects for which 
      * is greater or if they are equal
      */
-    friend inline bool operator>=(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator>=(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return !operator<(lhs,rhs);
     }
@@ -288,7 +440,10 @@ public:
      * @brief Logical-OR operator that logically ORs lhs's and rhs's field
      * values
      */
-    friend inline bool operator||(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator||(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return lhs.field || rhs.field;
     }
@@ -297,7 +452,10 @@ public:
      * @brief Logical-AND operator that logically ANDs lhs's and rhs's field
      * values
      */
-    friend inline bool operator&&(const MsgFieldTypeTemplate<T,OpaqueT> &lhs,const MsgFieldTypeTemplate<T,OpaqueT> &rhs)
+    friend inline bool operator&&(
+            const MsgFieldTypeTemplate<T,OpaqueT> &lhs,
+            const MsgFieldTypeTemplate<T,OpaqueT> &rhs
+            )
     {
         return lhs.field && rhs.field;
     }
@@ -336,7 +494,10 @@ public:
      * In order to use the type with QHash a qHash function needs to be in the
      * namespace of this type
      */
-    friend inline uint qHash(const MsgFieldTypeTemplate<T,OpaqueT> &key, uint seed)
+    friend inline uint qHash(
+            const MsgFieldTypeTemplate<T,OpaqueT> &key,
+            uint seed
+            )
     {
         return qHash(key.field, seed);
     }

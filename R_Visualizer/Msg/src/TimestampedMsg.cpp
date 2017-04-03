@@ -1,4 +1,5 @@
 #include "TimestampedMsg.h"
+#include "fileparser.h"
 
 TimestampedMsg::TimestampedMsg() :
     originalMsg(),
@@ -19,7 +20,7 @@ TimestampedMsg::TimestampedMsg(const TimestampedMsg &other) :
 }
 
 
-virtual ~TimestampedMsg::TimestampedMsg()
+virtual TimestampedMsg::~TimestampedMsg()
 {
 }
 
@@ -72,3 +73,7 @@ const Msg TimestampedMsg::getOriginalMsg() const
     return originalMsg;
 }
 
+void TimestampedMsg::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
+}

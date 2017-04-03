@@ -118,7 +118,7 @@ void SystemOverview::slt_applyRole(UserRoleMngr::UserRole roleToSwitchTo)
     }
 }
 
-void SystemOverview::slt_newMessage(const Msg &newMsg)
+void SystemOverview::slt_newMessage(const TimestampedMsg &newMsg)
 {
     qDebug() << "SystemOverview received msg from ID:  " << newMsg.getId() << " with code: " << newMsg.getCode();
     /* ui->visualizerGraphicsView->getObjectStore()->receiveMessage(ptr); */

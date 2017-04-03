@@ -60,7 +60,7 @@ private:
 
 private slots:
     void slt_applyRole(UserRoleMngr::UserRole roleToSwitchTo);
-    void slt_newMessage(const Msg &newMsg);
+    void slt_newMessage(const TimestampedMsg &newMsg);
 
     void slt_addNewObject(const QPointF &pos);
     void slt_removeObject(SysOvrvObject* obj);

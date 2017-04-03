@@ -7,10 +7,11 @@
 #include "sendmsgmodel.h"
 #include "Msg.h"
 #include "MessageConfig.h"
-#include "idmodel.h"
-#include "idrep.h"
-#include "msgtypemodel.h"
-#include "msgtyperep.h"
+/* #include "idmodel.h" */
+#include "MsgIDRep.h"
+/* #include "msgtypemodel.h" */
+#include "MsgCodeRep.h"
+#include "MsgDataRep.h"
 #include "messagefilter.h"
 #include "filteridstore.h"
 #include "filtercodestore.h"
@@ -110,22 +111,22 @@ void JsonInParser::visit(MessageConfig &visitor)
 {
 }
 
-void JsonInParser::visit(IDModel &visitor)
-{
-    const QJsonArray &tempJsonArray = currentJsonValuePtr->toArray();
-    const int tempJsonArraySize = tempJsonArray.size();
+/* void JsonInParser::visit(IDModel &visitor) */
+/* { */
+/*     const QJsonArray &tempJsonArray = currentJsonValuePtr->toArray(); */
+/*     const int tempJsonArraySize = tempJsonArray.size(); */
 
-    for(int i = 0; i < tempJsonArraySize; ++i)
-    {
-        const QJsonObject &tempJsonObject = tempJsonArray.at(i).toObject();
-        currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
-        IDRep newIDRep;
-        newIDRep.accept(this);
-        visitor.add(newIDRep);
-    }
-}
+/*     for(int i = 0; i < tempJsonArraySize; ++i) */
+/*     { */
+/*         const QJsonObject &tempJsonObject = tempJsonArray.at(i).toObject(); */
+/*         currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
+/*         IDRep newIDRep; */
+/*         newIDRep.accept(this); */
+/*         visitor.add(newIDRep); */
+/*     } */
+/* } */
 
-void JsonInParser::visit(IDRep &visitor)
+void JsonInParser::visit(MsgIDRep &visitor)
 {
     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
 
@@ -134,29 +135,33 @@ void JsonInParser::visit(IDRep &visitor)
     visitor.setColor(QColor(tempJsonObject["IDRepColor"].toString()));
 }
 
-void JsonInParser::visit(MsgTypeModel &visitor)
-{
-    const QJsonArray &tempJsonArray = currentJsonValuePtr->toArray();
-    const int tempJsonArraySize = tempJsonArray.size();
+/* void JsonInParser::visit(MsgTypeModel &visitor) */
+/* { */
+/*     const QJsonArray &tempJsonArray = currentJsonValuePtr->toArray(); */
+/*     const int tempJsonArraySize = tempJsonArray.size(); */
 
-    for(int i = 0; i < tempJsonArraySize; ++i)
-    {
-        const QJsonObject &tempJsonObject = tempJsonArray.at(i).toObject();
-        currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject));
-        MsgTypeRep newMsgTypeRep;
-        newMsgTypeRep.accept(this);
-        visitor.add(newMsgTypeRep);
-    }
-}
+/*     for(int i = 0; i < tempJsonArraySize; ++i) */
+/*     { */
+/*         const QJsonObject &tempJsonObject = tempJsonArray.at(i).toObject(); */
+/*         currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
+/*         MsgTypeRep newMsgTypeRep; */
+/*         newMsgTypeRep.accept(this); */
+/*         visitor.add(newMsgTypeRep); */
+/*     } */
+/* } */
 
-void JsonInParser::visit(MsgTypeRep &visitor)
+void JsonInParser::visit(MsgCodeRep &visitor)
 {
     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
 
     visitor.setCode(static_cast<MsgCodeType>(tempJsonObject["MsgTypeRepCode"].toInt()));
     visitor.setCodeName(tempJsonObject["MsgTypeRepName"].toString());
-    visitor.setMessageFormat(tempJsonObject["MsgTypeRepMessageFormat"].toString());
+    /* visitor.setMessageFormat(tempJsonObject["MsgTypeRepMessageFormat"].toString()); */
     visitor.setColor(QColor(tempJsonObject["MsgTypeRepColor"].toString()));
+}
+
+void JsonInParser::visit(MsgDataRep &visitor)
+{
 }
 
 void JsonInParser::visit(MessageFilter &visitor)

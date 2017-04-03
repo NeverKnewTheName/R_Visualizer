@@ -66,18 +66,19 @@ public:
      * @brief Generic QCompleter generator function for mappings
      */
     virtual QCompleter *createAliasCompleterForMapping(
-            const MessageMappingTypes mappingType
+            const MessageMappingTypes mappingType,
+            QObject *parent = Q_NULLPTR
             ) = 0;
 
     //ToTHINK Deprecated
-    virtual QCompleter *createIDNameCompleter(
-            QObject *parent = Q_NULLPTR
-            ) const = 0;
+    /* virtual QCompleter *createIDNameCompleter( */
+    /*         QObject *parent = Q_NULLPTR */
+    /*         ) const = 0; */
 
     //ToTHINK Deprecated
-    virtual QCompleter *createCodeNameCompleter(
-            QObject *parent = Q_NULLPTR
-            ) const = 0;
+    /* virtual QCompleter *createCodeNameCompleter( */
+    /*         QObject *parent = Q_NULLPTR */
+    /*         ) const = 0; */
 
 signals:
     /**
@@ -105,7 +106,7 @@ signals:
             ) = 0;
 
 private slots:
-    virtual void slt_ApplyRole(UserRoleMngr::UserRole roleToApply) = 0;
+    virtual void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply) = 0;
 };
 
 #endif /* IMESSAGECONFIG_H */

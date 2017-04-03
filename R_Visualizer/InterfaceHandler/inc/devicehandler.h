@@ -18,8 +18,11 @@
 #include <QTimer>
 #include <devicedriver.h>
 
-#include "Msg.h"
-#include "errorlogentry.h"
+//#include "errorlogentry.h"
+
+class ErrorLogEntry;
+class TimestampedMsg;
+class Msg;
 
 /** \addtogroup Group_BasicApplication
  *  @{
@@ -80,7 +83,7 @@ class DeviceHandler : public QThread
          */
         void sigPacketReceived(CAN_PacketPtr);
 
-        void sigMsgReceived(const Msg &msg);
+        void sigMsgReceived(const TimestampedMsg &msg);
         void sigErrorMsgReceived(ErrorLogEntry *errEntry);
         /**
          * @brief Signal that notifies the application of an error in the usb communication.

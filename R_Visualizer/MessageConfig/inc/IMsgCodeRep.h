@@ -26,10 +26,10 @@ class IMsgCodeRep :
 public:
     virtual ~IMsgCodeRep(){}
 
-    virtual IMsgCodeRepUniqPtr cloneMsgCodeRep() const = 0;
+    virtual std::unique_ptr<IMsgCodeRep> cloneMsgCodeRep() const = 0;
 
-    MsgCodeType getCode() const = 0;
-    void setCode(const MsgCodeType code) = 0;
+    virtual MsgCodeType getCode() const = 0;
+    virtual void setCode(const MsgCodeType code) = 0;
 };
 
 /**

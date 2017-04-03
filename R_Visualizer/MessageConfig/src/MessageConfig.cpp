@@ -41,22 +41,50 @@ IPrettyMsgUniqPtr<ITimestampedMsg> MessageConfig::prettifyMsg(
     return std::move(prettyMsg);
 }
 
-
-QCompleter *MessageConfig::createIDNameCompleter(
+QCompleter *MessageConfig::createAliasCompleterForMapping(
+        const IMessageConfig::MessageMappingTypes mappingType,
         QObject *parent
-        ) const
+        )
 {
-}
-
-QCompleter *MessageConfig::createCodeNameCompleter(
-        QObject *parent
-        ) const
-{
+    switch(mappingType)
+    {
+    case IMessageConfig::MessageIDMappingType:
+        return createIDNameCompleter(parent);
+        break;
+    case IMessageConfig::MessageCodeMappingType:
+        return createCodeNameCompleter(parent);
+        break;
+    case IMessageConfig::MessageDataMappingType:
+        return Q_NULLPTR;
+        break;
+    default:
+        return Q_NULLPTR;
+    }
 }
 
 //ToTHINK DEPRECATED?
 void MessageConfig::accept(FileParser *visitor)
 {
     visitor->visit(*this);
+}
+
+void MessageConfig::slt_ApplyRole(const UserRoleMngr::UserRole roleToApply)
+{
+    emit sgnl_PropagateUserRole(roleToApply);
+}
+
+
+QCompleter *MessageConfig::createIDNameCompleter(
+        QObject *parent
+        ) const
+{
+    return msgIDMapping->createIDNameCompleter(parent);
+}
+
+QCompleter *MessageConfig::createCodeNameCompleter(
+        QObject *parent
+        ) const
+{
+    return msgCodeMapping->createCodeNameCompleter(parent);
 }
 

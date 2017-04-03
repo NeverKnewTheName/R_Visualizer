@@ -21,7 +21,11 @@ class IMsgCodeMapping;
 class IMsgDataMapping;
 
 /**
- * @brief The MessageConfig module
+ * @brief The MessageConfig module is a standard implementation of the
+ * #IMessageConfig interface
+ * 
+ * The standard implementation has per default mappings for message ID,
+ * message code, and message data fields.
  */
 class MessageConfig : public QObject, public IMessageConfig
 {
@@ -34,20 +38,18 @@ public:
             );
     virtual ~MessageConfig();
 
-    IPrettyMsgUniqPtr<IMsg> prettifyMsg(
+    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
             const IMsg &msgToPrettify
             ) const;
-    IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
+    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
             const ITimestampedMsg &timestampedMsgToPrettify
             ) const;
 
-    QCompleter *createAliasCompleterForMapping(
-            const IMessageConfig::MessageMappingTypes mappingType
+    virtual QCompleter *createAliasCompleterForMapping(
+            const IMessageConfig::MessageMappingTypes mappingType,
+            QObject *parent = Q_NULLPTR
             );
 
-    //ToTHINK Deprecated
-    QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR) const;
-    QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR) const;
 
     //ToTHINK DEPRECATED?
     void accept(FileParser *visitor);
@@ -75,16 +77,19 @@ signals:
      */
     virtual void sgnl_PropagateUserRole(
             const UserRoleMngr::UserRole roleToApply
-            ) = 0;
+            );
 
 private slots:
-    void slt_ApplyRole(UserRoleMngr::UserRole roleToApply);
+    void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply);
+
+private:
+    QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR);
+    QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR);
 
 private:
     IMsgIDMapping *msgIDMapping;
     IMsgCodeMapping *msgCodeMapping;
     IMsgDataMapping *msgDataMapping;
-
 };
 
 #endif /* MESSAGECONFIG_H */

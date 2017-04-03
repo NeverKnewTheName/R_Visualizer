@@ -10,10 +10,11 @@
 
 #include <QLineEdit>
 #include <QMetaObject>
+#include <QCompleter>
 
-class MessageConfig;
+#include "MsgCodeType.h"
 
-#include "Msg.h"
+class IMsgCodeMapping;
 
 /**
  * @brief The CodeLineEdit
@@ -22,18 +23,24 @@ class CodeLineEdit : public QLineEdit
 {
 public:
     CodeLineEdit( QWidget *parent = Q_NULLPTR );
-    CodeLineEdit( const MessageConfig *msgConfig, QWidget *parent = Q_NULLPTR );
+    CodeLineEdit(
+            const IMsgCodeMapping *msgCodeMapping,
+            QCompleter *msgCodeAliasCompleter = Q_NULLPTR,
+            QWidget *parent = Q_NULLPTR
+            );
     virtual ~CodeLineEdit();
 
-    void setMsgConfig(const MessageConfig *msgConfig);
+    void setMsgCodeMapping(const IMsgCodeMapping *msgCodeMapping);
 
-    MsgCodeType getCode() const;
+    MsgCodeType getMsgCode() const;
 
 private:
-    const MessageConfig *msgConfig;
+    const IMsgCodeMapping *msgCodeMapping;
     QMetaObject::Connection colorizeLineEditConnection;
 
-    void msgConfigChanged();
+    void connectMsgCodeMapping();
+    virtual MsgCodeType convertTextToMsgCode(const QString &text) const;
+    /* void msgConfigChanged(); */
 };
 
 #endif /* CODELINEEDIT_H */

@@ -10,7 +10,8 @@ SOURCES += \
     $$PWD/src/Msg.cpp \
     $$PWD/src/msgtableview.cpp \
     $$PWD/src/msgdatawidget.cpp \
-    $$PWD/src/Prettymsg.cpp \
+    $$PWD/src/PrettyMsg.cpp \
+    $$PWD/src/TimestampedMsg.cpp \
 
 HEADERS  += \
     $$PWD/inc/MsgFieldType.h \

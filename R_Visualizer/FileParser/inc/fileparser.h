@@ -8,10 +8,11 @@ class SendMessages;
 class SendMsgModel;
 class Msg;
 class MessageConfig;
-class IDModel;
-class IDRep;
-class MsgTypeModel;
-class MsgTypeRep;
+/* class IDModel; */
+class MsgIDRep;
+/* class MsgTypeModel; */
+class MsgCodeRep;
+class MsgDataRep;
 class MessageFilter;
 class FilterIDStore;
 class FilterCodeStore;
@@ -37,10 +38,11 @@ public:
     virtual void visit(SendMsgModel &visitor) = 0;
     virtual void visit(Msg &visitor) = 0;
     virtual void visit(MessageConfig &visitor) = 0;
-    virtual void visit(IDModel &visitor) = 0;
-    virtual void visit(IDRep &visitor) = 0;
-    virtual void visit(MsgTypeModel &visitor) = 0;
-    virtual void visit(MsgTypeRep &visitor) = 0;
+    /* virtual void visit(IDModel &visitor) = 0; */
+    virtual void visit(MsgIDRep &visitor) = 0;
+    /* virtual void visit(MsgTypeModel &visitor) = 0; */
+    virtual void visit(MsgCodeRep &visitor) = 0;
+    virtual void visit(MsgDataRep &visitor) = 0;
     virtual void visit(MessageFilter &visitor) = 0;
     virtual void visit(FilterIDStore &visitor) = 0;
     virtual void visit(FilterCodeStore &visitor) = 0;

@@ -8,10 +8,13 @@
 #ifndef TIMESTAMPEDMSG_H
 #define TIMESTAMPEDMSG_H
 
+#include <QDateTime>
+
 #include "ITimestampedMsg.h"
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
+#include "Msg.h"
 
 /**
  * @brief The TimestampedMsg
@@ -41,9 +44,13 @@ public:
 
     const Msg getOriginalMsg() const;
 
+    void accept(FileParser *visitor);
+
 private:
     Msg originalMsg;
     QDateTime msgTimestamp;
 };
+
+Q_DECLARE_METATYPE(TimestampedMsg)
 
 #endif /* TIMESTAMPEDMSG_H */

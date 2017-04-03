@@ -7,25 +7,32 @@
 #include "IMsg.h"
 #include "ITimestampedMsg.h"
 
+class IMsgIDMappingStore;
+
 class MsgIDMapping : public IMsgIDMapping
 {
 public:
-    MsgIDMapping();
+    MsgIDMapping(IMsgIDMappingStore *msgIDMappingStore);
     virtual ~MsgIDMapping();
 
-    IPrettyMsgUniqPtr<IMsg> prettifyMsg(
+    virtual MsgIDType getMsgIDToAlias(const QString &alias) const;
+    virtual QString getAliasToMsgID(const MsgIDType &msgID) const;
+    virtual QColor getColorToMsgID(const MsgIDType &msgID) const;
+    virtual QColor getColorToAlias(const QString &alias) const;
+
+    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
             IPrettyMsgUniqPtr<IMsg> msgToPrettify
             ) const;
-    IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
+    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
             IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
             ) const;
 
-    QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR) const;
+    /* QCompleter *createIDaliasCompleter(QObject *parent = Q_NULLPTR) const; */
 
-    void accept(FileParser *visitor);
+    virtual void accept(FileParser *visitor);
 
 private:
-    
+    IMsgIDMappingStore *msgIDMappingStore;
 
 };
 

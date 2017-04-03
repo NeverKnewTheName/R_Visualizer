@@ -4,29 +4,35 @@
 #include "IMsgCodeMapping.h"
 
 class FileParser;
+class IMsgCodeMappingStore;
 
 class MsgCodeMapping : public IMsgCodeMapping
 {
 public:
-    MsgCodeMapping();
+    MsgCodeMapping(IMsgCodeMappingStore *msgCodeMappingStore);
     virtual ~MsgCodeMapping();
 
-    IPrettyMsgUniqPtr<IMsg> prettifyMsg(
+    virtual MsgCodeType getMsgCodeToAlias(const QString &alias) const;
+    virtual QString getAliasToMsgCode(const MsgCodeType &msgCode) const;
+    virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const;
+    virtual QColor getColorToAlias(const QString &alias) const;
+
+    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
             IPrettyMsgUniqPtr<IMsg> msgToPrettify
             ) const;
 
-    IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
+    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
             IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
             ) const;
 
-    QCompleter *createCodeNameCompleter(
-            QObject *parent = Q_NULLPTR
-            ) const;
+    /* QCompleter *createCodeNameCompleter( */
+    /*         QObject *parent = Q_NULLPTR */
+    /*         ) const; */
 
-    void accept(FileParser *visitor);
+    virtual void accept(FileParser *visitor);
 
 private:
-    
+    IMsgCodeMappingStore *msgCodeMappingStore;
 
 };
 

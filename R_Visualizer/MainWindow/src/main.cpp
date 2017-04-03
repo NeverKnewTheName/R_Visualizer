@@ -27,8 +27,15 @@
 #include "IMsgIDMappingStore.h"
 #include "MsgIDMappingStore.h"
 #include "MsgIDMappingWidget.h"
+#include "IMsgCodeMappingStore.h"
+#include "MsgCodeMappingStore.h"
+#include "MsgCodeMappingWidget.h"
 
 #include "MessageConfigWidget.h"
+
+#include "Msg.h"
+#include "TimestampedMsg.h"
+#include "errorlogentry.h"
 
 int main(int argc, char *argv[])
 {
@@ -37,15 +44,21 @@ int main(int argc, char *argv[])
     /* qRegisterMetaType <CAN_PacketPtr>("CAN_PacketPtr"); */
     /* qRegisterMetaType <Data_PacketPtr>("Data_PacketPtr"); */
     /* qRegisterMetaType <Error_PacketPtr>("Error_PacketPtr"); */
-    /* qRegisterMetaType <Msg>("Msg"); */
+    qRegisterMetaType <Msg>("Msg");
+    qRegisterMetaType <TimestampedMsg>("TimestampedMsg");
     /* qRegisterMetaType <MsgData>("MsgData"); */
     /* qRegisterMetaType <DataByteVect>("DataByteVect"); */
-    /* qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry"); */
+    qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
 
     /* MainWindow w; */
 
-    IMsgIDMapping *msgIDMapping = new MsgIDMapping();
-    IMsgCodeMapping *msgCodeMapping = new MsgCodeMapping();
+    IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
+    IMsgIDMapping *msgIDMapping = new MsgIDMapping(msgIDMappingStore);
+    IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
+            msgIDMappingStore
+            );
+    IMsgCodeMappingStore *msgCodeMappingStore = new MsgCodeMappingStore();
+    IMsgCodeMapping *msgCodeMapping = new MsgCodeMapping(msgCodeMappingStore);
     IMsgDataMapping *msgDataMapping = new MsgDataMapping();
 
 
@@ -58,14 +71,11 @@ int main(int argc, char *argv[])
     MessageConfigWidget *messageConfigWidget = new MessageConfigWidget(
             messageConfig
             );
-    IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
-    IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
-            msgIDMappingStore
-            );
     MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(
             msgIDMappingModel,
             messageConfigWidget
             );
+    messageConfigWidget->appendMappingWidget(msgIDMappingWidget);
     /* messageConfigWidget->appendMappingWidget(); */
 
     /* MessageFilter *messageFilterWidget = new MessageFilter(); */

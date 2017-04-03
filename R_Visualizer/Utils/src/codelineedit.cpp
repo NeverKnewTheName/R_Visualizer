@@ -3,77 +3,93 @@
 #include <QString>
 #include <QColor>
 
-#include "MessageConfig.h"
+#include "IMsgCodeMapping.h"
 
 #include <QDebug>
 
 CodeLineEdit::CodeLineEdit( QWidget *parent ) :
     QLineEdit(parent),
-    msgConfig(nullptr)
+    msgCodeMapping(Q_NULLPTR)
 {
 }
 
-CodeLineEdit::CodeLineEdit( const MessageConfig *msgConfig, QWidget *parent ) :
+CodeLineEdit::CodeLineEdit(
+        const IMsgCodeMapping *msgCodeMapping,
+        QCompleter *msgCodeAliasCompleter,
+        QWidget *parent
+        ) :
     QLineEdit(parent),
-    msgConfig(msgConfig)
+    msgCodeMapping(msgCodeMapping)
 {
-    if(msgConfig != nullptr)
+    if(msgCodeAliasCompleter != Q_NULLPTR)
     {
-        msgConfigChanged();
+        setCompleter(msgCodeAliasCompleter);
     }
+    connectMsgCodeMapping();
 }
 
 CodeLineEdit::~CodeLineEdit()
 {
 }
 
-void CodeLineEdit::setMsgConfig(const MessageConfig *msgConfig)
+void CodeLineEdit::setMsgCodeMapping(const IMsgCodeMapping *msgCodeMapping)
 {
-    this->msgConfig = msgConfig;
-    if(msgConfig != nullptr)
-    {
-        msgConfigChanged();
-    }
+    this->msgCodeMapping = msgCodeMapping;
+    connectMsgCodeMapping();
 }
 
-MsgCodeType CodeLineEdit::getCode() const
+MsgCodeType CodeLineEdit::getMsgCode() const
 {
     const QString &codeTypeText = text();
-    bool conversionOK;
-    MsgCodeType retrievedCode = codeTypeText.toInt(&conversionOK, (codeTypeText.startsWith("0x")) ? 16 : 0);
 
-    if(!conversionOK)
-    {
-        if(msgConfig != nullptr)
-        {
-            retrievedCode = msgConfig->getCodeToName(codeTypeText);
-        }
-        else
-        {
-            retrievedCode = 0;
-        }
-    }
+    MsgCodeType retrievedCode = convertTextToMsgCode(codeTypeText);
 
-    qDebug() << "CodeLineEdit getCode(): " << retrievedCode;
+    qDebug() << "CodeLineEdit getMsgCode(): "
+        << static_cast<QString>(retrievedCode);
 
     return retrievedCode;
 }
 
-void CodeLineEdit::msgConfigChanged()
+void CodeLineEdit::connectMsgCodeMapping()
 {
     if(colorizeLineEditConnection)
     {
         QObject::disconnect(colorizeLineEditConnection);
     }
-    QCompleter *codeCompleter = msgConfig->createCodeNameCompleter(this);
-    setCompleter(codeCompleter);
-    colorizeLineEditConnection = connect(this, &QLineEdit::textChanged, [=](const QString &text){
-            QColor color = msgConfig->getColorToCodeName(text);
-            QString colorName("white");
-            if(color.isValid())
-            {
-                colorName = color.name();
+    colorizeLineEditConnection = connect(
+            this,
+            &QLineEdit::textChanged, [=](const QString &text){
+                QColor color = msgCodeMapping->getColorToAlias(text);
+                QString colorName("white");
+                if(color.isValid())
+                {
+                    colorName = color.name();
+                }
+                this->setStyleSheet(QString("background: %1").arg(colorName));
             }
-            this->setStyleSheet(QString("background: %1").arg(colorName));
-            });
+        );
+}
+
+MsgCodeType CodeLineEdit::convertTextToMsgCode(const QString &text) const
+{
+    bool conversionOK;
+    MsgCodeType retrievedCode(
+            text.toInt(
+                &conversionOK,
+                (text.startsWith("0x")) ? 16 : 0
+                )
+            );
+
+    if(!conversionOK)
+    {
+        if(msgCodeMapping != Q_NULLPTR)
+        {
+            retrievedCode = msgCodeMapping->getMsgCodeToAlias(text);
+        }
+        else
+        {
+            retrievedCode = MsgCodeType(0);
+        }
+    }
+    return retrievedCode;
 }

@@ -15,6 +15,8 @@
 #include <QJsonObject>
 
 #include "rsimpleringbuff.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
 
 //ToDELETE... needed because no interface yet..
 #include "Msg.h"
@@ -377,7 +379,10 @@ public:
                 if(recentContainerWasLoaded)
                 {
                     //Handle if the previous container was loaded
-                    recentJsonMsgsArr.append(curMsg.parseOUT());
+                    JsonOutParser tempJsonOutParser();
+                    curMsg.accept(&tempJsonOutParser);
+                    const QJsonObject &tempMsgJsonObject = tempJsonOutParser.getJsonDocument().object();
+                    recentJsonMsgsArr.append(tempMsgJsonObject);
                     QFile MsgDataTempFile(ContainerFileNames[recentContainerNR]);
                     if(!MsgDataTempFile.exists())
                     {
@@ -431,7 +436,10 @@ public:
             LastContainer.removeFirst();
             if(recentContainerWasLoaded)
             {
-                recentJsonMsgsArr.append(curMsg.parseOUT());
+                JsonOutParser tempJsonOutParser();
+                curMsg.accept(&tempJsonOutParser);
+                const QJsonObject &tempMsgJsonObject = tempJsonOutParser.getJsonDocument().object();
+                recentJsonMsgsArr.append(tempMsgJsonObject);
 
                 QFile MsgDataTempFile(ContainerFileNames[recentContainerNR]);
                 if(!MsgDataTempFile.exists())
@@ -630,9 +638,12 @@ public:
                 //Is in RAM
                 curContainerIDToParse = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(curContainerIDToParse));
                 const DataContainer &curContainerToParse = DataStore.at(curContainerIDToParse.IndexInStore);
+                JsonOutParser tempJsonOutParser();
                 for(const Msg &msg : curContainerToParse)
                 {
-                    msgsAsJsonObjsArray.append(msg.parseOUT());
+                    msg.accept(&tempJsonOutParser);
+                    const QJsonObject &tempMsgJsonObject = tempJsonOutParser.getJsonDocument().object();
+                    msgsAsJsonObjsArray.append(tempMsgJsonObject);
                 }
             }
             else
@@ -670,9 +681,12 @@ public:
         }
 
         //parse last container
+        JsonOutParser tempJsonOutParser();
         for(const Msg &msg : LastContainer)
         {
-            msgsAsJsonObjsArray.append(msg.parseOUT());
+            msg.accept(&tempJsonOutParser);
+            const QJsonObject &tempMsgJsonObject = tempJsonOutParser.getJsonDocument().object();
+            msgsAsJsonObjsArray.append(tempMsgJsonObject);
         }
 
         return QJsonDocument(msgsAsJsonObjsArray);

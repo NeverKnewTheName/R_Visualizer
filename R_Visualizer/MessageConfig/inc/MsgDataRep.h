@@ -38,7 +38,7 @@ public:
 
     QString parseMsgData(const IMsg &msg) const;
 
-    friend inline bool operator==(const MsgDataRep &lhs, const MsgDataRep &rhs) const;
+    friend inline bool operator==(const MsgDataRep &lhs, const MsgDataRep &rhs);
 
     /**
      * @brief qHash implementation to use #MsgDataRep as a QHash key

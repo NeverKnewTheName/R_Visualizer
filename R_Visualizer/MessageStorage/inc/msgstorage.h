@@ -12,7 +12,7 @@ class MainWindow;
 class FileParser;
 
 #include <QObject>
-#include "Msg.h"
+#include "TimestampedMsg.h"
 #include "datastorage.h"
 
 #include "IFileParsable.h"
@@ -42,10 +42,10 @@ public:
      *       RAM; it can even not be guaranteed that a reference would
      *       be up to date...
      */
-    Msg at(const size_t index);
+    TimestampedMsg at(const size_t index);
     /* Msg at(const size_t index) const; */
 
-    Msg operator[](const size_t index);
+    TimestampedMsg operator[](const size_t index);
 
     /**
      * \brief clears the MsgStorage
@@ -63,7 +63,7 @@ public:
      */
     bool isEmpty() const;
 
-    void appendMsg(const Msg &newMsg);
+    void appendMsg(const TimestampedMsg &newMsg);
 
     /**
      * \brief parses the whole MsgStorage to a JSON document
@@ -79,15 +79,15 @@ public:
     QString saveMsgStorage(const QString &saveLocation);
 
 signals:
-    void sgnl_MsgAdded(const Msg &addedMsg);
+    void sgnl_MsgAdded(const TimestampedMsg &addedMsg);
     void sgnl_StoreCleared();
 
 private slots:
-    void slt_addMsg(const Msg &newMsg);
+    void slt_addMsg(const TimestampedMsg &newMsg);
 
 private:
 friend class MainWindow;
-    DataStorage<Msg> msgStore;
+    DataStorage<TimestampedMsg> msgStore;
 };
 
 #endif // MSGSTORAGE_H

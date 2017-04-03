@@ -7,10 +7,11 @@
 #include "sendmsgmodel.h"
 #include "Msg.h"
 #include "MessageConfig.h"
-#include "idmodel.h"
-#include "idrep.h"
-#include "msgtypemodel.h"
-#include "msgtyperep.h"
+/* #include "idmodel.h" */
+#include "MsgIDRep.h"
+/* #include "msgtypemodel.h" */
+#include "MsgCodeRep.h"
+#include "MsgDataRep.h"
 #include "messagefilter.h"
 #include "filteridstore.h"
 #include "filtercodestore.h"
@@ -61,19 +62,23 @@ void CsvInParser::visit(MessageConfig &visitor)
 {
 }
 
-void CsvInParser::visit(IDModel &visitor)
+/* void CsvInParser::visit(IDModel &visitor) */
+/* { */
+/* } */
+
+void CsvInParser::visit(MsgIDRep &visitor)
 {
 }
 
-void CsvInParser::visit(IDRep &visitor)
+/* void CsvInParser::visit(MsgTypeModel &visitor) */
+/* { */
+/* } */
+
+void CsvInParser::visit(MsgCodeRep &visitor)
 {
 }
 
-void CsvInParser::visit(MsgTypeModel &visitor)
-{
-}
-
-void CsvInParser::visit(MsgTypeRep &visitor)
+void CsvInParser::visit(MsgDataRep &visitor)
 {
 }
 
