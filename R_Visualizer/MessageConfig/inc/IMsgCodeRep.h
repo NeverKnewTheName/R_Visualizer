@@ -44,6 +44,8 @@ template<class Derived>
 class MsgCodeRepCRTPHelper : public IMsgCodeRep
 {
 public:
+    virtual ~IMsgCodeRepUniqPtr(){}
+
     virtual IMsgCodeRepUniqPtr cloneMsgCodeRep() const
     {
         return IMsgCodeRepUniqPtr(

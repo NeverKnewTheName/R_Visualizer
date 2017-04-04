@@ -49,6 +49,7 @@ template<class Derived>
 class MsgDataRepCRTPHelper : public IMsgDataRep
 {
 public:
+    virtual ~MsgDataRepCRTPHelper(){}
     virtual IMsgDataRepUniqPtr cloneMsgDataRep() const
     {
         return IMsgDataRepUniqPtr(
