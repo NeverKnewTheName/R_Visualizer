@@ -15,7 +15,6 @@
 #include "filteridadddialog.h"
 #include "filtercodeadddialog.h"
 
-#include "fileparser.h"
 #include "csvinparser.h"
 #include "csvoutparser.h"
 #include "jsoninparser.h"
@@ -168,34 +167,34 @@ const FilterTimestampStore &MessageFilter::getFilterTimestampModel() const
     return filterTimestampModel;
 }
 
-void MessageFilter::accept(FileParser *visitor)
-{
-    visitor->visit(*this);
-}
-
-void MessageFilter::saveIDFilter(const QString &pathToFile, FileParser *openFileParser)
-{
-}
-
-void MessageFilter::saveCodeFilter(const QString &pathToFile, FileParser *openFileParser)
-{
-}
-
-void MessageFilter::saveTimestampFilter(const QString &pathToFile, FileParser *openFileParser)
-{
-}
-
-void MessageFilter::loadIDFilter(const QString &pathToFile, FileParser *openFileParser)
-{
-}
-
-void MessageFilter::loadCodeFilter(const QString &pathToFile, FileParser *openFileParser)
-{
-}
-
-void MessageFilter::loadTimestampFilter(const QString &pathToFile, FileParser *openFileParser)
-{
-}
+//void MessageFilter::accept(FileParser *visitor)
+//{
+    //visitor->visit(*this);
+//}
+//
+//void MessageFilter::saveIDFilter(const QString &pathToFile, FileParser *openFileParser)
+//{
+//}
+//
+//void MessageFilter::saveCodeFilter(const QString &pathToFile, FileParser *openFileParser)
+//{
+//}
+//
+//void MessageFilter::saveTimestampFilter(const QString &pathToFile, FileParser *openFileParser)
+//{
+//}
+//
+//void MessageFilter::loadIDFilter(const QString &pathToFile, FileParser *openFileParser)
+//{
+//}
+//
+//void MessageFilter::loadCodeFilter(const QString &pathToFile, FileParser *openFileParser)
+//{
+//}
+//
+//void MessageFilter::loadTimestampFilter(const QString &pathToFile, FileParser *openFileParser)
+//{
+//}
 
 
 void MessageFilter::on_enableIDFilterCheckBox_toggled(bool checked)

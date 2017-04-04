@@ -15,10 +15,6 @@
 #include "sendmsgmodel.h"
 #include "MessageConfig.h"
 
-#include "idrep.h"
-#include "msgtyperep.h"
-
-#include "fileparser.h"
 #include "csvoutparser.h"
 #include "csvinparser.h"
 #include "jsonoutparser.h"
@@ -72,10 +68,10 @@ SendMessages::~SendMessages()
     delete ui;
 }
 
-void SendMessages::accept(FileParser *visitor)
-{
-    visitor->visit(*this);
-}
+//void SendMessages::accept(FileParser *visitor)
+//{
+    //visitor->visit(*this);
+//}
 
 void SendMessages::updateMsgPacketModel()
 {

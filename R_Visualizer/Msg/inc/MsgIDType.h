@@ -8,6 +8,7 @@
 #ifndef MSGIDTYPE_H
 #define MSGIDTYPE_H
 
+#include <QMetaType>
 #include "MsgFieldType.h"
 
 /**
@@ -20,6 +21,8 @@ typedef quint16 MsgIDPrimitiveType;
 /* typedef MsgFieldType<MsgIDPrimitiveType> MsgIDType; */
 
 CREATE_OPAQUE_MSG_FIELD_TYPE(MsgIDPrimitiveType, MsgIDType)
+
+Q_DECLARE_METATYPE(MsgIDType)
 
 
 #endif /* MSGIDTYPE_H */

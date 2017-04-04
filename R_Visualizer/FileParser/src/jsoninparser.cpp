@@ -1,26 +1,18 @@
 #include "jsoninparser.h"
 
-#include "messagestream.h"
 #include "msgstreammodel.h"
 #include "msgstorage.h"
-#include "sendmessages.h"
 #include "sendmsgmodel.h"
 #include "Msg.h"
-#include "MessageConfig.h"
-/* #include "idmodel.h" */
 #include "MsgIDRep.h"
-/* #include "msgtypemodel.h" */
 #include "MsgCodeRep.h"
 #include "MsgDataRep.h"
-#include "messagefilter.h"
 #include "filteridstore.h"
 #include "filtercodestore.h"
 #include "filtertimestampstore.h"
-#include "systemoverview.h"
 #include "sysovrvobject.h"
 #include "sysovrvtextlabel.h"
 #include "sysovrvtrigger.h"
-#include "errlogview.h"
 #include "errorlogentry.h"
 
 
@@ -46,9 +38,9 @@ void JsonInParser::setJsonDocument(const QJsonDocument &jsonDoc)
     }
 }
 
-void JsonInParser::visit(MessageStream &visitor)
-{
-}
+/* void JsonInParser::visit(MessageStream &visitor) */
+/* { */
+/* } */
 
 void JsonInParser::visit(MsgStreamModel &visitor)
 {
@@ -67,9 +59,22 @@ void JsonInParser::visit(MsgStorage &visitor)
     }
 }
 
-void JsonInParser::visit(SendMessages &visitor)
+void JsonInParser::visit(TimestampedMsgStorage &visitor)
 {
+    QJsonArray tempJsonArray = currentJsonValuePtr->toArray();
+    const int tempJsonArraySize = tempJsonArray.size();
+    for(int i = 0; i < tempJsonArraySize; ++i)
+    {
+        currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray.at(i).toObject()));
+        TimestampedMsg newMsg;
+        newMsg.accept(this);
+        visitor.appendMsg(newMsg);
+    }
 }
+
+/* void JsonInParser::visit(SendMessages &visitor) */
+/* { */
+/* } */
 
 void JsonInParser::visit(SendMsgModel &visitor)
 {
@@ -89,27 +94,35 @@ void JsonInParser::visit(SendMsgModel &visitor)
 void JsonInParser::visit(Msg &visitor)
 {
     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
-    visitor.setId(static_cast<MsgIDType>(tempJsonObject["MsgID"].toInt()));
-    visitor.setCode(static_cast<MsgCodeType>(tempJsonObject["MsgCode"].toInt()));
+    visitor.setMsgID(MsgIDType(tempJsonObject["MsgID"].toInt()));
+    visitor.setMsgCode(MsgCodeType(tempJsonObject["MsgCode"].toInt()));
+    const QJsonArray &tempJsonArray = tempJsonObject["MsgData"].toArray();
+    const int tempJsonArraySize = tempJsonArray.size();
+    MsgDataType tempMsgData;
+    for(int i = 0; i < tempJsonArraySize; ++i)
+    {
+        tempMsgData.append(MsgDataByteType(tempJsonArray.at(i).toInt()));
+    }
+    visitor.setMsgData(tempMsgData);
+}
+
+void JsonInParser::visit(TimestampedMsg &visitor)
+{
+    const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
     visitor.setTimestamp(
             QDateTime::fromString(
-                tempJsonObject["MsgTimestamp"].toString(), 
+                tempJsonObject["MsgTimestamp"].toString(),
                 QString("dd.MM.yyyy - hh:mm:ss.zzz")
                 )
             );
-    const QJsonArray &tempJsonArray = tempJsonObject["MsgData"].toArray();
-    const int tempJsonArraySize = tempJsonArray.size();
-    DataByteVect tempDataByteVect;
-    for(int i = 0; i < tempJsonArraySize; ++i)
-    {
-        tempDataByteVect.append(static_cast<quint8>(tempJsonArray.at(i).toInt()));
-    }
-    visitor.setData(tempDataByteVect);
+    Msg originalMsg;
+    originalMsg.accept(this);
+    visitor.setOriginalMsg(originalMsg);
 }
 
-void JsonInParser::visit(MessageConfig &visitor)
-{
-}
+/* void JsonInParser::visit(MessageConfig &visitor) */
+/* { */
+/* } */
 
 /* void JsonInParser::visit(IDModel &visitor) */
 /* { */
@@ -130,9 +143,9 @@ void JsonInParser::visit(MsgIDRep &visitor)
 {
     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
 
-    visitor.setId(static_cast<MsgIDType>(tempJsonObject["IDRepID"].toInt()));
-    visitor.setName(tempJsonObject["IDRepName"].toString());
-    visitor.setColor(QColor(tempJsonObject["IDRepColor"].toString()));
+    visitor.setID(MsgIDType(tempJsonObject["IDRepID"].toInt()));
+    visitor.setPlainTextAlias(tempJsonObject["IDRepName"].toString());
+    visitor.setColorRepresentation(QColor(tempJsonObject["IDRepColor"].toString()));
 }
 
 /* void JsonInParser::visit(MsgTypeModel &visitor) */
@@ -154,19 +167,19 @@ void JsonInParser::visit(MsgCodeRep &visitor)
 {
     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject();
 
-    visitor.setCode(static_cast<MsgCodeType>(tempJsonObject["MsgTypeRepCode"].toInt()));
-    visitor.setCodeName(tempJsonObject["MsgTypeRepName"].toString());
+    visitor.setCode(MsgCodeType(tempJsonObject["MsgTypeRepCode"].toInt()));
+    visitor.setPlainTextAlias(tempJsonObject["MsgTypeRepName"].toString());
     /* visitor.setMessageFormat(tempJsonObject["MsgTypeRepMessageFormat"].toString()); */
-    visitor.setColor(QColor(tempJsonObject["MsgTypeRepColor"].toString()));
+    visitor.setColorRepresentation(QColor(tempJsonObject["MsgTypeRepColor"].toString()));
 }
 
 void JsonInParser::visit(MsgDataRep &visitor)
 {
 }
 
-void JsonInParser::visit(MessageFilter &visitor)
-{
-}
+/* void JsonInParser::visit(MessageFilter &visitor) */
+/* { */
+/* } */
 
 void JsonInParser::visit(FilterIDStore &visitor)
 {
@@ -209,9 +222,9 @@ void JsonInParser::visit(FilterTimestampStore &visitor)
             );
 }
 
-void JsonInParser::visit(SystemOverview &visitor)
-{
-}
+/* void JsonInParser::visit(SystemOverview &visitor) */
+/* { */
+/* } */
 
 void JsonInParser::visit(SysOvrvObject &visitor)
 {
@@ -231,9 +244,9 @@ void JsonInParser::visit(SysOvrvTrigger &visitor)
 {
 }
 
-void JsonInParser::visit(ErrorLogView &visitor)
-{
-}
+/* void JsonInParser::visit(ErrorLogView &visitor) */
+/* { */
+/* } */
 
 void JsonInParser::visit(ErrLogModel &visitor)
 {

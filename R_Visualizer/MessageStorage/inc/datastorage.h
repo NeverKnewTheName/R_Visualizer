@@ -19,7 +19,7 @@
 #include "jsonoutparser.h"
 
 //ToDELETE... needed because no interface yet..
-#include "Msg.h"
+//#include "Msg.h"
 #include <QDebug>
 #define  PRINT_MSGS_AS_JSON
 
@@ -163,7 +163,7 @@ public:
         const typename DataContainer::size_type indexInContainer = index % ContainerSize;
 
         if( ( index > CurrentSize ) || ( containerIndex > CurrentNrOfContainers ) )
-            return Msg();
+            return T();
 
         if( containerIndex == CurrentNrOfContainers )
         {
@@ -175,7 +175,7 @@ public:
         fetchContainerIDHelper(fetchedContainerID);
 
         if(fetchedContainerID.IndexInStore == -1)
-            return Msg();
+            return T();
 
         const DataContainer &RelatedContainer = DataStore.at(fetchedContainerID.IndexInStore);
 
@@ -262,7 +262,7 @@ public:
             ContainerID ContainerIDToRemoveValueFrom(containerIndex);
             QJsonArray  curJsonMsgsArr;
             QJsonArray  recentJsonMsgsArr;
-            Msg curMsg;
+            T curMsg;
             typename DataContainer::size_type recentContainerNR;
             bool recentContainerWasLoaded = false;
 
@@ -612,8 +612,8 @@ public:
         typename DataContainer::size_type FullMemUsage = 0;
         FullMemUsage += DataStore.capacity() * sizeof(DataContainer);
         for(const DataContainer &msgContainer : DataStore)
-            FullMemUsage += msgContainer.capacity() * sizeof(Msg);
-        FullMemUsage += LastContainer.capacity() * sizeof(Msg);
+            FullMemUsage += msgContainer.capacity() * sizeof(T);
+        FullMemUsage += LastContainer.capacity() * sizeof(T);
         FullMemUsage += ContainerFileNames.capacity() * sizeof(QFile);
         FullMemUsage += ContainerInRAMIndexMapping.capacity() * sizeof(ContainerID);
 
@@ -639,7 +639,7 @@ public:
                 curContainerIDToParse = ContainerInRAMIndexMapping.at(ContainerInRAMIndexMapping.find(curContainerIDToParse));
                 const DataContainer &curContainerToParse = DataStore.at(curContainerIDToParse.IndexInStore);
                 JsonOutParser tempJsonOutParser();
-                for(const Msg &msg : curContainerToParse)
+                for(const T &msg : curContainerToParse)
                 {
                     msg.accept(&tempJsonOutParser);
                     const QJsonObject &tempMsgJsonObject = tempJsonOutParser.getJsonDocument().object();
@@ -682,7 +682,7 @@ public:
 
         //parse last container
         JsonOutParser tempJsonOutParser();
-        for(const Msg &msg : LastContainer)
+        for(const T &msg : LastContainer)
         {
             msg.accept(&tempJsonOutParser);
             const QJsonObject &tempMsgJsonObject = tempJsonOutParser.getJsonDocument().object();
@@ -751,7 +751,7 @@ public:
             DataContainer CurContainerInRam;
             while(i < end)
             {
-                CurContainerInRam.append(Msg(jsonMsgsArray.at(i).toObject()));
+                CurContainerInRam.append(T(jsonMsgsArray.at(i).toObject()));
                 i++;
                 this->CurrentSize++;
             }
@@ -762,7 +762,7 @@ public:
         typename DataContainer::size_type CurIndex = NrOfMessagesInTotal - NrMessagesInLastContainer;
         while(CurIndex < NrMessagesInLastContainer)
         {
-            LastContainer.append(Msg(jsonMsgsArray.at(CurIndex).toObject()));
+            LastContainer.append(T(jsonMsgsArray.at(CurIndex).toObject()));
             CurIndex++;
             this->CurrentSize++;
         }
@@ -816,9 +816,13 @@ public:
                     ContainerInRAMIndexMapping.at(i).IndexInStore
                     );
             QJsonArray curDataContainerJsonArray;
+            JsonOutParser tempJsonOutParser;
             for(const auto &data : curDataContainer)
             {
-                curDataContainerJsonArray.append(data.parseOUT());
+                data.accept(&tempJsonOutParser);
+                curDataContainerJsonArray.append(
+                        tempJsonOutParser.getJsonDocument().object()
+                        );
             }
 
             QFile curContainerSaveFile(saveDir.absoluteFilePath(ramContainerSaveFileLocation));
@@ -840,9 +844,13 @@ public:
                 );
         QJsonArray lastContainerJsonArray;
 
+        JsonOutParser tempJsonOutParser;
         for(const auto &data : LastContainer)
         {
-            lastContainerJsonArray.append(data.parseOUT());
+            data.accept(&tempJsonOutParser);
+            lastContainerJsonArray.append(
+                    tempJsonOutParser.getJsonDocument().object()
+                    );
         }
 
         QFile lastContainerSaveFile(saveDir.absoluteFilePath(lastContainerSaveFileLocation));
@@ -882,9 +890,14 @@ private:
     {
         //    qDebug() << "Serialize to file --- Container nr. " << ContainerNr;
         QJsonArray jsonMsgsArr;
-        for(auto &&msg : ContainerToSerializeTo)
+        JsonOutParser tempJsonOutParser;
+        for(const T &msg : ContainerToSerializeTo)
         {
-            jsonMsgsArr.append(msg.parseOUT());
+            //ToDO HACKYWACKY !!
+            const_cast<T &>(msg).accept(&tempJsonOutParser);
+            jsonMsgsArr.append(
+                    tempJsonOutParser.getJsonDocument().object()
+                    );
         }
 
         QFile MsgDataTempFile(ContainerFileNames[ContainerNr]);
@@ -937,9 +950,13 @@ private:
 
         NewDataContainer.reserve(ContainerSize);
 
+        JsonInParser tempJsonInParser;
         for(const auto& item : jsonMsgsArr)
         {
-            NewDataContainer.append(std::move(Msg(item.toObject())));
+            tempJsonInParser.setJsonDocument(QJsonDocument(item.toObject()));
+            T newData;
+            newData.accept(&tempJsonInParser);
+            NewDataContainer.append(newData);
         }
 
 

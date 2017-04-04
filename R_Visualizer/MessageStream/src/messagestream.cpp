@@ -8,20 +8,16 @@
 #include "messagefilter.h"
 #include "msgstorage.h"
 
-#include "idmodel.h"
-#include "msgtypemodel.h"
-#include "idrep.h"
-#include "msgtyperep.h"
-
-#include "fileparser.h"
-
+//#include "idmodel.h"
+//#include "msgtypemodel.h"
+//#include "idrep.h"
+//#include "msgtyperep.h"
 
 #include <QDebug>
 
-MessageStream::MessageStream(
-            const MessageConfig *msgConfig,
+MessageStream::MessageStream(const MessageConfig *msgConfig,
             const MessageFilter *msgFilter,
-            MsgStorage &msgStorage,
+            TimestampedMsgStorage &msgStorage,
             QWidget *parent
             ) :
     QFrame(parent),
@@ -66,13 +62,13 @@ MessageStream::MessageStream(
     /* ui->msgStreamTV->setItemDelegateForColumn(MsgStreamModel::COL_DATA, dataDelegate); */
 
     //ToDO MessageConfig signal is not emitted...only the signal from the IDModel -> rewire!
-    connect(msgConfig, &MessageConfig::sgnl_IDRepAdded, this, &MessageStream::slt_IDRepAdded);
-    connect(msgConfig, &MessageConfig::sgnl_IDRepUpdated, this, &MessageStream::slt_IDRepUpdated);
-    connect(msgConfig, &MessageConfig::sgnl_IDRepRemoved, this, &MessageStream::slt_IDRepRemoved);
-
-    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepAdded, this, &MessageStream::slt_MsgTypeRepAdded);
-    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepUpdated, this, &MessageStream::slt_MsgTypeRepUpdated);
-    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepRemoved, this, &MessageStream::slt_MsgTypeRepRemoved);
+    //connect(msgConfig, &MessageConfig::sgnl_IDRepAdded, this, &MessageStream::slt_IDRepAdded);
+    //connect(msgConfig, &MessageConfig::sgnl_IDRepUpdated, this, &MessageStream::slt_IDRepUpdated);
+    //connect(msgConfig, &MessageConfig::sgnl_IDRepRemoved, this, &MessageStream::slt_IDRepRemoved);
+//
+    //connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepAdded, this, &MessageStream::slt_MsgTypeRepAdded);
+    //connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepUpdated, this, &MessageStream::slt_MsgTypeRepUpdated);
+    //connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepRemoved, this, &MessageStream::slt_MsgTypeRepRemoved);
 
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepAdded, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepAdded); */
     /* connect(&msgStreamMsgDataModel, &MsgDataModel::sgnl_MsgDataRepUpdated, &msgStreamModel, &MsgStreamModel::slt_MsgDataRepUpdated); */
@@ -98,8 +94,8 @@ MessageStream::MessageStream(
     connect(ui->msgStreamTV->verticalScrollBar(), &QScrollBar::valueChanged, this, &MessageStream::slt_MsgStreamViewScrollBarMoved);
 
 
-    connect(&msgStorage, &MsgStorage::sgnl_MsgAdded, this, &MessageStream::slt_ReceiveMsg);
-    connect(&msgStorage, &MsgStorage::sgnl_StoreCleared, this, &MessageStream::slt_MsgStorageCleared);
+    connect(&msgStorage, &TimestampedMsgStorage::sgnl_MsgAdded, this, &MessageStream::slt_ReceiveMsg);
+    connect(&msgStorage, &TimestampedMsgStorage::sgnl_StoreCleared, this, &MessageStream::slt_MsgStorageCleared);
 }
 
 MessageStream::~MessageStream()
@@ -129,10 +125,10 @@ bool MessageStream::prependMsg(const Msg& msgToPrepend)
     return false;
 }
 
-void MessageStream::accept(FileParser *visitor)
-{
-    visitor->visit(*this);
-}
+//void MessageStream::accept(FileParser *visitor)
+//{
+    //visitor->visit(*this);
+//}
 
 void MessageStream::fetchMsgForward()
 {
@@ -174,37 +170,37 @@ void MessageStream::slt_MsgStorageCleared()
     msgStreamModel.clear();
 }
 
-void MessageStream::slt_IDRepAdded(const IDRep &addedIDRep)
-{
-    msgStreamModel.setIDRepForID(addedIDRep.getId(), addedIDRep);
-}
+/* void MessageStream::slt_IDRepAdded(const IDRep &addedIDRep) */
+/* { */
+/*     msgStreamModel.setIDRepForID(addedIDRep.getId(), addedIDRep); */
+/* } */
 
-void MessageStream::slt_IDRepUpdated(const IDRep &updatedIDRep)
-{
-    msgStreamModel.setIDRepForID(updatedIDRep.getId(), updatedIDRep);
+/* void MessageStream::slt_IDRepUpdated(const IDRep &updatedIDRep) */
+/* { */
+/*     msgStreamModel.setIDRepForID(updatedIDRep.getId(), updatedIDRep); */
 
-}
+/* } */
 
-void MessageStream::slt_IDRepRemoved(const MsgIDType relatedID)
-{
-    msgStreamModel.setIDRepForID(relatedID, IDRep(relatedID));
+/* void MessageStream::slt_IDRepRemoved(const MsgIDType relatedID) */
+/* { */
+/*     msgStreamModel.setIDRepForID(relatedID, IDRep(relatedID)); */
 
-}
+/* } */
 
-void MessageStream::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
-{
-    msgStreamModel.setMsgTypeRepForCode(addedMsgTypeRep.getCode(), addedMsgTypeRep);
-}
+/* void MessageStream::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep) */
+/* { */
+/*     msgStreamModel.setMsgTypeRepForCode(addedMsgTypeRep.getCode(), addedMsgTypeRep); */
+/* } */
 
-void MessageStream::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep)
-{
-    msgStreamModel.setMsgTypeRepForCode(updatedMsgTypeRep.getCode(), updatedMsgTypeRep);
-}
+/* void MessageStream::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep) */
+/* { */
+/*     msgStreamModel.setMsgTypeRepForCode(updatedMsgTypeRep.getCode(), updatedMsgTypeRep); */
+/* } */
 
-void MessageStream::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
-{
-    msgStreamModel.setMsgTypeRepForCode(relatedCode, MsgTypeRep(relatedCode));
-}
+/* void MessageStream::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode) */
+/* { */
+/*     msgStreamModel.setMsgTypeRepForCode(relatedCode, MsgTypeRep(relatedCode)); */
+/* } */
 
 /* void MessageStream::slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep) */
 /* { */

@@ -13,7 +13,7 @@
 
 class MainWindow;
 class MessageConfig;
-class FileParser;
+//class FileParser;
 
 #include "Msg.h"
 #include "can_packet.h"
@@ -28,7 +28,7 @@ class SendMessages;
 /**
  * @brief The SendMessages
  */
-class SendMessages : public QWidget, public IFileParsable
+class SendMessages : public QWidget//, public IFileParsable
 {
     Q_OBJECT
 
@@ -38,7 +38,7 @@ public:
             QWidget *parent = 0);
     ~SendMessages();
 
-    void accept(FileParser *visitor);
+    //void accept(FileParser *visitor);
     void updateMsgPacketModel();
     void setMsgPacketModel(const SendMsgModel &newMsgPacketModel);
 

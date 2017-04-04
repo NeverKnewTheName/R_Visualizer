@@ -8,8 +8,7 @@
 
 #include <QDebug>
 
-MsgStorage::MsgStorage(QObject *parent) :
-    QObject(parent),
+MsgStorage::MsgStorage() :
     msgStore(1000, 3)
 {
 }

@@ -1,10 +1,10 @@
-#include "PrettyMsg.h"
+#include "PrettyTimestampedMsg.h"
 
-#include "Msg.h"
+#include "TimestampedMsg.h"
 
-PrettyMsg::PrettyMsg() : 
+PrettyTimestampedMsg::PrettyTimestampedMsg() :
     msgDataFormatterUniqPtr(Q_NULLPTR),
-    originalMsg(new Msg()),
+    originalMsg(new TimestampedMsg()),
     msgIDPlainTextAlias("Default"),
     msgCodePlainTextAlias("Default"),
     msgIDColorRepresentation(Qt::white),
@@ -12,7 +12,7 @@ PrettyMsg::PrettyMsg() :
 {
 }
 
-PrettyMsg::PrettyMsg(const IMsg &originalMsg) :
+PrettyTimestampedMsg::PrettyTimestampedMsg(const ITimestampedMsg &originalMsg) :
     msgDataFormatterUniqPtr(Q_NULLPTR),
     originalMsg(originalMsg.cloneMsg()),
     msgIDPlainTextAlias(static_cast<QString>(originalMsg.getMsgID())),
@@ -22,8 +22,8 @@ PrettyMsg::PrettyMsg(const IMsg &originalMsg) :
 {
 }
 
-PrettyMsg::PrettyMsg(const PrettyMsg &other) :
-    PrettyMsgCloneable<PrettyMsg,IMsg>(other),
+PrettyTimestampedMsg::PrettyTimestampedMsg(const PrettyTimestampedMsg &other) :
+    PrettyTimestampedMsgCloneable<PrettyTimestampedMsg,ITimestampedMsg>(other),
     originalMsg(other.originalMsg->cloneMsg()),
     msgDataFormatterUniqPtr(other.msgDataFormatterUniqPtr->cloneFormatter()),
     msgIDPlainTextAlias(other.msgIDPlainTextAlias),
@@ -34,12 +34,12 @@ PrettyMsg::PrettyMsg(const PrettyMsg &other) :
 }
 
 
-PrettyMsg::~PrettyMsg()
+PrettyTimestampedMsg::~PrettyTimestampedMsg()
 {
 }
 
-PrettyMsg &PrettyMsg::operator =(
-        const PrettyMsg &other
+PrettyTimestampedMsg &PrettyTimestampedMsg::operator =(
+        const PrettyTimestampedMsg &other
         )
 {
     this->msgDataFormatterUniqPtr =
@@ -51,22 +51,22 @@ PrettyMsg &PrettyMsg::operator =(
     this->msgCodeColorRepresentation = other.msgCodeColorRepresentation;
 }
 
-QString PrettyMsg::getMsgIDPlainTextAlias() const
+QString PrettyTimestampedMsg::getMsgIDPlainTextAlias() const
 {
     return msgIDPlainTextAlias;
 }
 
-void PrettyMsg::setMsgIDPlainTextAlias(const QString &msgIDAlias)
+void PrettyTimestampedMsg::setMsgIDPlainTextAlias(const QString &msgIDAlias)
 {
     this->msgIDPlainTextAlias = msgIDAlias;
 }
 
-QColor PrettyMsg::getMsgIDColorRepresentation() const
+QColor PrettyTimestampedMsg::getMsgIDColorRepresentation() const
 {
     return msgIDColorRepresentation;
 }
 
-void PrettyMsg::setMsgIDColorRepresentation(
+void PrettyTimestampedMsg::setMsgIDColorRepresentation(
         const QColor &msgIDColorRepresentation
         )
 {
@@ -74,22 +74,22 @@ void PrettyMsg::setMsgIDColorRepresentation(
 }
 
 
-QString PrettyMsg::getMsgCodePlainTextAlias() const
+QString PrettyTimestampedMsg::getMsgCodePlainTextAlias() const
 {
     return msgCodePlainTextAlias;
 }
 
-void PrettyMsg::setMsgCodePlainTextAlias(const QString &msgCodePlainTextAlias)
+void PrettyTimestampedMsg::setMsgCodePlainTextAlias(const QString &msgCodePlainTextAlias)
 {
     this->msgCodePlainTextAlias = msgCodePlainTextAlias;
 }
 
-QColor PrettyMsg::getMsgCodeColorRepresentation() const
+QColor PrettyTimestampedMsg::getMsgCodeColorRepresentation() const
 {
     return msgCodeColorRepresentation;
 }
 
-void PrettyMsg::setMsgCodeColorRepresentation(
+void PrettyTimestampedMsg::setMsgCodeColorRepresentation(
         const QColor &msgCodeColorRepresentation
         )
 {
@@ -97,58 +97,69 @@ void PrettyMsg::setMsgCodeColorRepresentation(
 }
 
 
-QString PrettyMsg::getParsedMsgDataString() const
+QString PrettyTimestampedMsg::getParsedMsgDataString() const
 {
     return msgDataFormatterUniqPtr->parseMsgDataToString(*this);
 }
 
-QColor PrettyMsg::getParsedMsgDataColor() const
+QColor PrettyTimestampedMsg::getParsedMsgDataColor() const
 {
     return msgDataFormatterUniqPtr->parseMsgDataToColor(*this);
 }
 
-void PrettyMsg::setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter)
+void PrettyTimestampedMsg::setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter)
 {
     this->msgDataFormatterUniqPtr = msgDataFormatter.cloneFormatter();
 }
 
-IMsgUniqPtr PrettyMsg::cloneMsg() const
+IMsgUniqPtr PrettyTimestampedMsg::cloneMsg() const
 {
     return originalMsg->cloneMsg();
 }
 
-void PrettyMsg::setMsgID(const MsgIDType &msgID)
+void PrettyTimestampedMsg::setMsgID(const MsgIDType &msgID)
 {
     originalMsg->setMsgID(msgID);
 }
 
-const MsgIDType PrettyMsg::getMsgID() const
+const MsgIDType PrettyTimestampedMsg::getMsgID() const
 {
     return originalMsg->getMsgID();
 }
 
-void PrettyMsg::setMsgCode(const MsgCodeType &msgCode)
+void PrettyTimestampedMsg::setMsgCode(const MsgCodeType &msgCode)
 {
     originalMsg->setMsgCode(msgCode);
 }
 
-const MsgCodeType PrettyMsg::getMsgCode() const
+const MsgCodeType PrettyTimestampedMsg::getMsgCode() const
 {
     return originalMsg->getMsgCode();
 }
 
-void PrettyMsg::setMsgData(const MsgDataType &msgData)
+void PrettyTimestampedMsg::setMsgData(const MsgDataType &msgData)
 {
     originalMsg->setMsgData(msgData);
 }
 
-const MsgDataType PrettyMsg::getMsgData() const
+const MsgDataType PrettyTimestampedMsg::getMsgData() const
 {
     return originalMsg->getMsgData();
 }
 
-void PrettyMsg::accept(FileParser *visitor)
+void PrettyTimestampedMsg::setTimestamp(const QDateTime &newTimestamp)
+{
+    originalMsg->setTimestamp(newTimestamp);
+}
+
+const QDateTime PrettyTimestampedMsg::getTimestamp() const
+{
+    return originalMsg->getTimestamp();
+}
+
+void PrettyTimestampedMsg::accept(FileParser *visitor)
 {
     originalMsg->accept(visitor);
 }
+
 

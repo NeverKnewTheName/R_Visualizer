@@ -1,8 +1,8 @@
 #include "msgstreammodel.h"
 
 #include "Msg.h"
-#include "idrep.h"
-#include "msgtyperep.h"
+//#include "idrep.h"
+//#include "msgtyperep.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -48,7 +48,7 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     int col = index.column();
-    const PrettyMsg &msgAtIndex = msgBuffer.at(row);
+    const PrettyTimestampedMsg &msgAtIndex = msgBuffer.at(row);
 
     switch(role)
     {
@@ -60,13 +60,13 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
                 return msgAtIndex.getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
                 break;
             case COL_ID:
-                return msgAtIndex.printIDName();
+                return msgAtIndex.getMsgIDPlainTextAlias();
                 break;
             case COL_CODE:
-                return msgAtIndex.printCodeName();
+                return msgAtIndex.getMsgCodePlainTextAlias();
                 break;
             case COL_DATA:
-                return msgAtIndex.printDataString();
+                return msgAtIndex.getParsedMsgDataString();
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
@@ -96,13 +96,13 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
             case COL_TIMESTAMP:
                 break;
             case COL_ID:
-                return QBrush(msgAtIndex.getIDColor());
+                return QBrush(msgAtIndex.getMsgIDColorRepresentation());
                 break;
             case COL_CODE:
-                return QBrush(msgAtIndex.getCodeColor());
+                return QBrush(msgAtIndex.getMsgCodeColorRepresentation());
                 break;
             case COL_DATA:
-                return QBrush(msgAtIndex.getDataColor());
+                return QBrush(msgAtIndex.getParsedMsgDataColor());
                 break;
         }
         //Background is drawn by delegate
@@ -120,10 +120,10 @@ QVariant MsgStreamModel::data(const QModelIndex &index, int role) const
                 return msgAtIndex.getTimestamp();
                 break;
             case COL_ID:
-                return msgAtIndex.getId();
+                return msgAtIndex.getMsgID();
                 break;
             case COL_CODE:
-                return msgAtIndex.getCode();
+                return msgAtIndex.getMsgCode();
                 break;
             case COL_DATA:
                 return QVariant::fromValue(msgAtIndex.getMsgData());
@@ -205,7 +205,7 @@ void MsgStreamModel::removeRow(int row, const QModelIndex &parent)
     }
 }
 
-void MsgStreamModel::appendMsg(const PrettyMsg &msg)
+void MsgStreamModel::appendMsg(const PrettyTimestampedMsg &msg)
 {
     /*
      * If the msg is to be displayed it has to be evaluated whether the msgBuffer is
@@ -237,7 +237,7 @@ void MsgStreamModel::appendMsg(const PrettyMsg &msg)
     }
 }
 
-void MsgStreamModel::prependMsg(const PrettyMsg &msg)
+void MsgStreamModel::prependMsg(const PrettyTimestampedMsg &msg)
 {
     if(msgBuffer.size() >= NrOfMessagesToDisplay)
     {
@@ -253,7 +253,7 @@ void MsgStreamModel::prependMsg(const PrettyMsg &msg)
     }
 }
 
-const PrettyMsg &MsgStreamModel::at(const int index) const
+const PrettyTimestampedMsg &MsgStreamModel::at(const int index) const
 {
     return msgBuffer.at(index);
 }
@@ -274,70 +274,70 @@ void MsgStreamModel::clear()
     endResetModel();
 }
 
-QByteArray MsgStreamModel::ParseToJson()
-{
-    QJsonArray jsonMsgsArr;
-    int msgBuffSize = msgBuffer.size();
-    for(int i = 0; i < msgBuffSize;++i)
-    {
-        const Msg &msg = msgBuffer.at(i);
-        jsonMsgsArr.append(msg.ParseToJson());
-    }
-    return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
-}
+//QByteArray MsgStreamModel::ParseToJson()
+//{
+    //QJsonArray jsonMsgsArr;
+    //int msgBuffSize = msgBuffer.size();
+    //for(int i = 0; i < msgBuffSize;++i)
+    //{
+        //const Msg &msg = msgBuffer.at(i);
+        //jsonMsgsArr.append(msg.ParseToJson());
+    //}
+    //return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
+//}
 
-void MsgStreamModel::ParseFromJson(const QByteArray &jsonFile)
-{
-    this->clear();
-    QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
-    for(auto&& item : jsonMsgsArr)
-    {
-        //ToDO
-        /* const Msg newMsg(item.toObject); */
-        /* appendMsg(newMsg); */
-    }
-}
+//void MsgStreamModel::ParseFromJson(const QByteArray &jsonFile)
+//{
+    //this->clear();
+    //QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
+    //for(auto&& item : jsonMsgsArr)
+    //{
+        ////ToDO
+        ///* const Msg newMsg(item.toObject); */
+        ///* appendMsg(newMsg); */
+    //}
+//}
 
 void MsgStreamModel::accept(FileParser *visitor)
 {
     visitor->visit(*this);
 }
 
-void MsgStreamModel::messageReceived(const PrettyMsg &msg)
+void MsgStreamModel::messageReceived(const PrettyTimestampedMsg &msg)
 {
     appendMsg(msg);
 }
 
 
-void MsgStreamModel::slt_IDRepAdded(const IDRep &addedIDRep)
-{
-    setIDRepForID(addedIDRep.getId(), addedIDRep);
-}
-
-void MsgStreamModel::slt_IDRepUpdated(const IDRep &updatedIDRep)
-{
-    setIDRepForID(updatedIDRep.getId(), updatedIDRep);
-}
-
-void MsgStreamModel::slt_IDRepRemoved(const MsgIDType relatedID)
-{
-    setIDRepForID(relatedID, IDRep(relatedID));
-}
-
-void MsgStreamModel::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
-{
-    setMsgTypeRepForCode(addedMsgTypeRep.getCode(), addedMsgTypeRep);
-}
-
-void MsgStreamModel::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep)
-{
-    setMsgTypeRepForCode(updatedMsgTypeRep.getCode(), updatedMsgTypeRep);
-}
-
-void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
-{
-    setMsgTypeRepForCode(relatedCode, MsgTypeRep(relatedCode));
-}
+//void MsgStreamModel::slt_IDRepAdded(const IDRep &addedIDRep)
+//{
+    //setIDRepForID(addedIDRep.getId(), addedIDRep);
+//}
+//
+//void MsgStreamModel::slt_IDRepUpdated(const IDRep &updatedIDRep)
+//{
+    //setIDRepForID(updatedIDRep.getId(), updatedIDRep);
+//}
+//
+//void MsgStreamModel::slt_IDRepRemoved(const MsgIDType relatedID)
+//{
+    //setIDRepForID(relatedID, IDRep(relatedID));
+//}
+//
+//void MsgStreamModel::slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep)
+//{
+    //setMsgTypeRepForCode(addedMsgTypeRep.getCode(), addedMsgTypeRep);
+//}
+//
+//void MsgStreamModel::slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep)
+//{
+    //setMsgTypeRepForCode(updatedMsgTypeRep.getCode(), updatedMsgTypeRep);
+//}
+//
+//void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
+//{
+    //setMsgTypeRepForCode(relatedCode, MsgTypeRep(relatedCode));
+//}
 
 /* void MsgStreamModel::slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep) */
 /* { */
@@ -354,33 +354,33 @@ void MsgStreamModel::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
 
 /* } */
 
-void MsgStreamModel::setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet)
-{
-    const int msgBuffSize = msgBuffer.size();
-    for(int i = 0; i < msgBuffSize; ++i)
-    {
-        PrettyMsg &msg = msgBuffer.at(i);
-        if(msg.getId() == relatedID)
-        {
-            msg.changeIDRep(idRepToSet);
-            emit dataChanged(index(i,COL_ID),index(i,COL_ID), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
-        }
-    }
-}
-
-void MsgStreamModel::setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet)
-{
-    const int msgBuffSize = msgBuffer.size();
-    for(int i = 0; i < msgBuffSize; ++i)
-    {
-        PrettyMsg &msg = msgBuffer.at(i);
-        if(msg.getCode() == relatedCode)
-        {
-            //Since there is no special MsgTypeRep for the message anymore, use the plain one.
-            msg.changeMsgTypeRep(msgTypeRepToSet);
-            emit dataChanged(index(i,COL_CODE),index(i,COL_DATA), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
-            /* emit dataChanged(index(i,COL_CODE),index(i,COL_CODE), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole}); */
-            /* emit dataChanged(index(i,COL_DATA),index(i,COL_DATA), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole}); */
-        }
-    }
-}
+//void MsgStreamModel::setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet)
+//{
+    //const int msgBuffSize = msgBuffer.size();
+    //for(int i = 0; i < msgBuffSize; ++i)
+    //{
+        //PrettyTimestampedMsg &msg = msgBuffer.at(i);
+        //if(msg.getId() == relatedID)
+        //{
+            //msg.changeIDRep(idRepToSet);
+            //emit dataChanged(index(i,COL_ID),index(i,COL_ID), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
+        //}
+    //}
+//}
+//
+//void MsgStreamModel::setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet)
+//{
+    //const int msgBuffSize = msgBuffer.size();
+    //for(int i = 0; i < msgBuffSize; ++i)
+    //{
+        //PrettyTimestampedMsg &msg = msgBuffer.at(i);
+        //if(msg.getCode() == relatedCode)
+        //{
+            ////Since there is no special MsgTypeRep for the message anymore, use the plain one.
+            //msg.changeMsgTypeRep(msgTypeRepToSet);
+            //emit dataChanged(index(i,COL_CODE),index(i,COL_DATA), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole});
+            ///* emit dataChanged(index(i,COL_CODE),index(i,COL_CODE), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole}); */
+            ///* emit dataChanged(index(i,COL_DATA),index(i,COL_DATA), {Qt::DisplayRole, Qt::BackgroundRole, Qt::SizeHintRole}); */
+        //}
+    //}
+//}

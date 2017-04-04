@@ -10,6 +10,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QVariant>
 
 /**
  * \brief Wrapper for strongly typedef Message Field types
@@ -54,6 +55,10 @@ public:
     MsgFieldTypeTemplate(const MsgFieldTypeTemplate<T,OpaqueT> &other) :
         field(other.field)
     {}
+
+    virtual ~MsgFieldTypeTemplate()
+    {
+    }
 
 
     /**
@@ -487,6 +492,11 @@ public:
     }
     /* virtual explicit operator QColor() */
     /* { return QColor(Qt::green); } */
+
+    virtual operator QVariant() const
+    {
+        return QVariant(field);
+    }
 
     /**
      * @brief Support for QHash

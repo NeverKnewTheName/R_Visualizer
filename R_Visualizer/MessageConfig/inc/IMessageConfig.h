@@ -25,7 +25,7 @@ class IMsgDataRep;
 /**
  * \brief The IMessageConfig interface
  */
-class IMessageConfig : public IFileParsable
+class IMessageConfig //: public IFileParsable
 {
 public:
     /**

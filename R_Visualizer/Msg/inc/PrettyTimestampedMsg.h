@@ -1,42 +1,31 @@
-/**
- * @file PrettyMsg.h
- * @author Christian Neuberger
- * @date 2017-03-26
- * 
- * @brief A PrettyMsg
- */
-#ifndef PRETTYMSG_H
-#define PRETTYMSG_H
+#ifndef PRETTYTIMESTAMPEDMSG_H
+#define PRETTYTIMESTAMPEDMSG_H
 
 #include <QString>
 #include <QColor>
+#include <QDateTime>
 #include <memory>
 
 #include "IPrettyMsg.h"
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
-#include "IMsg.h"
+#include "ITimestampedMsg.h"
 #include "IMsgDataFormatter.h"
 
-class FileParser;
-
-/**
- * @brief The PrettyMsg
- */
-class PrettyMsg : public PrettyMsgCloneable<PrettyMsg, IMsg>
+class PrettyTimestampedMsg :
+    public PrettyMsgCloneable<PrettyTimestampedMsg, ITimestampedMsg>
 {
 public:
     /**
      * @brief Default Constructor for use with QVector..
      */
-    PrettyMsg();
-    PrettyMsg(const IMsg &originalMsg);
-    PrettyMsg(const PrettyMsg &other);
+    PrettyTimestampedMsg();
+    PrettyTimestampedMsg(const ITimestampedMsg &originalMsg);
+    PrettyTimestampedMsg(const PrettyTimestampedMsg &other);
+    virtual ~PrettyTimestampedMsg();
 
-    virtual ~PrettyMsg();
-
-    PrettyMsg &operator =(const PrettyMsg &other);
+    PrettyTimestampedMsg &operator =(const PrettyTimestampedMsg &other);
 
     QString getMsgIDPlainTextAlias() const;
     void setMsgIDPlainTextAlias(const QString &msgIDAlias);
@@ -53,7 +42,7 @@ public:
     void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter);
 
     /**
-     * @brief For when only the contained #IMsg must be cloned
+     * @brief For when only the contained #ITimestampedMsg must be cloned
      */
     IMsgUniqPtr cloneMsg() const;
 
@@ -66,6 +55,9 @@ public:
     void setMsgData(const MsgDataType &msgData);
     const MsgDataType getMsgData() const;
 
+    void setTimestamp(const QDateTime &newTimestamp);
+    const QDateTime getTimestamp() const;
+
     /**
      * @brief Short circuit to the #IMsg accept method
      * 
@@ -74,14 +66,13 @@ public:
      * parsing to file and thereof.
      */
     void accept(FileParser *visitor);
-
 private:
     std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
-    std::unique_ptr<IMsg> originalMsg;
+    std::unique_ptr<ITimestampedMsg> originalMsg;
     QString msgIDPlainTextAlias;
     QString msgCodePlainTextAlias;
     QColor msgIDColorRepresentation;
     QColor msgCodeColorRepresentation;
 };
 
-#endif /* PRETTYMSG_H */
+#endif /* PRETTYTIMESTAMPEDMSG_H */

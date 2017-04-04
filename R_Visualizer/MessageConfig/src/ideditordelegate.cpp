@@ -1,6 +1,6 @@
 #include "ideditordelegate.h"
 
-#include "idmodel.h"
+//#include "idmodel.h"
 
 #include <QColorDialog>
 #include <QLineEdit>

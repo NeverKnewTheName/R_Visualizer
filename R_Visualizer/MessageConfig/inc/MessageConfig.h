@@ -52,7 +52,7 @@ public:
 
 
     //ToTHINK DEPRECATED?
-    void accept(FileParser *visitor);
+    //void accept(FileParser *visitor);
 
 signals:
     /**

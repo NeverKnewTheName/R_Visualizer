@@ -8,14 +8,14 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/Msg.cpp \
-    $$PWD/src/msgtableview.cpp \
+    # $$PWD/src/msgtableview.cpp \
     $$PWD/src/msgdatawidget.cpp \
     $$PWD/src/PrettyMsg.cpp \
     $$PWD/src/TimestampedMsg.cpp \
 
 HEADERS  += \
     $$PWD/inc/MsgFieldType.h \
-    $$PWD/inc/IMsgFieldType.h \
+    # $$PWD/inc/IMsgFieldType.h \
     $$PWD/inc/MsgIDType.h \
     $$PWD/inc/MsgCodeType.h \
     $$PWD/inc/MsgDataType.h \

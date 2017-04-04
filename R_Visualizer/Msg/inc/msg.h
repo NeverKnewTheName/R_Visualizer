@@ -113,7 +113,7 @@ private:
     MsgData msgData; //!< Optional data accompaying the message
 };
 
-Q_DECLARE_METATYPE(Msg)
+//Q_DECLARE_METATYPE(Msg);
 
 /**
  * \brief Class for received messages

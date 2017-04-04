@@ -14,20 +14,17 @@
 #include "msgstreammodel.h"
 /* #include "msgiddelegate.h" */
 /* #include "msgdatadelegate.h" */
-#include "IFileParsable.h"
 
 class MainWindow;
-class MessageConfig;
+class IMessageConfig;
 class MessageFilter;
-class MsgStorage;
-
-class FileParser;
+class TimestampedMsgStorage;
 
 namespace Ui {
 class MessageStream;
 }
 
-class MessageStream : public QFrame, public IFileParsable
+class MessageStream : public QFrame
 {
     Q_OBJECT
 
@@ -40,13 +37,14 @@ public:
      * \param[in] msgStorage    The #MsgStorage that to display the #Msg from
      * \param[in] parent        The parent QWidget
      * 
-     * This constructor constructs a new #MessageStream widget. The #IDModel and #MsgTypeModel are used for its delegates
-     * to paint #Msg pretty. The various filter models are used to filter the displayed #Msg.
+     * This constructor constructs a new #MessageStream widget. The #IDModel and
+     * #MsgTypeModel are used for its delegates * to paint #Msg pretty. The
+     * various filter models are used to filter the displayed #Msg.
      */
     explicit MessageStream(
-            const MessageConfig *msgConfig,
+            const IMessageConfig *msgConfig,
             const MessageFilter *msgFilter,
-            MsgStorage &msgStorage,
+            TimestampedMsgStorage &msgStorage,
             QWidget *parent = 0
             );
     /**
@@ -57,9 +55,11 @@ public:
     ~MessageStream();
 
     /**
-     * \brief Appends the given #Msg to the MessageStream if it matches the current MessageFilter criteria
+     * \brief Appends the given #Msg to the MessageStream if it matches the
+     * current MessageFilter criteria
      * 
-     * \param[in] msgToAppend #Msg that is matched against the MessageFilter criteria, parsed to a #PrettyMsg, and appended to the MessageStream
+     * \param[in] msgToAppend #Msg that is matched against the MessageFilter
+     * criteria, parsed to a #PrettyMsg, and appended to the MessageStream
      * 
      * \return whether the #Msg was appended
      * \returns true #Msg was appended
@@ -67,17 +67,19 @@ public:
      */
     bool appendMsg(const Msg &msgToAppend);
     /**
-     * \brief Prepends the given #Msg to the MessageStream if it matches the current MessageFilter criteria
+     * \brief Prepends the given #Msg to the MessageStream if it matches the
+     * current MessageFilter criteria
      * 
-     * \param[in] msgToPrepend #Msg that is matched against the MessageFilter criteria, parsed to a #PrettyMsg, and prepended to the MessageStream
+     * \param[in] msgToPrepend #Msg that is matched against the MessageFilter
+     * criteria, parsed to a #PrettyMsg, and prepended to the MessageStream
      * 
      * \return whether the #Msg was prepended
      * \returns true #Msg was prepended
      * \returns false #Msg was not prepended
      */
-    bool prependMsg(const Msg &msgToPrepend);
+    bool prependMsg(const ITimestampedMsg &msgToPrepend);
 
-    void accept(FileParser *visitor);
+    //void accept(FileParser *visitor);
 
 private:
     void fetchMsgForward();
@@ -88,15 +90,15 @@ private:
 signals:
 
 private slots:
-    void slt_ReceiveMsg(const Msg &receivedMsg);
+    void slt_ReceiveMsg(const ITimestampedMsg &receivedMsg);
     void slt_MsgStorageCleared();
 
-    void slt_IDRepAdded(const IDRep &addedIDRep);
-    void slt_IDRepUpdated(const IDRep &updatedIDRep);
-    void slt_IDRepRemoved(const MsgIDType relatedID);
-    void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep);
-    void slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
-    void slt_MsgTypeRepRemoved(const MsgCodeType relatedCode);
+    /* void slt_IDRepAdded(const IDRep &addedIDRep); */
+    /* void slt_IDRepUpdated(const IDRep &updatedIDRep); */
+    /* void slt_IDRepRemoved(const MsgIDType relatedID); */
+    /* void slt_MsgTypeRepAdded(const MsgTypeRep &addedMsgTypeRep); */
+    /* void slt_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep); */
+    /* void slt_MsgTypeRepRemoved(const MsgCodeType relatedCode); */
     /* void slt_MsgDataRepAdded(const MsgDataRep &addedMsgDataRep); */
     /* void slt_MsgDataRepUpdated(const MsgDataRep &changedMsgDataRep); */
     /* void slt_MsgDataRepRemoved(const MsgCodeType codeWhoseDataRepWasRemoved); */
@@ -124,9 +126,9 @@ private slots:
 private:
     friend class MainWindow;
     Ui::MessageStream *ui;
-    const MessageConfig *msgConfig;
+    const IMessageConfig *msgConfig;
     const MessageFilter *msgFilter;
-    MsgStorage &msgStorage;
+    TimestampedMsgStorage &msgStorage;
     MsgStreamModel msgStreamModel;
     bool continousMsgStream;
 };

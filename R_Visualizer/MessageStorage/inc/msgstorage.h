@@ -16,22 +16,27 @@ class FileParser;
 #include "datastorage.h"
 
 #include "IFileParsable.h"
+#include "fileparser.h"
 
 /**
  * \brief MsgStorage to store huge numbers of messages
  * 
+ * \todo Make template!.. somehow
  */
-class MsgStorage : public QObject, public IFileParsable
+template<class MsgType>
+class TemplateMsgStorage : public IFileParsable
 {
-    Q_OBJECT
-
 public:
     /**
      * @brief Constructs a MsgStorage object with the given metrics
      *
      */
-    MsgStorage(QObject *parent = Q_NULLPTR);
+    TemplateMsgStorage() :
+        msgStore(1000,3)
+    {
+    }
 
+    virtual ~TemplateMsgStorage(){}
     /**
      * @brief at
      * @param index
@@ -42,52 +47,133 @@ public:
      *       RAM; it can even not be guaranteed that a reference would
      *       be up to date...
      */
-    TimestampedMsg at(const size_t index);
+    MsgType at(const size_t index)
+    {
+        return msgStore.at(index);
+    }
     /* Msg at(const size_t index) const; */
 
-    TimestampedMsg operator[](const size_t index);
+    MsgType operator[](const size_t index)
+    {
+        return msgStore[index];
+    }
 
     /**
      * \brief clears the MsgStorage
      * 
      * \warning This does not free the contained elements!
      */
-    void clear();
+    void clear()
+    {
+        msgStore.clear();
+        emit sgnl_StoreCleared();
+    }
 
     /**
      * \brief returns the current size of the MsgStorage
      */
-    int size() const;
+    int size() const
+    {
+        return msgStore.size();
+    }
     /**
      * \brief returns whether the MsgStorage is empty
      */
-    bool isEmpty() const;
+    bool isEmpty() const
+    {
+        return msgStore.isEmpty();
+    }
 
-    void appendMsg(const TimestampedMsg &newMsg);
+    void appendMsg(const MsgType &newMsg)
+    {
+        msgStore.append(newMsg);
+        emit sgnl_MsgAdded(newMsg);
+    }
 
     /**
      * \brief parses the whole MsgStorage to a JSON document
      */
-    QJsonDocument ParseToJson() const;
+    QJsonDocument ParseToJson() const
+    {
+        return QJsonDocument();
+    }
     /**
      * \brief reads in a MsgStorage from a JSON document
      */
-    bool ParseFromJson(const QJsonArray &jsonMsgsArray);
+    bool ParseFromJson(const QJsonArray &jsonMsgsArray)
+    {
+        return false;
+    }
 
-    void accept(FileParser *visitor);
 
-    QString saveMsgStorage(const QString &saveLocation);
+    QString saveMsgStorage(const QString &saveLocation)
+    {
+        return msgStore.saveDataStorage(saveLocation);
+    }
 
 signals:
-    void sgnl_MsgAdded(const TimestampedMsg &addedMsg);
-    void sgnl_StoreCleared();
+    virtual void sgnl_MsgAdded(const MsgType &addedMsg) = 0;
+    virtual void sgnl_StoreCleared() = 0;
 
-private slots:
-    void slt_addMsg(const TimestampedMsg &newMsg);
+protected slots:
+    virtual void slt_addMsg(const MsgType &newMsg)
+    {
+        appendMsg(newMsg);
+    }
 
 private:
 friend class MainWindow;
-    DataStorage<TimestampedMsg> msgStore;
+    DataStorage<MsgType> msgStore;
 };
 
+class MsgStorage : public QObject, public TemplateMsgStorage<Msg>
+{
+    Q_OBJECT
+public:
+    MsgStorage(){}
+
+    void accept(FileParser *visitor)
+    {
+        visitor->visit(*this);
+    }
+signals:
+    virtual void sgnl_MsgAdded(const Msg &addedMsg);
+    virtual void sgnl_StoreCleared();
+
+private slots:
+    virtual void slt_addMsg(const Msg &newMsg)
+    {
+        TemplateMsgStorage<Msg>::slt_addMsg(newMsg);
+    }
+
+private:
+    friend class MainWindow;
+};
+
+class TimestampedMsgStorage :
+    public QObject,
+    public TemplateMsgStorage<TimestampedMsg>
+{
+    Q_OBJECT
+public:
+    TimestampedMsgStorage(){}
+
+    void accept(FileParser *visitor)
+    {
+        visitor->visit(*this);
+    }
+
+signals:
+    virtual void sgnl_MsgAdded(const TimestampedMsg &addedMsg);
+    virtual void sgnl_StoreCleared();
+
+private slots:
+    virtual void slt_addMsg(const TimestampedMsg &newMsg)
+    {
+        TemplateMsgStorage<TimestampedMsg>::slt_addMsg(newMsg);
+    }
+
+private:
+    friend class MainWindow;
+};
 #endif // MSGSTORAGE_H

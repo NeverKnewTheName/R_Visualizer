@@ -4,8 +4,6 @@
 #include "IMsgCodeMapping.h"
 #include "IMsgDataMapping.h"
 
-#include "fileparser.h"
-
 MessageConfig::MessageConfig(
         IMsgIDMapping *msgIDMapping,
         IMsgCodeMapping *msgCodeMapping,
@@ -63,10 +61,10 @@ QCompleter *MessageConfig::createAliasCompleterForMapping(
 }
 
 //ToTHINK DEPRECATED?
-void MessageConfig::accept(FileParser *visitor)
-{
-    visitor->visit(*this);
-}
+//void MessageConfig::accept(FileParser *visitor)
+//{
+//    visitor->visit(*this);
+//}
 
 void MessageConfig::slt_ApplyRole(const UserRoleMngr::UserRole roleToApply)
 {

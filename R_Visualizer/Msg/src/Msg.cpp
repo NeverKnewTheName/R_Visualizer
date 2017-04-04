@@ -12,7 +12,7 @@ Msg::Msg() :
 Msg::Msg(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode,
-        const MsgDataType &msgData)
+        const MsgDataType &msgData
     ) :
         msgID(msgID),
         msgCode(msgCode),
@@ -27,7 +27,7 @@ Msg::Msg(const Msg &other) :
 {
 }
 
-virtual ~Msg::Msg()
+Msg::~Msg()
 {
 }
 

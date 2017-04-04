@@ -8,6 +8,8 @@
 #ifndef MSG_H
 #define MSG_H
 
+#include <QMetaType>
+
 #include "IMsg.h"
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
@@ -18,7 +20,7 @@ class FileParser;
 /**
  * @brief The Msg
  */
-class Msg : IMsgCRTPHelper<Msg>
+class Msg : public IMsgCRTPHelper<Msg>
 {
 public:
     Msg();
@@ -46,5 +48,7 @@ private:
     MsgCodeType msgCode;
     MsgDataType msgData;
 };
+
+Q_DECLARE_METATYPE(Msg);
 
 #endif /* MSG_H */

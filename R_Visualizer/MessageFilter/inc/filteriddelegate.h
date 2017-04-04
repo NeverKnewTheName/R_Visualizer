@@ -8,7 +8,7 @@
 #ifndef FILTERIDDELEGATE_H
 #define FILTERIDDELEGATE_H
 
-#include "idmodel.h"
+//#include "idmodel.h"
 
 #include <QStyledItemDelegate>
 #include <QStringList>

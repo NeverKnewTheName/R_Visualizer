@@ -1,4 +1,5 @@
 #include "TimestampedMsg.h"
+
 #include "fileparser.h"
 
 TimestampedMsg::TimestampedMsg() :
@@ -7,7 +8,7 @@ TimestampedMsg::TimestampedMsg() :
 {
 }
 
-TimestampedMsg::TimestampedMsg(const Msg &originalMsg, QDateTime timestamp = QDateTime()) :
+TimestampedMsg::TimestampedMsg(const Msg &originalMsg, QDateTime timestamp) :
     originalMsg(originalMsg),
     msgTimestamp(timestamp)
 {
@@ -20,7 +21,7 @@ TimestampedMsg::TimestampedMsg(const TimestampedMsg &other) :
 }
 
 
-virtual TimestampedMsg::~TimestampedMsg()
+TimestampedMsg::~TimestampedMsg()
 {
 }
 
@@ -71,6 +72,11 @@ const MsgDataType TimestampedMsg::getMsgData() const
 const Msg TimestampedMsg::getOriginalMsg() const
 {
     return originalMsg;
+}
+
+void TimestampedMsg::setOriginalMsg(const Msg &originalMsg)
+{
+    this->originalMsg = originalMsg;
 }
 
 void TimestampedMsg::accept(FileParser *visitor)

@@ -12,7 +12,6 @@
 #include <QDialog>
 #include <QAbstractButton>
 
-class FileParser;
 
 #include "errlogmodel.h"
 #include "IFileParsable.h"
@@ -24,7 +23,7 @@ class ErrorLogView;
 /**
  * \brief The ErrorLogView
  */
-class ErrorLogView : public QDialog, public IFileParsable
+class ErrorLogView : public QDialog
 {
     Q_OBJECT
 
@@ -34,8 +33,6 @@ public:
 
     ErrLogModel *getErrLogModel() const;
     void setErrLogModel(ErrLogModel *value);
-
-    void accept(FileParser *visitor);
 
 private slots:
 

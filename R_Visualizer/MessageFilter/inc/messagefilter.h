@@ -11,7 +11,7 @@
 #include <QWidget>
 
 class MessageConfig;
-class FileParser;
+//class FileParser;
 
 #include "filteridstore.h"
 #include "filtercodestore.h"
@@ -27,7 +27,7 @@ class MessageFilter;
 /**
  * \brief The #MessageFilter widget
  */
-class MessageFilter : public QWidget, public IFileParsable
+class MessageFilter : public QWidget//, public IFileParsable
 {
     Q_OBJECT
 
@@ -82,7 +82,7 @@ public:
      */
     const FilterTimestampStore &getFilterTimestampModel() const;
 
-    void accept(FileParser *visitor);
+    //void accept(FileParser *visitor);
 
 signals:
     /**
@@ -213,12 +213,12 @@ private:
      */
     void initFilterTimestamp();
 
-    void saveIDFilter(const QString &pathToFile, FileParser *saveFileParser);
-    void saveCodeFilter(const QString &pathToFile, FileParser *saveFileParser);
-    void saveTimestampFilter(const QString &pathToFile, FileParser *saveFileParser);
-    void loadIDFilter(const QString &pathToFile, FileParser *openFileParser);
-    void loadCodeFilter(const QString &pathToFile, FileParser *openFileParser);
-    void loadTimestampFilter(const QString &pathToFile, FileParser *openFileParser);
+    //void saveIDFilter(const QString &pathToFile, FileParser *saveFileParser);
+    //void saveCodeFilter(const QString &pathToFile, FileParser *saveFileParser);
+    //void saveTimestampFilter(const QString &pathToFile, FileParser *saveFileParser);
+    //void loadIDFilter(const QString &pathToFile, FileParser *openFileParser);
+    //void loadCodeFilter(const QString &pathToFile, FileParser *openFileParser);
+    //void loadTimestampFilter(const QString &pathToFile, FileParser *openFileParser);
 
     Ui::MessageFilter *ui;
     /**

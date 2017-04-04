@@ -71,8 +71,6 @@ template<class BaseClass>
 class IPrettyMsg : public BaseClass
 {
 public:
-    using BaseClass::BaseClass;
-
     virtual ~IPrettyMsg(){}
 
     virtual std::unique_ptr<IPrettyMsg<BaseClass>> clonePrettyMsg() const = 0;
@@ -109,11 +107,6 @@ class PrettyMsgCloneable : public IPrettyMsg<BaseClass>
 {
 public:
     /**
-     * @brief Import Constructors from BaseClas
-     */
-    using BaseClass::BaseClass;
-
-    /**
      * @brief CRTP Copy helper
      * 
      * Call this function to create a copy of a derivate from a pointer to its
@@ -121,7 +114,7 @@ public:
      */
     virtual IPrettyMsgUniqPtr<BaseClass> clonePrettyMsg() const
     {
-        return new Derivate(static_cast<const Derivate &>(*this));
+        return IPrettyMsgUniqPtr<BaseClass>(new Derivate(static_cast<const Derivate &>(*this)));
     }
 };
 

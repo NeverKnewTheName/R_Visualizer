@@ -26,7 +26,7 @@ class MsgTypeRep;
 
 #include "datastorage.h"
 #include "rsimpleringbuff.h"
-#include "PrettyMsg.h"
+#include "PrettyTimestampedMsg.h"
 #include "IFileParsable.h"
 
 
@@ -88,13 +88,13 @@ public:
     /**
      * \brief Appends a #Msg to display to the #MsgStreamModel
      */
-    void appendMsg(const PrettyMsg &msg);
+    void appendMsg(const PrettyTimestampedMsg &msg);
     /**
      * \brief Prepends a #Msg to display to the #MsgStreamModel
      */
-    void prependMsg(const PrettyMsg &msg);
+    void prependMsg(const PrettyTimestampedMsg &msg);
 
-    const PrettyMsg &at(const int index) const;
+    const PrettyTimestampedMsg &at(const int index) const;
 
     int size() const;
 
@@ -129,7 +129,7 @@ private slots:
     /**
      * \brief The #messageReceived slot shall be called whenever a new message that is to be displayed is received
      */
-    void messageReceived(const PrettyMsg &msg);
+    void messageReceived(const PrettyTimestampedMsg &msg);
 
     void slt_IDRepAdded(const IDRep &addedIDRep);
     void slt_IDRepUpdated(const IDRep &updatedIDRep);
@@ -165,7 +165,7 @@ private:
     /**
      * \brief The #msgBuffer contains all messages that are to be displayed by the #MessageStream
      */
-    RSimpleDestructiveRingBuff<PrettyMsg> msgBuffer;
+    RSimpleDestructiveRingBuff<PrettyTimestampedMsg> msgBuffer;
     const size_t NrOfMessagesToDisplay;
     size_t currentLastIndex;
 };
