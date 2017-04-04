@@ -1,0 +1,22 @@
+#ifndef MESSAGEFILTERWIDGET_H
+#define MESSAGEFILTERWIDGET_H
+
+#include <QWidget>
+
+namespace Ui {
+class MessageFilterWidget;
+}
+
+class MessageFilterWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit MessageFilterWidget(QWidget *parent = 0);
+    ~MessageFilterWidget();
+
+private:
+    Ui::MessageFilterWidget *ui;
+};
+
+#endif // MESSAGEFILTERWIDGET_H
