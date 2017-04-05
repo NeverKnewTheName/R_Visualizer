@@ -1,9 +1,19 @@
+/**
+ * @file MsgIDFilterStore.h
+ * @author Christian Neuberger
+ * @date 2017-04-03
+ * 
+ * @brief Default implementation of #IMsgIDFilterStore
+ */
 #ifndef MSGIDFILTERSTORE_H
 #define MSGIDFILTERSTORE_H
 
 #include <QVector>
 #include "IMsgIDFilterStore.h"
 
+/**
+ * @brief The MsgIDFilterStore
+ */
 class MsgIDFilterStore : public IMsgIDFilterStore
 {
 public:
@@ -14,6 +24,8 @@ public:
     void removeMsgID(const MsgIDType &msgIDToRemove);
 
     bool containsMsgID(const MsgIDType &msgID) const;
+
+    MsgIDType at(int index) const;
 
     void clear();
 

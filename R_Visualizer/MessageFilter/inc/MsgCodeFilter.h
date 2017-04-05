@@ -1,3 +1,10 @@
+/**
+ * @file MsgCodeFilter.h
+ * @author Christian Neuberger
+ * @date 2017-04-03
+ * 
+ * @brief Filters #Imsg by #MsgCodeType
+ */
 #ifndef MSGCODEFILTER_H
 #define MSGCODEFILTER_H
 
@@ -9,7 +16,10 @@
 
 #include "MsgCodeType.h"
 
-class MsgCodeFilter : public QOjbect, public IMsgFilter
+/**
+ * @brief The MsgCodeFilter
+ */
+class MsgCodeFilter : public QObject, public IMsgFilter
 {
     Q_OBJECT
 public:
@@ -19,13 +29,23 @@ public:
             );
     virtual ~MsgCodeFilter();
 
+    /**
+     * @brief Matches the passed #IMsg against the current filter state and
+     * configuration and returns the result
+     * 
+     * If the filter is not enabled, this function always returns true
+     * 
+     * @returns bool filter result
+     * @retval true The #MsgCodeType of the passed #IMsg is valid
+     * @retval false The #MsgCodeType of the passed #IMsg is invalid
+     */
     virtual bool filterMessage(const IMsg &msgToFilter) const;
 
     virtual void enableFilter(const bool enable);
-    virtual bool isEnabled() const;
+    virtual bool isFilterEnabled() const;
 
     virtual void invertFilter(const bool invert);
-    virtual bool isInverted() const;
+    virtual bool isFilterInverted() const;
 
     void addMsgCodeToFilter(const MsgCodeType &msgCodeToAdd);
     void removeMsgCodeFromFilter(const MsgCodeType &msgCodeToRemove);

@@ -1,6 +1,7 @@
 #include "MessageFilter.h"
 
-MessageFilter::MessageFilter()
+MessageFilter::MessageFilter(QObject *parent) :
+    QObject(parent)
 {
 
 }
@@ -11,7 +12,7 @@ MessageFilter::~MessageFilter()
 
 bool MessageFilter::filterMessage(const IMsg &msgToFilter) const
 {
-    for(auto filter : filterStore)
+    for(auto filter : msgFilterStore)
     {
         if(!filter->filterMessage(msgToFilter))
         {
@@ -22,25 +23,67 @@ bool MessageFilter::filterMessage(const IMsg &msgToFilter) const
     return true;
 }
 
-void MessageFilter::addFilter(IFilter *filterToAdd)
+bool MessageFilter::filterMessage(const ITimestampedMsg &msgToFilter) const
 {
-    filterStore.append(filterToAdd);
-}
-
-void MessageFilter::removeFilter(IFilter *fitlerToRemove)
-{
-    const int filterStoreSize = filterStore.size();
-
-    for(int i = 0; i < filterStoreSize; ++i)
+    for(auto filter : timestampedMsgFilterStore)
     {
-        if(filterStore.at(i) == filterToRemove)
+        if(!filter->filterMessage(msgToFilter))
         {
-            filterStore.removeAt(i);
-            break;
+            return false;
         }
     }
+
+    // A ITimestampedMsg is a IMsg, thus the upcast is safe
+    return filterMessage(dynamic_cast<const IMsg &>(msgToFilter));
+}
+
+bool MessageFilter::filterMessageByFilter(
+        IMsgFilter *filterToUse,
+        IMsg *msgToFilter
+        ) const
+{
+    return filterToUse->filterMessage(msgToFilter);
+}
+
+bool MessageFilter::filterMessageByFilter(
+        ITimestampedMsgFilter *filterToUse,
+        ITimestampedMsg *msgToFilter
+        ) const
+{
+    return filterToUse->filterMessage(msgToFilter);
+}
+
+void MessageFilter::addFilter(IFilter *filterToAdd)
+{
+    regularFilterStore.append(filterToAdd);
+}
+
+void MessageFilter::addFilter(IMsgFilter *filterToAdd)
+{
+    msgFilterStore.append(filterToAdd);
+}
+
+void MessageFilter::addFilter(ITimestampedMsgFilter *filterToAdd)
+{
+    timestampedMsgFilterStore.append(filterToAdd);
+}
+
+void MessageFilter::removeFilter(IFilter *filterToRemove)
+{
+    regularFilterStore.removeAll(filterToRemove);
+}
+
+void MessageFilter::removeFilter(IMsgFilter *filterToRemove)
+{
+    msgFilterStore.removeAll(filterToRemove);
+}
+
+void MessageFilter::removeFilter(ITimestampedMsgFilter *filterToRemove)
+{
+    timestampedMsgFilterStore.removeAll(filterToRemove);
 }
 
 void MessageFilter::slt_applyRole(const UserRoleMngr::UserRole roleToApply)
 {
+    emit sgnl_PropagateUserRole(roleToApply);
 }

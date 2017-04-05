@@ -34,6 +34,8 @@
 #include "jsoninparser.h"
 #include "jsonoutparser.h"
 
+#include "MessageStreamWidget.h"
+
 #define __DEBUG__
 
 #ifdef __DEBUG__
@@ -49,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->splitter->insertWidget(0,msgStream);
+//    ui->splitter->insertWidget(0,msgStream);
 
     connectErrorLog();
     connectUserRoleManager();
@@ -76,12 +78,12 @@ void MainWindow::appendTabMenuWidget(
         const QString &widgetName
         )
 {
-    ui->configTabWidget->addTab(widgetToAppend);
+    ui->configTabWidget->addTab(widgetToAppend,widgetName);
 }
 
 void MainWindow::setErrorDialog(ErrorLogView *errorLogDialog)
 {
-    this->errLogViewDiag = errorLogDialog;
+//    this->errLogViewDiag = errorLogDialog;
 }
 
 void MainWindow::initDeviceHandler()
@@ -92,8 +94,8 @@ void MainWindow::initDeviceHandler()
 
 void MainWindow::connectDeviceHandler()
 {
-    connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, &m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
-    connect(&m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
+//    connect(this->sndMsgsWidget, &SendMessages::sigSendCANPacket, &m_deviceHandler, &DeviceHandler::sltSendPacket/*, Qt::QueuedConnection*/);
+//    connect(&m_deviceHandler, &DeviceHandler::sigPacketReceived, this, &MainWindow::messageReceived, Qt::QueuedConnection);
     /* connect(&m_deviceHandler, &DeviceHandler::sigMsgReceived, &msgModel, &MsgModel::messageReceived, Qt::QueuedConnection); */
     /* connect(this, &MainWindow::dataReceived, this->sysOvrvWidget, &SystemOverview::newMessage, Qt::QueuedConnection); */
     //connect(&m_deviceHandler, &DeviceHandler::sigErrorMsgReceived, errLogViewDiag->getErrLogModel(), &ErrLogModel::errLogMsgReceived, Qt::QueuedConnection);
@@ -103,13 +105,13 @@ void MainWindow::connectDeviceHandler()
 
 void MainWindow::initErrorLog()
 {
-    ui->actionOpen_Error_Log->setText(QString("Show Error Log");
+    ui->actionOpen_Error_Log->setText(QString("Show Error Log"));
             // (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
 }
 
 void MainWindow::connectErrorLog()
 {
-    connect(ui->actionOpen_Error_Log, &QAction::triggered, errLogViewDiag, &ErrorLogView::show);
+//    connect(ui->actionOpen_Error_Log, &QAction::triggered, errLogViewDiag, &ErrorLogView::show);
 }
 
 void MainWindow::initUserRoleManager()
@@ -121,9 +123,9 @@ void MainWindow::initUserRoleManager()
 
 void MainWindow::connectUserRoleManager()
 {
-    connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
-    connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::slt_applyRole);
-    connect(this, &MainWindow::switchUserRoles, sndMsgsWidget, &SendMessages::applyRole);
+//    connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
+//    connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::slt_applyRole);
+//    connect(this, &MainWindow::switchUserRoles, sndMsgsWidget, &SendMessages::applyRole);
     /* connect(this, &MainWindow::switchUserRoles, msgConfigWidget, &MessageConfig::applyRole); */
     connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
 
@@ -204,51 +206,51 @@ void MainWindow::on_actionConnect_triggered()
     qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
 #endif //__DEBUG__
 
-    if(m_IsConnectedToDevice)
-    {
-        //Disconnect
-        ui->actionStart->setDisabled(true);
-        ui->actionStop->setDisabled(true);
-        m_deviceHandler.disconnect();
-        qDebug() << "Disconnected";
-        m_IsConnectedToDevice = false;
-        ui->actionConnect->setIcon(QIcon(":/GUI/Icons/Icons/Network-01-32.png"));
-        ui->actionConnect->setText(QString("Connect"));
-        ui->actionConnect->setToolTip(QString("Connect to a device"));
-    }
-    else
-    {
-        //        connect
-
-        if (m_deviceHandler.devices().isEmpty())
-        {
-            QMessageBox::information(this, tr("Kein Gerät gefunden"), tr("Bitte schließen Sie ein Gerät an!"), QMessageBox::Cancel);
-            return;
-        }
-
-        HID_Device device = m_deviceHandler.devices()[0];
-        if (m_deviceHandler.connectTo(device))
-        {
-            qDebug() << "Connected";
-            ui->actionStart->setDisabled(false);
-            ui->actionStop->setDisabled(true);
-            m_IsConnectedToDevice = true;
-            ui->actionConnect->setIcon(QIcon(":/GUI/Icons/Icons/Network_Disconnected-32.png"));
-            ui->actionConnect->setText(QString("Disconnect"));
-            ui->actionConnect->setToolTip(QString("Disconnect form connected device"));
-            //m_deviceHandler.sltStartCapture();
-            //m_state = Connected;
-            //updateActionStates();
-            ui->statusBar->showMessage(QString("Connected to device: %1").arg(device.product));
-            //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 wurde hergestellt. Die Analyse kann nun gestartet werden.").arg(device.product));
-        }
-        else
-        {
-            qDebug() << "Connection failed";
-            ui->statusBar->showMessage(QString("Connection failed"));
-            //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 konnte nicht hergestellt werden. Das Gerät ist nicht betriebsbereit.").arg(device.product));
-        }
-    }
+//    if(m_IsConnectedToDevice)
+//    {
+//        //Disconnect
+//        ui->actionStart->setDisabled(true);
+//        ui->actionStop->setDisabled(true);
+//        m_deviceHandler.disconnect();
+//        qDebug() << "Disconnected";
+//        m_IsConnectedToDevice = false;
+//        ui->actionConnect->setIcon(QIcon(":/GUI/Icons/Icons/Network-01-32.png"));
+//        ui->actionConnect->setText(QString("Connect"));
+//        ui->actionConnect->setToolTip(QString("Connect to a device"));
+//    }
+//    else
+//    {
+//        //        connect
+//
+//        if (m_deviceHandler.devices().isEmpty())
+//        {
+//            QMessageBox::information(this, tr("Kein Gerät gefunden"), tr("Bitte schließen Sie ein Gerät an!"), QMessageBox::Cancel);
+//            return;
+//        }
+//
+//        HID_Device device = m_deviceHandler.devices()[0];
+//        if (m_deviceHandler.connectTo(device))
+//        {
+//            qDebug() << "Connected";
+//            ui->actionStart->setDisabled(false);
+//            ui->actionStop->setDisabled(true);
+//            m_IsConnectedToDevice = true;
+//            ui->actionConnect->setIcon(QIcon(":/GUI/Icons/Icons/Network_Disconnected-32.png"));
+//            ui->actionConnect->setText(QString("Disconnect"));
+//            ui->actionConnect->setToolTip(QString("Disconnect form connected device"));
+//            //m_deviceHandler.sltStartCapture();
+//            //m_state = Connected;
+//            //updateActionStates();
+//            ui->statusBar->showMessage(QString("Connected to device: %1").arg(device.product));
+//            //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 wurde hergestellt. Die Analyse kann nun gestartet werden.").arg(device.product));
+//        }
+//        else
+//        {
+//            qDebug() << "Connection failed";
+//            ui->statusBar->showMessage(QString("Connection failed"));
+//            //ui->statusBar->showMessage(tr("Eine Verbindung zu dem Gerät %1 konnte nicht hergestellt werden. Das Gerät ist nicht betriebsbereit.").arg(device.product));
+//        }
+//    }
 }
 
 void MainWindow::on_actionStart_triggered()
@@ -259,7 +261,7 @@ void MainWindow::on_actionStart_triggered()
 
     ui->actionStart->setDisabled(true);
     ui->actionStop->setDisabled(false);
-    m_deviceHandler.sltStartCapture();
+//    m_deviceHandler.sltStartCapture();
 }
 
 void MainWindow::on_actionStop_triggered()
@@ -270,7 +272,7 @@ void MainWindow::on_actionStop_triggered()
 
     ui->actionStart->setDisabled(false);
     ui->actionStop->setDisabled(true);
-    m_deviceHandler.sltStopCapture();
+//    m_deviceHandler.sltStopCapture();
     //Somehow the device cannot be restarted without a disconnect...
     emit ui->actionConnect->triggered();
 }
@@ -312,8 +314,8 @@ void MainWindow::on_actionSwitch_User_Role_triggered()
     emit this->switchUserRoles(role);
 }
 
-void MainWindow::scrollBarMsgTableViewMoved(int position)
-{
+//void MainWindow::scrollBarMsgTableViewMoved(int position)
+//{
     /* QScrollBar *vertScrollBar = ui->msgTableView->verticalScrollBar(); */
 
     /* if(position >= (vertScrollBar->maximum())) */
@@ -349,7 +351,7 @@ void MainWindow::scrollBarMsgTableViewMoved(int position)
     /* { */
     /*     emit this->changedDataAcquisitionMode(false); */
     /* } */
-}
+//}
 
 void MainWindow::on_TestPB_1_clicked()
 {
@@ -361,17 +363,17 @@ void MainWindow::on_actionOpen_Error_Log_triggered()
     //this->errLogViewDiag->show();
 }
 
-void MainWindow::messageReceived(CAN_PacketPtr ptr)
-{
-    if( ptr->type() == CAN_Packet::Data_Frame )
-    {
-        emit dataReceived(qSharedPointerDynamicCast<Data_Packet>(ptr));
-    }
-    else if( ptr->type() == CAN_Packet::Error_Frame )
-    {
-        currErrCntr++;
-        totalErrCntr++;
-        ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
-        emit errorReceived(qSharedPointerDynamicCast<Error_Packet>(ptr));
-    }
-}
+//void MainWindow::messageReceived(CAN_PacketPtr ptr)
+//{
+//    if( ptr->type() == CAN_Packet::Data_Frame )
+//    {
+//        emit dataReceived(qSharedPointerDynamicCast<Data_Packet>(ptr));
+//    }
+//    else if( ptr->type() == CAN_Packet::Error_Frame )
+//    {
+//        currErrCntr++;
+//        totalErrCntr++;
+//        ui->actionOpen_Error_Log->setText(QString("Show Error Log (%1/%2)").arg(totalErrCntr).arg(currErrCntr));
+//        emit errorReceived(qSharedPointerDynamicCast<Error_Packet>(ptr));
+//    }
+//}

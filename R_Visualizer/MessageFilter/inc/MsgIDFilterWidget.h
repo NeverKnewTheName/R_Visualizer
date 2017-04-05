@@ -12,22 +12,22 @@ class MsgIDFilterWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MsgIDFilterWidget(QWidget *parent = 0);
+    explicit MsgIDFilterWidget(QWidget *parent = Q_NULLPTR);
     virtual ~MsgIDFilterWidget();
 
     void addMsgID(const MsgIDType &msgIDToAdd);
     void removeMsgID(const MsgIDType &msgIDToRemove);
 
 signals:
-    sgnl_MsgIDAdded(const MsgIDType &addedMsgID);
-    sgnl_MsgIDRemoved(const MsgIDType &removedMsgID);
+    void sgnl_MsgIDAdded(const MsgIDType &addedMsgID);
+    void sgnl_MsgIDRemoved(const MsgIDType &removedMsgID);
 
-    sgnl_filterEnabled(const bool enable);
-    sgnl_filterInverted(const bool invert);
+    void sgnl_filterEnabled(const bool enable);
+    void sgnl_filterInverted(const bool invert);
 
 public slots:
-    slt_addMsgID(const MsgIDType &msgIDToAdd);
-    slt_removeMsgID(const MsgIDType &msgIDToRemove);
+    void slt_addMsgID(const MsgIDType &msgIDToAdd);
+    void slt_removeMsgID(const MsgIDType &msgIDToRemove);
 
 private slots:
     void on_addFilterIDPushButton_clicked();

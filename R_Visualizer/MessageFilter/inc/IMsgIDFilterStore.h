@@ -1,8 +1,18 @@
+/**
+ * @file IMsgIDFilterStore.h
+ * @author Christian Neuberger
+ * @date 2017-04-03
+ * 
+ * @brief Interface for #MsgIDType storages
+ */
 #ifndef IMSGIDFILTERSTORE_H
 #define IMSGIDFILTERSTORE_H
 
 #include "MsgIDType.h"
 
+/**
+ * @brief The IMsgIDFilterStore interface
+ */
 class IMsgIDFilterStore
 {
 public:

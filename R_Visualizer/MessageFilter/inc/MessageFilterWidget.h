@@ -15,6 +15,8 @@ public:
     explicit MessageFilterWidget(QWidget *parent = 0);
     ~MessageFilterWidget();
 
+    void addFilterWidget(QWidget *filterWidget);
+
 private:
     Ui::MessageFilterWidget *ui;
 };

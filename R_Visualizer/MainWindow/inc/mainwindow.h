@@ -16,6 +16,9 @@
 
 #include <QMainWindow>
 
+class MessageStreamWidget;
+class ErrorLogView;
+
 namespace Ui {
 class MainWindow;
 }
@@ -132,13 +135,13 @@ private:
      * For the configuration widgets the parent is the QTabWidget that is
      * inside of the MainWindow.
      */
-    MessageConfig *msgConfigWidget;
-    MessageFilter *msgFilterWidget;
-    MessageStream *msgStream;
-    SendMessages *sndMsgsWidget;
-    SystemOverview *sysOvrvWidget;
+    //MessageConfig *msgConfigWidget;
+    //MessageFilter *msgFilterWidget;
+    //MessageStream *msgStream;
+    //SendMessages *sndMsgsWidget;
+    //SystemOverview *sysOvrvWidget;
 
-    ErrorLogView *errLogViewDiag;
+    //ErrorLogView *errLogViewDiag;
 
     UserRoleMngr userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
     bool m_IsConnectedToDevice; //!< Keeps track of whether an interface ot an R_Sys is connected
