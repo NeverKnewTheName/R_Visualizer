@@ -1,15 +1,22 @@
 #ifndef MSGIDFILTER_H
 #define MSGIDFILTER_H
 
+#include <QObject>
+
 #include "IMsg.h"
-#include "IFilter.h"
+#include "IMsgFilter.h"
+#include "IMsgIDFilterStore.h"
 
 #include "MsgIDType.h"
 
-class MsgIDFilter : public IFilter
+class MsgIDFilter : public QOjbect, public IMsgFilter
 {
+    Q_OBJECT
 public:
-    MsgIDFilter();
+    explicit MsgIDFilter(
+            IMsgIDFilterStore *msgIDFilterStore,
+            QOjbect * parent = Q_NULLPTR
+            );
     virtual ~MsgIDFilter();
 
     virtual bool filterMessage(const IMsg &msgToFilter) const;
@@ -23,8 +30,23 @@ public:
     void addMsgIDToFilter(const MsgIDType &msgIDToAdd);
     void removeMsgIDFromFilter(const MsgIDType &msgIDToRemove);
 
+signals:
+    void sgnl_filterEnabled(const bool enabled);
+    void sgnl_filterInverted(const bool inverted);
+    void sngl_filterChanged();
+
+public slots:
+    void slt_enableFilter(const bool enable);
+    void slt_invertFilter(const bool invert);
+
+    void slt_addMsgIDToFilter(const MsgIDType &msgIDToAdd);
+    void slt_removeMsgIDToFilter(const MsgIDType &msgIDToRemove);
+
 private:
-    QVector<MsgIDType> msgIDFilterStore;
+    bool applyInversion(const bool intermediateFilterResult) const;
+
+private:
+    IMsgIDFilterStore *msgIDFilterStore;
 
     bool isEnabled;
     bool isInverted;

@@ -10,28 +10,15 @@ MsgTimestampFilter::~MsgTimestampFilter()
 {
 }
 
-bool MsgTimestampFilter::filterMessage(const IMsg &msgToFilter) const
+bool MsgTimestampFilter::filterMessage(const ITimestampedMsg &msgToFilter) const
 {
-    try
-    {
-        //The cast will throw an exception when the cast fails
-        const ITimestampedMsg &timestampedMsg =
-            dynamic_cast<const ITimestampedMsg&>(msgToFilter);
-        const QDateTime &msgTimestamp = timestampedMsg.getTimestamp();
+    bool filterResult = true;
+    const QDateTime &msgTimestamp = msgToFilter.getTimestamp();
 
-        bool filterResult = true;
+    filterResult &= filterTimestampFrom(msgTimestamp);
+    filterResult &= filterTimestampTo(msgTimestamp);
 
-        filterResult &= filterTimestampFrom(msgTimestamp);
-        filterResult &= filterTimestampTo(msgTimestamp);
-
-        return applyInversion(filterResult);
-    }
-    catch(std::bad_cast exp)
-    {
-        //If a regular Msg that does not contain a timestamp is passed, ignore
-        //this filter!
-        return true;
-    }
+    return applyInversion(filterResult);
 }
 
 void MsgTimestampFilter::enableFilter(const bool enable)
@@ -57,6 +44,10 @@ bool MsgTimestampFilter::isInverted() const
 void MsgTimestampFilter::setTimestampFrom( const QDateTime &timestampFrom)
 {
     this->timestampeFrom = timestampFrom;
+    if(this->timestampFrom > this->timestampTo)
+    {
+        this->timestampTo = this->timestampFrom;
+    }
 }
 
 QDateTime MsgTimestampFilter::getTimestampFrom() const
@@ -67,6 +58,10 @@ QDateTime MsgTimestampFilter::getTimestampFrom() const
 void MsgTimestampFilter::setTimestampTo( const QDateTime &timestampTo)
 {
     this->timestampTo = timestampTo;
+    if(this->timestampFrom > this->timestampTo)
+    {
+        this->timestampFrom = this->timestampTo;
+    }
 }
 
 QDateTime MsgTimestampFilter::getTimestampTo() const
