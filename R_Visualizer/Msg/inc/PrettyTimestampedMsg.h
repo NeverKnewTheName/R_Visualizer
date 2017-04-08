@@ -14,7 +14,8 @@
 #include "IMsgDataFormatter.h"
 
 class PrettyTimestampedMsg :
-    public PrettyMsgCloneable<PrettyTimestampedMsg, ITimestampedMsg>
+    public IPrettyMsg,
+    public AbstractTimestampedMsgCRTPHelper<PrettyTimestampedMsg>
 {
 public:
     /**
@@ -23,6 +24,7 @@ public:
     PrettyTimestampedMsg();
     PrettyTimestampedMsg(const ITimestampedMsg &originalMsg);
     PrettyTimestampedMsg(const PrettyTimestampedMsg &other);
+
     virtual ~PrettyTimestampedMsg();
 
     PrettyTimestampedMsg &operator =(const PrettyTimestampedMsg &other);
@@ -41,11 +43,6 @@ public:
     QColor getParsedMsgDataColor() const;
     void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter);
 
-    /**
-     * @brief For when only the contained #ITimestampedMsg must be cloned
-     */
-    IMsgUniqPtr cloneMsg() const;
-
     void setMsgID(const MsgIDType &msgID);
     const MsgIDType getMsgID() const;
 
@@ -58,17 +55,9 @@ public:
     void setTimestamp(const QDateTime &newTimestamp);
     const QDateTime getTimestamp() const;
 
-    /**
-     * @brief Short circuit to the #IMsg accept method
-     * 
-     * PrettyMsg are not to be parsed to files, because they are dynamically
-     * created. Therefore treat them as regular IMsg derivates regarding
-     * parsing to file and thereof.
-     */
-    void accept(FileParser *visitor);
 private:
-    std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
     std::unique_ptr<ITimestampedMsg> originalMsg;
+    std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
     QString msgIDPlainTextAlias;
     QString msgCodePlainTextAlias;
     QColor msgIDColorRepresentation;

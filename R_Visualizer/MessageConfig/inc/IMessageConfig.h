@@ -56,10 +56,14 @@ public:
      * implementation classes to match the used derivate of #IPrettyMsg
      */
     virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            const IMsg &msgToPrettify
+            IPrettyMsgUniqPtr<IMsg> msgToPrettify
             ) const = 0;
     virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            const ITimestampedMsg &timestampedMsgToPrettify
+            IPrettyMsgUniqPtr<ITimestampedMsg> msgToPrettify
+            ) const = 0;
+
+    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsgByMapping(
+            const IMsg &msgToPrettify
             ) const = 0;
 
     /**

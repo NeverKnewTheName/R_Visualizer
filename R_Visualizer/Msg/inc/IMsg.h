@@ -8,8 +8,6 @@
 #ifndef IMSG_H
 #define IMSG_H
 
-#include <memory>
-
 #include "IFileParsable.h"
 
 #include "MsgIDType.h"
@@ -27,7 +25,7 @@ public:
     /**
      * @brief IMsg CRTP copy helper
      */
-    virtual std::unique_ptr<IMsg> cloneMsg() const = 0;
+    virtual IMsg *cloneMsg() const = 0;
 
     /**
      * \brief Set the message's ID
@@ -57,15 +55,28 @@ public:
     virtual const MsgDataType getMsgData() const = 0;
 };
 
-typedef std::unique_ptr<IMsg> IMsgUniqPtr;
-
+/**
+ * @brief CRTP clone helper to clone #IMsg derivates with only a pointer to the
+ * interface
+ * 
+ * This helper class wraps around #IMsg derivates and implements the cloneMsg
+ * method in a way that enables #IMsg derivates to be copied whilst preserving
+ * their individual type.
+ * 
+ * Additionally the mandatory #IFileParsable interface is default implemented
+ * here.
+ */
 template<class Derived>
-class IMsgCRTPHelper : public IMsg
+class AbstractMsgCRTPHelper : public IMsg
 {
 public:
-    virtual IMsgUniqPtr cloneMsg() const
+    virtual IMsg *cloneMsg() const
     {
-        return IMsgUniqPtr(new Derived(static_cast<const Derived&>(*this)));
+        return new Derived(static_cast<const Derived&>(*this));
+    }
+    virtual void accept(FileParser *visitor)
+    {
+        visitor->visit(static_cast<Derived *>(this));
     }
 };
 

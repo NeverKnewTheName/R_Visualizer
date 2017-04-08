@@ -22,21 +22,19 @@ MessageConfig::~MessageConfig()
 }
 
 IPrettyMsgUniqPtr<IMsg> MessageConfig::prettifyMsg(
-        const IMsg &msgToPrettify
+        IPrettyMsgUniqPtr<IMsg> msgToPrettify
         ) const
 {
-    IPrettyMsgUniqPtr<IMsg> prettyMsg(msgToPrettify->cloneMsg());
 
-    return std::move(prettyMsg);
+    return std::move(msgToPrettify);
 }
 
 IPrettyMsgUniqPtr<ITimestampedMsg> MessageConfig::prettifyMsg(
-        const ITimestampedMsg &timestampedMsgToPrettify
+        IPrettyMsgUniqPtr<ITimestampedMsg> msgToPrettify
         ) const
 {
-    IPrettyMsgUniqPtr<ITimestampedMsg> prettyMsg(TimestampedMsgToPrettify->cloneMsg());
 
-    return std::move(prettyMsg);
+    return std::move(msgToPrettify);
 }
 
 QCompleter *MessageConfig::createAliasCompleterForMapping(

@@ -23,8 +23,17 @@ class FileParser;
 
 /**
  * @brief The PrettyMsg
+ * 
+ * The PrettyMsg class unifies the #IPrettyMsg and the #IMsg interface. This
+ * way a PrettyMsg can either be used as an #IPrettyMsg or directly as an #IMsg.
+ * The composition approach was chosen to trim down the inheritance hierarchy.
+ * 
+ * The IMsgCRTPHelper class is used to provide a default implementation of the
+ * cloneMsg method.
  */
-class PrettyMsg : public PrettyMsgCloneable<PrettyMsg, IMsg>
+class PrettyMsg :
+    public IPrettyMsg,
+    public AbstractMsgCRTPHelper<PrettyMsg>
 {
 public:
     /**
@@ -52,11 +61,6 @@ public:
     QColor getParsedMsgDataColor() const;
     void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter);
 
-    /**
-     * @brief For when only the contained #IMsg must be cloned
-     */
-    IMsgUniqPtr cloneMsg() const;
-
     void setMsgID(const MsgIDType &msgID);
     const MsgIDType getMsgID() const;
 
@@ -66,18 +70,9 @@ public:
     void setMsgData(const MsgDataType &msgData);
     const MsgDataType getMsgData() const;
 
-    /**
-     * @brief Short circuit to the #IMsg accept method
-     * 
-     * PrettyMsg are not to be parsed to files, because they are dynamically
-     * created. Therefore treat them as regular IMsg derivates regarding
-     * parsing to file and thereof.
-     */
-    void accept(FileParser *visitor);
-
 private:
-    std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
     std::unique_ptr<IMsg> originalMsg;
+    std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
     QString msgIDPlainTextAlias;
     QString msgCodePlainTextAlias;
     QColor msgIDColorRepresentation;

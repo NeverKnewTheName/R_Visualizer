@@ -25,17 +25,18 @@ public:
     virtual const QDateTime getTimestamp() const = 0;
 };
 
-typedef std::unique_ptr<ITimestampedMsg> ITimestampedMsgUniqPtr;
-
 template<class Derived>
-class ITimestampedMsgCRTPHelper : public ITimestampedMsg
+class AbstractTimestampedMsgCRTPHelper : public ITimestampedMsg
 {
 public:
-    virtual IMsgUniqPtr cloneMsg() const
+    virtual IMsg *cloneMsg() const
     {
-        return IMsgUniqPtr(new Derived(static_cast<const Derived&>(*this)));
+        return new Derived(static_cast<const Derived&>(*this));
     }
-
+    virtual void accept(FileParser *visitor)
+    {
+        visitor->visit(static_cast<Derived *>(this));
+    }
 };
 
 #endif /* ITIMESTAMPEDMSG_H */

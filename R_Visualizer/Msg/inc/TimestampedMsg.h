@@ -24,7 +24,7 @@ class FileParser;
  * 
  * \note Additional facade for #Msg
  */
-class TimestampedMsg : public ITimestampedMsgCRTPHelper<TimestampedMsg>
+class TimestampedMsg : public AbstractTimestampedMsgCRTPHelper<TimestampedMsg>
 {
 public:
     TimestampedMsg();

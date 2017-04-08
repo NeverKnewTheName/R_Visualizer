@@ -20,7 +20,7 @@ class FileParser;
 /**
  * @brief The Msg
  */
-class Msg : public IMsgCRTPHelper<Msg>
+class Msg : public AbstractMsgCRTPHelper<Msg>
 {
 public:
     Msg();

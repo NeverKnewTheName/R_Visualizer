@@ -4,7 +4,7 @@
 
 PrettyMsg::PrettyMsg() : 
     msgDataFormatterUniqPtr(Q_NULLPTR),
-    originalMsg(new Msg()),
+    originalMsg(Q_NULLPTR),
     msgIDPlainTextAlias("Default"),
     msgCodePlainTextAlias("Default"),
     msgIDColorRepresentation(Qt::white),
@@ -23,7 +23,6 @@ PrettyMsg::PrettyMsg(const IMsg &originalMsg) :
 }
 
 PrettyMsg::PrettyMsg(const PrettyMsg &other) :
-    PrettyMsgCloneable<PrettyMsg,IMsg>(other),
     originalMsg(other.originalMsg->cloneMsg()),
     msgDataFormatterUniqPtr(other.msgDataFormatterUniqPtr->cloneFormatter()),
     msgIDPlainTextAlias(other.msgIDPlainTextAlias),
@@ -99,11 +98,31 @@ void PrettyMsg::setMsgCodeColorRepresentation(
 
 QString PrettyMsg::getParsedMsgDataString() const
 {
+    //Check if the MsgDataFormatter is a nullptr
+    if(msgDataFormatterUniqPtr.get() == nullptr)
+    {
+        QString msgDataAsDefaultString;
+        MsgDataType msgData = getMsgData();
+        for(const MsgDataByteType &dataByte : msgData)
+        {
+            QString msgDataByteAsString("0x%1 ");
+            msgDataByteAsString.arg(static_cast<const QString &>(dataByte));
+            msgDataAsDefaultString.prepend(msgDataByteAsString);
+        }
+        return msgDataAsDefaultString;
+    }
+
     return msgDataFormatterUniqPtr->parseMsgDataToString(*this);
 }
 
 QColor PrettyMsg::getParsedMsgDataColor() const
 {
+    //Check if the MsgDataFormatter is a nullptr
+    if(msgDataFormatterUniqPtr.get() == nullptr)
+    {
+        return QColor(Qt::white);
+    }
+
     return msgDataFormatterUniqPtr->parseMsgDataToColor(*this);
 }
 
