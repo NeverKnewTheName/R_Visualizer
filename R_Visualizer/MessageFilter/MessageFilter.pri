@@ -24,7 +24,6 @@ SOURCES += \
     $$PWD/src/filtertimestampstore.cpp \
     $$PWD/src/filteriddelegate.cpp \
     $$PWD/src/filtermsgtypedelegate.cpp \
-    # $$PWD/src/messagefilter.cpp \
     $$PWD/src/filteridadddialog.cpp \
     $$PWD/src/filtercodeadddialog.cpp \
 
@@ -32,7 +31,6 @@ HEADERS  += \
     $$PWD/inc/IMessageFilter.h \
     $$PWD/inc/MessageFilter.h \
     $$PWD/inc/MessageFilterWidget.h \
-    # $$PWD/inc/messagefilter.h \
     $$PWD/inc/IFilter.h \
     $$PWD/inc/IMsgFilter.h \
     $$PWD/inc/ITimestampedMsgFilter.h \

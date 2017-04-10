@@ -10,6 +10,7 @@ SOURCES += \
     $$PWD/src/userrolemngr.cpp \
 
 HEADERS  += \
+    $$PWD/inc/IUserRoleManager.h \
     $$PWD/inc/userrolemngr.h \
 
 FORMS    += \

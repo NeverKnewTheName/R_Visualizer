@@ -1,3 +1,10 @@
+/**
+ * @file SendMsgSingleWidget.h
+ * @author Christian Neuberger
+ * @date 2017-04-11
+ * 
+ * @brief The SendMsgSingleWidget
+ */
 #ifndef SENDMSGSINGLEWIDGET_H
 #define SENDMSGSINGLEWIDGET_H
 
@@ -7,6 +14,9 @@ namespace Ui {
 class SendMsgSingleWidget;
 }
 
+/**
+ * @brief The SendMsgSingleWidget
+ */
 class SendMsgSingleWidget : public QWidget
 {
     Q_OBJECT

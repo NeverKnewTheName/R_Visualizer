@@ -1,3 +1,10 @@
+/**
+ * @file SendMsgPackageWidget.h
+ * @author Christian Neuberger
+ * @date 2017-04-11
+ * 
+ * @brief The SendMsgPackageWidget sub-module
+ */
 #ifndef SENDMSGPACKAGEWIDGET_H
 #define SENDMSGPACKAGEWIDGET_H
 
@@ -7,6 +14,9 @@ namespace Ui {
 class SendMsgPackageWidget;
 }
 
+/**
+ * @brief THe SendMsgPackageWidget
+ */
 class SendMsgPackageWidget : public QWidget
 {
     Q_OBJECT

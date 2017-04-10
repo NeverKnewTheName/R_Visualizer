@@ -1,0 +1,22 @@
+/**
+ * @file IMsgStreamModel.h
+ * @author Christian Neuberger
+ * @date 2017-04-11
+ * 
+ * @brief Provides the interface of a MessageStream model
+ */
+#ifndef IMSGSTREAMMODEL_H
+#define IMSGSTREAMMODEL_H
+
+#include "IMsgStreamStore.h"
+
+/**
+ * @brief The IMsgStreamModel interface
+ */
+class IMsgStreamModel
+{
+public:
+    virtual ~IMsgStreamModel();
+};
+
+#endif /* IMSGSTREAMMODEL_H */

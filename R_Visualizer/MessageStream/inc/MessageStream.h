@@ -1,9 +1,21 @@
+/**
+ * @file MessageStream.h
+ * @author Christian Neuberger
+ * @date 2017-04-11
+ * 
+ * @brief The MessageStream module
+ */
 #ifndef MESSAGESTREAM_H
 #define MESSAGESTREAM_H
 
 #include <QObject>
 
-class MessageStream : public QObject
+#include "IMessageStream.h"
+
+/**
+ * @brief The MessageStream
+ */
+class MessageStream : public QObject, public IMessageStream
 {
     Q_OBJECT
 public:
