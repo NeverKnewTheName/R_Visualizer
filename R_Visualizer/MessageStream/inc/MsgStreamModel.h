@@ -8,7 +8,7 @@
 #ifndef MSGSTREAMMODEL_H
 #define MSGSTREAMMODEL_H
 
-#include "IMsgStreamStore.h"
+#include "IMsgStreamModel.h"
 
 /**
  * @brief The MsgStreamModel

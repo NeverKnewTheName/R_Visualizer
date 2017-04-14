@@ -151,6 +151,13 @@ public:
         return RBufBuffer.at(calcdIndex);
     }
 
+    /**
+     * @brief Retrieves a modifiable reference to the element currelty located
+     * at index
+     * 
+     * @note the index must be valid in all cases, because the vector is fixed
+     * size and pre-instantiated
+     */
     T &at(const int index)
     {
         const int calcdIndex = (index + RBufStartIndex ) % RBufSize;
@@ -237,6 +244,7 @@ private:
         return index;
     }
 
+private:
     QVector<T> RBufBuffer; //!< Buffer vector
     const int RBufSize;    //!< Maximum size of the buffer
     int RBufCurSize;       //!< Current size of the buffer/Current number of elements in the buffer

@@ -8,7 +8,10 @@ TimestampedMsg::TimestampedMsg() :
 {
 }
 
-TimestampedMsg::TimestampedMsg(const Msg &originalMsg, QDateTime timestamp) :
+TimestampedMsg::TimestampedMsg(
+        const Msg &originalMsg,
+        const QDateTime &timestamp
+        ) :
     originalMsg(originalMsg),
     msgTimestamp(timestamp)
 {

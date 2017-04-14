@@ -11,6 +11,9 @@
 #include <QString>
 #include <QColor>
 
+#include "IMsg.h"
+#include "ITimestampedMsg.h"
+
 class IMsgDataFormatter;
 
 /**
@@ -66,22 +69,22 @@ public:
 class IPrettyMsg :
     public IPrettyMsgID,
     public IPrettyMsgCode,
-    public IPrettyMsgData
+    public IPrettyMsgData,
+    public IMsg
 {
 public:
     virtual ~IPrettyMsg(){}
 };
 
-template<class Derived>
-class AbstractCloneablePrettyMsg : public IPrettyMsg
+/**
+ * @brief The IPrettyTimstampedMsg interface
+ */
+class IPrettyTimestampedMsg :
+    public IPrettyMsg,
+    public ITimestamp
 {
 public:
-    virtual ~AbstractCloneablePrettyMsg(){}
-
-    virtual IPrettyMsg *clonePrettyMsg() const
-    {
-        return new Derived(static_cast<const Derived &>(*this));
-    }
-}
+    virtual ~IPrettyTimestampedMsg(){}
+};
 
 #endif /* IPRETTYMSG_H */

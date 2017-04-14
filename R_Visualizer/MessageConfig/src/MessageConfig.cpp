@@ -1,5 +1,6 @@
 #include "MessageConfig.h"
 
+#include "IMsgMapping.h"
 #include "IMsgIDMapping.h"
 #include "IMsgCodeMapping.h"
 #include "IMsgDataMapping.h"
@@ -21,20 +22,23 @@ MessageConfig::~MessageConfig()
 {
 }
 
-IPrettyMsgUniqPtr<IMsg> MessageConfig::prettifyMsg(
-        IPrettyMsgUniqPtr<IMsg> msgToPrettify
+IPrettyMsg &MessageConfig::prettifyMsg(
+        IPrettyMsg &msgToPrettify
         ) const
 {
+    msgIDMapping->prettifyMsg(msgToPrettify);
+    msgCodeMapping->prettifyMsg(msgToPrettify);
+    msgDataMapping->prettifyMsg(msgToPrettify);
 
-    return std::move(msgToPrettify);
+    return msgToPrettify;
 }
 
-IPrettyMsgUniqPtr<ITimestampedMsg> MessageConfig::prettifyMsg(
-        IPrettyMsgUniqPtr<ITimestampedMsg> msgToPrettify
+IPrettyMsg &MessageConfig::prettifyMsgByMapping(
+        IPrettyMsg &msgToPrettify,
+        const IMsgMapping &mappingToApply
         ) const
 {
-
-    return std::move(msgToPrettify);
+    return mappingToApply.prettifyMsg(msgToPrettify);
 }
 
 QCompleter *MessageConfig::createAliasCompleterForMapping(

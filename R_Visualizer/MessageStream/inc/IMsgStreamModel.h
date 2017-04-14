@@ -16,7 +16,17 @@
 class IMsgStreamModel
 {
 public:
-    virtual ~IMsgStreamModel();
+    virtual ~IMsgStreamModel(){}
+
+    /**
+     * @brief Appends a message to the model
+     */
+    virtual void appendMsg(const ITimestampedMsg &msgToAppend) = 0;
+
+    /**
+     * @brief Clears the model removing all contained messages
+     */
+    virtual void clear() = 0;
 };
 
 #endif /* IMSGSTREAMMODEL_H */

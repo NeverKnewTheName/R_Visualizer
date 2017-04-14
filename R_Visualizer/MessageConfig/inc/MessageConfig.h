@@ -16,6 +16,7 @@
 
 #include "userrolemngr.h"
 
+class IMsgMapping;
 class IMsgIDMapping;
 class IMsgCodeMapping;
 class IMsgDataMapping;
@@ -38,11 +39,13 @@ public:
             );
     virtual ~MessageConfig();
 
-    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            const IMsg &msgToPrettify
+    virtual IPrettyMsg &prettifyMsg(
+            IPrettyMsg &msgToPrettify
             ) const;
-    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            const ITimestampedMsg &timestampedMsgToPrettify
+
+    virtual IPrettyMsg &prettifyMsgByMapping(
+            IPrettyMsg &msgToPrettify,
+            const IMsgMapping &mappingToApply
             ) const;
 
     virtual QCompleter *createAliasCompleterForMapping(

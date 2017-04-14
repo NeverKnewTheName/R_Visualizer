@@ -9,8 +9,8 @@ INCLUDEPATH += $$PWD/inc
 SOURCES += \
     $$PWD/src/Msg.cpp \
     # $$PWD/src/msgtableview.cpp \
-    $$PWD/src/msgdatawidget.cpp \
-    $$PWD/src/PrettyMsg.cpp \
+    # $$PWD/src/msgdatawidget.cpp \
+    # $$PWD/src/PrettyMsg.cpp \
     $$PWD/src/TimestampedMsg.cpp \
 
 HEADERS  += \
@@ -26,6 +26,7 @@ HEADERS  += \
     $$PWD/inc/Msg.h \
     $$PWD/inc/IPrettyMsg.h \
     $$PWD/inc/PrettyMsg.h \
+    $$PWD/inc/PrettyTimestampedMsg.h \
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \

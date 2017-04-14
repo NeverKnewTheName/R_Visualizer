@@ -9,34 +9,33 @@
 #define ITIMESTAMPEDMSG_H
 
 #include <QDateTime>
-#include <memory>
 
 #include "IMsg.h"
 
 /**
- * \brief The interface for messages with timestamps
+ * @brief The ITimestamp interface provides methods to organize a timestamp
  */
-class ITimestampedMsg : public IMsg
+class ITimestamp
 {
 public:
-    virtual ~ITimestampedMsg(){}
+    virtual ~ITimestamp(){}
 
     virtual void setTimestamp(const QDateTime &newTimestamp) = 0;
     virtual const QDateTime getTimestamp() const = 0;
 };
 
-template<class Derived>
-class AbstractTimestampedMsgCRTPHelper : public ITimestampedMsg
+/**
+ * \brief The interface for messages with timestamps
+ * 
+ * This interface groups #IMsg and #ITimestamp into one #ITimestampedMsg
+ * interface. This allows for messages to include a timestamp.
+ * 
+ * \note #ITimestampedMsg are usable as #IMsg
+ */
+class ITimestampedMsg : public IMsg, public ITimestamp
 {
 public:
-    virtual IMsg *cloneMsg() const
-    {
-        return new Derived(static_cast<const Derived&>(*this));
-    }
-    virtual void accept(FileParser *visitor)
-    {
-        visitor->visit(static_cast<Derived *>(this));
-    }
+    virtual ~ITimestampedMsg(){}
 };
 
 #endif /* ITIMESTAMPEDMSG_H */

@@ -1,6 +1,6 @@
 #include "jsoninparser.h"
 
-#include "msgstreammodel.h"
+#include "MsgStreamModel.h"
 #include "msgstorage.h"
 #include "sendmsgmodel.h"
 #include "Msg.h"

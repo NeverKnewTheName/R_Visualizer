@@ -11,11 +11,8 @@ public:
     MsgDataMapping();
     virtual ~MsgDataMapping();
 
-    IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<IMsg> msgToPrettify
-            ) const;
-    IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
+    virtual IPrettyMsg &prettifyMsg(
+            IPrettyMsg &msgToPrettify
             ) const;
 
     void accept(FileParser *visitor);

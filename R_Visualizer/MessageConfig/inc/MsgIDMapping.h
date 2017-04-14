@@ -20,11 +20,8 @@ public:
     virtual QColor getColorToMsgID(const MsgIDType &msgID) const;
     virtual QColor getColorToAlias(const QString &alias) const;
 
-    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<IMsg> msgToPrettify
-            ) const;
-    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
+    virtual IPrettyMsg &prettifyMsg(
+            IPrettyMsg &msgToPrettify
             ) const;
 
     /* QCompleter *createIDaliasCompleter(QObject *parent = Q_NULLPTR) const; */

@@ -5,15 +5,15 @@
  * MainWindow Widgets
  */
 //#include "MessageConfig.h"
-#include "messagefilter.h"
-#include "messagestream.h"
-#include "sendmessages.h"
-#include "systemoverview.h"
+//#include "messagefilter.h"
+//#include "messagestream.h"
+//#include "sendmessages.h"
+//#include "systemoverview.h"
 
 //#include "msgdelegate.h"
 //#include "msgiddelegate.h"
 //#include "msgdatadelegate.h"
-#include "filteridstore.h"
+//#include "filteridstore.h"
 
 #include "errlogview.h"
 

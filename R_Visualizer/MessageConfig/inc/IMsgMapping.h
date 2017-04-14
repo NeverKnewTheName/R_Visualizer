@@ -20,14 +20,13 @@
 class IMsgMapping : public IFileParsable
 {
 public:
-    virtual ~IMsgMapping();
+    virtual ~IMsgMapping(){}
 
-    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<IMsg> msgToPrettify
-            ) const = 0;
-
-    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
+    /**
+     * @brief Prettifies the passed #IPrettyMsg and returns it as a reference
+     */
+    virtual IPrettyMsg &prettifyMsg(
+            IPrettyMsg &msgToPrettify
             ) const = 0;
 };
 

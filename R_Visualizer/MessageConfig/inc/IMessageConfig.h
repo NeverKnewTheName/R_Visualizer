@@ -18,6 +18,7 @@
 
 #include "userrolemngr.h"
 
+class IMsgMapping;
 class IMsgIDRep;
 class IMsgCodeRep;
 class IMsgDataRep;
@@ -35,8 +36,8 @@ public:
      * - Message ID Mapping
      * - Message Code Mapping
      * - Message Data Mapping
-     *   
-     * @note Every other mapping, that is added by the user, must start its
+     * 
+     * Every other mapping, that is added by the user, must start its
      * Enumeration at USERMappingType
      */
     typedef enum _MessageMappingTypes
@@ -47,23 +48,21 @@ public:
         USERMappingType //!< Start of USER definded mappings
     }MessageMappingTypes;
 
+    /**
+     * @brief Destructor
+     */
     virtual ~IMessageConfig(){}
 
     /**
-     * @brief Returns a unique_ptr to the prettified message
-     * 
-     * @note The template parameter BaseClass must be specialized in the
-     * implementation classes to match the used derivate of #IPrettyMsg
+     * @brief Prettifies the given #IPrettyMsg and returns a reference to it
      */
-    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<IMsg> msgToPrettify
-            ) const = 0;
-    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<ITimestampedMsg> msgToPrettify
+    virtual IPrettyMsg &prettifyMsg(
+            IPrettyMsg &msgToPrettify
             ) const = 0;
 
-    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsgByMapping(
-            const IMsg &msgToPrettify
+    virtual IPrettyMsg &prettifyMsgByMapping(
+            IPrettyMsg &msgToPrettify,
+            const IMsgMapping &mappingToApply
             ) const = 0;
 
     /**

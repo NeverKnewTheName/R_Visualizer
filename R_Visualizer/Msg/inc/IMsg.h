@@ -9,6 +9,7 @@
 #define IMSG_H
 
 #include "IFileParsable.h"
+#include "fileparser.h"
 
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
@@ -76,7 +77,7 @@ public:
     }
     virtual void accept(FileParser *visitor)
     {
-        visitor->visit(static_cast<Derived *>(this));
+        visitor->visit(static_cast<Derived &>(*this));
     }
 };
 

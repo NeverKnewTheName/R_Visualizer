@@ -24,17 +24,22 @@ class FileParser;
  * 
  * \note Additional facade for #Msg
  */
-class TimestampedMsg : public AbstractTimestampedMsgCRTPHelper<TimestampedMsg>
+class TimestampedMsg : public ITimestampedMsg
 {
 public:
     TimestampedMsg();
-    TimestampedMsg(const Msg &originalMsg, QDateTime timestamp = QDateTime());
+    TimestampedMsg(
+            const Msg &originalMsg,
+            const QDateTime &timestamp = QDateTime()
+            );
     TimestampedMsg(const TimestampedMsg &other);
 
     virtual ~TimestampedMsg();
 
     void setTimestamp(const QDateTime &newTimestamp);
     const QDateTime getTimestamp() const;
+
+    IMsg *cloneMsg() const;
 
     void setMsgID(const MsgIDType &msgID);
     const MsgIDType getMsgID() const;

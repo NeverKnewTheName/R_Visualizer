@@ -43,7 +43,7 @@ PrettyMsg &PrettyMsg::operator =(
 {
     this->msgDataFormatterUniqPtr =
         other.msgDataFormatterUniqPtr->cloneFormatter();
-    this->originalMsg = other.originalMsg->cloneMsg();
+    this->originalMsg = std::unique_ptr<IMsg>(other.originalMsg->cloneMsg());
     this->msgIDPlainTextAlias = other.msgIDPlainTextAlias;
     this->msgCodePlainTextAlias = other.msgCodePlainTextAlias;
     this->msgIDColorRepresentation = other.msgIDColorRepresentation;
@@ -106,7 +106,7 @@ QString PrettyMsg::getParsedMsgDataString() const
         for(const MsgDataByteType &dataByte : msgData)
         {
             QString msgDataByteAsString("0x%1 ");
-            msgDataByteAsString.arg(static_cast<const QString &>(dataByte));
+            msgDataByteAsString.arg(static_cast<QString>(dataByte));
             msgDataAsDefaultString.prepend(msgDataByteAsString);
         }
         return msgDataAsDefaultString;
@@ -129,11 +129,6 @@ QColor PrettyMsg::getParsedMsgDataColor() const
 void PrettyMsg::setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter)
 {
     this->msgDataFormatterUniqPtr = msgDataFormatter.cloneFormatter();
-}
-
-IMsgUniqPtr PrettyMsg::cloneMsg() const
-{
-    return originalMsg->cloneMsg();
 }
 
 void PrettyMsg::setMsgID(const MsgIDType &msgID)
@@ -165,9 +160,3 @@ const MsgDataType PrettyMsg::getMsgData() const
 {
     return originalMsg->getMsgData();
 }
-
-void PrettyMsg::accept(FileParser *visitor)
-{
-    originalMsg->accept(visitor);
-}
-

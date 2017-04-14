@@ -17,17 +17,9 @@ public:
     virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const;
     virtual QColor getColorToAlias(const QString &alias) const;
 
-    virtual IPrettyMsgUniqPtr<IMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<IMsg> msgToPrettify
+    virtual IPrettyMsg &prettifyMsg(
+            IPrettyMsg &msgToPrettify
             ) const;
-
-    virtual IPrettyMsgUniqPtr<ITimestampedMsg> prettifyMsg(
-            IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
-            ) const;
-
-    /* QCompleter *createCodeNameCompleter( */
-    /*         QObject *parent = Q_NULLPTR */
-    /*         ) const; */
 
     virtual void accept(FileParser *visitor);
 

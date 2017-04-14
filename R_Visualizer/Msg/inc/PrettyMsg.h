@@ -28,50 +28,174 @@ class FileParser;
  * way a PrettyMsg can either be used as an #IPrettyMsg or directly as an #IMsg.
  * The composition approach was chosen to trim down the inheritance hierarchy.
  * 
- * The IMsgCRTPHelper class is used to provide a default implementation of the
+ * The AbstractMsgCRTPHelper class is used to provide a default implementation of the
  * cloneMsg method.
  */
+template<class ConcreteMsg>
 class PrettyMsg :
-    public IPrettyMsg,
-    public AbstractMsgCRTPHelper<PrettyMsg>
+    public IPrettyMsg
 {
 public:
     /**
      * @brief Default Constructor for use with QVector..
      */
-    PrettyMsg();
-    PrettyMsg(const IMsg &originalMsg);
-    PrettyMsg(const PrettyMsg &other);
+    PrettyMsg() :
+        msgDataFormatterUniqPtr(Q_NULLPTR),
+        originalMsg(),
+        msgIDPlainTextAlias("Default"),
+        msgCodePlainTextAlias("Default"),
+        msgIDColorRepresentation(Qt::white),
+        msgCodeColorRepresentation(Qt::white)
+    {
+    }
 
-    virtual ~PrettyMsg();
+    PrettyMsg(const Msg &originalMsg) :
+        msgDataFormatterUniqPtr(Q_NULLPTR),
+        originalMsg(originalMsg),
+        msgIDPlainTextAlias(static_cast<QString>(originalMsg.getMsgID())),
+        msgCodePlainTextAlias(static_cast<QString>(originalMsg.getMsgCode())),
+        msgIDColorRepresentation(Qt::white),
+        msgCodeColorRepresentation(Qt::white)
+    {
+    }
 
-    PrettyMsg &operator =(const PrettyMsg &other);
+    PrettyMsg(const PrettyMsg &other) : 
+        originalMsg(other.originalMsg),
+        msgDataFormatterUniqPtr(other.msgDataFormatterUniqPtr->cloneFormatter()),
+        msgIDPlainTextAlias(other.msgIDPlainTextAlias),
+        msgCodePlainTextAlias(other.msgCodePlainTextAlias),
+        msgIDColorRepresentation(other.msgIDColorRepresentation),
+        msgCodeColorRepresentation(other.msgCodeColorRepresentation)
+    {
+    }
 
-    QString getMsgIDPlainTextAlias() const;
-    void setMsgIDPlainTextAlias(const QString &msgIDAlias);
-    QColor getMsgIDColorRepresentation() const;
-    void setMsgIDColorRepresentation(const QColor &msgIDColorRepresentation);
+    virtual ~PrettyMsg()
+    {
+    }
 
-    QString getMsgCodePlainTextAlias() const;
-    void setMsgCodePlainTextAlias(const QString &msgCodePlainTextAlias);
-    QColor getMsgCodeColorRepresentation() const;
-    void setMsgCodeColorRepresentation(const QColor &msgCodeColorRepresentation);
+    PrettyMsg &operator =(const PrettyMsg &other)
+    {
+        this->msgDataFormatterUniqPtr =
+            other.msgDataFormatterUniqPtr->cloneFormatter();
+        this->originalMsg = other.originalMsg;
+        this->msgIDPlainTextAlias = other.msgIDPlainTextAlias;
+        this->msgCodePlainTextAlias = other.msgCodePlainTextAlias;
+        this->msgIDColorRepresentation = other.msgIDColorRepresentation;
+        this->msgCodeColorRepresentation = other.msgCodeColorRepresentation;
+    }
 
-    QString getParsedMsgDataString() const;
-    QColor getParsedMsgDataColor() const;
-    void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter);
+    QString getMsgIDPlainTextAlias() const
+    {
+        return msgIDPlainTextAlias;
+    }
 
-    void setMsgID(const MsgIDType &msgID);
-    const MsgIDType getMsgID() const;
+    void setMsgIDPlainTextAlias(const QString &msgIDAlias)
+    {
+        this->msgIDPlainTextAlias = msgIDAlias;
+    }
 
-    void setMsgCode(const MsgCodeType &msgCode);
-    const MsgCodeType getMsgCode() const;
+    QColor getMsgIDColorRepresentation() const
+    {
+        return msgIDColorRepresentation;
+    }
 
-    void setMsgData(const MsgDataType &msgData);
-    const MsgDataType getMsgData() const;
+    void setMsgIDColorRepresentation(const QColor &msgIDColorRepresentation)
+    {
+        this->msgIDColorRepresentation = msgIDColorRepresentation;
+    }
+
+    QString getMsgCodePlainTextAlias() const
+    {
+        return msgCodePlainTextAlias;
+    }
+
+    void setMsgCodePlainTextAlias(const QString &msgCodePlainTextAlias)
+    {
+        this->msgCodePlainTextAlias = msgCodePlainTextAlias;
+    }
+
+    QColor getMsgCodeColorRepresentation() const
+    {
+        return msgCodeColorRepresentation;
+    }
+
+    void setMsgCodeColorRepresentation(const QColor &msgCodeColorRepresentation)
+    {
+        this->msgCodeColorRepresentation = msgCodeColorRepresentation;
+    }
+
+    QString getParsedMsgDataString() const
+    {
+        //Check if the MsgDataFormatter is a nullptr
+        if(msgDataFormatterUniqPtr.get() == nullptr)
+        {
+            QString msgDataAsDefaultString;
+            MsgDataType msgData = getMsgData();
+            for(const MsgDataByteType &dataByte : msgData)
+            {
+                QString msgDataByteAsString("0x%1 ");
+                msgDataByteAsString.arg(static_cast<QString>(dataByte));
+                msgDataAsDefaultString.prepend(msgDataByteAsString);
+            }
+            return msgDataAsDefaultString;
+        }
+
+        return msgDataFormatterUniqPtr->parseMsgDataToString(*this);
+    }
+
+    QColor getParsedMsgDataColor() const
+    {
+        //Check if the MsgDataFormatter is a nullptr
+        if(msgDataFormatterUniqPtr.get() == nullptr)
+        {
+            return QColor(Qt::white);
+        }
+
+        return msgDataFormatterUniqPtr->parseMsgDataToColor(*this);
+    }
+
+    void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter)
+    {
+        this->msgDataFormatterUniqPtr =
+           std::unique_ptr<IMsgDataFormatter>(
+                   msgDataFormatter.cloneFormatter()
+                   );
+    }
+
+    IMsg *cloneMsg() const
+    {
+        return new ConcreteMsg(originalMsg);
+    }
+
+    void setMsgID(const MsgIDType &msgID)
+    {
+        originalMsg.setMsgID(msgID);
+    }
+    const MsgIDType getMsgID() const
+    {
+        return originalMsg.getMsgID();
+    }
+
+    void setMsgCode(const MsgCodeType &msgCode)
+    {
+        originalMsg.setMsgCode(msgCode);
+    }
+    const MsgCodeType getMsgCode() const
+    {
+        return originalMsg.getMsgCode();
+    }
+
+    void setMsgData(const MsgDataType &msgData)
+    {
+        originalMsg.setMsgData(msgData);
+    }
+    const MsgDataType getMsgData() const
+    {
+        return originalMsg.getMsgData();
+    }
 
 private:
-    std::unique_ptr<IMsg> originalMsg;
+    ConcreteMsg originalMsg;
     std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
     QString msgIDPlainTextAlias;
     QString msgCodePlainTextAlias;
