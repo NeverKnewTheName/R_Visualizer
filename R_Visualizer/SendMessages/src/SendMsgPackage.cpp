@@ -20,6 +20,21 @@ void SendMsgPackage::appendMsg(const IMsg &msgToAppend)
     msgConfig->prettifyMsg(prettifiedMsg);
 }
 
+void SendMsgPackage::prependMsg(const IMsg &msgToPrepend)
+{
+    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->prependMsg();
+    msgConfig->prettifyMsg(prettifiedMsg);
+}
+
+void SendMsgPackage::insertMsg(
+        const int index,
+        const IMsg &msgToAppend
+        )
+{
+    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->appendMsg();
+    msgConfig->prettifyMsg(prettifiedMsg);
+}
+
 void SendMsgPackage::removeMsgFirstMatch(const IMsg &msgToRemove)
 {
 }
@@ -28,7 +43,7 @@ void SendMsgPackage::removeMsgLastMatch(const IMsg &msgToRemove)
 {
 }
 
-void SendMsgPackage::removeMsgsAllmatches(const IMsg &msgToRemove)
+void SendMsgPackage::removeMsgsAllMatches(const IMsg &msgToRemove)
 {
 }
 

@@ -8,6 +8,9 @@
 #ifndef ISENDMESSAGES_H
 #define ISENDMESSAGES_H
 
+class ISendMsgSingle;
+class ISendMsgPackage;
+
 /**
  * @brief The ISendMessages interface
  */
@@ -15,6 +18,15 @@ class ISendMessages
 {
 public:
     virtual ~ISendMessages();
+
+    virtual void addSendMsgSingle(ISendMsgSingle *sendMsgSingleToAdd) = 0;
+    virtual void addSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd) = 0;
+
+    virtual void sendSingleMsg(ISendMsgSingle *sendMsgSingle) = 0;
+    virtual void sendPackageMsg(ISendMsgPackage *sendMsgPackage) = 0;
+
+public slots:
+    void slt_applyUserRole(const UserRoleMngr::UserRole roleToApply);
 };
 
 #endif /* ISENDMESSAGES_H */

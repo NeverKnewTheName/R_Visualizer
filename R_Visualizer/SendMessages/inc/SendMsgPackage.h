@@ -32,11 +32,14 @@ public:
     void appendMsg(const IMsg &msgToAppend);
     void removeMsgFirstMatch(const IMsg &msgToRemove);
     void removeMsgLastMatch(const IMsg &msgToRemove);
-    void removeMsgsAllmatches(const IMsg &msgToRemove);
+    void removeMsgsAllMatches(const IMsg &msgToRemove);
+
+    virtual void sendMessages();
 
 signals:
     void sgnl_sendMsg(const IMsg &msgToSend);
     void sgnl_msgAppended();
+    void sgnl_msgPrepended();
     void sgnl_msgRemoved();
 
 public slots:

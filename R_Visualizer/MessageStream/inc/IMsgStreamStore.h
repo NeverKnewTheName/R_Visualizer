@@ -28,10 +28,30 @@ public:
             ) = 0;
 
     /**
+     * @brief Constructs a new #PrettyTimestampedMsg from the given
+     * #ITimestampedMsg and appends this message to the store
+     * 
+     * \returns a modfiable reference to the new #IPrettyTimestampedMsg
+     */
+    virtual IPrettyTimestampedMsg &appendMsg(
+            const ITimestampedMsg &msgToAppend
+            ) = 0;
+
+    /**
      * @brief Prepends a copy of the passed pretty message to the store
      */
     virtual IPrettyTimestampedMsg &prependMsg(
-            const IPrettyTimestampedMsg &msgToAppend
+            const IPrettyTimestampedMsg &msgToPrepend
+            ) = 0;
+
+    /**
+     * @brief Constructs a new #PrettyTimestampedMsg from the given
+     * #ITimestampedMsg and prepends this message to the store
+     * 
+     * \returns a modfiable reference to the new #IPrettyTimestampedMsg
+     */
+    virtual IPrettyTimestampedMsg &prependMsg(
+            const ITimestampedMsg &msgToPrepend
             ) = 0;
 
     /**

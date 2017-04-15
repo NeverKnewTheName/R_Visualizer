@@ -36,11 +36,43 @@ public:
      * with the returned #IPrettyMsg reference without being concerned about
      * these details.
      */
-    IPrettyMsg &appendMsg(const IPrettyMsg &msgToAppend = PrettyMsg());
+    virtual IPrettyMsg &appendMsg(const IPrettyMsg &msgToAppend = PrettyMsg());
+
+    virtual IPrettyMsg &prependMsg(const IPrettyMsg &msgToAppend);
+    /**
+     * @brief Inserts the given message at index
+     * 
+     * \note If index is greater than the current size of the package, the
+     * given message is appended to the current end of the package
+     */
+    virtual IPrettyMsg &insertMsg(const int index, const IPrettyMsg &msgToAppend);
+
+    virtual void removeMsgFirstMatch(const IPrettyMsg &msgToRemove);
+
+    virtual void removeMsgLastMatch(const IPrettyMsg &msgToRemove);
+
+    virtual void removeMsgsAllMatches(const IPrettyMsg &msgToRemove);
 
 signals:
+    void sgnl_msgAboutToBeAppended();
+    void sgnl_msgAppended();
+
+    void sgnl_msgAboutToBePrepended();
+    void sgnl_msgPrepended();
+
+    void sgnl_msgAboutToBeInserted(const int index);
+    void sgnl_msgInserted();
+
+    void sgnl_msgAboutToBeRemoved();
+    void sgnl_msgRemoved();
 
 public slots:
+    void slt_appendMsg(const IPrettyMsg &msgToAppend);
+    void slt_prependMsg(const IPrettyMsg &msgToPrepend);
+    void slt_insertMsg(const int index, const IPrettyMsg &msgToInsert);
+    void slt_removeMsgFirstMatch(const IPrettyMsg &msgToRemove);
+    void slt_removeMsgLastMatch(const IPrettyMsg &msgToRemove);
+    void slt_removeMsgsAllMatches(const IPrettyMsg &msgToRemove);
 
 private:
     QVector<PrettyMsg> msgStorage;

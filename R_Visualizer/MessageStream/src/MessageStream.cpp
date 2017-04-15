@@ -41,6 +41,7 @@ bool MessageStream::appendMsg(const ITimestampedMsg &msgToAppend)
     if(msgFilter->filterMsg(msgToAppend))
     {
         IPrettyMsg &prettyMsg = msgStreamStore->appendMsg();
+        prettyMsg.setMsg(msgToAppend);
 
         msgConfig->prettifyMsg(prettifiedMsg);
 

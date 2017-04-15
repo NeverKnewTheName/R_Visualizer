@@ -23,6 +23,8 @@ public:
     virtual void setMsgCode(const MsgCodeType &msgCode) = 0;
     virtual void setMsgData(const MsgDataType &msgData) = 0;
 
+    virtual void sendMessage(const IMsg &msgToSend) = 0;
+
 signals:
     virtual void sgnl_sendMessage(const IMsg &msgToSend) = 0;
 

@@ -38,11 +38,31 @@ public:
             );
 
     /**
+     * @brief Constructs a #PrettyTimestampedMsg from the given
+     * #ITimestampedMsg and appends this new #PrettyTimestampedMsg to the store
+     * 
+     * @note calls #appendMsg
+     */
+    virtual IPrettyTimestampedMsg &appendMsg(
+            const ITimestampedMsg &msgToAppend
+            );
+
+    /**
      * @brief Prepends a copy of the passed pretty message to the store
      */
     virtual IPrettyTimestampedMsg &prependMsg(
             const IPrettyTimestampedMsg &msgToPrepend =
             PrettyTimestampedMsg<TimestampedMsg>()
+            );
+
+    /**
+     * @brief Constructs a #PrettyTimestampedMsg from the given
+     * #ITimestampedMsg and prepends this new #PrettyTimestampedMsg to the store
+     * 
+     * @note calls #prependMsg
+     */
+    virtual IPrettyTimestampedMsg &prependMsg(
+            const ITimestampedMsg &msgToPrepend
             );
 
     /**

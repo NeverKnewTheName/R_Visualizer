@@ -19,6 +19,7 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
 
     if(bufferOverflowing)
     {
+        emit sgnl_storeAboutToOverflow();
     }
     else
     {
@@ -29,6 +30,7 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
 
     if(bufferOverflowing)
     {
+        emit sgnl_storeOverflow();
     }
     else
     {
@@ -38,17 +40,48 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
     return msgStorage.last();
 }
 
+IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
+        const ITimestampedMsg &msgToAppend
+        )
+{
+    return appendMsg(PrettyTimestampedMsg<TimestampedMsg>(msgToAppend));
+}
+
 IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
         const IPrettyTimestampedMsg &msgToPrepend
         )
 {
-    emit sgnl_msgAboutToBePrepended();
+    bool bufferOverflowing = msgStorage.size() >= bufferSize;
+
+    if(bufferOverflowing)
+    {
+        emit sgnl_storeAboutToUnderflow();
+    }
+    else
+    {
+        emit sgnl_msgAboutToBePrepended();
+    }
 
     msgStorage.prepend(msgToPrepend);
 
-    emit sgnl_msgPrepended();
+    if(bufferOverflowing)
+    {
+        emit sgnl_storeUnderflow();
+    }
+    else
+    {
+        emit sgnl_msgPrepended();
+    }
     return msgStorage.first();
 }
+
+IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
+        const ITimestampedMsg &msgToPrepend
+        )
+{
+    return prependMsg(PrettyTimestampedMsg<TimestampedMsg>(msgToPrepend));
+}
+
 
 IPretty &MsgStreamStore::at(const int index) const
 {
