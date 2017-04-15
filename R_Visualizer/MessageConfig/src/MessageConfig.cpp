@@ -29,8 +29,6 @@ IPrettyMsg &MessageConfig::prettifyMsg(
     msgIDMapping->prettifyMsg(msgToPrettify);
     msgCodeMapping->prettifyMsg(msgToPrettify);
     msgDataMapping->prettifyMsg(msgToPrettify);
-
-    return msgToPrettify;
 }
 
 IPrettyMsg &MessageConfig::prettifyMsgByMapping(
@@ -38,7 +36,7 @@ IPrettyMsg &MessageConfig::prettifyMsgByMapping(
         const IMsgMapping &mappingToApply
         ) const
 {
-    return mappingToApply.prettifyMsg(msgToPrettify);
+    mappingToApply.prettifyMsg(msgToPrettify);
 }
 
 QCompleter *MessageConfig::createAliasCompleterForMapping(

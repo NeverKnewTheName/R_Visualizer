@@ -9,8 +9,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "can_packet.h"
-#include "devicehandler.h"
+/* #include "can_packet.h" */
+/* #include "devicehandler.h" */
 
 #include "userrolemngr.h"
 
@@ -58,8 +58,8 @@ public:
 
 signals:
     void switchUserRoles(UserRoleMngr::UserRole roleToSwitchTo);
-    void dataReceived(Data_PacketPtr);
-    void errorReceived(Error_PacketPtr);
+    /* void dataReceived(Data_PacketPtr); */
+    /* void errorReceived(Error_PacketPtr); */
 
 private slots:
     /**

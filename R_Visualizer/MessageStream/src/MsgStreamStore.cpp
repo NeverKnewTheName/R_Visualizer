@@ -2,6 +2,7 @@
 
 MsgStreamStore::MsgStreamStore(const int bufferSize, QObject *parent) :
     QObject(parent),
+    bufferSize(bufferSize),
     msgStorage(bufferSize)
 {
 }
@@ -10,16 +11,43 @@ MsgStreamStore::~MsgStreamStore()
 {
 }
 
-bool MsgStreamStore::appendMsg(const IPrettyTimestampedMsg &msgToAppend)
+IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
+        const IPrettyTimestampedMsg &msgToAppend
+        )
 {
+    bool bufferOverflowing = msgStorage.size() >= bufferSize;
+
+    if(bufferOverflowing)
+    {
+    }
+    else
+    {
+        emit sgnl_msgAboutToBeAppended();
+    }
+
     msgStorage.append(msgToAppend);
-    return true;
+
+    if(bufferOverflowing)
+    {
+    }
+    else
+    {
+        emit sgnl_msgAppended();
+    }
+
+    return msgStorage.last();
 }
 
-bool MsgStreamStore::prependMsg(const IPrettyTimestampedMsg &msgToPrepend)
+IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
+        const IPrettyTimestampedMsg &msgToPrepend
+        )
 {
+    emit sgnl_msgAboutToBePrepended();
+
     msgStorage.prepend(msgToPrepend);
-    return true;
+
+    emit sgnl_msgPrepended();
+    return msgStorage.first();
 }
 
 IPretty &MsgStreamStore::at(const int index) const
@@ -39,7 +67,9 @@ int size() const
 
 void MsgStreamStore::clear()
 {
+    emit sgnl_storeAboutToBeCleared();
     msgStorage.clear();
+    emit sgnl_storeCleared();
 }
 
 void MsgStreamStore::slt_appendMsg(const IPrettyTimestampedMsg &msgToAppend)

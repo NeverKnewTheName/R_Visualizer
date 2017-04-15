@@ -25,7 +25,7 @@ public:
     /**
      * @brief Prettifies the passed #IPrettyMsg and returns it as a reference
      */
-    virtual IPrettyMsg &prettifyMsg(
+    virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const = 0;
 };

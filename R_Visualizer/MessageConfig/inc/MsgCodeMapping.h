@@ -17,7 +17,7 @@ public:
     virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const;
     virtual QColor getColorToAlias(const QString &alias) const;
 
-    virtual IPrettyMsg &prettifyMsg(
+    virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;
 

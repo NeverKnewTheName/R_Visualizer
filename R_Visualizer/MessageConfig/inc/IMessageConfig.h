@@ -56,11 +56,11 @@ public:
     /**
      * @brief Prettifies the given #IPrettyMsg and returns a reference to it
      */
-    virtual IPrettyMsg &prettifyMsg(
+    virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const = 0;
 
-    virtual IPrettyMsg &prettifyMsgByMapping(
+    virtual void prettifyMsgByMapping(
             IPrettyMsg &msgToPrettify,
             const IMsgMapping &mappingToApply
             ) const = 0;

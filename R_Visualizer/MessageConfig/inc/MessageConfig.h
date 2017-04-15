@@ -39,11 +39,11 @@ public:
             );
     virtual ~MessageConfig();
 
-    virtual IPrettyMsg &prettifyMsg(
+    virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;
 
-    virtual IPrettyMsg &prettifyMsgByMapping(
+    virtual void prettifyMsgByMapping(
             IPrettyMsg &msgToPrettify,
             const IMsgMapping &mappingToApply
             ) const;

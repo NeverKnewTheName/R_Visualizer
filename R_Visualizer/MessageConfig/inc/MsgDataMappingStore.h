@@ -8,10 +8,12 @@
 #ifndef MSGDATAMAPPINGSTORE_H
 #define MSGDATAMAPPINGSTORE_H
 
+#include "IMsgDataMappingStore.h"
+
 /**
  * @brief The MsgDataMappingStore
  */
-class MsgDataMappingStore
+class MsgDataMappingStore : public IMsgDataMappingStore
 {
 public:
     MsgDataMappingStore();

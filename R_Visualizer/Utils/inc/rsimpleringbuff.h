@@ -122,12 +122,24 @@ public:
     /** 
      * \brief retrieves the current first element of the ring buffer
      * 
-     * The first element is the element pointed to by the ring buffer's
+     * \note The first element is the element pointed to by the ring buffer's
      * start pointer.
      */
     const T &first() const
     {
         return RBufBuffer.at(RBufStartIndex);
+    }
+
+    /**
+     * @brief Retrieve a modifiable reference to the first element of the ring
+     * buffer
+     * 
+     * \note The first element is the element pointed to by the ring buffer's
+     * start pointer.
+     */
+    T &first()
+    {
+        return RBufBuffer[RBufStartIndex];
     }
 
     /**
@@ -139,6 +151,18 @@ public:
     const T &last() const
     {
         return RBufBuffer.at(RBufEndIndex);
+    }
+
+    /**
+     * \brief Retrieve a modifiable reference to the current last element of the
+     * ring buffer
+     * 
+     * The last element is the element pointed to by the ring buffer's
+     * end pointer
+     */
+    T &last()
+    {
+        return RBufBuffer[RBufEndIndex];
     }
 
     /**

@@ -2,22 +2,23 @@
 #define MSGDATAMAPPING_H
 
 #include "IMsgMapping.h"
+#include "IMsgDataMappingStore.h"
 
 class FileParser;
 
 class MsgDataMapping : public IMsgDataMapping
 {
 public:
-    MsgDataMapping();
+    MsgDataMapping(IMsgDataMappingStore *msgDataMappingStore);
     virtual ~MsgDataMapping();
 
-    virtual IPrettyMsg &prettifyMsg(
+    virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;
 
-    void accept(FileParser *visitor);
+    virtual void accept(FileParser *visitor);
 private:
-    
+    IMsgDataMappingStore *msgDataMappingStore;
 
 };
 

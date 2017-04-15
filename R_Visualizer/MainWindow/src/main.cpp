@@ -17,18 +17,25 @@
 #include "MessageConfig.h"
 #include "IMsgIDMapping.h"
 #include "MsgIDMapping.h"
-#include "IMsgCodeMapping.h"
-#include "MsgCodeMapping.h"
-#include "IMsgDataMapping.h"
-#include "MsgDataMapping.h"
-#include "IMsgIDMappingModel.h"
-#include "MsgIDMappingModel.h"
 #include "IMsgIDMappingStore.h"
 #include "MsgIDMappingStore.h"
+#include "IMsgIDMappingModel.h"
+#include "MsgIDMappingModel.h"
 #include "MsgIDMappingWidget.h"
+#include "IMsgCodeMapping.h"
+#include "MsgCodeMapping.h"
 #include "IMsgCodeMappingStore.h"
 #include "MsgCodeMappingStore.h"
+#include "IMsgCodeMappingModel.h"
+#include "MsgCodeMappingModel.h"
 #include "MsgCodeMappingWidget.h"
+#include "IMsgDataMapping.h"
+#include "MsgDataMapping.h"
+#include "IMsgDataMappingStore.h"
+#include "MsgDataMappingStore.h"
+#include "IMsgDataMappingModel.h"
+#include "MsgDataMappingModel.h"
+#include "MsgDataMappingWidget.h"
 #include "MessageConfigWidget.h"
 
 #include "IMessageFilter.h"
@@ -80,7 +87,8 @@ int main(int argc, char *argv[])
             );
     IMsgCodeMappingStore *msgCodeMappingStore = new MsgCodeMappingStore();
     IMsgCodeMapping *msgCodeMapping = new MsgCodeMapping(msgCodeMappingStore);
-    IMsgDataMapping *msgDataMapping = new MsgDataMapping();
+    IMsgDataMappingStore *msgDataMappingStore = new MsgDataMappingStore();
+    IMsgDataMapping *msgDataMapping = new MsgDataMapping(msgDataMappingStore);
 
 
     IMessageConfig *messageConfig = new MessageConfig(

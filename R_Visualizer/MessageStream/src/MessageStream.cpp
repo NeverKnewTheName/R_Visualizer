@@ -40,11 +40,11 @@ bool MessageStream::appendMsg(const ITimestampedMsg &msgToAppend)
 {
     if(msgFilter->filterMsg(msgToAppend))
     {
-        PrettyTimestampedMsg prettifiedMsg(msgToAppend);
+        IPrettyMsg &prettyMsg = msgStreamStore->appendMsg();
 
         msgConfig->prettifyMsg(prettifiedMsg);
 
-        return msgStreamStore->appendMsg(prettifiedMsg);
+        return true;
     }
     else
     {
@@ -56,7 +56,7 @@ bool MessageStream::prependMsg(const ITimestampedMsg &msgToAppend)
 {
     if(msgFilter->filterMsg(msgToAppend))
     {
-         IPrettyMsg &prettyMsg = msgStreamStore->appendMsg();
+        IPrettyMsg &prettyMsg = msgStreamStore->prependMsg();
 
         msgConfig->prettifyMsg(prettifiedMsg);
 

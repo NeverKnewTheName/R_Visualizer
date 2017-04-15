@@ -8,20 +8,14 @@ MsgDataMapping::~MsgDataMapping()
 {
 }
 
-IPrettyMsgUniqPtr<IMsg> MsgDataMapping::prettifyMsg(
-        IPrettyMsgUniqPtr<IMsg> msgToPrettify
+void MsgDataMapping::prettifyMsg(
+        IPrettyMsg &msgToPrettify
         ) const
 {
     //ToDO
-    return std::move(msgToPrettify);
-}
+    const MsgDataType &msgData = msgToPrettify.getMsgData();
 
-IPrettyMsgUniqPtr<ITimestampedMsg> MsgDataMapping::prettifyMsg(
-        IPrettyMsgUniqPtr<ITimestampedMsg> timestampedMsgToPrettify
-        ) const
-{
-    //ToDO
-    return std::move(msgToPrettify);
+    /* msgDataMappingStore-> */
 }
 
 void MsgDataMapping::accept(FileParser *visitor)

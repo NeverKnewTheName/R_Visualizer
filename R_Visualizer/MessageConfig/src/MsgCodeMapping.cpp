@@ -28,31 +28,19 @@ QColor MsgCodeMapping::getColorToAlias(const QString &alias) const
 }
 
 
-IPrettyMsgUniqPtr<IMsg> MsgCodeMapping::prettifyMsg(
-       IPrettyMsgUniqPtr<IMsg> msgToPrettify
+void MsgCodeMapping::prettifyMsg(
+       IPrettyMsg &msgToPrettify
        ) const
 {
-    //ToDO
-    msgToPrettify->setMsgCodePlainTextAlias("SomeCodeALias");
-    msgToPrettify->setMsgCodeColorRepresentation(QColor(Qt::green));
-    return std::move(msgToPrettify);
-}
+    const MsgCodeType &msgCode = msgToPrettify.getMsgCode();
 
-IPrettyMsgUniqPtr<ITimestampedMsg> MsgCodeMapping::prettifyMsg(
-       IPrettyMsgUniqPtr<ITimestampedMsg> msgToPrettify
-       ) const
-{
-    //ToDO
-    msgToPrettify->setMsgCodePlainTextAlias("SomeTimestampCodeLias");
-    msgToPrettify->setMsgCodeColorRepresentation(QColor(Qt::green).darker());
-    return std::move(msgToPrettify);
+    msgToPrettify.setMsgCodePlainTextAlias(
+            msgCodeMappingStore->getAliasToMsgCode(msgCode)
+                );
+    msgToPrettify.setMsgCodeColorRepresentation(
+            msgCodeMappingStore->getColorToMsgCode(msgCode)
+            );
 }
-
-/* QCompleter *createCodeNameCompleter( */
-/*         QObject *parent = Q_NULLPTR */
-/*         ) const */
-/* { */
-/* } */
 
 void MsgCodeMapping::accept(FileParser *visitor)
 {
