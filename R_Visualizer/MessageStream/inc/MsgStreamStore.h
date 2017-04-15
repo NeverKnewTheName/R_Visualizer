@@ -13,6 +13,7 @@
 
 #include "rsimpleringbuff.h"
 #include "PrettyTimestampedMsg.h"
+#include "TimestampedMsg.h"
 
 /**
  * @brief The MsgStreamStore
@@ -20,6 +21,7 @@
 class MsgStreamStore : public QObject, public IMsgStreamStore
 {
     Q_OBJECT
+    Q_INTERFACES(IMsgStreamStore)
 public:
     MsgStreamStore(const int bufferSize, QObject *parent = Q_NULLPTR);
     virtual ~MsgStreamStore();
@@ -69,7 +71,7 @@ public:
      * @brief Returns a constant reference to the pretty message in the store at
      * index
      */
-    virtual IPrettyTimestampedMsg &at(const int index) const;
+    virtual const IPrettyTimestampedMsg &at(const int index) const;
 
     /**
      * @brief Returns a modifiable reference to the pretty message in the store

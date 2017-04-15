@@ -16,13 +16,13 @@ SendMsgPackage::~SendMsgPackage()
 
 void SendMsgPackage::appendMsg(const IMsg &msgToAppend)
 {
-    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->appendMsg();
+    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->appendMsg(msgToAppend);
     msgConfig->prettifyMsg(prettifiedMsg);
 }
 
 void SendMsgPackage::prependMsg(const IMsg &msgToPrepend)
 {
-    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->prependMsg();
+    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->prependMsg(Append);
     msgConfig->prettifyMsg(prettifiedMsg);
 }
 
@@ -31,7 +31,9 @@ void SendMsgPackage::insertMsg(
         const IMsg &msgToAppend
         )
 {
-    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->appendMsg();
+    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->insertMsg(
+            index, msgToAppend
+            );
     msgConfig->prettifyMsg(prettifiedMsg);
 }
 

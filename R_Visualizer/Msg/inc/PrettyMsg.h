@@ -49,7 +49,7 @@ public:
     {
     }
 
-    PrettyMsg(const Msg &originalMsg) :
+    PrettyMsg(const ConcreteMsg &originalMsg) :
         msgDataFormatterUniqPtr(Q_NULLPTR),
         originalMsg(originalMsg),
         msgIDPlainTextAlias(static_cast<QString>(originalMsg.getMsgID())),
@@ -192,6 +192,11 @@ public:
     const MsgDataType getMsgData() const
     {
         return originalMsg.getMsgData();
+    }
+
+    void accept(FileParser *visitor)
+    {
+        originalMsg.accept(visitor);
     }
 
 private:

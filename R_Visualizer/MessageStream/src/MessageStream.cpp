@@ -1,5 +1,10 @@
 #include "MessageStream.h"
 
+#include "IMessageConfig.h"
+#include "IMessageFilter.h"
+#include "IPrettyMsg.h"
+#include "PrettyTimestampedMsg.h"
+
 MessageStream::MessageStream(
         IMessageConfig *msgConfig,
         IMessageFilter *msgFilter,
@@ -38,10 +43,9 @@ MessageStream::~MessageStream()
 
 bool MessageStream::appendMsg(const ITimestampedMsg &msgToAppend)
 {
-    if(msgFilter->filterMsg(msgToAppend))
+    if(msgFilter->filterMessage(msgToAppend))
     {
-        IPrettyMsg &prettyMsg = msgStreamStore->appendMsg();
-        prettyMsg.setMsg(msgToAppend);
+        IPrettyMsg &prettifiedMsg = msgStreamStore->appendMsg(msgToAppend);
 
         msgConfig->prettifyMsg(prettifiedMsg);
 
@@ -55,9 +59,9 @@ bool MessageStream::appendMsg(const ITimestampedMsg &msgToAppend)
 
 bool MessageStream::prependMsg(const ITimestampedMsg &msgToAppend)
 {
-    if(msgFilter->filterMsg(msgToAppend))
+    if(msgFilter->filterMessage(msgToAppend))
     {
-        IPrettyMsg &prettyMsg = msgStreamStore->prependMsg();
+        IPrettyMsg &prettifiedMsg = msgStreamStore->prependMsg(msgToAppend);
 
         msgConfig->prettifyMsg(prettifiedMsg);
 
@@ -106,37 +110,37 @@ void MessageStream::connectMsgStorage()
 
 void MessageStream::connectMsgStreamStore()
 {
-    /**
-     * Connects the store signal for message appended to this object's signal
-     * for message added to propagate the signal from the store
-     */
-    connect(
-            msgStreamStore,
-            &IMsgStreamStore::sgnl_msgAppended,
-            this,
-            &IMessageStream::sgnl_messageAdded
-           );
+    /* /** */
+    /*  * Connects the store signal for message appended to this object's signal */
+    /*  * for message added to propagate the signal from the store */
+    /*  *1/ */
+    /* connect( */
+    /*         msgStreamStore, */
+    /*         &IMsgStreamStore::sgnl_msgAppended, */
+    /*         this, */
+    /*         &IMessageStream::sgnl_messageAdded */
+    /*        ); */
 
-    /**
-     * Connects the store signal for message prepended to this object's signal
-     * for message added to propagate the signal from the store
-     */
-    connect(
-            msgStreamStore,
-            &IMsgStreamStore::sgnl_msgPrepended,
-            this,
-            &IMessageStream::sgnl_messageAdded
-           );
+    /* /** */
+    /*  * Connects the store signal for message prepended to this object's signal */
+    /*  * for message added to propagate the signal from the store */
+    /*  *1/ */
+    /* connect( */
+    /*         msgStreamStore, */
+    /*         &IMsgStreamStore::sgnl_msgPrepended, */
+    /*         this, */
+    /*         &IMessageStream::sgnl_messageAdded */
+    /*        ); */
 
-    /**
-     * Connects the store signal for store cleared to this object's signal
-     * for stream cleared to propagate the signal from the store
-     */
-    connect(
-            msgStreamStore,
-            &IMsgStreamStore::sgnl_storeCleared,
-            this,
-            &IMessageStream::sgnl_streamCleared
-           );
+    /* /** */
+    /*  * Connects the store signal for store cleared to this object's signal */
+    /*  * for stream cleared to propagate the signal from the store */
+    /*  *1/ */
+    /* connect( */
+    /*         msgStreamStore, */
+    /*         &IMsgStreamStore::sgnl_storeCleared, */
+    /*         this, */
+    /*         &IMessageStream::sgnl_streamCleared */
+    /*        ); */
 }
 

@@ -36,16 +36,27 @@ public:
      * with the returned #IPrettyMsg reference without being concerned about
      * these details.
      */
-    virtual IPrettyMsg &appendMsg(const IPrettyMsg &msgToAppend = PrettyMsg());
+    virtual IPrettyMsg &appendMsg(const IPrettyMsg &msgToAppend = PrettyMsg<Msg>());
 
-    virtual IPrettyMsg &prependMsg(const IPrettyMsg &msgToAppend);
+    virtual IPrettyMsg &appendMsg(const IMsg &msgToAppend);
+
+    virtual IPrettyMsg &prependMsg(const IPrettyMsg &msgToAppend = PrettyMsg<Msg>());
+    virtual IPrettyMsg &prependMsg(const IMsg &msgToAppend);
     /**
      * @brief Inserts the given message at index
      * 
      * \note If index is greater than the current size of the package, the
      * given message is appended to the current end of the package
      */
-    virtual IPrettyMsg &insertMsg(const int index, const IPrettyMsg &msgToAppend);
+    virtual IPrettyMsg &insertMsg(
+            const int index,
+            const IPrettyMsg &msgToAppend = PrettyMsg<Msg>()
+            );
+
+    virtual IPrettyMsg &insertMsg(
+            const int index,
+            const IMsg &msgToAppend
+            );
 
     virtual void removeMsgFirstMatch(const IPrettyMsg &msgToRemove);
 
@@ -75,7 +86,7 @@ public slots:
     void slt_removeMsgsAllMatches(const IPrettyMsg &msgToRemove);
 
 private:
-    QVector<PrettyMsg> msgStorage;
+    QVector<PrettyMsg<Msg>> msgStorage;
 };
 
 #endif /* SENDMSGPACKAGESTORE_H */

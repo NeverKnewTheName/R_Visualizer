@@ -18,7 +18,7 @@ MsgStreamModel::~MsgStreamModel()
 int MsgStreamModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return msgBuffer.size();
+    return msgStorage.size();
 }
 
 int MsgStreamModel::columnCount(const QModelIndex &parent) const

@@ -26,7 +26,10 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
         emit sgnl_msgAboutToBeAppended();
     }
 
-    msgStorage.append(msgToAppend);
+    /*
+     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     */
+    msgStorage.append(dynamic_cast<const PrettyTimestampedMsg<TimestampedMsg>&>(msgToAppend));
 
     if(bufferOverflowing)
     {
@@ -44,7 +47,10 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
         const ITimestampedMsg &msgToAppend
         )
 {
-    return appendMsg(PrettyTimestampedMsg<TimestampedMsg>(msgToAppend));
+    /*
+     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     */
+    return appendMsg(PrettyTimestampedMsg<TimestampedMsg>(dynamic_cast<const TimestampedMsg&>(msgToAppend)));
 }
 
 IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
@@ -62,7 +68,10 @@ IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
         emit sgnl_msgAboutToBePrepended();
     }
 
-    msgStorage.prepend(msgToPrepend);
+    /*
+     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     */
+    msgStorage.prepend(dynamic_cast<const PrettyTimestampedMsg<TimestampedMsg>&>(msgToPrepend));
 
     if(bufferOverflowing)
     {
@@ -79,21 +88,24 @@ IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
         const ITimestampedMsg &msgToPrepend
         )
 {
-    return prependMsg(PrettyTimestampedMsg<TimestampedMsg>(msgToPrepend));
+    /*
+     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     */
+    return prependMsg(PrettyTimestampedMsg<TimestampedMsg>(dynamic_cast<const TimestampedMsg&>(msgToPrepend)));
 }
 
 
-IPretty &MsgStreamStore::at(const int index) const
+const IPrettyTimestampedMsg &MsgStreamStore::at(const int index) const
 {
     return msgStorage.at(index);
 }
 
-IPretty &MsgStreamStore::at(const int index)
+IPrettyTimestampedMsg &MsgStreamStore::at(const int index)
 {
     return msgStorage.at(index);
 }
 
-int size() const
+int MsgStreamStore::size() const
 {
     return msgStorage.size();
 }

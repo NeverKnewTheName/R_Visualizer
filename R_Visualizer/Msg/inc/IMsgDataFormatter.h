@@ -21,7 +21,7 @@ class IMsgDataFormatter
 public:
     virtual ~IMsgDataFormatter(){}
 
-    virtual std::unique_ptr<IMsgDataFormatter> cloneFormatter() const = 0;
+    virtual IMsgDataFormatter *cloneFormatter() const = 0;
     /**
      * \brief Parses the data field of a message to a QString
      * 
@@ -40,11 +40,6 @@ public:
 };
 
 /**
- * @brief Typedef to unique_ptr for #IMsgDataFormatter
- */
-using IMsgDataFormatterUniqPtr = std::unique_ptr<IMsgDataFormatter>;
-
-/**
  * @brief CRTP Copy helper for #IMsgDataFormatter
  */
 template<class Derived>
@@ -55,11 +50,9 @@ public:
      * @brief Clones the current #IMsgDataFormatter derivate whilst conserving
      * its type
      */
-    virtual IMsgDataFormatterUniqPtr cloneFormatter() const
+    virtual IMsgDataFormatter *cloneFormatter() const
     {
-        return IMsgDataFormatterUniqPtr(
-                new Derived(static_cast<const Derived &>(*this))
-                );
+        return  new Derived(static_cast<const Derived &>(*this));
     }
 };
 

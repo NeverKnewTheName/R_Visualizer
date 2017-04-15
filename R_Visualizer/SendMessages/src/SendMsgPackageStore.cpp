@@ -19,20 +19,30 @@ IPrettyMsg &SendMsgPackageStore::appendMsg(const IPrettyMsg &msgToAppend)
     return msgStorage.last();
 }
 
-IPrettyMsg &SendMsgPackageStore::prependMsg(const IPrettyMsg &msgToAppend)
+IPrettyMsg &SendMsgPackageStore::appendMsg(const IMsg &msgToAppend)
+{
+    return appendMsg(PrettyMsg<Msg>(msgToAppend));
+}
+
+IPrettyMsg &SendMsgPackageStore::prependMsg(const IPrettyMsg &msgToPrepend)
 {
     emit sgnl_msgAboutToBePrepended();
 
-    msgStorage.prepend(msgToAppend);
+    msgStorage.prepend(msgToPrepend);
 
     emit sgnl_msgPrepended();
 
     return msgStorage.first();
 }
 
+IPrettyMsg &SendMsgPackageStore::prependMsg(const IMsg &msgToPrepend)
+{
+    return prependMsg(PrettyMsg<Msg>(msgToPrepend));
+}
+
 IPrettyMsg &SendMsgPackageStore::insertMsg(
         const int index,
-        const IPrettymsg &msgToInsert
+        const IPrettyMsg &msgToInsert
         )
 {
     if(index >= msgStorage.size())
@@ -49,6 +59,14 @@ IPrettyMsg &SendMsgPackageStore::insertMsg(
 
         return msgStorage[index];
     }
+}
+
+IPrettyMsg &SendMsgPackageStore::insertMsg(
+        const int index,
+        const IMsg &msgToInsert
+        )
+{
+    return insertMsg(index, PrettyMsg<Msg>(msgToInsert));
 }
 
 void SendMsgPackageStore::removeMsgFirstMatch(const IPrettyMsg &msgToRemove)

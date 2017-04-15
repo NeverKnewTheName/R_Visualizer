@@ -8,6 +8,7 @@
 #ifndef IMSGSTREAMSTORE_H
 #define IMSGSTREAMSTORE_H
 
+#include <QMetaObject>
 #include "ITimestampedMsg.h"
 
 class IPrettyTimestampedMsg;
@@ -58,7 +59,7 @@ public:
      * @brief Returns a constant reference to the pretty message in the store at
      * index
      */
-    virtual IPrettyTimestampedMsg &at(const int index) const = 0;
+    virtual const IPrettyTimestampedMsg &at(const int index) const = 0;
 
     /**
      * @brief Returns a modifiable reference to the pretty message in the store
@@ -84,7 +85,7 @@ signals:
      * and is now about to be appended to the store.
      */
     virtual void sgnl_msgAboutToBeAppended() = 0;
-    /**
+
     /**
      * @brief This signal is emitted when a pretty message was appended to the
      * store
@@ -98,7 +99,7 @@ signals:
      * and is now about to be appended to the store.
      */
     virtual void sgnl_msgAboutToBePrepended() = 0;
-    /**
+
     /**
      * @brief This signal is emitted when a pretty message was prepended to the
      * store
@@ -144,7 +145,7 @@ signals:
      * from the store
      */
     virtual void sgnl_storeAboutToBeCleared() = 0;
-    /**
+
     /**
      * @brief This signal is emitted when the store is cleared
      */
@@ -166,5 +167,7 @@ public slots:
      */
     virtual void slt_clearStore() = 0;
 };
+
+Q_DECLARE_INTERFACE(IMsgStreamStore, "IMsgStreamStore")
 
 #endif /* IMSGSTREAMSTORE_H */

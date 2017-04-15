@@ -36,13 +36,3 @@ void SendMessages::slt_applyUserRole(const UserRoleMngr::UserRole roleToApply)
 {
     currentUserRole = roleToApply;
 }
-
-void SendMessages::
-
-SendMessages::
-
-SendMessages::
-
-SendMessages::
-
-SendMessages::

@@ -44,22 +44,22 @@ public:
     virtual void removeMsgsAllmatches(const IMsg &msgToRemove) = 0;
 
 signals:
-    void sgnl_msgAboutToBeAppended() = 0;
-    void sgnl_msgAppended() = 0;
+    virtual void sgnl_msgAboutToBeAppended() = 0;
+    virtual void sgnl_msgAppended() = 0;
 
-    void sgnl_msgAboutToBePrepended() = 0;
-    void sgnl_msgPrepended() = 0;
+    virtual void sgnl_msgAboutToBePrepended() = 0;
+    virtual void sgnl_msgPrepended() = 0;
 
-    void sgnl_msgAboutToBeRemoved() = 0;
-    void sgnl_msgRemoved() = 0;
+    virtual void sgnl_msgAboutToBeRemoved() = 0;
+    virtual void sgnl_msgRemoved() = 0;
 
 public slots:
-    void slt_appendMsg(const IMsg &msgToAppend) = 0;
-    void slt_prependMsg(const IMsg &msgToPrepend) = 0;
-    void slt_insertMsg(const int index, const IMsg &msgToInsert) = 0;
-    void slt_removeMsgFirstMatch(const IMsg &msgToRemove) = 0;
-    void slt_removeMsgLastMatch(const IMsg &msgToRemove) = 0;
-    void slt_removeMsgsAllMatches(const IMsg &msgToRemove) = 0;
+    virtual void slt_appendMsg(const IMsg &msgToAppend) = 0;
+    virtual void slt_prependMsg(const IMsg &msgToPrepend) = 0;
+    virtual void slt_insertMsg(const int index, const IMsg &msgToInsert) = 0;
+    virtual void slt_removeMsgFirstMatch(const IMsg &msgToRemove) = 0;
+    virtual void slt_removeMsgLastMatch(const IMsg &msgToRemove) = 0;
+    virtual void slt_removeMsgsAllMatches(const IMsg &msgToRemove) = 0;
 
 };
 

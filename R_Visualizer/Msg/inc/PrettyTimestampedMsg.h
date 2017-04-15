@@ -11,6 +11,7 @@
 #include <QString>
 #include <QColor>
 #include <QDateTime>
+#include <memory>
 
 #include "IPrettyMsg.h"
 #include "MsgIDType.h"
@@ -66,13 +67,16 @@ public:
 
     PrettyTimestampedMsg &operator =(const PrettyTimestampedMsg &other)
     {
-        this->msgDataFormatterUniqPtr =
-            other.msgDataFormatterUniqPtr->cloneFormatter();
+        this->msgDataFormatterUniqPtr = std::unique_ptr<IMsgDataFormatter>(
+            other.msgDataFormatterUniqPtr->cloneFormatter()
+                    );
         this->originalMsg = other.originalMsg;
         this->msgIDPlainTextAlias = other.msgIDPlainTextAlias;
         this->msgCodePlainTextAlias = other.msgCodePlainTextAlias;
         this->msgIDColorRepresentation = other.msgIDColorRepresentation;
         this->msgCodeColorRepresentation = other.msgCodeColorRepresentation;
+
+        return *this;
     }
 
 
@@ -160,7 +164,7 @@ public:
 
     IMsg *cloneMsg() const
     {
-        return new ConcreteMsg(originalMsg);
+        return new ConcreteTimestampedMsg(originalMsg);
     }
 
     void setMsgID(const MsgIDType &msgID)
@@ -197,6 +201,11 @@ public:
     const QDateTime getTimestamp() const
     {
         return originalMsg.getTimestamp();
+    }
+
+    void accept(FileParser *visitor)
+    {
+        originalMsg.accept(visitor);
     }
 
 private:

@@ -22,12 +22,12 @@ public:
     /**
      * @brief Appends the specified message to the stream
      */
-    virtual void appendMsg(const ITimestampedMsg &msgToAppend) = 0;
+    virtual bool appendMsg(const ITimestampedMsg &msgToAppend) = 0;
 
     /**
      * @brief Prepends the specified messages to the stream
      */
-    virtual void prependMsg(const ITimestampedMsg &msgToPrepend) = 0;
+    virtual bool prependMsg(const ITimestampedMsg &msgToPrepend) = 0;
 
     /**
      * @brief Clears the stream

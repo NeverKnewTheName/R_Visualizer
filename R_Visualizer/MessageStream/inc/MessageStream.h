@@ -13,6 +13,8 @@
 #include "IMessageStream.h"
 #include "IMsgStreamStore.h"
 
+class IMessageConfig;
+class IMessageFilter;
 /**
  * @brief The MessageStream
  */
