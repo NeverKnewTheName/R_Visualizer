@@ -1,5 +1,10 @@
 #include "MessageFilter.h"
 
+#include "IMsgFilter.h"
+#include "ITimestampedMsgFilter.h"
+#include "IMsg.h"
+#include "ITimestampedMsg.h"
+
 MessageFilter::MessageFilter(QObject *parent) :
     QObject(parent)
 {
@@ -39,7 +44,7 @@ bool MessageFilter::filterMessage(const ITimestampedMsg &msgToFilter) const
 
 bool MessageFilter::filterMessageByFilter(
         IMsgFilter *filterToUse,
-        IMsg *msgToFilter
+        const IMsg &msgToFilter
         ) const
 {
     return filterToUse->filterMessage(msgToFilter);
@@ -47,16 +52,16 @@ bool MessageFilter::filterMessageByFilter(
 
 bool MessageFilter::filterMessageByFilter(
         ITimestampedMsgFilter *filterToUse,
-        ITimestampedMsg *msgToFilter
+        const ITimestampedMsg &msgToFilter
         ) const
 {
     return filterToUse->filterMessage(msgToFilter);
 }
 
-void MessageFilter::addFilter(IFilter *filterToAdd)
-{
-    regularFilterStore.append(filterToAdd);
-}
+/* void MessageFilter::addFilter(IFilter *filterToAdd) */
+/* { */
+/*     regularFilterStore.append(filterToAdd); */
+/* } */
 
 void MessageFilter::addFilter(IMsgFilter *filterToAdd)
 {
@@ -68,10 +73,10 @@ void MessageFilter::addFilter(ITimestampedMsgFilter *filterToAdd)
     timestampedMsgFilterStore.append(filterToAdd);
 }
 
-void MessageFilter::removeFilter(IFilter *filterToRemove)
-{
-    regularFilterStore.removeAll(filterToRemove);
-}
+/* void MessageFilter::removeFilter(IFilter *filterToRemove) */
+/* { */
+/*     regularFilterStore.removeAll(filterToRemove); */
+/* } */
 
 void MessageFilter::removeFilter(IMsgFilter *filterToRemove)
 {

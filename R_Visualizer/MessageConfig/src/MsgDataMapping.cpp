@@ -1,6 +1,10 @@
 #include "MsgDataMapping.h"
 
-MsgDataMapping::MsgDataMapping()
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+
+MsgDataMapping::MsgDataMapping(IMsgDataMappingStore *msgDataMappingStore) :
+    msgDataMappingStore(msgDataMappingStore)
 {
 }
 
@@ -13,6 +17,8 @@ void MsgDataMapping::prettifyMsg(
         ) const
 {
     //ToDO
+    const MsgIDType &msgID = msgToPrettify.getMsgID();
+    const MsgCodeType &msgCode = msgToPrettify.getMsgCode();
     const MsgDataType &msgData = msgToPrettify.getMsgData();
 
     /* msgDataMappingStore-> */
@@ -20,5 +26,5 @@ void MsgDataMapping::prettifyMsg(
 
 void MsgDataMapping::accept(FileParser *visitor)
 {
-    visitor->accept(*this);
+    msgDataMappingStore->accept(visitor);
 }

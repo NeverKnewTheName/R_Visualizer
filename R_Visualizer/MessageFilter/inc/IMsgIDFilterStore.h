@@ -25,6 +25,8 @@ public:
 
     virtual MsgIDType at(int index) const = 0;
 
+    virtual int size() const = 0;
+
     virtual void clear() = 0;
 };
 

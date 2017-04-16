@@ -1,5 +1,9 @@
 #include "MsgIDMappingModel.h"
 
+#include <QBrush>
+#include <QString>
+#include <QColor>
+
 #include "fileparser.h"
 
 MsgIDMappingModel::MsgIDMappingModel(
@@ -27,7 +31,11 @@ int MsgIDMappingModel::columnCount(const QModelIndex &parent) const
     return msgIDStore.size();
 }
 
-QVariant MsgIDMappingModel::headerData(int section, Qt::Orientation, int role) const
+QVariant MsgIDMappingModel::headerData(
+        int section,
+        Qt::Orientation orientation,
+        int role
+        ) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -77,8 +85,7 @@ QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
     const int row = index.row();
     const int col = index.column();
 
-    const IMsgIDRep &msgIdRepAtIndex =
-        msgIDMappingStore->value(msgIdStore.at(row));
+    const MsgIDType msgID = msgIDStore.at(row);
 
     switch(role)
     {
@@ -86,21 +93,20 @@ QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
         case MsgIDMappingModel::COL_ID:
-            return QString("0x%1")
-                .arg(idRepAtIndex.getID(), 4, 16, QLatin1Char( '0' ));
+            return msgID;
             break;
         case MsgIDMappingModel::COL_Alias:
-            return idRepAtIndex.getPlainTextAlias();
+            return msgIDMappingStore->getAliasToMsgID(msgID);
             break;
         case MsgIDMappingModel::COL_Color:
-            return idRepAtIndex.getColorRepresentation().name();
+            return msgIDMappingStore->getColorToMsgID(msgID);
             break;
         }
         break;
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:
-        return QBrush(idRepAtIndex.getColorRepresentation());
+        return QBrush(msgIDMappingStore->getColorToMsgID(msgID));
         break;
     case Qt::TextAlignmentRole:
         break;
@@ -110,7 +116,9 @@ QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool MsgIDMappingModel::setData(const QModelIndex &index, const QVariant &value,
+bool MsgIDMappingModel::setData(
+        const QModelIndex &index,
+        const QVariant &value,
         int role)
 {
     const int row = index.row();
@@ -126,11 +134,11 @@ bool MsgIDMappingModel::setData(const QModelIndex &index, const QVariant &value,
         switch(col)
         {
             case MsgIDMappingModel::COL_Alias:
-                msgIDRep.setName(value.value<QString>());
+                msgIDRep.setPlainTextAlias(value.value<QString>());
                 dataChanged = true;
                 break;
             case MsgIDMappingModel::COL_Color:
-                msgIDRep.setColor(value.value<QColor>());
+                msgIDRep.setColorRepresentation(value.value<QColor>());
                 dataChanged = true;
                 break;
         }
@@ -139,8 +147,9 @@ bool MsgIDMappingModel::setData(const QModelIndex &index, const QVariant &value,
 
     if(dataChanged)
     {
-        emit dataChanged(index, index);
-        emit sgnl_IDRepUpdated(msgIDRep);
+        //ToDO EMIT SIGNALS!!! URGENT!!!
+        /* emit dataChanged(index, index); */
+        /* emit sgnl_IDRepUpdated(msgIDRep); */
         return true;
     }
     else
@@ -158,7 +167,7 @@ bool MsgIDMappingModel::setData(const QModelIndex &index, const QVariant &value,
 
 bool MsgIDMappingModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    const int modelSize = msgIdStore.size();
+    const int modelSize = msgIDStore.size();
     if(modelSize || ((row+count-1) < modelSize))
     {
         return false;
@@ -183,37 +192,40 @@ void MsgIDMappingModel::removeRow(int row, const QModelIndex &parent)
 
 ///////////////////////////////////////
 
-IMsgIDRep &MsgIDMappingModel::getMsgIDRepToMsgID(const MsgIDType msgID) const
+/* IMsgIDRep &MsgIDMappingModel::getMsgIDRepToMsgID(const MsgIDType &msgID) const */
+/* { */
+/*     return msgIDMappingStore->getMsgIDRepToMsgID(msgID); */
+/* } */
+
+IMsgIDRep &MsgIDMappingModel::getMsgIDRepToMsgID(const MsgIDType &msgID)
 {
     return msgIDMappingStore->getMsgIDRepToMsgID(msgID);
 }
 
-IMsgIDRep &MsgIDMappingModel::getMsgIDRepToMsgID(const MsgIDType msgID)
-{
-    return msgIDMappingStore->getMsgIDRepToMsgID(msgID);
-}
-
-MsgIDMappingModel::contains(const MsgIDType msgID) const
+bool MsgIDMappingModel::contains(const MsgIDType &msgID) const
 {
     return msgIDStore.contains(msgID);
 }
 
-MsgIDMappingModel::contains(const IMsgIDRep &msgIDRep) const
+bool MsgIDMappingModel::contains(const IMsgIDRep &msgIDRep) const
 {
     return msgIDStore.contains(msgIDRep.getID());
 }
 
-MsgIDMappingModel::appendMsgIDMapping(const IMsgIDRep &msgIDRepToAppend)
+void MsgIDMappingModel::appendMsgIDMapping(const IMsgIDRep &msgIDRepToAppend)
 {
     const int currentEndIndex = rowCount();
 
     beginInsertRows(QModelIndex(), currentEndIndex, currentEndIndex);
     msgIDStore.append(msgIDRepToAppend.getID());
-    msgIDMappingStore->addMsgIDMapping(msgIDRepToAppend);
+    msgIDMappingStore->addMsgIDMapping(
+            msgIDRepToAppend.getID(),
+            msgIDRepToAppend
+            );
     endInsertRows();
 }
 
-MsgIDMappingModel::removeMsgIDMapping(const MsgIDType relatedMsgID)
+void MsgIDMappingModel::removeMsgIDMapping(const MsgIDType &relatedMsgID)
 {
     const int row = msgIDStore.indexOf(relatedMsgID);
     if(!row)
@@ -223,7 +235,7 @@ MsgIDMappingModel::removeMsgIDMapping(const MsgIDType relatedMsgID)
     removeRows(row, 1, QModelIndex());
 }
 
-MsgIDMappingModel::clear()
+void MsgIDMappingModel::clear()
 {
     beginResetModel();
     msgIDStore.clear();
@@ -231,8 +243,8 @@ MsgIDMappingModel::clear()
     endResetModel();
 }
 
-MsgIDMappingModel::accept(FileParser *visitor)
+void MsgIDMappingModel::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    msgIDMappingStore->accept(visitor);
 }
 

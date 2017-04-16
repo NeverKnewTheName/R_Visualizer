@@ -18,7 +18,7 @@
 class IMsgCodeMapping : public IMsgMapping
 {
 public:
-    virtual ~IMsgCodeMapping();
+    virtual ~IMsgCodeMapping(){}
 
     virtual MsgCodeType getMsgCodeToAlias(const QString &alias) const = 0;
     virtual QString getAliasToMsgCode(const MsgCodeType &msgCode) const = 0;

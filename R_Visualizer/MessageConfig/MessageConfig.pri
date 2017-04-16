@@ -24,11 +24,11 @@ SOURCES += \
     $$PWD/src/MsgDataMappingWidget.cpp \
     $$PWD/src/MsgDataMappingStore.cpp \
     $$PWD/src/MsgDataMappingModel.cpp \
-    $$PWD/src/ideditordelegate.cpp \
-    $$PWD/src/msgtypeeditordelegate.cpp \
-    $$PWD/src/msgtypeformatterdialog.cpp \
-    $$PWD/src/idadddialog.cpp \
-    $$PWD/src/msgtypeadddialog.cpp \
+    #$$PWD/src/ideditordelegate.cpp \
+    #$$PWD/src/msgtypeeditordelegate.cpp \
+    #$$PWD/src/msgtypeformatterdialog.cpp \
+    #$$PWD/src/idadddialog.cpp \
+    #$$PWD/src/msgtypeadddialog.cpp \
 
 HEADERS  += \
     $$PWD/inc/IMessageConfig.h \
@@ -64,11 +64,11 @@ HEADERS  += \
     $$PWD/inc/MsgDataMappingModel.h \
     $$PWD/inc/IMsgDataMappingStore.h \
     $$PWD/inc/MsgDataMappingStore.h \
-    $$PWD/inc/ideditordelegate.h \
-    $$PWD/inc/msgtypeeditordelegate.h \
-    $$PWD/inc/msgtypeformatterdialog.h \
-    $$PWD/inc/idadddialog.h \
-    $$PWD/inc/msgtypeadddialog.h \
+    #$$PWD/inc/ideditordelegate.h \
+    #$$PWD/inc/msgtypeeditordelegate.h \
+    #$$PWD/inc/msgtypeformatterdialog.h \
+    #$$PWD/inc/idadddialog.h \
+    #$$PWD/inc/msgtypeadddialog.h \
 
 FORMS    += \
     $$PWD/ui/messageconfig.ui \
@@ -76,6 +76,6 @@ FORMS    += \
     $$PWD/ui/msgidmappingwidget.ui \
     $$PWD/ui/msgcodemappingwidget.ui \
     $$PWD/ui/msgdatamappingwidget.ui \
-    $$PWD/ui/idadddialog.ui \
-    $$PWD/ui/msgtypeadddialog.ui \
-    $$PWD/ui/msgtypeformatterdialog.ui \
+    #$$PWD/ui/idadddialog.ui \
+    #$$PWD/ui/msgtypeadddialog.ui \
+    #$$PWD/ui/msgtypeformatterdialog.ui \

@@ -24,23 +24,20 @@ class IMsgDataRep : public IFileParsable
 public:
     virtual ~IMsgDataRep(){}
 
-    virtual std::unique_ptr<IMsgDataRep> cloneMsgDataRep() const = 0;
+    virtual IMsgDataRep *cloneMsgDataRep() const = 0;
 
     virtual MsgIDType getMsgID() const = 0;
-    virtual void setMsgID(const MsgIDType id) = 0;
+    virtual void setMsgID(const MsgIDType &id) = 0;
 
     virtual MsgCodeType getMsgCode() const = 0;
-    virtual void setMsgCode(const MsgCodeType code) = 0;
+    virtual void setMsgCode(const MsgCodeType &code) = 0;
 
+    virtual IMsgDataFormatter *getMsgDataFormatter() const = 0;
     virtual void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter) = 0;
 
     virtual QString parseMsgData(const IMsg &msg) const = 0;
 };
 
-/**
- * @brief Typedef of unique_ptr to #IMsgDataRep
- */
-typedef std::unique_ptr<IMsgDataRep> IMsgDataRepUniqPtr;
 
 /**
  * @brief CRTP copy helper for #IMsgDataRep
@@ -50,11 +47,9 @@ class MsgDataRepCRTPHelper : public IMsgDataRep
 {
 public:
     virtual ~MsgDataRepCRTPHelper(){}
-    virtual IMsgDataRepUniqPtr cloneMsgDataRep() const
+    virtual IMsgDataRep *cloneMsgDataRep() const
     {
-        return IMsgDataRepUniqPtr(
-                new Derived(static_cast<const Derived&>(*this))
-                );
+        return new Derived(static_cast<const Derived&>(*this));
     }
 };
 

@@ -14,69 +14,59 @@ MsgCodeType MsgCodeMappingStore::getMsgCodeToAlias(const QString &alias) const
 {
     for(auto &msgCodeRep : msgCodeRepStore )
     {
-        if(!alias.compare(msgCodeRep.getAlias(), Qt::CaseInsensitive))
+        if(!alias.compare(msgCodeRep.getPlainTextAlias(), Qt::CaseInsensitive))
         {
             return msgCodeRepStore.key(msgCodeRep);
         }
     }
-    return 0;
+    return MsgCodeType();
 }
 
 QString MsgCodeMappingStore::getAliasToMsgCode(const MsgCodeType &msgCode) const
 {
-    //ToTHINK maybe discard contains check.. default constructed value anyway
-    if(msgCodeRepStore.contains(msgCode))
-    {
-        return msgCodeRepStore.value(msgCode).getPlainTextAlias();
-    }
-    return QString();
+    /**
+     * returns default constructed value anyway if none found
+     */
+    return msgCodeRepStore[msgCode].getPlainTextAlias();
 }
 
 QColor MsgCodeMappingStore::getColorToMsgCode(const MsgCodeType &msgCode) const
 {
-    //ToTHINK maybe discard contains check.. default constructed value anyway
-    if(msgCodeRepStore.contains(msgCode))
-    {
-        return msgCodeRepStore.at(msgCode).getColorRepresentation();
-    }
-    return QColor();
+    /**
+     * returns default constructed value anyway if none found
+     */
+    return msgCodeRepStore[msgCode].getColorRepresentation();
 }
 
 QColor MsgCodeMappingStore::getColorToAlias(const QString &alias) const
 {
     const MsgCodeType &tempMsgCode = getMsgCodeToAlias(alias);
-    if(tempMsgCode == 0)
-    {
-        return QColor();
-    }
 
     return getColorToMsgCode(tempMsgCode);
 }
 
 
-IMsgCodeRep &MsgCodeMappingStore::getMsgCodeRepToMsgCode(
-        const MsgCodeType &msgCode
-        ) const
-{
-    if(containsMsgCode(msgCode))
-    {
-        return msgCodeRepStore.value(msgCode);
-    }
+/* IMsgCodeRep &MsgCodeMappingStore::getMsgCodeRepToMsgCode( */
+/*         const MsgCodeType &msgCode */
+/*         ) const */
+/* { */
+/*     if(containsMsgCode(msgCode)) */
+/*     { */
+/*         return msgCodeRepStore.value(msgCode); */
+/*     } */
 
-    //todo Add standard return...
-}
+/*     //todo Add standard return... */
+/* } */
 
 
 IMsgCodeRep &MsgCodeMappingStore::getMsgCodeRepToMsgCode(
         const MsgCodeType &msgCode
         )
 {
-    if(containsMsgCode(msgCode))
-    {
-        return msgCodeRepStore.value(msgCode);
-    }
-
-    //todo Add standard return...
+    /**
+     * returns default constructed value anyway
+     */
+    return msgCodeRepStore[msgCode];
 }
 
 
@@ -87,21 +77,28 @@ bool MsgCodeMappingStore::contains(const MsgCodeType &msgCode) const
 
 bool MsgCodeMappingStore::contains(const IMsgCodeRep &msgCodeRep) const
 {
-    return msgCodeRepStore.contains(msgCodeRep);
+    return contains(msgCodeRep.getCode());
 }
 
 
-void MsgCodeMappingStore::addMsgCodeMapping(const IMsgCodeRep &msgCodeRepToAdd)
+IMsgCodeRep &MsgCodeMappingStore::addMsgCodeMapping(
+        const MsgCodeType &msgCode,
+        const IMsgCodeRep &msgCodeRepToAdd
+        )
 {
     msgCodeRepStore.insert(
-            msgCodeRepToAdd.getCode(),
-            msgCodeRepToAdd.cloneMsgCodeRep()
+            msgCode,
+            dynamic_cast<const MsgCodeRep &>(msgCodeRepToAdd)
             );
+
+    return msgCodeRepStore[msgCode];
 }
 
-void MsgCodeMappingStore::removeMsgCodeMapping(const MsgCodeType &relatedMsgCode)
+void MsgCodeMappingStore::removeMsgCodeMapping(
+        const MsgCodeType &relatedMsgCode
+        )
 {
-    msgCodeRepStore.remove(relatedMsgID);
+    msgCodeRepStore.remove(relatedMsgCode);
 }
 
 

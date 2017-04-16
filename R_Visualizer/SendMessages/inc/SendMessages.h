@@ -9,6 +9,8 @@
 #define SENDMESSAGES_H
 
 #include <QObject>
+#include <QVector>
+
 #include "ISendMessages.h"
 
 class ISendMsgSingle;

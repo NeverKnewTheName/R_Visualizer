@@ -42,7 +42,7 @@ public:
      * The plain object will have a white background and a default
      * text representation of the id that is the id printed as a hex value.
      */
-    MsgIDRep(const MsgIDType id);
+    MsgIDRep(const MsgIDType &id);
     /**
      * \brief Constructs a new #MsgIDRep
      * 
@@ -51,7 +51,7 @@ public:
      * \param[in] color The color the ID is mapped to
      * 
      */
-    MsgIDRep(const MsgIDType id, const QString &name, const QColor &color);
+    MsgIDRep(const MsgIDType &id, const QString &name, const QColor &color);
 
     /**
      * \brief Returns the ID that this #MsgIDRep contain/applies to
@@ -61,7 +61,7 @@ public:
     /**
      * \brief Set the related ID for this #MsgIDRep
      */
-    void setID(const MsgIDType id);
+    void setID(const MsgIDType &id);
 
     /**
      * \brief Returns the name the ID corresponds to
@@ -87,12 +87,15 @@ public:
     /* void setColor(const QColor &value); */
     void setColorRepresentation(const QColor &colorRepresentation);
 
+    IMsgIDRep &operator =(const IMsgIDRep &other);
+
     /**
      * \brief Copares this #MsgIDRep to another for equality
      * 
      * \note For two #MsgIDRep objects to be considered equal their #id field has to match.
      */
-    bool operator==(const MsgIDRep &other) const;
+    bool operator ==(const MsgIDRep &other) const;
+    bool operator ==(const IMsgIDRep &other) const;
 
     /**
      * @brief qHash implementation to use #MsgIDRep as a QHash key

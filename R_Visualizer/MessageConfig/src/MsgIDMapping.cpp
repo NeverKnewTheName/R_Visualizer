@@ -1,7 +1,7 @@
 #include "MsgIDMapping.h"
 #include "IMsgIDMappingStore.h"
 
-MsgIDMapping::MsgIDMapping(IMsgIDMappingStore *msgIDMappingStore) : 
+MsgIDMapping::MsgIDMapping(IMsgIDMappingStore *msgIDMappingStore) :
     msgIDMappingStore(msgIDMappingStore)
 {
 }
@@ -27,7 +27,7 @@ QColor MsgIDMapping::getColorToMsgID(const MsgIDType &msgID) const
 
 QColor MsgIDMapping::getColorToAlias(const QString &alias) const
 {
-    return MsgIDMappingStore->getColorToAlias(alias);
+    return msgIDMappingStore->getColorToAlias(alias);
 }
 
 void MsgIDMapping::prettifyMsg(
@@ -46,5 +46,5 @@ void MsgIDMapping::prettifyMsg(
 
 void MsgIDMapping::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    msgIDMappingStore->accept(visitor);
 }

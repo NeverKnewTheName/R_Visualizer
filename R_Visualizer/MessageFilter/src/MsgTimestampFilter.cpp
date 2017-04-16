@@ -2,7 +2,8 @@
 
 #include "ITimestampedMsg.h"
 
-MsgTimestampFilter::MsgTimestampFilter()
+MsgTimestampFilter::MsgTimestampFilter(QObject *parent) :
+    QObject(parent)
 {
 }
 
@@ -15,8 +16,8 @@ bool MsgTimestampFilter::filterMessage(const ITimestampedMsg &msgToFilter) const
     bool filterResult = true;
     const QDateTime &msgTimestamp = msgToFilter.getTimestamp();
 
-    filterResult &= filterTimestampFrom(msgTimestamp);
-    filterResult &= filterTimestampTo(msgTimestamp);
+    filterResult &= greaterThanTimestampFrom(msgTimestamp);
+    filterResult &= lowerThanTimestampTo(msgTimestamp);
 
     return applyInversion(filterResult);
 }
@@ -26,7 +27,7 @@ void MsgTimestampFilter::enableFilter(const bool enable)
     this->isEnabled = enable;
 }
 
-bool MsgTimestampFilter::isEnabled() const
+bool MsgTimestampFilter::isFilterEnabled() const
 {
     return isEnabled;
 }
@@ -36,14 +37,14 @@ void MsgTimestampFilter::invertFilter(const bool invert)
     this->isInverted = invert;
 }
 
-bool MsgTimestampFilter::isInverted() const
+bool MsgTimestampFilter::isFilterInverted() const
 {
     return isInverted;
 }
 
 void MsgTimestampFilter::setTimestampFrom( const QDateTime &timestampFrom)
 {
-    this->timestampeFrom = timestampFrom;
+    this->timestampFrom = timestampFrom;
     if(this->timestampFrom > this->timestampTo)
     {
         this->timestampTo = this->timestampFrom;

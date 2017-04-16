@@ -182,7 +182,7 @@ void SendMsgModel::removeRow(int row, const QModelIndex &parent)
     }
 }
 
-void SendMsgModel::appendMsg(const PrettyMsg &msg)
+void SendMsgModel::appendMsg(const PrettyMsg<Msg> &msg)
 {
     int newRow = msgPacketStorage.size();
     beginInsertRows(QModelIndex(),newRow,newRow);
@@ -224,7 +224,7 @@ void SendMsgModel::clear()
 /*     } */
 /* } */
 
-QVector<PrettyMsg> SendMsgModel::getMsgPacket() const
+QVector<PrettyMsg<Msg> > SendMsgModel::getMsgPacket() const
 {
     QVector<PrettyMsg> msgPacket;
     for(const PrettyMsg &msg : msgPacketStorage)
@@ -234,7 +234,7 @@ QVector<PrettyMsg> SendMsgModel::getMsgPacket() const
     return msgPacket;
 }
 
-void SendMsgModel::setMsgPacket(const QVector<PrettyMsg> &msgPacket)
+void SendMsgModel::setMsgPacket(const QVector<PrettyMsg<Msg> > &msgPacket)
 {
     clear();
     beginResetModel();
@@ -250,7 +250,7 @@ void SendMsgModel::accept(FileParser *visitor)
     visitor->visit(*this);
 }
 
-void SendMsgModel::slt_appendMsg(const PrettyMsg &newMsg)
+void SendMsgModel::slt_appendMsg(const PrettyMsg<Msg> &newMsg)
 {
     appendMsg(newMsg);
 }
@@ -316,12 +316,12 @@ const int SendMsgModel::size() const
     return msgPacketStorage.size();
 }
 
-const PrettyMsg &SendMsgModel::at(const int index) const
+const PrettyMsg<Msg> &SendMsgModel::at(const int index) const
 {
     return msgPacketStorage.at(index);
 }
 
-void SendMsgModel::updateMsg(const int index, const PrettyMsg &updatedMsg)
+void SendMsgModel::updateMsg(const int index, const PrettyMsg<Msg> &updatedMsg)
 {
     msgPacketStorage.replace(index, updatedMsg);
 }

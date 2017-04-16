@@ -8,10 +8,14 @@
 #ifndef IMSGDATAMAPPINGSTORE_H
 #define IMSGDATAMAPPINGSTORE_H
 
-class IMsgDataMappingStore
+#include "IFileParsable.h"
+
+class IMsgDataMappingStore : public IFileParsable
 {
 public:
-    virtual ~IMsgDataMappingStore();
+    virtual ~IMsgDataMappingStore(){}
+
+    /* virtual */ 
 };
 
 #endif /* IMSGDATAMAPPINGSTORE_H */

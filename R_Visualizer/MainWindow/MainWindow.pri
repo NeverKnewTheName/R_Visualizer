@@ -9,11 +9,11 @@ INCLUDEPATH += $$PWD/inc
 SOURCES += \
     $$PWD/src/main.cpp \
     $$PWD/src/mainwindow.cpp \
-    $$PWD/src/csvmsgpackethandler.cpp \
+#    $$PWD/src/csvmsgpackethandler.cpp \
 
 HEADERS  += \
     $$PWD/inc/mainwindow.h \
-    $$PWD/inc/csvmsgpackethandler.h \
+#    $$PWD/inc/csvmsgpackethandler.h \
 
 FORMS    += \
     $$PWD/ui/mainwindow.ui

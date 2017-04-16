@@ -6,29 +6,29 @@
 
 MsgCodeRep::MsgCodeRep() :
     code(0x0),
-    codeName(QString("")),
+    name(QString("")),
     color(Qt::black)
 {
 }
 
 MsgCodeRep::MsgCodeRep(const MsgCodeRep &other) :
     code(other.code),
-    codeName(other.codeName),
+    name(other.name),
     color(other.color)
 {
 }
 
-MsgCodeRep::MsgCodeRep(const MsgCodeType code) :
+MsgCodeRep::MsgCodeRep(const MsgCodeType &code) :
     code(code),
-    codeName(QString("0x%1").arg(code, 4, 16, QLatin1Char('0'))),
+    name(static_cast<QString>(code)),
     /* messageFormat("#Data0# #Data1# #Data2# #Data3# #Data4# #Data5# #Data6#"), */
     color(Qt::white)
 {
 }
 
-MsgCodeRep::MsgCodeRep(const MsgCodeType code, const QString &codeName,const QColor &color) :
+MsgCodeRep::MsgCodeRep(const MsgCodeType &code, const QString &name,const QColor &color) :
     code(code),
-    codeName(codeName),
+    name(name),
     color(color)
 {
 }
@@ -38,7 +38,7 @@ MsgCodeType MsgCodeRep::getCode() const
     return code;
 }
 
-void MsgCodeRep::setCode(const MsgCodeType code)
+void MsgCodeRep::setCode(const MsgCodeType &code)
 {
     this->code = code;
 }
@@ -46,12 +46,12 @@ void MsgCodeRep::setCode(const MsgCodeType code)
 
 QString MsgCodeRep::getPlainTextAlias() const
 {
-    return codeName;
+    return name;
 }
 
 void MsgCodeRep::setPlainTextAlias(const QString &plainTextAlias)
 {
-    this->codeName = plainTextAlias;
+    this->name = plainTextAlias;
 }
 
 /* QString MsgCodeRep::getMessageFormat() const */
@@ -74,7 +74,21 @@ void MsgCodeRep::setColorRepresentation(const QColor &colorRepresentation)
     this->color = colorRepresentation;
 }
 
+IMsgCodeRep &MsgCodeRep::operator=(const IMsgCodeRep &other)
+{
+    this->code = other.getCode();
+    this->name = other.getPlainTextAlias();
+    this->color = other.getColorRepresentation();
+
+    return *this;
+}
+
 bool MsgCodeRep::operator==(const MsgCodeRep &other) const
+{
+    return (this->code == other.code);
+}
+
+bool MsgCodeRep::operator==(const IMsgCodeRep &other) const
 {
     return (this->code == other.getCode());
 }

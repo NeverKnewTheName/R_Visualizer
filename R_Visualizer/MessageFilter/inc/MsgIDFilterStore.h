@@ -11,6 +11,8 @@
 #include <QVector>
 #include "IMsgIDFilterStore.h"
 
+#include "MsgIDType.h"
+
 /**
  * @brief The MsgIDFilterStore
  */
@@ -26,6 +28,8 @@ public:
     bool containsMsgID(const MsgIDType &msgID) const;
 
     MsgIDType at(int index) const;
+
+    int size() const;
 
     void clear();
 

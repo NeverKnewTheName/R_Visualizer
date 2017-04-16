@@ -22,23 +22,26 @@ public:
     MsgDataRep(const MsgDataRep &other);
 
     MsgDataRep(
-            const MsgIDType msgID,
-            const MsgCodeType msgCode,
+            const MsgIDType &msgID,
+            const MsgCodeType &msgCode,
             IMsgDataFormatter *msgDataFormatter
             );
     virtual ~MsgDataRep();
 
     MsgIDType getMsgID() const;
-    void setMsgID(const MsgIDType msgID);
+    void setMsgID(const MsgIDType &msgID);
 
     MsgCodeType getMsgCode() const;
-    void setMsgCode(const MsgCodeType msgCode);
+    void setMsgCode(const MsgCodeType &msgCode);
 
+    IMsgDataFormatter *getMsgDataFormatter() const;
     void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter);
 
     QString parseMsgData(const IMsg &msg) const;
 
-    friend inline bool operator==(const MsgDataRep &lhs, const MsgDataRep &rhs);
+    IMsgDataRep &operator =(const IMsgDataRep &other);
+    bool operator ==(const MsgDataRep &other) const;
+    bool operator ==(const IMsgDataRep &other) const;
 
     /**
      * @brief qHash implementation to use #MsgDataRep as a QHash key

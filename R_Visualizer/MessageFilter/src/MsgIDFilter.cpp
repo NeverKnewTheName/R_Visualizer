@@ -22,18 +22,18 @@ bool MsgIDFilter::filterMessage(const IMsg &msgToFilter) const
         return true;
     }
 
-    bool filterResult = msgIDFilterStore.containsMsgID(msgToFilter);
+    bool filterResult = msgIDFilterStore->containsMsgID(msgToFilter.getMsgID());
 
     return applyInversion(filterResult);
 }
 
 void MsgIDFilter::enableFilter(const bool enable)
 {
-    isEnabled(enable);
-    emit sngl_filterEnabled(isEnabled);
+    isEnabled = enable;
+    emit sgnl_filterEnabled(isEnabled);
 }
 
-bool MsgIDFilter::isEnabled() const
+bool MsgIDFilter::isFilterEnabled() const
 {
     return isEnabled;
 }
@@ -44,7 +44,7 @@ void MsgIDFilter::invertFilter(const bool inverted)
     emit sgnl_filterInverted(isInverted);
 }
 
-bool MsgIDFilter::isInverted() const
+bool MsgIDFilter::isFilterInverted() const
 {
     return isInverted;
 }
@@ -55,7 +55,7 @@ void MsgIDFilter::addMsgIDToFilter(const MsgIDType &msgIDToAdd)
     emit sgnl_filterChanged();
 }
 
-void MsgIDFilter::removeMsgIDFromFilter(const MsgIDType &msgIDtoRemove)
+void MsgIDFilter::removeMsgIDFromFilter(const MsgIDType &msgIDToRemove)
 {
     msgIDFilterStore->removeMsgID(msgIDToRemove);
     emit sgnl_filterChanged();

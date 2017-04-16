@@ -8,8 +8,8 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/SendMessages.cpp \
-    $$PWD/src/sendmessages.cpp \
-    $$PWD/src/sendmsgmodel.cpp \
+#    $$PWD/src/sendmessages.cpp \
+#    $$PWD/src/sendmsgmodel.cpp \
     $$PWD/src/SendMessagesWidget.cpp \
     $$PWD/src/SendMsgSingleWidget.cpp \
     $$PWD/src/SendMsgPackageWidget.cpp
@@ -17,14 +17,14 @@ SOURCES += \
 HEADERS  += \
     $$PWD/inc/ISendMessages.h \
     $$PWD/inc/SendMessages.h \
-    $$PWD/inc/sendmessages.h \
-    $$PWD/inc/sendmsgmodel.h \
+#    $$PWD/inc/sendmessages.h \
+#    $$PWD/inc/sendmsgmodel.h \
     $$PWD/inc/SendMessagesWidget.h \
     $$PWD/inc/SendMsgSingleWidget.h \
     $$PWD/inc/SendMsgPackageWidget.h
 
 FORMS    += \
-    $$PWD/ui/sendmessages.ui \
+#    $$PWD/ui/sendmessages.ui \
     $$PWD/ui/sendmessageswidget.ui \
     $$PWD/ui/sendmsgsinglewidget.ui \
     $$PWD/ui/sendmsgpackagewidget.ui

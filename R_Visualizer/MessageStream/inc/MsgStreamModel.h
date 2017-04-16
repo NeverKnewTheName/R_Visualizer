@@ -34,7 +34,7 @@ public:
     };
 
     MsgStreamModel(
-            IMsgStreamStore *msgStreamStore,
+            IMsgStreamStore &msgStreamStore,
             QObject *parent = Q_NULLPTR
             );
     virtual ~MsgStreamModel();
@@ -80,7 +80,7 @@ private:
     void connectMsgStreamStore();
 
 private:
-    IMsgStreamStore *msgStreamStore;
+    IMsgStreamStore &msgStreamStore;
 
 };
 

@@ -66,7 +66,7 @@ private:
     bool applyInversion(const bool intermediateFilterResult) const;
 
 private:
-    QDateTime timestampeFrom;
+    QDateTime timestampFrom;
     QDateTime timestampTo;
 
     bool isEnabled;

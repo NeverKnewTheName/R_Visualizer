@@ -12,3 +12,7 @@ MessageFilterWidget::~MessageFilterWidget()
 {
     delete ui;
 }
+
+void MessageFilterWidget::addFilterWidget(QWidget *filterWidget)
+{
+}

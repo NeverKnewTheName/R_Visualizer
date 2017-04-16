@@ -31,16 +31,22 @@ public:
 
     /* virtual QCompleter *createIDAliasCompleter(QObject *parent = Q_NULLPTR) = 0; */
 
-    virtual IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) const = 0;
+    /* virtual const IMsgIDRep &getMsgIDRepToMsgID(
+     * const MsgIDType &msgID
+     * ) const = 0; */
     virtual IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) = 0;
 
     virtual bool contains(const MsgIDType &msgID) const = 0;
     virtual bool contains(const IMsgIDRep &msgIDRep) const = 0;
 
-    virtual void addMsgIDMapping(const IMsgIDRep &msgIDRepToAppend) = 0;
+    virtual IMsgIDRep &addMsgIDMapping(
+            const MsgIDType &msgID,
+            const IMsgIDRep &msgIDRepToAppend
+            ) = 0;
     virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID) = 0;
 
     virtual void clear() = 0;
+
 };
 
 #endif /* IMSGIDMAPPINGSTORE_H */

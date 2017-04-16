@@ -19,13 +19,13 @@ SOURCES += \
     $$PWD/src/MsgCodeFilterWidget.cpp \
     $$PWD/src/MsgTimestampFilter.cpp \
     $$PWD/src/MsgTimestampFilterWidget.cpp \
-    $$PWD/src/filteridstore.cpp \
-    $$PWD/src/filtercodestore.cpp \
-    $$PWD/src/filtertimestampstore.cpp \
-    $$PWD/src/filteriddelegate.cpp \
-    $$PWD/src/filtermsgtypedelegate.cpp \
-    $$PWD/src/filteridadddialog.cpp \
-    $$PWD/src/filtercodeadddialog.cpp \
+    #$$PWD/src/filteridstore.cpp \
+    #$$PWD/src/filtercodestore.cpp \
+    #$$PWD/src/filtertimestampstore.cpp \
+    #$$PWD/src/filteriddelegate.cpp \
+    #$$PWD/src/filtermsgtypedelegate.cpp \
+    #$$PWD/src/filteridadddialog.cpp \
+    #$$PWD/src/filtercodeadddialog.cpp \
 
 HEADERS  += \
     $$PWD/inc/IMessageFilter.h \
@@ -46,16 +46,16 @@ HEADERS  += \
     $$PWD/inc/MsgCodeFilterModel.h \
     $$PWD/inc/MsgTimestampFilter.h \
     $$PWD/inc/MsgTimestampFilterWidget.h \
-    $$PWD/inc/filteridstore.h \
-    $$PWD/inc/filtercodestore.h \
-    $$PWD/inc/filtertimestampstore.h \
-    $$PWD/inc/filteriddelegate.h \
-    $$PWD/inc/filtermsgtypedelegate.h \
-    $$PWD/inc/filteridadddialog.h \
-    $$PWD/inc/filtercodeadddialog.h \
+    #$$PWD/inc/filteridstore.h \
+    #$$PWD/inc/filtercodestore.h \
+    #$$PWD/inc/filtertimestampstore.h \
+    #$$PWD/inc/filteriddelegate.h \
+    #$$PWD/inc/filtermsgtypedelegate.h \
+    #$$PWD/inc/filteridadddialog.h \
+    #$$PWD/inc/filtercodeadddialog.h \
 
 FORMS    += \
-    $$PWD/ui/messagefilter.ui \
+    #$$PWD/ui/messagefilter.ui \
     $$PWD/ui/filteridadddialog.ui \
     $$PWD/ui/filtercodeadddialog.ui \
     $$PWD/ui/messagefilterwidget.ui \

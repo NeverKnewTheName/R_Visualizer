@@ -1,7 +1,7 @@
 #ifndef MSGDATAMAPPING_H
 #define MSGDATAMAPPING_H
 
-#include "IMsgMapping.h"
+#include "IMsgDataMapping.h"
 #include "IMsgDataMappingStore.h"
 
 class FileParser;

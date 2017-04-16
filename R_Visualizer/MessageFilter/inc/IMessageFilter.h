@@ -11,9 +11,12 @@
 
 #include "IMsg.h"
 
+#include "userrolemngr.h"
+
 class IFilter;
 class IMsgFilter;
 class ITimestampedMsgFilter;
+class ITimestampedMsg;
 
 /**
  * @brief The #IMessageFilter interface
@@ -52,7 +55,7 @@ public:
      */
     virtual bool filterMessageByFilter(
             IMsgFilter *filterToUse,
-            IMsg *msgToFilter
+            const IMsg &msgToFilter
             ) const = 0;
 
     /**
@@ -67,7 +70,7 @@ public:
      */
     virtual bool filterMessageByFilter(
             ITimestampedMsgFilter *filterToUse,
-            ITimestampedMsg *msgToFilter
+            const ITimestampedMsg &msgToFilter
             ) const = 0;
 
 
@@ -130,7 +133,10 @@ public:
     virtual void removeFilter(ITimestampedMsgFilter *filterToAdd) = 0;
 
 signals:
-    virtual void sgnl_FilterChanged(IFilter *filterThatHasChanged) = 0;
+    virtual void sgnl_MsgFilterChanged(IMsgFilter *filterThatHasChanged) = 0;
+    virtual void sgnl_TimestampedMsgFilterChanged(
+            ITimestampedMsgFilter *filterThatHasChanged
+            ) = 0;
     virtual void sgnl_PropagateUserRole(
             const UserRoleMngr::UserRole roleToApply
             ) = 0;

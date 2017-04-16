@@ -28,7 +28,6 @@ TimestampedMsg::~TimestampedMsg()
 {
 }
 
-
 void TimestampedMsg::setTimestamp(const QDateTime &newTimestamp)
 {
     this->msgTimestamp = newTimestamp;
@@ -37,6 +36,12 @@ void TimestampedMsg::setTimestamp(const QDateTime &newTimestamp)
 const QDateTime TimestampedMsg::getTimestamp() const
 {
     return msgTimestamp;
+}
+
+
+IMsg *TimestampedMsg::cloneMsg() const
+{
+    return new TimestampedMsg(*this);
 }
 
 

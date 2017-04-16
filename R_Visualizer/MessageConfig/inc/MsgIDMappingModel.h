@@ -110,19 +110,19 @@ public:
     // \ QAbstractItemModel Implementation \ //
 
     // IMsgIDMappingModel Implementation //
-    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType msgID) const;
-    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType msgID);
+    /* IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) const; */
+    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID);
 
     /* QString getAliasToMsgID(const MsgIDType msgID) const; */
     /* MsgIDType getMsgIDToAlias(const QString &alias) const; */
     /* QColor getColorToMsgID(const MsgIDType msgID) const; */
     /* QColor getColorToAlias(const QString &alias) const; */
 
-    bool contains(const MsgIDType msgID) const;
+    bool contains(const MsgIDType &msgID) const;
     bool contains(const IMsgIDRep &msgIDRep) const;
 
     void appendMsgIDMapping(const IMsgIDRep &msgIDRepToAppend);
-    void removeMsgIDMapping(const MsgIDType relatedMsgID);
+    void removeMsgIDMapping(const MsgIDType &relatedMsgID);
 
     void clear();
 
@@ -133,13 +133,13 @@ public:
     // \ IFileParsable Implementation \ //
 
 signals:
-    void sgnl_MappingAdded(const MsgIDType relatedID);
-    void sgnl_MappingUpdated(const MsgIDType relatedID);
-    void sgnl_MappingRemoved(const MsgIDType relatedID);
+    void sgnl_MappingAdded(const MsgIDType &relatedID);
+    void sgnl_MappingUpdated(const MsgIDType &relatedID);
+    void sgnl_MappingRemoved(const MsgIDType &relatedID);
 
     void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
     void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
-    void sgnl_MsgIDRepRemoved(const MsgIDType relatedMsgID);
+    void sgnl_MsgIDRepRemoved(const MsgIDType &relatedMsgID);
 
 
 private:

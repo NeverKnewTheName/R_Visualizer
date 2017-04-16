@@ -3,6 +3,8 @@
 
 #include <QAbstractListModel>
 
+class IMsgIDFilterStore;
+
 class MsgIDFilterModel : public QAbstractListModel
 {
     Q_OBJECT

@@ -11,13 +11,15 @@
 class ISendMsgSingle;
 class ISendMsgPackage;
 
+#include "userrolemngr.h"
+
 /**
  * @brief The ISendMessages interface
  */
 class ISendMessages
 {
 public:
-    virtual ~ISendMessages();
+    virtual ~ISendMessages(){}
 
     virtual void addSendMsgSingle(ISendMsgSingle *sendMsgSingleToAdd) = 0;
     virtual void addSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd) = 0;

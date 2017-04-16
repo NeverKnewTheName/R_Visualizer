@@ -112,4 +112,6 @@ private slots:
     virtual void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply) = 0;
 };
 
+Q_DECLARE_INTERFACE(IMessageConfig, "R_Visualizer.IMessageConfig")
+
 #endif /* IMESSAGECONFIG_H */

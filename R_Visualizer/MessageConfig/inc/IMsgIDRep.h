@@ -26,16 +26,14 @@ class IMsgIDRep :
 public:
     virtual ~IMsgIDRep(){}
 
-    virtual std::unique_ptr<IMsgIDRep> cloneMsgIDRep() const = 0;
+    virtual IMsgIDRep *cloneMsgIDRep() const = 0;
 
     virtual MsgIDType getID() const = 0;
-    virtual void setID(const MsgIDType id) = 0;
+    virtual void setID(const MsgIDType &id) = 0;
+
+    virtual IMsgIDRep &operator =(const IMsgIDRep &other) = 0;
 };
 
-/**
- * @brief Typedef of unique_ptr to #IMsgIDRep
- */
-typedef std::unique_ptr<IMsgIDRep> IMsgIDRepUniqPtr;
 
 /**
  * @brief CRTP copy helper for #IMsgIDRep
@@ -46,11 +44,9 @@ class MsgIDRepCRTPHelper : public IMsgIDRep
 public:
     virtual ~MsgIDRepCRTPHelper(){}
 
-    virtual IMsgIDRepUniqPtr cloneMsgIDRep() const
+    virtual IMsgIDRep *cloneMsgIDRep() const
     {
-        return IMsgIDRepUniqPtr(
-                new Derived(static_cast<const Derived&>(*this))
-                );
+        return new Derived(static_cast<const Derived&>(*this));
     }
 };
 

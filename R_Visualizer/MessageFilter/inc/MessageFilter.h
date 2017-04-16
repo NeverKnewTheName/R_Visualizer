@@ -49,12 +49,12 @@ public:
 
     virtual bool filterMessageByFilter(
             IMsgFilter *filterToUse,
-            IMsg *msgToFilter
+            const IMsg &msgToFilter
             ) const;
 
     virtual bool filterMessageByFilter(
             ITimestampedMsgFilter *filterToUse,
-            ITimestampedMsg *msgToFilter
+            const ITimestampedMsg &msgToFilter
             ) const;
 
     virtual void addFilter(IMsgFilter *filterToAdd);
@@ -64,7 +64,10 @@ public:
     virtual void removeFilter(ITimestampedMsgFilter *filterToRemove);
 
 signals:
-    void sgnl_FilterChanged(IFilter *filterThatHasChanged);
+    void sgnl_MsgFilterChanged(IMsgFilter *filterThatHasChanged);
+    void sgnl_TimestampedMsgFilterChanged(
+            ITimestampedMsgFilter *filterThatHasChanged
+            );
     void sgnl_PropagateUserRole(
             const UserRoleMngr::UserRole roleToApply
             );

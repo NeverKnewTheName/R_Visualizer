@@ -16,7 +16,7 @@
 class IMsgDataMapping : public IMsgMapping
 {
 public:
-    virtual ~IMsgDataMapping();
+    virtual ~IMsgDataMapping(){}
 };
 
 #endif /* IMSGDATAMAPPING_H */

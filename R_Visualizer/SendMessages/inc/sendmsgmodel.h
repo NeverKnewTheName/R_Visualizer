@@ -70,27 +70,27 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     void removeRow(int row, const QModelIndex &parent = QModelIndex());
 
-    void appendMsg(const PrettyMsg &newMsg);
+    void appendMsg(const PrettyMsg<Msg> &newMsg);
 
     void clear();
 
     /* QByteArray ParseToJson(); */
     /* void ParseFromJson(const QByteArray &jsonFile); */
 
-    QVector<PrettyMsg> getMsgPacket() const;
-    void setMsgPacket(const QVector<PrettyMsg> &msgPacket);
+    QVector<PrettyMsg<Msg>> getMsgPacket() const;
+    void setMsgPacket(const QVector<PrettyMsg<Msg>> &msgPacket);
 
     void setIDRepForID(const MsgIDType relatedID, const IDRep &idRepToSet);
     void setMsgTypeRepForCode(const MsgCodeType relatedCode, const MsgTypeRep &msgTypeRepToSet);
 
     const int size() const;
-    const PrettyMsg &at(const int index) const;
-    void updateMsg(const int index, const PrettyMsg &updatedMsg);
+    const PrettyMsg<Msg> &at(const int index) const;
+    void updateMsg(const int index, const PrettyMsg<Msg> &updatedMsg);
 
     void accept(FileParser *visitor);
 
 private slots:
-    void slt_appendMsg(const PrettyMsg &newMsg);
+    void slt_appendMsg(const PrettyMsg<Msg> &newMsg);
 
     void slt_IDRepAdded(const IDRep &addedIDRep);
     void slt_IDRepUpdated(const IDRep &updatedIDRep);
@@ -105,7 +105,7 @@ private slots:
 signals:
 
 private:
-    QVector<PrettyMsg> msgPacketStorage;
+    QVector<PrettyMsg<Msg>> msgPacketStorage;
 };
 
 #endif /* SENDMSGMODEL_H */

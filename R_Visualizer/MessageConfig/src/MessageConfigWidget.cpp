@@ -1,9 +1,13 @@
 #include "MessageConfigWidget.h"
 #include "ui_messageconfigwidget.h"
 
-MessageConfigWidget::MessageConfigWidget(QWidget *parent) :
+MessageConfigWidget::MessageConfigWidget(
+        IMessageConfig *msgConfig,
+        QWidget *parent
+        ) :
     QWidget(parent),
-    ui(new Ui::MessageConfigWidget)
+    ui(new Ui::MessageConfigWidget),
+    msgConfig(msgConfig)
 {
     ui->setupUi(this);
 }

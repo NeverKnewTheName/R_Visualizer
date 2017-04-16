@@ -13,7 +13,7 @@ MsgCodeFilterStore::~MsgCodeFilterStore()
 
 void MsgCodeFilterStore::addMsgCode(const MsgCodeType &msgCodeToAdd)
 {
-    if(msgCodeVector.contains(msgCodetoAdd))
+    if(msgCodeVector.contains(msgCodeToAdd))
     {
         qDebug() << "MsgCodeStore does already contain: "
             << static_cast<QString>(msgCodeToAdd);
@@ -25,22 +25,22 @@ void MsgCodeFilterStore::addMsgCode(const MsgCodeType &msgCodeToAdd)
 
 void MsgCodeFilterStore::removeMsgCode(const MsgCodeType &msgCodeToRemove)
 {
-    if(!msgCodeVector.contains(msgCodetoAdd))
+    if(!msgCodeVector.contains(msgCodeToRemove))
     {
         qDebug() << "MsgCodeStore does not contain: "
-            << static_cast<QString>(msgCodeToAdd);
+            << static_cast<QString>(msgCodeToRemove);
         return;
     }
 
     msgCodeVector.removeOne(msgCodeToRemove);
 }
 
-MsgCodeFilterStore::containsMsgCode(const MsgCodeType &msgCode) const
+bool MsgCodeFilterStore::containsMsgCode(const MsgCodeType &msgCode) const
 {
     return msgCodeVector.contains(msgCode);
 }
 
-MsgCodeFilterStore::clear()
+void MsgCodeFilterStore::clear()
 {
     msgCodeVector.clear();
 }

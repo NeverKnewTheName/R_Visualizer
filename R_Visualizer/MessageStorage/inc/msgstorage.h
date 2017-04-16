@@ -111,11 +111,11 @@ public:
         return msgStore.saveDataStorage(saveLocation);
     }
 
-signals:
+//signals:
     virtual void sgnl_MsgAdded(const MsgType &addedMsg) = 0;
     virtual void sgnl_StoreCleared() = 0;
 
-protected slots:
+public:// slots:
     virtual void slt_addMsg(const MsgType &newMsg)
     {
         appendMsg(newMsg);
@@ -140,7 +140,7 @@ signals:
     virtual void sgnl_MsgAdded(const Msg &addedMsg);
     virtual void sgnl_StoreCleared();
 
-private slots:
+public slots:
     virtual void slt_addMsg(const Msg &newMsg)
     {
         TemplateMsgStorage<Msg>::slt_addMsg(newMsg);
@@ -167,7 +167,7 @@ signals:
     virtual void sgnl_MsgAdded(const TimestampedMsg &addedMsg);
     virtual void sgnl_StoreCleared();
 
-private slots:
+public slots:
     virtual void slt_addMsg(const TimestampedMsg &newMsg)
     {
         TemplateMsgStorage<TimestampedMsg>::slt_addMsg(newMsg);

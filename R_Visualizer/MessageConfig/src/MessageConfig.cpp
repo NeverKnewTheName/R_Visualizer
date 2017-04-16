@@ -4,6 +4,7 @@
 #include "IMsgIDMapping.h"
 #include "IMsgCodeMapping.h"
 #include "IMsgDataMapping.h"
+#include "IPrettyMsg.h"
 
 MessageConfig::MessageConfig(
         IMsgIDMapping *msgIDMapping,
@@ -22,7 +23,7 @@ MessageConfig::~MessageConfig()
 {
 }
 
-IPrettyMsg &MessageConfig::prettifyMsg(
+void MessageConfig::prettifyMsg(
         IPrettyMsg &msgToPrettify
         ) const
 {
@@ -31,7 +32,7 @@ IPrettyMsg &MessageConfig::prettifyMsg(
     msgDataMapping->prettifyMsg(msgToPrettify);
 }
 
-IPrettyMsg &MessageConfig::prettifyMsgByMapping(
+void MessageConfig::prettifyMsgByMapping(
         IPrettyMsg &msgToPrettify,
         const IMsgMapping &mappingToApply
         ) const
@@ -47,10 +48,10 @@ QCompleter *MessageConfig::createAliasCompleterForMapping(
     switch(mappingType)
     {
     case IMessageConfig::MessageIDMappingType:
-        return createIDNameCompleter(parent);
+        //return createIDNameCompleter(parent);
         break;
     case IMessageConfig::MessageCodeMappingType:
-        return createCodeNameCompleter(parent);
+        //return createCodeNameCompleter(parent);
         break;
     case IMessageConfig::MessageDataMappingType:
         return Q_NULLPTR;
@@ -72,17 +73,17 @@ void MessageConfig::slt_ApplyRole(const UserRoleMngr::UserRole roleToApply)
 }
 
 
-QCompleter *MessageConfig::createIDNameCompleter(
-        QObject *parent
-        ) const
-{
-    return msgIDMapping->createIDNameCompleter(parent);
-}
+//QCompleter *MessageConfig::createIDNameCompleter(
+        //QObject *parent
+        //) const
+//{
+    //return msgIDMapping->createIDNameCompleter(parent);
+//}
 
-QCompleter *MessageConfig::createCodeNameCompleter(
-        QObject *parent
-        ) const
-{
-    return msgCodeMapping->createCodeNameCompleter(parent);
-}
+//QCompleter *MessageConfig::createCodeNameCompleter(
+        //QObject *parent
+        //) const
+//{
+    //return msgCodeMapping->createCodeNameCompleter(parent);
+//}
 

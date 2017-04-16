@@ -10,7 +10,7 @@
 
 #include "IMsgMapping.h"
 
-#include <QCompleter>
+/* #include <QCompleter> */
 
 /**
  * @brief The IMsgIDMapping interface
@@ -18,7 +18,7 @@
 class IMsgIDMapping : public IMsgMapping
 {
 public:
-    virtual ~IMsgIDMapping();
+    virtual ~IMsgIDMapping(){}
 
     virtual MsgIDType getMsgIDToAlias(const QString &alias) const = 0;
     virtual QString getAliasToMsgID(const MsgIDType &msgID) const = 0;

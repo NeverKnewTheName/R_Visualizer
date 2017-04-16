@@ -51,16 +51,16 @@ SendMessages::SendMessages(
      * This is actually bad design... It would be better to encapsulate the represenation models into the
      * SendMessagesModel. Let the model be responsible for updating the view!
      */
-    connect(msgConfig, &MessageConfig::sgnl_IDRepAdded, this, &SendMessages::slt_IDRepAdded);
-    connect(msgConfig, &MessageConfig::sgnl_IDRepUpdated, this, &SendMessages::slt_IDRepUpdated);
-    connect(msgConfig, &MessageConfig::sgnl_IDRepRemoved, this, &SendMessages::slt_IDRepRemoved);
+    //connect(msgConfig, &MessageConfig::sgnl_IDRepAdded, this, &SendMessages::slt_IDRepAdded);
+    //connect(msgConfig, &MessageConfig::sgnl_IDRepUpdated, this, &SendMessages::slt_IDRepUpdated);
+    //connect(msgConfig, &MessageConfig::sgnl_IDRepRemoved, this, &SendMessages::slt_IDRepRemoved);
 
-    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepAdded, this, &SendMessages::slt_MsgTypeRepAdded);
-    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepUpdated, this, &SendMessages::slt_MsgTypeRepUpdated);
-    connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepRemoved, this, &SendMessages::slt_MsgTypeRepRemoved);
+    //connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepAdded, this, &SendMessages::slt_MsgTypeRepAdded);
+    //connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepUpdated, this, &SendMessages::slt_MsgTypeRepUpdated);
+    //connect(msgConfig, &MessageConfig::sgnl_MsgTypeRepRemoved, this, &SendMessages::slt_MsgTypeRepRemoved);
 
-    ui->sndMsgIDLineEdit->setMsgConfig(msgConfig);
-    ui->sndMsgCodeLineEdit->setMsgConfig(msgConfig);
+    //ui->sndMsgIDLineEdit->setMsgConfig(msgConfig);
+    //ui->sndMsgCodeLineEdit->setMsgConfig(msgConfig);
 }
 
 SendMessages::~SendMessages()

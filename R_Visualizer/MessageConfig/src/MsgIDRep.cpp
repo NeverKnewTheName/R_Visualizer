@@ -17,21 +17,21 @@ MsgIDRep::MsgIDRep(const MsgIDRep &other) :
 {
 }
 
-MsgIDRep::MsgIDRep(const MsgIDType id) :
+MsgIDRep::MsgIDRep(const MsgIDType &id) :
     id(id),
-    name(QString("0x%1").arg(id, 4, 16, QLatin1Char('0'))), //ToDO Upper case letters for HEX representation would be nice
+    name(static_cast<QString>(id)), //ToDO Upper case letters for HEX representation would be nice
     color(Qt::white)
 {
 }
 
-MsgIDRep::MsgIDRep(const MsgIDType id, const QString &name, const QColor &color) :
+MsgIDRep::MsgIDRep(const MsgIDType &id, const QString &name, const QColor &color) :
     id(id),
     name(name),
     color(color)
 {
 }
 
-void MsgIDRep::setID(const MsgIDType id)
+void MsgIDRep::setID(const MsgIDType &id)
 {
     this->id = id;
 }
@@ -59,6 +59,25 @@ QColor MsgIDRep::getColorRepresentation() const
 void MsgIDRep::setColorRepresentation(const QColor &colorRepresentation)
 {
     this->color = colorRepresentation;
+}
+
+IMsgIDRep &MsgIDRep::operator =(const IMsgIDRep &other)
+{
+    this->id = other.getID();
+    this->name = other.getPlainTextAlias();
+    this->color = other.getColorRepresentation();
+
+    return *this;
+}
+
+bool MsgIDRep::operator ==(const MsgIDRep &other) const
+{
+    return this->id == other.id;
+}
+
+bool MsgIDRep::operator ==(const IMsgIDRep &other) const
+{
+    return this->id == other.getID();
 }
 
 void MsgIDRep::accept(FileParser *visitor)

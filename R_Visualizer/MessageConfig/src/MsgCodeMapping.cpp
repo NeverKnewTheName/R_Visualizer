@@ -44,5 +44,5 @@ void MsgCodeMapping::prettifyMsg(
 
 void MsgCodeMapping::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    msgCodeMappingStore->accept(visitor);
 }

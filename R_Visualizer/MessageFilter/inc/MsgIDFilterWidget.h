@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "MsgIDType.h"
+
 namespace Ui {
 class MsgIDFilterWidget;
 }

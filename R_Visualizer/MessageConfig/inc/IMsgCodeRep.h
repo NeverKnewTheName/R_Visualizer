@@ -26,16 +26,11 @@ class IMsgCodeRep :
 public:
     virtual ~IMsgCodeRep(){}
 
-    virtual std::unique_ptr<IMsgCodeRep> cloneMsgCodeRep() const = 0;
+    virtual IMsgCodeRep *cloneMsgCodeRep() const = 0;
 
     virtual MsgCodeType getCode() const = 0;
-    virtual void setCode(const MsgCodeType code) = 0;
+    virtual void setCode(const MsgCodeType &code) = 0;
 };
-
-/**
- * @brief Typedef of unique_ptr to #IMsgCodeRep
- */
-typedef std::unique_ptr<IMsgCodeRep> IMsgCodeRepUniqPtr;
 
 /**
  * @brief CRTP copy helper for #IMsgCodeRep
@@ -46,11 +41,9 @@ class MsgCodeRepCRTPHelper : public IMsgCodeRep
 public:
     virtual ~MsgCodeRepCRTPHelper(){}
 
-    virtual IMsgCodeRepUniqPtr cloneMsgCodeRep() const
+    virtual IMsgCodeRep *cloneMsgCodeRep() const
     {
-        return IMsgCodeRepUniqPtr(
-                new Derived(static_cast<const Derived&>(*this))
-                );
+        return new Derived(static_cast<const Derived&>(*this));
     }
 };
 

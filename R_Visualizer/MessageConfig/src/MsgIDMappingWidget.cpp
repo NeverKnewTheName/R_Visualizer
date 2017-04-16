@@ -19,14 +19,6 @@
 #include "jsoninparser.h"
 #include "jsonoutparser.h"
 
-MsgIDMappingWidget::MsgIDMappingWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MsgIDMappingWidget),
-    msgIDMappingModel(new MsgIDMappingModel())
-{
-    init();
-}
-
 MsgIDMappingWidget::MsgIDMappingWidget(
         IMsgIDMappingModel *model,
         QWidget *parent
@@ -103,8 +95,8 @@ void MsgIDMappingWidget::on_idRmvBtn_clicked()
 
 void MsgIDMappingWidget::on_idAddBtn_clicked()
 {
-    MsgIDRep testRep(10, QString("TEST"), QColor(Qt::blue));
-    msgIDMappingModel->appendMsgIDMapping(testRep);
+    //MsgIDRep testRep(10, QString("TEST"), QColor(Qt::blue));
+    //msgIDMappingModel->appendMsgIDMapping(testRep);
 }
 
 void MsgIDMappingWidget::init()
@@ -112,14 +104,16 @@ void MsgIDMappingWidget::init()
     ui->setupUi(this);
     QSortFilterProxyModel *sortFilterProxyModel = new
         QSortFilterProxyModel(this);
-    proxy->setSourceModel(msgIDMappingModel);
+    //ToDO... this is not good... maybe inherit from QAbstractItemModel directly in the interface?
+    sortFilterProxyModel->setSourceModel(dynamic_cast<QAbstractItemModel*>(msgIDMappingModel));
     ui->idTableView->setSortingEnabled(true);
-    ui->idTableView->setModel(proxy);
+    ui->idTableView->setModel(sortFilterProxyModel);
     ui->idTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->idTableView->verticalHeader()->hide();
     ui->idTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->idTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    ui->idTableView->setItemDelegate(new IDEditorDelegate(this));
+    //ToDO
+    //ui->idTableView->setItemDelegate(new IDEditorDelegate(this));
 
     //ToDO SCROLL TO BOTTOM
 }

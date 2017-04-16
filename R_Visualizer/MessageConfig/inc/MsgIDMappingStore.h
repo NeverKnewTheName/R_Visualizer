@@ -9,7 +9,7 @@
 #define MSGIDMAPPINGSTORE_H
 
 #include "IMsgIDMappingStore.h"
-#include "IMsgIDRep.h"
+#include "MsgIDRep.h"
 #include "MsgIDType.h"
 
 #include <QHash>
@@ -25,26 +25,29 @@ public:
     MsgIDMappingStore();
     virtual ~MsgIDMappingStore();
 
-    MsgIDType getMsgIDToAlias(const QString &alias) const;
-    QString getAliasToMsgID(const MsgIDType &msgID) const;
-    QColor getColorToMsgID(const MsgIDType &msgID) const;
-    QColor getColorToAlias(const QString &alias) const;
+    virtual MsgIDType getMsgIDToAlias(const QString &alias) const;
+    virtual QString getAliasToMsgID(const MsgIDType &msgID) const;
+    virtual QColor getColorToMsgID(const MsgIDType &msgID) const;
+    virtual QColor getColorToAlias(const QString &alias) const;
 
-    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) const;
-    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID);
+    /* const IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) const; */
+    virtual IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID);
 
-    bool contains(const MsgIDType &msgID) const;
-    bool contains(const IMsgIDRep &msgIDRep) const;
+    virtual bool contains(const MsgIDType &msgID) const;
+    virtual bool contains(const IMsgIDRep &msgIDRep) const;
 
-    void addMsgIDMapping(const IMsgIDRep &msgIDRepToAdd);
-    void removeMsgIDMapping(const MsgIDType &relatedMsgID);
+    virtual IMsgIDRep &addMsgIDMapping(
+            const MsgIDType &msgID,
+            const IMsgIDRep &msgIDRepToAdd = MsgIDRep()
+            );
+    virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID);
 
-    void clear();
+    virtual void clear();
 
-    void accept(FileParser *visitor);
+    virtual void accept(FileParser *visitor);
 
 private:
-    QHash<MsgIDType, IMsgIDRepUniqPtr> msgIDRepStore;
+    QHash<MsgIDType, MsgIDRep> msgIDRepStore;
 };
 
 #endif /* MSGIDMAPPINGSTORE_H */
