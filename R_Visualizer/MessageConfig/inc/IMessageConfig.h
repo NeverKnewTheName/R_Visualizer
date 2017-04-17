@@ -8,25 +8,23 @@
 #ifndef IMESSAGECONFIG_H
 #define IMESSAGECONFIG_H
 
+#include <QObject>
 #include <QString>
 #include <QColor>
 #include <QCompleter>
 
-#include "IMsg.h"
-#include "ITimestampedMsg.h"
-#include "PrettyMsg.h"
-
 #include "userrolemngr.h"
 
+class MessageConfigNotifier;
+class IPrettyMsg;
 class IMsgMapping;
-class IMsgIDRep;
-class IMsgCodeRep;
-class IMsgDataRep;
+class IMsg;
+class ITimestampedMsg;
 
 /**
  * \brief The IMessageConfig interface
  */
-class IMessageConfig //: public IFileParsable
+class IMessageConfig
 {
 public:
     /**
@@ -65,53 +63,20 @@ public:
             const IMsgMapping &mappingToApply
             ) const = 0;
 
-    /**
-     * @brief Generic QCompleter generator function for mappings
-     */
-    virtual QCompleter *createAliasCompleterForMapping(
-            const MessageMappingTypes mappingType,
-            QObject *parent = Q_NULLPTR
-            ) = 0;
-
-    //ToTHINK Deprecated
-    /* virtual QCompleter *createIDNameCompleter( */
+    /* /** */
+    /*  * @brief Generic QCompleter generator function for mappings */
+    /*  *1/ */
+    /* virtual QCompleter *createAliasCompleterForMapping( */
+    /*         const MessageMappingTypes mappingType, */
     /*         QObject *parent = Q_NULLPTR */
-    /*         ) const = 0; */
+    /*         ) = 0; */
 
-    //ToTHINK Deprecated
-    /* virtual QCompleter *createCodeNameCompleter( */
-    /*         QObject *parent = Q_NULLPTR */
-    /*         ) const = 0; */
-
-signals:
-    /**
-     * @brief This signal is emitted when a mapping is changed
-     * 
-     * The singal is emitted with the corresponding mappingType whenever a new
-     * entry is added, an existing entry is updated, or an existing entry is
-     * removed.
-     * 
-     * @param[out] mappingType Type of the mapping that has changed
-     */
-    void sgnl_MappingChanged(
-            const IMessageConfig::MessageMappingTypes mappingType
-            );
+    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
 
     /**
-     * @brief Propagated signal that widgets or mappings can connect to in
-     * order to receive changes in the user-role
-     * 
-     * This signal is emitted as a response to receiving a user-role change
-     * from the #UserRoleMngr
+     * @brief Workaround for messy signal and slot mechanism with interfaces...
      */
-    void sgnl_PropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
-            );
-
-private slots:
-    virtual void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply) = 0;
+    virtual MessageConfigNotifier *getNotifier() = 0;
 };
-
-Q_DECLARE_INTERFACE(IMessageConfig, "R_Visualizer.IMessageConfig")
 
 #endif /* IMESSAGECONFIG_H */

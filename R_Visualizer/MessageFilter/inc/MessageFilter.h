@@ -12,6 +12,8 @@
 #include <QVector>
 #include "IMessageFilter.h"
 
+class MessageFilterNotifier;
+
 /**
  * @brief The MessageFilter
  */
@@ -63,21 +65,12 @@ public:
     virtual void removeFilter(IMsgFilter *filterToRemove);
     virtual void removeFilter(ITimestampedMsgFilter *filterToRemove);
 
-signals:
-    void sgnl_MsgFilterChanged(IMsgFilter *filterThatHasChanged);
-    void sgnl_TimestampedMsgFilterChanged(
-            ITimestampedMsgFilter *filterThatHasChanged
-            );
-    void sgnl_PropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
-            );
+    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply);
 
-public slots:
-    void slt_applyRole(
-            const UserRoleMngr::UserRole roleToApply
-            );
+    virtual MessageFilterNotifier *getNotifier();
 
 private:
+    MessageFilterNotifier *msgFilterNotifier;
     QVector<IMsgFilter *> msgFilterStore;
     QVector<ITimestampedMsgFilter *> timestampedMsgFilterStore;
 };

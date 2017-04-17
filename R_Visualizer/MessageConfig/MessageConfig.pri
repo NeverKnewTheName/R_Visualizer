@@ -8,6 +8,7 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/MessageConfig.cpp \
+    $$PWD/src/MessageConfigNotifier.cpp \
     $$PWD/src/MessageConfigWidget.cpp \
     $$PWD/src/MsgIDRep.cpp \
     $$PWD/src/MsgIDMapping.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS  += \
     $$PWD/inc/IMessageConfig.h \
+    $$PWD/inc/MessageConfigNotifier.h \
     $$PWD/inc/MessageConfig.h \
     $$PWD/inc/MessageConfigWidget.h \
     $$PWD/inc/IPlainTextAliasMapping.h \

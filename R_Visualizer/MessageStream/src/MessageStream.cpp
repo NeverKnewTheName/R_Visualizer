@@ -1,5 +1,7 @@
 #include "MessageStream.h"
 
+#include "MessageStreamNotifier.h"
+
 #include "IMessageConfig.h"
 #include "IMessageFilter.h"
 #include "IPrettyMsg.h"
@@ -13,6 +15,7 @@ MessageStream::MessageStream(
         QObject *parent
         ) :
     QObject(parent),
+    msgStreamNotifier(new MessageStreamNotifier(this, this)),
     msgConfig(msgConfig),
     msgFilter(msgFilter),
     msgStreamStore(msgStreamStore),
@@ -78,19 +81,9 @@ void MessageStream::clear()
     msgStreamStore->clear();
 }
 
-void MessageStream::slt_appendMessage(const ITimestampedMsg &msgToAppend)
+MessageStreamNotifier *MessageStream::getNotifier()
 {
-    appendMsg(msgToAppend);
-}
-
-void MessageStream::slt_prependMessage(const ITimestampedMsg &msgToPrepend)
-{
-    prependMsg(msgToPrepend);
-}
-
-void MessageStream::slt_clearStream()
-{
-    clear();
+    return msgStreamNotifier;
 }
 
 void MessageStream::connectMsgConfig()

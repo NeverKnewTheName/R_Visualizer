@@ -1,5 +1,7 @@
 #include "MessageConfig.h"
 
+#include "MessageConfigNotifier.h"
+
 #include "IMsgMapping.h"
 #include "IMsgIDMapping.h"
 #include "IMsgCodeMapping.h"
@@ -11,8 +13,9 @@ MessageConfig::MessageConfig(
         IMsgCodeMapping *msgCodeMapping,
         IMsgDataMapping *msgDataMapping,
         QObject *parent
-        ) : 
+        ) :
     QObject(parent),
+    msgConfigNotifier(new MessageConfigNotifier(this, this)),
     msgIDMapping(msgIDMapping),
     msgCodeMapping(msgCodeMapping),
     msgDataMapping(msgDataMapping)
@@ -40,25 +43,37 @@ void MessageConfig::prettifyMsgByMapping(
     mappingToApply.prettifyMsg(msgToPrettify);
 }
 
-QCompleter *MessageConfig::createAliasCompleterForMapping(
-        const IMessageConfig::MessageMappingTypes mappingType,
-        QObject *parent
+/* QCompleter *MessageConfig::createAliasCompleterForMapping( */
+/*         const IMessageConfig::MessageMappingTypes mappingType, */
+/*         QObject *parent */
+/*         ) */
+/* { */
+/*     switch(mappingType) */
+/*     { */
+/*     case IMessageConfig::MessageIDMappingType: */
+/*         //return createIDNameCompleter(parent); */
+/*         break; */
+/*     case IMessageConfig::MessageCodeMappingType: */
+/*         //return createCodeNameCompleter(parent); */
+/*         break; */
+/*     case IMessageConfig::MessageDataMappingType: */
+/*         return Q_NULLPTR; */
+/*         break; */
+/*     default: */
+/*         return Q_NULLPTR; */
+/*     } */
+/* } */
+
+void MessageConfig::applyUserRole(
+        const UserRoleMngr::UserRole roleToApply
         )
 {
-    switch(mappingType)
-    {
-    case IMessageConfig::MessageIDMappingType:
-        //return createIDNameCompleter(parent);
-        break;
-    case IMessageConfig::MessageCodeMappingType:
-        //return createCodeNameCompleter(parent);
-        break;
-    case IMessageConfig::MessageDataMappingType:
-        return Q_NULLPTR;
-        break;
-    default:
-        return Q_NULLPTR;
-    }
+    //ToDO
+}
+
+MessageConfigNotifier *MessageConfig::getNotifier()
+{
+    return msgConfigNotifier;
 }
 
 //ToTHINK DEPRECATED?
@@ -67,10 +82,10 @@ QCompleter *MessageConfig::createAliasCompleterForMapping(
 //    visitor->visit(*this);
 //}
 
-void MessageConfig::slt_ApplyRole(const UserRoleMngr::UserRole roleToApply)
-{
-    emit sgnl_PropagateUserRole(roleToApply);
-}
+/* void MessageConfig::slt_ApplyRole(const UserRoleMngr::UserRole roleToApply) */
+/* { */
+/*     emit IMessageConfig::sgnl_PropagateUserRole(roleToApply); */
+/* } */
 
 
 //QCompleter *MessageConfig::createIDNameCompleter(

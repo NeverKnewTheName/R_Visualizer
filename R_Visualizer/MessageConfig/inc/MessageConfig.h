@@ -16,6 +16,7 @@
 
 #include "userrolemngr.h"
 
+class MessageConfigNotifier;
 class IMsgMapping;
 class IMsgIDMapping;
 class IMsgCodeMapping;
@@ -28,7 +29,9 @@ class IMsgDataMapping;
  * The standard implementation has per default mappings for message ID,
  * message code, and message data fields.
  */
-class MessageConfig : public QObject, public IMessageConfig
+class MessageConfig :
+    public QObject,
+    public IMessageConfig
 {
     Q_OBJECT
 public:
@@ -49,48 +52,28 @@ public:
             const IMsgMapping &mappingToApply
             ) const;
 
-    virtual QCompleter *createAliasCompleterForMapping(
-            const IMessageConfig::MessageMappingTypes mappingType,
-            QObject *parent = Q_NULLPTR
-            );
+    /* virtual QCompleter *createAliasCompleterForMapping( */
+    /*         const IMessageConfig::MessageMappingTypes mappingType, */
+    /*         QObject *parent = Q_NULLPTR */
+    /*         ); */
 
-
-    //ToTHINK DEPRECATED?
-    //void accept(FileParser *visitor);
-
-signals:
-    /**
-     * @brief This signal is emitted when a mapping is changed
-     * 
-     * The singal is emitted with the corresponding mappingType whenever a new
-     * entry is added, an existing entry is updated, or an existing entry is
-     * removed.
-     * 
-     * @param[out] mappingType Type of the mapping that has changed
-     */
-    void sgnl_MappingChanged(
-            const IMessageConfig::MessageMappingTypes mappingType
-            );
+    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply);
 
     /**
-     * @brief Propagated signal that widgets or mappings can connect to in
-     * order to receive changes in the user-role
+     * @brief Returns the notifier to this #MessageConfig object
      * 
-     * This signal is emitted as a response to receiving a user-role change
-     * from the #UserRoleMngr
+     * The notifier was introduced to have a unified interface for signals and
+     * slots. Somehow it is not possible to declare signals and slots inside of
+     * interfaces without sacrificing sanity. Thus, this workaround shall
+     * suffice.
+     * 
+     * \note Signals and Slots for this object are contained in the notifier.
+     * Connect to the notifier to connect to this object.
      */
-    virtual void sgnl_PropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
-            );
-
-private slots:
-    void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply);
+    virtual MessageConfigNotifier *getNotifier();
 
 private:
-    QCompleter *createIDNameCompleter(QObject *parent = Q_NULLPTR);
-    QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR);
-
-private:
+    MessageConfigNotifier *msgConfigNotifier;
     IMsgIDMapping *msgIDMapping;
     IMsgCodeMapping *msgCodeMapping;
     IMsgDataMapping *msgDataMapping;

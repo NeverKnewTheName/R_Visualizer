@@ -13,6 +13,7 @@
 
 #include "userrolemngr.h"
 
+class MessageFilterNotifier;
 class IFilter;
 class IMsgFilter;
 class ITimestampedMsgFilter;
@@ -132,19 +133,9 @@ public:
      */
     virtual void removeFilter(ITimestampedMsgFilter *filterToAdd) = 0;
 
-signals:
-    virtual void sgnl_MsgFilterChanged(IMsgFilter *filterThatHasChanged) = 0;
-    virtual void sgnl_TimestampedMsgFilterChanged(
-            ITimestampedMsgFilter *filterThatHasChanged
-            ) = 0;
-    virtual void sgnl_PropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
-            ) = 0;
+    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
 
-public slots:
-    virtual void slt_applyRole(
-            const UserRoleMngr::UserRole roleToApply
-            ) = 0;
+    virtual MessageFilterNotifier *getNotifier() = 0;
 
 };
 

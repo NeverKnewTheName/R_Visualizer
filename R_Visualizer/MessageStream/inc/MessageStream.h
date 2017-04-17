@@ -13,8 +13,10 @@
 #include "IMessageStream.h"
 #include "IMsgStreamStore.h"
 
+class IMessageStreamNotifier;
 class IMessageConfig;
 class IMessageFilter;
+
 /**
  * @brief The MessageStream
  */
@@ -61,35 +63,7 @@ public:
      */
     virtual void clear();
 
-signals:
-
-    /**
-     * @brief Signal that is emitted when a new message was added to the
-     * message stream
-     */
-    void sgnl_messageAdded(const ITimestampedMsg &addedMsg);
-
-    /**
-     * @brief Singal that is emitted when the stream was cleared
-     */
-    void sgnl_streamCleared();
-
-public slots:
-
-    /**
-     * @brief Slots that appends the specified message to the stream
-     */
-    void slt_appendMessage(const ITimestampedMsg &msgToAppend);
-
-    /**
-     * @brief Slots that prepends the specified messages to the stream
-     */
-    void slt_prependMessage(const ITimestampedMsg &msgToPrepend);
-
-    /**
-     * @brief Slot that clears the message stream
-     */
-    void slt_clearStream();
+    virtual MessageStreamNotifier *getNotifier();
 
 private:
     void connectMsgConfig();
@@ -98,6 +72,7 @@ private:
     void connectMsgStreamStore();
 
 private:
+    MessageStreamNotifier *msgStreamNotifier;
     IMessageConfig *msgConfig;
     IMessageFilter *msgFilter;
     IMsgStreamStore *msgStreamStore;

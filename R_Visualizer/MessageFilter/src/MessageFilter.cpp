@@ -1,12 +1,14 @@
 #include "MessageFilter.h"
 
+#include "MessageFilterNotifier.h"
 #include "IMsgFilter.h"
 #include "ITimestampedMsgFilter.h"
 #include "IMsg.h"
 #include "ITimestampedMsg.h"
 
 MessageFilter::MessageFilter(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    msgFilterNotifier(new MessageFilterNotifier(this, this))
 {
 
 }
@@ -88,7 +90,12 @@ void MessageFilter::removeFilter(ITimestampedMsgFilter *filterToRemove)
     timestampedMsgFilterStore.removeAll(filterToRemove);
 }
 
-void MessageFilter::slt_applyRole(const UserRoleMngr::UserRole roleToApply)
+void MessageFilter::applyUserRole(const UserRoleMngr::UserRole roleToApply)
 {
-    emit sgnl_PropagateUserRole(roleToApply);
+    //ToDo
+}
+
+MessageFilterNotifier *MessageFilter::getNotifier()
+{
+    return msgFilterNotifier;
 }
