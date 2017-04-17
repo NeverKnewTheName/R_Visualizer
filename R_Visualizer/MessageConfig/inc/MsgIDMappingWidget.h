@@ -23,7 +23,6 @@ class MsgIDMappingWidget;
 class MsgIDMappingWidget : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit MsgIDMappingWidget(IMsgIDMappingModel *model, QWidget *parent = 0);
     ~MsgIDMappingWidget();

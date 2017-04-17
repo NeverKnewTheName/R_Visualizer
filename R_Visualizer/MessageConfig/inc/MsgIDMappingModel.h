@@ -23,6 +23,7 @@ class FileParser;
  */
 class MsgIDMappingModel : public QAbstractTableModel, public IMsgIDMappingModel
 {
+    Q_OBJECT
 public:
     /**
      * \brief Enumeration of the header columns for the #MsgIDMappingModel

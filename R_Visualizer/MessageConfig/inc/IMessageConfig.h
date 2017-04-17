@@ -93,9 +93,9 @@ signals:
      * 
      * @param[out] mappingType Type of the mapping that has changed
      */
-    virtual void sgnl_MappingChanged(
+    void sgnl_MappingChanged(
             const IMessageConfig::MessageMappingTypes mappingType
-            ) = 0;
+            );
 
     /**
      * @brief Propagated signal that widgets or mappings can connect to in
@@ -104,9 +104,9 @@ signals:
      * This signal is emitted as a response to receiving a user-role change
      * from the #UserRoleMngr
      */
-    virtual void sgnl_PropagateUserRole(
+    void sgnl_PropagateUserRole(
             const UserRoleMngr::UserRole roleToApply
-            ) = 0;
+            );
 
 private slots:
     virtual void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply) = 0;

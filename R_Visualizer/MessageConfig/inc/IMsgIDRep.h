@@ -31,7 +31,7 @@ public:
     virtual MsgIDType getID() const = 0;
     virtual void setID(const MsgIDType &id) = 0;
 
-    virtual IMsgIDRep &operator =(const IMsgIDRep &other) = 0;
+    /* virtual IMsgIDRep &operator =(const IMsgIDRep &other) = 0; */
 };
 
 

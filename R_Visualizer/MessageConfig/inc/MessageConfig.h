@@ -30,6 +30,7 @@ class IMsgDataMapping;
  */
 class MessageConfig : public QObject, public IMessageConfig
 {
+    Q_OBJECT
 public:
     MessageConfig(
             IMsgIDMapping *msgIDMapping,

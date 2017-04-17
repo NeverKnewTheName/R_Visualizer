@@ -10,6 +10,15 @@ MsgDataMappingStore::~MsgDataMappingStore()
 {
 }
 
+QString MsgDataMappingStore::parseMsgDataToString(const IMsg &msg) const
+{
+
+}
+
+QColor MsgDataMappingStore::parseMsgDataToColor(const IMsg &msg) const
+{
+}
+
 IMsgDataRep &MsgDataMappingStore::getMsgDataRep(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode

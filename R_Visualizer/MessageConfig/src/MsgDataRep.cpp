@@ -49,6 +49,11 @@ void MsgDataRep::setMsgCode(const MsgCodeType &msgCode)
     this->msgCode = msgCode;
 }
 
+IMsgDataFormatter *MsgDataRep::getMsgDataFormatter() const
+{
+    return msgDataFormatter;
+}
+
 void MsgDataRep::setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter)
 {
     this->msgDataFormatter = msgDataFormatter;

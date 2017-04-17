@@ -99,6 +99,16 @@ void MsgIDMappingWidget::on_idAddBtn_clicked()
     //msgIDMappingModel->appendMsgIDMapping(testRep);
 }
 
+void MsgIDMappingWidget::slt_clear()
+{
+    msgIDMappingModel->clear();
+}
+
+void MsgIDMappingWidget::slt_MsgIDRepAddFinished(const IMsgIDRep &addedMsgIDRep)
+{
+    //ToDO
+}
+
 void MsgIDMappingWidget::init()
 {
     ui->setupUi(this);

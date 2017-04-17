@@ -29,8 +29,8 @@ public:
     MsgDataMappingStore();
     virtual ~MsgDataMappingStore();
 
-    virtual QString parseMsgDataToString(const IMsg &msg);
-    virtual QColor parseMsgDataToColor(const IMsg &msg);
+    virtual QString parseMsgDataToString(const IMsg &msg) const;
+    virtual QColor parseMsgDataToColor(const IMsg &msg) const;
 
     virtual IMsgDataRep &getMsgDataRep(
             const MsgIDType &msgID,
