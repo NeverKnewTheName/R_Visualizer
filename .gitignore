@@ -1,6 +1,7 @@
 /build*
 /Docu/*
 *.pro.user*
+*.user
 *.swp
 tag
 cscope.out
