@@ -11,14 +11,17 @@ SOURCES += \
     $$PWD/src/MessageFilterNotifier.cpp \
     $$PWD/src/MessageFilterWidget.cpp \
     $$PWD/src/MsgIDFilter.cpp \
+    $$PWD/src/MsgIDFilterNotifier.cpp \
     $$PWD/src/MsgIDFilterStore.cpp \
     $$PWD/src/MsgIDFilterModel.cpp \
     $$PWD/src/MsgIDFilterWidget.cpp \
     $$PWD/src/MsgCodeFilter.cpp \
+    $$PWD/src/MsgCodeFilterNotifier.cpp \
     $$PWD/src/MsgCodeFilterStore.cpp \
     $$PWD/src/MsgCodeFilterModel.cpp \
     $$PWD/src/MsgCodeFilterWidget.cpp \
     $$PWD/src/MsgTimestampFilter.cpp \
+    $$PWD/src/MsgTimestampFilterNotifier.cpp \
     $$PWD/src/MsgTimestampFilterWidget.cpp \
     #$$PWD/src/filteridstore.cpp \
     #$$PWD/src/filtercodestore.cpp \
@@ -37,16 +40,19 @@ HEADERS  += \
     $$PWD/inc/IMsgFilter.h \
     $$PWD/inc/ITimestampedMsgFilter.h \
     $$PWD/inc/MsgIDFilter.h \
+    $$PWD/inc/MsgIDFilterNotifier.h \
     $$PWD/inc/IMsgIDFilterStore.h \
     $$PWD/inc/MsgIDFilterStore.h \
     $$PWD/inc/MsgIDFilterWidget.h \
     $$PWD/inc/MsgIDFilterModel.h \
     $$PWD/inc/MsgCodeFilter.h \
+    $$PWD/inc/MsgCodeFilterNotifier.h \
     $$PWD/inc/IMsgCodeFilterStore.h \
     $$PWD/inc/MsgCodeFilterStore.h \
     $$PWD/inc/MsgCodeFilterWidget.h \
     $$PWD/inc/MsgCodeFilterModel.h \
     $$PWD/inc/MsgTimestampFilter.h \
+    $$PWD/inc/MsgTimestampFilterNotifier.h \
     $$PWD/inc/MsgTimestampFilterWidget.h \
     #$$PWD/inc/filteridstore.h \
     #$$PWD/inc/filtercodestore.h \

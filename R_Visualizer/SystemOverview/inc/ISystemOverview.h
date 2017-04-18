@@ -10,6 +10,7 @@
 
 #include "userrolemngr.h"
 
+class SystemOverviewNotifier;
 class IMsg;
 
 /**
@@ -20,11 +21,10 @@ class ISystemOverview
 public:
     virtual ~ISystemOverview(){}
 
-signals:
+    virtual void receiveMsg(const IMsg &receivedMsg) = 0;
+    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
 
-public slots:
-    virtual void slt_receiveMsg(const IMsg &receivedMsg) = 0;
-    virtual void slt_applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
+    virtual SystemOverviewNotifier *getNotifier() = 0;
 };
 
 #endif /* ISYSTEMOVERVIEW_H */

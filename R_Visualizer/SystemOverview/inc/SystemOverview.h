@@ -11,6 +11,8 @@
 #include <QObject>
 #include "ISystemOverview.h"
 
+class SystemOverviewNotifier;
+
 /**
  * @brief The SystemOverview
  */
@@ -19,12 +21,15 @@ class SystemOverview : public QObject, public ISystemOverview
     Q_OBJECT
 public:
     explicit SystemOverview(QObject *parent = 0);
+    virtual ~SystemOverview();
 
-signals:
+    virtual void receiveMsg(const IMsg &receivedMsg);
+    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply);
 
-public slots:
-    void slt_receiveMsg(const IMsg &receivedMsg);
-    void slt_applyUserRole(const UserRoleMngr::UserRole roleToApply);
+    virtual SystemOverviewNotifier *getNotifier();
+
+private:
+    SystemOverviewNotifier *notifier;
 };
 
 #endif // SYSTEMOVERVIEW_H
