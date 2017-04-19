@@ -375,3 +375,8 @@ void MessageConfig::slt_MsgTypeRepRemoved(const MsgCodeType relatedCode)
 /* { */
 /*     emit sgnl_MsgDataRepRemoved(relatedCode); */
 /* } */
+
+
+void MessageConfig::slt_ApplyRole(UserRoleMngr::UserRole roleToApply)
+{
+}

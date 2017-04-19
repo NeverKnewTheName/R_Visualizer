@@ -100,6 +100,10 @@ private slots:
     /* void slt_MsgDataRepUpdated(const MsgDataRep &updatedMsgDataRep); */
     /* void slt_MsgDataRepRemoved(const MsgCodeType relatedCode); */
 
+
+    // IMessageConfig interface
+private slots:
+    void slt_ApplyRole(UserRoleMngr::UserRole roleToApply);
 };
 
 #endif // MESSAGECONFIG_H
