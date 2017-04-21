@@ -8,17 +8,26 @@
 #ifndef IMESSAGESTREAM_H
 #define IMESSAGESTREAM_H
 
+#include <QObject>
+
 class ITimestampedMsg;
-class MessageStreamNotifier;
 
 /**
  * @brief The #IMessageStream interface
  */
-class IMessageStream
+class IMessageStream : public QObject
 {
+    Q_OBJECT
 public:
 
-    virtual ~IMessageStream(){}
+    explicit IMessageStream(QObject *parent = Q_NULLPTR) : QObject(parent)
+    {
+
+    }
+    virtual ~IMessageStream()
+    {
+
+    }
 
     /**
      * @brief Appends the specified message to the stream
@@ -35,7 +44,22 @@ public:
      */
     virtual void clear() = 0;
 
-    virtual MessageStreamNotifier *getNotifier() = 0;
+signals:
+
+public slots:
+    /**
+     * @brief Slot that shall be called to receive messages to add to the
+     * #IMessageStream
+     * 
+     * @param[in] receivedMsg Received #ITimestampedMsg to add to the stream
+     *
+     * @note This default implementation calls #appendMsg
+     */
+    virtual void slt_receiveMessage(const ITimestampedMsg &receivedMsg)
+    {
+        appendMsg(receivedMsg);
+    }
+
 };
 
 #endif /* IMESSAGESTREAM_H */

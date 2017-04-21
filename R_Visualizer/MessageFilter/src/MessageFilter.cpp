@@ -90,7 +90,7 @@ void MessageFilter::removeFilter(ITimestampedMsgFilter *filterToRemove)
     timestampedMsgFilterStore.removeAll(filterToRemove);
 }
 
-void MessageFilter::applyUserRole(const UserRoleMngr::UserRole roleToApply)
+void MessageFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
     //ToDo
 }

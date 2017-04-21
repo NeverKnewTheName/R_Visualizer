@@ -8,12 +8,18 @@
 #ifndef IFILTER_H
 #define IFILTER_H
 
+#include <QObject>
+
+#include "IUserRoleManager.h"
+
 /**
  * @brief The #IFilter interface
  */
-class IFilter
+class IFilter : public QObject
 {
+    Q_OBJECT
 public:
+    IFilter(QObject *parent = Q_NULLPTR) : QObject(parent){}
     virtual ~IFilter(){}
 
     /**
@@ -35,36 +41,52 @@ public:
      */
     virtual bool isFilterInverted() const = 0;
 
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply) = 0;
+
 signals:
     /**
      * @brief This signal is emitted when the enable state of the filter is
      * changed
      */
-    virtual void sgnl_filterEnabled(const bool enabled) = 0;
+    void sgnl_filterEnabled(const bool enabled);
     /**
      * @brief This signal is emitted when the invert state of the filter is
      * changed
      */
-    virtual void sgnl_filterInverted(const bool inverted) = 0;
+    void sgnl_filterInverted(const bool inverted);
     /**
      * @brief This signal is emitted when the filter changes in general
      * 
      * @warning This signal is also emitted when the filter's enable or invert
      * state changes! Keep this in mind when connecting the signals to slots.
      */
-    virtual void sgnl_filterChanged() = 0;
+    void sgnl_filterChanged();
 
 public slots:
     /**
      * @brief Slot that changes the filter's enable state according to the
      * enable value
      */
-    virtual void slt_enableFilter(const bool enable) = 0;
+    virtual void slt_enableFilter(const bool enable)
+    {
+        enableFilter(enable);
+    }
     /**
      * @brief Slot that changes the filter's invert state according to the
      * invert value
      */
-    virtual void slt_invertFilter(const bool invert) = 0;
+    virtual void slt_invertFilter(const bool invert)
+    {
+        invertFilter(invert);
+    }
+
+    /**
+     * @brief Slot that applies the given UserRole to the IFilter
+     */
+    virtual void slt_applyUserRole(const UserRoleManagement::UserRole roleToApply)
+    {
+        applyUserRole(roleToApply);
+    }
 };
 
 #endif /* IFILTER_H */

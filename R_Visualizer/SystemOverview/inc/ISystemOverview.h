@@ -8,7 +8,7 @@
 #ifndef ISYSTEMOVERVIEW_H
 #define ISYSTEMOVERVIEW_H
 
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
 class SystemOverviewNotifier;
 class IMsg;
@@ -22,7 +22,7 @@ public:
     virtual ~ISystemOverview(){}
 
     virtual void receiveMsg(const IMsg &receivedMsg) = 0;
-    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply) = 0;
 
     virtual SystemOverviewNotifier *getNotifier() = 0;
 };

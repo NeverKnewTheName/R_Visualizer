@@ -9,7 +9,8 @@
 #define IMSGFILTER_H
 
 #include "IFilter.h"
-#include "IMsg.h"
+
+class IMsg;
 
 /**
  * @brief The #IMsgFilter interface
@@ -17,6 +18,7 @@
 class IMsgFilter : public IFilter
 {
 public:
+    IMsgFilter(QObject * parent = Q_NULLPTR) : IFilter(parent){}
     virtual ~IMsgFilter(){}
 
     /**

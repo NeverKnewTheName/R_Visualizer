@@ -11,7 +11,7 @@
 class ISendMsgSingle;
 class ISendMsgPackage;
 
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
 /**
  * @brief The ISendMessages interface
@@ -28,7 +28,7 @@ public:
     virtual void sendPackageMsg(ISendMsgPackage *sendMsgPackage) = 0;
 
 public slots:
-    void slt_applyUserRole(const UserRoleMngr::UserRole roleToApply);
+    void slt_applyUserRole(const UserRoleManagement::UserRole roleToApply);
 };
 
 #endif /* ISENDMESSAGES_H */

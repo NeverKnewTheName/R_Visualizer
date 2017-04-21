@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
 class IMessageFilter;
 class IMsgFilter;
@@ -33,12 +33,12 @@ signals:
             ITimestampedMsgFilter *filterThatHasChanged
             );
     void sgnl_PropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
+            const UserRoleManagement::UserRole roleToApply
             );
 
 public slots:
     void slt_applyRole(
-            const UserRoleMngr::UserRole roleToApply
+            const UserRoleManagement::UserRole roleToApply
             );
 
 private:

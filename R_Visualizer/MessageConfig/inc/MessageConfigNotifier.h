@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
 class IMessageConfig;
 class IMsgMapping;
@@ -24,7 +24,7 @@ public:
             );
 
     virtual void emitSgnlPropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
+            const UserRoleManagement::UserRole roleToApply
             );
 
 signals:
@@ -49,11 +49,11 @@ signals:
      * from the #UserRoleMngr
      */
     void sgnl_PropagateUserRole(
-            const UserRoleMngr::UserRole roleToApply
+            const UserRoleManagement::UserRole roleToApply
             );
 
 public slots:
-    void slt_ApplyRole(const UserRoleMngr::UserRole roleToApply);
+    void slt_ApplyRole(const UserRoleManagement::UserRole roleToApply);
 
 private:
     IMessageConfig *msgConfig;

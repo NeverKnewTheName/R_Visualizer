@@ -18,7 +18,7 @@ void SystemOverview::receiveMsg(const IMsg &receivedMsg)
     //ToDo
 }
 
-void SystemOverview::applyUserRole(const UserRoleMngr::UserRole roleToApply)
+void SystemOverview::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
     //ToDo
 }

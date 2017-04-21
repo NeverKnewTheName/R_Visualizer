@@ -12,7 +12,7 @@
 /* #include "can_packet.h" */
 /* #include "devicehandler.h" */
 
-#include "userrolemngr.h"
+#include "UserRoleManager.h"
 
 #include <QMainWindow>
 
@@ -49,15 +49,15 @@ public:
      */
     ~MainWindow();
 
-    void setMessageStreamWidget(MessageStreamWidget *msgStreamWidget);
+    /* void setMessageStreamWidget(MessageStreamWidget *msgStreamWidget); */
     void appendTabMenuWidget(
             QWidget *widgetToAppend,
             const QString &widgetName
             );
-    void setErrorDialog(ErrorLogView *errorLogDialog);
+    /* void setErrorDialog(ErrorLogView *errorLogDialog); */
 
 signals:
-    void switchUserRoles(UserRoleMngr::UserRole roleToSwitchTo);
+    void switchUserRoles(UserRoleManagement::UserRole roleToSwitchTo);
     /* void dataReceived(Data_PacketPtr); */
     /* void errorReceived(Error_PacketPtr); */
 
@@ -104,7 +104,7 @@ private slots:
      * 
      * The #UserRole affects the SwitchRoles button as well as advanced options in the menu.
      */
-    void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
+    void applyRole(UserRoleManagement::UserRole roleToSwitchTo);
 
     void on_actionSwitch_User_Role_triggered();
 
@@ -143,7 +143,7 @@ private:
 
     //ErrorLogView *errLogViewDiag;
 
-    UserRoleMngr userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
+    UserRoleManager userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
     bool m_IsConnectedToDevice; //!< Keeps track of whether an interface ot an R_Sys is connected
 };
 

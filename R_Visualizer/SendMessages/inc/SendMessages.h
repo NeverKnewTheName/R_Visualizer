@@ -33,12 +33,12 @@ public:
     virtual void removeSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd);
 
 public slots:
-    void slt_applyUserRole(const UserRoleMngr::UserRole roleToApply);
+    void slt_applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
 private:
     QVector<ISendMsgSingle *> sendMsgSingleInstances;
     QVector<ISendMsgPackage *> sendMsgPackageInstances;
-    UserRoleMngr::UserRole currentUserRole;
+    UserRoleManagement::UserRole currentUserRole;
 
 };
 

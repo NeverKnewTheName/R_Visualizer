@@ -13,14 +13,13 @@
 #include "IMessageStream.h"
 #include "IMsgStreamStore.h"
 
-class IMessageStreamNotifier;
 class IMessageConfig;
 class IMessageFilter;
 
 /**
  * @brief The MessageStream
  */
-class MessageStream : public QObject, public IMessageStream
+class MessageStream : public IMessageStream
 {
     Q_OBJECT
 public:
@@ -63,8 +62,6 @@ public:
      */
     virtual void clear();
 
-    virtual MessageStreamNotifier *getNotifier();
-
 private:
     void connectMsgConfig();
     void connectMsgFilter();
@@ -72,7 +69,6 @@ private:
     void connectMsgStreamStore();
 
 private:
-    MessageStreamNotifier *msgStreamNotifier;
     IMessageConfig *msgConfig;
     IMessageFilter *msgFilter;
     IMsgStreamStore *msgStreamStore;

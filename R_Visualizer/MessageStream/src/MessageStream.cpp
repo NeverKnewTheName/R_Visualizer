@@ -14,8 +14,8 @@ MessageStream::MessageStream(
         TimestampedMsgStorage &msgStorage,
         QObject *parent
         ) :
-    QObject(parent),
-    msgStreamNotifier(new MessageStreamNotifier(this, this)),
+    IMessageStream(parent),
+    //msgStreamNotifier(new MessageStreamNotifier(this, this)),
     msgConfig(msgConfig),
     msgFilter(msgFilter),
     msgStreamStore(msgStreamStore),
@@ -81,10 +81,10 @@ void MessageStream::clear()
     msgStreamStore->clear();
 }
 
-MessageStreamNotifier *MessageStream::getNotifier()
-{
-    return msgStreamNotifier;
-}
+//MessageStreamNotifier *MessageStream::getNotifier()
+//{
+    //return msgStreamNotifier;
+//}
 
 void MessageStream::connectMsgConfig()
 {

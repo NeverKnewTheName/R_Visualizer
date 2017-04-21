@@ -32,7 +32,7 @@ void MessageFilterNotifier::emitSnglTimestampedMsgFilterChanged
 }
 
 void MessageFilterNotifier::slt_applyRole(
-        const UserRoleMngr::UserRole roleToApply
+        const UserRoleManagement::UserRole roleToApply
         )
 {
     msgFilter->applyUserRole(roleToApply);

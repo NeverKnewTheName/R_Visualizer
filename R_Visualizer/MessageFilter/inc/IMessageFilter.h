@@ -11,7 +11,7 @@
 
 #include "IMsg.h"
 
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
 class MessageFilterNotifier;
 class IFilter;
@@ -133,7 +133,7 @@ public:
      */
     virtual void removeFilter(ITimestampedMsgFilter *filterToAdd) = 0;
 
-    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply) = 0;
 
     virtual MessageFilterNotifier *getNotifier() = 0;
 

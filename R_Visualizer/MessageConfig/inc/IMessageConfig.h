@@ -1,31 +1,28 @@
 /**
- * \file IMessageConfig.h
- * \author Christian Neuberger
- * \date 2017-03-23
+ * @file IMessageConfig.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
  * 
- * \brief An interface for the Message Config Module
+ * @brief An interface for the Message Config Module
  */
 #ifndef IMESSAGECONFIG_H
 #define IMESSAGECONFIG_H
 
 #include <QObject>
-#include <QString>
-#include <QColor>
-#include <QCompleter>
 
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
-class MessageConfigNotifier;
 class IPrettyMsg;
 class IMsgMapping;
 class IMsg;
 class ITimestampedMsg;
 
 /**
- * \brief The IMessageConfig interface
+ * @brief The IMessageConfig interface
  */
-class IMessageConfig
+class IMessageConfig : public QObject
 {
+    Q_OBJECT
 public:
     /**
      * @brief Enumeration of mapping types
@@ -46,37 +43,75 @@ public:
         USERMappingType //!< Start of USER definded mappings
     }MessageMappingTypes;
 
+    explicit IMessageConfig(QObject *parent = Q_NULLPTR) : QObject(parent){}
+
     /**
      * @brief Destructor
      */
     virtual ~IMessageConfig(){}
 
     /**
-     * @brief Prettifies the given #IPrettyMsg and returns a reference to it
+     * @brief Prettifies the given #IPrettyMsg
+     * 
+     * @param[inout] msgToPrettify #IPrettyMsg that shall be prettified
      */
     virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const = 0;
 
+    /**
+     * @brief Prettifies the given #IPrettyMsg with the given #IMsgMapping
+     * 
+     * @param[inout] msgToPrettify #IPrettyMsg that shall be prettified
+     * @param[in] mappingToApply #IMsgMapping that shall be used to prettify
+     */
     virtual void prettifyMsgByMapping(
             IPrettyMsg &msgToPrettify,
             const IMsgMapping &mappingToApply
             ) const = 0;
 
-    /* /** */
-    /*  * @brief Generic QCompleter generator function for mappings */
-    /*  *1/ */
-    /* virtual QCompleter *createAliasCompleterForMapping( */
-    /*         const MessageMappingTypes mappingType, */
-    /*         QObject *parent = Q_NULLPTR */
-    /*         ) = 0; */
+    /**
+     * @brief Applies the roleToApply to this module
+     * 
+     * @note Must emit sgnl_PropagateUserRole to inform sub-modules about the
+     * changes to the current UserRole
+     */
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply) = 0;
 
-    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply) = 0;
+signals:
+    /**
+     * @brief This signal shall be emitted wheneever a contained mapping has
+     * changed to inform interrested parties about this evernt
+     * 
+     * Modules that make use of the #IMessageConfig must be informed whenever a
+     * mapping contained in the #IMessageConfig object changes to react to this
+     * change by calling #prettifyMsgByMapping for example.
+     */
+    void sgnl_MappingChanged(
+            const IMsgMapping &changedMapping
+            );
 
     /**
-     * @brief Workaround for messy signal and slot mechanism with interfaces...
+     * @brief This signal must be emitted whenever the UserRole of this object
+     * changes to inform sub-modules about the new UserRole
      */
-    virtual MessageConfigNotifier *getNotifier() = 0;
+    void sgnl_PropagateUserRole(
+            const UserRoleManagement::UserRole roleToApply
+            );
+
+public slots:
+    /**
+     * @brief This slot must be called to enforce a new UserRole to this module
+     * 
+     * @note Calls #applyUserRole
+     * 
+     * @note This slot does not emit #sgnl_PropagateUserRole
+     */
+    virtual void slt_ApplyRole(const UserRoleManagement::UserRole roleToApply)
+    {
+        applyUserRole(roleToApply);
+    }
+
 };
 
 #endif /* IMESSAGECONFIG_H */

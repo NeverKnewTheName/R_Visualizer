@@ -24,7 +24,7 @@ public:
     virtual ~SystemOverview();
 
     virtual void receiveMsg(const IMsg &receivedMsg);
-    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply);
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
     virtual SystemOverviewNotifier *getNotifier();
 

@@ -65,7 +65,7 @@ public:
     virtual void removeFilter(IMsgFilter *filterToRemove);
     virtual void removeFilter(ITimestampedMsgFilter *filterToRemove);
 
-    virtual void applyUserRole(const UserRoleMngr::UserRole roleToApply);
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
     virtual MessageFilterNotifier *getNotifier();
 

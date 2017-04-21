@@ -8,16 +8,15 @@
 #ifndef IMSGMAPPING_H
 #define IMSGMAPPING_H
 
-#include "IPrettyMsg.h"
-#include "IMsg.h"
-#include "ITimestampedMsg.h"
-
 #include "IFileParsable.h"
+#include "IUserRoleManageable.h"
+
+class IPrettyMsg;
 
 /**
  * @brief The IMsgMapping interface
  */
-class IMsgMapping : public IFileParsable
+class IMsgMapping : public QObject, public IUserRoleManageable, public IFileParsable
 {
 public:
     virtual ~IMsgMapping(){}
@@ -28,6 +27,16 @@ public:
     virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const = 0;
+
+signals:
+    void sgnl_MappingChanged(const IMsgMapping &mapping);
+
+public slots:
+    virtual void slt_ApplyRole(const UserRoleManagement::UserRole roleToApply)
+    {
+        applyUserRole(roleToApply);
+    }
+
 };
 
 #endif /* IMSGMAPPING_H */

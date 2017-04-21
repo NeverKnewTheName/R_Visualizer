@@ -15,11 +15,11 @@
 //#include "msgdatadelegate.h"
 //#include "filteridstore.h"
 
-#include "errlogview.h"
+//#include "errlogview.h"
 
 #include "csvmsgpackethandler.h"
 
-#include "devicehandler.h"
+//#include "devicehandler.h"
 
 #include <QFile>
 #include <QFileDialog>
@@ -34,7 +34,7 @@
 /* #include "jsoninparser.h" */
 /* #include "jsonoutparser.h" */
 
-#include "MessageStreamWidget.h"
+//#include "MessageStreamWidget.h"
 
 #define __DEBUG__
 
@@ -62,16 +62,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setMessageStreamWidget(MessageStreamWidget *msgStreamWidget)
-{
-    QWidget *oldMsgStream = ui->splitter->widget(0);
-    if(oldMsgStream != Q_NULLPTR && oldMsgStream != ui->configTabWidget)
-    {
-        oldMsgStream->setParent(Q_NULLPTR);
-        oldMsgStream->deleteLater();
-    }
-    ui->splitter->insertWidget(0,msgStreamWidget);
-}
+/* void MainWindow::setMessageStreamWidget(MessageStreamWidget *msgStreamWidget) */
+/* { */
+/*     QWidget *oldMsgStream = ui->splitter->widget(0); */
+/*     if(oldMsgStream != Q_NULLPTR && oldMsgStream != ui->configTabWidget) */
+/*     { */
+/*         oldMsgStream->setParent(Q_NULLPTR); */
+/*         oldMsgStream->deleteLater(); */
+/*     } */
+/*     ui->splitter->insertWidget(0,msgStreamWidget); */
+/* } */
 
 void MainWindow::appendTabMenuWidget(
         QWidget *widgetToAppend,
@@ -81,10 +81,10 @@ void MainWindow::appendTabMenuWidget(
     ui->configTabWidget->addTab(widgetToAppend,widgetName);
 }
 
-void MainWindow::setErrorDialog(ErrorLogView *errorLogDialog)
-{
-//    this->errLogViewDiag = errorLogDialog;
-}
+/* void MainWindow::setErrorDialog(ErrorLogView *errorLogDialog) */
+/* { */
+/*     this->errLogViewDiag = errorLogDialog; */
+/* } */
 
 void MainWindow::initDeviceHandler()
 {
@@ -123,13 +123,13 @@ void MainWindow::initUserRoleManager()
 
 void MainWindow::connectUserRoleManager()
 {
-//    connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleMngr::switchRoles);
+//    connect(this, &MainWindow::switchUserRoles, &userRoleMngr, &UserRoleManagement::switchRoles);
 //    connect(this, &MainWindow::switchUserRoles, sysOvrvWidget, &SystemOverview::slt_applyRole);
 //    connect(this, &MainWindow::switchUserRoles, sndMsgsWidget, &SendMessages::applyRole);
     /* connect(this, &MainWindow::switchUserRoles, msgConfigWidget, &MessageConfig::applyRole); */
     connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
 
-    emit switchUserRoles(UserRoleMngr::NormalUserRole);
+    emit switchUserRoles(UserRoleManagement::NormalUserRole);
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -277,17 +277,17 @@ void MainWindow::on_actionStop_triggered()
     emit ui->actionConnect->triggered();
 }
 
-void MainWindow::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
+void MainWindow::applyRole(UserRoleManagement::UserRole roleToSwitchTo)
 {
     QString RoleName;
     QIcon RoleIcon;
 
-    if( roleToSwitchTo == UserRoleMngr::NormalUserRole )
+    if( roleToSwitchTo == UserRoleManagement::NormalUserRole )
     {
         RoleIcon = QIcon(":/GUI/Icons/Icons/UserAdmin-32.png");
         RoleName = QString("Admin");
     }
-    else if( roleToSwitchTo == UserRoleMngr::AdminRole )
+    else if( roleToSwitchTo == UserRoleManagement::AdminRole )
     {
         RoleIcon = QIcon(":/GUI/Icons/Icons/UserNormal-32.png");
         RoleName = QString("User");
@@ -300,18 +300,18 @@ void MainWindow::applyRole(UserRoleMngr::UserRole roleToSwitchTo)
 
 void MainWindow::on_actionSwitch_User_Role_triggered()
 {
-    UserRoleMngr::UserRole role = userRoleMngr.getCurrentRole();
+    UserRoleManagement::UserRole role = userRoleMngr.getUserRole();
 
-    if( role == UserRoleMngr::NormalUserRole )
+    if( role == UserRoleManagement::NormalUserRole )
     {
-        role = UserRoleMngr::AdminRole;
+        role = UserRoleManagement::AdminRole;
     }
-    else if( role == UserRoleMngr::AdminRole )
+    else if( role == UserRoleManagement::AdminRole )
     {
-        role = UserRoleMngr::NormalUserRole;
+        role = UserRoleManagement::NormalUserRole;
     }
 
-    emit this->switchUserRoles(role);
+    userRoleMngr.setUserRole(role);
 }
 
 //void MainWindow::scrollBarMsgTableViewMoved(int position)

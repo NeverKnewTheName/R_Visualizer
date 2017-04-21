@@ -9,7 +9,7 @@
 #define SYSTEMOVERVIEWNOTIFIER_H
 
 #include <QObject>
-#include "userrolemngr.h"
+#include "IUserRoleManager.h"
 
 class ISystemOverview;
 class IMsg;
@@ -31,7 +31,7 @@ signals:
 
 public slots:
     void slt_receiveMsg(const IMsg &receivedMsg);
-    void slt_applyUserRole(const UserRoleMngr::UserRole roleToApply);
+    void slt_applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
 private:
     ISystemOverview *systemOverview;

@@ -24,14 +24,14 @@ void MessageConfigNotifier::emitSgnlMappingChanged(
 }
 
 void MessageConfigNotifier::emitSgnlPropagateUserRole(
-        const UserRoleMngr::UserRole roleToApply
+        const UserRoleManagement::UserRole roleToApply
         )
 {
     emit sgnl_PropagateUserRole(roleToApply);
 }
 
 void MessageConfigNotifier::slt_ApplyRole(
-        const UserRoleMngr::UserRole roleToApply
+        const UserRoleManagement::UserRole roleToApply
         )
 {
     emit sgnl_PropagateUserRole(roleToApply);

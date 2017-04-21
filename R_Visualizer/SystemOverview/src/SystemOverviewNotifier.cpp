@@ -23,7 +23,7 @@ void SystemOverviewNotifier::slt_receiveMsg(
 }
 
 void SystemOverviewNotifier::slt_applyUserRole(
-        const UserRoleMngr::UserRole roleToApply
+        const UserRoleManagement::UserRole roleToApply
         )
 {
     systemOverview->applyUserRole(roleToApply);

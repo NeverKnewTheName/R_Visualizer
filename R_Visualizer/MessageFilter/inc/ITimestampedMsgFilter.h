@@ -9,7 +9,8 @@
 #define ITIMESTAMPEDMSGFILTER_H
 
 #include "IFilter.h"
-#include "ITimestampedMsg.h"
+
+class ITimestampedMsg;
 
 /**
  * @brief The #ITimestampedMsgFilter interface
@@ -17,6 +18,7 @@
 class ITimestampedMsgFilter : public IFilter
 {
 public:
+    ITimestampedMsgFilter(QObject *parent = Q_NULLPTR) : IFilter(parent){}
     virtual ~ITimestampedMsgFilter(){}
 
     /**

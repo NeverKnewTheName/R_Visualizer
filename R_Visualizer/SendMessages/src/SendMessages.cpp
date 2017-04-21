@@ -32,7 +32,7 @@ void SendMessages::removeSendMsgPackage(ISendMsgPackage *sendMsgPackage)
     sendMsgPackageInstances.removeAll(sendMsgPackage);
 }
 
-void SendMessages::slt_applyUserRole(const UserRoleMngr::UserRole roleToApply)
+void SendMessages::slt_applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
     currentUserRole = roleToApply;
 }

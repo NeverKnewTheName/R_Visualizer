@@ -2,18 +2,18 @@
 
 #include "Msg.h"
 #include "TimestampedMsg.h"
-#include "MsgStreamStore.h"
-#include "msgstorage.h"
-#include "SendMsgPackageStore.h"
+/* #include "MsgStreamStore.h" */
+/* #include "msgstorage.h" */
+/* #include "SendMsgPackageStore.h" */
 #include "MsgIDMappingStore.h"
 #include "MsgIDRep.h"
 #include "MsgCodeMappingStore.h"
 #include "MsgCodeRep.h"
 #include "MsgDataMappingStore.h"
 #include "MsgDataRep.h"
-#include "MsgIDFilterStore.h"
-#include "MsgCodeFilterStore.h"
-#include "MsgTimestampFilter.h"
+/* #include "MsgIDFilterStore.h" */
+/* #include "MsgCodeFilterStore.h" */
+/* #include "MsgTimestampFilter.h" */
 
 #include <QDebug>
 
@@ -63,21 +63,21 @@ void JsonOutParser::visit(TimestampedMsg &visitor)
 {
 }
 
-void JsonOutParser::visit(MsgStreamStore &visitor)
-{
-}
+/* void JsonOutParser::visit(MsgStreamStore &visitor) */
+/* { */
+/* } */
 
-void JsonOutParser::visit(MsgStorage &visitor)
-{
-}
+/* void JsonOutParser::visit(MsgStorage &visitor) */
+/* { */
+/* } */
 
-void JsonOutParser::visit(TimestampedMsgStorage &visitor)
-{
-}
+/* void JsonOutParser::visit(TimestampedMsgStorage &visitor) */
+/* { */
+/* } */
 
-void JsonOutParser::visit(SendMsgPackageStore &visitor)
-{
-}
+/* void JsonOutParser::visit(SendMsgPackageStore &visitor) */
+/* { */
+/* } */
 
 void JsonOutParser::visit(MsgIDMappingStore &visitor)
 {
@@ -103,17 +103,19 @@ void JsonOutParser::visit(MsgDataRep &visitor)
 {
 }
 
-void JsonOutParser::visit(MsgIDFilterStore &visitor)
-{
-}
+/* void JsonOutParser::visit(MsgIDFilterStore &visitor) */
+/* { */
+/* } */
 
-void JsonOutParser::visit(MsgCodeFilterStore &visitor)
-{
-}
+/* void JsonOutParser::visit(MsgCodeFilterStore &visitor) */
+/* { */
+/* } */
 
-void JsonOutParser::visit(MsgTimestampFilter &visitor)
-{
-}
+/* void JsonOutParser::visit(MsgTimestampFilter &visitor) */
+/* { */
+/* } */
+
+
 
 /* void JsonOutParser::visit(SysOvrvObject &visitor) */
 /* { */

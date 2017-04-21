@@ -9,9 +9,11 @@
 #include "Msg.h"
 #include "TimestampedMsg.h"
 
-#include "msgstorage.h"
+/* #include "msgstorage.h" */
 
-#include "devicehandler.h"
+/* #include "devicehandler.h" */
+
+#include "UserRoleManager.h"
 
 #include "IMessageConfig.h"
 #include "MessageConfig.h"
@@ -38,26 +40,26 @@
 #include "MsgDataMappingWidget.h"
 #include "MessageConfigWidget.h"
 
-#include "IMessageFilter.h"
-#include "MessageFilter.h"
-#include "MessageFilterWidget.h"
+/* #include "IMessageFilter.h" */
+/* #include "MessageFilter.h" */
+/* #include "MessageFilterWidget.h" */
 /* #include "IFilter.h" */
-#include "IMsgFilter.h"
-#include "ITimestampedMsgFilter.h"
-#include "MsgIDFilter.h"
-#include "IMsgIDFilterStore.h"
-#include "MsgIDFilterStore.h"
-#include "MsgIDFilterWidget.h"
-#include "MsgIDFilterModel.h"
-#include "MsgCodeFilter.h"
-#include "IMsgCodeFilterStore.h"
-#include "MsgCodeFilterStore.h"
-#include "MsgCodeFilterWidget.h"
-#include "MsgCodeFilterModel.h"
-#include "MsgTimestampFilter.h"
-#include "MsgTimestampFilterWidget.h"
+/* #include "IMsgFilter.h" */
+/* #include "ITimestampedMsgFilter.h" */
+/* #include "MsgIDFilter.h" */
+/* #include "IMsgIDFilterStore.h" */
+/* #include "MsgIDFilterStore.h" */
+/* #include "MsgIDFilterWidget.h" */
+/* #include "MsgIDFilterModel.h" */
+/* #include "MsgCodeFilter.h" */
+/* #include "IMsgCodeFilterStore.h" */
+/* #include "MsgCodeFilterStore.h" */
+/* #include "MsgCodeFilterWidget.h" */
+/* #include "MsgCodeFilterModel.h" */
+/* #include "MsgTimestampFilter.h" */
+/* #include "MsgTimestampFilterWidget.h" */
 
-#include "errorlogentry.h"
+/* #include "errorlogentry.h" */
 
 int main(int argc, char *argv[])
 {
@@ -74,19 +76,30 @@ int main(int argc, char *argv[])
     qRegisterMetaType <TimestampedMsg>("TimestampedMsg");
     /* qRegisterMetaType <MsgData>("MsgData"); */
     /* qRegisterMetaType <DataByteVect>("DataByteVect"); */
-    qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
+    /* qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry"); */
 
     MainWindow w;
-    DeviceHandler *interfaceHandler = new DeviceHandler();
-    TimestampedMsgStorage timestampedMsgStorage;
+    /* DeviceHandler *interfaceHandler = new DeviceHandler(); */
+    /* TimestampedMsgStorage timestampedMsgStorage; */
 
     IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
+
+    msgIDMappingStore->addMsgIDMapping(
+            MsgIDType(0x01),
+            MsgIDRep(MsgIDType(0x01))
+                );
+
     IMsgIDMapping *msgIDMapping = new MsgIDMapping(msgIDMappingStore);
     IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
             msgIDMappingStore
             );
+
     IMsgCodeMappingStore *msgCodeMappingStore = new MsgCodeMappingStore();
     IMsgCodeMapping *msgCodeMapping = new MsgCodeMapping(msgCodeMappingStore);
+    IMsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
+            msgCodeMappingStore
+            );
+
     IMsgDataMappingStore *msgDataMappingStore = new MsgDataMappingStore();
     IMsgDataMapping *msgDataMapping = new MsgDataMapping(msgDataMappingStore);
 
@@ -104,26 +117,33 @@ int main(int argc, char *argv[])
             msgIDMappingModel,
             messageConfigWidget
             );
+    MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
+            msgCodeMappingModel,
+            messageConfigWidget
+            );
     messageConfigWidget->appendMappingWidget(msgIDMappingWidget);
+    messageConfigWidget->appendMappingWidget(msgCodeMappingWidget);
+
+    w.appendTabMenuWidget(messageConfigWidget, "Message Configuration");
     /* messageConfigWidget->appendMappingWidget(); */
 
-    MessageFilter *messageFilter = new MessageFilter(&a);
-    MessageFilterWidget *messageFilterWidget = new MessageFilterWidget(&w);
-    IMsgIDFilterStore *msgIDFilterStore = new MsgIDFilterStore();
-    MsgIDFilter *msgIDFilter = new MsgIDFilter(
-            msgIDFilterStore,
-            messageFilter
-            );
-    //msgIDFilterStore->setParent(msgIDFilter);
-    messageFilter->addFilter(msgIDFilter);
-    MsgIDFilterWidget *msgIDFilterWidget = new MsgIDFilterWidget(
-            messageFilterWidget
-            );
-    MsgIDFilterModel *msgIDFilterModel = new MsgIDFilterModel(
-            msgIDFilterStore,
-            msgIDFilterWidget
-            );
-    messageFilterWidget->addFilterWidget(msgIDFilterWidget);
+    /* MessageFilter *messageFilter = new MessageFilter(&a); */
+    /* MessageFilterWidget *messageFilterWidget = new MessageFilterWidget(&w); */
+    /* IMsgIDFilterStore *msgIDFilterStore = new MsgIDFilterStore(); */
+    /* MsgIDFilter *msgIDFilter = new MsgIDFilter( */
+    /*         msgIDFilterStore, */
+    /*         messageFilter */
+    /*         ); */
+
+    /* messageFilter->addFilter(msgIDFilter); */
+    /* MsgIDFilterWidget *msgIDFilterWidget = new MsgIDFilterWidget( */
+    /*         messageFilterWidget */
+    /*         ); */
+    /* MsgIDFilterModel *msgIDFilterModel = new MsgIDFilterModel( */
+    /*         msgIDFilterStore, */
+    /*         msgIDFilterWidget */
+    /*         ); */
+    /* messageFilterWidget->addFilterWidget(msgIDFilterWidget); */
 
 
     //MessageStream *messageStreamWidget = new MessageStream(

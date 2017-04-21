@@ -14,8 +14,8 @@ MessageConfig::MessageConfig(
         IMsgDataMapping *msgDataMapping,
         QObject *parent
         ) :
-    QObject(parent),
-    msgConfigNotifier(new MessageConfigNotifier(this, this)),
+    IMessageConfig(parent),
+    //msgConfigNotifier(new MessageConfigNotifier(this, this)),
     msgIDMapping(msgIDMapping),
     msgCodeMapping(msgCodeMapping),
     msgDataMapping(msgDataMapping)
@@ -65,16 +65,16 @@ void MessageConfig::prettifyMsgByMapping(
 /* } */
 
 void MessageConfig::applyUserRole(
-        const UserRoleMngr::UserRole roleToApply
+        const UserRoleManagement::UserRole roleToApply
         )
 {
     //ToDO
 }
 
-MessageConfigNotifier *MessageConfig::getNotifier()
-{
-    return msgConfigNotifier;
-}
+//MessageConfigNotifier *MessageConfig::getNotifier()
+//{
+    //return msgConfigNotifier;
+//}
 
 //ToTHINK DEPRECATED?
 //void MessageConfig::accept(FileParser *visitor)
@@ -82,7 +82,7 @@ MessageConfigNotifier *MessageConfig::getNotifier()
 //    visitor->visit(*this);
 //}
 
-/* void MessageConfig::slt_ApplyRole(const UserRoleMngr::UserRole roleToApply) */
+/* void MessageConfig::slt_ApplyRole(const UserRoleManagement::UserRole roleToApply) */
 /* { */
 /*     emit IMessageConfig::sgnl_PropagateUserRole(roleToApply); */
 /* } */
