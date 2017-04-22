@@ -6,11 +6,11 @@
 /* #include "msgstorage.h" */
 /* #include "SendMsgPackageStore.h" */
 #include "MsgIDMappingStore.h"
-#include "MsgIDRep.h"
+#include "MsgIDMapping.h"
 #include "MsgCodeMappingStore.h"
-#include "MsgCodeRep.h"
+#include "MsgCodeMapping.h"
 #include "MsgDataMappingStore.h"
-#include "MsgDataRep.h"
+#include "MsgDataMapping.h"
 /* #include "MsgIDFilterStore.h" */
 /* #include "MsgCodeFilterStore.h" */
 /* #include "MsgTimestampFilter.h" */
@@ -53,7 +53,7 @@ void CsvOutParser::visit(MsgIDMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgIDRep &visitor)
+void CsvOutParser::visit(MsgIDMapping &visitor)
 {
 }
 
@@ -61,7 +61,7 @@ void CsvOutParser::visit(MsgCodeMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgCodeRep &visitor)
+void CsvOutParser::visit(MsgCodeMapping &visitor)
 {
 }
 
@@ -69,7 +69,7 @@ void CsvOutParser::visit(MsgDataMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgDataRep &visitor)
+void CsvOutParser::visit(MsgDataMapping &visitor)
 {
 }
 

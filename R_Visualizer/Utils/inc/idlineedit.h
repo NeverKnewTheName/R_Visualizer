@@ -14,7 +14,7 @@
 
 #include "MsgIDType.h"
 
-class IMsgIDMapping;
+class IMsgIDMappingManager;
 
 /**
  * @brief The IDLineEdit
@@ -39,7 +39,7 @@ public:
      * that is related to the #msgIDMapping's #IMsgIDMappingStore
      */
     IDLineEdit(
-            const IMsgIDMapping *msgIDMapping,
+            const IMsgIDMappingManager *msgIDMappingManager,
             QCompleter *msgIDAliasCompleter = Q_NULLPTR,
             QWidget *parent = Q_NULLPTR
             );
@@ -53,7 +53,7 @@ public:
      * 
      * @note Sets up the connections automatically
      */
-    void setMsgIDMapping(const IMsgIDMapping *msgIDMapping);
+    void setMsgIDMapping(const IMsgIDMappingManager *msgIDMappingManager);
 
     /**
      * @brief Returns the parsed #MsgIDType from the #IDLineEdit
@@ -72,7 +72,7 @@ private:
      * #MsgIDTypes. Additionally, the background color of the #IDLineEdit is
      * adapted to the color representation for the text alias, if available
      */
-    const IMsgIDMapping *msgIDMapping;
+    const IMsgIDMappingManager *msgIDMappingManager;
     /* QCompleter *msgIDAliasCompleter; */
     /**
      * @brief Connection object that holds the connection between the passed

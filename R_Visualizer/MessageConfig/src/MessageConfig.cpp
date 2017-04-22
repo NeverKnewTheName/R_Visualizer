@@ -2,23 +2,23 @@
 
 #include "MessageConfigNotifier.h"
 
-#include "IMsgMapping.h"
-#include "IMsgIDMapping.h"
-#include "IMsgCodeMapping.h"
-#include "IMsgDataMapping.h"
+#include "IMsgMappingManager.h"
+#include "IMsgIDMappingManager.h"
+#include "IMsgCodeMappingManager.h"
+#include "IMsgDataMappingManager.h"
 #include "IPrettyMsg.h"
 
 MessageConfig::MessageConfig(
-        IMsgIDMapping *msgIDMapping,
-        IMsgCodeMapping *msgCodeMapping,
-        IMsgDataMapping *msgDataMapping,
+        IMsgIDMappingManager *msgIDMappingManager,
+        IMsgCodeMappingManager *msgCodeMappingManager,
+        IMsgDataMappingManager *msgDataMappingManager,
         QObject *parent
         ) :
     IMessageConfig(parent),
     //msgConfigNotifier(new MessageConfigNotifier(this, this)),
-    msgIDMapping(msgIDMapping),
-    msgCodeMapping(msgCodeMapping),
-    msgDataMapping(msgDataMapping)
+    msgIDMappingManager(msgIDMappingManager),
+    msgCodeMappingManager(msgCodeMappingManager),
+    msgDataMappingManager(msgDataMappingManager)
 {
 }
 
@@ -30,14 +30,14 @@ void MessageConfig::prettifyMsg(
         IPrettyMsg &msgToPrettify
         ) const
 {
-    msgIDMapping->prettifyMsg(msgToPrettify);
-    msgCodeMapping->prettifyMsg(msgToPrettify);
-    msgDataMapping->prettifyMsg(msgToPrettify);
+    msgIDMappingManager->prettifyMsg(msgToPrettify);
+    msgCodeMappingManager->prettifyMsg(msgToPrettify);
+    msgDataMappingManager->prettifyMsg(msgToPrettify);
 }
 
-void MessageConfig::prettifyMsgByMapping(
+void MessageConfig::prettifyMsgByMappingManager(
         IPrettyMsg &msgToPrettify,
-        const IMsgMapping &mappingToApply
+        const IMsgMappingManager &mappingToApply
         ) const
 {
     mappingToApply.prettifyMsg(msgToPrettify);

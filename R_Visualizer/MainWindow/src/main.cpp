@@ -17,6 +17,8 @@
 
 #include "IMessageConfig.h"
 #include "MessageConfig.h"
+#include "IMsgIDMappingManager.h"
+#include "MsgIDMappingManager.h"
 #include "IMsgIDMapping.h"
 #include "MsgIDMapping.h"
 #include "IMsgIDMappingStore.h"
@@ -24,6 +26,8 @@
 #include "IMsgIDMappingModel.h"
 #include "MsgIDMappingModel.h"
 #include "MsgIDMappingWidget.h"
+#include "IMsgCodeMappingManager.h"
+#include "MsgCodeMappingManager.h"
 #include "IMsgCodeMapping.h"
 #include "MsgCodeMapping.h"
 #include "IMsgCodeMappingStore.h"
@@ -31,6 +35,8 @@
 #include "IMsgCodeMappingModel.h"
 #include "MsgCodeMappingModel.h"
 #include "MsgCodeMappingWidget.h"
+#include "IMsgDataMappingManager.h"
+#include "MsgDataMappingManager.h"
 #include "IMsgDataMapping.h"
 #include "MsgDataMapping.h"
 #include "IMsgDataMappingStore.h"
@@ -86,28 +92,28 @@ int main(int argc, char *argv[])
 
     msgIDMappingStore->addMsgIDMapping(
             MsgIDType(0x01),
-            MsgIDRep(MsgIDType(0x01))
+            MsgIDMapping(MsgIDType(0x01))
                 );
 
-    IMsgIDMapping *msgIDMapping = new MsgIDMapping(msgIDMappingStore);
+    IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(msgIDMappingStore);
     IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
             msgIDMappingStore
             );
 
     IMsgCodeMappingStore *msgCodeMappingStore = new MsgCodeMappingStore();
-    IMsgCodeMapping *msgCodeMapping = new MsgCodeMapping(msgCodeMappingStore);
-    IMsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
-            msgCodeMappingStore
-            );
+    IMsgCodeMappingManager *msgCodeMappingManager = new MsgCodeMappingManager(msgCodeMappingStore);
+    //IMsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
+    //        msgCodeMappingStore
+    //        );
 
     IMsgDataMappingStore *msgDataMappingStore = new MsgDataMappingStore();
-    IMsgDataMapping *msgDataMapping = new MsgDataMapping(msgDataMappingStore);
+    IMsgDataMappingManager *msgDataMappingManager = new MsgDataMappingManager(msgDataMappingStore);
 
 
     IMessageConfig *messageConfig = new MessageConfig(
-            msgIDMapping,
-            msgCodeMapping,
-            msgDataMapping,
+            msgIDMappingManager,
+            msgCodeMappingManager,
+            msgDataMappingManager,
             &a
             );
     MessageConfigWidget *messageConfigWidget = new MessageConfigWidget(
@@ -117,12 +123,12 @@ int main(int argc, char *argv[])
             msgIDMappingModel,
             messageConfigWidget
             );
-    MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
-            msgCodeMappingModel,
-            messageConfigWidget
-            );
-    messageConfigWidget->appendMappingWidget(msgIDMappingWidget);
-    messageConfigWidget->appendMappingWidget(msgCodeMappingWidget);
+    //MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
+    //        msgCodeMappingModel,
+    //        messageConfigWidget
+    //        );
+    messageConfigWidget->appendMappingManagerWidget(msgIDMappingWidget);
+    //messageConfigWidget->appendMappingManagerWidget(msgCodeMappingWidget);
 
     w.appendTabMenuWidget(messageConfigWidget, "Message Configuration");
     /* messageConfigWidget->appendMappingWidget(); */

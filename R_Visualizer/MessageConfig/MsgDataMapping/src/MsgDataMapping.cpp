@@ -1,9 +1,27 @@
 #include "MsgDataMapping.h"
 
-#include "IPrettyMsg.h"
+MsgDataMapping::MsgDataMapping() :
+    msgID(),
+    msgCode(),
+    msgDataFormatter(Q_NULLPTR)
+{
+}
 
-MsgDataMapping::MsgDataMapping(IMsgDataMappingStore *msgDataMappingStore) :
-    msgDataMappingStore(msgDataMappingStore)
+MsgDataMapping::MsgDataMapping(const MsgDataMapping &other) :
+    msgID(other.msgID),
+    msgCode(other.msgCode),
+    msgDataFormatter(other.msgDataFormatter)
+{
+}
+
+MsgDataMapping::MsgDataMapping(
+        const MsgIDType &msgID,
+        const MsgCodeType &msgCode,
+        IMsgDataFormatter *msgDataFormatter
+        ) :
+    msgID(msgID),
+    msgCode(msgCode),
+    msgDataFormatter(msgDataFormatter)
 {
 }
 
@@ -11,24 +29,72 @@ MsgDataMapping::~MsgDataMapping()
 {
 }
 
-void MsgDataMapping::prettifyMsg(
-        IPrettyMsg &msgToPrettify
-        ) const
+MsgIDType MsgDataMapping::getMsgID() const
 {
-    //ToDO
-    const MsgIDType &msgID = msgToPrettify.getMsgID();
-    const MsgCodeType &msgCode = msgToPrettify.getMsgCode();
-    const MsgDataType &msgData = msgToPrettify.getMsgData();
+    return msgID;
+}
 
-    /* msgDataMappingStore-> */
+void MsgDataMapping::setMsgID(const MsgIDType &msgID)
+{
+    this->msgID = msgID;
+}
+
+MsgCodeType MsgDataMapping::getMsgCode() const
+{
+    return msgCode;
+}
+
+void MsgDataMapping::setMsgCode(const MsgCodeType &msgCode)
+{
+    this->msgCode = msgCode;
+}
+
+IMsgDataFormatter *MsgDataMapping::getMsgDataFormatter() const
+{
+    return msgDataFormatter;
+}
+
+void MsgDataMapping::setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter)
+{
+    this->msgDataFormatter = msgDataFormatter;
+}
+
+QString MsgDataMapping::parseMsgData(const IMsg &msg) const
+{
+    /**
+     * msgDataFormatter could be NULL
+     */
+    if(msgDataFormatter == Q_NULLPTR)
+    {
+        return QString("");
+    }
+    return msgDataFormatter->parseMsgDataToString(msg);
+}
+
+IMsgDataMapping &MsgDataMapping::operator =(const IMsgDataMapping &other)
+{
+    this->msgID = other.getMsgID();
+    this->msgCode = other.getMsgCode();
+    this->msgDataFormatter = other.getMsgDataFormatter();
+
+    return *this;
+}
+
+bool MsgDataMapping::operator ==(const MsgDataMapping &other) const
+{
+    return ((this->msgID == other.msgID) && (this->msgCode == other.msgCode));
+}
+
+bool MsgDataMapping::operator ==(const IMsgDataMapping &other) const
+{
+    return (
+            (this->msgID == other.getMsgID())
+            &&
+            (this->msgCode == other.getMsgCode())
+            );
 }
 
 void MsgDataMapping::accept(FileParser *visitor)
 {
-    msgDataMappingStore->accept(visitor);
-}
-
-
-void MsgDataMapping::applyUserRole(const UserRoleManagement::UserRole roleToApply)
-{
+    visitor->visit(*this);
 }

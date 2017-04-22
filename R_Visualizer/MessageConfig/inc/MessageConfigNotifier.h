@@ -6,7 +6,7 @@
 #include "IUserRoleManager.h"
 
 class IMessageConfig;
-class IMsgMapping;
+class IMsgMappingManager;
 
 class MessageConfigNotifier : public QObject
 {
@@ -19,8 +19,7 @@ public:
 
     virtual ~MessageConfigNotifier();
 
-    virtual void emitSgnlMappingChanged(
-            const IMsgMapping &changedMapping
+    virtual void emitSgnlMappingChanged(const IMsgMappingManager &changedMapping
             );
 
     virtual void emitSgnlPropagateUserRole(
@@ -38,7 +37,7 @@ signals:
      * @param[out] mappingType Type of the mapping that has changed
      */
     void sgnl_MappingChanged(
-            const IMsgMapping &changedMapping
+            const IMsgMappingManager &changedMapping
             );
 
     /**

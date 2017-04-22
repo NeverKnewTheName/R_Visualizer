@@ -1,37 +1,126 @@
+/**
+ * \file MsgIDMapping.h
+ * \author Christian Neuberger
+ * \date 2017-02-04
+ * 
+ * \brief Representation of a MsgID
+ */
 #ifndef MSGIDMAPPING_H
 #define MSGIDMAPPING_H
 
+
+#include <QString>
+#include <QColor>
+
 #include "IMsgIDMapping.h"
+#include "MsgIDType.h"
 
-#include "IPrettyMsg.h"
-#include "IMsg.h"
-#include "ITimestampedMsg.h"
+class FileParser;
 
-class IMsgIDMappingStore;
-
-class MsgIDMapping : public IMsgIDMapping
+/**
+ * \brief The MsgIDMapping class contains all information necessary for displaying a
+ * MsgID
+ * 
+ * The MsgID is displayed according to the name and color mapping
+ */
+class MsgIDMapping : public MsgIDMappingCRTPHelper<MsgIDMapping>
 {
 public:
-    MsgIDMapping(IMsgIDMappingStore *msgIDMappingStore);
-    virtual ~MsgIDMapping();
+    /**
+     * \brief Constructs an empty #MsgIDMapping object
+     */
+    MsgIDMapping();
+    /**
+     * \brief Copies a given #MsgIDMapping to this #MsgIDMapping
+     */
+    MsgIDMapping(const MsgIDMapping& other);
+    /**
+     * \brief Constructs a plain #MsgIDMapping object for the given id
+     * 
+     * \param[in] id The id to construct the plain #MsgIDMapping for
+     * 
+     * The plain object will have a white background and a default
+     * text representation of the id that is the id printed as a hex value.
+     */
+    MsgIDMapping(const MsgIDType &id);
+    /**
+     * \brief Constructs a new #MsgIDMapping
+     * 
+     * \param[in] id The ID the mapping applies to
+     * \param[in] name The name the ID is mapped to
+     * \param[in] color The color the ID is mapped to
+     * 
+     */
+    MsgIDMapping(const MsgIDType &id, const QString &name, const QColor &color);
 
-    virtual MsgIDType getMsgIDToAlias(const QString &alias) const;
-    virtual QString getAliasToMsgID(const MsgIDType &msgID) const;
-    virtual QColor getColorToMsgID(const MsgIDType &msgID) const;
-    virtual QColor getColorToAlias(const QString &alias) const;
+    /**
+     * \brief Returns the ID that this #MsgIDMapping contain/applies to
+     */
+    MsgIDType getID() const;
 
-    virtual void prettifyMsg(
-            IPrettyMsg &msgToPrettify
-            ) const;
+    /**
+     * \brief Set the related ID for this #MsgIDMapping
+     */
+    void setID(const MsgIDType &id);
 
-    virtual void accept(FileParser *visitor);
+    /**
+     * \brief Returns the name the ID corresponds to
+     */
+    /* QString getName() const; */
+    QString getPlainTextAlias() const;
 
-    // IUserRoleManageable interface
-public:
-    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+    /**
+     * \brief Sets a name that this ID shall correspond to
+     */
+    /* void setName(const QString &value); */
+    void setPlainTextAlias(const QString &plainTextAlias);
+
+    /**
+     * \brief Returns the color the ID corresponds to
+     */
+    /* QColor getColor() const; */
+    QColor getColorRepresentation() const;
+
+    /**
+     * \brief Sets a color that this ID shall correspond to
+     */
+    /* void setColor(const QColor &value); */
+    void setColorRepresentation(const QColor &colorRepresentation);
+
+    IMsgIDMapping &operator =(const IMsgIDMapping &other);
+
+    /**
+     * \brief Copares this #MsgIDMapping to another for equality
+     * 
+     * \note For two #MsgIDMapping objects to be considered equal their #id field has to match.
+     */
+    bool operator ==(const MsgIDMapping &other) const;
+    bool operator ==(const IMsgIDMapping &other) const;
+
+    /**
+     * @brief qHash implementation to use #MsgIDMapping as a QHash key
+     */
+    friend uint qHash(const MsgIDMapping &key, uint seed)
+    {
+        return qHash(key.id, seed);
+    }
+
+    void accept(FileParser *visitor);
+
 
 private:
-    IMsgIDMappingStore *msgIDMappingStore;
+    /**
+     * \brief The #MsgIDType this #MsgIDMapping object contains the mappings for
+     */
+    MsgIDType id;
+    /**
+     * \brief The name that is mapped to the id
+     */
+    QString name;
+    /**
+     * \brief The color that is mapped to the id
+     */
+    QColor color;
 };
 
-#endif /* MSGIDMAPPING_H */
+#endif // MSGIDMAPPING_H

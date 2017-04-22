@@ -36,7 +36,7 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
 
     int row = index.row();
     int col = index.column();
-    const MsgTypeRep &msgTypeRepAtIndex = msgTypePropStore.value(codeStore.at(row));
+    const MsgTypeMapping &msgTypeMappingAtIndex = msgTypePropStore.value(codeStore.at(row));
 
     switch(role)
     {
@@ -45,17 +45,17 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
         {
             case COL_CODE:
                 return QString("0x%1")
-                    .arg(msgTypeRepAtIndex.getCode()/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); 
+                    .arg(msgTypeMappingAtIndex.getCode()/*decimal*/, 2/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/); 
                 // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
                 break;
             case COL_CODENAME:
-                return msgTypeRepAtIndex.getCodeName();
+                return msgTypeMappingAtIndex.getCodeName();
                 break;
             case COL_MESSAGEFORMAT:
-                return msgTypeRepAtIndex.getMessageFormat();
+                return msgTypeMappingAtIndex.getMessageFormat();
                 break;
             case COL_COLOR:
-                return msgTypeRepAtIndex.getColor().name();
+                return msgTypeMappingAtIndex.getColor().name();
                 break;
         }
         break;
@@ -68,7 +68,7 @@ QVariant MsgTypeModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-        return QBrush(msgTypeRepAtIndex.getColor());
+        return QBrush(msgTypeMappingAtIndex.getColor());
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -97,7 +97,7 @@ bool MsgTypeModel::setData(const QModelIndex &index, const QVariant &value, int 
         if(col == COL_MESSAGEFORMAT ) msgTypePropStore[codeStore[row]].setMessageFormat(value.value<QString>());
         if(col == COL_COLOR) msgTypePropStore[codeStore[row]].setColor(value.value<QColor>());
         emit dataChanged(index, index);
-        emit sgnl_MsgTypeRepUpdated(msgTypePropStore[codeStore[row]]);
+        emit sgnl_MsgTypeMappingUpdated(msgTypePropStore[codeStore[row]]);
         return true;
         break;
     }
@@ -154,7 +154,7 @@ void MsgTypeModel::removeRow(int row, const QModelIndex &parent)
     msgTypePropStore.remove(relatedCode);
     codeStore.remove(row);
     endRemoveRows();
-    emit sgnl_MsgTypeRepRemoved(relatedCode);
+    emit sgnl_MsgTypeMappingRemoved(relatedCode);
 }
 
 Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
@@ -175,19 +175,19 @@ Qt::ItemFlags MsgTypeModel::flags(const QModelIndex &index) const
     return Qt::NoItemFlags;
 }
 
-void MsgTypeModel::add(const MsgTypeRep &msgTypeRep)
+void MsgTypeModel::add(const MsgTypeMapping &msgTypeMapping)
 {
     int newRow = codeStore.size();
-    const MsgCodeType code = msgTypeRep.getCode();
+    const MsgCodeType code = msgTypeMapping.getCode();
     beginInsertRows(QModelIndex(),newRow,newRow);
     codeStore.append(code);
     msgTypePropStore.remove(code);
-    msgTypePropStore.insertMulti(code, msgTypeRep);
+    msgTypePropStore.insertMulti(code, msgTypeMapping);
     endInsertRows();
-    emit sgnl_MsgTypeRepAdded(msgTypeRep);
+    emit sgnl_MsgTypeMappingAdded(msgTypeMapping);
 }
 
-MsgTypeRep MsgTypeModel::getMsgTypeRepToCode(const MsgCodeType code) const
+MsgTypeMapping MsgTypeModel::getMsgTypeMappingToCode(const MsgCodeType code) const
 {
     if(contains(code))
     {
@@ -195,7 +195,7 @@ MsgTypeRep MsgTypeModel::getMsgTypeRepToCode(const MsgCodeType code) const
     }
     else
     {
-        return MsgTypeRep(code);
+        return MsgTypeMapping(code);
     }
 }
 
@@ -217,7 +217,7 @@ const int MsgTypeModel::size() const
     return codeStore.size();
 }
 
-const MsgTypeRep &MsgTypeModel::at(const int index) const
+const MsgTypeMapping &MsgTypeModel::at(const int index) const
 {
     return msgTypePropStore.value(codeStore.at(index));
 }
@@ -238,10 +238,10 @@ QString MsgTypeModel::getNameToCode(const MsgCodeType code) const
 
 MsgCodeType MsgTypeModel::getCodeToName(const QString &name) const
 {
-    for( auto &msgTypeRep : msgTypePropStore )
+    for( auto &msgTypeMapping : msgTypePropStore )
     {
-        if(!name.compare(msgTypeRep.getCodeName(),Qt::CaseInsensitive))
-            return msgTypeRep.getCode();
+        if(!name.compare(msgTypeMapping.getCodeName(),Qt::CaseInsensitive))
+            return msgTypeMapping.getCode();
     }
 
     return 0;
@@ -280,9 +280,9 @@ int MsgTypeModel::getNrLinesToCode(const MsgCodeType code)
 QStringList MsgTypeModel::getAllCodeNames() const
 {
     QStringList names;
-    for(const auto &msgTypeRep : msgTypePropStore )
+    for(const auto &msgTypeMapping : msgTypePropStore )
     {
-        names.append(msgTypeRep.getCodeName());
+        names.append(msgTypeMapping.getCodeName());
     }
     return names;
 }
@@ -292,8 +292,8 @@ QByteArray MsgTypeModel::ParseToJson() const
     QJsonArray jsonMsgsArr;
     for(const MsgCodeType &code : codeStore)
     {
-        const MsgTypeRep &newMsgTypeRep = msgTypePropStore[code];
-        jsonMsgsArr.append(newMsgTypeRep.parseOUT());
+        const MsgTypeMapping &newMsgTypeMapping = msgTypePropStore[code];
+        jsonMsgsArr.append(newMsgTypeMapping.parseOUT());
     }
     return QJsonDocument(jsonMsgsArr).toJson(QJsonDocument::Indented);
 }
@@ -304,13 +304,13 @@ void MsgTypeModel::ParseFromJson(const QByteArray &jsonFile)
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto&& item : jsonMsgsArr)
     {
-        add(MsgTypeRep::createObjFromJson(item.toObject()));
+        add(MsgTypeMapping::createObjFromJson(item.toObject()));
     }
 }
 
-void MsgTypeModel::paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const
+void MsgTypeModel::paintMsgTypeMapping(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const
 {
-    msgTypePropStore[code].paintMsgTypeRep(painter, option, msg);
+    msgTypePropStore[code].paintMsgTypeMapping(painter, option, msg);
 }
 
 QCompleter *MsgTypeModel::createMsgTypeCompleter(QObject *parent) const

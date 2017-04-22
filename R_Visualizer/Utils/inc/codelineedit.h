@@ -14,7 +14,7 @@
 
 #include "MsgCodeType.h"
 
-class IMsgCodeMapping;
+class IMsgCodeMappingManager;
 
 /**
  * @brief The CodeLineEdit
@@ -23,19 +23,18 @@ class CodeLineEdit : public QLineEdit
 {
 public:
     CodeLineEdit( QWidget *parent = Q_NULLPTR );
-    CodeLineEdit(
-            const IMsgCodeMapping *msgCodeMapping,
+    CodeLineEdit(const IMsgCodeMappingManager *msgCodeMappingManager,
             QCompleter *msgCodeAliasCompleter = Q_NULLPTR,
             QWidget *parent = Q_NULLPTR
             );
     virtual ~CodeLineEdit();
 
-    void setMsgCodeMapping(const IMsgCodeMapping *msgCodeMapping);
+    void setMsgCodeMapping(const IMsgCodeMappingManager *msgCodeMappingManager);
 
     MsgCodeType getMsgCode() const;
 
 private:
-    const IMsgCodeMapping *msgCodeMapping;
+    const IMsgCodeMappingManager *msgCodeMappingManager;
     QMetaObject::Connection colorizeLineEditConnection;
 
     void connectMsgCodeMapping();

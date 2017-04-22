@@ -11,7 +11,7 @@
 #include "IMsgIDMappingModel.h"
 #include "IMsgIDMappingStore.h"
 
-#include "IMsgIDRep.h"
+#include "IMsgIDMapping.h"
 
 #include <QAbstractTableModel>
 #include <QVector>
@@ -111,8 +111,8 @@ public:
     // \ QAbstractItemModel Implementation \ //
 
     // IMsgIDMappingModel Implementation //
-    /* IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) const; */
-    IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID);
+    /* IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) const; */
+    IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID);
 
     /* QString getAliasToMsgID(const MsgIDType msgID) const; */
     /* MsgIDType getMsgIDToAlias(const QString &alias) const; */
@@ -120,9 +120,9 @@ public:
     /* QColor getColorToAlias(const QString &alias) const; */
 
     bool contains(const MsgIDType &msgID) const;
-    bool contains(const IMsgIDRep &msgIDRep) const;
+    bool contains(const IMsgIDMapping &msgIDMapping) const;
 
-    void appendMsgIDMapping(const IMsgIDRep &msgIDRepToAppend);
+    void appendMsgIDMapping(const IMsgIDMapping &msgIDMappingToAppend);
     void removeMsgIDMapping(const MsgIDType &relatedMsgID);
 
     void clear();
@@ -138,9 +138,9 @@ signals:
     void sgnl_MappingUpdated(const MsgIDType &relatedID);
     void sgnl_MappingRemoved(const MsgIDType &relatedID);
 
-    void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
-    void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
-    void sgnl_MsgIDRepRemoved(const MsgIDType &relatedMsgID);
+    void sgnl_MsgIDMappingAdded(const IMsgIDMapping &newMsgIDMapping);
+    void sgnl_MsgIDMappingUpdated(const IMsgIDMapping &updatedMsgIDMapping);
+    void sgnl_MsgIDMappingRemoved(const MsgIDType &relatedMsgID);
 
 
 private:

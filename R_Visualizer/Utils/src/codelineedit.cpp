@@ -3,23 +3,23 @@
 #include <QString>
 #include <QColor>
 
-#include "IMsgCodeMapping.h"
+#include "IMsgCodeMappingManager.h"
 
 #include <QDebug>
 
 CodeLineEdit::CodeLineEdit( QWidget *parent ) :
     QLineEdit(parent),
-    msgCodeMapping(Q_NULLPTR)
+    msgCodeMappingManager(Q_NULLPTR)
 {
 }
 
 CodeLineEdit::CodeLineEdit(
-        const IMsgCodeMapping *msgCodeMapping,
+        const IMsgCodeMappingManager *msgCodeMappingManagerManager,
         QCompleter *msgCodeAliasCompleter,
         QWidget *parent
         ) :
     QLineEdit(parent),
-    msgCodeMapping(msgCodeMapping)
+    msgCodeMappingManager(msgCodeMappingManager)
 {
     if(msgCodeAliasCompleter != Q_NULLPTR)
     {
@@ -32,9 +32,9 @@ CodeLineEdit::~CodeLineEdit()
 {
 }
 
-void CodeLineEdit::setMsgCodeMapping(const IMsgCodeMapping *msgCodeMapping)
+void CodeLineEdit::setMsgCodeMapping(const IMsgCodeMappingManager *msgCodeMappingManagerManager)
 {
-    this->msgCodeMapping = msgCodeMapping;
+    this->msgCodeMappingManager = msgCodeMappingManagerManager;
     connectMsgCodeMapping();
 }
 
@@ -59,7 +59,7 @@ void CodeLineEdit::connectMsgCodeMapping()
     colorizeLineEditConnection = connect(
             this,
             &QLineEdit::textChanged, [=](const QString &text){
-                QColor color = msgCodeMapping->getColorToAlias(text);
+                QColor color = msgCodeMappingManager->getColorToAlias(text);
                 QString colorName("white");
                 if(color.isValid())
                 {
@@ -82,9 +82,9 @@ MsgCodeType CodeLineEdit::convertTextToMsgCode(const QString &text) const
 
     if(!conversionOK)
     {
-        if(msgCodeMapping != Q_NULLPTR)
+        if(msgCodeMappingManager != Q_NULLPTR)
         {
-            retrievedCode = msgCodeMapping->getMsgCodeToAlias(text);
+            retrievedCode = msgCodeMappingManager->getMsgCodeToAlias(text);
         }
         else
         {

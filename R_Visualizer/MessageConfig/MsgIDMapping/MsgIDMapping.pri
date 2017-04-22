@@ -7,8 +7,8 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/MsgIDRep.cpp \
     $$PWD/src/MsgIDMapping.cpp \
+    $$PWD/src/MsgIDMappingManager.cpp \
     $$PWD/src/MsgIDMappingNotifier.cpp \
     $$PWD/src/MsgIDMappingWidget.cpp \
     $$PWD/src/MsgIDMappingStore.cpp \
@@ -16,10 +16,10 @@ SOURCES += \
     $$PWD/src/MsgIDMappingModel.cpp \
 
 HEADERS  += \
-    $$PWD/inc/IMsgIDRep.h \
-    $$PWD/inc/MsgIDRep.h \
     $$PWD/inc/IMsgIDMapping.h \
     $$PWD/inc/MsgIDMapping.h \
+    $$PWD/inc/IMsgIDMappingManager.h \
+    $$PWD/inc/MsgIDMappingManager.h \
     $$PWD/inc/MsgIDMappingNotifier.h \
     $$PWD/inc/MsgIDMappingWidget.h \
     $$PWD/inc/IMsgIDMappingModel.h \

@@ -8,11 +8,11 @@ class TimestampedMsg;
 /* class TimestampedMsgStorage; */
 /* class SendMsgPackageStore; */
 class MsgIDMappingStore;
-class MsgIDRep;
+class MsgIDMapping;
 class MsgCodeMappingStore;
-class MsgCodeRep;
+class MsgCodeMapping;
 class MsgDataMappingStore;
-class MsgDataRep;
+class MsgDataMapping;
 /* class MsgIDFilterStore; */
 /* class MsgCodeFilterStore; */
 /* class MsgTimestampFilter; */
@@ -36,11 +36,11 @@ public:
     /* virtual void visit(TimestampedMsgStorage &visitor) = 0; */
     /* virtual void visit(SendMsgPackageStore &visitor) = 0; */
     virtual void visit(MsgIDMappingStore &visitor) = 0;
-    virtual void visit(MsgIDRep &visitor) = 0;
+    virtual void visit(MsgIDMapping &visitor) = 0;
     virtual void visit(MsgCodeMappingStore &visitor) = 0;
-    virtual void visit(MsgCodeRep &visitor) = 0;
+    virtual void visit(MsgCodeMapping &visitor) = 0;
     virtual void visit(MsgDataMappingStore &visitor) = 0;
-    virtual void visit(MsgDataRep &visitor) = 0;
+    virtual void visit(MsgDataMapping &visitor) = 0;
     /* virtual void visit(MsgIDFilterStore &visitor) = 0; */
     /* virtual void visit(MsgCodeFilterStore &visitor) = 0; */
     /* virtual void visit(MsgTimestampFilter &visitor) = 0; */

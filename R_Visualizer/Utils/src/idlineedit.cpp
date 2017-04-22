@@ -3,24 +3,24 @@
 #include <QString>
 #include <QColor>
 
-#include "IMsgIDMapping.h"
+#include "IMsgIDMappingManager.h"
 
 #include <QDebug>
 
 IDLineEdit::IDLineEdit( QWidget *parent ) :
     QLineEdit(parent),
-    msgIDMapping(Q_NULLPTR)
+    msgIDMappingManager(Q_NULLPTR)
     /* msgIDAliasCompleter(Q_NULLPTR) */
 {
 }
 
 IDLineEdit::IDLineEdit(
-        const IMsgIDMapping *msgIDMapping,
+        const IMsgIDMappingManager *msgIDMappingManager,
         QCompleter *msgIDAliasCompleter,
         QWidget *parent
         ) :
     QLineEdit(parent),
-    msgIDMapping(msgIDMapping)
+    msgIDMappingManager(msgIDMappingManager)
     /* msgIDAliasCompleter(msgIDAliasCompleter) */
 {
     connectMsgIDMapping();
@@ -31,9 +31,9 @@ IDLineEdit::~IDLineEdit()
 {
 }
 
-void IDLineEdit::setMsgIDMapping(const IMsgIDMapping *msgIDMapping)
+void IDLineEdit::setMsgIDMapping(const IMsgIDMappingManager *msgIDMappingManagerManager)
 {
-    this->msgIDMapping = msgIDMapping;
+    this->msgIDMappingManager = msgIDMappingManagerManager;
     connectMsgIDMapping();
 }
 
@@ -48,7 +48,7 @@ MsgIDType IDLineEdit::getMsgID() const
 
 void IDLineEdit::connectMsgIDMapping()
 {
-    if(msgIDMapping == Q_NULLPTR)
+    if(msgIDMappingManager == Q_NULLPTR)
     {
         return;
     }
@@ -59,7 +59,7 @@ void IDLineEdit::connectMsgIDMapping()
     colorizeLineEditConnection = connect(
         this,
         &QLineEdit::textChanged, [=](const QString &text){
-            QColor color = msgIDMapping->getColorToAlias(text);
+            QColor color = msgIDMappingManager->getColorToAlias(text);
             QString colorName("white");
             if(color.isValid())
             {
@@ -86,9 +86,9 @@ MsgIDType IDLineEdit::convertTextToMsgID(const QString &text) const
      */
     if(!conversionOK)
     {
-        if(msgIDMapping != Q_NULLPTR)
+        if(msgIDMappingManager != Q_NULLPTR)
         {
-            retrievedID = msgIDMapping->getMsgIDToAlias(text);
+            retrievedID = msgIDMappingManager->getMsgIDToAlias(text);
         }
         else
         {

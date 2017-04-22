@@ -1,7 +1,7 @@
 #include "MessageConfigNotifier.h"
 
 #include "IMessageConfig.h"
-#include "IMsgMapping.h"
+#include "IMsgMappingManager.h"
 
 MessageConfigNotifier::MessageConfigNotifier(
         IMessageConfig *msgConfig,
@@ -17,7 +17,7 @@ MessageConfigNotifier::~MessageConfigNotifier()
 }
 
 void MessageConfigNotifier::emitSgnlMappingChanged(
-        const IMsgMapping &changedMapping
+        const IMsgMappingManager &changedMapping
         )
 {
     emit sgnl_MappingChanged(changedMapping);

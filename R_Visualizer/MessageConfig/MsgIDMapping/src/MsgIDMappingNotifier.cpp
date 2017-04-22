@@ -1,11 +1,11 @@
 #include "MsgIDMappingNotifier.h"
 
 MsgIDMappingNotifier::MsgIDMappingNotifier(
-        IMsgIDMapping *msgIDMapping,
+        IMsgIDMappingManager *msgIDMappingManager,
         QObject *parent
         ) :
     QObject(parent),
-    msgIDMapping(msgIDMapping)
+    msgIDMappingManager(msgIDMappingManager)
 {
 }
 

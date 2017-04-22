@@ -33,7 +33,7 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
 
     int row = index.row();
     int col = index.column();
-    const IDRep &idRepAtIndex = idPropStore.value(idStore.at(row));
+    const IDMapping &idMappingAtIndex = idPropStore.value(idStore.at(row));
 
     switch(role)
     {
@@ -42,14 +42,14 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
         {
         case COL_ID: 
             return QString("0x%1")
-                .arg(idRepAtIndex.getId()/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
+                .arg(idMappingAtIndex.getId()/*decimal*/, 4/*width*/, 16/*base*/, QLatin1Char( '0' )/*fill character*/);
                 // convert integer to string with hexadecimal representation (preceding '0x' inlcuded)
             break;
         case COL_NAME: 
-            return idRepAtIndex.getName();
+            return idMappingAtIndex.getName();
             break;
         case COL_COLOR: 
-            return idRepAtIndex.getColor().name();
+            return idMappingAtIndex.getColor().name();
             break;
         }
         break;
@@ -62,7 +62,7 @@ QVariant IDModel::data(const QModelIndex &index, int role) const
         //        }
         break;
     case Qt::BackgroundRole:
-        return QBrush(idRepAtIndex.getColor());
+        return QBrush(idMappingAtIndex.getColor());
         break;
     case Qt::TextAlignmentRole:
         //        if(row == 1 && col == 1)
@@ -90,7 +90,7 @@ bool IDModel::setData(const QModelIndex &index, const QVariant &value, int role)
         if(col == COL_NAME) idPropStore[idStore[row]].setName(value.value<QString>());
         if(col == COL_COLOR) idPropStore[idStore[row]].setColor(value.value<QColor>());
         emit dataChanged(index, index);
-        emit sgnl_IDRepUpdated(idPropStore[idStore[row]]);
+        emit sgnl_IDMappingUpdated(idPropStore[idStore[row]]);
         return true;
         break;
     }
@@ -144,7 +144,7 @@ void IDModel::removeRow(int row, const QModelIndex &parent)
     idPropStore.remove(relatedID);
     idStore.remove(row);
     endRemoveRows();
-    emit sgnl_IDRepRemoved(relatedID);
+    emit sgnl_IDMappingRemoved(relatedID);
 }
 
 Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
@@ -165,7 +165,7 @@ Qt::ItemFlags IDModel::flags(const QModelIndex &index) const
     return Qt::NoItemFlags;
 }
 
-IDRep IDModel::getIDRepToID(const MsgIDType id) const
+IDMapping IDModel::getIDMappingToID(const MsgIDType id) const
 {
     if(contains(id))
     {
@@ -173,7 +173,7 @@ IDRep IDModel::getIDRepToID(const MsgIDType id) const
     }
     else
     {
-        return IDRep(id);
+        return IDMapping(id);
     }
 }
 
@@ -194,7 +194,7 @@ const int IDModel::size() const
     return idStore.size();
 }
 
-const IDRep &IDModel::at(const int index) const
+const IDMapping &IDModel::at(const int index) const
 {
     return idPropStore.value(idStore.at(index));
 }
@@ -214,16 +214,16 @@ MsgIDType IDModel::getIDToName(const QString &name) const
     return 0;
 }
 
-void IDModel::add(const IDRep &idRep)
+void IDModel::add(const IDMapping &idMapping)
 {
     int newRow = idStore.size();
-    const MsgIDType id = idRep.getId();
+    const MsgIDType id = idMapping.getId();
     beginInsertRows(QModelIndex(),newRow,newRow);
     idStore.append(id);
     idPropStore.remove(id);
-    idPropStore.insertMulti(id, idRep); //idRep has no AssignmentOperator...thus we need to remove the Key and create a new one...
+    idPropStore.insertMulti(id, idMapping); //idMapping has no AssignmentOperator...thus we need to remove the Key and create a new one...
     endInsertRows();
-    emit sgnl_IDRepAdded(idRep);
+    emit sgnl_IDMappingAdded(idMapping);
 }
 
 QString IDModel::getNameToID(const MsgIDType id) const
@@ -263,21 +263,21 @@ void IDModel::ParseFromJson(const QByteArray &jsonFile)
     QJsonArray jsonMsgsArr = QJsonDocument::fromJson(jsonFile).array();
     for(auto &&item : jsonMsgsArr)
     {
-        add(IDRep::createObjFromJson(item.toObject()));
+        add(IDMapping::createObjFromJson(item.toObject()));
     }
 }
 
 void IDModel::paintID(QPainter *painter, const QStyleOptionViewItem &option, const MsgIDType id) const
 {
-    idPropStore[id].paintIDRep(painter, option);
+    idPropStore[id].paintIDMapping(painter, option);
 }
 
 QStringList IDModel::getAllIDNames() const
 {
     QStringList names;
-    for(auto &&idRep : idPropStore)
+    for(auto &&idMapping : idPropStore)
     {
-        names.append(idRep.getName());
+        names.append(idMapping.getName());
     }
     return names;
 }

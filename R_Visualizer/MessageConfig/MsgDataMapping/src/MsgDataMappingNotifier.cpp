@@ -1,11 +1,11 @@
 #include "MsgDataMappingNotifier.h"
 
 MsgDataMappingNotifier::MsgDataMappingNotifier(
-        IMsgDataMapping *msgDataMapping,
+        IMsgDataMappingManager *msgDataMappingManager,
         QObject *parent
         ) :
     QObject(parent),
-    msgDataMapping(msgDataMapping)
+    msgDataMappingManager(msgDataMappingManager)
 {
 }
 

@@ -95,20 +95,20 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
     /**
-     * \brief Adds a #MsgTypeRep mapping to the #MsgTypeModel
+     * \brief Adds a #MsgTypeMapping mapping to the #MsgTypeModel
      */
-    void add(const MsgTypeRep &msgTypeRep);
+    void add(const MsgTypeMapping &msgTypeMapping);
 
     /**
-     * \brief Returns the #MsgTypeRep that is stored in the model for the given code
+     * \brief Returns the #MsgTypeMapping that is stored in the model for the given code
      * 
      * Queries the model for the provided code. 
-     * If there is an existing #MsgTypeRep associated with the code in the model,
+     * If there is an existing #MsgTypeMapping associated with the code in the model,
      * it is returned.
-     * If there is no existing #MsgTypeRep associated with the code in the model,
-     * a new default #MsgTypeRep for that code is returned.
+     * If there is no existing #MsgTypeMapping associated with the code in the model,
+     * a new default #MsgTypeMapping for that code is returned.
      */
-    MsgTypeRep getMsgTypeRepToCode(const MsgCodeType code) const;
+    MsgTypeMapping getMsgTypeMappingToCode(const MsgCodeType code) const;
     /**
      * \brief Clears the whole #MsgTypeModel for a fresh start
      */
@@ -116,7 +116,7 @@ public:
 
     const int size() const;
 
-    const MsgTypeRep &at(const int index) const;
+    const MsgTypeMapping &at(const int index) const;
 
 
     /**
@@ -167,7 +167,7 @@ public:
     /**
      * \brief Paint a #Msg according to the code and the mappings contained in this #MsgTypeModel
      */
-    void paintMsgTypeRep(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const;
+    void paintMsgTypeMapping(QPainter *painter, const QStyleOptionViewItem &option, const MsgCodeType code, Msg &msg) const;
 
     QCompleter *createMsgTypeCompleter(QObject *parent = Q_NULLPTR) const;
 
@@ -179,18 +179,18 @@ private:
      */
     QVector<MsgCodeType> codeStore;
     /**
-     * \brief QHash that contains the respective #MsgCodeType to #MsgTypeRep mappings
+     * \brief QHash that contains the respective #MsgCodeType to #MsgTypeMapping mappings
      */
-    QHash<MsgCodeType, MsgTypeRep> msgTypePropStore;
+    QHash<MsgCodeType, MsgTypeMapping> msgTypePropStore;
 
 signals:
     /**
      * \brief The #internalModelChanged signal is emitted every time the data in the #MsgTypeModel changes
      */
     void internalModelChanged();
-    void sgnl_MsgTypeRepAdded(const MsgTypeRep &newMsgTypeRep);
-    void sgnl_MsgTypeRepUpdated(const MsgTypeRep &updatedMsgTypeRep);
-    void sgnl_MsgTypeRepRemoved(const MsgCodeType relatedCode);
+    void sgnl_MsgTypeMappingAdded(const MsgTypeMapping &newMsgTypeMapping);
+    void sgnl_MsgTypeMappingUpdated(const MsgTypeMapping &updatedMsgTypeMapping);
+    void sgnl_MsgTypeMappingRemoved(const MsgCodeType relatedCode);
 };
 
 #endif // MSGTYPEMODEL_H

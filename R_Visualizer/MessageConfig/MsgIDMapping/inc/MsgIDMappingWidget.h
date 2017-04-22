@@ -10,7 +10,7 @@
 
 #include <QWidget>
 
-#include "IMsgIDRep.h"
+#include "IMsgIDMapping.h"
 #include "IMsgIDMappingModel.h"
 
 namespace Ui {
@@ -36,18 +36,18 @@ private slots:
     void on_idAddBtn_clicked();
 
     void slt_clear();
-    void slt_MsgIDRepAddFinished(const IMsgIDRep &addedMsgIDRep);
+    void slt_MsgIDMappingAddFinished(const IMsgIDMapping &addedMsgIDMapping);
 signals:
     void sgnl_MappingsChanged();
-    void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep);
-    void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep);
-    void sgnl_MsgIDRepRemoved(const MsgIDType relatedID);
+    void sgnl_MsgIDMappingAdded(const IMsgIDMapping &newMsgIDMapping);
+    void sgnl_MsgIDMappingUpdated(const IMsgIDMapping &updatedMsgIDMapping);
+    void sgnl_MsgIDMappingRemoved(const MsgIDType relatedID);
 
 private:
     Ui::MsgIDMappingWidget *ui;
     IMsgIDMappingModel *msgIDMappingModel;
 
-    void appendMsgIDMapping(const IMsgIDRep &msgIDRepToAdd);
+    void appendMsgIDMapping(const IMsgIDMapping &msgIDMappingToAdd);
     void init();
 };
 

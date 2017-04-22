@@ -1,12 +1,12 @@
 /**
- * @file IMsgMapping.h
+ * @file IMsgMappingManager.h
  * @author Christian Neuberger
  * @date 2017-03-27
  * 
  * @brief General interface for message mappings
  */
-#ifndef IMSGMAPPING_H
-#define IMSGMAPPING_H
+#ifndef IMSGMAPPINGMANAGER_H
+#define IMSGMAPPINGMANAGER_H
 
 #include "IFileParsable.h"
 #include "IUserRoleManageable.h"
@@ -14,12 +14,12 @@
 class IPrettyMsg;
 
 /**
- * @brief The IMsgMapping interface
+ * @brief The IMsgMappingManager interface
  */
-class IMsgMapping : public QObject, public IUserRoleManageable, public IFileParsable
+class IMsgMappingManager : public QObject, public IUserRoleManageable, public IFileParsable
 {
 public:
-    virtual ~IMsgMapping(){}
+    virtual ~IMsgMappingManager(){}
 
     /**
      * @brief Prettifies the passed #IPrettyMsg and returns it as a reference
@@ -29,7 +29,7 @@ public:
             ) const = 0;
 
 signals:
-    void sgnl_MappingChanged(const IMsgMapping &mapping);
+    void sgnl_MappingManagerChanged(const IMsgMappingManager &mapping);
 
 public slots:
     virtual void slt_ApplyRole(const UserRoleManagement::UserRole roleToApply)
@@ -39,4 +39,4 @@ public slots:
 
 };
 
-#endif /* IMSGMAPPING_H */
+#endif /* IMSGMAPPINGMANAGER_H */

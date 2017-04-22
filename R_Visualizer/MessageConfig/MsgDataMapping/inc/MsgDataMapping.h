@@ -1,29 +1,69 @@
+/**
+ * \file MsgDataMapping.h
+ * \author Christian Neuberger
+ * \date 2017-03-23
+ * 
+ * \brief Mappingresentation of message data
+ */
 #ifndef MSGDATAMAPPING_H
 #define MSGDATAMAPPING_H
 
 #include "IMsgDataMapping.h"
-#include "IMsgDataMappingStore.h"
+#include "IMsgDataFormatter.h"
 
-class FileParser;
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
 
-class MsgDataMapping : public IMsgDataMapping
+/**
+ * \brief The MsgDataMapping
+ */
+class MsgDataMapping : public MsgDataMappingCRTPHelper<MsgDataMapping>
 {
 public:
-    MsgDataMapping(IMsgDataMappingStore *msgDataMappingStore);
+    MsgDataMapping();
+
+    MsgDataMapping(const MsgDataMapping &other);
+
+    MsgDataMapping(
+            const MsgIDType &msgID,
+            const MsgCodeType &msgCode,
+            IMsgDataFormatter *msgDataFormatter
+            );
     virtual ~MsgDataMapping();
 
-    virtual void prettifyMsg(
-            IPrettyMsg &msgToPrettify
-            ) const;
+    MsgIDType getMsgID() const;
+    void setMsgID(const MsgIDType &msgID);
 
-    virtual void accept(FileParser *visitor);
+    MsgCodeType getMsgCode() const;
+    void setMsgCode(const MsgCodeType &msgCode);
+
+    IMsgDataFormatter *getMsgDataFormatter() const;
+    void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter);
+
+    QString parseMsgData(const IMsg &msg) const;
+
+    IMsgDataMapping &operator =(const IMsgDataMapping &other);
+    bool operator ==(const MsgDataMapping &other) const;
+    bool operator ==(const IMsgDataMapping &other) const;
+
+    /**
+     * @brief qHash implementation to use #MsgDataMapping as a QHash key
+     */
+    friend uint qHash(const MsgDataMapping &key, uint seed)
+    {
+        return qHash(
+            static_cast<uint>(static_cast<MsgIDType::type>(key.msgID)) || (
+            static_cast<uint>(static_cast<MsgCodeType::type>(key.msgCode))
+            << ( 8 * sizeof(MsgCodeType::type))),
+            seed);
+    }
+
+    void accept(FileParser *visitor);
 private:
-    IMsgDataMappingStore *msgDataMappingStore;
-
-
-    // IUserRoleManageable interface
-public:
-    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+    MsgIDType msgID;
+    MsgCodeType msgCode;
+    IMsgDataFormatter *msgDataFormatter;
 };
 
 #endif /* MSGDATAMAPPING_H */

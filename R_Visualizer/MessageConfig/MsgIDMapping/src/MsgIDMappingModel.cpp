@@ -125,8 +125,8 @@ bool MsgIDMappingModel::setData(
     const int col = index.column();
     bool dataChanged = false;
 
-    IMsgIDRep &msgIDRep =
-        msgIDMappingStore->getMsgIDRepToMsgID(msgIDStore.at(row));
+    IMsgIDMapping &msgIDMapping =
+        msgIDMappingStore->getMsgIDMappingToMsgID(msgIDStore.at(row));
 
     switch(role)
     {
@@ -134,11 +134,11 @@ bool MsgIDMappingModel::setData(
         switch(col)
         {
             case MsgIDMappingModel::COL_Alias:
-                msgIDRep.setPlainTextAlias(value.value<QString>());
+                msgIDMapping.setPlainTextAlias(value.value<QString>());
                 dataChanged = true;
                 break;
             case MsgIDMappingModel::COL_Color:
-                msgIDRep.setColorRepresentation(value.value<QColor>());
+                msgIDMapping.setColorRepresentation(value.value<QColor>());
                 dataChanged = true;
                 break;
         }
@@ -149,7 +149,7 @@ bool MsgIDMappingModel::setData(
     {
         //ToDO EMIT SIGNALS!!! URGENT!!!
         /* emit dataChanged(index, index); */
-        /* emit sgnl_IDRepUpdated(msgIDRep); */
+        /* emit sgnl_IDMappingUpdated(msgIDMapping); */
         return true;
     }
     else
@@ -192,14 +192,14 @@ void MsgIDMappingModel::removeRow(int row, const QModelIndex &parent)
 
 ///////////////////////////////////////
 
-/* IMsgIDRep &MsgIDMappingModel::getMsgIDRepToMsgID(const MsgIDType &msgID) const */
+/* IMsgIDMapping &MsgIDMappingModel::getMsgIDMappingToMsgID(const MsgIDType &msgID) const */
 /* { */
-/*     return msgIDMappingStore->getMsgIDRepToMsgID(msgID); */
+/*     return msgIDMappingStore->getMsgIDMappingToMsgID(msgID); */
 /* } */
 
-IMsgIDRep &MsgIDMappingModel::getMsgIDRepToMsgID(const MsgIDType &msgID)
+IMsgIDMapping &MsgIDMappingModel::getMsgIDMappingToMsgID(const MsgIDType &msgID)
 {
-    return msgIDMappingStore->getMsgIDRepToMsgID(msgID);
+    return msgIDMappingStore->getMsgIDMappingToMsgID(msgID);
 }
 
 bool MsgIDMappingModel::contains(const MsgIDType &msgID) const
@@ -207,20 +207,20 @@ bool MsgIDMappingModel::contains(const MsgIDType &msgID) const
     return msgIDStore.contains(msgID);
 }
 
-bool MsgIDMappingModel::contains(const IMsgIDRep &msgIDRep) const
+bool MsgIDMappingModel::contains(const IMsgIDMapping &msgIDMapping) const
 {
-    return msgIDStore.contains(msgIDRep.getID());
+    return msgIDStore.contains(msgIDMapping.getID());
 }
 
-void MsgIDMappingModel::appendMsgIDMapping(const IMsgIDRep &msgIDRepToAppend)
+void MsgIDMappingModel::appendMsgIDMapping(const IMsgIDMapping &msgIDMappingToAppend)
 {
     const int currentEndIndex = rowCount();
 
     beginInsertRows(QModelIndex(), currentEndIndex, currentEndIndex);
-    msgIDStore.append(msgIDRepToAppend.getID());
+    msgIDStore.append(msgIDMappingToAppend.getID());
     msgIDMappingStore->addMsgIDMapping(
-            msgIDRepToAppend.getID(),
-            msgIDRepToAppend
+            msgIDMappingToAppend.getID(),
+            msgIDMappingToAppend
             );
     endInsertRows();
 }

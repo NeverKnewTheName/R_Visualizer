@@ -82,20 +82,20 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
     /**
-     * \brief Adds a #IDRep mapping to the #IDModel
+     * \brief Adds a #IDMapping mapping to the #IDModel
      */
-    void add(const IDRep &idRep);
+    void add(const IDMapping &idMapping);
 
     /**
-     * \brief Returns the #IDRep that is stored in the model for the given id
+     * \brief Returns the #IDMapping that is stored in the model for the given id
      * 
      * Queries the model for the provided id. 
-     * If there is an existing #IDRep associated with the id in the model,
+     * If there is an existing #IDMapping associated with the id in the model,
      * it is returned.
-     * If there is no existing #IDRep associated with the id in the model,
-     * a new default #IDRep for that id is returned.
+     * If there is no existing #IDMapping associated with the id in the model,
+     * a new default #IDMapping for that id is returned.
      */
-    IDRep getIDRepToID(const MsgIDType id) const;
+    IDMapping getIDMappingToID(const MsgIDType id) const;
     /**
      * \brief Clears the whole #IDModel for a fresh start
      */
@@ -103,7 +103,7 @@ public:
 
     const int size() const;
 
-    const IDRep &at(const int index) const;
+    const IDMapping &at(const int index) const;
 
     /**
      * \brief Returns whether a given #MsgIDType is contained in the #IDModel
@@ -122,8 +122,8 @@ public:
      */
     QColor getColorToID(const MsgIDType id) const;
 
-//    QHash<int, IDRep *> getIdPropStore() const;
-//    void setIdPropStore(const QHash<int, IDRep *> &value);
+//    QHash<int, IDMapping *> getIdPropStore() const;
+//    void setIdPropStore(const QHash<int, IDMapping *> &value);
 
     /**
      * \brief Returns all names that are contained in the #IDModel
@@ -165,18 +165,18 @@ private:
      */
     QVector<MsgIDType> idStore; //ToDO MsgIDType
     /**
-     * \brief QHash that contains the respective #MsgIDType to #IDRep mappings
+     * \brief QHash that contains the respective #MsgIDType to #IDMapping mappings
      */
-    QHash<MsgIDType, IDRep> idPropStore; //ToDO MsgIDType
+    QHash<MsgIDType, IDMapping> idPropStore; //ToDO MsgIDType
 
 signals:
     /**
      * \brief The #internalModelChanged signal is emitted every time the data in the #IDModel changes
      */
     void internalModelChanged();
-    void sgnl_IDRepAdded(const IDRep &newIDRep);
-    void sgnl_IDRepUpdated(const IDRep &updatedIDRep);
-    void sgnl_IDRepRemoved(const MsgIDType relatedID);
+    void sgnl_IDMappingAdded(const IDMapping &newIDMapping);
+    void sgnl_IDMappingUpdated(const IDMapping &updatedIDMapping);
+    void sgnl_IDMappingRemoved(const MsgIDType relatedID);
 };
 
 #endif // IDMODEL_H

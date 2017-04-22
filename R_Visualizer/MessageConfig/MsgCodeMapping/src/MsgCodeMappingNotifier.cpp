@@ -1,11 +1,11 @@
 #include "MsgCodeMappingNotifier.h"
 
 MsgCodeMappingNotifier::MsgCodeMappingNotifier(
-        IMsgCodeMapping *msgCodeMapping,
+        IMsgCodeMappingManager *msgCodeMappingManager,
         QObject *parent
         ) :
     QObject(parent),
-    msgCodeMapping(msgCodeMapping)
+    msgCodeMappingManager(msgCodeMappingManager)
 {
 }
 

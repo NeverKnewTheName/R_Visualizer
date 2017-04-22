@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-class IMsgIDMapping;
+class IMsgIDMappingManager;
 
 /**
  * @brief The MsgIDMappingNotifier
@@ -20,13 +20,13 @@ class MsgIDMappingNotifier : public QObject
     Q_OBJECT
 public:
     MsgIDMappingNotifier(
-            IMsgIDMapping *msgIDMapping,
+            IMsgIDMappingManager *msgIDMappingManager,
             QObject *parent = Q_NULLPTR
             );
     virtual ~MsgIDMappingNotifier();
 
 private:
-    IMsgIDMapping *msgIDMapping;
+    IMsgIDMappingManager *msgIDMappingManager;
 };
 
 #endif /* MSGIDMAPPINGNOTIFIER_H */

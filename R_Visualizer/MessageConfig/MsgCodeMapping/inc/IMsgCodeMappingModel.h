@@ -13,7 +13,7 @@
 #include <QCompleter>
 
 #include "Msg.h"
-#include "IMsgCodeRep.h"
+#include "IMsgCodeMapping.h"
 
 /**
  * \brief The IMsgCodeMappingModel interface
@@ -24,7 +24,7 @@ public:
     IMsgCodeMappingModel();
     virtual ~IMsgCodeMappingModel();
 
-    //IMsgCodeRep getMsgCodeRepToCode(const MsgCodeType code) const = 0;
+    //IMsgCodeMapping getMsgCodeMappingToCode(const MsgCodeType code) const = 0;
     virtual QString getNameToCode(const MsgCodeType code) const = 0;
     virtual MsgCodeType getCodeToName(const QString &name) const = 0;
     virtual QColor getColorToCode(const MsgCodeType code) const = 0;
@@ -34,9 +34,9 @@ public:
     virtual QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR) const = 0;
 
 signals:
-    virtual void sgnl_MsgCodeRepAdded(const IMsgCodeRep &newMsgCodeRep) = 0;
-    virtual void sgnl_MsgCodeRepUpdated(const IMsgCodeRep &updatedMsgCodeRep) = 0;
-    virtual void sgnl_MsgCodeRepRemoved(const MsgCodeType relatedCode) = 0;
+    virtual void sgnl_MsgCodeMappingAdded(const IMsgCodeMapping &newMsgCodeMapping) = 0;
+    virtual void sgnl_MsgCodeMappingUpdated(const IMsgCodeMapping &updatedMsgCodeMapping) = 0;
+    virtual void sgnl_MsgCodeMappingRemoved(const MsgCodeType relatedCode) = 0;
 };
 
 #endif /* IMSGCODEMODEL_H */

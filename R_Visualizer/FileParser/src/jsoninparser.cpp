@@ -6,11 +6,11 @@
 /* #include "msgstorage.h" */
 /* #include "SendMsgPackageStore.h" */
 #include "MsgIDMappingStore.h"
-#include "MsgIDRep.h"
+#include "MsgIDMapping.h"
 #include "MsgCodeMappingStore.h"
-#include "MsgCodeRep.h"
+#include "MsgCodeMapping.h"
 #include "MsgDataMappingStore.h"
-#include "MsgDataRep.h"
+#include "MsgDataMapping.h"
 /* #include "MsgIDFilterStore.h" */
 /* #include "MsgCodeFilterStore.h" */
 /* #include "MsgTimestampFilter.h" */
@@ -65,7 +65,7 @@ void JsonInParser::visit(MsgIDMappingStore &visitor)
 {
 }
 
-void JsonInParser::visit(MsgIDRep &visitor)
+void JsonInParser::visit(MsgIDMapping &visitor)
 {
 }
 
@@ -73,7 +73,7 @@ void JsonInParser::visit(MsgCodeMappingStore &visitor)
 {
 }
 
-void JsonInParser::visit(MsgCodeRep &visitor)
+void JsonInParser::visit(MsgCodeMapping &visitor)
 {
 }
 
@@ -81,7 +81,7 @@ void JsonInParser::visit(MsgDataMappingStore &visitor)
 {
 }
 
-void JsonInParser::visit(MsgDataRep &visitor)
+void JsonInParser::visit(MsgDataMapping &visitor)
 {
 }
 
@@ -217,19 +217,19 @@ void JsonInParser::visit(MsgDataRep &visitor)
 /* /1*     { *1/ */
 /* /1*         const QJsonObject &tempJsonObject = tempJsonArray.at(i).toObject(); *1/ */
 /* /1*         currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); *1/ */
-/* /1*         IDRep newIDRep; *1/ */
-/* /1*         newIDRep.accept(this); *1/ */
-/* /1*         visitor.add(newIDRep); *1/ */
+/* /1*         IDMapping newIDMapping; *1/ */
+/* /1*         newIDMapping.accept(this); *1/ */
+/* /1*         visitor.add(newIDMapping); *1/ */
 /* /1*     } *1/ */
 /* /1* } *1/ */
 
-/* void JsonInParser::visit(MsgIDRep &visitor) */
+/* void JsonInParser::visit(MsgIDMapping &visitor) */
 /* { */
 /*     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject(); */
 
-/*     visitor.setID(MsgIDType(tempJsonObject["IDRepID"].toInt())); */
-/*     visitor.setPlainTextAlias(tempJsonObject["IDRepName"].toString()); */
-/*     visitor.setColorRepresentation(QColor(tempJsonObject["IDRepColor"].toString())); */
+/*     visitor.setID(MsgIDType(tempJsonObject["IDMappingID"].toInt())); */
+/*     visitor.setPlainTextAlias(tempJsonObject["IDMappingName"].toString()); */
+/*     visitor.setColorMappingresentation(QColor(tempJsonObject["IDMappingColor"].toString())); */
 /* } */
 
 /* /1* void JsonInParser::visit(MsgTypeModel &visitor) *1/ */
@@ -241,23 +241,23 @@ void JsonInParser::visit(MsgDataRep &visitor)
 /* /1*     { *1/ */
 /* /1*         const QJsonObject &tempJsonObject = tempJsonArray.at(i).toObject(); *1/ */
 /* /1*         currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); *1/ */
-/* /1*         MsgTypeRep newMsgTypeRep; *1/ */
-/* /1*         newMsgTypeRep.accept(this); *1/ */
-/* /1*         visitor.add(newMsgTypeRep); *1/ */
+/* /1*         MsgTypeMapping newMsgTypeMapping; *1/ */
+/* /1*         newMsgTypeMapping.accept(this); *1/ */
+/* /1*         visitor.add(newMsgTypeMapping); *1/ */
 /* /1*     } *1/ */
 /* /1* } *1/ */
 
-/* void JsonInParser::visit(MsgCodeRep &visitor) */
+/* void JsonInParser::visit(MsgCodeMapping &visitor) */
 /* { */
 /*     const QJsonObject &tempJsonObject = currentJsonValuePtr->toObject(); */
 
-/*     visitor.setCode(MsgCodeType(tempJsonObject["MsgTypeRepCode"].toInt())); */
-/*     visitor.setPlainTextAlias(tempJsonObject["MsgTypeRepName"].toString()); */
-/*     /1* visitor.setMessageFormat(tempJsonObject["MsgTypeRepMessageFormat"].toString()); *1/ */
-/*     visitor.setColorRepresentation(QColor(tempJsonObject["MsgTypeRepColor"].toString())); */
+/*     visitor.setCode(MsgCodeType(tempJsonObject["MsgTypeMappingCode"].toInt())); */
+/*     visitor.setPlainTextAlias(tempJsonObject["MsgTypeMappingName"].toString()); */
+/*     /1* visitor.setMessageFormat(tempJsonObject["MsgTypeMappingMessageFormat"].toString()); *1/ */
+/*     visitor.setColorMappingresentation(QColor(tempJsonObject["MsgTypeMappingColor"].toString())); */
 /* } */
 
-/* void JsonInParser::visit(MsgDataRep &visitor) */
+/* void JsonInParser::visit(MsgDataMapping &visitor) */
 /* { */
 /* } */
 

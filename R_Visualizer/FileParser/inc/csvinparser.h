@@ -26,11 +26,11 @@ public:
     /* virtual void visit(TimestampedMsgStorage &visitor); */
     /* virtual void visit(SendMsgPackageStore &visitor); */
     virtual void visit(MsgIDMappingStore &visitor);
-    virtual void visit(MsgIDRep &visitor);
+    virtual void visit(MsgIDMapping &visitor);
     virtual void visit(MsgCodeMappingStore &visitor);
-    virtual void visit(MsgCodeRep &visitor);
+    virtual void visit(MsgCodeMapping &visitor);
     virtual void visit(MsgDataMappingStore &visitor);
-    virtual void visit(MsgDataRep &visitor);
+    virtual void visit(MsgDataMapping &visitor);
     /* virtual void visit(MsgIDFilterStore &visitor); */
     /* virtual void visit(MsgCodeFilterStore &visitor); */
     /* virtual void visit(MsgTimestampFilter &visitor); */

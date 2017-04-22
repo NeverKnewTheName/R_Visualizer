@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-class IMsgDataMapping;
+class IMsgDataMappingManager;
 
 /**
  * @brief The MsgDataMappingNotifier
@@ -20,13 +20,13 @@ class MsgDataMappingNotifier : public QObject
     Q_OBJECT
 public:
     MsgDataMappingNotifier(
-            IMsgDataMapping *msgDataMapping,
+            IMsgDataMappingManager *msgDataMappingManager,
             QObject *parent = Q_NULLPTR
             );
     virtual ~MsgDataMappingNotifier();
 
 private:
-    IMsgDataMapping *msgDataMapping;
+    IMsgDataMappingManager *msgDataMappingManager;
 };
 
 #endif /* MSGDATAMAPPINGNOTIFIER_H */

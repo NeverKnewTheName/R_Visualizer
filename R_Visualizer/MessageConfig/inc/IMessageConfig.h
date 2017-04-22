@@ -13,7 +13,7 @@
 #include "IUserRoleManager.h"
 
 class IPrettyMsg;
-class IMsgMapping;
+class IMsgMappingManager;
 class IMsg;
 class ITimestampedMsg;
 
@@ -60,14 +60,14 @@ public:
             ) const = 0;
 
     /**
-     * @brief Prettifies the given #IPrettyMsg with the given #IMsgMapping
+     * @brief Prettifies the given #IPrettyMsg with the given #IMsgMappingManager
      * 
      * @param[inout] msgToPrettify #IPrettyMsg that shall be prettified
-     * @param[in] mappingToApply #IMsgMapping that shall be used to prettify
+     * @param[in] mappingToApply #IMsgMappingManager that shall be used to prettify
      */
-    virtual void prettifyMsgByMapping(
+    virtual void prettifyMsgByMappingManager(
             IPrettyMsg &msgToPrettify,
-            const IMsgMapping &mappingToApply
+            const IMsgMappingManager &mappingToApply
             ) const = 0;
 
     /**
@@ -85,10 +85,10 @@ signals:
      * 
      * Modules that make use of the #IMessageConfig must be informed whenever a
      * mapping contained in the #IMessageConfig object changes to react to this
-     * change by calling #prettifyMsgByMapping for example.
+     * change by calling #prettifyMsgByMappingManager for example.
      */
-    void sgnl_MappingChanged(
-            const IMsgMapping &changedMapping
+    void sgnl_MappingManagerChanged(
+            const IMsgMappingManager &changedMappingManager
             );
 
     /**

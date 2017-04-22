@@ -10,11 +10,11 @@ MsgIDMappingStore::~MsgIDMappingStore()
 
 MsgIDType MsgIDMappingStore::getMsgIDToAlias(const QString &alias) const
 {
-    for(auto &msgIDRep : msgIDRepStore )
+    for(auto &msgIDMapping : msgIDMappingStore )
     {
-        if(!alias.compare(msgIDRep.getPlainTextAlias(), Qt::CaseInsensitive))
+        if(!alias.compare(msgIDMapping.getPlainTextAlias(), Qt::CaseInsensitive))
         {
-            return msgIDRepStore.key(msgIDRep);
+            return msgIDMappingStore.key(msgIDMapping);
         }
     }
     return MsgIDType();
@@ -25,7 +25,7 @@ QString MsgIDMappingStore::getAliasToMsgID(const MsgIDType &msgID) const
     /**
      * returns default constructed value anyway if none found
      */
-    return msgIDRepStore[msgID].getPlainTextAlias();
+    return msgIDMappingStore[msgID].getPlainTextAlias();
 }
 
 QColor MsgIDMappingStore::getColorToMsgID(const MsgIDType &msgID) const
@@ -33,7 +33,7 @@ QColor MsgIDMappingStore::getColorToMsgID(const MsgIDType &msgID) const
     /**
      * returns default constructed value anyway if none found
      */
-    return msgIDRepStore[msgID].getColorRepresentation();
+    return msgIDMappingStore[msgID].getColorRepresentation();
 }
 
 QColor MsgIDMappingStore::getColorToAlias(const QString &alias) const
@@ -43,55 +43,55 @@ QColor MsgIDMappingStore::getColorToAlias(const QString &alias) const
     return getColorToMsgID(tempMsgID);
 }
 
-/* IMsgIDRep &MsgIDMappingStore::getMsgIDRepToMsgID( */
+/* IMsgIDMapping &MsgIDMappingStore::getMsgIDMappingToMsgID( */
 /*         const MsgIDType &msgID */
 /*         ) const */
 /* { */
 /*     if(contains(msgID)) */
 /*     { */
-/*         return msgIDRepStore.value(msgID); */
+/*         return msgIDMappingStore.value(msgID); */
 /*     } */
 /* } */
 
-IMsgIDRep &MsgIDMappingStore::getMsgIDRepToMsgID(const MsgIDType &msgID)
+IMsgIDMapping &MsgIDMappingStore::getMsgIDMappingToMsgID(const MsgIDType &msgID)
 {
     /**
      * returns default constructed value anyway
      */
-    return msgIDRepStore[msgID];
+    return msgIDMappingStore[msgID];
 }
 
 bool MsgIDMappingStore::contains(const MsgIDType &msgID) const
 {
-    return msgIDRepStore.contains(msgID);
+    return msgIDMappingStore.contains(msgID);
 }
 
-bool MsgIDMappingStore::contains(const IMsgIDRep &msgIDRep) const
+bool MsgIDMappingStore::contains(const IMsgIDMapping &msgIDMapping) const
 {
-    return contains(msgIDRep.getID());
+    return contains(msgIDMapping.getID());
 }
 
-IMsgIDRep &MsgIDMappingStore::addMsgIDMapping(
+IMsgIDMapping &MsgIDMappingStore::addMsgIDMapping(
         const MsgIDType &msgID,
-        const IMsgIDRep &msgIDRepToAdd
+        const IMsgIDMapping &msgIDMappingToAdd
         )
 {
-    msgIDRepStore.insert(
+    msgIDMappingStore.insert(
             msgID,
-            dynamic_cast<const MsgIDRep &>(msgIDRepToAdd)
+            dynamic_cast<const MsgIDMapping &>(msgIDMappingToAdd)
             );
 
-    return msgIDRepStore[msgID];
+    return msgIDMappingStore[msgID];
 }
 
 void MsgIDMappingStore::removeMsgIDMapping(const MsgIDType &relatedMsgID)
 {
-    msgIDRepStore.remove(relatedMsgID);
+    msgIDMappingStore.remove(relatedMsgID);
 }
 
 void MsgIDMappingStore::clear()
 {
-    msgIDRepStore.clear();
+    msgIDMappingStore.clear();
 }
 
 void MsgIDMappingStore::accept(FileParser *visitor)

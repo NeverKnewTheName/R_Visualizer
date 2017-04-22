@@ -16,10 +16,10 @@
 
 class IMsg;
 class IPrettyMsg;
-class IMsgMapping;
-class IMsgIDMapping;
-class IMsgCodeMapping;
-class IMsgDataMapping;
+class IMsgMappingManager;
+class IMsgIDMappingManager;
+class IMsgCodeMappingManager;
+class IMsgDataMappingManager;
 
 /**
  * @brief The MessageConfig module is a standard implementation of the
@@ -34,9 +34,9 @@ class MessageConfig :
     Q_OBJECT
 public:
     MessageConfig(
-            IMsgIDMapping *msgIDMapping,
-            IMsgCodeMapping *msgCodeMapping,
-            IMsgDataMapping *msgDataMapping,
+            IMsgIDMappingManager *msgIDMappingManager,
+            IMsgCodeMappingManager *msgCodeMappingManager,
+            IMsgDataMappingManager *msgDataMappingManager,
             QObject *parent = Q_NULLPTR
             );
     virtual ~MessageConfig();
@@ -45,18 +45,18 @@ public:
             IPrettyMsg &msgToPrettify
             ) const;
 
-    virtual void prettifyMsgByMapping(
+    virtual void prettifyMsgByMappingManager(
             IPrettyMsg &msgToPrettify,
-            const IMsgMapping &mappingToApply
+            const IMsgMappingManager &mappingToApply
             ) const;
 
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
 
 private:
-    IMsgIDMapping *msgIDMapping;
-    IMsgCodeMapping *msgCodeMapping;
-    IMsgDataMapping *msgDataMapping;
+    IMsgIDMappingManager *msgIDMappingManager;
+    IMsgCodeMappingManager *msgCodeMappingManager;
+    IMsgDataMappingManager *msgDataMappingManager;
 };
 
 #endif /* MESSAGECONFIG_H */

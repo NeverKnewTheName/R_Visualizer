@@ -13,7 +13,7 @@
 #include <QCompleter>
 
 #include "Msg.h"
-#include "IMsgIDRep.h"
+#include "IMsgIDMapping.h"
 #include "IFileParsable.h"
 
 /**
@@ -24,8 +24,8 @@ class IMsgIDMappingModel : public IFileParsable
 public:
     virtual ~IMsgIDMappingModel(){}
 
-    /* virtual IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) const = 0; */
-    virtual IMsgIDRep &getMsgIDRepToMsgID(const MsgIDType &msgID) = 0;
+    /* virtual IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) const = 0; */
+    virtual IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) = 0;
 
     /* virtual QString getAliasToMsgID(const MsgIDType msgID) const = 0; */
     /* virtual MsgIDType getMsgIDToAlias(const QString &alias) const = 0; */
@@ -33,9 +33,9 @@ public:
     /* virtual QColor getColorToAlias(const QString &alias) const = 0; */
 
     virtual bool contains(const MsgIDType &msgID) const = 0;
-    virtual bool contains(const IMsgIDRep &msgIDRep) const = 0;
+    virtual bool contains(const IMsgIDMapping &msgIDMapping) const = 0;
 
-    virtual void appendMsgIDMapping(const IMsgIDRep &msgIDRepToAppend) = 0;
+    virtual void appendMsgIDMapping(const IMsgIDMapping &msgIDMappingToAppend) = 0;
     virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID) = 0;
 
     virtual void clear() = 0;
@@ -45,9 +45,9 @@ signals:
     virtual void sgnl_MappingUpdated(const MsgIDType &relatedID) = 0;
     virtual void sgnl_MappingRemoved(const MsgIDType &relatedID) = 0;
 
-    virtual void sgnl_MsgIDRepAdded(const IMsgIDRep &newMsgIDRep) = 0;
-    virtual void sgnl_MsgIDRepUpdated(const IMsgIDRep &updatedMsgIDRep) = 0;
-    virtual void sgnl_MsgIDRepRemoved(const MsgIDType &relatedID) = 0;
+    virtual void sgnl_MsgIDMappingAdded(const IMsgIDMapping &newMsgIDMapping) = 0;
+    virtual void sgnl_MsgIDMappingUpdated(const IMsgIDMapping &updatedMsgIDMapping) = 0;
+    virtual void sgnl_MsgIDMappingRemoved(const MsgIDType &relatedID) = 0;
 };
 
 #endif /* IMSGIDMAPPINGMODEL_H */

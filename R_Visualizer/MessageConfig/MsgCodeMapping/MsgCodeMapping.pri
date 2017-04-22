@@ -7,8 +7,8 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
+    $$PWD/src/MsgCodeMappingManager.cpp \
     $$PWD/src/MsgCodeMapping.cpp \
-    $$PWD/src/MsgCodeRep.cpp \
     $$PWD/src/MsgCodeMappingNotifier.cpp \
     $$PWD/src/MsgCodeMappingWidget.cpp \
     $$PWD/src/MsgCodeMappingStore.cpp \
@@ -19,10 +19,10 @@ SOURCES += \
     #$$PWD/src/msgtypeadddialog.cpp \
 
 HEADERS  += \
-    $$PWD/inc/IMsgCodeRep.h \
-    $$PWD/inc/MsgCodeRep.h \
     $$PWD/inc/IMsgCodeMapping.h \
     $$PWD/inc/MsgCodeMapping.h \
+    $$PWD/inc/IMsgCodeMappingManager.h \
+    $$PWD/inc/MsgCodeMappingManager.h \
     $$PWD/inc/MsgCodeMappingNotifier.h \
     $$PWD/inc/MsgCodeMappingWidget.h \
     $$PWD/inc/IMsgCodeMappingModel.h \

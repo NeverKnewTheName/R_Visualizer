@@ -12,7 +12,7 @@
 #include <QColor>
 
 #include "MsgCodeType.h"
-#include "IMsgCodeRep.h"
+#include "IMsgCodeMapping.h"
 
 #include "IFileParsable.h"
 
@@ -29,20 +29,20 @@ public:
     virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const = 0;
     virtual QColor getColorToAlias(const QString &alias) const = 0;
 
-    /* virtual IMsgCodeRep &getMsgCodeRepToMsgCode( */
+    /* virtual IMsgCodeMapping &getMsgCodeMappingToMsgCode( */
     /*         const MsgCodeType &msgCode */
     /*         ) const = 0; */
 
-    virtual IMsgCodeRep &getMsgCodeRepToMsgCode(
+    virtual IMsgCodeMapping &getMsgCodeMappingToMsgCode(
             const MsgCodeType &msgCode
             ) = 0;
 
     virtual bool contains(const MsgCodeType &msgCode) const = 0;
-    virtual bool contains(const IMsgCodeRep &msgCodeRep) const = 0;
+    virtual bool contains(const IMsgCodeMapping &msgCodeMapping) const = 0;
 
-    virtual IMsgCodeRep &addMsgCodeMapping(
+    virtual IMsgCodeMapping &addMsgCodeMapping(
             const MsgCodeType &msgCode,
-            const IMsgCodeRep &msgCodeRepToAdd
+            const IMsgCodeMapping &msgCodeMappingToAdd
             ) = 0;
     virtual void removeMsgCodeMapping(const MsgCodeType &relatedMsgCode) = 0;
 

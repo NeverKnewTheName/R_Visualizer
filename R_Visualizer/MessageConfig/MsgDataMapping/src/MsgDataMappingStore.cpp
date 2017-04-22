@@ -19,13 +19,13 @@ QColor MsgDataMappingStore::parseMsgDataToColor(const IMsg &msg) const
 {
 }
 
-IMsgDataRep &MsgDataMappingStore::getMsgDataRep(
+IMsgDataMapping &MsgDataMappingStore::getMsgDataMapping(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode
         )
 {
     //ToDO...
-    return msgDataRepStore[msgID][msgCode];
+    return msgDataMappingStore[msgID][msgCode];
 }
 
 bool MsgDataMappingStore::contains(
@@ -33,7 +33,7 @@ bool MsgDataMappingStore::contains(
         const MsgCodeType &msgCode
         ) const
 {
-    if(msgDataRepStore.contains(msgID))
+    if(msgDataMappingStore.contains(msgID))
     {
         /*
          * ToDO FIX IT!
@@ -44,7 +44,7 @@ bool MsgDataMappingStore::contains(
          * 
          * Fix: merge MsgID and MsgCode into one hash key
          */
-        return msgDataRepStore[msgID].contains(msgCode);
+        return msgDataMappingStore[msgID].contains(msgCode);
     }
     else
     {
@@ -53,7 +53,7 @@ bool MsgDataMappingStore::contains(
 }
 
 bool MsgDataMappingStore::contains(
-        const IMsgDataRep &msgDataRep
+        const IMsgDataMapping &msgDataMapping
     ) const
 {
     /*
@@ -62,15 +62,15 @@ bool MsgDataMappingStore::contains(
     return false;
 }
 
-IMsgDataRep &MsgDataMappingStore::addMsgDataMapping(
+IMsgDataMapping &MsgDataMappingStore::addMsgDataMapping(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode,
-        const IMsgDataRep &msgDataRep
+        const IMsgDataMapping &msgDataMapping
         )
 {
     //ToDO...
-    msgDataRepStore[msgID].insert(
-            msgCode,dynamic_cast<const MsgDataRep &>(msgDataRep)
+    msgDataMappingStore[msgID].insert(
+            msgCode,dynamic_cast<const MsgDataMapping &>(msgDataMapping)
             );
 
 }
@@ -81,12 +81,12 @@ void MsgDataMappingStore::removeMsgDataMapping(
         )
 {
     //ToDO...
-    msgDataRepStore[msgID].remove(msgCode);
+    msgDataMappingStore[msgID].remove(msgCode);
 }
 
 void MsgDataMappingStore::clear()
 {
-    msgDataRepStore.clear();
+    msgDataMappingStore.clear();
 }
 
 void MsgDataMappingStore::accept(FileParser *visitor)

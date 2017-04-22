@@ -18,7 +18,7 @@ HEADERS  += \
     $$PWD/inc/MessageConfigWidget.h \
     $$PWD/inc/IPlainTextAliasMapping.h \
     $$PWD/inc/IColorRepresentationMapping.h \
-    $$PWD/inc/IMsgMapping.h \
+    $$PWD/inc/IMsgMappingManager.h \
 
 FORMS    += \
     $$PWD/ui/messageconfig.ui \

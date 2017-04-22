@@ -17,7 +17,7 @@ public:
     explicit MessageConfigWidget(IMessageConfig *msgConfig, QWidget *parent = 0);
     ~MessageConfigWidget();
 
-    void appendMappingWidget(QWidget *mappingWidgetToAppend);
+    void appendMappingManagerWidget(QWidget *mappingWidgetToAppend);
 
 private:
     Ui::MessageConfigWidget *ui;

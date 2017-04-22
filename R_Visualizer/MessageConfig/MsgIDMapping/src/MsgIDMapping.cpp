@@ -1,55 +1,87 @@
 #include "MsgIDMapping.h"
-#include "IMsgIDMappingStore.h"
+#include <QDebug>
 
-MsgIDMapping::MsgIDMapping(IMsgIDMappingStore *msgIDMappingStore) :
-    msgIDMappingStore(msgIDMappingStore)
+#include "fileparser.h"
+
+MsgIDMapping::MsgIDMapping() :
+    id(0x0),
+    name(""),
+    color(Qt::white)
 {
 }
 
-MsgIDMapping::~MsgIDMapping()
+MsgIDMapping::MsgIDMapping(const MsgIDMapping &other) :
+    id(other.id),
+    name(other.name),
+    color(other.color)
 {
 }
 
-MsgIDType MsgIDMapping::getMsgIDToAlias(const QString &alias) const
+MsgIDMapping::MsgIDMapping(const MsgIDType &id) :
+    id(id),
+    name(static_cast<QString>(id)), //ToDO Upper case letters for HEX representation would be nice
+    color(Qt::white)
 {
-    return msgIDMappingStore->getMsgIDToAlias(alias);
 }
 
-QString MsgIDMapping::getAliasToMsgID(const MsgIDType &msgID) const
+MsgIDMapping::MsgIDMapping(const MsgIDType &id, const QString &name, const QColor &color) :
+    id(id),
+    name(name),
+    color(color)
 {
-    return msgIDMappingStore->getAliasToMsgID(msgID);
 }
 
-QColor MsgIDMapping::getColorToMsgID(const MsgIDType &msgID) const
+void MsgIDMapping::setID(const MsgIDType &id)
 {
-    return msgIDMappingStore->getColorToMsgID(msgID);
+    this->id = id;
 }
 
-QColor MsgIDMapping::getColorToAlias(const QString &alias) const
+MsgIDType MsgIDMapping::getID() const
 {
-    return msgIDMappingStore->getColorToAlias(alias);
+    return id;
 }
 
-void MsgIDMapping::prettifyMsg(
-        IPrettyMsg &msgToPrettify
-        ) const
+QString MsgIDMapping::getPlainTextAlias() const
 {
-    const MsgIDType &msgID = msgToPrettify.getMsgID();
+    return name;
+}
 
-    msgToPrettify.setMsgIDPlainTextAlias(
-            msgIDMappingStore->getAliasToMsgID(msgID)
-            );
-    msgToPrettify.setMsgIDColorRepresentation(
-            msgIDMappingStore->getColorToMsgID(msgID)
-            );
+void MsgIDMapping::setPlainTextAlias(const QString &plainTextAlias)
+{
+    this->name = plainTextAlias;
+}
+
+QColor MsgIDMapping::getColorRepresentation() const
+{
+    return color;
+}
+
+void MsgIDMapping::setColorRepresentation(const QColor &colorRepresentation)
+{
+    this->color = colorRepresentation;
+}
+
+IMsgIDMapping &MsgIDMapping::operator =(const IMsgIDMapping &other)
+{
+    this->id = other.getID();
+    this->name = other.getPlainTextAlias();
+    this->color = other.getColorRepresentation();
+
+    return *this;
+}
+
+bool MsgIDMapping::operator ==(const MsgIDMapping &other) const
+{
+    return this->id == other.id;
+}
+
+bool MsgIDMapping::operator ==(const IMsgIDMapping &other) const
+{
+    return this->id == other.getID();
 }
 
 void MsgIDMapping::accept(FileParser *visitor)
 {
-    msgIDMappingStore->accept(visitor);
+    visitor->visit(*this);
 }
 
-
-void MsgIDMapping::applyUserRole(const UserRoleManagement::UserRole roleToApply)
-{
-}

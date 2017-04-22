@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-class IMsgCodeMapping;
+class IMsgCodeMappingManager;
 /**
  * @brief The MsgCodeMappingNotifier
  */
@@ -19,13 +19,13 @@ class MsgCodeMappingNotifier : public QObject
     Q_OBJECT
 public:
     MsgCodeMappingNotifier(
-            IMsgCodeMapping *msgCodeMapping,
+            IMsgCodeMappingManager *msgCodeMappingManager,
             QObject *parent = Q_NULLPTR
             );
     virtual ~MsgCodeMappingNotifier();
 
 private:
-    IMsgCodeMapping *msgCodeMapping;
+    IMsgCodeMappingManager *msgCodeMappingManager;
 };
 
 #endif /* MSGCODEMAPPINGNOTIFIER_H */

@@ -95,8 +95,8 @@ void MsgIDMappingWidget::on_idRmvBtn_clicked()
 
 void MsgIDMappingWidget::on_idAddBtn_clicked()
 {
-    //MsgIDRep testRep(10, QString("TEST"), QColor(Qt::blue));
-    //msgIDMappingModel->appendMsgIDMapping(testRep);
+    //MsgIDMapping testMapping(10, QString("TEST"), QColor(Qt::blue));
+    //msgIDMappingModel->appendMsgIDMapping(testMapping);
 }
 
 void MsgIDMappingWidget::slt_clear()
@@ -104,7 +104,7 @@ void MsgIDMappingWidget::slt_clear()
     msgIDMappingModel->clear();
 }
 
-void MsgIDMappingWidget::slt_MsgIDRepAddFinished(const IMsgIDRep &addedMsgIDRep)
+void MsgIDMappingWidget::slt_MsgIDMappingAddFinished(const IMsgIDMapping &addedMsgIDMapping)
 {
     //ToDO
 }

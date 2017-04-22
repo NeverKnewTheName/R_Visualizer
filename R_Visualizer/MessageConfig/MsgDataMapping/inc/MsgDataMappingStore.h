@@ -15,8 +15,8 @@
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
-#include "IMsgDataRep.h"
-#include "MsgDataRep.h"
+#include "IMsgDataMapping.h"
+#include "MsgDataMapping.h"
 
 class FileParser;
 
@@ -32,7 +32,7 @@ public:
     virtual QString parseMsgDataToString(const IMsg &msg) const;
     virtual QColor parseMsgDataToColor(const IMsg &msg) const;
 
-    virtual IMsgDataRep &getMsgDataRep(
+    virtual IMsgDataMapping &getMsgDataMapping(
             const MsgIDType &msgID,
             const MsgCodeType &msgCode
             );
@@ -43,13 +43,13 @@ public:
             ) const;
 
     virtual bool contains(
-            const IMsgDataRep &msgDataRep
+            const IMsgDataMapping &msgDataMapping
             ) const;
 
-    virtual IMsgDataRep &addMsgDataMapping(
+    virtual IMsgDataMapping &addMsgDataMapping(
             const MsgIDType &msgID,
             const MsgCodeType &msgCode,
-            const IMsgDataRep &msgDataRepToAdd = MsgDataRep()
+            const IMsgDataMapping &msgDataMappingToAdd = MsgDataMapping()
             );
 
     virtual void removeMsgDataMapping(
@@ -61,7 +61,7 @@ public:
 
     void accept(FileParser *visitor);
 private:
-    QHash<MsgIDType,QHash<MsgCodeType, MsgDataRep>> msgDataRepStore;
+    QHash<MsgIDType,QHash<MsgCodeType, MsgDataMapping>> msgDataMappingStore;
 };
 
 #endif /* MSGDATAMAPPINGSTORE_H */

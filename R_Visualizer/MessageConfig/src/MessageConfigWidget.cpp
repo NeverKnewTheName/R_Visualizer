@@ -17,7 +17,7 @@ MessageConfigWidget::~MessageConfigWidget()
     delete ui;
 }
 
-void MessageConfigWidget::appendMappingWidget(QWidget *mappingWidgetToAppend)
+void MessageConfigWidget::appendMappingManagerWidget(QWidget *mappingWidgetToAppend)
 {
     ui->verticalLayout->addWidget(mappingWidgetToAppend);
 }
