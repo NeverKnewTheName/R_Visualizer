@@ -40,7 +40,9 @@ public:
             const MsgIDType &msgID,
             const IMsgIDMapping &msgIDMappingToAdd = MsgIDMapping()
             );
-    virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID);
+    virtual void removeMsgIDMapping(
+            const MsgIDType &relatedMsgID
+            );
 
     virtual void clear();
 

@@ -96,11 +96,6 @@ public:
             QModelIndex()) Q_DECL_OVERRIDE;
 
     /**
-     * \brief Removes a single row/mapping at row
-     */
-    void removeRow(int row, const QModelIndex &parent = QModelIndex());
-
-    /**
      * \brief Returns the valid flags for a given index
      * 
      * Per default items in the #IDModel are editable, selectable, and
@@ -134,14 +129,28 @@ public:
     // \ IFileParsable Implementation \ //
 
 signals:
-    void sgnl_MappingAdded(const MsgIDType &relatedID);
-    void sgnl_MappingUpdated(const MsgIDType &relatedID);
-    void sgnl_MappingRemoved(const MsgIDType &relatedID);
+    void sgnl_MappingHasChanged(const MsgIDType &msgID);
+    void sgnl_AddMapping(
+            const MsgIDType &msgID,
+            const IMsgIDMapping &mappingToAdd
+            );
 
-    void sgnl_MsgIDMappingAdded(const IMsgIDMapping &newMsgIDMapping);
-    void sgnl_MsgIDMappingUpdated(const IMsgIDMapping &updatedMsgIDMapping);
-    void sgnl_MsgIDMappingRemoved(const MsgIDType &relatedMsgID);
+    void sgnl_RemoveMapping(
+            const MsgIDType &msgID
+            );
 
+public slots:
+    void slt_MsgIDMappingAboutToBeAdded(const MsgIDType &msgID);
+    void slt_MsgIDMappingAdded(const MsgIDType &msgID);
+
+    void slt_MsgIDMappingAboutToBeRemoved(const MsgIDType &msgID);
+    void slt_MsgIDMappingRemoved(const MsgIDType &msgID);
+
+    void slt_AboutToBeCleared();
+    void slt_Cleared();
+
+private:
+    void connectToStore();
 
 private:
     QVector<MsgIDType> msgIDStore;

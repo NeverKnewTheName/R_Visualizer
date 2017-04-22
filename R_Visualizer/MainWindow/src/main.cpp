@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
                 );
 
     IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(msgIDMappingStore);
-    IMsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
+    MsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
             msgIDMappingStore
             );
 

@@ -72,15 +72,17 @@ public:
             const IMsgIDMapping &msgIDMappingToAppend
             ) = 0;
     /**
-     * @brief Removes the #IMsgIDMapping that is related to relatedMsgID from the
-     * store
+     * @brief Removes the #IMsgIDMapping that is related to relatedMsgID from
+     * the store
      * 
      * @note must emit #sgnl_MappingAboutToBeRemoved and #sgnl_MappingRemoved
      */
-    virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID) = 0;
+    virtual void removeMsgIDMapping(
+            const MsgIDType &relatedMsgID
+            ) = 0;
 
     /**
-     * @brief Clears the messages store removed all contained #IMsgIDMapping
+     * @brief Clears the messages store removing all contained #IMsgIDMapping
      */
     virtual void clear() = 0;
 
@@ -89,7 +91,7 @@ signals:
      * @brief Signal must be emitted before a new #IMsgIDMapping is added to the
      * store
      */
-    void sgnl_MappingAboutToBeAdded(const MsgIDType &relatedID);
+    void sgnl_MsgIDMappingAboutToBeAdded(const MsgIDType &relatedID);
     /**
      * @brief Signal must be emitted after a new #IMsgIDMapping has been added to
      * the store
@@ -107,15 +109,33 @@ signals:
      */
     void sgnl_MsgIDMappingRemoved(const MsgIDType &relatedID);
 
+    /**
+     * @brief Signal must be emitted before the store is cleared
+     */
+    void sgnl_AboutToBeCleared();
+
+    /**
+     * @brief Signal must be emitted after the store has been cleared
+     */
+    void sgnl_Cleared();
+
+    /**
+     * @brief Signal must be emitted when a contained mapping is changed
+     */
+    void sgnl_MappingHasChanged(const MsgIDType &relatedMsgID);
+
 public slots:
     /**
      * @brief Slot that adds the specified #IMsgIDMapping to the store
      * 
      * @note calls #addMsgIDMapping
      */
-    virtual void slt_AddMsgIDMapping(const IMsgIDMapping &msgIDMappingToAdd)
+    virtual void slt_AddMsgIDMapping(
+            const MsgIDType &msgID,
+            const IMsgIDMapping &msgIDMappingToAdd
+            )
     {
-        addMsgIDMapping(msgIDMappingToAdd.getID(),msgIDMappingToAdd);
+        addMsgIDMapping(msgID,msgIDMappingToAdd);
     }
 
     /**
@@ -123,10 +143,20 @@ public slots:
      * 
      * @note calls #removeMsgIDMapping
      */
-    virtual void slt_RemoveMsgIDMapping(const IMsgIDMapping &msgIDMappingToAdd)
+    virtual void slt_RemoveMsgIDMapping(
+            const MsgIDType &msgID
+            )
     {
-        //removeMsgIDMapping(msgIDMappingToAdd.getID(),msgIDMappingToAdd);
-        removeMsgIDMapping(msgIDMappingToAdd.getID());
+        removeMsgIDMapping(msgID);
+    }
+
+    /**
+     * @brief Slot that clears the store by removed all contained
+     * #IMsgIDMappings from the store
+     */
+    virtual void slt_ClearStore()
+    {
+        clear();
     }
 
 };

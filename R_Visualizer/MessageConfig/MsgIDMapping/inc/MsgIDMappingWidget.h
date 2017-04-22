@@ -11,7 +11,7 @@
 #include <QWidget>
 
 #include "IMsgIDMapping.h"
-#include "IMsgIDMappingModel.h"
+#include "MsgIDMappingModel.h"
 
 namespace Ui {
 class MsgIDMappingWidget;
@@ -24,10 +24,10 @@ class MsgIDMappingWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MsgIDMappingWidget(IMsgIDMappingModel *model, QWidget *parent = 0);
+    explicit MsgIDMappingWidget(MsgIDMappingModel *model, QWidget *parent = 0);
     ~MsgIDMappingWidget();
 
-    void setModel(IMsgIDMappingModel *model);
+    void setModel(MsgIDMappingModel *model);
 
 private slots:
     void on_idStoreBtn_clicked();
@@ -43,9 +43,21 @@ signals:
     void sgnl_MsgIDMappingUpdated(const IMsgIDMapping &updatedMsgIDMapping);
     void sgnl_MsgIDMappingRemoved(const MsgIDType relatedID);
 
+    void sgnl_AddMsgIDMapping(
+            const MsgIDType msgID,
+            const IMsgIDMapping &mappingToAdd
+            );
+
+    void sgnl_RemoveMsgIDMapping(
+            const MsgIDType &msgID
+            );
+
+private:
+    void connectModel();
+
 private:
     Ui::MsgIDMappingWidget *ui;
-    IMsgIDMappingModel *msgIDMappingModel;
+    MsgIDMappingModel *msgIDMappingModel;
 
     void appendMsgIDMapping(const IMsgIDMapping &msgIDMappingToAdd);
     void init();

@@ -13,6 +13,7 @@ MsgIDMappingModel::MsgIDMappingModel(
     QAbstractTableModel(parent),
     msgIDMappingStore(msgIDMappingStore)
 {
+    connectToStore();
 }
 
 MsgIDMappingModel::~MsgIDMappingModel()
@@ -22,13 +23,13 @@ MsgIDMappingModel::~MsgIDMappingModel()
 int MsgIDMappingModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return MsgIDMappingModel::COL_NR_OF_COLS;
+    return msgIDStore.size();
 }
 
 int MsgIDMappingModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return msgIDStore.size();
+    return MsgIDMappingModel::COL_NR_OF_COLS;
 }
 
 QVariant MsgIDMappingModel::headerData(
@@ -123,10 +124,11 @@ bool MsgIDMappingModel::setData(
 {
     const int row = index.row();
     const int col = index.column();
-    bool dataChanged = false;
+    bool altered = false;
 
+    const MsgIDType &msgID = msgIDStore.at(row);
     IMsgIDMapping &msgIDMapping =
-        msgIDMappingStore->getMsgIDMappingToMsgID(msgIDStore.at(row));
+        msgIDMappingStore->getMsgIDMappingToMsgID(msgID);
 
     switch(role)
     {
@@ -135,21 +137,21 @@ bool MsgIDMappingModel::setData(
         {
             case MsgIDMappingModel::COL_Alias:
                 msgIDMapping.setPlainTextAlias(value.value<QString>());
-                dataChanged = true;
+                altered = true;
                 break;
             case MsgIDMappingModel::COL_Color:
                 msgIDMapping.setColorRepresentation(value.value<QColor>());
-                dataChanged = true;
+                altered = true;
                 break;
         }
         break;
     }
 
-    if(dataChanged)
+    if(altered)
     {
         //ToDO EMIT SIGNALS!!! URGENT!!!
-        /* emit dataChanged(index, index); */
-        /* emit sgnl_IDMappingUpdated(msgIDMapping); */
+        emit dataChanged(index, index);
+        emit sgnl_MappingHasChanged(msgID);
         return true;
     }
     else
@@ -158,37 +160,29 @@ bool MsgIDMappingModel::setData(
     }
 }
 
-/* bool MsgIDMappingModel::insertRows(int row, int count, const QModelIndex &parent) */
-/* { */
-/*     beginInsertRows(parent, row, row+count-1); */
-/*     msgIDStore.insert(row */
-/*     endInsertRows(); */
-/* } */
-
 bool MsgIDMappingModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     const int modelSize = msgIDStore.size();
-    if(modelSize || ((row+count-1) < modelSize))
+    if(!modelSize || ((row+count-1) >= modelSize))
     {
         return false;
     }
 
-    beginRemoveRows(parent, row, row+count-1);
+    //ToTHINK .. This is definitely for perfomance.. but it is clean
 
-        while(count--)
-        {
-            msgIDMappingStore->removeMsgIDMapping(msgIDStore.at(row+count));
-            msgIDStore.remove(row+count);
-        }
-    endRemoveRows();
+    /* beginRemoveRows(parent, row, row+count-1); */
+
+    int cntr = count;
+
+    while(cntr--)
+    {
+        msgIDMappingStore->removeMsgIDMapping(msgIDStore.at(row+cntr));
+    }
+    /* msgIDStore.remove(row, count); */
+
+    /* endRemoveRows(); */
     return true;
 }
-
-void MsgIDMappingModel::removeRow(int row, const QModelIndex &parent)
-{
-    //DEPRECATED!
-}
-
 
 ///////////////////////////////////////
 
@@ -248,3 +242,111 @@ void MsgIDMappingModel::accept(FileParser *visitor)
     msgIDMappingStore->accept(visitor);
 }
 
+void MsgIDMappingModel::slt_MsgIDMappingAboutToBeAdded(
+        const MsgIDType &msgID
+        )
+{
+    const int currentEndIndex = rowCount();
+    beginInsertRows(QModelIndex(), currentEndIndex, currentEndIndex);
+}
+
+void MsgIDMappingModel::slt_MsgIDMappingAdded(
+        const MsgIDType &msgID
+        )
+{
+    msgIDStore.append(msgID);
+    endInsertRows();
+}
+
+void MsgIDMappingModel::slt_MsgIDMappingAboutToBeRemoved(
+        const MsgIDType &msgID
+        )
+{
+    //ToTHINK .. This is definitely for perfomance.. but it is clean
+    const int index = msgIDStore.indexOf(msgID);
+    beginRemoveRows(QModelIndex(), index, index);
+}
+
+void MsgIDMappingModel::slt_MsgIDMappingRemoved(
+        const MsgIDType &msgID
+        )
+{
+    msgIDStore.removeAll(msgID);
+    endRemoveRows();
+}
+
+void MsgIDMappingModel::slt_AboutToBeCleared()
+{
+    beginResetModel();
+}
+
+void MsgIDMappingModel::slt_Cleared()
+{
+    endResetModel();
+}
+
+void MsgIDMappingModel::connectToStore()
+{
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_MsgIDMappingAboutToBeAdded,
+            this,
+            &MsgIDMappingModel::slt_MsgIDMappingAboutToBeAdded
+           );
+
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_MsgIDMappingAdded,
+            this,
+            &MsgIDMappingModel::slt_MsgIDMappingAdded
+           );
+
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_MsgIDMappingAboutToBeRemoved,
+            this,
+            &MsgIDMappingModel::slt_MsgIDMappingAboutToBeRemoved
+           );
+
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_MsgIDMappingRemoved,
+            this,
+            &MsgIDMappingModel::slt_MsgIDMappingRemoved
+           );
+
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_AboutToBeCleared,
+            this,
+            &MsgIDMappingModel::slt_AboutToBeCleared
+           );
+
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_Cleared,
+            this,
+            &MsgIDMappingModel::slt_Cleared
+           );
+
+    connect(
+            this,
+            &MsgIDMappingModel::sgnl_AddMapping,
+            msgIDMappingStore,
+            &IMsgIDMappingStore::slt_AddMsgIDMapping
+           );
+
+    connect(
+            this,
+            &MsgIDMappingModel::sgnl_RemoveMapping,
+            msgIDMappingStore,
+            &IMsgIDMappingStore::slt_RemoveMsgIDMapping
+           );
+
+    connect(
+            this,
+            &MsgIDMappingModel::sgnl_MappingHasChanged,
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_MappingHasChanged
+           );
+}

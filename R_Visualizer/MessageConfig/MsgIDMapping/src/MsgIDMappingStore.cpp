@@ -76,22 +76,29 @@ IMsgIDMapping &MsgIDMappingStore::addMsgIDMapping(
         const IMsgIDMapping &msgIDMappingToAdd
         )
 {
+    emit sgnl_MsgIDMappingAboutToBeAdded(msgID);
     msgIDMappingStore.insert(
             msgID,
             dynamic_cast<const MsgIDMapping &>(msgIDMappingToAdd)
             );
+
+    emit sgnl_MsgIDMappingAdded(msgID);
 
     return msgIDMappingStore[msgID];
 }
 
 void MsgIDMappingStore::removeMsgIDMapping(const MsgIDType &relatedMsgID)
 {
+    emit sgnl_MsgIDMappingAboutToBeRemoved(relatedMsgID);
     msgIDMappingStore.remove(relatedMsgID);
+    emit sgnl_MsgIDMappingRemoved(relatedMsgID);
 }
 
 void MsgIDMappingStore::clear()
 {
+    emit sgnl_AboutToBeCleared();
     msgIDMappingStore.clear();
+    emit sgnl_Cleared();
 }
 
 void MsgIDMappingStore::accept(FileParser *visitor)

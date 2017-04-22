@@ -39,15 +39,6 @@ public:
     virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID) = 0;
 
     virtual void clear() = 0;
-
-signals:
-    virtual void sgnl_MappingAdded(const MsgIDType &relatedID) = 0;
-    virtual void sgnl_MappingUpdated(const MsgIDType &relatedID) = 0;
-    virtual void sgnl_MappingRemoved(const MsgIDType &relatedID) = 0;
-
-    virtual void sgnl_MsgIDMappingAdded(const IMsgIDMapping &newMsgIDMapping) = 0;
-    virtual void sgnl_MsgIDMappingUpdated(const IMsgIDMapping &updatedMsgIDMapping) = 0;
-    virtual void sgnl_MsgIDMappingRemoved(const MsgIDType &relatedID) = 0;
 };
 
 #endif /* IMSGIDMAPPINGMODEL_H */

@@ -4,8 +4,8 @@
 #include <QFile>
 #include <QFileDialog>
 
-#include <QJsonDocument>
-
+#include <QModelIndexList>
+#include <QItemSelectionModel>
 #include <QSortFilterProxyModel>
 
 #include <QDebug>
@@ -20,7 +20,7 @@
 #include "jsonoutparser.h"
 
 MsgIDMappingWidget::MsgIDMappingWidget(
-        IMsgIDMappingModel *model,
+        MsgIDMappingModel *model,
         QWidget *parent
         ) :
     QWidget(parent),
@@ -28,6 +28,8 @@ MsgIDMappingWidget::MsgIDMappingWidget(
     msgIDMappingModel(model)
 {
     init();
+    connectModel();
+
 }
 
 MsgIDMappingWidget::~MsgIDMappingWidget()
@@ -35,7 +37,7 @@ MsgIDMappingWidget::~MsgIDMappingWidget()
     delete ui;
 }
 
-void MsgIDMappingWidget::setModel(IMsgIDMappingModel *model)
+void MsgIDMappingWidget::setModel(MsgIDMappingModel *model)
 {
     this->msgIDMappingModel = model;
 }
@@ -90,12 +92,26 @@ void MsgIDMappingWidget::on_idLoadBtn_clicked()
 
 void MsgIDMappingWidget::on_idRmvBtn_clicked()
 {
+    QItemSelectionModel *selectionModel = ui->idTableView->selectionModel();
+
+    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+
+    if(selectionIndexList.size())
+    {
+        msgIDMappingModel->removeRows(
+                selectionIndexList.first().row(),
+                selectionIndexList.size()
+                );
+    }
 
 }
 
+#include "MsgIDMapping.h"
 void MsgIDMappingWidget::on_idAddBtn_clicked()
 {
-    //MsgIDMapping testMapping(10, QString("TEST"), QColor(Qt::blue));
+    qsrand(qrand());
+    MsgIDMapping testMapping(MsgIDType(qrand() % 100), QString("TEST"), QColor(Qt::blue));
+    emit sgnl_AddMsgIDMapping(testMapping.getID(), testMapping);
     //msgIDMappingModel->appendMsgIDMapping(testMapping);
 }
 
@@ -126,4 +142,21 @@ void MsgIDMappingWidget::init()
     //ui->idTableView->setItemDelegate(new IDEditorDelegate(this));
 
     //ToDO SCROLL TO BOTTOM
+}
+
+void MsgIDMappingWidget::connectModel()
+{
+    connect(
+            this,
+            &MsgIDMappingWidget::sgnl_AddMsgIDMapping,
+            msgIDMappingModel,
+            &MsgIDMappingModel::sgnl_AddMapping
+           );
+
+    connect(
+            this,
+            &MsgIDMappingWidget::sgnl_RemoveMsgIDMapping,
+            msgIDMappingModel,
+            &MsgIDMappingModel::sgnl_RemoveMapping
+           );
 }
