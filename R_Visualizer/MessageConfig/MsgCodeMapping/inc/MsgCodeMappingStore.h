@@ -23,17 +23,13 @@ class FileParser;
 class MsgCodeMappingStore : public IMsgCodeMappingStore
 {
 public:
-    MsgCodeMappingStore();
+    MsgCodeMappingStore(QObject *parent = Q_NULLPTR);
     virtual ~MsgCodeMappingStore();
 
     virtual MsgCodeType getMsgCodeToAlias(const QString &alias) const;
     virtual QString getAliasToMsgCode(const MsgCodeType &msgCode) const;
     virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const;
     virtual QColor getColorToAlias(const QString &alias) const;
-
-    /* virtual IMsgCodeMapping &getMsgCodeMappingToMsgCode( */
-    /*         const MsgCodeType &msgCode */
-    /*         ) const; */
 
     virtual IMsgCodeMapping &getMsgCodeMappingToMsgCode(
             const MsgCodeType &msgCode

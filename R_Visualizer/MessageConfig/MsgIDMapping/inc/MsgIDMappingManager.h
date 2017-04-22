@@ -10,9 +10,7 @@
 
 #include "IMsgIDMappingManager.h"
 
-#include "IPrettyMsg.h"
-#include "IMsg.h"
-#include "ITimestampedMsg.h"
+#include "MsgIDType.h"
 
 class IMsgIDMappingStore;
 

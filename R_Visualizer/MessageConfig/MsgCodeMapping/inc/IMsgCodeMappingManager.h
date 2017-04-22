@@ -23,10 +23,6 @@ public:
     virtual QString getAliasToMsgCode(const MsgCodeType &msgCode) const = 0;
     virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const = 0;
     virtual QColor getColorToAlias(const QString &alias) const = 0;
-
-    /* virtual QCompleter *createCodeAliasCompleter( */
-    /*         QObject *parent = Q_NULLPTR */
-    /*         ) const = 0; */
 };
 
 #endif /* IMSGCODEMAPPINGMANAGER_H */

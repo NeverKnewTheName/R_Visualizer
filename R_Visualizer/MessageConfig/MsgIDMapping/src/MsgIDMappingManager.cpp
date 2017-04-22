@@ -1,7 +1,12 @@
 #include "MsgIDMappingManager.h"
+
 #include "IMsgIDMappingStore.h"
 
-MsgIDMappingManager::MsgIDMappingManager(IMsgIDMappingStore *msgIDMappingStore) :
+#include "IPrettyMsg.h"
+
+MsgIDMappingManager::MsgIDMappingManager(
+        IMsgIDMappingStore *msgIDMappingStore
+        ) :
     msgIDMappingStore(msgIDMappingStore)
 {
 }
@@ -10,22 +15,30 @@ MsgIDMappingManager::~MsgIDMappingManager()
 {
 }
 
-MsgIDType MsgIDMappingManager::getMsgIDToAlias(const QString &alias) const
+MsgIDType MsgIDMappingManager::getMsgIDToAlias(
+        const QString &alias
+        ) const
 {
     return msgIDMappingStore->getMsgIDToAlias(alias);
 }
 
-QString MsgIDMappingManager::getAliasToMsgID(const MsgIDType &msgID) const
+QString MsgIDMappingManager::getAliasToMsgID(
+        const MsgIDType &msgID
+        ) const
 {
     return msgIDMappingStore->getAliasToMsgID(msgID);
 }
 
-QColor MsgIDMappingManager::getColorToMsgID(const MsgIDType &msgID) const
+QColor MsgIDMappingManager::getColorToMsgID(
+        const MsgIDType &msgID
+        ) const
 {
     return msgIDMappingStore->getColorToMsgID(msgID);
 }
 
-QColor MsgIDMappingManager::getColorToAlias(const QString &alias) const
+QColor MsgIDMappingManager::getColorToAlias(
+        const QString &alias
+        ) const
 {
     return msgIDMappingStore->getColorToAlias(alias);
 }
@@ -50,6 +63,9 @@ void MsgIDMappingManager::accept(FileParser *visitor)
 }
 
 
-void MsgIDMappingManager::applyUserRole(const UserRoleManagement::UserRole roleToApply)
+void MsgIDMappingManager::applyUserRole(
+        const UserRoleManagement::UserRole roleToApply
+        )
 {
+    //ToDo
 }

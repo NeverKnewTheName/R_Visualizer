@@ -10,7 +10,8 @@
 
 #include "IMsgCodeMappingManager.h"
 
-class FileParser;
+#include "MsgCodeType.h"
+
 class IMsgCodeMappingStore;
 
 /**
@@ -33,13 +34,12 @@ public:
 
     virtual void accept(FileParser *visitor);
 
-private:
-    IMsgCodeMappingStore *msgCodeMappingStore;
-
-
     // IUserRoleManageable interface
 public:
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+
+private:
+    IMsgCodeMappingStore *msgCodeMappingStore;
 };
 
 #endif /* MSGCODEMAPPINGMANAGER_H */

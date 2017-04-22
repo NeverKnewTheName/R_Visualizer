@@ -1,6 +1,7 @@
 #include "MsgIDMappingStore.h"
 
-MsgIDMappingStore::MsgIDMappingStore()
+MsgIDMappingStore::MsgIDMappingStore(QObject *parent) :
+    IMsgIDMappingStore(parent)
 {
 }
 
@@ -43,16 +44,6 @@ QColor MsgIDMappingStore::getColorToAlias(const QString &alias) const
     return getColorToMsgID(tempMsgID);
 }
 
-/* IMsgIDMapping &MsgIDMappingStore::getMsgIDMappingToMsgID( */
-/*         const MsgIDType &msgID */
-/*         ) const */
-/* { */
-/*     if(contains(msgID)) */
-/*     { */
-/*         return msgIDMappingStore.value(msgID); */
-/*     } */
-/* } */
-
 IMsgIDMapping &MsgIDMappingStore::getMsgIDMappingToMsgID(const MsgIDType &msgID)
 {
     /**
@@ -77,6 +68,7 @@ IMsgIDMapping &MsgIDMappingStore::addMsgIDMapping(
         )
 {
     emit sgnl_MsgIDMappingAboutToBeAdded(msgID);
+
     msgIDMappingStore.insert(
             msgID,
             dynamic_cast<const MsgIDMapping &>(msgIDMappingToAdd)

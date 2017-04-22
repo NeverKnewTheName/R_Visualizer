@@ -1,14 +1,13 @@
 #include "MsgCodeMappingStore.h"
 
-
-MsgCodeMappingStore::MsgCodeMappingStore()
+MsgCodeMappingStore::MsgCodeMappingStore(QObject *parent) :
+    IMsgCodeMappingStore(parent)
 {
 }
 
 MsgCodeMappingStore::~MsgCodeMappingStore()
 {
 }
-
 
 MsgCodeType MsgCodeMappingStore::getMsgCodeToAlias(const QString &alias) const
 {
@@ -45,20 +44,6 @@ QColor MsgCodeMappingStore::getColorToAlias(const QString &alias) const
     return getColorToMsgCode(tempMsgCode);
 }
 
-
-/* IMsgCodeMapping &MsgCodeMappingStore::getMsgCodeMappingToMsgCode( */
-/*         const MsgCodeType &msgCode */
-/*         ) const */
-/* { */
-/*     if(containsMsgCode(msgCode)) */
-/*     { */
-/*         return msgCodeMappingStore.value(msgCode); */
-/*     } */
-
-/*     //todo Add standard return... */
-/* } */
-
-
 IMsgCodeMapping &MsgCodeMappingStore::getMsgCodeMappingToMsgCode(
         const MsgCodeType &msgCode
         )
@@ -86,25 +71,33 @@ IMsgCodeMapping &MsgCodeMappingStore::addMsgCodeMapping(
         const IMsgCodeMapping &msgCodeMappingToAdd
         )
 {
+    emit sgnl_MsgCodeMappingAboutToBeAdded(msgCode);
+
     msgCodeMappingStore.insert(
             msgCode,
             dynamic_cast<const MsgCodeMapping &>(msgCodeMappingToAdd)
             );
 
+    emit sgnl_MsgCodeMappingAdded(msgCode);
+
     return msgCodeMappingStore[msgCode];
 }
 
 void MsgCodeMappingStore::removeMsgCodeMapping(
-        const MsgCodeType &relatedMsgCode
+        const MsgCodeType &relatedCode
         )
 {
-    msgCodeMappingStore.remove(relatedMsgCode);
+    emit sgnl_MsgCodeMappingAboutToBeRemoved(relatedCode);
+    msgCodeMappingStore.remove(relatedCode);
+    emit sgnl_MsgCodeMappingRemoved(relatedCode);
 }
 
 
 void MsgCodeMappingStore::clear()
 {
+    emit sgnl_AboutToBeCleared();
     msgCodeMappingStore.clear();
+    emit sgnl_Cleared();
 }
 
 

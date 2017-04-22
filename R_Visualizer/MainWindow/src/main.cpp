@@ -89,25 +89,25 @@ int main(int argc, char *argv[])
     /* TimestampedMsgStorage timestampedMsgStorage; */
 
     IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
-
-    msgIDMappingStore->addMsgIDMapping(
-            MsgIDType(0x01),
-            MsgIDMapping(MsgIDType(0x01))
-                );
-
-    IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(msgIDMappingStore);
+    IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(
+            msgIDMappingStore
+            );
     MsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
             msgIDMappingStore
             );
 
     IMsgCodeMappingStore *msgCodeMappingStore = new MsgCodeMappingStore();
-    IMsgCodeMappingManager *msgCodeMappingManager = new MsgCodeMappingManager(msgCodeMappingStore);
-    //IMsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
-    //        msgCodeMappingStore
-    //        );
+    IMsgCodeMappingManager *msgCodeMappingManager = new MsgCodeMappingManager(
+            msgCodeMappingStore
+            );
+    MsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
+            msgCodeMappingStore
+            );
 
     IMsgDataMappingStore *msgDataMappingStore = new MsgDataMappingStore();
-    IMsgDataMappingManager *msgDataMappingManager = new MsgDataMappingManager(msgDataMappingStore);
+    IMsgDataMappingManager *msgDataMappingManager = new MsgDataMappingManager(
+            msgDataMappingStore
+            );
 
 
     IMessageConfig *messageConfig = new MessageConfig(
@@ -119,16 +119,22 @@ int main(int argc, char *argv[])
     MessageConfigWidget *messageConfigWidget = new MessageConfigWidget(
             messageConfig
             );
+
+    //Note: do not set messageConfigWidget as parent, because the actual parent
+    //will be the vertical layout of the messageConfigWidget...
     MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(
-            msgIDMappingModel,
-            messageConfigWidget
+            msgIDMappingModel
+            /* messageConfigWidget */
             );
-    //MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
-    //        msgCodeMappingModel,
-    //        messageConfigWidget
-    //        );
+    //Note: do not set messageConfigWidget as parent, because the actual parent
+    //will be the vertical layout of the messageConfigWidget...
+    MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
+            msgCodeMappingModel
+            /* messageConfigWidget */
+            );
+
     messageConfigWidget->appendMappingManagerWidget(msgIDMappingWidget);
-    //messageConfigWidget->appendMappingManagerWidget(msgCodeMappingWidget);
+    messageConfigWidget->appendMappingManagerWidget(msgCodeMappingWidget);
 
     w.appendTabMenuWidget(messageConfigWidget, "Message Configuration");
     /* messageConfigWidget->appendMappingWidget(); */

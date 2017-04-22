@@ -8,6 +8,7 @@
 #ifndef IMSGIDMAPPINGSTORE_H
 #define IMSGIDMAPPINGSTORE_H
 
+#include <QObject>
 #include <QString>
 #include <QColor>
 
@@ -23,6 +24,8 @@ class IMsgIDMappingStore : public QObject, public IFileParsable
 {
     Q_OBJECT
 public:
+    IMsgIDMappingStore(QObject *parent = Q_NULLPTR) :
+        QObject(parent){}
     virtual ~IMsgIDMappingStore(){}
 
     /**
@@ -83,6 +86,8 @@ public:
 
     /**
      * @brief Clears the messages store removing all contained #IMsgIDMapping
+     * 
+     * @note must emit #sgnl_AboutToBeCleared and #sgnl_Cleared
      */
     virtual void clear() = 0;
 

@@ -24,13 +24,7 @@ class IMsgIDMappingModel : public IFileParsable
 public:
     virtual ~IMsgIDMappingModel(){}
 
-    /* virtual IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) const = 0; */
     virtual IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) = 0;
-
-    /* virtual QString getAliasToMsgID(const MsgIDType msgID) const = 0; */
-    /* virtual MsgIDType getMsgIDToAlias(const QString &alias) const = 0; */
-    /* virtual QColor getColorToMsgID(const MsgIDType msgID) const = 0; */
-    /* virtual QColor getColorToAlias(const QString &alias) const = 0; */
 
     virtual bool contains(const MsgIDType &msgID) const = 0;
     virtual bool contains(const IMsgIDMapping &msgIDMapping) const = 0;
@@ -39,6 +33,11 @@ public:
     virtual void removeMsgIDMapping(const MsgIDType &relatedMsgID) = 0;
 
     virtual void clear() = 0;
+
+    /* virtual QCompleter *createIDNameCompleter(
+     * QObject *parent = Q_NULLPTR
+     * ) const = 0; */
+
 };
 
 #endif /* IMSGIDMAPPINGMODEL_H */

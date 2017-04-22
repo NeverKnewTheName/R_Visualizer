@@ -120,7 +120,8 @@ QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
 bool MsgIDMappingModel::setData(
         const QModelIndex &index,
         const QVariant &value,
-        int role)
+        int role
+        )
 {
     const int row = index.row();
     const int col = index.column();

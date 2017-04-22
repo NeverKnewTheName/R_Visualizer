@@ -110,7 +110,11 @@ void MsgIDMappingWidget::on_idRmvBtn_clicked()
 void MsgIDMappingWidget::on_idAddBtn_clicked()
 {
     qsrand(qrand());
-    MsgIDMapping testMapping(MsgIDType(qrand() % 100), QString("TEST"), QColor(Qt::blue));
+    MsgIDMapping testMapping(
+            MsgIDType(qrand() % 100),
+            QString("TEST"),
+            QColor(Qt::blue)
+            );
     emit sgnl_AddMsgIDMapping(testMapping.getID(), testMapping);
     //msgIDMappingModel->appendMsgIDMapping(testMapping);
 }

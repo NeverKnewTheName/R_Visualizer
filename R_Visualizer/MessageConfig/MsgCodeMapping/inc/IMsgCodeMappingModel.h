@@ -18,25 +18,31 @@
 /**
  * \brief The IMsgCodeMappingModel interface
  */
-class IMsgCodeMappingModel
+class IMsgCodeMappingModel : public IFileParsable
 {
 public:
-    IMsgCodeMappingModel();
-    virtual ~IMsgCodeMappingModel();
+    virtual ~IMsgCodeMappingModel(){}
 
-    //IMsgCodeMapping getMsgCodeMappingToCode(const MsgCodeType code) const = 0;
-    virtual QString getNameToCode(const MsgCodeType code) const = 0;
-    virtual MsgCodeType getCodeToName(const QString &name) const = 0;
-    virtual QColor getColorToCode(const MsgCodeType code) const = 0;
+    virtual IMsgCodeMapping &getMsgCodeMappingToMsgCode(
+            const MsgCodeType &msgCode
+            ) = 0;
 
-    virtual bool contains(const MsgCodeType code) const = 0;
+    virtual bool contains(const MsgCodeType &code) const = 0;
+    virtual bool contains(const IMsgCodeMapping &msgIDMapping) const = 0;
 
-    virtual QCompleter *createCodeNameCompleter(QObject *parent = Q_NULLPTR) const = 0;
+    virtual void appendMsgCodeMapping(
+            const IMsgCodeMapping &msgCodeMappingToAppend
+            ) = 0;
+    virtual void removeMsgCodeMapping(
+            const MsgCodeType &relatedCode
+            ) = 0;
 
-signals:
-    virtual void sgnl_MsgCodeMappingAdded(const IMsgCodeMapping &newMsgCodeMapping) = 0;
-    virtual void sgnl_MsgCodeMappingUpdated(const IMsgCodeMapping &updatedMsgCodeMapping) = 0;
-    virtual void sgnl_MsgCodeMappingRemoved(const MsgCodeType relatedCode) = 0;
+    virtual void clear() = 0;
+
+    /* virtual QCompleter *createCodeNameCompleter(
+     * QObject *parent = Q_NULLPTR
+     * ) const = 0; */
+
 };
 
 #endif /* IMSGCODEMODEL_H */

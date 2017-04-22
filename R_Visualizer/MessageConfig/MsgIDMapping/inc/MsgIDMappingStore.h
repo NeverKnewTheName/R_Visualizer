@@ -22,7 +22,7 @@ class FileParser;
 class MsgIDMappingStore : public IMsgIDMappingStore
 {
 public:
-    MsgIDMappingStore();
+    MsgIDMappingStore(QObject *parnet = Q_NULLPTR);
     virtual ~MsgIDMappingStore();
 
     virtual MsgIDType getMsgIDToAlias(const QString &alias) const;
@@ -30,7 +30,6 @@ public:
     virtual QColor getColorToMsgID(const MsgIDType &msgID) const;
     virtual QColor getColorToAlias(const QString &alias) const;
 
-    /* const IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) const; */
     virtual IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID);
 
     virtual bool contains(const MsgIDType &msgID) const;

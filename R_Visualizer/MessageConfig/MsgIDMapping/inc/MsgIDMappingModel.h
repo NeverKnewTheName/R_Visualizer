@@ -21,7 +21,9 @@ class FileParser;
 /**
  * \brief The MsgIDMappingModel
  */
-class MsgIDMappingModel : public QAbstractTableModel, public IMsgIDMappingModel
+class MsgIDMappingModel :
+    public QAbstractTableModel,
+    public IMsgIDMappingModel
 {
     Q_OBJECT
 public:
@@ -106,13 +108,7 @@ public:
     // \ QAbstractItemModel Implementation \ //
 
     // IMsgIDMappingModel Implementation //
-    /* IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) const; */
     IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID);
-
-    /* QString getAliasToMsgID(const MsgIDType msgID) const; */
-    /* MsgIDType getMsgIDToAlias(const QString &alias) const; */
-    /* QColor getColorToMsgID(const MsgIDType msgID) const; */
-    /* QColor getColorToAlias(const QString &alias) const; */
 
     bool contains(const MsgIDType &msgID) const;
     bool contains(const IMsgIDMapping &msgIDMapping) const;
