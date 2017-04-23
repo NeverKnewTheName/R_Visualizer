@@ -186,7 +186,7 @@ Qt::ItemFlags MsgCodeMappingModel::flags(
         ) const
 {
     const int col = index.column();
-    Qt::ItemFlags itemFlags = 0;
+    Qt::ItemFlags itemFlags = Qt::NoItemFlags;
 
     switch(col)
     {

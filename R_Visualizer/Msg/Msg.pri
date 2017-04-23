@@ -12,6 +12,7 @@ SOURCES += \
     # $$PWD/src/msgdatawidget.cpp \
     # $$PWD/src/PrettyMsg.cpp \
     $$PWD/src/TimestampedMsg.cpp \
+    $$PWD/src/MsgDataFormatter.cpp \ #Should be in MessageConfig
 
 HEADERS  += \
     $$PWD/inc/MsgFieldType.h \
@@ -19,7 +20,9 @@ HEADERS  += \
     $$PWD/inc/MsgIDType.h \
     $$PWD/inc/MsgCodeType.h \
     $$PWD/inc/MsgDataType.h \
+    $$PWD/inc/MessageTypeIdentifier.h \
     $$PWD/inc/IMsgDataFormatter.h \ #Should be in MessageConfig
+    $$PWD/inc/MsgDataFormatter.h \ #Should be in MessageConfig
     $$PWD/inc/IMsg.h \
     $$PWD/inc/ITimestampedMsg.h \
     $$PWD/inc/TimestampedMsg.h \

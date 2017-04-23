@@ -575,7 +575,12 @@ const int MsgFieldTypeTemplate<T,OpaqueT>::msgFieldWidth = sizeof(T) * 2;
  */
 #define CREATE_OPAQUE_MSG_FIELD_TYPE(primitiveType, name) \
     using name##Primitive = primitiveType; \
-    using name = MsgFieldTypeTemplate<name##Primitive, const struct Opaque##name>; \
+    /**
+      @brief The name is a strong typedef for the corresponding message field
+      @sa #MsgFieldTypeTemplate
+    */ \
+    using name \
+     = MsgFieldTypeTemplate<name##Primitive, const struct Opaque##name>; \
 
 
 #endif /* MSGFIELDTYPE_H */

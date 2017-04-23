@@ -51,7 +51,7 @@ signals:
     void sgnl_MsgCodeMappingRemoved(const MsgCodeType relatedCode);
 
     void sgnl_AddMsgCodeMapping(
-            const MsgCodeType msgCode,
+            const MsgCodeType &msgCode,
             const IMsgCodeMapping &mappingToAdd
             );
 

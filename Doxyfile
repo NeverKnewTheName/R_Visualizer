@@ -780,6 +780,9 @@ INPUT                  = ./R_Visualizer ./R_Visualizer/inc ./R_Visualizer/src \
                          ./R_Visualizer/MessageStream ./R_Visualizer/MessageStream/inc ./R_Visualizer/MessageStream/src \
                          ./R_Visualizer/MessageStorage ./R_Visualizer/MessageStorage/inc ./R_Visualizer/MessageStorage/src \
                          ./R_Visualizer/MessageConfig ./R_Visualizer/MessageConfig/inc ./R_Visualizer/MessageConfig/src \
+                         ./R_Visualizer/MessageConfig/MsgIDMapping ./R_Visualizer/MessageConfig/MsgIDMapping/inc ./R_Visualizer/MessageConfig/MsgIDMapping/src \
+                         ./R_Visualizer/MessageConfig/MsgCodeMapping ./R_Visualizer/MessageConfig/MsgCodeMapping/inc ./R_Visualizer/MessageConfig/MsgCodeMapping/src \
+                         ./R_Visualizer/MessageConfig/MsgDataMapping ./R_Visualizer/MessageConfig/MsgDataMapping/inc ./R_Visualizer/MessageConfig/MsgDataMapping/src \
                          ./R_Visualizer/MessageFilter ./R_Visualizer/MessageFilter/inc ./R_Visualizer/MessageFilter/src \
                          ./R_Visualizer/SendMessages ./R_Visualizer/SendMessages/inc ./R_Visualizer/SendMessages/src \
                          ./R_Visualizer/UserRoleManager ./R_Visualizer/UserRoleManager/inc ./R_Visualizer/UserRoleManager/src \
@@ -2012,7 +2015,7 @@ ENABLE_PREPROCESSING   = YES
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-MACRO_EXPANSION        = NO
+MACRO_EXPANSION        = YES
 
 # If the EXPAND_ONLY_PREDEF and MACRO_EXPANSION tags are both set to YES then
 # the macro expansion is limited to the macros specified with the PREDEFINED and

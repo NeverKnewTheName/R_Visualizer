@@ -17,7 +17,7 @@ struct TriggerIdentifier
         id(id),
         code(code)
     {}
-    
+
     TriggerIdentifier(const TriggerIdentifier &other) :
         id(other.id),
         code(other.code)

@@ -44,7 +44,12 @@ void MsgIDMappingWidget::setModel(MsgIDMappingModel *model)
 
 void MsgIDMappingWidget::on_idStoreBtn_clicked()
 {
-    QString saveLoc = QFileDialog::getSaveFileName(this, QString("Save as"), QString(), "JSON File (*.json)");
+    QString saveLoc = QFileDialog::getSaveFileName(
+            this,
+            QString("Save as"),
+            QString(),
+            "JSON File (*.json)"
+            );
     qDebug() << saveLoc;
     QFile jsonSaveFile(saveLoc);
     if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
@@ -57,7 +62,8 @@ void MsgIDMappingWidget::on_idStoreBtn_clicked()
         // write to file
         JsonOutParser jsonOutParser;
         msgIDMappingModel->accept(&jsonOutParser);
-        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson()); //ToDO check for error (-1)
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
+        //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
@@ -66,8 +72,12 @@ void MsgIDMappingWidget::on_idStoreBtn_clicked()
 
 void MsgIDMappingWidget::on_idLoadBtn_clicked()
 {
-    QString openLoc = QFileDialog::getOpenFileName(this, QString("Open"),
-            QString(), "JSON File (*.json)");
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "JSON File (*.json)"
+            );
     qDebug() << openLoc;
     QFile jsonOpenFile(openLoc);
     if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -82,7 +92,6 @@ void MsgIDMappingWidget::on_idLoadBtn_clicked()
                 QJsonDocument::fromJson(jsonOpenFile.readAll())
                 );
         msgIDMappingModel->accept(&jsonInParser);
-        /* idModel.ParseFromJson(jsonOpenFile.readAll()); //ToDO check for error (-1) */
         // parse file
         // populate ui
     }

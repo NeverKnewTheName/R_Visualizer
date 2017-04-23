@@ -11,7 +11,7 @@
 #include <QString>
 #include <QColor>
 
-#include "IMsg.h"
+class IMsg;
 
 /**
  * @brief The IMsgDataFormatter interface
@@ -22,6 +22,29 @@ public:
     virtual ~IMsgDataFormatter(){}
 
     virtual IMsgDataFormatter *cloneFormatter() const = 0;
+
+    /**
+     * @brief Sets the format string that is used by the formatter to format
+     * #MsgDataType
+     */
+    virtual void setFormatString(const QString &formatString) = 0;
+
+    /**
+     * @brief Retrieve the currently set format string
+     */
+    virtual QString getFormatString() const = 0;
+
+    /**
+     * @brief Set the default color
+     */
+    virtual void setDefaultColor(const QColor &defaultColor) = 0;
+
+    /**
+     * @brief Retrieve the currently set default color
+     */
+    virtual QColor getDefaultColor() const = 0;
+
+
     /**
      * \brief Parses the data field of a message to a QString
      * 

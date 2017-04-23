@@ -60,20 +60,19 @@ QVariant MsgIDMappingModel::headerData(
 
 Qt::ItemFlags MsgIDMappingModel::flags(const QModelIndex &index) const
 {
-    int col = index.column();
+    const int col = index.column();
+    Qt::ItemFlags itemFlags = Qt::NoItemFlags;
 
     switch(col)
     {
-        case MsgIDMappingModel::COL_ID:
-            return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-            break;
         case MsgIDMappingModel::COL_Alias:
         case MsgIDMappingModel::COL_Color:
-            return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-            break;
+            itemFlags |= Qt::ItemIsSelectable;
+        case MsgIDMappingModel::COL_ID:
+            itemFlags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
     }
 
-    return Qt::NoItemFlags;
+    return itemFlags;
 }
 
 QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
@@ -86,7 +85,7 @@ QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
     const int row = index.row();
     const int col = index.column();
 
-    const MsgIDType msgID = msgIDStore.at(row);
+    const MsgIDType &msgID = msgIDStore.at(row);
 
     switch(role)
     {
@@ -207,17 +206,22 @@ bool MsgIDMappingModel::contains(const IMsgIDMapping &msgIDMapping) const
     return msgIDStore.contains(msgIDMapping.getID());
 }
 
+//DEPRECATED
 void MsgIDMappingModel::appendMsgIDMapping(const IMsgIDMapping &msgIDMappingToAppend)
 {
-    const int currentEndIndex = rowCount();
-
-    beginInsertRows(QModelIndex(), currentEndIndex, currentEndIndex);
-    msgIDStore.append(msgIDMappingToAppend.getID());
     msgIDMappingStore->addMsgIDMapping(
             msgIDMappingToAppend.getID(),
             msgIDMappingToAppend
             );
-    endInsertRows();
+    /* const int currentEndIndex = rowCount(); */
+
+    /* beginInsertRows(QModelIndex(), currentEndIndex, currentEndIndex); */
+    /* msgIDStore.append(msgIDMappingToAppend.getID()); */
+    /* msgIDMappingStore->addMsgIDMapping( */
+    /*         msgIDMappingToAppend.getID(), */
+    /*         msgIDMappingToAppend */
+    /*         ); */
+    /* endInsertRows(); */
 }
 
 void MsgIDMappingModel::removeMsgIDMapping(const MsgIDType &relatedMsgID)

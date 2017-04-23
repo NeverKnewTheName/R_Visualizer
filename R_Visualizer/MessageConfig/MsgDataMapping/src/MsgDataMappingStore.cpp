@@ -2,7 +2,10 @@
 
 #include "fileparser.h"
 
-MsgDataMappingStore::MsgDataMappingStore()
+MsgDataMappingStore::MsgDataMappingStore(
+        QObject *parent
+        ) :
+    IMsgDataMappingStore(parent)
 {
 }
 
@@ -10,13 +13,19 @@ MsgDataMappingStore::~MsgDataMappingStore()
 {
 }
 
-QString MsgDataMappingStore::parseMsgDataToString(const IMsg &msg) const
+IMsgDataFormatter *MsgDataMappingStore::getMsgDataFormatter(
+        const MsgIDType &msgID,
+        const MsgCodeType &msgCode
+        ) const
 {
-
+    return getMsgDataFormatter(MessageTypeIdentifier(msgID,msgCode));
 }
 
-QColor MsgDataMappingStore::parseMsgDataToColor(const IMsg &msg) const
+IMsgDataFormatter *MsgDataMappingStore::getMsgDataFormatter(
+        const MessageTypeIdentifier &msgType
+        ) const
 {
+    return msgDataMappingStore[msgType].getMsgDataFormatter();
 }
 
 IMsgDataMapping &MsgDataMappingStore::getMsgDataMapping(
@@ -24,8 +33,14 @@ IMsgDataMapping &MsgDataMappingStore::getMsgDataMapping(
         const MsgCodeType &msgCode
         )
 {
-    //ToDO...
-    return msgDataMappingStore[msgID][msgCode];
+    return getMsgDataMapping(MessageTypeIdentifier(msgID,msgCode));
+}
+
+IMsgDataMapping &MsgDataMappingStore::getMsgDataMapping(
+        const MessageTypeIdentifier &msgType
+        )
+{
+    return msgDataMappingStore[msgType];
 }
 
 bool MsgDataMappingStore::contains(
@@ -33,33 +48,24 @@ bool MsgDataMappingStore::contains(
         const MsgCodeType &msgCode
         ) const
 {
-    if(msgDataMappingStore.contains(msgID))
-    {
-        /*
-         * ToDO FIX IT!
-         * This operation is costly because we are in a const function
-         * hence the const operator[] function is called which returns a
-         * value... so basically we copy the whole msgID hash just to check if
-         * it contains a msgCode.. THIS IS STUPID... 
-         * 
-         * Fix: merge MsgID and MsgCode into one hash key
-         */
-        return msgDataMappingStore[msgID].contains(msgCode);
-    }
-    else
-    {
-        return false;
-    }
+    return contains(MessageTypeIdentifier(msgID,msgCode));
+}
+
+bool MsgDataMappingStore::contains(
+        const MessageTypeIdentifier &msgType
+        ) const
+{
+    return msgDataMappingStore.contains(msgType);
 }
 
 bool MsgDataMappingStore::contains(
         const IMsgDataMapping &msgDataMapping
     ) const
 {
-    /*
-     * ToDO See comment above!
-     */
-    return false;
+    const MsgIDType &msgID = msgDataMapping.getMsgID();
+    const MsgCodeType &msgCode = msgDataMapping.getMsgCode();
+
+    return contains(MessageTypeIdentifier(msgID,msgCode));
 }
 
 IMsgDataMapping &MsgDataMappingStore::addMsgDataMapping(
@@ -68,11 +74,32 @@ IMsgDataMapping &MsgDataMappingStore::addMsgDataMapping(
         const IMsgDataMapping &msgDataMapping
         )
 {
-    //ToDO...
-    msgDataMappingStore[msgID].insert(
-            msgCode,dynamic_cast<const MsgDataMapping &>(msgDataMapping)
+    return addMsgDataMapping(
+            MessageTypeIdentifier(msgID,msgCode),
+            msgDataMapping
+            );
+}
+
+IMsgDataMapping &MsgDataMappingStore::addMsgDataMapping(
+        const MessageTypeIdentifier &msgType,
+        const IMsgDataMapping &msgDataMapping
+        )
+{
+    emit sgnl_MsgDataMappingAboutToBeAdded(
+            msgType.getID(),
+            msgType.getCode()
+            );
+    msgDataMappingStore.insert(
+            msgType,
+            dynamic_cast<const MsgDataMapping&>(msgDataMapping)
             );
 
+    emit sgnl_MsgDataMappingAdded(
+            msgType.getID(),
+            msgType.getCode()
+            );
+
+    return msgDataMappingStore[msgType];
 }
 
 void MsgDataMappingStore::removeMsgDataMapping(
@@ -80,13 +107,30 @@ void MsgDataMappingStore::removeMsgDataMapping(
         const MsgCodeType &msgCode
         )
 {
-    //ToDO...
-    msgDataMappingStore[msgID].remove(msgCode);
+    removeMsgDataMapping(MessageTypeIdentifier(msgID,msgCode));
+}
+
+void MsgDataMappingStore::removeMsgDataMapping(
+        const MessageTypeIdentifier &msgType
+        )
+{
+    emit sgnl_MsgDataMappingAboutToBeRemoved(
+            msgType.getID(),
+            msgType.getCode()
+            );
+    msgDataMappingStore.remove(msgType);
+
+    emit sgnl_MsgDataMappingRemoved(
+            msgType.getID(),
+            msgType.getCode()
+            );
 }
 
 void MsgDataMappingStore::clear()
 {
+    emit sgnl_AboutToBeCleared();
     msgDataMappingStore.clear();
+    emit sgnl_Cleared();
 }
 
 void MsgDataMappingStore::accept(FileParser *visitor)

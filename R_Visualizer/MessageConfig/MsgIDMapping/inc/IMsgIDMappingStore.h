@@ -50,7 +50,8 @@ public:
     virtual QColor getColorToAlias(const QString &alias) const = 0;
 
     /**
-     * @brief Returns the #IMsgIDMapping that is related to the specified #MsgIDType
+     * @brief Returns the #IMsgIDMapping that is related to the specified
+     * #MsgIDType contained in the store
      */
     virtual IMsgIDMapping &getMsgIDMappingToMsgID(const MsgIDType &msgID) = 0;
 
@@ -68,7 +69,8 @@ public:
     /**
      * @brief Adds the given #IMsgIDMapping to the store
      * 
-     * @note must emit #sgnl_MappingAboutToBeAdded and #sgnl_MappingAdded
+     * @note must emit #sgnl_MsgIDMappingAboutToBeAdded and
+     * #sgnl_MsgIDMappingAdded
      */
     virtual IMsgIDMapping &addMsgIDMapping(
             const MsgIDType &msgID,
@@ -78,7 +80,8 @@ public:
      * @brief Removes the #IMsgIDMapping that is related to relatedMsgID from
      * the store
      * 
-     * @note must emit #sgnl_MappingAboutToBeRemoved and #sgnl_MappingRemoved
+     * @note must emit #sgnl_MsgIDMappingAboutToBeRemoved and
+     * #sgnl_MsgIDMappingRemoved
      */
     virtual void removeMsgIDMapping(
             const MsgIDType &relatedMsgID

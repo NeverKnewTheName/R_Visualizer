@@ -108,6 +108,9 @@ int main(int argc, char *argv[])
     IMsgDataMappingManager *msgDataMappingManager = new MsgDataMappingManager(
             msgDataMappingStore
             );
+    MsgDataMappingModel *msgDataMappingModel = new MsgDataMappingModel(
+            msgDataMappingStore
+            );
 
 
     IMessageConfig *messageConfig = new MessageConfig(
@@ -132,9 +135,17 @@ int main(int argc, char *argv[])
             msgCodeMappingModel
             /* messageConfigWidget */
             );
+    //Note: do not set messageConfigWidget as parent, because the actual parent
+    //will be the vertical layout of the messageConfigWidget...
+    MsgDataMappingWidget *msgDataMappingWidget = new MsgDataMappingWidget(
+            msgDataMappingModel
+            /* messageConfigWidget */
+            );
+
 
     messageConfigWidget->appendMappingManagerWidget(msgIDMappingWidget);
     messageConfigWidget->appendMappingManagerWidget(msgCodeMappingWidget);
+    messageConfigWidget->appendMappingManagerWidget(msgDataMappingWidget);
 
     w.appendTabMenuWidget(messageConfigWidget, "Message Configuration");
     /* messageConfigWidget->appendMappingWidget(); */
