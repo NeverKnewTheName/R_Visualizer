@@ -87,7 +87,7 @@ public:
     void appendMsg(const MsgType &newMsg)
     {
         msgStore.append(newMsg);
-        emit sgnl_MsgAdded(newMsg);
+        emit sgnl_MsgAdded(newMsg, size()-1);
     }
 
     /**
@@ -112,7 +112,7 @@ public:
     }
 
 //signals:
-    virtual void sgnl_MsgAdded(const MsgType &addedMsg) = 0;
+    virtual void sgnl_MsgAdded(const MsgType &addedMsg, const int index) = 0;
     virtual void sgnl_StoreCleared() = 0;
 
 public:// slots:
@@ -130,14 +130,14 @@ class MsgStorage : public QObject, public TemplateMsgStorage<Msg>
 {
     Q_OBJECT
 public:
-    MsgStorage(){}
+    MsgStorage(QObject *parent = Q_NULLPTR) : QObject(parent){}
 
     void accept(FileParser *visitor)
     {
         visitor->visit(*this);
     }
 signals:
-    virtual void sgnl_MsgAdded(const Msg &addedMsg);
+    virtual void sgnl_MsgAdded(const Msg &addedMsg, const int index);
     virtual void sgnl_StoreCleared();
 
 public slots:
@@ -156,7 +156,7 @@ class TimestampedMsgStorage :
 {
     Q_OBJECT
 public:
-    TimestampedMsgStorage(){}
+    TimestampedMsgStorage(QObject *parent = Q_NULLPTR) : QObject(parent){}
 
     void accept(FileParser *visitor)
     {
@@ -164,7 +164,7 @@ public:
     }
 
 signals:
-    virtual void sgnl_MsgAdded(const TimestampedMsg &addedMsg);
+    virtual void sgnl_MsgAdded(const TimestampedMsg &addedMsg, const int index);
     virtual void sgnl_StoreCleared();
 
 public slots:

@@ -20,7 +20,9 @@ MessageStream::MessageStream(
     msgConfig(msgConfig),
     msgFilter(msgFilter),
     msgStreamStore(msgStreamStore),
-    msgStorage(msgStorage)
+    msgStorage(msgStorage),
+    currentStartIndex(0),
+    currentEndIndex(0)
 {
     if(msgConfig == Q_NULLPTR)
     {
@@ -82,12 +84,15 @@ void MessageStream::clear()
     msgStreamStore->clear();
 }
 
+void MessageStream::setCurrentEndIndex(const int newEndIndex)
+{
+    currentEndIndex = newEndIndex;
+}
+
 void MessageStream::updateMsgMapping(
         const IMsgMappingManager &mappingToUpdate
         )
 {
-    //ToDO
-
     const int msgStreamStoreSize = msgStreamStore->size();
     for(int i = 0; i < msgStreamStoreSize; ++i)
     {

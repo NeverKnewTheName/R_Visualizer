@@ -45,6 +45,8 @@ public:
      */
     virtual void clear() = 0;
 
+    virtual void setCurrentEndIndex(const int newEndIndex) = 0;
+
     /**
      * @brief Updates the stream by the mappingToUpdate #IMsgDataMappingManager
      */
@@ -77,9 +79,15 @@ public slots:
      *
      * @note This default implementation calls #appendMsg
      */
-    virtual void slt_receiveMessage(const ITimestampedMsg &receivedMsg)
+    virtual void slt_receiveMessage(
+            const ITimestampedMsg &receivedMsg,
+            const int index
+            )
     {
-        appendMsg(receivedMsg);
+        if(appendMsg(receivedMsg))
+        {
+            setCurrentEndIndex(index);
+        }
     }
 
     /**

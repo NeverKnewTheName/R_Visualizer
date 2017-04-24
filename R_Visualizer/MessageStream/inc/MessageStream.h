@@ -68,6 +68,8 @@ public:
      */
     virtual void clear();
 
+    virtual void setCurrentEndIndex(const int newEndIndex);
+
     /**
      * @brief Updates the stream by the mappingToUpdate #IMsgDataMappingManager
      */
@@ -104,6 +106,9 @@ private:
      * incoming messages to be displayed in the #MessageStream
      */
     TimestampedMsgStorage &msgStorage;
+
+    int currentStartIndex;
+    int currentEndIndex;
 };
 
 #endif // MESSAGESTREAM_H
