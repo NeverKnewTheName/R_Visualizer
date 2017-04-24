@@ -125,9 +125,7 @@ signals:
     /**
      * @brief Signal is emitted when the store has been changed
      */
-    void sgnl_HasChanged(
-            const MsgIDType &relatedMsgID
-            );
+    void sgnl_HasChanged();
 
 public slots:
     /**

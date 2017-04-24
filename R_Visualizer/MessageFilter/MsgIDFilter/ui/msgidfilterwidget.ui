@@ -98,7 +98,7 @@
        </spacer>
       </item>
       <item row="3" column="3">
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="invertIDFilterCheckBox">
         <property name="text">
          <string>Inverted</string>
         </property>

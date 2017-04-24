@@ -21,7 +21,9 @@ void MsgCodeFilterStore::addMsgCode(const MsgCodeType &msgCodeToAdd)
         return;
     }
 
+    emit sgnl_MsgCodeAboutToBeAdded(msgCodeToAdd);
     msgCodeVector.append(msgCodeToAdd);
+    emit sgnl_MsgCodeAdded(msgCodeToAdd);
 }
 
 void MsgCodeFilterStore::removeMsgCode(const MsgCodeType &msgCodeToRemove)
@@ -33,7 +35,9 @@ void MsgCodeFilterStore::removeMsgCode(const MsgCodeType &msgCodeToRemove)
         return;
     }
 
+    emit sgnl_MsgCodeAboutToBeRemoved(msgCodeToRemove);
     msgCodeVector.removeOne(msgCodeToRemove);
+    emit sgnl_MsgCodeRemoved(msgCodeToRemove);
 }
 
 bool MsgCodeFilterStore::containsMsgCode(const MsgCodeType &msgCode) const
@@ -56,8 +60,14 @@ int MsgCodeFilterStore::size() const
     return msgCodeVector.size();
 }
 
-void MsgCodeFilterStore::clear()
+int MsgCodeFilterStore::indexOf(const MsgCodeType &msgCode) const
 {
-    msgCodeVector.clear();
+    return msgCodeVector.indexOf(msgCode);
 }
 
+void MsgCodeFilterStore::clear()
+{
+    emit sgnl_AboutToBeCleared();
+    msgCodeVector.clear();
+    emit sgnl_Cleared();
+}

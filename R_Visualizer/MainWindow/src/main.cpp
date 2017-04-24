@@ -164,6 +164,7 @@ int main(int argc, char *argv[])
             msgIDFilterStore
             );
     MsgIDFilterWidget *msgIDFilterWidget = new MsgIDFilterWidget(
+            msgIDFilter,
             msgIDFilterModel
             );
 
@@ -173,16 +174,22 @@ int main(int argc, char *argv[])
             );
 
     messageFilter->addFilter(msgCodeFilter);
-    MsgCodeFilterWidget *msgCodeFilterWidget = new MsgCodeFilterWidget(
-            );
     MsgCodeFilterModel *msgCodeFilterModel = new MsgCodeFilterModel(
-            msgCodeFilterStore,
-            msgCodeFilterWidget
+            msgCodeFilterStore
+            );
+    MsgCodeFilterWidget *msgCodeFilterWidget = new MsgCodeFilterWidget(
+            msgCodeFilter,
+            msgCodeFilterModel
             );
 
+    MsgTimestampFilter *msgTimestampFilter = new MsgTimestampFilter();
+
+    MsgTimestampFilterWidget *msgTimestampFilterWidget =
+        new MsgTimestampFilterWidget(msgTimestampFilter);
 
     messageFilterWidget->addFilterWidget(msgIDFilterWidget);
     messageFilterWidget->addFilterWidget(msgCodeFilterWidget);
+    messageFilterWidget->addFilterWidget(msgTimestampFilterWidget);
 
     w.appendTabMenuWidget(messageFilterWidget, "Message Filter");
 

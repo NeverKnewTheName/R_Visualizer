@@ -3,7 +3,13 @@
 #include "ITimestampedMsg.h"
 
 MsgTimestampFilter::MsgTimestampFilter(QObject *parent) :
-    ITimestampedMsgFilter(parent)
+    ITimestampedMsgFilter(parent),
+    timestampFrom(QDateTime::currentDateTime()),
+    timestampTo(QDateTime::currentDateTime()),
+    isEnabled(true),
+    isInverted(false),
+    timestampFromFilterEnabled(false),
+    timestampToFilterEnabled(false)
 {
 }
 
@@ -18,8 +24,14 @@ bool MsgTimestampFilter::filterTimestamp(
     bool filterResult = true;
     const QDateTime &msgTimestamp = timestampToFilter.getTimestamp();
 
-    filterResult &= greaterThanTimestampFrom(msgTimestamp);
-    filterResult &= lowerThanTimestampTo(msgTimestamp);
+    if(timestampFromFilterEnabled)
+    {
+        filterResult &= greaterThanTimestampFrom(msgTimestamp);
+    }
+    if(timestampToFilterEnabled)
+    {
+        filterResult &= lowerThanTimestampTo(msgTimestamp);
+    }
 
     return applyInversion(filterResult);
 }
@@ -50,7 +62,9 @@ void MsgTimestampFilter::setTimestampFrom( const QDateTime &timestampFrom)
     if(this->timestampFrom > this->timestampTo)
     {
         this->timestampTo = this->timestampFrom;
+        emit sgnl_TimestampToChanged(timestampTo);
     }
+    emit sgnl_TimestampFromChanged(timestampFrom);
     emit sgnl_filterChanged(*this);
     emit sgnl_TimestampFilterChanged(*this);
 }
@@ -66,7 +80,9 @@ void MsgTimestampFilter::setTimestampTo( const QDateTime &timestampTo)
     if(this->timestampFrom > this->timestampTo)
     {
         this->timestampFrom = this->timestampTo;
+        emit sgnl_TimestampFromChanged(timestampFrom);
     }
+    emit sgnl_TimestampToChanged(timestampTo);
     emit sgnl_filterChanged(*this);
     emit sgnl_TimestampFilterChanged(*this);
 }
@@ -109,4 +125,46 @@ void MsgTimestampFilter::slt_changeTimestampFrom(
         )
 {
     setTimestampFrom(newTimestampFrom);
+}
+
+void MsgTimestampFilter::enableTimestampFilterFrom(
+        const bool enabled
+        )
+{
+    timestampFromFilterEnabled = enabled;
+
+    emit sgnl_TimestampFilterChanged(*this);
+}
+
+bool MsgTimestampFilter::isTimestampFilterFromEnabled() const
+{
+    return timestampFromFilterEnabled;
+}
+
+void MsgTimestampFilter::enableTimestampFilterTo(
+        const bool enabled
+        )
+{
+    timestampToFilterEnabled = enabled;
+
+    emit sgnl_TimestampFilterChanged(*this);
+}
+
+bool MsgTimestampFilter::isTimestampFilterToEnabled() const
+{
+    return timestampToFilterEnabled;
+}
+
+void MsgTimestampFilter::slt_enableTimestampFrom(
+        const bool enabled
+        )
+{
+    enableTimestampFilterFrom(enabled);
+}
+
+void MsgTimestampFilter::slt_enableTimestampTo(
+        const bool enabled
+        )
+{
+    enableTimestampFilterTo(enabled);
 }

@@ -35,6 +35,14 @@ public:
      */
     virtual int size() const = 0;
 
+    /**
+     * @brief Returns the index of the specified #MsgCodeType in the store
+     */
+    virtual int indexOf(const MsgCodeType &msgCode) const = 0;
+
+    /**
+     * @brief Clears the store removing all conteind #MsgCodeType
+     */
     virtual void clear() = 0;
 
 signals:
@@ -82,9 +90,7 @@ signals:
     /**
      * @brief Signal is emitted when the store has been changed
      */
-    void sgnl_HasChanged(
-            const MsgCodeType &relatedMsgCode
-            );
+    void sgnl_HasChanged();
 
 public slots:
     /**

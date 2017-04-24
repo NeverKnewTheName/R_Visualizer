@@ -48,11 +48,23 @@ public:
     void setTimestampTo(const QDateTime &timestampTo);
     QDateTime getTimestampTo() const;
 
+    void enableTimestampFilterFrom(const bool enabled);
+    bool isTimestampFilterFromEnabled() const;
+    void enableTimestampFilterTo(const bool enabled);
+    bool isTimestampFilterToEnabled() const;
+
     void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+
+signals:
+    void sgnl_TimestampFromChanged(const QDateTime &newTimestampFrom);
+    void sgnl_TimestampToChanged(const QDateTime &newTimestampTo);
 
 public slots:
     void slt_changeTimestampFrom(const QDateTime &newTimestampFrom);
     void slt_changeTimestampTo(const QDateTime &newTimestampTo);
+
+    void slt_enableTimestampFrom(const bool enabled);
+    void slt_enableTimestampTo(const bool enabled);
 
 private:
     virtual bool greaterThanTimestampFrom(const QDateTime &timestamp) const;
@@ -66,6 +78,8 @@ private:
     bool isEnabled;
     bool isInverted;
 
+    bool timestampFromFilterEnabled;
+    bool timestampToFilterEnabled;
 };
 
 #endif /* MSGTIMESTAMPFILTER_H */

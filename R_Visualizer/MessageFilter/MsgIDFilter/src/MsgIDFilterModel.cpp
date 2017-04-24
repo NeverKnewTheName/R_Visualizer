@@ -37,7 +37,6 @@ QVariant MsgIDFilterModel::data(
     }
 
     const int row = index.row();
-    const int col = index.column();
 
     const MsgIDType &msgID = msgIDFilterStore->at(row);
 
@@ -49,7 +48,6 @@ QVariant MsgIDFilterModel::data(
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:
-        return QBrush(QColor(Qt::white));
         break;
     case Qt::TextAlignmentRole:
         break;
@@ -83,6 +81,38 @@ Qt::ItemFlags MsgIDFilterModel::flags(
     Q_UNUSED(index)
 
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+}
+
+bool MsgIDFilterModel::setData(
+        const QModelIndex &index,
+        const QVariant &value,
+        int role
+        )
+{
+    const int row = index.row();
+    bool altered = false;
+
+    MsgIDType &msgID = msgIDFilterStore->at(row);
+
+    switch(role)
+    {
+    case Qt::EditRole:
+        msgID = MsgIDType(value.value<MsgIDType::type>());
+        altered = true;
+        break;
+    }
+
+    if(altered)
+    {
+        //ToDO EMIT SIGNALS!!! URGENT!!!
+        emit dataChanged(index, index);
+        emit sgnl_HasChanged();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool MsgIDFilterModel::insertRows(
@@ -121,13 +151,6 @@ bool MsgIDFilterModel::removeRows(
 
     /* endRemoveRows(); */
     return true;
-}
-
-void MsgIDFilterModel::addMsgID(
-        const MsgIDType &msgIDToAdd
-        )
-{
-    msgIDFilterStore->addMsgID(msgIDToAdd);
 }
 
 void MsgIDFilterModel::slt_MsgIDAboutToBeAdded(
@@ -214,25 +237,25 @@ void MsgIDFilterModel::connectToStore()
             &MsgIDFilterModel::slt_Cleared
            );
 
-    /* connect( */
-    /*         this, */
-    /*         &MsgIDFilterModel::sgnl_AddFilter, */
-    /*         msgIDFilterStore, */
-    /*         &IMsgIDFilterStore::slt_AddMsgIDFilter */
-    /*        ); */
+    connect(
+            this,
+            &MsgIDFilterModel::sgnl_AddMsgIDToFilter,
+            msgIDFilterStore,
+            &IMsgIDFilterStore::slt_AddMsgIDToFilter
+           );
 
-    /* connect( */
-    /*         this, */
-    /*         &MsgIDFilterModel::sgnl_RemoveFilter, */
-    /*         msgIDFilterStore, */
-    /*         &IMsgIDFilterStore::slt_RemoveMsgIDFilter */
-    /*        ); */
+    connect(
+            this,
+            &MsgIDFilterModel::sgnl_RemoveMsgIDFromFilter,
+            msgIDFilterStore,
+            &IMsgIDFilterStore::slt_RemoveMsgIDFromFilter
+           );
 
-    /* connect( */
-    /*         this, */
-    /*         &MsgIDFilterModel::sgnl_FilterHasChanged, */
-    /*         msgIDFilterStore, */
-    /*         &IMsgIDFilterStore::sgnl_FilterHasChanged */
-    /*        ); */
+    connect(
+            this,
+            &MsgIDFilterModel::sgnl_HasChanged,
+            msgIDFilterStore,
+            &IMsgIDFilterStore::sgnl_HasChanged
+           );
 
 }

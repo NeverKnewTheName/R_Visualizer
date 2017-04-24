@@ -13,6 +13,7 @@ MsgCodeFilterModel::MsgCodeFilterModel(
     QAbstractListModel(parent),
     msgCodeFilterStore(msgCodeFilterStore)
 {
+    connectToStore();
 }
 
 MsgCodeFilterModel::~MsgCodeFilterModel()
@@ -36,7 +37,6 @@ QVariant MsgCodeFilterModel::data(
     }
 
     const int row = index.row();
-    const int col = index.column();
 
     const MsgCodeType &msgCode = msgCodeFilterStore->at(row);
 
@@ -48,7 +48,6 @@ QVariant MsgCodeFilterModel::data(
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:
-        return QBrush(QColor(Qt::white));
         break;
     case Qt::TextAlignmentRole:
         break;
@@ -84,6 +83,38 @@ Qt::ItemFlags MsgCodeFilterModel::flags(
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
 }
 
+bool MsgCodeFilterModel::setData(
+        const QModelIndex &index,
+        const QVariant &value,
+        int role
+        )
+{
+    const int row = index.row();
+    bool altered = false;
+
+    MsgCodeType &msgCode = msgCodeFilterStore->at(row);
+
+    switch(role)
+    {
+    case Qt::EditRole:
+        msgCode = MsgCodeType(value.value<MsgCodeType::type>());
+        altered = true;
+        break;
+    }
+
+    if(altered)
+    {
+        //ToDO EMIT SIGNALS!!! URGENT!!!
+        emit dataChanged(index, index);
+        emit sgnl_HasChanged();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool MsgCodeFilterModel::insertRows(
         int row,
         int count,
@@ -100,5 +131,131 @@ bool MsgCodeFilterModel::removeRows(
         )
 {
     Q_UNUSED(parent)
+    const int modelSize = msgCodeFilterStore->size();
+    if(!modelSize || ((row+count-1) >= modelSize))
+    {
+        return false;
+    }
+
+    //ToTHINK .. This is definitely for perfomance.. but it is clean
+
+    /* beginRemoveRows(parent, row, row+count-1); */
+
+    int cntr = count;
+
+    while(cntr--)
+    {
+        msgCodeFilterStore->removeMsgCode(msgCodeFilterStore->at(row+cntr));
+    }
+    /* msgCodeStore.remove(row, count); */
+
+    /* endRemoveRows(); */
+    return true;
 }
 
+void MsgCodeFilterModel::slt_MsgCodeAboutToBeAdded(
+        const MsgCodeType &msgCode
+        )
+{
+    const int currentEndIndex = rowCount();
+    emit beginInsertRows(QModelIndex(), currentEndIndex, currentEndIndex);
+}
+
+void MsgCodeFilterModel::slt_MsgCodeAdded(
+        const MsgCodeType &msgCode
+        )
+{
+    emit endInsertRows();
+}
+
+void MsgCodeFilterModel::slt_MsgCodeAboutToBeRemoved(
+        const MsgCodeType &msgCode
+        )
+{
+    const int index = msgCodeFilterStore->indexOf(msgCode);
+    emit beginRemoveRows(QModelIndex(), index, index);
+}
+
+void MsgCodeFilterModel::slt_MsgCodeRemoved(
+        const MsgCodeType &msgCode
+        )
+{
+    emit endRemoveRows();
+}
+
+void MsgCodeFilterModel::slt_AboutToBeCleared()
+{
+    emit beginResetModel();
+}
+
+void MsgCodeFilterModel::slt_Cleared()
+{
+    emit endResetModel();
+}
+
+void MsgCodeFilterModel::connectToStore()
+{
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_MsgCodeAboutToBeAdded,
+            this,
+            &MsgCodeFilterModel::slt_MsgCodeAboutToBeAdded
+           );
+
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_MsgCodeAdded,
+            this,
+            &MsgCodeFilterModel::slt_MsgCodeAdded
+           );
+
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_MsgCodeAboutToBeRemoved,
+            this,
+            &MsgCodeFilterModel::slt_MsgCodeAboutToBeRemoved
+           );
+
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_MsgCodeRemoved,
+            this,
+            &MsgCodeFilterModel::slt_MsgCodeRemoved
+           );
+
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_AboutToBeCleared,
+            this,
+            &MsgCodeFilterModel::slt_AboutToBeCleared
+           );
+
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_Cleared,
+            this,
+            &MsgCodeFilterModel::slt_Cleared
+           );
+
+    connect(
+            this,
+            &MsgCodeFilterModel::sgnl_AddMsgCodeToFilter,
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::slt_AddMsgCodeToFilter
+           );
+
+    connect(
+            this,
+            &MsgCodeFilterModel::sgnl_RemoveMsgCodeFromFilter,
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::slt_RemoveMsgCodeFromFilter
+           );
+
+    connect(
+            this,
+            &MsgCodeFilterModel::sgnl_HasChanged,
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_HasChanged
+           );
+
+}

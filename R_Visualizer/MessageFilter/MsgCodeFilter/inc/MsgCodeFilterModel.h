@@ -10,6 +10,8 @@
 
 #include <QAbstractListModel>
 
+#include "MsgCodeType.h"
+
 class IMsgCodeFilterStore;
 
 /**
@@ -45,6 +47,12 @@ public:
             const QModelIndex &index
             ) const Q_DECL_OVERRIDE;
 
+    bool setData(
+            const QModelIndex &index,
+            const QVariant &value,
+            int role
+            ) Q_DECL_OVERRIDE;
+
     bool insertRows(
             int row,
             int count,
@@ -56,6 +64,43 @@ public:
             int count,
             const QModelIndex &parent = QModelIndex()
             ) Q_DECL_OVERRIDE;
+
+signals:
+
+    void sgnl_AddMsgCodeToFilter(
+            const MsgCodeType &msgCodeToAdd
+        );
+
+    void sgnl_RemoveMsgCodeFromFilter(
+            const MsgCodeType &msgCodeToRemove
+        );
+
+    void sgnl_HasChanged();
+
+public slots:
+    void slt_MsgCodeAboutToBeAdded(
+            const MsgCodeType &msgCode
+            );
+
+    void slt_MsgCodeAdded(
+            const MsgCodeType &msgCode
+            );
+
+    void slt_MsgCodeAboutToBeRemoved(
+            const MsgCodeType &msgCode
+            );
+
+    void slt_MsgCodeRemoved(
+            const MsgCodeType &msgCode
+            );
+
+    void slt_AboutToBeCleared();
+
+    void slt_Cleared();
+
+private:
+    void connectToStore();
+
 
 private:
     IMsgCodeFilterStore *msgCodeFilterStore;

@@ -20,6 +20,8 @@ public:
 
     int size() const;
 
+    int indexOf(const MsgCodeType &msgCode) const;
+
     void clear();
 
 private:

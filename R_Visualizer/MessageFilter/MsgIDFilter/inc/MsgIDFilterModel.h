@@ -47,6 +47,12 @@ public:
             const QModelIndex &index
             ) const Q_DECL_OVERRIDE;
 
+    bool setData(
+            const QModelIndex &index,
+            const QVariant &value,
+            int role
+            ) Q_DECL_OVERRIDE;
+
     bool insertRows(
             int row,
             int count,
@@ -59,10 +65,6 @@ public:
             const QModelIndex &parent = QModelIndex()
             ) Q_DECL_OVERRIDE;
 
-    void addMsgID(
-            const MsgIDType &msgIDToAdd
-            );
-
 signals:
 
     void sgnl_AddMsgIDToFilter(
@@ -72,6 +74,8 @@ signals:
     void sgnl_RemoveMsgIDFromFilter(
             const MsgIDType &msgIDToRemove
         );
+
+    void sgnl_HasChanged();
 
 public slots:
     void slt_MsgIDAboutToBeAdded(

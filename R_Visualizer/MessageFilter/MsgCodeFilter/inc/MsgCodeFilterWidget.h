@@ -12,6 +12,9 @@
 
 #include "MsgCodeType.h"
 
+class MsgCodeFilter;
+class MsgCodeFilterModel;
+
 namespace Ui {
 class MsgCodeFilterWidget;
 }
@@ -24,7 +27,11 @@ class MsgCodeFilterWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MsgCodeFilterWidget(QWidget *parent = Q_NULLPTR);
+    explicit MsgCodeFilterWidget(
+            MsgCodeFilter *msgCodeFilter,
+            MsgCodeFilterModel *msgCodeFilterModel,
+            QWidget *parent = Q_NULLPTR
+            );
     virtual ~MsgCodeFilterWidget();
 
     void addMsgCode(const MsgCodeType &msgCodeToAdd);
@@ -50,12 +57,17 @@ private slots:
 
     void on_rmvFilterCodePushButton_clicked();
 
-    void on_enableCodeFilterCheckBox_toggled(bool checked);
+    /* void on_enableCodeFilterCheckBox_toggled(bool checked); */
 
-    void on_invertCodeFilterCheckBox_toggled(bool checked);
+    /* void on_invertCodeFilterCheckBox_toggled(bool checked); */
+
+private:
+    void init();
 
 private:
     Ui::MsgCodeFilterWidget *ui;
+    MsgCodeFilter *msgCodeFilter;
+    MsgCodeFilterModel *msgCodeFilterModel;
 };
 
 #endif // MSGCODEFILTERWIDGET_H

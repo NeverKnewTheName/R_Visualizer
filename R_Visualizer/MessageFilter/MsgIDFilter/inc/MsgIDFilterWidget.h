@@ -13,6 +13,7 @@
 #include "MsgIDType.h"
 
 class MsgIDFilterModel;
+class MsgIDFilter;
 
 namespace Ui {
 class MsgIDFilterWidget;
@@ -27,6 +28,7 @@ class MsgIDFilterWidget : public QWidget
 
 public:
     explicit MsgIDFilterWidget(
+            MsgIDFilter *msgIDFilter,
             MsgIDFilterModel *msgIDFilterModel,
             QWidget *parent = Q_NULLPTR
             );
@@ -55,15 +57,16 @@ private slots:
 
     void on_filterIDLoadBtn_clicked();
 
-    void on_enableIDFilterCheckBox_toggled(bool checked);
+    /* void on_enableIDFilterCheckBox_toggled(bool checked); */
 
-    void on_checkBox_toggled(bool checked);
+    /* void on_checkBox_toggled(bool checked); */
 
 private:
     void init();
 
 private:
     Ui::MsgIDFilterWidget *ui;
+    MsgIDFilter *msgIDFilter;
     MsgIDFilterModel *msgIDFilterModel;
 };
 

@@ -29,7 +29,6 @@ MsgIDMappingWidget::MsgIDMappingWidget(
 {
     init();
     connectModel();
-
 }
 
 MsgIDMappingWidget::~MsgIDMappingWidget()
