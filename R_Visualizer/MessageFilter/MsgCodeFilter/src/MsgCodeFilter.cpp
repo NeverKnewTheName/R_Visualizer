@@ -52,13 +52,15 @@ bool MsgCodeFilter::isFilterInverted() const
 void MsgCodeFilter::addMsgCodeToFilter(const MsgCodeType &msgCodeToAdd)
 {
     msgCodeFilterStore->addMsgCode(msgCodeToAdd);
-    emit sgnl_filterChanged();
+    emit sgnl_filterChanged(*this);
+    emit sgnl_MsgFilterChanged(*this);
 }
 
 void MsgCodeFilter::removeMsgCodeFromFilter(const MsgCodeType &msgCodeToRemove)
 {
     msgCodeFilterStore->removeMsgCode(msgCodeToRemove);
-    emit sgnl_filterChanged();
+    emit sgnl_filterChanged(*this);
+    emit sgnl_MsgFilterChanged(*this);
 }
 
 bool MsgCodeFilter::applyInversion(const bool intermediateFilterResult) const
@@ -69,4 +71,18 @@ bool MsgCodeFilter::applyInversion(const bool intermediateFilterResult) const
 
 void MsgCodeFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
+}
+
+void MsgCodeFilter::slt_addMsgCodeToFilter(
+        const MsgCodeType &msgCodeToAdd
+        )
+{
+    msgCodeFilterStore->addMsgCode(msgCodeToAdd);
+}
+
+void MsgCodeFilter::slt_removeMsgCodeFromFilter(
+        const MsgCodeType &msgCodeToRemove
+        )
+{
+    msgCodeFilterStore->removeMsgCode(msgCodeToRemove);
 }

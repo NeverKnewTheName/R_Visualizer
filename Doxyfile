@@ -784,6 +784,9 @@ INPUT                  = ./R_Visualizer ./R_Visualizer/inc ./R_Visualizer/src \
                          ./R_Visualizer/MessageConfig/MsgCodeMapping ./R_Visualizer/MessageConfig/MsgCodeMapping/inc ./R_Visualizer/MessageConfig/MsgCodeMapping/src \
                          ./R_Visualizer/MessageConfig/MsgDataMapping ./R_Visualizer/MessageConfig/MsgDataMapping/inc ./R_Visualizer/MessageConfig/MsgDataMapping/src \
                          ./R_Visualizer/MessageFilter ./R_Visualizer/MessageFilter/inc ./R_Visualizer/MessageFilter/src \
+                         ./R_Visualizer/MessageFilter/MsgIDFilter ./R_Visualizer/MessageFilter/MsgIDFilter/inc ./R_Visualizer/MessageFilter/MsgIDFilter/src \
+                         ./R_Visualizer/MessageFilter/MsgCodeFilter ./R_Visualizer/MessageFilter/MsgCodeFilter/inc ./R_Visualizer/MessageFilter/MsgCodeFilter/src \
+                         ./R_Visualizer/MessageFilter/MsgTimestampFilter ./R_Visualizer/MessageFilter/MsgTimestampFilter/inc ./R_Visualizer/MessageFilter/MsgTimestampFilter/src \
                          ./R_Visualizer/SendMessages ./R_Visualizer/SendMessages/inc ./R_Visualizer/SendMessages/src \
                          ./R_Visualizer/UserRoleManager ./R_Visualizer/UserRoleManager/inc ./R_Visualizer/UserRoleManager/src \
                          ./R_Visualizer/SystemOverview ./R_Visualizer/SystemOverview/inc ./R_Visualizer/SystemOverview/src \

@@ -11,9 +11,9 @@
 #include "MsgCodeMapping.h"
 #include "MsgDataMappingStore.h"
 #include "MsgDataMapping.h"
-/* #include "MsgIDFilterStore.h" */
-/* #include "MsgCodeFilterStore.h" */
-/* #include "MsgTimestampFilter.h" */
+#include "MsgIDFilterStore.h"
+#include "MsgCodeFilterStore.h"
+#include "MsgTimestampFilter.h"
 
 #include <QDebug>
 
@@ -73,17 +73,17 @@ void CsvOutParser::visit(MsgDataMapping &visitor)
 {
 }
 
-/* void CsvOutParser::visit(MsgIDFilterStore &visitor) */
-/* { */
-/* } */
+void CsvOutParser::visit(MsgIDFilterStore &visitor)
+{
+}
 
-/* void CsvOutParser::visit(MsgCodeFilterStore &visitor) */
-/* { */
-/* } */
+void CsvOutParser::visit(MsgCodeFilterStore &visitor)
+{
+}
 
-/* void CsvOutParser::visit(MsgTimestampFilter &visitor) */
-/* { */
-/* } */
+void CsvOutParser::visit(MsgTimestampFilter &visitor)
+{
+}
 
 
 

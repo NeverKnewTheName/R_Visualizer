@@ -41,7 +41,9 @@ public:
      */
     virtual bool isFilterInverted() const = 0;
 
-    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply) = 0;
+    virtual void applyUserRole(
+            const UserRoleManagement::UserRole roleToApply
+            ) = 0;
 
 signals:
     /**
@@ -60,7 +62,7 @@ signals:
      * @warning This signal is also emitted when the filter's enable or invert
      * state changes! Keep this in mind when connecting the signals to slots.
      */
-    void sgnl_filterChanged();
+    void sgnl_filterChanged(const IFilter &filterThatHasChanged);
 
 public slots:
     /**

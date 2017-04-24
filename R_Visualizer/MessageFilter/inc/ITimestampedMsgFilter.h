@@ -10,22 +10,32 @@
 
 #include "IFilter.h"
 
-class ITimestampedMsg;
+class ITimestamp;
 
 /**
  * @brief The #ITimestampedMsgFilter interface
  */
 class ITimestampedMsgFilter : public IFilter
 {
+    Q_OBJECT
 public:
     ITimestampedMsgFilter(QObject *parent = Q_NULLPTR) : IFilter(parent){}
     virtual ~ITimestampedMsgFilter(){}
 
     /**
-     * @brief Filters an #ITimestampedMsg according to the current filter
+     * @brief Filters an #ITimestamp according to the current filter
      * configuration and filter criteria
      */
-    virtual bool filterMessage(const ITimestampedMsg &msgToFilter) const = 0;
+    virtual bool filterTimestamp(
+            const ITimestamp &timestampToFilter
+            ) const = 0;
+
+signals:
+    void sgnl_TimestampFilterChanged(
+            const ITimestampedMsgFilter &filterThatHasChanged
+            );
+
+public slots:
 };
 
 #endif /* ITIMESTAMPEDMSGFILTER_H */

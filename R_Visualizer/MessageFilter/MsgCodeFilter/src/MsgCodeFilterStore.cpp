@@ -3,7 +3,8 @@
 #include <QString>
 #include <QDebug>
 
-MsgCodeFilterStore::MsgCodeFilterStore()
+MsgCodeFilterStore::MsgCodeFilterStore(QObject *parent) :
+    IMsgCodeFilterStore(parent)
 {
 }
 
@@ -38,6 +39,21 @@ void MsgCodeFilterStore::removeMsgCode(const MsgCodeType &msgCodeToRemove)
 bool MsgCodeFilterStore::containsMsgCode(const MsgCodeType &msgCode) const
 {
     return msgCodeVector.contains(msgCode);
+}
+
+const MsgCodeType &MsgCodeFilterStore::at(const int index) const
+{
+    return msgCodeVector.at(index);
+}
+
+MsgCodeType &MsgCodeFilterStore::at(const int index)
+{
+    return msgCodeVector[index];
+}
+
+int MsgCodeFilterStore::size() const
+{
+    return msgCodeVector.size();
 }
 
 void MsgCodeFilterStore::clear()

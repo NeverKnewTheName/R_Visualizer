@@ -34,7 +34,7 @@ bool MessageFilter::filterMessage(const ITimestampedMsg &msgToFilter) const
 {
     for(auto filter : timestampedMsgFilterStore)
     {
-        if(!filter->filterMessage(msgToFilter))
+        if(!filter->filterTimestamp(msgToFilter))
         {
             return false;
         }
@@ -57,7 +57,7 @@ bool MessageFilter::filterMessageByFilter(
         const ITimestampedMsg &msgToFilter
         ) const
 {
-    return filterToUse->filterMessage(msgToFilter);
+    return filterToUse->filterTimestamp(msgToFilter);
 }
 
 /* void MessageFilter::addFilter(IFilter *filterToAdd) */

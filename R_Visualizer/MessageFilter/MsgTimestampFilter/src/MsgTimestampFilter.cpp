@@ -11,10 +11,12 @@ MsgTimestampFilter::~MsgTimestampFilter()
 {
 }
 
-bool MsgTimestampFilter::filterMessage(const ITimestampedMsg &msgToFilter) const
+bool MsgTimestampFilter::filterTimestamp(
+        const ITimestamp &timestampToFilter
+        ) const
 {
     bool filterResult = true;
-    const QDateTime &msgTimestamp = msgToFilter.getTimestamp();
+    const QDateTime &msgTimestamp = timestampToFilter.getTimestamp();
 
     filterResult &= greaterThanTimestampFrom(msgTimestamp);
     filterResult &= lowerThanTimestampTo(msgTimestamp);
@@ -49,6 +51,8 @@ void MsgTimestampFilter::setTimestampFrom( const QDateTime &timestampFrom)
     {
         this->timestampTo = this->timestampFrom;
     }
+    emit sgnl_filterChanged(*this);
+    emit sgnl_TimestampFilterChanged(*this);
 }
 
 QDateTime MsgTimestampFilter::getTimestampFrom() const
@@ -63,6 +67,8 @@ void MsgTimestampFilter::setTimestampTo( const QDateTime &timestampTo)
     {
         this->timestampFrom = this->timestampTo;
     }
+    emit sgnl_filterChanged(*this);
+    emit sgnl_TimestampFilterChanged(*this);
 }
 
 QDateTime MsgTimestampFilter::getTimestampTo() const
@@ -87,7 +93,20 @@ bool MsgTimestampFilter::applyInversion(
     return isInverted ? !intermediateFilterResult : intermediateFilterResult;
 }
 
-
 void MsgTimestampFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
+}
+
+void MsgTimestampFilter::slt_changeTimestampTo(
+        const QDateTime &newTimestampTo
+        )
+{
+    setTimestampTo(newTimestampTo);
+}
+
+void MsgTimestampFilter::slt_changeTimestampFrom(
+        const QDateTime &newTimestampFrom
+        )
+{
+    setTimestampFrom(newTimestampFrom);
 }

@@ -8,21 +8,9 @@
 #ifndef ITIMESTAMPEDMSG_H
 #define ITIMESTAMPEDMSG_H
 
-#include <QDateTime>
 
 #include "IMsg.h"
-
-/**
- * @brief The ITimestamp interface provides methods to organize a timestamp
- */
-class ITimestamp
-{
-public:
-    virtual ~ITimestamp(){}
-
-    virtual void setTimestamp(const QDateTime &newTimestamp) = 0;
-    virtual const QDateTime getTimestamp() const = 0;
-};
+#include "ITimestamp.h"
 
 /**
  * \brief The interface for messages with timestamps

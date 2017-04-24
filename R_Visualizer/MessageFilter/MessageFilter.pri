@@ -22,6 +22,7 @@ HEADERS  += \
 
 FORMS    += \
     $$PWD/ui/messagefilterwidget.ui \
+    $$PWD/ui/messagefilter.ui \
 
 include(MsgIDFilter/MsgIDFilter.pri)
 include(MsgCodeFilter/MsgCodeFilter.pri)

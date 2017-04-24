@@ -7,13 +7,18 @@
 class MsgCodeFilterStore : public IMsgCodeFilterStore
 {
 public:
-    MsgCodeFilterStore();
+    MsgCodeFilterStore(QObject *parent = Q_NULLPTR);
     virtual ~MsgCodeFilterStore();
 
     void addMsgCode(const MsgCodeType &msgCodeToAdd);
     void removeMsgCode(const MsgCodeType &msgCodeToRemove);
 
     bool containsMsgCode(const MsgCodeType &msgCode) const;
+
+    const MsgCodeType &at(const int index) const;
+    MsgCodeType &at(const int index);
+
+    int size() const;
 
     void clear();
 

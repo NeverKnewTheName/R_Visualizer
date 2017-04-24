@@ -15,4 +15,5 @@ MessageFilterWidget::~MessageFilterWidget()
 
 void MessageFilterWidget::addFilterWidget(QWidget *filterWidget)
 {
+    ui->verticalLayout->addWidget(filterWidget);
 }

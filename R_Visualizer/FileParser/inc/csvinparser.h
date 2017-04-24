@@ -31,9 +31,9 @@ public:
     virtual void visit(MsgCodeMapping &visitor);
     virtual void visit(MsgDataMappingStore &visitor);
     virtual void visit(MsgDataMapping &visitor);
-    /* virtual void visit(MsgIDFilterStore &visitor); */
-    /* virtual void visit(MsgCodeFilterStore &visitor); */
-    /* virtual void visit(MsgTimestampFilter &visitor); */
+    virtual void visit(MsgIDFilterStore &visitor);
+    virtual void visit(MsgCodeFilterStore &visitor);
+    virtual void visit(MsgTimestampFilter &visitor);
 
     /* virtual void visit(SysOvrvObject &visitor); */
     /* virtual void visit(SysOvrvTextLabel &visitor); */

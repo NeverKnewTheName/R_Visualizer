@@ -20,7 +20,7 @@ class MsgTimestampFilter : public ITimestampedMsgFilter
 {
     Q_OBJECT
 public:
-    explicit MsgTimestampFilter(QObject *parent = 0);
+    explicit MsgTimestampFilter(QObject *parent = Q_NULLPTR);
     virtual ~MsgTimestampFilter();
 
     /**
@@ -35,7 +35,7 @@ public:
      * @retval false The timestamp of the passed #ITimestampedMsg is outside of
      *  the filter's range
      */
-    virtual bool filterMessage(const ITimestampedMsg &msgToFilter) const;
+    virtual bool filterTimestamp(const ITimestamp &timestampToFilter) const;
 
     void enableFilter(const bool enable);
     bool isFilterEnabled() const;

@@ -17,6 +17,7 @@ class IMsg;
  */
 class IMsgFilter : public IFilter
 {
+    Q_OBJECT
 public:
     IMsgFilter(QObject * parent = Q_NULLPTR) : IFilter(parent){}
     virtual ~IMsgFilter(){}
@@ -26,6 +27,11 @@ public:
      * filter criteria
      */
     virtual bool filterMessage(const IMsg &msgToFilter) const = 0;
+
+signals:
+    void sgnl_MsgFilterChanged(const IMsgFilter &filterThatHasChanged);
+
+public slots:
 };
 
 #endif /* IFILTER_H */

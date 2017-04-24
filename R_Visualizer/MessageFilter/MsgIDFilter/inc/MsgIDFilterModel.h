@@ -1,11 +1,24 @@
+/**
+ * @file MsgIDFilterModel.h
+ * @author Christian Neuberger
+ * @date 2017-04-24
+ * 
+ * @brief Model for #MsgIDType needed by the message id filter
+ */
 #ifndef MSGIDFILTERMODEL_H
 #define MSGIDFILTERMODEL_H
 
 #include <QAbstractListModel>
 
+#include "MsgIDType.h"
+
 class IMsgIDFilterStore;
 
-class MsgIDFilterModel : public QAbstractListModel
+/**
+ * @brief The MsgIDFilterModel
+ */
+class MsgIDFilterModel :
+    public QAbstractListModel
 {
     Q_OBJECT
 public:
@@ -46,6 +59,43 @@ public:
             const QModelIndex &parent = QModelIndex()
             ) Q_DECL_OVERRIDE;
 
+    void addMsgID(
+            const MsgIDType &msgIDToAdd
+            );
+
+signals:
+
+    void sgnl_AddMsgIDToFilter(
+            const MsgIDType &msgIDToAdd
+        );
+
+    void sgnl_RemoveMsgIDFromFilter(
+            const MsgIDType &msgIDToRemove
+        );
+
+public slots:
+    void slt_MsgIDAboutToBeAdded(
+            const MsgIDType &msgID
+            );
+
+    void slt_MsgIDAdded(
+            const MsgIDType &msgID
+            );
+
+    void slt_MsgIDAboutToBeRemoved(
+            const MsgIDType &msgID
+            );
+
+    void slt_MsgIDRemoved(
+            const MsgIDType &msgID
+            );
+
+    void slt_AboutToBeCleared();
+
+    void slt_Cleared();
+
+private:
+    void connectToStore();
 
 private:
     IMsgIDFilterStore *msgIDFilterStore;

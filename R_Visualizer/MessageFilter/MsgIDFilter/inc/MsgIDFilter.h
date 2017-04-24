@@ -54,7 +54,7 @@ public:
 
 public slots:
     void slt_addMsgIDToFilter(const MsgIDType &msgIDToAdd);
-    void slt_removeMsgIDToFilter(const MsgIDType &msgIDToRemove);
+    void slt_removeMsgIDFromFilter(const MsgIDType &msgIDToRemove);
 
 private:
     bool applyInversion(const bool intermediateFilterResult) const;

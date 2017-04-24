@@ -46,24 +46,24 @@
 #include "MsgDataMappingWidget.h"
 #include "MessageConfigWidget.h"
 
-/* #include "IMessageFilter.h" */
-/* #include "MessageFilter.h" */
-/* #include "MessageFilterWidget.h" */
-/* #include "IFilter.h" */
-/* #include "IMsgFilter.h" */
-/* #include "ITimestampedMsgFilter.h" */
-/* #include "MsgIDFilter.h" */
-/* #include "IMsgIDFilterStore.h" */
-/* #include "MsgIDFilterStore.h" */
-/* #include "MsgIDFilterWidget.h" */
-/* #include "MsgIDFilterModel.h" */
-/* #include "MsgCodeFilter.h" */
-/* #include "IMsgCodeFilterStore.h" */
-/* #include "MsgCodeFilterStore.h" */
-/* #include "MsgCodeFilterWidget.h" */
-/* #include "MsgCodeFilterModel.h" */
-/* #include "MsgTimestampFilter.h" */
-/* #include "MsgTimestampFilterWidget.h" */
+#include "IMessageFilter.h"
+#include "MessageFilter.h"
+#include "MessageFilterWidget.h"
+#include "IFilter.h"
+#include "IMsgFilter.h"
+#include "ITimestampedMsgFilter.h"
+#include "MsgIDFilter.h"
+#include "IMsgIDFilterStore.h"
+#include "MsgIDFilterStore.h"
+#include "MsgIDFilterWidget.h"
+#include "MsgIDFilterModel.h"
+#include "MsgCodeFilter.h"
+#include "IMsgCodeFilterStore.h"
+#include "MsgCodeFilterStore.h"
+#include "MsgCodeFilterWidget.h"
+#include "MsgCodeFilterModel.h"
+#include "MsgTimestampFilter.h"
+#include "MsgTimestampFilterWidget.h"
 
 /* #include "errorlogentry.h" */
 
@@ -150,23 +150,41 @@ int main(int argc, char *argv[])
     w.appendTabMenuWidget(messageConfigWidget, "Message Configuration");
     /* messageConfigWidget->appendMappingWidget(); */
 
-    /* MessageFilter *messageFilter = new MessageFilter(&a); */
-    /* MessageFilterWidget *messageFilterWidget = new MessageFilterWidget(&w); */
-    /* IMsgIDFilterStore *msgIDFilterStore = new MsgIDFilterStore(); */
-    /* MsgIDFilter *msgIDFilter = new MsgIDFilter( */
-    /*         msgIDFilterStore, */
-    /*         messageFilter */
-    /*         ); */
+    MessageFilter *messageFilter = new MessageFilter(&a);
+    MessageFilterWidget *messageFilterWidget = new MessageFilterWidget();
 
-    /* messageFilter->addFilter(msgIDFilter); */
-    /* MsgIDFilterWidget *msgIDFilterWidget = new MsgIDFilterWidget( */
-    /*         messageFilterWidget */
-    /*         ); */
-    /* MsgIDFilterModel *msgIDFilterModel = new MsgIDFilterModel( */
-    /*         msgIDFilterStore, */
-    /*         msgIDFilterWidget */
-    /*         ); */
-    /* messageFilterWidget->addFilterWidget(msgIDFilterWidget); */
+
+    IMsgIDFilterStore *msgIDFilterStore = new MsgIDFilterStore();
+    MsgIDFilter *msgIDFilter = new MsgIDFilter(
+            msgIDFilterStore
+            );
+
+    messageFilter->addFilter(msgIDFilter);
+    MsgIDFilterModel *msgIDFilterModel = new MsgIDFilterModel(
+            msgIDFilterStore
+            );
+    MsgIDFilterWidget *msgIDFilterWidget = new MsgIDFilterWidget(
+            msgIDFilterModel
+            );
+
+    IMsgCodeFilterStore *msgCodeFilterStore = new MsgCodeFilterStore();
+    MsgCodeFilter *msgCodeFilter = new MsgCodeFilter(
+            msgCodeFilterStore
+            );
+
+    messageFilter->addFilter(msgCodeFilter);
+    MsgCodeFilterWidget *msgCodeFilterWidget = new MsgCodeFilterWidget(
+            );
+    MsgCodeFilterModel *msgCodeFilterModel = new MsgCodeFilterModel(
+            msgCodeFilterStore,
+            msgCodeFilterWidget
+            );
+
+
+    messageFilterWidget->addFilterWidget(msgIDFilterWidget);
+    messageFilterWidget->addFilterWidget(msgCodeFilterWidget);
+
+    w.appendTabMenuWidget(messageFilterWidget, "Message Filter");
 
 
     //MessageStream *messageStreamWidget = new MessageStream(

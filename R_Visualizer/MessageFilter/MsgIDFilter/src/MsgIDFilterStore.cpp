@@ -3,7 +3,8 @@
 #include <QString>
 #include <QDebug>
 
-MsgIDFilterStore::MsgIDFilterStore()
+MsgIDFilterStore::MsgIDFilterStore(QObject *parent) :
+    IMsgIDFilterStore(parent)
 {
 }
 
@@ -20,7 +21,9 @@ void MsgIDFilterStore::addMsgID(const MsgIDType &msgIDToAdd)
         return;
     }
 
+    emit sgnl_MsgIDAboutToBeAdded(msgIDToAdd);
     msgIDVector.append(msgIDToAdd);
+    emit sgnl_MsgIDAdded(msgIDToAdd);
 }
 
 void MsgIDFilterStore::removeMsgID(const MsgIDType &msgIDToRemove)
@@ -32,7 +35,9 @@ void MsgIDFilterStore::removeMsgID(const MsgIDType &msgIDToRemove)
         return;
     }
 
+    emit sgnl_MsgIDAboutToBeRemoved(msgIDToRemove);
     msgIDVector.removeOne(msgIDToRemove);
+    emit sgnl_MsgIDRemoved(msgIDToRemove);
 }
 
 bool MsgIDFilterStore::containsMsgID(const MsgIDType &msgID) const
@@ -40,9 +45,14 @@ bool MsgIDFilterStore::containsMsgID(const MsgIDType &msgID) const
     return msgIDVector.contains(msgID);
 }
 
-MsgIDType MsgIDFilterStore::at(int index) const
+const MsgIDType &MsgIDFilterStore::at(const int index) const
 {
     return msgIDVector.at(index);
+}
+
+MsgIDType &MsgIDFilterStore::at(const int index)
+{
+    return msgIDVector[index];
 }
 
 int MsgIDFilterStore::size() const
@@ -50,7 +60,14 @@ int MsgIDFilterStore::size() const
     return msgIDVector.size();
 }
 
+int MsgIDFilterStore::indexOf(const MsgIDType &msgID) const
+{
+    return msgIDVector.indexOf(msgID);
+}
+
 void MsgIDFilterStore::clear()
 {
+    emit sgnl_AboutToBeCleared();
     msgIDVector.clear();
+    emit sgnl_Cleared();
 }

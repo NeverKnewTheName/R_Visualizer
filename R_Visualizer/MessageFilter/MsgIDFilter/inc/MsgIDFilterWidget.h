@@ -1,3 +1,10 @@
+/**
+ * @file MsgIDFilterWidget.h
+ * @author Christian Neuberger
+ * @date 2017-04-24
+ * 
+ * @brief The Widget for the message id filter
+ */
 #ifndef MSGIDFILTERWIDGET_H
 #define MSGIDFILTERWIDGET_H
 
@@ -5,16 +12,24 @@
 
 #include "MsgIDType.h"
 
+class MsgIDFilterModel;
+
 namespace Ui {
 class MsgIDFilterWidget;
 }
 
+/**
+ * @brief The MsgIDFilterWidget
+ */
 class MsgIDFilterWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MsgIDFilterWidget(QWidget *parent = Q_NULLPTR);
+    explicit MsgIDFilterWidget(
+            MsgIDFilterModel *msgIDFilterModel,
+            QWidget *parent = Q_NULLPTR
+            );
     virtual ~MsgIDFilterWidget();
 
     void addMsgID(const MsgIDType &msgIDToAdd);
@@ -45,7 +60,11 @@ private slots:
     void on_checkBox_toggled(bool checked);
 
 private:
+    void init();
+
+private:
     Ui::MsgIDFilterWidget *ui;
+    MsgIDFilterModel *msgIDFilterModel;
 };
 
 #endif // MSGIDFILTERWIDGET_H

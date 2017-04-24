@@ -24,6 +24,7 @@ HEADERS  += \
     $$PWD/inc/IMsgDataFormatter.h \ #Should be in MessageConfig
     $$PWD/inc/MsgDataFormatter.h \ #Should be in MessageConfig
     $$PWD/inc/IMsg.h \
+    $$PWD/inc/ITimestamped.h \
     $$PWD/inc/ITimestampedMsg.h \
     $$PWD/inc/TimestampedMsg.h \
     $$PWD/inc/Msg.h \

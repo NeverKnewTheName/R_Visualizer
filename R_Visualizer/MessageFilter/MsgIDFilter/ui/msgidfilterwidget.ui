@@ -23,24 +23,34 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Message ID/Name</string>
+      <string>Message ID Filter</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="2" column="3">
-       <widget class="QPushButton" name="rmvFilterIDPushButton">
+      <item row="1" column="0" colspan="4">
+       <widget class="QListView" name="idFilterListView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="filterIDLoadBtn">
         <property name="text">
-         <string>Remove</string>
+         <string>Load</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QCheckBox" name="enableIDFilterCheckBox">
+        <property name="text">
+         <string>Enabled</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QPushButton" name="addFilterIDPushButton">
-        <property name="text">
-         <string>Add</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
        <spacer name="idHorzSpcr">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -53,38 +63,28 @@
         </property>
        </spacer>
       </item>
-      <item row="1" column="0" colspan="4">
-       <widget class="QListView" name="idFilterlistView">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="enableIDFilterCheckBox">
-        <property name="text">
-         <string>Enabled</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
+      <item row="2" column="1">
        <widget class="QPushButton" name="filterIDSaveBtn">
         <property name="text">
-         <string>Save</string>
+         <string>Store</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <widget class="QPushButton" name="filterIDLoadBtn">
+      <item row="3" column="0">
+       <widget class="QPushButton" name="addFilterIDPushButton">
         <property name="text">
-         <string>Load</string>
+         <string>Add</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
+       <widget class="QPushButton" name="rmvFilterIDPushButton">
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -97,7 +97,7 @@
         </property>
        </spacer>
       </item>
-      <item row="3" column="0">
+      <item row="3" column="3">
        <widget class="QCheckBox" name="checkBox">
         <property name="text">
          <string>Inverted</string>

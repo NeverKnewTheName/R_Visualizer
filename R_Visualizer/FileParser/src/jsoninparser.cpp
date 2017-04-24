@@ -11,9 +11,9 @@
 #include "MsgCodeMapping.h"
 #include "MsgDataMappingStore.h"
 #include "MsgDataMapping.h"
-/* #include "MsgIDFilterStore.h" */
-/* #include "MsgCodeFilterStore.h" */
-/* #include "MsgTimestampFilter.h" */
+#include "MsgIDFilterStore.h"
+#include "MsgCodeFilterStore.h"
+#include "MsgTimestampFilter.h"
 
 #include <QDebug>
 
@@ -85,17 +85,17 @@ void JsonInParser::visit(MsgDataMapping &visitor)
 {
 }
 
-/* void JsonInParser::visit(MsgIDFilterStore &visitor) */
-/* { */
-/* } */
+void JsonInParser::visit(MsgIDFilterStore &visitor)
+{
+}
 
-/* void JsonInParser::visit(MsgCodeFilterStore &visitor) */
-/* { */
-/* } */
+void JsonInParser::visit(MsgCodeFilterStore &visitor)
+{
+}
 
-/* void JsonInParser::visit(MsgTimestampFilter &visitor) */
-/* { */
-/* } */
+void JsonInParser::visit(MsgTimestampFilter &visitor)
+{
+}
 
 
 

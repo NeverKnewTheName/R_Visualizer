@@ -13,9 +13,9 @@ class MsgCodeMappingStore;
 class MsgCodeMapping;
 class MsgDataMappingStore;
 class MsgDataMapping;
-/* class MsgIDFilterStore; */
-/* class MsgCodeFilterStore; */
-/* class MsgTimestampFilter; */
+class MsgIDFilterStore;
+class MsgCodeFilterStore;
+class MsgTimestampFilter;
 
 /* class SysOvrvObject; */
 /* class SysOvrvTextLabel; */
@@ -41,9 +41,9 @@ public:
     virtual void visit(MsgCodeMapping &visitor) = 0;
     virtual void visit(MsgDataMappingStore &visitor) = 0;
     virtual void visit(MsgDataMapping &visitor) = 0;
-    /* virtual void visit(MsgIDFilterStore &visitor) = 0; */
-    /* virtual void visit(MsgCodeFilterStore &visitor) = 0; */
-    /* virtual void visit(MsgTimestampFilter &visitor) = 0; */
+    virtual void visit(MsgIDFilterStore &visitor) = 0;
+    virtual void visit(MsgCodeFilterStore &visitor) = 0;
+    virtual void visit(MsgTimestampFilter &visitor) = 0;
 
     /* virtual void visit(SysOvrvObject &visitor) = 0; */
     /* virtual void visit(SysOvrvTextLabel &visitor) = 0; */
