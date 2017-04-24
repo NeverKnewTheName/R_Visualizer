@@ -37,6 +37,8 @@ private slots:
 
     void on_filterTimestampSaveBtn_clicked();
 
+    void on_checkBox_toggled(bool checked);
+
 private:
     Ui::MsgTimestampFilterWidget *ui;
     MsgTimestampFilter *msgTimestampFilter;

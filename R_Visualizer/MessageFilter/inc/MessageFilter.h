@@ -17,9 +17,8 @@ class MessageFilterNotifier;
 /**
  * @brief The MessageFilter
  */
-class MessageFilter : public QObject, public IMessageFilter
+class MessageFilter : public IMessageFilter
 {
-    Q_OBJECT
 public:
     MessageFilter(QObject *parent = Q_NULLPTR);
     virtual ~MessageFilter();
@@ -66,8 +65,6 @@ public:
     virtual void removeFilter(ITimestampedMsgFilter *filterToRemove);
 
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
-
-    virtual MessageFilterNotifier *getNotifier();
 
 private:
     MessageFilterNotifier *msgFilterNotifier;

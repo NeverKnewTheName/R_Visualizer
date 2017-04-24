@@ -7,7 +7,7 @@
 #include "ITimestampedMsg.h"
 
 MessageFilter::MessageFilter(QObject *parent) :
-    QObject(parent),
+    IMessageFilter(parent),
     msgFilterNotifier(new MessageFilterNotifier(this, this))
 {
 
@@ -95,7 +95,7 @@ void MessageFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply
     //ToDo
 }
 
-MessageFilterNotifier *MessageFilter::getNotifier()
-{
-    return msgFilterNotifier;
-}
+/* MessageFilterNotifier *MessageFilter::getNotifier() */
+/* { */
+/*     return msgFilterNotifier; */
+/* } */

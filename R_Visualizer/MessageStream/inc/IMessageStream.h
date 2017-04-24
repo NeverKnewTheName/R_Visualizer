@@ -12,6 +12,11 @@
 
 class ITimestampedMsg;
 
+class IMsgMappingManager;
+
+class IMsgFilter;
+class ITimestampedMsgFilter;
+
 /**
  * @brief The #IMessageStream interface
  */
@@ -21,13 +26,9 @@ class IMessageStream : public QObject
 public:
 
     explicit IMessageStream(QObject *parent = Q_NULLPTR) : QObject(parent)
-    {
+    {}
 
-    }
-    virtual ~IMessageStream()
-    {
-
-    }
+    virtual ~IMessageStream(){}
 
     /**
      * @brief Appends the specified message to the stream
@@ -43,6 +44,27 @@ public:
      * @brief Clears the stream
      */
     virtual void clear() = 0;
+
+    /**
+     * @brief Updates the stream by the mappingToUpdate #IMsgDataMappingManager
+     */
+    virtual void updateMsgMapping(
+            const IMsgMappingManager &mappingToUpdate
+            ) = 0;
+
+    /**
+     * @brief Updates the stream by the filterToUpdate #IMsgFilter
+     */
+    virtual void updateMsgFilter(
+            const IMsgFilter &filterToUpdate
+            ) = 0;
+
+    /**
+     * @brief Updates the stream by the filterToUpdate #ITimestampedMsgFilter
+     */
+    virtual void updateTimestampFilter(
+            const ITimestampedMsgFilter &filterToUpdate
+            ) = 0;
 
 signals:
 
@@ -60,6 +82,43 @@ public slots:
         appendMsg(receivedMsg);
     }
 
+    /**
+     * @brief Slot that updates the #IMessageStream by the given
+     * #IMsgDataMappingManager
+     * 
+     * @note Calls #updateMsgMapping
+     */
+    virtual void slt_UpdateMsgMapping(
+            const IMsgMappingManager &mappingToUpdate
+            )
+    {
+        updateMsgMapping(mappingToUpdate);
+    }
+
+    /**
+     * @brief Slot that updates the #IMessageStream by the given #IMsgFilter
+     * 
+     * @note Calls #updateMsgFilter
+     */
+    virtual void slt_UpdateMsgFilter(
+            const IMsgFilter &filterToUpdate
+            )
+    {
+        updateMsgFilter(filterToUpdate);
+    }
+
+    /**
+     * @brief Slot that updates the #IMessageStream by the given
+     * #ITimestampedMsgFilter
+     * 
+     * @note Calls #updateTimestampFilter
+     */
+    virtual void slt_UpdateTimestampFilter(
+            const ITimestampedMsgFilter &filterToUpdate
+            )
+    {
+        updateTimestampFilter(filterToUpdate);
+    }
 };
 
 #endif /* IMESSAGESTREAM_H */

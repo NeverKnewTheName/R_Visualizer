@@ -35,6 +35,10 @@ MsgTimestampFilterWidget::MsgTimestampFilterWidget(
             msgTimestampFilter->isFilterInverted()
             );
 
+    ui->globalEnableTimestampFilterCheckBox->setChecked(
+            msgTimestampFilter->isFilterEnabled()
+            );
+
     connect(
             ui->enableTimestampToFilterCheckBox,
             &QCheckBox::toggled,
@@ -69,6 +73,13 @@ MsgTimestampFilterWidget::MsgTimestampFilterWidget(
             msgTimestampFilter,
             &MsgTimestampFilter::slt_changeTimestampFrom
            );
+
+    connect(
+            ui->globalEnableTimestampFilterCheckBox,
+            &QCheckBox::toggled,
+            msgTimestampFilter,
+            &MsgTimestampFilter::slt_enableFilter
+            );
 
     connect(
             msgTimestampFilter,
@@ -122,6 +133,11 @@ void MsgTimestampFilterWidget::on_filterTimestampLoadBtn_clicked()
 }
 
 void MsgTimestampFilterWidget::on_filterTimestampSaveBtn_clicked()
+{
+
+}
+
+void MsgTimestampFilterWidget::on_checkBox_toggled(bool checked)
 {
 
 }

@@ -9,22 +9,26 @@
 #ifndef IMESSAGEFILTER_H
 #define IMESSAGEFILTER_H
 
-#include "IMsg.h"
+#include <QObject>
+
 
 #include "IUserRoleManager.h"
 
-class MessageFilterNotifier;
 class IFilter;
 class IMsgFilter;
 class ITimestampedMsgFilter;
+
+class IMsg;
 class ITimestampedMsg;
 
 /**
  * @brief The #IMessageFilter interface
  */
-class IMessageFilter
+class IMessageFilter : public QObject
 {
+    Q_OBJECT
 public:
+    IMessageFilter(QObject *parent = Q_NULLPTR) : QObject(parent){}
     virtual ~IMessageFilter(){}
 
     /**
@@ -74,15 +78,6 @@ public:
             const ITimestampedMsg &msgToFilter
             ) const = 0;
 
-
-    /* /**
-     * @brief General method to add an #IFilter
-     * 
-     * @note This method is supposed to serve all kinds of filters, it has to
-     * be implemented for cases when the filter to be added is neither an
-     * #IMsgFilter nor an #ITimestampedMsgFilter
-     */
-    /* virtual void addFilter(IFilter *filterToAdd) = 0; */
     /**
      * @brief Method to add an #IMsgFilter
      * 
@@ -104,14 +99,6 @@ public:
      */
     virtual void addFilter(ITimestampedMsgFilter *filterToAdd) = 0;
 
-    /* /**
-     * @brief General method to remove an #IFilter
-     * 
-     * @note This method is supposed to serve all kinds of filters, it has to
-     * be implemented for cases when the filter to be added is neither an
-     * #IMsgFilter nor an #ITimestampedMsgFilter
-     */
-    /* virtual void removeFilter(IFilter *filterToRemove) = 0; */
     /**
      * @brief Method to remove an #IMsgFilter
      * 
@@ -133,9 +120,24 @@ public:
      */
     virtual void removeFilter(ITimestampedMsgFilter *filterToAdd) = 0;
 
-    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply) = 0;
+    virtual void applyUserRole(
+            const UserRoleManagement::UserRole roleToApply
+            ) = 0;
 
-    virtual MessageFilterNotifier *getNotifier() = 0;
+signals:
+    void sgnl_MsgFilterHasChanged(
+            const IMsgFilter &filterThatHasChanged
+            );
+
+    void sgnl_TimestampFilterHasChanged(
+            const ITimestampedMsgFilter &filterThatHasChanged
+            );
+
+public slots:
+    virtual void slt_ApplyRole(const UserRoleManagement::UserRole roleToApply)
+    {
+        applyUserRole(roleToApply);
+    }
 
 };
 

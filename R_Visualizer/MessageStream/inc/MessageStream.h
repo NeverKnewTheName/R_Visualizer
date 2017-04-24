@@ -13,8 +13,14 @@
 #include "IMessageStream.h"
 #include "IMsgStreamStore.h"
 
+class TimestampedMsgStorage;
 class IMessageConfig;
 class IMessageFilter;
+
+class IMsgMappingManager;
+
+class IMsgFilter;
+class ITimestampedMsgFilter;
 
 /**
  * @brief The MessageStream
@@ -61,6 +67,27 @@ public:
      * @brief Clears the stream
      */
     virtual void clear();
+
+    /**
+     * @brief Updates the stream by the mappingToUpdate #IMsgDataMappingManager
+     */
+    virtual void updateMsgMapping(
+            const IMsgMappingManager &mappingToUpdate
+            );
+
+    /**
+     * @brief Updates the stream by the filterToUpdate #IMsgFilter
+     */
+    virtual void updateMsgFilter(
+            const IMsgFilter &filterToUpdate
+            );
+
+    /**
+     * @brief Updates the stream by the filterToUpdate #ITimestampedMsgFilter
+     */
+    virtual void updateTimestampFilter(
+            const ITimestampedMsgFilter &filterToUpdate
+            );
 
 private:
     void connectMsgConfig();

@@ -9,7 +9,7 @@
 #include "Msg.h"
 #include "TimestampedMsg.h"
 
-/* #include "msgstorage.h" */
+#include "msgstorage.h"
 
 /* #include "devicehandler.h" */
 
@@ -65,6 +65,13 @@
 #include "MsgTimestampFilter.h"
 #include "MsgTimestampFilterWidget.h"
 
+#include "IMessageStream.h"
+#include "MessageStream.h"
+#include "MessageStreamWidget.h"
+#include "IMsgStreamStore.h"
+#include "MsgStreamStore.h"
+#include "MsgStreamModel.h"
+
 /* #include "errorlogentry.h" */
 
 int main(int argc, char *argv[])
@@ -86,7 +93,6 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     /* DeviceHandler *interfaceHandler = new DeviceHandler(); */
-    /* TimestampedMsgStorage timestampedMsgStorage; */
 
     IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
     IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(
@@ -194,12 +200,24 @@ int main(int argc, char *argv[])
     w.appendTabMenuWidget(messageFilterWidget, "Message Filter");
 
 
-    //MessageStream *messageStreamWidget = new MessageStream(
-    //        messageConfig,
-    //        messageFilter,
-    //        timestampedMsgStorage,
-    //        &w
-    //        );
+    TimestampedMsgStorage timestampedMsgStorage;
+
+    IMsgStreamStore *msgStreamStore = new MsgStreamStore(
+            50
+            );
+    MessageStream *messageStream = new MessageStream(
+            messageConfig,
+            messageFilter,
+            msgStreamStore,
+            timestampedMsgStorage
+            );
+
+    MessageStreamWidget *messageStreamWidget = new MessageStreamWidget(
+            );
+
+    w.setMessageStreamWidget(
+            messageStreamWidget
+            );
     /* SendMessages *sendMessagesWidget; */
     //SendMessages *sndMsgsWidget = new SendMessages(
     //        messageConfig

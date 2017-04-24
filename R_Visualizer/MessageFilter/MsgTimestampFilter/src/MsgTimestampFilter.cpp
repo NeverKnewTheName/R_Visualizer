@@ -22,18 +22,26 @@ bool MsgTimestampFilter::filterTimestamp(
         ) const
 {
     bool filterResult = true;
-    const QDateTime &msgTimestamp = timestampToFilter.getTimestamp();
 
-    if(timestampFromFilterEnabled)
+    if(isEnabled)
     {
-        filterResult &= greaterThanTimestampFrom(msgTimestamp);
-    }
-    if(timestampToFilterEnabled)
-    {
-        filterResult &= lowerThanTimestampTo(msgTimestamp);
-    }
+        const QDateTime &msgTimestamp = timestampToFilter.getTimestamp();
 
-    return applyInversion(filterResult);
+        if(timestampFromFilterEnabled)
+        {
+            filterResult &= greaterThanTimestampFrom(msgTimestamp);
+        }
+        if(timestampToFilterEnabled)
+        {
+            filterResult &= lowerThanTimestampTo(msgTimestamp);
+        }
+
+        return applyInversion(filterResult);
+    }
+    else
+    {
+        return filterResult;
+    }
 }
 
 void MsgTimestampFilter::enableFilter(const bool enable)

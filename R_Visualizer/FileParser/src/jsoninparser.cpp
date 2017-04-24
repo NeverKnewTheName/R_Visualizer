@@ -2,8 +2,8 @@
 
 #include "Msg.h"
 #include "TimestampedMsg.h"
-/* #include "MsgStreamStore.h" */
-/* #include "msgstorage.h" */
+#include "MsgStreamStore.h"
+#include "msgstorage.h"
 /* #include "SendMsgPackageStore.h" */
 #include "MsgIDMappingStore.h"
 #include "MsgIDMapping.h"
@@ -45,17 +45,17 @@ void JsonInParser::visit(TimestampedMsg &visitor)
 {
 }
 
-/* void JsonInParser::visit(MsgStreamStore &visitor) */
-/* { */
-/* } */
+void JsonInParser::visit(MsgStreamStore &visitor)
+{
+}
 
-/* void JsonInParser::visit(MsgStorage &visitor) */
-/* { */
-/* } */
+void JsonInParser::visit(MsgStorage &visitor)
+{
+}
 
-/* void JsonInParser::visit(TimestampedMsgStorage &visitor) */
-/* { */
-/* } */
+void JsonInParser::visit(TimestampedMsgStorage &visitor)
+{
+}
 
 /* void JsonInParser::visit(SendMsgPackageStore &visitor) */
 /* { */

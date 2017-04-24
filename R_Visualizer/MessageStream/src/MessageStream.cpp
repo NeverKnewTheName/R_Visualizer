@@ -2,6 +2,7 @@
 
 #include "MessageStreamNotifier.h"
 
+#include "msgstorage.h"
 #include "IMessageConfig.h"
 #include "IMessageFilter.h"
 #include "IPrettyMsg.h"
@@ -81,19 +82,61 @@ void MessageStream::clear()
     msgStreamStore->clear();
 }
 
-//MessageStreamNotifier *MessageStream::getNotifier()
-//{
-    //return msgStreamNotifier;
-//}
+void MessageStream::updateMsgMapping(
+        const IMsgMappingManager &mappingToUpdate
+        )
+{
+    //ToDO
 
-void MessageStream::connectMsgConfig()
+    const int msgStreamStoreSize = msgStreamStore->size();
+    for(int i = 0; i < msgStreamStoreSize; ++i)
+    {
+        msgConfig->prettifyMsgByMappingManager(
+            msgStreamStore->at(i),
+            mappingToUpdate
+            );
+    }
+}
+
+void MessageStream::updateMsgFilter(
+        const IMsgFilter &filterToUpdate
+        )
 {
     //ToDO
 }
 
-void MessageStream::connectMsgFilter()
+void MessageStream::updateTimestampFilter(
+        const ITimestampedMsgFilter &filterToUpdate
+        )
 {
     //ToDO
+}
+
+void MessageStream::connectMsgConfig()
+{
+    connect(
+            msgConfig,
+            &IMessageConfig::sgnl_MappingManagerChanged,
+            this,
+            &MessageStream::slt_UpdateMsgMapping
+           );
+}
+
+void MessageStream::connectMsgFilter()
+{
+    connect(
+            msgFilter,
+            &IMessageFilter::sgnl_MsgFilterHasChanged,
+            this,
+            &MessageStream::slt_UpdateMsgFilter
+           );
+
+    connect(
+            msgFilter,
+            &IMessageFilter::sgnl_TimestampFilterHasChanged,
+            this,
+            &MessageStream::slt_UpdateTimestampFilter
+           );
 }
 
 void MessageStream::connectMsgStorage()

@@ -62,16 +62,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-/* void MainWindow::setMessageStreamWidget(MessageStreamWidget *msgStreamWidget) */
-/* { */
-/*     QWidget *oldMsgStream = ui->splitter->widget(0); */
-/*     if(oldMsgStream != Q_NULLPTR && oldMsgStream != ui->configTabWidget) */
-/*     { */
-/*         oldMsgStream->setParent(Q_NULLPTR); */
-/*         oldMsgStream->deleteLater(); */
-/*     } */
-/*     ui->splitter->insertWidget(0,msgStreamWidget); */
-/* } */
+void MainWindow::setMessageStreamWidget(QWidget *msgStreamWidget)
+{
+    QWidget *oldMsgStream = ui->splitter->widget(0);
+    if(oldMsgStream != Q_NULLPTR && oldMsgStream != ui->configTabWidget)
+    {
+        oldMsgStream->setParent(Q_NULLPTR);
+        oldMsgStream->deleteLater();
+    }
+    ui->splitter->insertWidget(0,msgStreamWidget);
+}
 
 void MainWindow::appendTabMenuWidget(
         QWidget *widgetToAppend,

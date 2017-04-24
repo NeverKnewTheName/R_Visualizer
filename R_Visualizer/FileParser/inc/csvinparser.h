@@ -21,9 +21,9 @@ public:
 
     virtual void visit(Msg &visitor);
     virtual void visit(TimestampedMsg &visitor);
-    /* virtual void visit(MsgStreamStore &visitor); */
-    /* virtual void visit(MsgStorage &visitor); */
-    /* virtual void visit(TimestampedMsgStorage &visitor); */
+    virtual void visit(MsgStreamStore &visitor);
+    virtual void visit(MsgStorage &visitor);
+    virtual void visit(TimestampedMsgStorage &visitor);
     /* virtual void visit(SendMsgPackageStore &visitor); */
     virtual void visit(MsgIDMappingStore &visitor);
     virtual void visit(MsgIDMapping &visitor);

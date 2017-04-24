@@ -2,8 +2,8 @@
 
 #include "Msg.h"
 #include "TimestampedMsg.h"
-/* #include "MsgStreamStore.h" */
-/* #include "msgstorage.h" */
+#include "MsgStreamStore.h"
+#include "msgstorage.h"
 /* #include "SendMsgPackageStore.h" */
 #include "MsgIDMappingStore.h"
 #include "MsgIDMapping.h"
@@ -33,17 +33,17 @@ void CsvOutParser::visit(TimestampedMsg &visitor)
 {
 }
 
-/* void CsvOutParser::visit(MsgStreamStore &visitor) */
-/* { */
-/* } */
+void CsvOutParser::visit(MsgStreamStore &visitor)
+{
+}
 
-/* void CsvOutParser::visit(MsgStorage &visitor) */
-/* { */
-/* } */
+void CsvOutParser::visit(MsgStorage &visitor)
+{
+}
 
-/* void CsvOutParser::visit(TimestampedMsgStorage &visitor) */
-/* { */
-/* } */
+void CsvOutParser::visit(TimestampedMsgStorage &visitor)
+{
+}
 
 /* void CsvOutParser::visit(SendMsgPackageStore &visitor) */
 /* { */

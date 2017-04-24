@@ -49,7 +49,7 @@ public:
      */
     ~MainWindow();
 
-    /* void setMessageStreamWidget(MessageStreamWidget *msgStreamWidget); */
+    void setMessageStreamWidget(QWidget *msgStreamWidget);
     void appendTabMenuWidget(
             QWidget *widgetToAppend,
             const QString &widgetName

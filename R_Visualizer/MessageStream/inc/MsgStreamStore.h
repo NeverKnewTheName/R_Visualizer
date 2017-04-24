@@ -23,7 +23,10 @@ class MsgStreamStore : public QObject, public IMsgStreamStore
     Q_OBJECT
     Q_INTERFACES(IMsgStreamStore)
 public:
-    MsgStreamStore(const int bufferSize, QObject *parent = Q_NULLPTR);
+    MsgStreamStore(
+            const int bufferSize,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~MsgStreamStore();
 
     /**

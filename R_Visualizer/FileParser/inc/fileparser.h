@@ -3,9 +3,9 @@
 
 class Msg;
 class TimestampedMsg;
-/* class MsgStreamStore; */
-/* class MsgStorage; */
-/* class TimestampedMsgStorage; */
+class MsgStreamStore;
+class MsgStorage;
+class TimestampedMsgStorage;
 /* class SendMsgPackageStore; */
 class MsgIDMappingStore;
 class MsgIDMapping;
@@ -31,9 +31,9 @@ public:
 
     virtual void visit(Msg &visitor) = 0;
     virtual void visit(TimestampedMsg &visitor) = 0;
-    /* virtual void visit(MsgStreamStore &visitor) = 0; */
-    /* virtual void visit(MsgStorage &visitor) = 0; */
-    /* virtual void visit(TimestampedMsgStorage &visitor) = 0; */
+    virtual void visit(MsgStreamStore &visitor) = 0;
+    virtual void visit(MsgStorage &visitor) = 0;
+    virtual void visit(TimestampedMsgStorage &visitor) = 0;
     /* virtual void visit(SendMsgPackageStore &visitor) = 0; */
     virtual void visit(MsgIDMappingStore &visitor) = 0;
     virtual void visit(MsgIDMapping &visitor) = 0;
