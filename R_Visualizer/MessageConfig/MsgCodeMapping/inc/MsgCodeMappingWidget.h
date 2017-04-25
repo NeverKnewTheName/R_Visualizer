@@ -10,8 +10,12 @@
 
 #include <QWidget>
 
-#include "IMsgCodeMapping.h"
-#include "MsgCodeMappingModel.h"
+
+#include "MsgCodeType.h"
+
+class IMsgCodeMappingManager;
+class MsgCodeMappingModel;
+class IMsgCodeMapping;
 
 namespace Ui {
 class MsgCodeMappingWidget;
@@ -25,6 +29,7 @@ class MsgCodeMappingWidget : public QWidget
     Q_OBJECT
 public:
     explicit MsgCodeMappingWidget(
+            IMsgCodeMappingManager *msgCodeMappingManager,
             MsgCodeMappingModel *msgCodeMappingModel,
             QWidget *parent = 0);
     ~MsgCodeMappingWidget();
@@ -51,7 +56,6 @@ signals:
     void sgnl_MsgCodeMappingRemoved(const MsgCodeType relatedCode);
 
     void sgnl_AddMsgCodeMapping(
-            const MsgCodeType &msgCode,
             const IMsgCodeMapping &mappingToAdd
             );
 
@@ -69,6 +73,7 @@ private:
 
 private:
     Ui::MsgCodeMappingWidget *ui;
+    IMsgCodeMappingManager *msgCodeMappingManager;
     MsgCodeMappingModel *msgCodeMappingModel;
 };
 

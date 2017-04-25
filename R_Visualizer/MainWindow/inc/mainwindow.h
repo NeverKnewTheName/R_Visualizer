@@ -19,6 +19,8 @@
 class MessageStreamWidget;
 class ErrorLogView;
 
+class TimestampedMsg;
+
 namespace Ui {
 class MainWindow;
 }
@@ -60,6 +62,8 @@ signals:
     void switchUserRoles(UserRoleManagement::UserRole roleToSwitchTo);
     /* void dataReceived(Data_PacketPtr); */
     /* void errorReceived(Error_PacketPtr); */
+
+    void sgnl_AddTestMessage(const TimestampedMsg &testMsg);
 
 private slots:
     /**

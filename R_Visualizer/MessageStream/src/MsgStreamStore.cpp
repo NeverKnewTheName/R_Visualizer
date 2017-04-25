@@ -1,7 +1,7 @@
 #include "MsgStreamStore.h"
 
 MsgStreamStore::MsgStreamStore(const int bufferSize, QObject *parent) :
-    QObject(parent),
+    IMsgStreamStore(parent),
     bufferSize(bufferSize),
     msgStorage(bufferSize)
 {
@@ -15,7 +15,7 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
         const IPrettyTimestampedMsg &msgToAppend
         )
 {
-    bool bufferOverflowing = msgStorage.size() >= bufferSize;
+    const bool bufferOverflowing = msgStorage.size() >= bufferSize;
 
     if(bufferOverflowing)
     {
@@ -27,9 +27,14 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
     }
 
     /*
-     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     * ToDO Dynamic cast on references throws exception if gone wrong! include
+     * exception handling!
      */
-    msgStorage.append(dynamic_cast<const PrettyTimestampedMsg<TimestampedMsg>&>(msgToAppend));
+    msgStorage.append(
+            dynamic_cast<const PrettyTimestampedMsg<TimestampedMsg>&>(
+                msgToAppend
+                )
+            );
 
     if(bufferOverflowing)
     {
@@ -48,16 +53,21 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
         )
 {
     /*
-     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     * ToDO Dynamic cast on references throws exception if gone wrong! include
+     * exception handling!
      */
-    return appendMsg(PrettyTimestampedMsg<TimestampedMsg>(dynamic_cast<const TimestampedMsg&>(msgToAppend)));
+    return appendMsg(
+            PrettyTimestampedMsg<TimestampedMsg>(
+                dynamic_cast<const TimestampedMsg&>(msgToAppend)
+                )
+            );
 }
 
 IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
         const IPrettyTimestampedMsg &msgToPrepend
         )
 {
-    bool bufferOverflowing = msgStorage.size() >= bufferSize;
+    const bool bufferOverflowing = msgStorage.size() >= bufferSize;
 
     if(bufferOverflowing)
     {
@@ -69,9 +79,13 @@ IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
     }
 
     /*
-     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     * ToDO Dynamic cast on references throws exception if gone wrong! include
+     * exception handling!
      */
-    msgStorage.prepend(dynamic_cast<const PrettyTimestampedMsg<TimestampedMsg>&>(msgToPrepend));
+    msgStorage.prepend(
+            dynamic_cast<const PrettyTimestampedMsg<TimestampedMsg>&>(
+                msgToPrepend)
+            );
 
     if(bufferOverflowing)
     {
@@ -89,9 +103,14 @@ IPrettyTimestampedMsg &MsgStreamStore::prependMsg(
         )
 {
     /*
-     * ToDO Dynamic cast on references throws exception if gone wrong! include exception handling!
+     * ToDO Dynamic cast on references throws exception if gone wrong! include
+     * exception handling!
      */
-    return prependMsg(PrettyTimestampedMsg<TimestampedMsg>(dynamic_cast<const TimestampedMsg&>(msgToPrepend)));
+    return prependMsg(
+            PrettyTimestampedMsg<TimestampedMsg>(
+                dynamic_cast<const TimestampedMsg&>(msgToPrepend)
+                )
+            );
 }
 
 
@@ -116,19 +135,3 @@ void MsgStreamStore::clear()
     msgStorage.clear();
     emit sgnl_storeCleared();
 }
-
-void MsgStreamStore::slt_appendMsg(const IPrettyTimestampedMsg &msgToAppend)
-{
-    appendMsg(msgToAppend);
-}
-
-void MsgStreamStore::slt_prependMsg(const IPrettyTimestampedMsg &msgToPrepend)
-{
-    prependMsg(msgToPrepend);
-}
-
-void MsgStreamStore::slt_clearStore()
-{
-    clear();
-}
-

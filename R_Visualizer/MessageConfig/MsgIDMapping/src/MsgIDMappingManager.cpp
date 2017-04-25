@@ -43,18 +43,45 @@ QColor MsgIDMappingManager::getColorToAlias(
     return msgIDMappingStore->getColorToAlias(alias);
 }
 
+void MsgIDMappingManager::addMsgIDMapping(
+        const IMsgIDMapping &msgIDMapping
+        )
+{
+    const MsgIDType &msgID = msgIDMapping.getID();
+    if(!msgIDMappingStore->contains(msgID))
+    {
+        msgIDMappingStore->addMsgIDMapping(msgID, msgIDMapping);
+    }
+}
+
+void MsgIDMappingManager::removeMsgIDMapping(
+        const MsgIDType &relatedMsgID
+        /* const IMsgIDMapping &msgIDMapping */
+        )
+{
+    /* const MsgIDType &msgID = msgIDMapping.getID(); */
+    if(msgIDMappingStore->contains(relatedMsgID))
+    {
+        msgIDMappingStore->removeMsgIDMapping(relatedMsgID);
+    }
+}
+
+
 void MsgIDMappingManager::prettifyMsg(
         IPrettyMsg &msgToPrettify
         ) const
 {
     const MsgIDType &msgID = msgToPrettify.getMsgID();
 
-    msgToPrettify.setMsgIDPlainTextAlias(
-            msgIDMappingStore->getAliasToMsgID(msgID)
-            );
-    msgToPrettify.setMsgIDColorRepresentation(
-            msgIDMappingStore->getColorToMsgID(msgID)
-            );
+    if(msgIDMappingStore->contains(msgID))
+    {
+        msgToPrettify.setMsgIDPlainTextAlias(
+                msgIDMappingStore->getAliasToMsgID(msgID)
+                );
+        msgToPrettify.setMsgIDColorRepresentation(
+                msgIDMappingStore->getColorToMsgID(msgID)
+                );
+    }
 }
 
 void MsgIDMappingManager::accept(FileParser *visitor)

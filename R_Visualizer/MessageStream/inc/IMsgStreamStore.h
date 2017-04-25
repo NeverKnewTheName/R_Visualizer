@@ -8,7 +8,8 @@
 #ifndef IMSGSTREAMSTORE_H
 #define IMSGSTREAMSTORE_H
 
-#include <QMetaObject>
+/* #include <QMetaObject> */
+#include <QObject>
 #include "ITimestampedMsg.h"
 
 class IPrettyTimestampedMsg;
@@ -16,9 +17,11 @@ class IPrettyTimestampedMsg;
 /**
  * @brief The IMsgStreamStore interface
  */
-class IMsgStreamStore
+class IMsgStreamStore : public QObject
 {
+    Q_OBJECT
 public:
+    IMsgStreamStore(QObject *parent = Q_NULLPTR) : QObject(parent){}
     virtual ~IMsgStreamStore(){}
 
     /**
@@ -84,13 +87,17 @@ signals:
      * This signal tells related models, that a message has passed the filter
      * and is now about to be appended to the store.
      */
-    virtual void sgnl_msgAboutToBeAppended() = 0;
+    void sgnl_msgAboutToBeAppended(
+            /* const IPrettyTimestampedMsg &msgToAppend */
+            );
 
     /**
      * @brief This signal is emitted when a pretty message was appended to the
      * store
      */
-    virtual void sgnl_msgAppended() = 0;
+    void sgnl_msgAppended(
+            /* const IPrettyTimestampedMsg &msgToAppend */
+            );
 
     /**
      * @brief Emitted before a pretty message is prepended to the store
@@ -98,13 +105,17 @@ signals:
      * This signal tells related models that a message has passed the filter
      * and is now about to be appended to the store.
      */
-    virtual void sgnl_msgAboutToBePrepended() = 0;
+    void sgnl_msgAboutToBePrepended(
+            /* const IPrettyTimestampedMsg &msgToAppend */
+            );
 
     /**
      * @brief This signal is emitted when a pretty message was prepended to the
      * store
      */
-    virtual void sgnl_msgPrepended() = 0;
+    void sgnl_msgPrepended(
+            /* const IPrettyTimestampedMsg &msgToAppend */
+            );
 
     /**
      * @brief Emitted when a message will be appended to the store that causes
@@ -112,7 +123,7 @@ signals:
      * 
      * When the store overflows the first message is discarded
      */
-    virtual void sgnl_storeAboutToOverflow() = 0;
+    void sgnl_storeAboutToOverflow();
 
     /**
      * @brief Emitted when a message was appended to the store that caused
@@ -120,7 +131,7 @@ signals:
      * 
      * When the store overflows the first message is discarded
      */
-    virtual void sgnl_storeOverflow() = 0;
+    void sgnl_storeOverflow();
 
     /**
      * @brief Emitted when a message will be appended to the store that causes
@@ -128,7 +139,7 @@ signals:
      * 
      * When the store underflows the last message is discarded
      */
-    virtual void sgnl_storeAboutToUnderflow() = 0;
+    void sgnl_storeAboutToUnderflow();
 
     /**
      * @brief Emitted when a message was appended to the store that caused
@@ -136,7 +147,7 @@ signals:
      * 
      * When the store underflows the last message is discarded
      */
-    virtual void sgnl_storeUnderflow() = 0;
+    void sgnl_storeUnderflow();
 
     /**
      * @brief Emitted before the store is cleared
@@ -144,30 +155,45 @@ signals:
      * This signals tells related models that all data is about to be removed
      * from the store
      */
-    virtual void sgnl_storeAboutToBeCleared() = 0;
+    void sgnl_storeAboutToBeCleared();
 
     /**
      * @brief This signal is emitted when the store is cleared
      */
-    virtual void sgnl_storeCleared() = 0;
+    void sgnl_storeCleared();
 
 public slots:
     /**
      * @brief Slot to append the given pretty messages
+     * 
+     * @note Calls #appendMsg
      */
-    virtual void slt_appendMsg(const IPrettyTimestampedMsg &msgToAppend) = 0;
+    virtual void slt_appendMsg(const IPrettyTimestampedMsg &msgToAppend)
+    {
+        appendMsg(msgToAppend);
+    }
 
     /**
      * @brief Slot to prepend the given pretty messages
+     * 
+     * @note Calls #prependMsg
      */
-    virtual void slt_prependMsg(const IPrettyTimestampedMsg &msgToAppend) = 0;
+    virtual void slt_prependMsg(const IPrettyTimestampedMsg &msgToPrepend)
+    {
+        prependMsg(msgToPrepend);
+    }
 
     /**
      * @brief Slot to clear the store removing all contained messsages
+     * 
+     * @note Calls #clear
      */
-    virtual void slt_clearStore() = 0;
+    virtual void slt_clearStore()
+    {
+        clear();
+    }
 };
 
-Q_DECLARE_INTERFACE(IMsgStreamStore, "IMsgStreamStore")
+/* Q_DECLARE_INTERFACE(IMsgStreamStore, "IMsgStreamStore") */
 
 #endif /* IMSGSTREAMSTORE_H */

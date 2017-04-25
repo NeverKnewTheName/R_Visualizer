@@ -102,42 +102,42 @@ MsgTimestampFilterWidget::~MsgTimestampFilterWidget()
     delete ui;
 }
 
-void MsgTimestampFilterWidget::on_filterTimeStampFromDateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
-{
+/* void MsgTimestampFilterWidget::on_filterTimeStampFromDateTimeEdit_dateTimeChanged(const QDateTime &dateTime) */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
-{
+/* void MsgTimestampFilterWidget::on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDateTime &dateTime) */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_enableTimestampFromFilterCheckBox_toggled(bool checked)
-{
+/* void MsgTimestampFilterWidget::on_enableTimestampFromFilterCheckBox_toggled(bool checked) */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_enableTimestampToFilterCheckBox_toggled(bool checked)
-{
+/* void MsgTimestampFilterWidget::on_enableTimestampToFilterCheckBox_toggled(bool checked) */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_invertTimestampFilterCheckBox_toggled(bool checked)
-{
+/* void MsgTimestampFilterWidget::on_invertTimestampFilterCheckBox_toggled(bool checked) */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_filterTimestampLoadBtn_clicked()
-{
+/* void MsgTimestampFilterWidget::on_filterTimestampLoadBtn_clicked() */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_filterTimestampSaveBtn_clicked()
-{
+/* void MsgTimestampFilterWidget::on_filterTimestampSaveBtn_clicked() */
+/* { */
 
-}
+/* } */
 
-void MsgTimestampFilterWidget::on_checkBox_toggled(bool checked)
-{
+/* void MsgTimestampFilterWidget::on_checkBox_toggled(bool checked) */
+/* { */
 
-}
+/* } */

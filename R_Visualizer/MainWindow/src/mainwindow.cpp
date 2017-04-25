@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
 //    ui->splitter->insertWidget(0,msgStream);
+//
 
     connectErrorLog();
     connectUserRoleManager();
@@ -353,9 +354,28 @@ void MainWindow::on_actionSwitch_User_Role_triggered()
     /* } */
 //}
 
+#include <QDateTime>
+#include "TimestampedMsg.h"
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
 void MainWindow::on_TestPB_1_clicked()
 {
-    //this->msgModel->removeRow(3,QModelIndex());
+    qsrand(qrand());
+    MsgDataType msgData;
+
+    msgData.append(MsgDataByteType(qrand() %100));
+    msgData.append(MsgDataByteType(qrand() %100));
+    msgData.append(MsgDataByteType(qrand() %100));
+
+    Msg testMsgTemp(
+            MsgIDType(qrand() %100),
+            MsgCodeType(qrand() % 100),
+            msgData
+            );
+
+    TimestampedMsg testMsg(testMsgTemp, QDateTime::currentDateTime());
+    emit sgnl_AddTestMessage(testMsg);
 }
 
 void MainWindow::on_actionOpen_Error_Log_triggered()

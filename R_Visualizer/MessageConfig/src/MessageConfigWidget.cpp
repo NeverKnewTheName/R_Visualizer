@@ -12,8 +12,6 @@ MessageConfigWidget::MessageConfigWidget(
     msgConfig(msgConfig)
 {
     ui->setupUi(this);
-
-    setLayout(new QVBoxLayout);
 }
 
 MessageConfigWidget::~MessageConfigWidget()

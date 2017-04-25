@@ -17,6 +17,8 @@ class IMsgMappingManager;
 class IMsgFilter;
 class ITimestampedMsgFilter;
 
+class IPrettyTimestampedMsg;
+
 /**
  * @brief The #IMessageStream interface
  */
@@ -69,6 +71,7 @@ public:
             ) = 0;
 
 signals:
+    void sgnl_AppendMsg(const IPrettyTimestampedMsg &msgToAppend);
 
 public slots:
     /**

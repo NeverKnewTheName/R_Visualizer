@@ -29,6 +29,8 @@ void MsgDataMappingManager::accept(FileParser *visitor)
 }
 
 
-void MsgDataMappingManager::applyUserRole(const UserRoleManagement::UserRole roleToApply)
+void MsgDataMappingManager::applyUserRole(
+        const UserRoleManagement::UserRole roleToApply
+        )
 {
 }

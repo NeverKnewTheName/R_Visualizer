@@ -28,6 +28,15 @@ public:
     virtual QColor getColorToMsgCode(const MsgCodeType &msgCode) const;
     virtual QColor getColorToAlias(const QString &alias) const;
 
+    virtual void addMsgCodeMapping(
+            const IMsgCodeMapping &msgCodeMapping
+            );
+
+    virtual void removeMsgCodeMapping(
+            const MsgCodeType &relatedMsgCode
+            /* const IMsgCodeMapping &msgCodeMapping */
+            );
+
     virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;

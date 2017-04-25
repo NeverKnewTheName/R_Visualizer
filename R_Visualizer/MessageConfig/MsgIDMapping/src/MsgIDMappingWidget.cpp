@@ -1,6 +1,9 @@
 #include "MsgIDMappingWidget.h"
 #include "ui_msgidmappingwidget.h"
 
+#include "IMsgIDMappingManager.h"
+#include "MsgIDMappingModel.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -20,11 +23,13 @@
 #include "jsonoutparser.h"
 
 MsgIDMappingWidget::MsgIDMappingWidget(
+        IMsgIDMappingManager *msgIDMappingManager,
         MsgIDMappingModel *model,
         QWidget *parent
         ) :
     QWidget(parent),
     ui(new Ui::MsgIDMappingWidget),
+    msgIDMappingManager(msgIDMappingManager),
     msgIDMappingModel(model)
 {
     init();
@@ -123,7 +128,7 @@ void MsgIDMappingWidget::on_idAddBtn_clicked()
             QString("TEST"),
             QColor(Qt::blue)
             );
-    emit sgnl_AddMsgIDMapping(testMapping.getID(), testMapping);
+    emit sgnl_AddMsgIDMapping(testMapping);
     //msgIDMappingModel->appendMsgIDMapping(testMapping);
 }
 
@@ -132,7 +137,9 @@ void MsgIDMappingWidget::slt_clear()
     msgIDMappingModel->clear();
 }
 
-void MsgIDMappingWidget::slt_MsgIDMappingAddFinished(const IMsgIDMapping &addedMsgIDMapping)
+void MsgIDMappingWidget::slt_MsgIDMappingAddFinished(
+        const IMsgIDMapping &addedMsgIDMapping
+        )
 {
     //ToDO
 }
@@ -142,11 +149,16 @@ void MsgIDMappingWidget::init()
     ui->setupUi(this);
     QSortFilterProxyModel *sortFilterProxyModel = new
         QSortFilterProxyModel(this);
-    //ToDO... this is not good... maybe inherit from QAbstractItemModel directly in the interface?
-    sortFilterProxyModel->setSourceModel(dynamic_cast<QAbstractItemModel*>(msgIDMappingModel));
+    //ToDO... this is not good... maybe inherit from QAbstractItemModel directly
+    //in the interface?
+    sortFilterProxyModel->setSourceModel(
+            dynamic_cast<QAbstractItemModel*>(msgIDMappingModel)
+            );
     ui->idTableView->setSortingEnabled(true);
     ui->idTableView->setModel(sortFilterProxyModel);
-    ui->idTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->idTableView->horizontalHeader()->setSectionResizeMode(
+            QHeaderView::Stretch
+            );
     ui->idTableView->verticalHeader()->hide();
     ui->idTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->idTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
@@ -161,14 +173,14 @@ void MsgIDMappingWidget::connectModel()
     connect(
             this,
             &MsgIDMappingWidget::sgnl_AddMsgIDMapping,
-            msgIDMappingModel,
-            &MsgIDMappingModel::sgnl_AddMapping
+            msgIDMappingManager,
+            &IMsgIDMappingManager::slt_addMsgIDMapping
            );
 
     connect(
             this,
             &MsgIDMappingWidget::sgnl_RemoveMsgIDMapping,
-            msgIDMappingModel,
-            &MsgIDMappingModel::sgnl_RemoveMapping
+            msgIDMappingManager,
+            &IMsgIDMappingManager::slt_removeMsgIDMapping
            );
 }

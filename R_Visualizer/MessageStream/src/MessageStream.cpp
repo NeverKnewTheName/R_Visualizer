@@ -41,6 +41,11 @@ MessageStream::MessageStream(
         //ERROR
         //THROW EXCEPTION
     }
+
+    connectMsgConfig();
+    connectMsgFilter();
+    connectMsgStorage();
+    connectMsgStreamStore();
 }
 
 MessageStream::~MessageStream()
@@ -147,6 +152,13 @@ void MessageStream::connectMsgFilter()
 void MessageStream::connectMsgStorage()
 {
     //ToDO
+    
+    connect(
+            &msgStorage,
+            &TimestampedMsgStorage::sgnl_MsgAdded,
+            this,
+            &MessageStream::slt_receiveMessage
+           );
 }
 
 void MessageStream::connectMsgStreamStore()

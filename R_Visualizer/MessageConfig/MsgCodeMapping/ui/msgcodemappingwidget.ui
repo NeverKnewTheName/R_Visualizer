@@ -36,19 +36,6 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <spacer name="StoreLoadSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="5" column="2">
        <widget class="QPushButton" name="msgCodeStoreBtn">
         <property name="toolTip">
@@ -86,7 +73,20 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="5" column="4">
+       <spacer name="StoreLoadSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="6" column="4">
        <spacer name="RemoveAddSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>

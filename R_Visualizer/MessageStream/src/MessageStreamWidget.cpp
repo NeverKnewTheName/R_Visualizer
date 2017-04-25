@@ -1,14 +1,67 @@
 #include "MessageStreamWidget.h"
 #include "ui_messagestreamwidget.h"
 
-MessageStreamWidget::MessageStreamWidget(QWidget *parent) :
+#include <QHeaderView>
+
+#include "IMessageStream.h"
+#include "MsgStreamModel.h"
+
+#include <QDebug>
+
+MessageStreamWidget::MessageStreamWidget(
+        IMessageStream *msgStream,
+        MsgStreamModel *msgStreamModel,
+        QWidget *parent
+        ) :
     QWidget(parent),
-    ui(new Ui::MessageStreamWidget)
+    ui(new Ui::MessageStreamWidget),
+    msgStream(msgStream),
+    msgStreamModel(msgStreamModel)
 {
-    ui->setupUi(this);
+    init();
+    connectToMessageStream();
 }
 
 MessageStreamWidget::~MessageStreamWidget()
 {
     delete ui;
+}
+
+void MessageStreamWidget::init()
+{
+    ui->setupUi(this);
+
+    ui->msgStreamTableView->setModel(msgStreamModel);
+    ui->msgStreamTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    QHeaderView *horzHeader = ui->msgStreamTableView->horizontalHeader();
+
+    const int sectionCount = horzHeader->count() - 1;
+    const int sectionLength = horzHeader->length() / horzHeader->count();
+
+    qDebug() << "HorzHeader count: " << horzHeader->count();
+    qDebug() << "HorzHeader length: " << horzHeader->length();
+    qDebug() << "HorzHeader sectionLength: " << sectionLength;
+
+    for(int i = 0; i < sectionCount; ++i)
+    {
+        horzHeader->setSectionResizeMode(i,QHeaderView::Interactive);
+    }
+
+    horzHeader->setDefaultSectionSize(sectionLength);
+
+    horzHeader->setStretchLastSection(true);
+
+    /* ui->msgStreamTableView->setSelectionMode(
+     * QAbstractItemView::ContiguousSelection
+     * ); */
+
+    /* //ToDO */
+    //ui->codeFilterListView->setItemDelegate(new CodeEditorDelegate(this));
+
+    //ToDO SCROLL TO BOTTOM
+}
+
+void MessageStreamWidget::connectToMessageStream()
+{
 }

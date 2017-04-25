@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+#include <QObject>
 #include <QDebug>
 
 #include "MsgIDType.h"
@@ -132,12 +133,14 @@ int main(int argc, char *argv[])
     //Note: do not set messageConfigWidget as parent, because the actual parent
     //will be the vertical layout of the messageConfigWidget...
     MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(
+            msgIDMappingManager,
             msgIDMappingModel
             /* messageConfigWidget */
             );
     //Note: do not set messageConfigWidget as parent, because the actual parent
     //will be the vertical layout of the messageConfigWidget...
     MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
+            msgCodeMappingManager,
             msgCodeMappingModel
             /* messageConfigWidget */
             );
@@ -202,6 +205,13 @@ int main(int argc, char *argv[])
 
     TimestampedMsgStorage timestampedMsgStorage;
 
+    QObject::connect(
+            &w,
+            &MainWindow::sgnl_AddTestMessage,
+            &timestampedMsgStorage,
+            &TimestampedMsgStorage::slt_addMsg
+            );
+
     IMsgStreamStore *msgStreamStore = new MsgStreamStore(
             50
             );
@@ -212,7 +222,11 @@ int main(int argc, char *argv[])
             timestampedMsgStorage
             );
 
+    MsgStreamModel *msgStreamModel = new MsgStreamModel(msgStreamStore);
+
     MessageStreamWidget *messageStreamWidget = new MessageStreamWidget(
+            messageStream,
+            msgStreamModel
             );
 
     w.setMessageStreamWidget(

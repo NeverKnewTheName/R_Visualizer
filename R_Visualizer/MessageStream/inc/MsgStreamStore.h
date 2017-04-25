@@ -18,10 +18,10 @@
 /**
  * @brief The MsgStreamStore
  */
-class MsgStreamStore : public QObject, public IMsgStreamStore
+class MsgStreamStore : public IMsgStreamStore
 {
-    Q_OBJECT
-    Q_INTERFACES(IMsgStreamStore)
+    /* Q_OBJECT */
+    /* Q_INTERFACES(IMsgStreamStore) */
 public:
     MsgStreamStore(
             const int bufferSize,
@@ -91,96 +91,6 @@ public:
      * @brief Clears the store removing all messages
      */
     virtual void clear();
-
-signals:
-    /**
-     * @brief Emitted before a pretty message is appended to the store
-     * 
-     * This signal tells related models, that a message has passed the filter
-     * and is now about to be appended to the store.
-     */
-    virtual void sgnl_msgAboutToBeAppended();
-    /**
-     * @brief This signal is emitted when a pretty message was appended to the
-     * store
-     * 
-     * This signal tells related models, that a message has been appended to
-     * the store.
-     */
-    virtual void sgnl_msgAppended();
-
-    /**
-     * @brief Emitted before a pretty message is prepended to the store
-     * 
-     * This signal tells related models that a message has passed the filter
-     * and is now about to be appended to the store.
-     */
-    virtual void sgnl_msgAboutToBePrepended();
-    /**
-     * @brief This signal is emitted when a pretty message was prepended to the
-     * store
-     */
-    virtual void sgnl_msgPrepended();
-
-    /**
-     * @brief Emitted when a message will be appended to the store that causes
-     * the store to overflow
-     * 
-     * When the store overflows the first message is discarded
-     */
-    virtual void sgnl_storeAboutToOverflow();
-
-    /**
-     * @brief Emitted when a message was appended to the store that caused
-     * the store to overflow
-     * 
-     * When the store overflows the first message is discarded
-     */
-    virtual void sgnl_storeOverflow();
-
-    /**
-     * @brief Emitted when a message will be appended to the store that causes
-     * the store to underflow
-     * 
-     * When the store underflows the last message is discarded
-     */
-    virtual void sgnl_storeAboutToUnderflow();
-
-    /**
-     * @brief Emitted when a message was appended to the store that caused
-     * the store to underflow
-     * 
-     * When the store underflows the last message is discarded
-     */
-    virtual void sgnl_storeUnderflow();
-
-    /**
-     * @brief Emitted before the store is cleared
-     * 
-     * This signals tells related models that all data is about to be removed
-     * from the store
-     */
-    virtual void sgnl_storeAboutToBeCleared();
-    /**
-     * @brief This signal is emitted when the store is cleared
-     */
-    virtual void sgnl_storeCleared();
-
-public slots:
-    /**
-     * @brief Slot to append the given pretty messages
-     */
-    virtual void slt_appendMsg(const IPrettyTimestampedMsg &msgToAppend);
-
-    /**
-     * @brief Slot to prepend the given pretty messages
-     */
-    virtual void slt_prependMsg(const IPrettyTimestampedMsg &msgToAppend);
-
-    /**
-     * @brief Slot to clear the store removing all contained messsages
-     */
-    virtual void slt_clearStore();
 
 private:
     int bufferSize;

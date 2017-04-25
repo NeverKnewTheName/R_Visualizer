@@ -32,8 +32,8 @@ public:
      * @brief Default Constructor for use with QVector..
      */
     PrettyTimestampedMsg() :
-        msgDataFormatterUniqPtr(Q_NULLPTR),
         originalMsg(),
+        msgDataFormatterUniqPtr(Q_NULLPTR),
         msgIDPlainTextAlias("Default"),
         msgCodePlainTextAlias("Default"),
         msgIDColorRepresentation(Qt::white),
@@ -42,8 +42,8 @@ public:
     }
 
     PrettyTimestampedMsg(const ConcreteTimestampedMsg &originalMsg) :
-        msgDataFormatterUniqPtr(Q_NULLPTR),
         originalMsg(originalMsg),
+        msgDataFormatterUniqPtr(Q_NULLPTR),
         msgIDPlainTextAlias(static_cast<QString>(originalMsg.getMsgID())),
         msgCodePlainTextAlias(static_cast<QString>(originalMsg.getMsgCode())),
         msgIDColorRepresentation(Qt::white),
@@ -53,7 +53,11 @@ public:
 
     PrettyTimestampedMsg(const PrettyTimestampedMsg &other) :
         originalMsg(other.originalMsg),
-        msgDataFormatterUniqPtr(other.msgDataFormatterUniqPtr->cloneFormatter()),
+        msgDataFormatterUniqPtr(
+                other.msgDataFormatterUniqPtr ?
+                other.msgDataFormatterUniqPtr->cloneFormatter() :
+                Q_NULLPTR
+                ),
         msgIDPlainTextAlias(other.msgIDPlainTextAlias),
         msgCodePlainTextAlias(other.msgCodePlainTextAlias),
         msgIDColorRepresentation(other.msgIDColorRepresentation),
@@ -68,7 +72,9 @@ public:
     PrettyTimestampedMsg &operator =(const PrettyTimestampedMsg &other)
     {
         this->msgDataFormatterUniqPtr = std::unique_ptr<IMsgDataFormatter>(
-            other.msgDataFormatterUniqPtr->cloneFormatter()
+            other.msgDataFormatterUniqPtr ?
+            other.msgDataFormatterUniqPtr->cloneFormatter() :
+            Q_NULLPTR
                     );
         this->originalMsg = other.originalMsg;
         this->msgIDPlainTextAlias = other.msgIDPlainTextAlias;

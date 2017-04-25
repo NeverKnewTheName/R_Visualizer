@@ -43,18 +43,44 @@ QColor MsgCodeMappingManager::getColorToAlias(
     return msgCodeMappingStore->getColorToAlias(alias);
 }
 
+void MsgCodeMappingManager::addMsgCodeMapping(
+        const IMsgCodeMapping &msgCodeMapping
+        )
+{
+    const MsgCodeType &msgCode = msgCodeMapping.getCode();
+    if(!msgCodeMappingStore->contains(msgCode))
+    {
+        msgCodeMappingStore->addMsgCodeMapping(msgCode, msgCodeMapping);
+    }
+}
+
+void MsgCodeMappingManager::removeMsgCodeMapping(
+        const MsgCodeType &relatedMsgCode
+        /* const IMsgCodeMapping &msgCodeMapping */
+        )
+{
+    /* const MsgCodeType &msgCode = msgCodeMapping.getCode(); */
+    if(msgCodeMappingStore->contains(relatedMsgCode))
+    {
+        msgCodeMappingStore->removeMsgCodeMapping(relatedMsgCode);
+    }
+}
+
 void MsgCodeMappingManager::prettifyMsg(
        IPrettyMsg &msgToPrettify
        ) const
 {
     const MsgCodeType &msgCode = msgToPrettify.getMsgCode();
 
-    msgToPrettify.setMsgCodePlainTextAlias(
-            msgCodeMappingStore->getAliasToMsgCode(msgCode)
-            );
-    msgToPrettify.setMsgCodeColorRepresentation(
-            msgCodeMappingStore->getColorToMsgCode(msgCode)
-            );
+    if(msgCodeMappingStore->contains(msgCode))
+    {
+        msgToPrettify.setMsgCodePlainTextAlias(
+                msgCodeMappingStore->getAliasToMsgCode(msgCode)
+                );
+        msgToPrettify.setMsgCodeColorRepresentation(
+                msgCodeMappingStore->getColorToMsgCode(msgCode)
+                );
+    }
 }
 
 void MsgCodeMappingManager::accept(FileParser *visitor)

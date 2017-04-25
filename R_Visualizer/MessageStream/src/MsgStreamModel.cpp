@@ -5,7 +5,9 @@
 
 #include "PrettyTimestampedMsg.h"
 
-MsgStreamModel::MsgStreamModel(IMsgStreamStore &msgStreamStore,
+#include "IMsgStreamStore.h"
+
+MsgStreamModel::MsgStreamModel(IMsgStreamStore *msgStreamStore,
         QObject *parent
         ) :
     QAbstractTableModel(parent),
@@ -22,7 +24,7 @@ MsgStreamModel::~MsgStreamModel()
 int MsgStreamModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return msgStreamStore.size();
+    return msgStreamStore->size();
 }
 
 int MsgStreamModel::columnCount(const QModelIndex &parent) const
@@ -38,7 +40,7 @@ QVariant MsgStreamModel::data(
 {
     const int row = index.row();
     const int col = index.column();
-    const IPrettyTimestampedMsg &msgAtIndex = msgStreamStore.at(row);
+    const IPrettyTimestampedMsg &msgAtIndex = msgStreamStore->at(row);
 
     switch(role)
     {
@@ -47,7 +49,8 @@ QVariant MsgStreamModel::data(
         switch(col)
         {
             case MsgStreamModel::MsgStreamHeaderCol_Timestamp:
-                return msgAtIndex.getTimestamp().toString("dd.MM.yyyy - hh:mm:ss.zzz");
+                return msgAtIndex.getTimestamp().
+                    toString("dd.MM.yyyy - hh:mm:ss.zzz");
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Name:
                 return msgAtIndex.getMsgIDPlainTextAlias();
@@ -166,7 +169,7 @@ QVariant MsgStreamModel::headerData(
 
 void MsgStreamModel::slt_msgAboutToBeAppended()
 {
-    int newRowNumber = msgStreamStore.size();
+    int newRowNumber = msgStreamStore->size();
     beginInsertRows(QModelIndex(),newRowNumber,newRowNumber);
 }
 
@@ -225,73 +228,73 @@ void MsgStreamModel::slt_storeCleared()
 
 void MsgStreamModel::connectMsgStreamStore()
 {
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_msgAboutToBeAppended, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_msgAboutToBeAppended */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_msgAboutToBeAppended,
+            this,
+            &MsgStreamModel::slt_msgAboutToBeAppended
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_msgAppended, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_msgAppended */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_msgAppended,
+            this,
+            &MsgStreamModel::slt_msgAppended
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_msgPrepended, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_msgPrepended */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_msgPrepended,
+            this,
+            &MsgStreamModel::slt_msgPrepended
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_msgAboutToBePrepended, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_msgAboutToBePrepended */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_msgAboutToBePrepended,
+            this,
+            &MsgStreamModel::slt_msgAboutToBePrepended
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_storeAboutToOverflow, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_storeAboutToBeOverflow */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_storeAboutToOverflow,
+            this,
+            &MsgStreamModel::slt_storeAboutToOverflow
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_storeOverflow, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_storeOverflow */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_storeOverflow,
+            this,
+            &MsgStreamModel::slt_storeOverflow
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_storeAboutToUnderflow, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_storeAboutToBeUnderflow */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_storeAboutToUnderflow,
+            this,
+            &MsgStreamModel::slt_storeAboutToUnderflow
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_storeUnderflow, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_storeUnderflow */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_storeUnderflow,
+            this,
+            &MsgStreamModel::slt_storeUnderflow
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_storeAboutToBeCleared, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_storeAboutToBeCleared */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_storeAboutToBeCleared,
+            this,
+            &MsgStreamModel::slt_storeAboutToBeCleared
+           );
 
-    /* connect( */
-    /*         msgStreamStore, */
-    /*         &IMsgStreamStore::sgnl_storeCleared, */
-    /*         this, */
-    /*         &MsgStreamModel::slt_storeCleared */
-    /*        ); */
+    connect(
+            msgStreamStore,
+            &IMsgStreamStore::sgnl_storeCleared,
+            this,
+            &MsgStreamModel::slt_storeCleared
+           );
 }

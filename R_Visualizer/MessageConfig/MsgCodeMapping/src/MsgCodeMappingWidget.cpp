@@ -1,6 +1,9 @@
 #include "MsgCodeMappingWidget.h"
 #include "ui_msgcodemappingwidget.h"
 
+#include "IMsgCodeMappingManager.h"
+#include "MsgCodeMappingModel.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -18,11 +21,13 @@
 
 
 MsgCodeMappingWidget::MsgCodeMappingWidget(
+        IMsgCodeMappingManager *msgCodeMappingManager,
         MsgCodeMappingModel *msgCodeMappingModel,
         QWidget *parent
         ) :
     QWidget(parent),
     ui(new Ui::MsgCodeMappingWidget),
+    msgCodeMappingManager(msgCodeMappingManager),
     msgCodeMappingModel(msgCodeMappingModel)
 {
     init();
@@ -127,7 +132,7 @@ void MsgCodeMappingWidget::on_msgCodeAddBtn_clicked()
             QString("TEST"),
             QColor(Qt::green)
             );
-    emit sgnl_AddMsgCodeMapping(testMapping.getCode(), testMapping);
+    emit sgnl_AddMsgCodeMapping(testMapping);
 }
 
 void MsgCodeMappingWidget::slt_clear()
@@ -168,14 +173,14 @@ void MsgCodeMappingWidget::connectModel()
     connect(
             this,
             &MsgCodeMappingWidget::sgnl_AddMsgCodeMapping,
-            msgCodeMappingModel,
-            &MsgCodeMappingModel::sgnl_AddMapping
+            msgCodeMappingManager,
+            &IMsgCodeMappingManager::slt_addMsgCodeMapping
            );
 
     connect(
             this,
             &MsgCodeMappingWidget::sgnl_RemoveMsgCodeMapping,
-            msgCodeMappingModel,
-            &MsgCodeMappingModel::sgnl_RemoveMapping
+            msgCodeMappingManager,
+            &IMsgCodeMappingManager::slt_removeMsgCodeMapping
            );
 }

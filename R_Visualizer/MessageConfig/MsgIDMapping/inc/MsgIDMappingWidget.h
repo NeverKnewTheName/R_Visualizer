@@ -10,8 +10,11 @@
 
 #include <QWidget>
 
-#include "IMsgIDMapping.h"
-#include "MsgIDMappingModel.h"
+#include "MsgIDType.h"
+
+class IMsgIDMappingManager;
+class MsgIDMappingModel;
+class IMsgIDMapping;
 
 namespace Ui {
 class MsgIDMappingWidget;
@@ -24,7 +27,11 @@ class MsgIDMappingWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MsgIDMappingWidget(MsgIDMappingModel *model, QWidget *parent = 0);
+    explicit MsgIDMappingWidget(
+            IMsgIDMappingManager *msgIDMappingManager,
+            MsgIDMappingModel *model,
+            QWidget *parent = Q_NULLPTR
+            );
     ~MsgIDMappingWidget();
 
     void setModel(MsgIDMappingModel *model);
@@ -36,7 +43,6 @@ signals:
     void sgnl_MsgIDMappingRemoved(const MsgIDType relatedID);
 
     void sgnl_AddMsgIDMapping(
-            const MsgIDType &msgID,
             const IMsgIDMapping &mappingToAdd
             );
 
@@ -60,6 +66,7 @@ private:
 
 private:
     Ui::MsgIDMappingWidget *ui;
+    IMsgIDMappingManager *msgIDMappingManager;
     MsgIDMappingModel *msgIDMappingModel;
 };
 

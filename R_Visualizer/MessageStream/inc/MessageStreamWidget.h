@@ -10,6 +10,9 @@
 
 #include <QWidget>
 
+class IMessageStream;
+class MsgStreamModel;
+
 namespace Ui {
 class MessageStreamWidget;
 }
@@ -22,11 +25,21 @@ class MessageStreamWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MessageStreamWidget(QWidget *parent = 0);
+    explicit MessageStreamWidget(
+            IMessageStream *msgStream,
+            MsgStreamModel *msgStreamModel,
+            QWidget *parent = Q_NULLPTR
+            );
     ~MessageStreamWidget();
 
 private:
+    void init();
+    void connectToMessageStream();
+
+private:
     Ui::MessageStreamWidget *ui;
+    IMessageStream *msgStream;
+    MsgStreamModel *msgStreamModel;
 };
 
 #endif // MESSAGESTREAMWIDGET_H

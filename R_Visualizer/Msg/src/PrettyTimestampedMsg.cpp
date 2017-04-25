@@ -3,8 +3,8 @@
 #include "TimestampedMsg.h"
 
 PrettyTimestampedMsg::PrettyTimestampedMsg() :
-    msgDataFormatterUniqPtr(Q_NULLPTR),
     originalMsg(new TimestampedMsg()),
+    msgDataFormatterUniqPtr(Q_NULLPTR),
     msgIDPlainTextAlias("Default"),
     msgCodePlainTextAlias("Default"),
     msgIDColorRepresentation(Qt::white),
@@ -13,8 +13,8 @@ PrettyTimestampedMsg::PrettyTimestampedMsg() :
 }
 
 PrettyTimestampedMsg::PrettyTimestampedMsg(const ITimestampedMsg &originalMsg) :
+    originalMsg(originalMsg),
     msgDataFormatterUniqPtr(Q_NULLPTR),
-    originalMsg(originalMsg.cloneMsg()),
     msgIDPlainTextAlias(static_cast<QString>(originalMsg.getMsgID())),
     msgCodePlainTextAlias(static_cast<QString>(originalMsg.getMsgCode())),
     msgIDColorRepresentation(Qt::white),
@@ -23,9 +23,12 @@ PrettyTimestampedMsg::PrettyTimestampedMsg(const ITimestampedMsg &originalMsg) :
 }
 
 PrettyTimestampedMsg::PrettyTimestampedMsg(const PrettyTimestampedMsg &other) :
-    PrettyTimestampedMsgCloneable<PrettyTimestampedMsg,ITimestampedMsg>(other),
-    originalMsg(other.originalMsg->cloneMsg()),
-    msgDataFormatterUniqPtr(other.msgDataFormatterUniqPtr->cloneFormatter()),
+    originalMsg(other.originalMsg),
+    msgDataFormatterUniqPtr(
+            other.msgDataFormatterUniqPtr ?
+            other.msgDataFormatterUniqPtr->cloneFormatter() :
+            Q_NULLPTR
+            ),
     msgIDPlainTextAlias(other.msgIDPlainTextAlias),
     msgCodePlainTextAlias(other.msgCodePlainTextAlias),
     msgIDColorRepresentation(other.msgIDColorRepresentation),

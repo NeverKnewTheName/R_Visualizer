@@ -26,19 +26,6 @@
       <string>MsgID Mapping</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="5" column="0">
-       <spacer name="storeLoadSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="0" column="0" rowspan="5" colspan="5">
        <widget class="QTableView" name="idTableView">
         <property name="toolTip">
@@ -86,7 +73,20 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="5" column="4">
+       <spacer name="storeLoadSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="6" column="4">
        <spacer name="RemoveAddSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
