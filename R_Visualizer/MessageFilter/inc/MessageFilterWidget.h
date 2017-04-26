@@ -7,6 +7,12 @@ namespace Ui {
 class MessageFilterWidget;
 }
 
+/**
+ * @addtogroup MsgFilterGroup
+ * 
+ * @{
+ */
+
 class MessageFilterWidget : public QWidget
 {
     Q_OBJECT
@@ -20,5 +26,9 @@ public:
 private:
     Ui::MessageFilterWidget *ui;
 };
+
+/**
+ * @}
+ */
 
 #endif // MESSAGEFILTERWIDGET_H

@@ -4,7 +4,7 @@ MsgCodeFilter::MsgCodeFilter(
         IMsgCodeFilterStore *msgCodeFilterStore,
         QObject *parent
         ) :
-    IMsgFilter(parent),
+    IMsgCodeFilter(parent),
     msgCodeFilterStore(msgCodeFilterStore),
     isEnabled(false),
     isInverted(false)
@@ -71,18 +71,4 @@ bool MsgCodeFilter::applyInversion(const bool intermediateFilterResult) const
 
 void MsgCodeFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
-}
-
-void MsgCodeFilter::slt_addMsgCodeToFilter(
-        const MsgCodeType &msgCodeToAdd
-        )
-{
-    msgCodeFilterStore->addMsgCode(msgCodeToAdd);
-}
-
-void MsgCodeFilter::slt_removeMsgCodeFromFilter(
-        const MsgCodeType &msgCodeToRemove
-        )
-{
-    msgCodeFilterStore->removeMsgCode(msgCodeToRemove);
 }

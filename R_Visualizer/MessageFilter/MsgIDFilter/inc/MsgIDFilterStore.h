@@ -14,6 +14,12 @@
 #include "MsgIDType.h"
 
 /**
+ * @addtogroup MsgIDFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgIDFilterStore
  */
 class MsgIDFilterStore : public IMsgIDFilterStore
@@ -89,5 +95,9 @@ private:
      */
     QVector<MsgIDType> msgIDVector;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDFILTERSTORE_H */

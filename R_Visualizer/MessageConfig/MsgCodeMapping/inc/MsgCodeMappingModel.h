@@ -19,6 +19,12 @@
 class FileParser;
 
 /**
+ * @addtogroup MsgCodeMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgCodeMappingModel
  */
 class MsgCodeMappingModel :
@@ -115,5 +121,9 @@ private:
     QVector<MsgCodeType> msgCodeStore;
     IMsgCodeMappingStore *msgCodeMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGCODEMAPPINGMODEL_H */

@@ -10,11 +10,24 @@
 
 #include <QWidget>
 
-#include "MsgDataMappingModel.h"
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
+
+class IMsgDataMappingManager;
+class MsgDataMappingModel;
+class IMsgDataMapping;
+
 
 namespace Ui {
 class MsgDataMappingWidget;
 }
+
+/**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
 
 /**
  * \brief The MsgDataMappingWidget
@@ -24,6 +37,7 @@ class MsgDataMappingWidget : public QWidget
     Q_OBJECT
 public:
     explicit MsgDataMappingWidget(
+            IMsgDataMappingManager *msgDataMappingManager,
             MsgDataMappingModel *msgDataMappingModel,
             QWidget *parent = Q_NULLPTR
             );
@@ -38,8 +52,6 @@ signals:
     void sgnl_MsgDataMappingRemoved(const MsgDataType relatedData);
 
     void sgnl_AddMsgDataMapping(
-            const MsgIDType &msgID,
-            const MsgCodeType &msgCode,
             const IMsgDataMapping &mappingToAdd
             );
 
@@ -66,7 +78,12 @@ private:
 
 private:
     Ui::MsgDataMappingWidget *ui;
+    IMsgDataMappingManager *msgDataMappingManager;
     MsgDataMappingModel *msgDataMappingModel;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGDATAMAPPINGWIDGET_H

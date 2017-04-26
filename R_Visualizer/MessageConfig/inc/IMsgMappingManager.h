@@ -8,17 +8,36 @@
 #ifndef IMSGMAPPINGMANAGER_H
 #define IMSGMAPPINGMANAGER_H
 
+#include <QObject>
+
 #include "IFileParsable.h"
 #include "IUserRoleManageable.h"
 
 class IPrettyMsg;
 
 /**
+ * @defgroup MsgMappingGroup Message Mappings
+ * @ingroup MsgConfigGroup
+ * 
+ * Every class that is related to the Message Mappings
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMsgMappingManager interface
  */
-class IMsgMappingManager : public QObject, public IUserRoleManageable, public IFileParsable
+class IMsgMappingManager :
+    public QObject,
+    public IUserRoleManageable,
+    public IFileParsable
 {
 public:
+    IMsgMappingManager(
+            QObject *parent = Q_NULLPTR
+            ) :
+        QObject(parent)
+    {}
     virtual ~IMsgMappingManager(){}
 
     /**
@@ -38,5 +57,9 @@ public slots:
     }
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGMAPPINGMANAGER_H */

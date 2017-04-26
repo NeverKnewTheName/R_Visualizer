@@ -14,26 +14,57 @@
 class FileParser;
 
 /**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgDataMappingManager
  */
 class MsgDataMappingManager : public IMsgDataMappingManager
 {
 public:
-    MsgDataMappingManager(IMsgDataMappingStore *msgDataMappingStore);
+    MsgDataMappingManager(
+            IMsgDataMappingStore *msgDataMappingStore,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~MsgDataMappingManager();
 
     virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;
 
+    virtual IMsgDataFormatter *getMsgDataFormatter(
+            const MsgIDType &msgID,
+            const MsgCodeType &msgCode
+            ) const;
+
+    virtual QString getMsgDataFormatString(
+            const MsgIDType &msgID,
+            const MsgCodeType &msgCode
+            ) const;
+
+    virtual void addMsgDataMapping(
+            const IMsgDataMapping &msgDataMapping
+            );
+
+    virtual void removeMsgDataMapping(
+            const MsgIDType &msgID,
+            const MsgCodeType &msgCode
+            );
+
+
     virtual void accept(FileParser *visitor);
+
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+
 private:
     IMsgDataMappingStore *msgDataMappingStore;
-
-
-    // IUserRoleManageable interface
-public:
-    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGDATAMAPPINGMANAGER_H */

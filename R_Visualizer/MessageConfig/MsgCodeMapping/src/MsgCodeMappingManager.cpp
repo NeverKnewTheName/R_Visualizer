@@ -5,8 +5,10 @@
 #include "IPrettyMsg.h"
 
 MsgCodeMappingManager::MsgCodeMappingManager(
-        IMsgCodeMappingStore *msgCodeMappingStore
+        IMsgCodeMappingStore *msgCodeMappingStore,
+        QObject *parent
         ) :
+    IMsgCodeMappingManager(parent),
     msgCodeMappingStore(msgCodeMappingStore)
 {
 }

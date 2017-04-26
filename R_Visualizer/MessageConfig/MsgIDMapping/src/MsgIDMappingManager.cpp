@@ -5,8 +5,10 @@
 #include "IPrettyMsg.h"
 
 MsgIDMappingManager::MsgIDMappingManager(
-        IMsgIDMappingStore *msgIDMappingStore
+        IMsgIDMappingStore *msgIDMappingStore,
+        QObject *parent
         ) :
+    IMsgIDMappingManager(parent),
     msgIDMappingStore(msgIDMappingStore)
 {
 }

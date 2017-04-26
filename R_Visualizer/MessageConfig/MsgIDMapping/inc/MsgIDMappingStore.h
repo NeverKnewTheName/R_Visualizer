@@ -17,6 +17,12 @@
 class FileParser;
 
 /**
+ * @addtogroup MsgIDMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgIDMappingStore
  */
 class MsgIDMappingStore : public IMsgIDMappingStore
@@ -50,5 +56,9 @@ public:
 private:
     QHash<MsgIDType, MsgIDMapping> msgIDMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDMAPPINGSTORE_H */

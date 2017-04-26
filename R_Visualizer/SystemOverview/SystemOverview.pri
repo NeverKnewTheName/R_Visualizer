@@ -8,7 +8,6 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/SystemOverview.cpp \
-    $$PWD/src/SystemOverviewNotifier.cpp \
     # $$PWD/src/systemoverview.cpp \
     $$PWD/src/sysoverviewgraphicsview.cpp \
     $$PWD/src/isysovrvelement.cpp \
@@ -17,7 +16,6 @@ SOURCES += \
 HEADERS  += \
     $$PWD/inc/ISystemOverview.h \
     $$PWD/inc/SystemOverview.h \
-    $$PWD/inc/SystemOverviewNotifier.h \
     # $$PWD/inc/systemoverview.h \
     $$PWD/inc/sysoverviewgraphicsview.h \
     $$PWD/inc/isysovrvelement.h \

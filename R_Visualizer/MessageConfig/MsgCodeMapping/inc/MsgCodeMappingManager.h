@@ -15,12 +15,21 @@
 class IMsgCodeMappingStore;
 
 /**
+ * @addtogroup MsgCodeMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief THe MsgCodeMappingManager
  */
 class MsgCodeMappingManager : public IMsgCodeMappingManager
 {
 public:
-    MsgCodeMappingManager(IMsgCodeMappingStore *msgCodeMappingStore);
+    MsgCodeMappingManager(
+            IMsgCodeMappingStore *msgCodeMappingStore,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~MsgCodeMappingManager();
 
     virtual MsgCodeType getMsgCodeToAlias(const QString &alias) const;
@@ -50,5 +59,9 @@ public:
 private:
     IMsgCodeMappingStore *msgCodeMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGCODEMAPPINGMANAGER_H */

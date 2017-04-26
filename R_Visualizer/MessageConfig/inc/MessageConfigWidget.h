@@ -9,6 +9,12 @@ namespace Ui {
 class MessageConfigWidget;
 }
 
+/**
+ * @addtogroup MsgConfigGroup
+ * 
+ * @{
+ */
+
 class MessageConfigWidget : public QWidget
 {
     Q_OBJECT
@@ -23,5 +29,9 @@ private:
     Ui::MessageConfigWidget *ui;
     IMessageConfig *msgConfig;
 };
+
+/**
+ * @}
+ */
 
 #endif // MESSAGECONFIGWIDGET_H

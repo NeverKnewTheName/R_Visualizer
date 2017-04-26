@@ -20,6 +20,12 @@
 
 class FileParser;
 
+/**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
+
 
 /**
  * @brief The MsgDataMappingStore
@@ -125,5 +131,9 @@ public:
 private:
     QHash<MessageTypeIdentifier, MsgDataMapping> msgDataMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGDATAMAPPINGSTORE_H */

@@ -13,7 +13,7 @@
 #include "MsgDataMapping.h"
 #include "MsgIDFilterStore.h"
 #include "MsgCodeFilterStore.h"
-#include "MsgTimestampFilter.h"
+#include "MsgTimespanFilter.h"
 
 #include <QDebug>
 
@@ -93,7 +93,7 @@ void JsonInParser::visit(MsgCodeFilterStore &visitor)
 {
 }
 
-void JsonInParser::visit(MsgTimestampFilter &visitor)
+void JsonInParser::visit(MsgTimespanFilter &visitor)
 {
 }
 

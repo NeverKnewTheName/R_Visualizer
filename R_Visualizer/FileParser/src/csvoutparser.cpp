@@ -13,7 +13,7 @@
 #include "MsgDataMapping.h"
 #include "MsgIDFilterStore.h"
 #include "MsgCodeFilterStore.h"
-#include "MsgTimestampFilter.h"
+#include "MsgTimespanFilter.h"
 
 #include <QDebug>
 
@@ -81,7 +81,7 @@ void CsvOutParser::visit(MsgCodeFilterStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgTimestampFilter &visitor)
+void CsvOutParser::visit(MsgTimespanFilter &visitor)
 {
 }
 

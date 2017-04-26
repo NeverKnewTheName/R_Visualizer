@@ -12,6 +12,12 @@
 #include <QColor>
 
 /**
+ * @addtogroup MsgMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The IColorRepresentationMapping interface
  */
 class IColorRepresentationMapping
@@ -23,4 +29,7 @@ public:
     virtual void setColorRepresentation(const QColor &colorRepresentation) = 0;
 };
 
+/**
+ * @}
+ */
 #endif /* ICOLORREPRESENTATIONMAPPING_H */

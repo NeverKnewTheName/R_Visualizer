@@ -18,6 +18,12 @@
 class FileParser;
 
 /**
+ * @addtogroup MsgIDMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The MsgIDMapping class contains all information necessary for displaying a
  * MsgID
  * 
@@ -122,5 +128,9 @@ private:
      */
     QColor color;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGIDMAPPING_H

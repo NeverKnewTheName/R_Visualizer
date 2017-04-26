@@ -17,6 +17,13 @@
 #include <QVector>
 
 /**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
+
+
+/**
  * @brief The MsgDataMappingModel
  */
 class MsgDataMappingModel :
@@ -191,5 +198,9 @@ private:
     QVector<MessageTypeIdentifier> msgIdentifierStore;
     IMsgDataMappingStore *msgDataMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGDATAMAPPINGMODEL_H */

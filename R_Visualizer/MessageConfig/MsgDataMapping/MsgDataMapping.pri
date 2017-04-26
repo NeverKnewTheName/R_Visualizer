@@ -9,10 +9,8 @@ INCLUDEPATH += $$PWD/inc
 SOURCES += \
     $$PWD/src/MsgDataMapping.cpp \
     $$PWD/src/MsgDataMappingManager.cpp \
-    #$$PWD/src/MsgDataMappingNotifier.cpp \
     $$PWD/src/MsgDataMappingWidget.cpp \
     $$PWD/src/MsgDataMappingStore.cpp \
-    #$$PWD/src/MsgDataMappingStoreNotifier.cpp \
     $$PWD/src/MsgDataMappingModel.cpp \
 
 HEADERS  += \
@@ -20,13 +18,11 @@ HEADERS  += \
     $$PWD/inc/MsgDataMapping.h \
     $$PWD/inc/IMsgDataMappingManager.h \
     $$PWD/inc/MsgDataMappingManager.h \
-    #$$PWD/inc/MsgDataMappingNotifier.h \
     $$PWD/inc/MsgDataMappingWidget.h \
     $$PWD/inc/IMsgDataMappingModel.h \
     $$PWD/inc/MsgDataMappingModel.h \
     $$PWD/inc/IMsgDataMappingStore.h \
     $$PWD/inc/MsgDataMappingStore.h \
-    #$$PWD/inc/MsgDataMappingStoreNotifier.h \
 
 FORMS    += \
     $$PWD/ui/msgdatamappingwidget.ui \

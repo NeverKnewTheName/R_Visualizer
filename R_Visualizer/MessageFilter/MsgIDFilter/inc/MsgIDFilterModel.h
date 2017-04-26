@@ -15,6 +15,12 @@
 class IMsgIDFilterStore;
 
 /**
+ * @addtogroup MsgIDFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgIDFilterModel
  */
 class MsgIDFilterModel :
@@ -105,5 +111,9 @@ private:
     IMsgIDFilterStore *msgIDFilterStore;
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDFILTERMODEL_H */

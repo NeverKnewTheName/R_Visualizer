@@ -17,6 +17,13 @@
 #include "IMsgDataFormatter.h"
 
 /**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
+
+
+/**
  * \brief The IMsgDataMapping interface
  */
 class IMsgDataMapping : public IFileParsable
@@ -52,5 +59,9 @@ public:
         return new Derived(static_cast<const Derived&>(*this));
     }
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGDATAMAPPING_H */

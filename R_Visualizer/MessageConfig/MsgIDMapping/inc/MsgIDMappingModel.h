@@ -19,6 +19,12 @@
 class FileParser;
 
 /**
+ * @addtogroup MsgIDMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The MsgIDMappingModel
  */
 class MsgIDMappingModel :
@@ -152,5 +158,9 @@ private:
     QVector<MsgIDType> msgIDStore;
     IMsgIDMappingStore *msgIDMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDMAPPINGMODEL_H */

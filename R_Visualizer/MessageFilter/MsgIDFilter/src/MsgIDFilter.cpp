@@ -4,7 +4,7 @@ MsgIDFilter::MsgIDFilter(
         IMsgIDFilterStore *msgIDFilterStore,
         QObject *parent
         ) :
-    IMsgFilter(parent),
+    IMsgIDFilter(parent),
     msgIDFilterStore(msgIDFilterStore),
     isEnabled(false),
     isInverted(false)
@@ -71,18 +71,4 @@ bool MsgIDFilter::applyInversion(const bool intermediateFilterResult) const
 
 void MsgIDFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
-}
-
-void MsgIDFilter::slt_addMsgIDToFilter(
-        const MsgIDType &msgIDToAdd
-        )
-{
-    msgIDFilterStore->addMsgID(msgIDToAdd);
-}
-
-void MsgIDFilter::slt_removeMsgIDFromFilter(
-        const MsgIDType &msgIDToRemove
-        )
-{
-    msgIDFilterStore->removeMsgID(msgIDToRemove);
 }

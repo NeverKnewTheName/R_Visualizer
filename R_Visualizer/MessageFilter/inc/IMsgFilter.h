@@ -13,6 +13,13 @@
 class IMsg;
 
 /**
+ * @defgroup MsgFieldFilterGroup Message Field Filters
+ * @ingroup MsgFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The #IMsgFilter interface
  */
 class IMsgFilter : public IFilter
@@ -34,4 +41,7 @@ signals:
 public slots:
 };
 
+/**
+ * @}
+ */
 #endif /* IFILTER_H */

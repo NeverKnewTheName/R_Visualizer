@@ -17,6 +17,13 @@
 class FileParser;
 
 /**
+ * @addtogroup MsgCodeMappingGroup
+ * 
+ * @{
+ */
+
+
+/**
  * \brief The #MsgCodeMapping class contains all information necessary for displaying messages codes and data
  */
 class MsgCodeMapping : public MsgCodeMappingCRTPHelper<MsgCodeMapping>
@@ -109,5 +116,9 @@ private:
      */
     QColor color;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGCODEMAPPING_H

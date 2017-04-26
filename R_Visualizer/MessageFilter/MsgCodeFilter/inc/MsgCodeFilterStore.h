@@ -1,8 +1,21 @@
+/**
+ * @file MsgCodeFilterStore.h
+ * @author Christian Neuberger
+ * @date 2017-04-26
+ * 
+ * @brief Default implementation of #IMsgCodeFilterStore
+ */
 #ifndef MSGCODEFILTERSTORE_H
 #define MSGCODEFILTERSTORE_H
 
 #include <QVector>
 #include "IMsgCodeFilterStore.h"
+
+/**
+ * @addtogroup MsgCodeFilterGroup
+ * 
+ * @{
+ */
 
 class MsgCodeFilterStore : public IMsgCodeFilterStore
 {
@@ -28,4 +41,7 @@ private:
     QVector<MsgCodeType> msgCodeVector;
 };
 
+/**
+ * @}
+ */
 #endif /* MSGCODEFILTERSTORE_H */

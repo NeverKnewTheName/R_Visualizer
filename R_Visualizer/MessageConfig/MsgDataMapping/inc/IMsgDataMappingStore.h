@@ -8,6 +8,12 @@
 #ifndef IMSGDATAMAPPINGSTORE_H
 #define IMSGDATAMAPPINGSTORE_H
 
+/**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
+
 #include <QObject>
 
 #include "IFileParsable.h"
@@ -32,6 +38,11 @@ public:
      * @brief Returns the #IMsgDataFormatter from the contained
      * #IMsgDataMapping that is related to the specified #MsgIDType and
      * #MsgCodeType
+     * 
+     * @returns The #IMsgDataFormatter from the #IMsgDataMapping related to the
+     * specified #MsgIDType and #MsgCodeType
+     * @retval IMsgDataFormatter* A valid #IMsgDataFormatter
+     * @retval Q_NULLPTR No matching #IMsgDataMapping was found in the store
      */
     virtual IMsgDataFormatter *getMsgDataFormatter(
             const MsgIDType &msgID,
@@ -206,5 +217,9 @@ public slots:
         clear();
     }
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGDATAMAPPINGSTORE_H */

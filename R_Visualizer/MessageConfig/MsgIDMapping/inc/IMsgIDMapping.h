@@ -16,6 +16,12 @@
 #include "IFileParsable.h"
 
 /**
+ * @addtogroup MsgIDMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The IMsgIDMapping interface
  */
 class IMsgIDMapping :
@@ -49,5 +55,9 @@ public:
         return new Derived(static_cast<const Derived&>(*this));
     }
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGIDMAPPING_H */

@@ -15,6 +15,12 @@
 class MessageFilterNotifier;
 
 /**
+ * @addtogroup MsgFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MessageFilter
  */
 class MessageFilter : public IMessageFilter
@@ -71,5 +77,9 @@ private:
     QVector<IMsgFilter *> msgFilterStore;
     QVector<ITimestampedMsgFilter *> timestampedMsgFilterStore;
 };
+
+/**
+ * @}
+ */
 
 #endif // MESSAGEFILTER_H

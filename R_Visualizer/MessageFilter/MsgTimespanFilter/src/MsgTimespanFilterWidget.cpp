@@ -1,20 +1,20 @@
-#include "MsgTimestampFilterWidget.h"
-#include "ui_msgtimestampfilterwidget.h"
+#include "MsgTimespanFilterWidget.h"
+#include "ui_msgtimespanfilterwidget.h"
 
-#include "MsgTimestampFilter.h"
+#include "MsgTimespanFilter.h"
 
-MsgTimestampFilterWidget::MsgTimestampFilterWidget(
-        MsgTimestampFilter *msgTimestampFilter,
+MsgTimespanFilterWidget::MsgTimespanFilterWidget(
+        IMsgTimespanFilter *msgTimestampFilter,
         QWidget *parent
         ) :
     QWidget(parent),
-    ui(new Ui::MsgTimestampFilterWidget),
+    ui(new Ui::MsgTimespanFilterWidget),
     msgTimestampFilter(msgTimestampFilter)
 {
     ui->setupUi(this);
 
     //ToDO Fill widget with values from the filter!
-    
+
     ui->filterTimeStampFromDateTimeEdit->setDateTime(
             msgTimestampFilter->getTimestampFrom()
         );
@@ -43,101 +43,101 @@ MsgTimestampFilterWidget::MsgTimestampFilterWidget(
             ui->enableTimestampToFilterCheckBox,
             &QCheckBox::toggled,
             msgTimestampFilter,
-            &MsgTimestampFilter::slt_enableTimestampTo
+            &IMsgTimespanFilter::slt_enableTimestampTo
            );
 
     connect(
             ui->enableTimestampFromFilterCheckBox,
             &QCheckBox::toggled,
             msgTimestampFilter,
-            &MsgTimestampFilter::slt_enableTimestampFrom
+            &IMsgTimespanFilter::slt_enableTimestampFrom
            );
 
     connect(
             ui->invertTimestampFilterCheckBox,
             &QCheckBox::toggled,
             msgTimestampFilter,
-            &MsgTimestampFilter::slt_invertFilter
+            &IMsgTimespanFilter::slt_invertFilter
            );
 
     connect(
             ui->filterTimeStampToDateTimeEdit,
             &QDateTimeEdit::dateTimeChanged,
             msgTimestampFilter,
-            &MsgTimestampFilter::slt_changeTimestampTo
+            &IMsgTimespanFilter::slt_changeTimestampTo
            );
 
     connect(
             ui->filterTimeStampFromDateTimeEdit,
             &QDateTimeEdit::dateTimeChanged,
             msgTimestampFilter,
-            &MsgTimestampFilter::slt_changeTimestampFrom
+            &IMsgTimespanFilter::slt_changeTimestampFrom
            );
 
     connect(
             ui->globalEnableTimestampFilterCheckBox,
             &QCheckBox::toggled,
             msgTimestampFilter,
-            &MsgTimestampFilter::slt_enableFilter
+            &IMsgTimespanFilter::slt_enableFilter
             );
 
     connect(
             msgTimestampFilter,
-            &MsgTimestampFilter::sgnl_TimestampFromChanged,
+            &IMsgTimespanFilter::sgnl_TimestampFromChanged,
             ui->filterTimeStampFromDateTimeEdit,
             &QDateTimeEdit::setDateTime
            );
 
     connect(
             msgTimestampFilter,
-            &MsgTimestampFilter::sgnl_TimestampToChanged,
+            &IMsgTimespanFilter::sgnl_TimestampToChanged,
             ui->filterTimeStampToDateTimeEdit,
             &QDateTimeEdit::setDateTime
            );
 
 }
 
-MsgTimestampFilterWidget::~MsgTimestampFilterWidget()
+MsgTimespanFilterWidget::~MsgTimespanFilterWidget()
 {
     delete ui;
 }
 
-/* void MsgTimestampFilterWidget::on_filterTimeStampFromDateTimeEdit_dateTimeChanged(const QDateTime &dateTime) */
+/* void MsgTimespanFilterWidget::on_filterTimeStampFromDateTimeEdit_dateTimeChanged(const QDateTime &dateTime) */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDateTime &dateTime) */
+/* void MsgTimespanFilterWidget::on_filterTimeStampToDateTimeEdit_dateTimeChanged(const QDateTime &dateTime) */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_enableTimestampFromFilterCheckBox_toggled(bool checked) */
+/* void MsgTimespanFilterWidget::on_enableTimestampFromFilterCheckBox_toggled(bool checked) */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_enableTimestampToFilterCheckBox_toggled(bool checked) */
+/* void MsgTimespanFilterWidget::on_enableTimestampToFilterCheckBox_toggled(bool checked) */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_invertTimestampFilterCheckBox_toggled(bool checked) */
+/* void MsgTimespanFilterWidget::on_invertTimestampFilterCheckBox_toggled(bool checked) */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_filterTimestampLoadBtn_clicked() */
+/* void MsgTimespanFilterWidget::on_filterTimestampLoadBtn_clicked() */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_filterTimestampSaveBtn_clicked() */
+/* void MsgTimespanFilterWidget::on_filterTimestampSaveBtn_clicked() */
 /* { */
 
 /* } */
 
-/* void MsgTimestampFilterWidget::on_checkBox_toggled(bool checked) */
+/* void MsgTimespanFilterWidget::on_checkBox_toggled(bool checked) */
 /* { */
 
 /* } */

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MsgTimestampFilterWidget</class>
- <widget class="QWidget" name="MsgTimestampFilterWidget">
+ <class>MsgTimespanFilterWidget</class>
+ <widget class="QWidget" name="MsgTimespanFilterWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

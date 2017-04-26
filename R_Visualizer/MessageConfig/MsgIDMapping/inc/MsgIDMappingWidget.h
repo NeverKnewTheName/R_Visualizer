@@ -21,6 +21,12 @@ class MsgIDMappingWidget;
 }
 
 /**
+ * @addtogroup MsgIDMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The MsgIDMappingWidget
  */
 class MsgIDMappingWidget : public QWidget
@@ -69,5 +75,9 @@ private:
     IMsgIDMappingManager *msgIDMappingManager;
     MsgIDMappingModel *msgIDMappingModel;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGIDMAPPINGWIDGET_H

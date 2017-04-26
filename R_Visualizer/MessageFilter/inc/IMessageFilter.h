@@ -22,6 +22,14 @@ class IMsg;
 class ITimestampedMsg;
 
 /**
+ * @defgroup MsgFilterGroup Message Filter
+ * 
+ * Every class that is related to the Message Filter
+ * 
+ * @{
+ */
+
+/**
  * @brief The #IMessageFilter interface
  */
 class IMessageFilter : public QObject
@@ -141,4 +149,7 @@ public slots:
 
 };
 
+/**
+ * @}
+ */
 #endif /* IMESSAGEFILTER_H */

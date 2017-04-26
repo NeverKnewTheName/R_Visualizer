@@ -8,14 +8,13 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/MsgCodeFilter.cpp \
-    #$$PWD/src/MsgCodeFilterNotifier.cpp \
     $$PWD/src/MsgCodeFilterStore.cpp \
     $$PWD/src/MsgCodeFilterModel.cpp \
     $$PWD/src/MsgCodeFilterWidget.cpp \
 
 HEADERS  += \
+    $$PWD/inc/IMsgCodeFilter.h \
     $$PWD/inc/MsgCodeFilter.h \
-    #$$PWD/inc/MsgCodeFilterNotifier.h \
     $$PWD/inc/IMsgCodeFilterStore.h \
     $$PWD/inc/MsgCodeFilterStore.h \
     $$PWD/inc/MsgCodeFilterWidget.h \

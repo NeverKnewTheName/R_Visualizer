@@ -15,12 +15,21 @@
 class IMsgIDMappingStore;
 
 /**
+ * @addtogroup MsgIDMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgIDMappingManager
  */
 class MsgIDMappingManager : public IMsgIDMappingManager
 {
 public:
-    MsgIDMappingManager(IMsgIDMappingStore *msgIDMappingStore);
+    MsgIDMappingManager(
+            IMsgIDMappingStore *msgIDMappingStore,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~MsgIDMappingManager();
 
     virtual MsgIDType getMsgIDToAlias(const QString &alias) const;
@@ -50,5 +59,9 @@ public:
 private:
     IMsgIDMappingStore *msgIDMappingStore;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDMAPPINGMANAGER_H */

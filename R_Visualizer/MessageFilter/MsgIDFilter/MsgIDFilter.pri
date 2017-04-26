@@ -8,14 +8,13 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/MsgIDFilter.cpp \
-    #$$PWD/src/MsgIDFilterNotifier.cpp \
     $$PWD/src/MsgIDFilterStore.cpp \
     $$PWD/src/MsgIDFilterModel.cpp \
     $$PWD/src/MsgIDFilterWidget.cpp \
 
 HEADERS  += \
+    $$PWD/inc/IMsgIDFilter.h \
     $$PWD/inc/MsgIDFilter.h \
-    #$$PWD/inc/MsgIDFilterNotifier.h \
     $$PWD/inc/IMsgIDFilterStore.h \
     $$PWD/inc/MsgIDFilterStore.h \
     $$PWD/inc/MsgIDFilterWidget.h \

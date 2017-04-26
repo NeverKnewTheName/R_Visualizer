@@ -13,6 +13,12 @@
 #include "IUserRoleManager.h"
 
 /**
+ * @addtogroup MsgFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The #IFilter interface
  */
 class IFilter : public QObject
@@ -90,5 +96,10 @@ public slots:
         applyUserRole(roleToApply);
     }
 };
+
+/**
+ * @}
+ */
+
 
 #endif /* IFILTER_H */

@@ -22,6 +22,12 @@ class IMsgCodeMappingManager;
 class IMsgDataMappingManager;
 
 /**
+ * @addtogroup MsgConfigGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MessageConfig module is a standard implementation of the
  * #IMessageConfig interface
  * 
@@ -58,5 +64,9 @@ private:
     IMsgCodeMappingManager *msgCodeMappingManager;
     IMsgDataMappingManager *msgDataMappingManager;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MESSAGECONFIG_H */

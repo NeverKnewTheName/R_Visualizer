@@ -18,6 +18,14 @@ class IMsg;
 class ITimestampedMsg;
 
 /**
+ * @defgroup MsgConfigGroup Message Configuration
+ * 
+ * Every class that is related to the Message Configuration
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMessageConfig interface
  */
 class IMessageConfig : public QObject
@@ -113,5 +121,9 @@ public slots:
     }
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMESSAGECONFIG_H */

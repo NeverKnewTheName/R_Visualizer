@@ -12,6 +12,12 @@
 #include <QString>
 
 /**
+ * @addtogroup MsgMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The IPlainTextAliasMapping interface
  */
 class IPlainTextAliasMapping
@@ -22,5 +28,9 @@ public:
     virtual QString getPlainTextAlias() const = 0;
     virtual void setPlainTextAlias(const QString &plainTextAlias) = 0;
 };
+
+/**
+ * @}
+ */
 
 #endif /* IPLAINTEXTALIASMAPPING_H */

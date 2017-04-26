@@ -14,12 +14,26 @@
 class IMsgCodeMapping;
 
 /**
+ * @defgroup MsgCodeMappingGroup Message Code Mapping
+ * @ingroup MsgMappingGroup
+ * 
+ * Every class that is related to the Message Code Mapping
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMsgCodeMappingManager interface
  */
 class IMsgCodeMappingManager : public IMsgMappingManager
 {
     Q_OBJECT
 public:
+    IMsgCodeMappingManager(
+            QObject *parent = Q_NULLPTR
+            ) :
+        IMsgMappingManager(parent)
+    {}
     virtual ~IMsgCodeMappingManager(){}
 
     virtual MsgCodeType getMsgCodeToAlias(const QString &alias) const = 0;
@@ -50,5 +64,9 @@ public slots:
     }
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGCODEMAPPINGMANAGER_H */

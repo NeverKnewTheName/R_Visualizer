@@ -9,10 +9,8 @@ INCLUDEPATH += $$PWD/inc
 SOURCES += \
     $$PWD/src/MsgCodeMappingManager.cpp \
     $$PWD/src/MsgCodeMapping.cpp \
-    #$$PWD/src/MsgCodeMappingNotifier.cpp \
     $$PWD/src/MsgCodeMappingWidget.cpp \
     $$PWD/src/MsgCodeMappingStore.cpp \
-    #$$PWD/src/MsgCodeMappingStoreNotifier.cpp \
     $$PWD/src/MsgCodeMappingModel.cpp \
     #$$PWD/src/msgtypeeditordelegate.cpp \
     #$$PWD/src/msgtypeformatterdialog.cpp \
@@ -23,13 +21,11 @@ HEADERS  += \
     $$PWD/inc/MsgCodeMapping.h \
     $$PWD/inc/IMsgCodeMappingManager.h \
     $$PWD/inc/MsgCodeMappingManager.h \
-    #$$PWD/inc/MsgCodeMappingNotifier.h \
     $$PWD/inc/MsgCodeMappingWidget.h \
     $$PWD/inc/IMsgCodeMappingModel.h \
     $$PWD/inc/MsgCodeMappingModel.h \
     $$PWD/inc/IMsgCodeMappingStore.h \
     $$PWD/inc/MsgCodeMappingStore.h \
-    #$$PWD/inc/MsgCodeMappingStoreNotifier.h \
     #$$PWD/inc/msgtypeeditordelegate.h \
     #$$PWD/inc/msgtypeformatterdialog.h \
     #$$PWD/inc/msgtypeadddialog.h \

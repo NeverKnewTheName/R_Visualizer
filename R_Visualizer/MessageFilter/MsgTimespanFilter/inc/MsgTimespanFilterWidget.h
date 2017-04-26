@@ -5,22 +5,28 @@
 
 #include <QDateTime>
 
-class MsgTimestampFilter;
+class IMsgTimespanFilter;
 
 namespace Ui {
-class MsgTimestampFilterWidget;
+class MsgTimespanFilterWidget;
 }
 
-class MsgTimestampFilterWidget : public QWidget
+/**
+ * @addtogroup MsgTimespanFilterGroup
+ * 
+ * @{
+ */
+
+class MsgTimespanFilterWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MsgTimestampFilterWidget(
-            MsgTimestampFilter *msgTimestampFilter,
+    explicit MsgTimespanFilterWidget(
+            IMsgTimespanFilter *msgTimestampFilter,
             QWidget *parent = Q_NULLPTR
             );
-    ~MsgTimestampFilterWidget();
+    ~MsgTimespanFilterWidget();
 
 private slots:
     /* void on_filterTimeStampFromDateTimeEdit_dateTimeChanged( */
@@ -44,8 +50,12 @@ private slots:
     /* void on_checkBox_toggled(bool checked); */
 
 private:
-    Ui::MsgTimestampFilterWidget *ui;
-    MsgTimestampFilter *msgTimestampFilter;
+    Ui::MsgTimespanFilterWidget *ui;
+    IMsgTimespanFilter *msgTimestampFilter;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGTIMESTAMPFILTERWIDGET_H

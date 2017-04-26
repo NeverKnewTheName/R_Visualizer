@@ -13,6 +13,12 @@
 #include "MsgIDType.h"
 
 /**
+ * @addtogroup MsgIDFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMsgIDFilterStore interface
  */
 class IMsgIDFilterStore : public QObject
@@ -163,5 +169,8 @@ public slots:
     }
 };
 
-#endif /* IMSGIDFILTERSTORE_H */
+/**
+ * @}
+ */
 
+#endif /* IMSGIDFILTERSTORE_H */

@@ -1,5 +1,5 @@
 /**
- * @file MsgTimestampFilter.h
+ * @file MsgTimespanFilter.h
  * @author Christian Neuberger
  * @date 2017-04-03
  * 
@@ -11,17 +11,23 @@
 #include <QDateTime>
 
 #include "IMsg.h"
-#include "ITimestampedMsgFilter.h"
+#include "IMsgTimespanFilter.h"
 
 /**
- * @brief The MsgTimestampFilter
+ * @addtogroup MsgTimespanFilterGroup
+ * 
+ * @{
  */
-class MsgTimestampFilter : public ITimestampedMsgFilter
+
+/**
+ * @brief The MsgTimespanFilter
+ */
+class MsgTimespanFilter : public IMsgTimespanFilter
 {
     Q_OBJECT
 public:
-    explicit MsgTimestampFilter(QObject *parent = Q_NULLPTR);
-    virtual ~MsgTimestampFilter();
+    explicit MsgTimespanFilter(QObject *parent = Q_NULLPTR);
+    virtual ~MsgTimespanFilter();
 
     /**
      * @brief Matches the passed #ITImestampedMsg against the current filter
@@ -55,17 +61,6 @@ public:
 
     void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
-signals:
-    void sgnl_TimestampFromChanged(const QDateTime &newTimestampFrom);
-    void sgnl_TimestampToChanged(const QDateTime &newTimestampTo);
-
-public slots:
-    void slt_changeTimestampFrom(const QDateTime &newTimestampFrom);
-    void slt_changeTimestampTo(const QDateTime &newTimestampTo);
-
-    void slt_enableTimestampFrom(const bool enabled);
-    void slt_enableTimestampTo(const bool enabled);
-
 private:
     virtual bool greaterThanTimestampFrom(const QDateTime &timestamp) const;
     virtual bool lowerThanTimestampTo(const QDateTime &timestamp) const;
@@ -81,5 +76,9 @@ private:
     bool timestampFromFilterEnabled;
     bool timestampToFilterEnabled;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGTIMESTAMPFILTER_H */

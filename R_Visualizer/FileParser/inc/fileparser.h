@@ -15,7 +15,7 @@ class MsgDataMappingStore;
 class MsgDataMapping;
 class MsgIDFilterStore;
 class MsgCodeFilterStore;
-class MsgTimestampFilter;
+class MsgTimespanFilter;
 
 /* class SysOvrvObject; */
 /* class SysOvrvTextLabel; */
@@ -43,7 +43,7 @@ public:
     virtual void visit(MsgDataMapping &visitor) = 0;
     virtual void visit(MsgIDFilterStore &visitor) = 0;
     virtual void visit(MsgCodeFilterStore &visitor) = 0;
-    virtual void visit(MsgTimestampFilter &visitor) = 0;
+    virtual void visit(MsgTimespanFilter &visitor) = 0;
 
     /* virtual void visit(SysOvrvObject &visitor) = 0; */
     /* virtual void visit(SysOvrvTextLabel &visitor) = 0; */

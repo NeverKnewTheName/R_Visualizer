@@ -11,17 +11,22 @@
 #include <QObject>
 
 #include "IMsg.h"
-#include "IMsgFilter.h"
+#include "IMsgIDFilter.h"
 #include "IMsgIDFilterStore.h"
 
 #include "MsgIDType.h"
 
 /**
+ * @addtogroup MsgIDFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgIDFilter
  */
-class MsgIDFilter : public IMsgFilter
+class MsgIDFilter : public IMsgIDFilter
 {
-    Q_OBJECT
 public:
     explicit MsgIDFilter(
             IMsgIDFilterStore *msgIDFilterStore,
@@ -52,10 +57,6 @@ public:
 
     void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
-public slots:
-    void slt_addMsgIDToFilter(const MsgIDType &msgIDToAdd);
-    void slt_removeMsgIDFromFilter(const MsgIDType &msgIDToRemove);
-
 private:
     bool applyInversion(const bool intermediateFilterResult) const;
 
@@ -66,5 +67,9 @@ private:
     bool isInverted;
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDFILTER_H */

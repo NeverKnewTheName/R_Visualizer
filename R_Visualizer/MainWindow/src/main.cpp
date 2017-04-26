@@ -63,8 +63,8 @@
 #include "MsgCodeFilterStore.h"
 #include "MsgCodeFilterWidget.h"
 #include "MsgCodeFilterModel.h"
-#include "MsgTimestampFilter.h"
-#include "MsgTimestampFilterWidget.h"
+#include "MsgTimespanFilter.h"
+#include "MsgTimespanFilterWidget.h"
 
 #include "IMessageStream.h"
 #include "MessageStream.h"
@@ -147,6 +147,7 @@ int main(int argc, char *argv[])
     //Note: do not set messageConfigWidget as parent, because the actual parent
     //will be the vertical layout of the messageConfigWidget...
     MsgDataMappingWidget *msgDataMappingWidget = new MsgDataMappingWidget(
+            msgDataMappingManager,
             msgDataMappingModel
             /* messageConfigWidget */
             );
@@ -191,10 +192,10 @@ int main(int argc, char *argv[])
             msgCodeFilterModel
             );
 
-    MsgTimestampFilter *msgTimestampFilter = new MsgTimestampFilter();
+    MsgTimespanFilter *msgTimestampFilter = new MsgTimespanFilter();
 
-    MsgTimestampFilterWidget *msgTimestampFilterWidget =
-        new MsgTimestampFilterWidget(msgTimestampFilter);
+    MsgTimespanFilterWidget *msgTimestampFilterWidget =
+        new MsgTimespanFilterWidget(msgTimestampFilter);
 
     messageFilterWidget->addFilterWidget(msgIDFilterWidget);
     messageFilterWidget->addFilterWidget(msgCodeFilterWidget);

@@ -16,6 +16,12 @@
 #include "MsgDataType.h"
 
 /**
+ * @addtogroup MsgDataMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The MsgDataMapping
  */
 class MsgDataMapping : public MsgDataMappingCRTPHelper<MsgDataMapping>
@@ -65,5 +71,9 @@ private:
     MsgCodeType msgCode;
     IMsgDataFormatter *msgDataFormatter;
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGDATAMAPPING_H */

@@ -18,6 +18,12 @@
 #include "IFileParsable.h"
 
 /**
+ * @addtogroup MsgCodeMappingGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMsgCodeMappingStore interface
  */
 class IMsgCodeMappingStore : public QObject, public IFileParsable
@@ -167,5 +173,9 @@ public slots:
     }
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGCODEMAPPINGSTORE_H */

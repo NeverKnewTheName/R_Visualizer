@@ -8,12 +8,10 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/MessageFilter.cpp \
-    $$PWD/src/MessageFilterNotifier.cpp \
     $$PWD/src/MessageFilterWidget.cpp \
 
 HEADERS  += \
     $$PWD/inc/IMessageFilter.h \
-    $$PWD/inc/MessageFilterNotifier.h \
     $$PWD/inc/MessageFilter.h \
     $$PWD/inc/MessageFilterWidget.h \
     $$PWD/inc/IFilter.h \
@@ -26,4 +24,4 @@ FORMS    += \
 
 include(MsgIDFilter/MsgIDFilter.pri)
 include(MsgCodeFilter/MsgCodeFilter.pri)
-include(MsgTimestampFilter/MsgTimestampFilter.pri)
+include(MsgTimespanFilter/MsgTimespanFilter.pri)

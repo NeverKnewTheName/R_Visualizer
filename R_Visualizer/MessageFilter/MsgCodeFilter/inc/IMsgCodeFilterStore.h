@@ -13,6 +13,12 @@
 #include "MsgCodeType.h"
 
 /**
+ * @addtogroup MsgCodeFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMsgCodeFilterStore interface
  */
 class IMsgCodeFilterStore : public QObject
@@ -127,5 +133,9 @@ public slots:
         clear();
     }
 };
+
+/**
+ * @}
+ */
 
 #endif /* IMSGCODEFILTERSTORE_H */

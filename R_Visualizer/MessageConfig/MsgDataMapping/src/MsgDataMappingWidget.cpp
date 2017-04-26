@@ -1,6 +1,9 @@
 #include "MsgDataMappingWidget.h"
 #include "ui_msgdatamappingwidget.h"
 
+#include "IMsgDataMappingManager.h"
+#include "MsgDataMappingModel.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -20,11 +23,13 @@
 #include "jsonoutparser.h"
 
 MsgDataMappingWidget::MsgDataMappingWidget(
+        IMsgDataMappingManager *msgDataMappingManager,
         MsgDataMappingModel *msgDataMappingModel,
         QWidget *parent
         ) :
     QWidget(parent),
     ui(new Ui::MsgDataMappingWidget),
+    msgDataMappingManager(msgDataMappingManager),
     msgDataMappingModel(msgDataMappingModel)
 {
     init();
@@ -129,8 +134,6 @@ void MsgDataMappingWidget::on_msgDataAddBtn_clicked()
             );
 
     emit sgnl_AddMsgDataMapping(
-            msgID,
-            msgCode,
             msgDataMapping
             );
 }
@@ -173,14 +176,14 @@ void MsgDataMappingWidget::connectModel()
     connect(
             this,
             &MsgDataMappingWidget::sgnl_AddMsgDataMapping,
-            msgDataMappingModel,
-            &MsgDataMappingModel::sgnl_AddMapping
+            msgDataMappingManager,
+            &IMsgDataMappingManager::slt_AddMsgDataMapping
            );
 
     connect(
             this,
             &MsgDataMappingWidget::sgnl_RemoveMsgDataMapping,
-            msgDataMappingModel,
-            &MsgDataMappingModel::sgnl_RemoveMapping
+            msgDataMappingManager,
+            &IMsgDataMappingManager::slt_RemoveMsgDataMapping
            );
 }

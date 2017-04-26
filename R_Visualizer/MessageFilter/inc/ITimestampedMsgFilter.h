@@ -13,6 +13,13 @@
 class ITimestamp;
 
 /**
+ * @defgroup MsgTimestampFilterGroup Message Timestamp Filters
+ * @ingroup MsgFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The #ITimestampedMsgFilter interface
  */
 class ITimestampedMsgFilter : public IFilter
@@ -38,4 +45,7 @@ signals:
 public slots:
 };
 
+/**
+ * @}
+ */
 #endif /* ITIMESTAMPEDMSGFILTER_H */

@@ -20,6 +20,12 @@ class MsgIDFilterWidget;
 }
 
 /**
+ * @addtogroup MsgIDFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgIDFilterWidget
  */
 class MsgIDFilterWidget : public QWidget
@@ -69,5 +75,9 @@ private:
     MsgIDFilter *msgIDFilter;
     MsgIDFilterModel *msgIDFilterModel;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGIDFILTERWIDGET_H

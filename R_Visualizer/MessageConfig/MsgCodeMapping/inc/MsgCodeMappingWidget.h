@@ -22,6 +22,13 @@ class MsgCodeMappingWidget;
 }
 
 /**
+ * @addtogroup MsgCodeMappingGroup
+ * 
+ * @{
+ */
+
+
+/**
  * \brief The MsgCodeMappingWidget
  */
 class MsgCodeMappingWidget : public QWidget
@@ -76,5 +83,9 @@ private:
     IMsgCodeMappingManager *msgCodeMappingManager;
     MsgCodeMappingModel *msgCodeMappingModel;
 };
+
+/**
+ * @}
+ */
 
 #endif // MSGCODEMAPPINGWIDGET_H

@@ -11,15 +11,21 @@
 #include <QObject>
 
 #include "IMsg.h"
-#include "IMsgFilter.h"
+#include "IMsgCodeFilter.h"
 #include "IMsgCodeFilterStore.h"
 
 #include "MsgCodeType.h"
 
 /**
+ * @addtogroup MsgCodeFilterGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The MsgCodeFilter
  */
-class MsgCodeFilter : public IMsgFilter
+class MsgCodeFilter : public IMsgCodeFilter
 {
     Q_OBJECT
 public:
@@ -52,10 +58,6 @@ public:
 
     void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
-public slots:
-    void slt_addMsgCodeToFilter(const MsgCodeType &msgCodeToAdd);
-    void slt_removeMsgCodeFromFilter(const MsgCodeType &msgCodeToRemove);
-
 private:
     bool applyInversion(const bool intermediateFilterResult) const;
 
@@ -66,5 +68,9 @@ private:
     bool isInverted;
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* MSGCODEFILTER_H */
