@@ -24,6 +24,12 @@
 #define  PRINT_MSGS_AS_JSON
 
 /**
+ * @addtogroup MsgStorageGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The ContainerID is the mapping of a container to a given DataStore in the DataStorage
  */
 struct ContainerID{
@@ -1136,4 +1142,8 @@ private:
 
 template<typename T>
 unsigned int  DataStorage<T>::DataStorageCntr = 0;
+
+/**
+ * @}
+ */
 #endif // DATASTORAGE_H

@@ -14,6 +14,12 @@
 #include "MsgFieldType.h"
 
 /**
+ * @addtogroup MessageFieldGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief Typedef for the primitive type of a single data byte of a message's
  * data field
  */
@@ -31,5 +37,9 @@ Q_DECLARE_METATYPE(MsgDataByteType)
 typedef QVector<MsgDataByteType> MsgDataType;
 
 Q_DECLARE_METATYPE(MsgDataType)
+
+/**
+ * @}
+ */
 
 #endif /* MSGDATATYPE_H */

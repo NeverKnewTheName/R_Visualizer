@@ -1,7 +1,5 @@
 #include "MessageConfig.h"
 
-#include "MessageConfigNotifier.h"
-
 #include "IMsgMappingManager.h"
 #include "IMsgIDMappingManager.h"
 #include "IMsgCodeMappingManager.h"
@@ -15,7 +13,6 @@ MessageConfig::MessageConfig(
         QObject *parent
         ) :
     IMessageConfig(parent),
-    //msgConfigNotifier(new MessageConfigNotifier(this, this)),
     msgIDMappingManager(msgIDMappingManager),
     msgCodeMappingManager(msgCodeMappingManager),
     msgDataMappingManager(msgDataMappingManager)

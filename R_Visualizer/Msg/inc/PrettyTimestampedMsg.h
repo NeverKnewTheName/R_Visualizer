@@ -21,6 +21,12 @@
 #include "IMsgDataFormatter.h"
 
 /**
+ * @addtogroup PrettyMessageGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The PrettyTimestampedMsg
  */
 template<class ConcreteTimestampedMsg>
@@ -223,4 +229,7 @@ private:
     QColor msgCodeColorRepresentation;
 };
 
+/**
+ * @}
+ */
 #endif /* PRETTYTIMESTAMPEDMSG_H */

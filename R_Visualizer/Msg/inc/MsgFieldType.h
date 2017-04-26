@@ -13,6 +13,13 @@
 #include <QVariant>
 
 /**
+ * @defgroup MessageFieldGroup Message Fields
+ * @ingroup MessageGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief Wrapper for strongly typedef Message Field types
  * 
  * OpaqueT should be an opaque type of T. To create an opaque type create a
@@ -582,5 +589,9 @@ const int MsgFieldTypeTemplate<T,OpaqueT>::msgFieldWidth = sizeof(T) * 2;
     using name \
      = MsgFieldTypeTemplate<name##Primitive, const struct Opaque##name>; \
 
+
+ /**
+  * @}
+  */
 
 #endif /* MSGFIELDTYPE_H */

@@ -17,6 +17,13 @@
 class IMsgDataFormatter;
 
 /**
+ * @defgroup PrettyMessageGroup Pretty Messages
+ * @ingroup MessageGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The IPrettyMsgID interface
  */
 class IPrettyMsgID
@@ -87,4 +94,7 @@ public:
     virtual ~IPrettyTimestampedMsg(){}
 };
 
+/**
+ * @}
+ */
 #endif /* IPRETTYMSG_H */

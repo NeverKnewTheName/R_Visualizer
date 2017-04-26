@@ -17,11 +17,16 @@ class ISendMsgSingle;
 class ISendMsgPackage;
 
 /**
+ * @addtogroup SendMessagesGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The SendMessages
  */
-class SendMessages : public QObject, public ISendMessages
+class SendMessages : public ISendMessages
 {
-    Q_OBJECT
 public:
     SendMessages(QObject *parent = Q_NULLPTR);
     virtual ~SendMessages();
@@ -32,8 +37,7 @@ public:
     virtual void addSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd);
     virtual void removeSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd);
 
-public slots:
-    void slt_applyUserRole(const UserRoleManagement::UserRole roleToApply);
+    void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
 private:
     QVector<ISendMsgSingle *> sendMsgSingleInstances;
@@ -42,4 +46,7 @@ private:
 
 };
 
+/**
+ * @}
+ */
 #endif /* SENDMESSAGES_H */

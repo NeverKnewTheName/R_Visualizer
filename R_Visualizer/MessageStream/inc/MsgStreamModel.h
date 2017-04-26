@@ -15,6 +15,12 @@
 class IMsgStreamStore;
 
 /**
+ * @addtogroup MessageStreamGroup
+ *
+ * @{
+ */
+
+/**
  * @brief The MsgStreamModel
  */
 class MsgStreamModel : public QAbstractTableModel
@@ -83,4 +89,7 @@ private:
     IMsgStreamStore *msgStreamStore;
 };
 
+/**
+ * @}
+ */
 #endif /* MSGSTREAMMODEL_H */

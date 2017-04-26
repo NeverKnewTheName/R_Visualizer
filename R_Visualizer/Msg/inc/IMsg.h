@@ -16,6 +16,12 @@
 #include "MsgDataType.h"
 
 /**
+ * @defgroup MessageGroup Message
+ *
+ * @{
+ */
+
+/**
  * \brief The general interface for all types of messages
  */
 class IMsg : public IFileParsable
@@ -83,5 +89,7 @@ public:
     }
 };
 
+/**
+ * @}
+ */
 #endif /* IMSG_H */
-

@@ -16,6 +16,12 @@
 #include "TimestampedMsg.h"
 
 /**
+ * @addtogroup MessageStreamGroup
+ *
+ * @{
+ */
+
+/**
  * @brief The MsgStreamStore
  */
 class MsgStreamStore : public IMsgStreamStore
@@ -103,4 +109,7 @@ private:
     RSimpleDestructiveRingBuff<PrettyTimestampedMsg<TimestampedMsg>> msgStorage;
 };
 
+/**
+ * @}
+ */
 #endif /* MSGSTREAMSTORE_H */

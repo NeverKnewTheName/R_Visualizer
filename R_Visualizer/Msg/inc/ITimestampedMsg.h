@@ -13,6 +13,12 @@
 #include "ITimestamp.h"
 
 /**
+ * @addtogroup TimestampGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief The interface for messages with timestamps
  * 
  * This interface groups #IMsg and #ITimestamp into one #ITimestampedMsg
@@ -25,5 +31,9 @@ class ITimestampedMsg : public IMsg, public ITimestamp
 public:
     virtual ~ITimestampedMsg(){}
 };
+
+/**
+ * @}
+ */
 
 #endif /* ITIMESTAMPEDMSG_H */

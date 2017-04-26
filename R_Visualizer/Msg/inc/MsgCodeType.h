@@ -1,5 +1,5 @@
 /**
- * \file MessageCodeType.h
+ * \file MsgCodeType.h
  * \author Christian Neuberger
  * \date 2017-03-23
  * 
@@ -10,6 +10,12 @@
 
 #include <QMetaType>
 #include "MsgFieldType.h"
+
+/**
+ * @addtogroup MessageFieldGroup
+ * 
+ * @{
+ */
 
 /**
  * \brief Typedef for the primitive type of a message code
@@ -23,5 +29,9 @@ typedef quint16 MsgCodePrimitiveType;
 CREATE_OPAQUE_MSG_FIELD_TYPE(MsgCodePrimitiveType, MsgCodeType)
 
 Q_DECLARE_METATYPE(MsgCodeType)
+
+/**
+ * @}
+ */
 
 #endif /* MSGCODETYPE_H */

@@ -12,6 +12,12 @@
 #include "MsgFieldType.h"
 
 /**
+ * @addtogroup MessageFieldGroup
+ * 
+ * @{
+ */
+
+/**
  * \brief Typedef for the primitive type of a message ID
  */
 typedef quint16 MsgIDPrimitiveType;
@@ -19,5 +25,9 @@ typedef quint16 MsgIDPrimitiveType;
 CREATE_OPAQUE_MSG_FIELD_TYPE(MsgIDPrimitiveType, MsgIDType)
 
 Q_DECLARE_METATYPE(MsgIDType)
+
+/**
+ * @}
+ */
 
 #endif /* MSGIDTYPE_H */

@@ -12,6 +12,7 @@ SOURCES += \
     $$PWD/src/MsgDataMappingWidget.cpp \
     $$PWD/src/MsgDataMappingStore.cpp \
     $$PWD/src/MsgDataMappingModel.cpp \
+    $$PWD/src/MsgDataFormatter.cpp \
 
 HEADERS  += \
     $$PWD/inc/IMsgDataMapping.h \
@@ -23,6 +24,8 @@ HEADERS  += \
     $$PWD/inc/MsgDataMappingModel.h \
     $$PWD/inc/IMsgDataMappingStore.h \
     $$PWD/inc/MsgDataMappingStore.h \
+    $$PWD/inc/IMsgDataFormatter.h \
+    $$PWD/inc/MsgDataFormatter.h \
 
 FORMS    += \
     $$PWD/ui/msgdatamappingwidget.ui \

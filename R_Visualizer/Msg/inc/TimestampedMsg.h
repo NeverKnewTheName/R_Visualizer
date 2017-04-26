@@ -20,6 +20,12 @@
 class FileParser;
 
 /**
+ * @addtogroup MessageGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The TimestampedMsg
  * 
  * \note Additional facade for #Msg
@@ -62,4 +68,7 @@ private:
 
 Q_DECLARE_METATYPE(TimestampedMsg);
 
+/**
+ * @}
+ */
 #endif /* TIMESTAMPEDMSG_H */

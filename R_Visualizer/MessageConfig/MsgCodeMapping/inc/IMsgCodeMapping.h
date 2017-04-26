@@ -1,5 +1,5 @@
 /**
- * \file IMsgCodeMapping
+ * \file IMsgCodeMapping.h
  * \author Christian Neuberger
  * \date 2017-03-23
  * 

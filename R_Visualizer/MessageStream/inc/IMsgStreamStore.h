@@ -15,6 +15,12 @@
 class IPrettyTimestampedMsg;
 
 /**
+ * @addtogroup MessageStreamGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The IMsgStreamStore interface
  */
 class IMsgStreamStore : public QObject
@@ -196,4 +202,7 @@ public slots:
 
 /* Q_DECLARE_INTERFACE(IMsgStreamStore, "IMsgStreamStore") */
 
+/**
+ * @}
+ */
 #endif /* IMSGSTREAMSTORE_H */

@@ -18,6 +18,12 @@ class MessageStreamWidget;
 }
 
 /**
+ * @addtogroup MessageStreamGroup
+ *
+ * @{
+ */
+
+/**
  * @brief The MessageStreamWidget
  */
 class MessageStreamWidget : public QWidget
@@ -42,4 +48,7 @@ private:
     MsgStreamModel *msgStreamModel;
 };
 
+/**
+ * @}
+ */
 #endif // MESSAGESTREAMWIDGET_H

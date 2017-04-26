@@ -18,6 +18,12 @@
 
 #include <QHash>
 
+/**
+ * @addtogroup MessageGroup
+ * 
+ * @{
+ */
+
 class MessageTypeIdentifier
 {
 public:
@@ -102,5 +108,8 @@ inline bool operator !=(
     return !operator ==(lhs,rhs);
 }
 
+/**
+ * @}
+ */
 
 #endif /* MESSAGETYPIDENTIFIER_H */

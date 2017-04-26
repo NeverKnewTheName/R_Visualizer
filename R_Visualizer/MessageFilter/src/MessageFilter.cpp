@@ -1,14 +1,12 @@
 #include "MessageFilter.h"
 
-#include "MessageFilterNotifier.h"
 #include "IMsgFilter.h"
 #include "ITimestampedMsgFilter.h"
 #include "IMsg.h"
 #include "ITimestampedMsg.h"
 
 MessageFilter::MessageFilter(QObject *parent) :
-    IMessageFilter(parent),
-    msgFilterNotifier(new MessageFilterNotifier(this, this))
+    IMessageFilter(parent)
 {
 
 }
@@ -94,8 +92,3 @@ void MessageFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply
 {
     //ToDo
 }
-
-/* MessageFilterNotifier *MessageFilter::getNotifier() */
-/* { */
-/*     return msgFilterNotifier; */
-/* } */

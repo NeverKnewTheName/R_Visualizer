@@ -1,7 +1,5 @@
 #include "MessageStream.h"
 
-#include "MessageStreamNotifier.h"
-
 #include "msgstorage.h"
 #include "IMessageConfig.h"
 #include "IMessageFilter.h"
@@ -16,7 +14,6 @@ MessageStream::MessageStream(
         QObject *parent
         ) :
     IMessageStream(parent),
-    //msgStreamNotifier(new MessageStreamNotifier(this, this)),
     msgConfig(msgConfig),
     msgFilter(msgFilter),
     msgStreamStore(msgStreamStore),
@@ -163,10 +160,6 @@ void MessageStream::connectMsgStorage()
 
 void MessageStream::connectMsgStreamStore()
 {
-    /* /** */
-    /*  * Connects the store signal for message appended to this object's signal */
-    /*  * for message added to propagate the signal from the store */
-    /*  *1/ */
     /* connect( */
     /*         msgStreamStore, */
     /*         &IMsgStreamStore::sgnl_msgAppended, */
@@ -174,10 +167,6 @@ void MessageStream::connectMsgStreamStore()
     /*         &IMessageStream::sgnl_messageAdded */
     /*        ); */
 
-    /* /** */
-    /*  * Connects the store signal for message prepended to this object's signal */
-    /*  * for message added to propagate the signal from the store */
-    /*  *1/ */
     /* connect( */
     /*         msgStreamStore, */
     /*         &IMsgStreamStore::sgnl_msgPrepended, */
@@ -185,10 +174,6 @@ void MessageStream::connectMsgStreamStore()
     /*         &IMessageStream::sgnl_messageAdded */
     /*        ); */
 
-    /* /** */
-    /*  * Connects the store signal for store cleared to this object's signal */
-    /*  * for stream cleared to propagate the signal from the store */
-    /*  *1/ */
     /* connect( */
     /*         msgStreamStore, */
     /*         &IMsgStreamStore::sgnl_storeCleared, */

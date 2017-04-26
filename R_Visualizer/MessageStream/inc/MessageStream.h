@@ -23,6 +23,12 @@ class IMsgFilter;
 class ITimestampedMsgFilter;
 
 /**
+ * @addtogroup MessageStreamGroup
+ *
+ * @{
+ */
+
+/**
  * @brief The MessageStream
  */
 class MessageStream : public IMessageStream
@@ -110,5 +116,9 @@ private:
     int currentStartIndex;
     int currentEndIndex;
 };
+
+/**
+ * @}
+ */
 
 #endif // MESSAGESTREAM_H

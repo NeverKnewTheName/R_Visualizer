@@ -20,6 +20,12 @@ class ITimestampedMsgFilter;
 class IPrettyTimestampedMsg;
 
 /**
+ * @defgroup MessageStreamGroup Message Stream
+ * 
+ * @{
+ */
+
+/**
  * @brief The #IMessageStream interface
  */
 class IMessageStream : public QObject
@@ -132,4 +138,7 @@ public slots:
     }
 };
 
+/**
+ * @}
+ */
 #endif /* IMESSAGESTREAM_H */

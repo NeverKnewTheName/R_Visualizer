@@ -18,6 +18,12 @@
 class FileParser;
 
 /**
+ * @addtogroup MessageGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The Msg
  */
 class Msg : public AbstractMsgCRTPHelper<Msg>
@@ -51,4 +57,7 @@ private:
 
 Q_DECLARE_METATYPE(Msg);
 
+/**
+ * @}
+ */
 #endif /* MSG_H */

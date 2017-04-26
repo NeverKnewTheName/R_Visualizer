@@ -22,6 +22,12 @@
 class FileParser;
 
 /**
+ * @addtogroup PrettyMessageGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The PrettyMsg
  * 
  * The PrettyMsg class unifies the #IPrettyMsg and the #IMsg interface. This
@@ -207,5 +213,9 @@ private:
     QColor msgIDColorRepresentation;
     QColor msgCodeColorRepresentation;
 };
+
+/**
+ * @}
+ */
 
 #endif /* PRETTYMSG_H */

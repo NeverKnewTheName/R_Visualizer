@@ -11,6 +11,13 @@
 #include <QDateTime>
 
 /**
+ * @defgroup TimestampGroup Timestamp
+ * @ingroup MessageGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The ITimestamp interface provides methods to organize a timestamp
  * 
  * Implement this interface to be able to add a timestamp property to classes
@@ -34,4 +41,7 @@ public:
     virtual const QDateTime getTimestamp() const = 0;
 };
 
+/**
+ * @}
+ */
 #endif /* ITIMESTAMP_H */

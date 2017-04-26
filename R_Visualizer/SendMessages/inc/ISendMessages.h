@@ -8,27 +8,61 @@
 #ifndef ISENDMESSAGES_H
 #define ISENDMESSAGES_H
 
+#include <QObject>
+
+#include "IUserRoleManager.h"
+
 class ISendMsgSingle;
 class ISendMsgPackage;
 
-#include "IUserRoleManager.h"
+/**
+ * @defgroup SendMessagesGroup Send Messages
+ * 
+ * @{
+ */
 
 /**
  * @brief The ISendMessages interface
  */
-class ISendMessages
+class ISendMessages : public QObject
 {
+    Q_OBJECT
 public:
+    ISendMessages(
+            QObject *parent = Q_NULLPTR
+            ) :
+        QObject(parent)
+    {}
     virtual ~ISendMessages(){}
 
-    virtual void addSendMsgSingle(ISendMsgSingle *sendMsgSingleToAdd) = 0;
-    virtual void addSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd) = 0;
+    virtual void addSendMsgSingle(
+            ISendMsgSingle *sendMsgSingleToAdd
+            ) = 0;
+    virtual void removeSendMsgSingle(
+            ISendMsgSingle *sendMsgSingleToAdd
+            ) = 0;
 
-    virtual void sendSingleMsg(ISendMsgSingle *sendMsgSingle) = 0;
-    virtual void sendPackageMsg(ISendMsgPackage *sendMsgPackage) = 0;
+    virtual void addSendMsgPackage(
+            ISendMsgPackage *sendMsgPackageToAdd
+            ) = 0;
+    virtual void removeSendMsgPackage(
+            ISendMsgPackage *sendMsgPackageToAdd
+            ) = 0;
+
+    virtual void applyUserRole(
+            const UserRoleManagement::UserRole roleToApply
+            ) = 0;
 
 public slots:
-    void slt_applyUserRole(const UserRoleManagement::UserRole roleToApply);
+    virtual void slt_applyUserRole(
+            const UserRoleManagement::UserRole roleToApply
+            )
+    {
+        applyUserRole(roleToApply);
+    }
 };
 
+/**
+ * @}
+ */
 #endif /* ISENDMESSAGES_H */

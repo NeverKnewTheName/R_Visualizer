@@ -19,6 +19,12 @@ class FileParser;
 #include "fileparser.h"
 
 /**
+ * @defgroup MsgStorageGroup Message Storage
+ * 
+ * @{
+ */
+
+/**
  * \brief MsgStorage to store huge numbers of messages
  * 
  * \todo Make template!.. somehow
@@ -176,4 +182,9 @@ public slots:
 private:
     friend class MainWindow;
 };
+
+/**
+ * @}
+ */
+
 #endif // MSGSTORAGE_H

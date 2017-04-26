@@ -33,46 +33,6 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="2">
-       <widget class="QPushButton" name="idAddBtn">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new ID configuration entry to the current ID configuration. The ID configuration tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Add</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QPushButton" name="idRmvBtn">
-        <property name="toolTip">
-         <string>Remove the selected entry from the current ID configuration.</string>
-        </property>
-        <property name="text">
-         <string>Remove</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="idStoreBtn">
-        <property name="toolTip">
-         <string>Save the current ID configuration (*.json) to a file</string>
-        </property>
-        <property name="text">
-         <string>Store</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QPushButton" name="idLoadBtn">
-        <property name="toolTip">
-         <string>Load an ID configuration (*.json)</string>
-        </property>
-        <property name="text">
-         <string>Load</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="4">
        <spacer name="storeLoadSpacer">
         <property name="orientation">
@@ -98,6 +58,46 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="6" column="1">
+       <widget class="QPushButton" name="idAddBtn">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new ID configuration entry to the current ID configuration. The ID configuration tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QPushButton" name="idRmvBtn">
+        <property name="toolTip">
+         <string>Remove the selected entry from the current ID configuration.</string>
+        </property>
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QPushButton" name="idStoreBtn">
+        <property name="toolTip">
+         <string>Save the current ID configuration (*.json) to a file</string>
+        </property>
+        <property name="text">
+         <string>Store</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="idLoadBtn">
+        <property name="toolTip">
+         <string>Load an ID configuration (*.json)</string>
+        </property>
+        <property name="text">
+         <string>Load</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -12,8 +12,6 @@
 #include <QVector>
 #include "IMessageFilter.h"
 
-class MessageFilterNotifier;
-
 /**
  * @addtogroup MsgFilterGroup
  * 
@@ -73,7 +71,6 @@ public:
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
 private:
-    MessageFilterNotifier *msgFilterNotifier;
     QVector<IMsgFilter *> msgFilterStore;
     QVector<ITimestampedMsgFilter *> timestampedMsgFilterStore;
 };
