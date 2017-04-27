@@ -15,6 +15,12 @@ class SendMsgSingleWidget;
 }
 
 /**
+ * @addtogroup SendMessagesSingleGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The SendMsgSingleWidget
  */
 class SendMsgSingleWidget : public QWidget
@@ -22,11 +28,22 @@ class SendMsgSingleWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SendMsgSingleWidget(QWidget *parent = 0);
+    explicit SendMsgSingleWidget(
+            ISendMsgSingle *sendMsgSingle,
+            QWidget *parent = 0
+            );
     ~SendMsgSingleWidget();
 
 private:
+    void connectSendMsgSingle();
+
+private:
     Ui::SendMsgSingleWidget *ui;
+    ISendMsgSingle *sendMsgSingle;
 };
+
+/**
+ * @}
+ */
 
 #endif // SENDMSGSINGLEWIDGET_H

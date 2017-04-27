@@ -1,9 +1,15 @@
 #include "SendMessagesWidget.h"
 #include "ui_sendmessageswidget.h"
 
-SendMessagesWidget::SendMessagesWidget(QWidget *parent) :
+#include "ISendMessages.h"
+
+SendMessagesWidget::SendMessagesWidget(
+        ISendMessages *sendMessages,
+        QWidget *parent
+        ) :
     QWidget(parent),
-    ui(new Ui::SendMessagesWidget)
+    ui(new Ui::SendMessagesWidget),
+    sendMessages(sendMessages)
 {
     ui->setupUi(this);
 }
@@ -11,4 +17,8 @@ SendMessagesWidget::SendMessagesWidget(QWidget *parent) :
 SendMessagesWidget::~SendMessagesWidget()
 {
     delete ui;
+}
+
+void SendMessagesWidget::connectSendMessages()
+{
 }

@@ -49,11 +49,33 @@ public:
             ISendMsgPackage *sendMsgPackageToAdd
             ) = 0;
 
+    /**
+     * @brief Central method to send a message within the #ISendMessages module
+     * 
+     * This method helps sub-modules to send their messages. This way there is
+     * only one central connection to the interface handler needed.
+     */
+    virtual void sendMessage(const IMsg &msgToSend) = 0;
+
     virtual void applyUserRole(
             const UserRoleManagement::UserRole roleToApply
             ) = 0;
 
 public slots:
+    /**
+     * @brief Slot to send a single #IMsg
+     *
+     * @note Calls #sendMessage
+     */
+    virtual void slt_SendMessage(const IMsg &msgToSend)
+    {
+        sendMessage(msgToSend);
+    }
+
+
+    /**
+     * @brief Slot to change the #UserRole for the module
+     */
     virtual void slt_applyUserRole(
             const UserRoleManagement::UserRole roleToApply
             )

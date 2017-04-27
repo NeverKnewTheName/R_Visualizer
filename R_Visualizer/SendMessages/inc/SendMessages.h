@@ -15,6 +15,7 @@
 
 class ISendMsgSingle;
 class ISendMsgPackage;
+class IInterfaceHandler;
 
 /**
  * @addtogroup SendMessagesGroup
@@ -28,7 +29,10 @@ class ISendMsgPackage;
 class SendMessages : public ISendMessages
 {
 public:
-    SendMessages(QObject *parent = Q_NULLPTR);
+    SendMessages(
+            IInterfaceHandler *interfaceHandler,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~SendMessages();
 
     virtual void addSendMsgSingle(ISendMsgSingle *sendMsgSingleToAdd);
@@ -37,11 +41,14 @@ public:
     virtual void addSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd);
     virtual void removeSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd);
 
-    void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+    virtual void sendMessage(const IMsg &msgToSend);
+
+    virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
 private:
     QVector<ISendMsgSingle *> sendMsgSingleInstances;
     QVector<ISendMsgPackage *> sendMsgPackageInstances;
+    IInterfaceHandler *interfaceHandler;
     UserRoleManagement::UserRole currentUserRole;
 
 };

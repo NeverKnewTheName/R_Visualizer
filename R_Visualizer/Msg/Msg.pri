@@ -20,7 +20,7 @@ HEADERS  += \
     $$PWD/inc/MsgDataType.h \
     $$PWD/inc/MessageTypeIdentifier.h \
     $$PWD/inc/IMsg.h \
-    $$PWD/inc/ITimestamped.h \
+    $$PWD/inc/ITimestamp.h \
     $$PWD/inc/ITimestampedMsg.h \
     $$PWD/inc/TimestampedMsg.h \
     $$PWD/inc/Msg.h \

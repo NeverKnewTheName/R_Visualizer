@@ -14,6 +14,12 @@
 #include "Msg.h"
 
 /**
+ * @addtogroup SendMessagesSingleGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The SendMsgSingle
  */
 class SendMsgSingle : public QObject, public ISendMsgSingle
@@ -43,4 +49,7 @@ private:
     Msg messageToSend;
 };
 
+/**
+ * @}
+ */
 #endif /* SENDMSGSINGLE_H */

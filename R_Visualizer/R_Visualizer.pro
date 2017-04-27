@@ -42,7 +42,7 @@ win32 {
 }
 
 include(MainWindow/MainWindow.pri)
-#include(InterfaceHandler/InterfaceHandler.pri)
+include(InterfaceHandler/InterfaceHandler.pri)
 include(UserRoleManager/UserRoleManager.pri)
 include(Msg/Msg.pri)
 include(MessageStorage/MessageStorage.pri)

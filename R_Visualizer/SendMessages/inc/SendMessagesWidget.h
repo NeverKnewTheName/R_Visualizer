@@ -10,6 +10,8 @@
 
 #include <QWidget>
 
+class ISendMessages;
+
 namespace Ui {
 class SendMessagesWidget;
 }
@@ -22,11 +24,18 @@ class SendMessagesWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SendMessagesWidget(QWidget *parent = 0);
+    explicit SendMessagesWidget(
+            ISendMessages *sendMessages,
+            QWidget *parent = Q_NULLPTR
+            );
     ~SendMessagesWidget();
 
 private:
+    void connectSendMessages();
+
+private:
     Ui::SendMessagesWidget *ui;
+    ISendMessages *sendMessages;
 };
 
 #endif // SENDMESSAGESWIDGET_H

@@ -11,6 +11,13 @@
 #include "IMsg.h"
 
 /**
+ * @defgroup SendMessagesSingleGroup Send Single Messages
+ * @ingroup SendMessagesGroup
+ * 
+ * @{
+ */
+
+/**
  * @brief The ISendMsgSingle interface
  */
 class ISendMsgSingle
@@ -36,4 +43,7 @@ public slots:
 
 };
 
+/**
+ * @}
+ */
 #endif /* ISENDMSGSINGLE_H */
