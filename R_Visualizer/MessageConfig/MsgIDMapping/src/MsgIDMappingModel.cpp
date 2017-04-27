@@ -93,7 +93,7 @@ QVariant MsgIDMappingModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
         case MsgIDMappingModel::COL_ID:
-            return msgID;
+            return static_cast<QString>(msgID);
             break;
         case MsgIDMappingModel::COL_Alias:
             return msgIDMappingStore->getAliasToMsgID(msgID);

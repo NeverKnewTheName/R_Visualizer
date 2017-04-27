@@ -35,6 +35,10 @@ class TimestampedMsg : public ITimestampedMsg
 public:
     TimestampedMsg();
     TimestampedMsg(
+            const IMsg &originalMsg,
+            const QDateTime &timestamp = QDateTime()
+            );
+    TimestampedMsg(
             const Msg &originalMsg,
             const QDateTime &timestamp = QDateTime()
             );
@@ -58,6 +62,8 @@ public:
 
     const Msg getOriginalMsg() const;
     void setOriginalMsg(const Msg &originalMsg);
+
+    operator QString() const;
 
     void accept(FileParser *visitor);
 

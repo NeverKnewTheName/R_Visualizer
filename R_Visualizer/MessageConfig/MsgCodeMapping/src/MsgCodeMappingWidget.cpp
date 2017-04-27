@@ -4,6 +4,10 @@
 #include "IMsgCodeMappingManager.h"
 #include "MsgCodeMappingModel.h"
 
+#include "MsgCodeMappingAddDialog.h"
+
+#include "MsgCodeMapping.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -123,16 +127,19 @@ void MsgCodeMappingWidget::on_msgCodeRemoveBtn_clicked()
 }
 
 
-#include "MsgCodeMapping.h"
 void MsgCodeMappingWidget::on_msgCodeAddBtn_clicked()
 {
-    qsrand(qrand());
-    MsgCodeMapping testMapping(
-            MsgCodeType(qrand() % 100),
-            QString("TEST"),
-            QColor(Qt::green)
-            );
-    emit sgnl_AddMsgCodeMapping(testMapping);
+    MsgCodeMappingAddDialog *msgCodeMappingAddDialog =
+        new MsgCodeMappingAddDialog(this);
+
+    connect(
+            msgCodeMappingAddDialog,
+            &MsgCodeMappingAddDialog::commit,
+            this,
+            &MsgCodeMappingWidget::slt_MsgCodeMappingAddFinished
+           );
+
+    msgCodeMappingAddDialog->exec();
 }
 
 void MsgCodeMappingWidget::slt_clear()
@@ -141,10 +148,18 @@ void MsgCodeMappingWidget::slt_clear()
 }
 
 void MsgCodeMappingWidget::slt_MsgCodeMappingAddFinished(
-        const IMsgCodeMapping &addedMsgCodeMapping
+            const MsgCodeType &msgCode,
+            const QString &alias,
+            const QColor &colorRepresentation
         )
 {
-    //ToDO
+    MsgCodeMapping tempMsgCodeMapping(
+            msgCode,
+            alias,
+            colorRepresentation
+            );
+
+    emit sgnl_AddMsgCodeMapping(tempMsgCodeMapping);
 }
 
 void MsgCodeMappingWidget::init()

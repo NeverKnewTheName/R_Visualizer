@@ -13,6 +13,7 @@ SOURCES += \
 
 HEADERS  += \
     $$PWD/inc/mainwindow.h \
+    $$PWD/inc/IReportable.h \
 #    $$PWD/inc/csvmsgpackethandler.h \
 
 FORMS    += \

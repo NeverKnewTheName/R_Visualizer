@@ -90,10 +90,10 @@ QVariant MsgDataMappingModel::data(
         switch(col)
         {
         case MsgDataMappingModel::COL_ID:
-            return msgType.getID();
+            return static_cast<QString>(msgType.getID());
             break;
         case MsgDataMappingModel::COL_Code:
-            return msgType.getCode();
+            return static_cast<QString>(msgType.getCode());
             break;
         case MsgDataMappingModel::COL_FormatString:
             return

@@ -4,6 +4,8 @@
 #include "IMsgDataMappingManager.h"
 #include "MsgDataMappingModel.h"
 
+#include "MsgDataMappingAddDialog.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -12,9 +14,6 @@
 #include <QSortFilterProxyModel>
 
 #include <QDebug>
-
-#include "idadddialog.h"
-#include "ideditordelegate.h"
 
 #include "fileparser.h"
 #include "csvinparser.h"
@@ -123,19 +122,30 @@ void MsgDataMappingWidget::on_msgDataRemoveBtn_clicked()
 #include "MsgDataFormatter.h"
 void MsgDataMappingWidget::on_msgDataAddBtn_clicked()
 {
-    qsrand(qrand());
-    MsgIDType msgID(qrand() %100);
-    MsgCodeType msgCode(qrand() %100);
+    MsgDataMappingAddDialog *msgDataMappingAddDialog =
+        new MsgDataMappingAddDialog(this);
 
-    MsgDataMapping msgDataMapping(
-            msgID,
-            msgCode,
-            new MsgDataFormatter(QString("Testing!"))
-            );
+    connect(
+            msgDataMappingAddDialog,
+            &MsgDataMappingAddDialog::sgnl_Commit,
+            this,
+            &MsgDataMappingWidget::slt_MsgDataMappingAddFinished
+           );
 
-    emit sgnl_AddMsgDataMapping(
-            msgDataMapping
-            );
+    msgDataMappingAddDialog->exec();
+    /* qsrand(qrand()); */
+    /* MsgIDType msgID(qrand() %100); */
+    /* MsgCodeType msgCode(qrand() %100); */
+
+    /* MsgDataMapping msgDataMapping( */
+    /*         msgID, */
+    /*         msgCode, */
+    /*         new MsgDataFormatter(QString("Testing!")) */
+    /*         ); */
+
+    /* emit sgnl_AddMsgDataMapping( */
+    /*         msgDataMapping */
+    /*         ); */
 }
 
 void MsgDataMappingWidget::slt_clear()
@@ -144,10 +154,23 @@ void MsgDataMappingWidget::slt_clear()
 }
 
 void MsgDataMappingWidget::slt_MsgDataMappingAddFinished(
-        const IMsgDataMapping &addedMsgDataMapping
+        const MsgIDType &msgID,
+        const MsgCodeType &msgCode,
+        const QString &formatString,
+        const QColor &defaultColor
         )
 {
-    //toDo
+    MsgDataMapping tempMsgDataMapping(
+            msgID,
+            msgCode,
+            new MsgDataFormatter(
+                formatString,
+                defaultColor
+                )
+            );
+
+    emit sgnl_AddMsgDataMapping(tempMsgDataMapping);
+
 }
 
 void MsgDataMappingWidget::init()

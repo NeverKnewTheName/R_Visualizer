@@ -47,6 +47,8 @@ public:
     void setMsgData(const MsgDataType &msgData);
     const MsgDataType getMsgData() const;
 
+    operator QString() const;
+
     void accept(FileParser *visitor);
 
 private:

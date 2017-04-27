@@ -4,6 +4,8 @@
 #include "IMsgIDMappingManager.h"
 #include "MsgIDMappingModel.h"
 
+#include "MsgIDMappingAddDialog.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -13,7 +15,6 @@
 
 #include <QDebug>
 
-#include "idadddialog.h"
 #include "ideditordelegate.h"
 
 #include "fileparser.h"
@@ -122,14 +123,18 @@ void MsgIDMappingWidget::on_idRmvBtn_clicked()
 #include "MsgIDMapping.h"
 void MsgIDMappingWidget::on_idAddBtn_clicked()
 {
-    qsrand(qrand());
-    MsgIDMapping testMapping(
-            MsgIDType(qrand() % 100),
-            QString("TEST"),
-            QColor(Qt::blue)
-            );
-    emit sgnl_AddMsgIDMapping(testMapping);
-    //msgIDMappingModel->appendMsgIDMapping(testMapping);
+    MsgIDMappingAddDialog *msgIDMappingAddDialog =
+        new MsgIDMappingAddDialog(this);
+
+    connect(
+            msgIDMappingAddDialog,
+            &MsgIDMappingAddDialog::sgnl_commit,
+            this,
+            &MsgIDMappingWidget::slt_MsgIDMappingAddFinished
+           );
+
+    msgIDMappingAddDialog->exec();
+
 }
 
 void MsgIDMappingWidget::slt_clear()
@@ -138,10 +143,14 @@ void MsgIDMappingWidget::slt_clear()
 }
 
 void MsgIDMappingWidget::slt_MsgIDMappingAddFinished(
-        const IMsgIDMapping &addedMsgIDMapping
+            const MsgIDType &id,
+            const QString &alias,
+            const QColor &colorRepresentation
         )
 {
-    //ToDO
+    MsgIDMapping tempMsgIDMapping(id,alias,colorRepresentation);
+
+    emit sgnl_AddMsgIDMapping(tempMsgIDMapping);
 }
 
 void MsgIDMappingWidget::init()

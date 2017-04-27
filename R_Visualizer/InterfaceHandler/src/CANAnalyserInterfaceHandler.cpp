@@ -2,10 +2,15 @@
 
 #include <QString>
 #include <QDebug>
+#include <QDateTime>
 
+#include "IMsg.h"
+#include "ITimestampedMsg.h"
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
+
+#include "TimestampedMsg.h"
 
 CANAnalyserInterfaceHandler::CANAnalyserInterfaceHandler(
         QObject *parent
@@ -150,6 +155,17 @@ bool CANAnalyserInterfaceHandler::stopSession()
 
 bool CANAnalyserInterfaceHandler::sendMessage(const IMsg &msgToSend)
 {
+    /////////DEBUG//////////
+    
+    emit sgnl_MessageReceived(
+            TimestampedMsg(
+                msgToSend,
+                QDateTime::currentDateTime()
+                )
+            );
+    
+    /////////DEBUG//////////
+
     if(!connected)
     {
         emit sgnl_Error(
@@ -201,34 +217,34 @@ bool CANAnalyserInterfaceHandler::sendCANFrame(CAN_PacketPtr packet)
 
 CAN_PacketPtr CANAnalyserInterfaceHandler::convertMsgToCANFrame(
         const IMsg &msgToConvert
-        )
+        ) const
 {
     Data_Packet::Frame canFrame;
 
-    frame.ID_Standard = static_cast<MsgIDType::type>(msgToSend.getMsgID());
-    frame.IDE = 0;
-    frame.SRR = 0;
-    frame.ID_Extended = 0;
-    frame.RTR = 0;
+    canFrame.ID_Standard = static_cast<MsgIDType::type>(msgToConvert.getMsgID());
+    canFrame.IDE = 0;
+    canFrame.SRR = 0;
+    canFrame.ID_Extended = 0;
+    canFrame.RTR = 0;
 
-    const MsgDataType &msgData = msgToSend.getMsgData();
+    const MsgDataType &msgData = msgToConvert.getMsgData();
 
-    frame.DLC = msgDat.size() + 1; // +1 for the message code
+    canFrame.DLC = msgData.size() + 1; // +1 for the message code
 
-    frame.data.clear();
-    frame.data.append(
-            static_cast<MsgCodeType::type>(msgToSend.getMsgCode())
+    canFrame.data.clear();
+    canFrame.data.append(
+            static_cast<MsgCodeType::type>(msgToConvert.getMsgCode())
             );
 
     for(const MsgDataByteType &dataByte : msgData)
     {
-        frame.data.append(
+        canFrame.data.append(
                 static_cast<MsgDataByteType::type>(dataByte)
                 );
     }
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
-    qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(frame);
+    qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(canFrame);
     
     return packet;
 }

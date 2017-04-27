@@ -1,5 +1,7 @@
 #include "MsgStreamStore.h"
 
+#include <QDebug>
+
 MsgStreamStore::MsgStreamStore(const int bufferSize, QObject *parent) :
     IMsgStreamStore(parent),
     bufferSize(bufferSize),
@@ -15,6 +17,8 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
         const IPrettyTimestampedMsg &msgToAppend
         )
 {
+    qDebug() << static_cast<QString>(msgToAppend);
+
     const bool bufferOverflowing = msgStorage.size() >= bufferSize;
 
     if(bufferOverflowing)

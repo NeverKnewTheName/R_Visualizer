@@ -12,6 +12,7 @@ SOURCES += \
     $$PWD/src/MsgCodeMappingWidget.cpp \
     $$PWD/src/MsgCodeMappingStore.cpp \
     $$PWD/src/MsgCodeMappingModel.cpp \
+    $$PWD/src/MsgCodeMappingAddDialog.cpp \
     #$$PWD/src/msgtypeeditordelegate.cpp \
     #$$PWD/src/msgtypeformatterdialog.cpp \
     #$$PWD/src/msgtypeadddialog.cpp \
@@ -26,12 +27,14 @@ HEADERS  += \
     $$PWD/inc/MsgCodeMappingModel.h \
     $$PWD/inc/IMsgCodeMappingStore.h \
     $$PWD/inc/MsgCodeMappingStore.h \
+    $$PWD/inc/MsgCodeMappingAddDialog.h \
     #$$PWD/inc/msgtypeeditordelegate.h \
     #$$PWD/inc/msgtypeformatterdialog.h \
     #$$PWD/inc/msgtypeadddialog.h \
 
 FORMS    += \
     $$PWD/ui/msgcodemappingwidget.ui \
+    $$PWD/ui/msgcodemappingadddialog.ui \
     #$$PWD/ui/msgtypeadddialog.ui \
     #$$PWD/ui/msgtypeformatterdialog.ui \
 

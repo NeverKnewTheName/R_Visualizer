@@ -61,6 +61,8 @@ public:
      */
     virtual const MsgDataType getMsgData() const = 0;
 
+    virtual operator QString() const = 0;
+
     //virtual IMsg &operator =(const IMsg &msgToAssign) = 0;
 };
 

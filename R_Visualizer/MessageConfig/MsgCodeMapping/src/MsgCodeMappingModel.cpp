@@ -79,7 +79,7 @@ QVariant MsgCodeMappingModel::data(
             switch(col)
             {
                 case MsgCodeMappingModel::COL_Code:
-                    return msgCode;
+                    return static_cast<QString>(msgCode);
                     break;
                 case MsgCodeMappingModel::COL_Alias:
                     return msgCodeMappingStore->getAliasToMsgCode(msgCode);

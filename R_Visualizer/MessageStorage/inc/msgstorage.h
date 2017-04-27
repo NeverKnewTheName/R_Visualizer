@@ -15,6 +15,8 @@ class FileParser;
 #include "TimestampedMsg.h"
 #include "datastorage.h"
 
+#include "IReportable.h"
+
 #include "IFileParsable.h"
 #include "fileparser.h"
 
@@ -30,7 +32,8 @@ class FileParser;
  * \todo Make template!.. somehow
  */
 template<class MsgType>
-class TemplateMsgStorage : public IFileParsable
+class TemplateMsgStorage :
+    public IFileParsable
 {
 public:
     /**
@@ -53,13 +56,12 @@ public:
      *       RAM; it can even not be guaranteed that a reference would
      *       be up to date...
      */
-    MsgType at(const size_t index)
+    virtual MsgType at(const size_t index)
     {
         return msgStore.at(index);
     }
-    /* Msg at(const size_t index) const; */
 
-    MsgType operator[](const size_t index)
+    virtual MsgType operator[](const size_t index)
     {
         return msgStore[index];
     }
@@ -69,7 +71,7 @@ public:
      * 
      * \warning This does not free the contained elements!
      */
-    void clear()
+    virtual void clear()
     {
         msgStore.clear();
         emit sgnl_StoreCleared();
@@ -78,19 +80,19 @@ public:
     /**
      * \brief returns the current size of the MsgStorage
      */
-    int size() const
+    virtual int size() const
     {
         return msgStore.size();
     }
     /**
      * \brief returns whether the MsgStorage is empty
      */
-    bool isEmpty() const
+    virtual bool isEmpty() const
     {
         return msgStore.isEmpty();
     }
 
-    void appendMsg(const MsgType &newMsg)
+    virtual void appendMsg(const MsgType &newMsg)
     {
         msgStore.append(newMsg);
         emit sgnl_MsgAdded(newMsg, size()-1);
@@ -128,15 +130,35 @@ public:// slots:
     }
 
 private:
-friend class MainWindow;
     DataStorage<MsgType> msgStore;
 };
 
-class MsgStorage : public QObject, public TemplateMsgStorage<Msg>
+class MsgStorage :
+        public QObject,
+        public TemplateMsgStorage<Msg>,
+        public IReportable
 {
     Q_OBJECT
+    Q_INTERFACES(IReportable)
 public:
     MsgStorage(QObject *parent = Q_NULLPTR) : QObject(parent){}
+
+    virtual void appendMsg(const Msg &msgToAppend)
+    {
+        TemplateMsgStorage<Msg>::appendMsg(msgToAppend);
+        emit sgnl_ReportInfo(
+                QString("Message added to MsgStorage: %1")
+                    .arg(static_cast<QString>(msgToAppend))
+                );
+    }
+
+    void clear()
+    {
+        TemplateMsgStorage<Msg>::clear();
+        emit sgnl_ReportInfo(
+                QString("MsgStorage cleared")
+                );
+    }
 
     void accept(FileParser *visitor)
     {
@@ -147,22 +169,50 @@ signals:
     virtual void sgnl_StoreCleared();
 
 public slots:
-    virtual void slt_addMsg(const Msg &newMsg)
+    virtual void slt_addMsg(const IMsg &newMsg)
     {
-        TemplateMsgStorage<Msg>::slt_addMsg(newMsg);
+        Msg tempMsg;
+
+        tempMsg.setMsgID(newMsg.getMsgID());
+        tempMsg.setMsgCode(newMsg.getMsgCode());
+        tempMsg.setMsgData(newMsg.getMsgData());
+
+        appendMsg(tempMsg);
     }
 
-private:
-    friend class MainWindow;
+signals:
+    void sgnl_ReportError(const QString &errorString);
+    void sgnl_ReportWarning(const QString &warningString);
+    void sgnl_ReportInfo(const QString &infoString);
 };
 
 class TimestampedMsgStorage :
     public QObject,
-    public TemplateMsgStorage<TimestampedMsg>
+    public TemplateMsgStorage<TimestampedMsg>,
+    public IReportable
 {
     Q_OBJECT
+    Q_INTERFACES(IReportable)
 public:
     TimestampedMsgStorage(QObject *parent = Q_NULLPTR) : QObject(parent){}
+
+    virtual void appendMsg(const TimestampedMsg &msgToAppend)
+    {
+        TemplateMsgStorage<TimestampedMsg>::appendMsg(msgToAppend);
+        emit sgnl_ReportInfo(
+                QString("Message added to MsgStorage: %1")
+                    .arg(static_cast<QString>(msgToAppend))
+                );
+    }
+
+    void clear()
+    {
+        TemplateMsgStorage<TimestampedMsg>::clear();
+        emit sgnl_ReportInfo(
+                QString("MsgStorage cleared")
+                );
+    }
+
 
     void accept(FileParser *visitor)
     {
@@ -174,13 +224,23 @@ signals:
     virtual void sgnl_StoreCleared();
 
 public slots:
-    virtual void slt_addMsg(const TimestampedMsg &newMsg)
+    virtual void slt_addMsg(const ITimestampedMsg &newMsg)
     {
-        TemplateMsgStorage<TimestampedMsg>::slt_addMsg(newMsg);
+        TimestampedMsg tempMsg;
+
+        tempMsg.setMsgID(newMsg.getMsgID());
+        tempMsg.setMsgCode(newMsg.getMsgCode());
+        tempMsg.setMsgData(newMsg.getMsgData());
+        tempMsg.setTimestamp(newMsg.getTimestamp());
+
+        appendMsg(tempMsg);
     }
 
-private:
-    friend class MainWindow;
+    // IReportable interface
+signals:
+    void sgnl_ReportError(const QString &errorString);
+    void sgnl_ReportWarning(const QString &warningString);
+    void sgnl_ReportInfo(const QString &infoString);
 };
 
 /**

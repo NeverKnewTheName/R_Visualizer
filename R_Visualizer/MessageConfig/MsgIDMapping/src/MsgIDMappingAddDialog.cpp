@@ -1,15 +1,21 @@
-#include "idadddialog.h"
-#include "ui_idadddialog.h"
+#include "MsgIDMappingAddDialog.h"
+#include "ui_msgidmappingadddialog.h"
 
 #include <QDebug>
 #include <QColorDialog>
 
-IDAddDialog::IDAddDialog(QWidget *parent) :
+MsgIDMappingAddDialog::MsgIDMappingAddDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::IDAddDialog)
+    ui(new Ui::MsgIDMappingAddDialog)
 {
     ui->setupUi(this);
-    connect(this, &IDAddDialog::accepted, this, &IDAddDialog::readyToCommit);
+    connect(
+            this,
+            &MsgIDMappingAddDialog::accepted,
+            this,
+            &MsgIDMappingAddDialog::readyToCommit
+            );
+
     inputMasks << "\\0\\xhhhh"/*HEX*/
                << "00000"/*DEC*/
                << "\\0\\b bbbb\\ bbbb\\ bbbb\\ bbbb"/*BIN*/;
@@ -19,12 +25,12 @@ IDAddDialog::IDAddDialog(QWidget *parent) :
     ui->numericallFormatComboBox->addItems(items);
 }
 
-IDAddDialog::~IDAddDialog()
+MsgIDMappingAddDialog::~MsgIDMappingAddDialog()
 {
     delete ui;
 }
 
-int IDAddDialog::parseToNumber(QString numericalString)
+int MsgIDMappingAddDialog::parseToNumber(QString numericalString)
 {
     int idNumericalBase;
     if(numericalString.contains("0x"))
@@ -44,7 +50,7 @@ int IDAddDialog::parseToNumber(QString numericalString)
     return numericalString.toInt(0, idNumericalBase);
 }
 
-QString IDAddDialog::parseToString(int number)
+QString MsgIDMappingAddDialog::parseToString(int number)
 {
     int idNumericalBase = ui->numericallFormatComboBox->currentIndex();
     if(idNumericalBase == 0)
@@ -62,26 +68,41 @@ QString IDAddDialog::parseToString(int number)
     return QString::number(number, idNumericalBase);
 }
 
-void IDAddDialog::colorSelected(const QColor &color)
+void MsgIDMappingAddDialog::colorSelected(const QColor &color)
 {
     qDebug() << "Color picked: " << color.name();
-    ui->colorLineEdit->setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
+    ui->colorLineEdit->setStyleSheet(
+            QString("QLineEdit { background: %1; }").arg(color.name())
+            );
     ui->colorLineEdit->setText(color.name());
 }
 
-void IDAddDialog::on_pushButton_clicked()
+void MsgIDMappingAddDialog::on_pushButton_clicked()
 {
     QColorDialog *colorPicker = new QColorDialog(this);
-    connect(colorPicker, &QColorDialog::colorSelected, this, &IDAddDialog::colorSelected);
+
+    connect(
+            colorPicker,
+            &QColorDialog::colorSelected,
+            this,
+            &MsgIDMappingAddDialog::colorSelected
+            );
+
     colorPicker->exec();
 }
 
-void IDAddDialog::readyToCommit()
+void MsgIDMappingAddDialog::readyToCommit()
 {
-    emit commit(this->parseToNumber(ui->idLineEdit->text()), ui->nameLineEdit->text(), QColor(ui->colorLineEdit->text()));
+    emit sgnl_commit(
+            MsgIDType(parseToNumber(ui->idLineEdit->text())),
+            ui->nameLineEdit->text(),
+            QColor(ui->colorLineEdit->text())
+            );
 }
 
-void IDAddDialog::on_numericallFormatComboBox_currentIndexChanged(int index)
+void MsgIDMappingAddDialog::on_numericallFormatComboBox_currentIndexChanged(
+        int index
+        )
 {
     int enteredNumber = this->parseToNumber(ui->idLineEdit->text());
     ui->idLineEdit->setInputMask(inputMasks.at(index));

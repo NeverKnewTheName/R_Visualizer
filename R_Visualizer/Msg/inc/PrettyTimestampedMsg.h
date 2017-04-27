@@ -215,6 +215,11 @@ public:
         return originalMsg.getTimestamp();
     }
 
+    operator QString() const
+    {
+        return static_cast<QString>(originalMsg);
+    }
+
     void accept(FileParser *visitor)
     {
         originalMsg.accept(visitor);

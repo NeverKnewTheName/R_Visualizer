@@ -63,7 +63,11 @@ private slots:
     void on_idAddBtn_clicked();
 
     void slt_clear();
-    void slt_MsgIDMappingAddFinished(const IMsgIDMapping &addedMsgIDMapping);
+    void slt_MsgIDMappingAddFinished(
+            const MsgIDType &id,
+            const QString &alias,
+            const QColor &colorRepresentation
+            );
 
 private:
     void init();

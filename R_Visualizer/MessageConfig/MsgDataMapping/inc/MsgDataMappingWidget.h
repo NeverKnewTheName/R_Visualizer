@@ -69,7 +69,10 @@ private slots:
 
     void slt_clear();
     void slt_MsgDataMappingAddFinished(
-            const IMsgDataMapping &addedMsgDataMapping
+            const MsgIDType &msgID,
+            const MsgCodeType &msgCode,
+            const QString &formatString,
+            const QColor &defaultColor
             );
 
 private:

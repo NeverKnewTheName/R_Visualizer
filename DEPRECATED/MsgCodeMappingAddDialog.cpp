@@ -6,12 +6,18 @@
 #include <QDebug>
 #include <QColorDialog>
 
-MsgTypeAddDialog::MsgTypeAddDialog(QWidget *parent) :
+MsgCodeMappingAddDialog::MsgCodeMappingAddDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::MsgTypeAddDialog)
+    ui(new Ui::MsgCodeMappingAddDialog)
 {
     ui->setupUi(this);
-    connect(this, &MsgTypeAddDialog::accepted, this, &MsgTypeAddDialog::readyToCommit);
+    connect(
+            this,
+            &MsgCodeMappingAddDialog::accepted,
+            this,
+            &MsgCodeMappingAddDialog::readyToCommit
+            );
+
     inputMasks << "\\0\\xhh"/*HEX*/
                << "000"/*DEC*/
                << "\\0\\b bbbb\\ bbbb"/*BIN*/;
@@ -21,12 +27,12 @@ MsgTypeAddDialog::MsgTypeAddDialog(QWidget *parent) :
     ui->numericallFormatComboBox->addItems(items);
 }
 
-MsgTypeAddDialog::~MsgTypeAddDialog()
+MsgCodeMappingAddDialog::~MsgCodeMappingAddDialog()
 {
     delete ui;
 }
 
-int MsgTypeAddDialog::parseToNumber(QString numericalString)
+int MsgCodeMappingAddDialog::parseToNumber(QString numericalString)
 {
     int idNumericalBase;
     if(numericalString.contains("0x"))
@@ -46,7 +52,7 @@ int MsgTypeAddDialog::parseToNumber(QString numericalString)
     return numericalString.toInt(0, idNumericalBase);
 }
 
-QString MsgTypeAddDialog::parseToString(int number)
+QString MsgCodeMappingAddDialog::parseToString(int number)
 {
     int idNumericalBase = ui->numericallFormatComboBox->currentIndex();
     if(idNumericalBase == 0)
@@ -64,43 +70,66 @@ QString MsgTypeAddDialog::parseToString(int number)
     return QString::number(number, idNumericalBase);
 }
 
-void MsgTypeAddDialog::colorSelected(const QColor &color)
+void MsgCodeMappingAddDialog::colorSelected(const QColor &color)
 {
     qDebug() << "Color picked: " << color.name();
-    ui->colorLineEdit->setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
+    ui->colorLineEdit->setStyleSheet(
+            QString("QLineEdit { background: %1; }").arg(color.name())
+            );
     ui->colorLineEdit->setText(color.name());
 }
 
-void MsgTypeAddDialog::formatSelected(const QString &formatString)
+void MsgCodeMappingAddDialog::formatSelected(const QString &formatString)
 {
     qDebug() << "format specified: " << formatString;
     ui->formatPlainTextEdit->clear();
     ui->formatPlainTextEdit->textCursor().insertText(formatString);
 }
 
-void MsgTypeAddDialog::readyToCommit()
+void MsgCodeMappingAddDialog::readyToCommit()
 {
-    qDebug() << ui->formatPlainTextEdit->document()->toPlainText();
-    emit commit(this->parseToNumber(ui->codeLineEdit->text()), ui->nameLineEdit->text(), ui->formatPlainTextEdit->document()->toPlainText(), QColor(ui->colorLineEdit->text()));
+    emit commit(
+            MsgCodeType(this->parseToNumber(ui->codeLineEdit->text())),
+            ui->nameLineEdit->text(),
+            ui->formatPlainTextEdit->document()->toPlainText(),
+            QColor(ui->colorLineEdit->text())
+            );
     //emit QDialog::accepted();
 }
 
-void MsgTypeAddDialog::on_colorPickerPushButton_clicked()
+void MsgCodeMappingAddDialog::on_colorPickerPushButton_clicked()
 {
     QColorDialog *colorPicker = new QColorDialog(this);
-    connect(colorPicker, &QColorDialog::colorSelected, this, &MsgTypeAddDialog::colorSelected);
+    connect(
+            colorPicker,
+            &QColorDialog::colorSelected,
+            this,
+            &MsgCodeMappingAddDialog::colorSelected
+            );
     colorPicker->exec();
 }
 
-void MsgTypeAddDialog::on_formatterPushButton_clicked()
+void MsgCodeMappingAddDialog::on_formatterPushButton_clicked()
 {
-    MsgTypeFormatterDialog *formatter = new MsgTypeFormatterDialog(this);
-    connect(formatter, &MsgTypeFormatterDialog::commit, this, &MsgTypeAddDialog::formatSelected);
-    formatter->setFormatString(ui->formatPlainTextEdit->document()->toPlainText());
+    MsgCodeMappingFormatterDialog *formatter =
+        new MsgCodeMappingFormatterDialog(this);
+
+    connect(
+            formatter,
+            &MsgCodeMappingFormatterDialog::commit,
+            this,
+            &MsgCodeMappingAddDialog::formatSelected
+            );
+
+    formatter->setFormatString(
+            ui->formatPlainTextEdit->document()->toPlainText()
+            );
     formatter->exec();
 }
 
-void MsgTypeAddDialog::on_numericallFormatComboBox_currentIndexChanged(int index)
+void MsgCodeMappingAddDialog::on_numericallFormatComboBox_currentIndexChanged(
+        int index
+        )
 {
     int enteredNumber = this->parseToNumber(ui->codeLineEdit->text());
     ui->codeLineEdit->setInputMask(inputMasks.at(index));

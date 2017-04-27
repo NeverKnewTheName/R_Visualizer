@@ -9,6 +9,21 @@ TimestampedMsg::TimestampedMsg() :
 }
 
 TimestampedMsg::TimestampedMsg(
+        const IMsg &originalMsg,
+        const QDateTime &timestamp
+        ) :
+    originalMsg(
+            Msg(
+                originalMsg.getMsgID(),
+                originalMsg.getMsgCode(),
+                originalMsg.getMsgData()
+                )
+            ),
+    msgTimestamp(timestamp)
+{
+}
+
+TimestampedMsg::TimestampedMsg(
         const Msg &originalMsg,
         const QDateTime &timestamp
         ) :
@@ -22,7 +37,6 @@ TimestampedMsg::TimestampedMsg(const TimestampedMsg &other) :
     msgTimestamp(other.msgTimestamp)
 {
 }
-
 
 TimestampedMsg::~TimestampedMsg()
 {
@@ -85,6 +99,14 @@ const Msg TimestampedMsg::getOriginalMsg() const
 void TimestampedMsg::setOriginalMsg(const Msg &originalMsg)
 {
     this->originalMsg = originalMsg;
+}
+
+
+TimestampedMsg::operator QString() const
+{
+    return QString("Timestamp: %1 - %2")
+        .arg(msgTimestamp.toString("dd.MM.yyyy - hh:mm:ss.zzz"))
+        .arg(static_cast<QString>(originalMsg));
 }
 
 void TimestampedMsg::accept(FileParser *visitor)

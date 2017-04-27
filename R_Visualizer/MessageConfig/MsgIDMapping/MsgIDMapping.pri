@@ -12,6 +12,7 @@ SOURCES += \
     $$PWD/src/MsgIDMappingWidget.cpp \
     $$PWD/src/MsgIDMappingStore.cpp \
     $$PWD/src/MsgIDMappingModel.cpp \
+    $$PWD/src/MsgIDMappingAddDialog.cpp \
 
 HEADERS  += \
     $$PWD/inc/IMsgIDMapping.h \
@@ -23,7 +24,8 @@ HEADERS  += \
     $$PWD/inc/MsgIDMappingModel.h \
     $$PWD/inc/IMsgIDMappingStore.h \
     $$PWD/inc/MsgIDMappingStore.h \
+    $$PWD/inc/MsgIDMappingAddDialog.h \
 
 FORMS    += \
     $$PWD/ui/msgidmappingwidget.ui \
-    #$$PWD/ui/idadddialog.ui \
+    $$PWD/ui/msgidmappingadddialog.ui \

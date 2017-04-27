@@ -1,56 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MsgTypeAddDialog</class>
- <widget class="QDialog" name="MsgTypeAddDialog">
+ <class>MsgIDMappingAddDialog</class>
+ <widget class="QDialog" name="MsgIDMappingAddDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>332</height>
+    <width>400</width>
+    <height>128</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="codeLabel">
-     <property name="text">
-      <string>Code</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="codeLineEdit">
+      <widget class="QLineEdit" name="idLineEdit">
        <property name="minimumSize">
         <size>
          <width>100</width>
          <height>0</height>
         </size>
        </property>
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
        <property name="toolTip">
-        <string>Enter the code for the message to be parsed</string>
+        <string>Enter the ID for the message to be parsed</string>
        </property>
        <property name="locale">
         <locale language="English" country="UnitedStates"/>
        </property>
        <property name="inputMask">
-        <string>\0\xhh</string>
+        <string>\0\xhhhh</string>
        </property>
-       <property name="maxLength">
-        <number>4</number>
+       <property name="text">
+        <string>0x</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
        </property>
        <property name="placeholderText">
         <string/>
        </property>
        <property name="cursorMoveStyle">
         <enum>Qt::LogicalMoveStyle</enum>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -70,69 +66,32 @@
        </property>
       </widget>
      </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>356</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="nameLabel">
-     <property name="text">
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="nameLineEdit">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name which shall substitute the ID.&lt;/p&gt;&lt;p&gt;The numerical ID will then be replaced in each message by this name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
+     <property name="placeholderText">
       <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QLineEdit" name="nameLineEdit">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name which shall substitute the code.&lt;/p&gt;&lt;p&gt;The numerical code will then be replaced in each message by this name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="locale">
-      <locale language="English" country="UnitedStates"/>
-     </property>
-     <property name="placeholderText">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QLabel" name="dataFormatLabel">
-     <property name="text">
-      <string>Data Format:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPlainTextEdit" name="formatPlainTextEdit">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the formatting which shall be applied to the data of the message.&lt;/p&gt;&lt;p&gt;Use the Formatter by clicking on the button below for simplified input.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="locale">
-      <locale language="English" country="UnitedStates"/>
-     </property>
-     <property name="placeholderText">
-      <string>Data Format</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="colorLabel">
-     <property name="text">
-      <string>Color</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLineEdit" name="colorLineEdit">
@@ -151,7 +110,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="colorPickerPushButton">
+      <widget class="QPushButton" name="pushButton">
        <property name="toolTip">
         <string>Call the Color Picker</string>
        </property>
@@ -161,49 +120,45 @@
        <property name="text">
         <string>Color Picker</string>
        </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="9" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <item row="0" column="0">
+    <widget class="QLabel" name="idLabel">
+     <property name="text">
+      <string>ID</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QPushButton" name="formatterPushButton">
-     <property name="toolTip">
-      <string>Call the Formatter  to ease input of a message format</string>
-     </property>
-     <property name="locale">
-      <locale language="English" country="UnitedStates"/>
-     </property>
+   <item row="1" column="0">
+    <widget class="QLabel" name="nameLabel">
      <property name="text">
-      <string>Formatter</string>
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="colorLabel">
+     <property name="text">
+      <string>Color</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>codeLineEdit</tabstop>
-  <tabstop>nameLineEdit</tabstop>
-  <tabstop>formatPlainTextEdit</tabstop>
-  <tabstop>formatterPushButton</tabstop>
-  <tabstop>colorLineEdit</tabstop>
-  <tabstop>colorPickerPushButton</tabstop>
- </tabstops>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>MsgTypeAddDialog</receiver>
+   <receiver>MsgIDMappingAddDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -219,7 +174,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>MsgTypeAddDialog</receiver>
+   <receiver>MsgIDMappingAddDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

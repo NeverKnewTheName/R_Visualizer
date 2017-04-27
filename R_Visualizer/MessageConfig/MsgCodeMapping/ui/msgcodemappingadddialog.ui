@@ -1,52 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>IDAddDialog</class>
- <widget class="QDialog" name="IDAddDialog">
+ <class>MsgCodeMappingAddDialog</class>
+ <widget class="QDialog" name="MsgCodeMappingAddDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>408</width>
+    <height>146</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="codeLabel">
+     <property name="text">
+      <string>Code</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="idLineEdit">
+      <widget class="QLineEdit" name="codeLineEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>100</width>
          <height>0</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
        <property name="toolTip">
-        <string>Enter the ID for the message to be parsed</string>
+        <string>Enter the code for the message to be parsed</string>
        </property>
        <property name="locale">
         <locale language="English" country="UnitedStates"/>
        </property>
        <property name="inputMask">
-        <string>\0\xhhhh</string>
+        <string>\0\xhh</string>
        </property>
-       <property name="text">
-        <string>0x</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
+       <property name="maxLength">
+        <number>4</number>
        </property>
        <property name="placeholderText">
         <string/>
        </property>
        <property name="cursorMoveStyle">
         <enum>Qt::LogicalMoveStyle</enum>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -66,25 +76,19 @@
        </property>
       </widget>
      </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="0">
+    <widget class="QLabel" name="nameLabel">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <widget class="QLineEdit" name="nameLineEdit">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name which shall substitute the ID.&lt;/p&gt;&lt;p&gt;The numerical ID will then be replaced in each message by this name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name which shall substitute the code.&lt;/p&gt;&lt;p&gt;The numerical code will then be replaced in each message by this name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="locale">
       <locale language="English" country="UnitedStates"/>
@@ -94,17 +98,14 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <item row="4" column="0">
+    <widget class="QLabel" name="colorLabel">
+     <property name="text">
+      <string>Color</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="4" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLineEdit" name="colorLineEdit">
@@ -123,7 +124,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="colorPickerPushButton">
        <property name="toolTip">
         <string>Call the Color Picker</string>
        </property>
@@ -133,45 +134,34 @@
        <property name="text">
         <string>Color Picker</string>
        </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="idLabel">
-     <property name="text">
-      <string>ID</string>
+   <item row="6" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="nameLabel">
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="colorLabel">
-     <property name="text">
-      <string>Color</string>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>codeLineEdit</tabstop>
+  <tabstop>nameLineEdit</tabstop>
+  <tabstop>colorLineEdit</tabstop>
+  <tabstop>colorPickerPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>IDAddDialog</receiver>
+   <receiver>MsgCodeMappingAddDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -187,7 +177,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>IDAddDialog</receiver>
+   <receiver>MsgCodeMappingAddDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

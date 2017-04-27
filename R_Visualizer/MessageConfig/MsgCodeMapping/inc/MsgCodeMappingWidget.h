@@ -53,7 +53,9 @@ private slots:
 
     void slt_clear();
     void slt_MsgCodeMappingAddFinished(
-            const IMsgCodeMapping &addedMsgCodeMapping
+            const MsgCodeType &msgCode,
+            const QString &alis,
+            const QColor &colorRepresentation
             );
 
 signals:

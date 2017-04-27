@@ -12,7 +12,8 @@
 
 #include "msgstorage.h"
 
-/* #include "devicehandler.h" */
+#include "IInterfaceHandler.h"
+#include "CANAnalyserInterfaceHandler.h"
 
 #include "UserRoleManager.h"
 
@@ -94,11 +95,13 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     /* DeviceHandler *interfaceHandler = new DeviceHandler(); */
+    IInterfaceHandler *interfaceHandler = new CANAnalyserInterfaceHandler(&w);
 
     IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
     IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(
             msgIDMappingStore
             );
+    msgIDMappingStore->setParent(msgIDMappingManager);
     MsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
             msgIDMappingStore
             );
@@ -107,6 +110,7 @@ int main(int argc, char *argv[])
     IMsgCodeMappingManager *msgCodeMappingManager = new MsgCodeMappingManager(
             msgCodeMappingStore
             );
+    msgCodeMappingStore->setParent(msgCodeMappingManager);
     MsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
             msgCodeMappingStore
             );
@@ -115,6 +119,7 @@ int main(int argc, char *argv[])
     IMsgDataMappingManager *msgDataMappingManager = new MsgDataMappingManager(
             msgDataMappingStore
             );
+    msgDataMappingStore->setParent(msgDataMappingManager);
     MsgDataMappingModel *msgDataMappingModel = new MsgDataMappingModel(
             msgDataMappingStore
             );
@@ -126,6 +131,11 @@ int main(int argc, char *argv[])
             msgDataMappingManager,
             &a
             );
+    
+    msgIDMappingManager->setParent(messageConfig);
+    msgCodeMappingManager->setParent(messageConfig);
+    msgDataMappingManager->setParent(messageConfig);
+
     MessageConfigWidget *messageConfigWidget = new MessageConfigWidget(
             messageConfig
             );
@@ -161,13 +171,16 @@ int main(int argc, char *argv[])
     /* messageConfigWidget->appendMappingWidget(); */
 
     MessageFilter *messageFilter = new MessageFilter(&a);
-    MessageFilterWidget *messageFilterWidget = new MessageFilterWidget();
+    MessageFilterWidget *messageFilterWidget =
+        new MessageFilterWidget();
 
 
     IMsgIDFilterStore *msgIDFilterStore = new MsgIDFilterStore();
     MsgIDFilter *msgIDFilter = new MsgIDFilter(
             msgIDFilterStore
             );
+
+    msgIDFilterStore->setParent(msgIDFilter);
 
     messageFilter->addFilter(msgIDFilter);
     MsgIDFilterModel *msgIDFilterModel = new MsgIDFilterModel(
@@ -182,6 +195,8 @@ int main(int argc, char *argv[])
     MsgCodeFilter *msgCodeFilter = new MsgCodeFilter(
             msgCodeFilterStore
             );
+
+    msgCodeFilterStore->setParent(msgCodeFilter);
 
     messageFilter->addFilter(msgCodeFilter);
     MsgCodeFilterModel *msgCodeFilterModel = new MsgCodeFilterModel(
@@ -209,6 +224,13 @@ int main(int argc, char *argv[])
     QObject::connect(
             &w,
             &MainWindow::sgnl_AddTestMessage,
+            interfaceHandler,
+            &IInterfaceHandler::slt_SendMessage
+            );
+
+    QObject::connect(
+            interfaceHandler,
+            &IInterfaceHandler::sgnl_MessageReceived,
             &timestampedMsgStorage,
             &TimestampedMsgStorage::slt_addMsg
             );
@@ -220,8 +242,11 @@ int main(int argc, char *argv[])
             messageConfig,
             messageFilter,
             msgStreamStore,
-            timestampedMsgStorage
+            timestampedMsgStorage,
+            &w
             );
+
+    msgStreamStore->setParent(messageStream);
 
     MsgStreamModel *msgStreamModel = new MsgStreamModel(msgStreamStore);
 
@@ -233,6 +258,7 @@ int main(int argc, char *argv[])
     w.setMessageStreamWidget(
             messageStreamWidget
             );
+
     /* SendMessages *sendMessagesWidget; */
     //SendMessages *sndMsgsWidget = new SendMessages(
     //        messageConfig

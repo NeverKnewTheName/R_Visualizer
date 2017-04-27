@@ -10,6 +10,12 @@
 
 #include "IInterfaceHandler.h"
 
+/**
+ * @addtogroup InterfaceHandlerGroup
+ * 
+ * @{
+ */
+
 class InterfaceHandler : public IInterfaceHandler
 {
 public:
@@ -20,12 +26,16 @@ public:
     virtual bool disconnectFromInterface();
     virtual bool startSession();
     virtual bool stopSession();
-    virtual void sendMessage(const IMsg &msgToSend);
+    virtual bool sendMessage(const IMsg &msgToSend);
 
     virtual bool isConnected() const;
     virtual bool isSessionInProgress() const;
 private:
 
 };
+
+/**
+ * @}
+ */
 
 #endif /* INTERFACEHANDLER_H */

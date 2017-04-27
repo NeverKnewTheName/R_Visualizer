@@ -109,9 +109,26 @@ public:
      * @pre The #IInterfaceHandler must been connected to the connected
      * interface a monitoring session must be in progress
      */
-    virtual void sendMessage(const IMsg &msgToSend) = 0;
+    virtual bool sendMessage(const IMsg &msgToSend) = 0;
 
+    /**
+     * @brief Returns whether the #IInterfaceHandler is connected to a
+     * connected interface
+     * 
+     * @returns Connections status of the #IInterfaceHandler
+     * @retval true #IInterfaceHandler is connected to a connected interface
+     * @retval false #IInterfaceHandler is not connected to a connected
+     * interface
+     */
     virtual bool isConnected() const = 0;
+
+    /**
+     * @brief Returns whether a monitoring session is currently in progress
+     * 
+     * @returns Session status of the #IInterfaceHandler
+     * @retval true A monitoring session is currently in progress
+     * @retval false No monitoring session is currently in progress
+     */
     virtual bool isSessionInProgress() const = 0;
 
 signals:
