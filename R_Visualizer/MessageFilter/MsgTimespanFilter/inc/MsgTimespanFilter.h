@@ -30,7 +30,7 @@ public:
     virtual ~MsgTimespanFilter();
 
     /**
-     * @brief Matches the passed #ITImestampedMsg against the current filter
+     * @brief Matches the passed #ITimestampedMsg against the current filter
      * state and configuration and returns the result
      * 
      * If the filter is not enabled, this function always returns true

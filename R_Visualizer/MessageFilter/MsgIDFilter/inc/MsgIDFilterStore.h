@@ -53,7 +53,7 @@ public:
     bool containsMsgID(const MsgIDType &msgID) const;
 
     /**
-     * @brief Returns the #MsgIDTpe at the specified index
+     * @brief Returns the #MsgIDType at the specified index
      * 
      * @returns A const reference of the #MsgIDType at the specified index in
      * the store
@@ -61,7 +61,7 @@ public:
     const MsgIDType &at(const int index) const;
 
     /**
-     * @brief Returns the #MsgIDTpe at the specified index
+     * @brief Returns the #MsgIDType at the specified index
      * 
      * @returns A modifialbe reference to the #MsgIDType at the specified index
      * in the store
@@ -83,7 +83,7 @@ public:
     int indexOf(const MsgIDType &msgID) const;
 
     /**
-     * @brief Clears the store removing all currently contained #MsgIDTypes
+     * @brief Clears the store removing all currently contained #MsgIDType
      * 
      * @note emits #sgnl_AboutToBeCleared and #sgnl_Cleared
      */
@@ -91,7 +91,7 @@ public:
 
 private:
     /**
-     * @brief Vector to store the #MsgIDTypes for the #MsgIDFilterStore
+     * @brief Vector to store the #MsgIDType for the #MsgIDFilterStore
      */
     QVector<MsgIDType> msgIDVector;
 };

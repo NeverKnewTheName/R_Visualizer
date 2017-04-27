@@ -3,7 +3,7 @@
  * @author Christian Neuberger
  * @date 2017-04-03
  * 
- * @brief Filters #Imsg by #MsgCodeType
+ * @brief Filters #IMsg by #MsgCodeType
  */
 #ifndef MSGCODEFILTER_H
 #define MSGCODEFILTER_H

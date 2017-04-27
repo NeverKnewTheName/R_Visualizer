@@ -1,141 +1,14 @@
 warning: source ./R_Visualizer/inc is not a readable file or directory... skipping.
 warning: source ./R_Visualizer/src is not a readable file or directory... skipping.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStream/inc/IMsgStreamModel.h:47: warning: Reached end of file while still inside a (nested) comment. Nesting level 2 (probable line reference: 32, 27)
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStream/src/MessageStream.cpp:200: warning: Reached end of file while still inside a (nested) comment. Nesting level 3 (probable line reference: 188, 177, 166)
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/ErrLogView/inc/errlogmodel.h:2: warning: the name `errorlogmodel.h' supplied as the second argument in the \file statement is not an input file
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/ErrLogView/inc/errlogview.h:2: warning: the name `errorlogview.h' supplied as the second argument in the \file statement is not an input file
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/MsgCodeType.h:2: warning: the name `MessageCodeType.h' supplied as the second argument in the \file statement is not an input file
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypeadddialog.h:2: warning: the name `msgtypeaddialog.h' supplied as the second argument in the \file statement is not an input file
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMapping.h:2: warning: the name `IMsgCodeMapping' supplied as the second argument in the \file statement is not an input file
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:16: warning: documented symbol `MsgModel::MsgModel' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:30: warning: documented symbol `MsgModel::~MsgModel' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:35: warning: no uniquely matching class member found for 
-  int MsgModel::rowCount(const QModelIndex &parent) const
+/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/src/SendMessages.cpp:35: warning: no uniquely matching class member found for 
+  void SendMessages::slt_applyUserRole(const UserRoleManagement::UserRole roleToApply)
 
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:41: warning: no uniquely matching class member found for 
-  int MsgModel::columnCount(const QModelIndex &parent) const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:47: warning: no uniquely matching class member found for 
-  QVariant MsgModel::data(const QModelIndex &index, int role) const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:115: warning: no uniquely matching class member found for 
-  bool MsgModel::setData(const QModelIndex &index, const QVariant &value, int role)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:129: warning: no uniquely matching class member found for 
-  QVariant MsgModel::headerData(int section, Qt::Orientation orientation, int role) const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:152: warning: no uniquely matching class member found for 
-  bool MsgModel::removeRows(int row, int count, const QModelIndex &parent)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:170: warning: no uniquely matching class member found for 
-  void MsgModel::removeRow(int row, const QModelIndex &parent)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:184: warning: documented symbol `void MsgModel::addMsg' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:221: warning: no uniquely matching class member found for 
-  void MsgModel::clear()
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:233: warning: documented symbol `RSimpleDestructiveRingBuff< Msg > MsgModel::getMsgs' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:239: warning: documented symbol `void MsgModel::setMsgs' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:251: warning: documented symbol `QByteArray MsgModel::parseToJSON' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:262: warning: documented symbol `void MsgModel::parseFromJSON' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/__msgmodel.cpp:273: warning: no matching class member found for 
-  void MsgModel::messageReceived(const Msg &msg)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:30: warning: no matching class member found for 
-  Msg::Msg(const QJsonObject &jsonObj)
-Possible candidates:
-  Msg::Msg()
-  Msg::Msg(const MsgIDType &msgID, const MsgCodeType &msgCode, const MsgDataType &msgData=MsgDataType())
-  Msg::Msg(const Msg &other)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:51: warning: no matching class member found for 
-  Msg::Msg(const QDateTime &timestamp, const MsgIDType id, const MsgCodeType code, DataByteVect dataBytes)
-Possible candidates:
-  Msg::Msg()
-  Msg::Msg(const MsgIDType &msgID, const MsgCodeType &msgCode, const MsgDataType &msgData=MsgDataType())
-  Msg::Msg(const Msg &other)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:63: warning: no uniquely matching class member found for 
-  QDateTime Msg::getTimestamp() const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:68: warning: no uniquely matching class member found for 
-  void Msg::setTimestamp(const QDateTime &value)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:73: warning: documented symbol `MsgIDType Msg::getId' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:78: warning: documented symbol `void Msg::setId' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:83: warning: no uniquely matching class member found for 
-  MsgCodeType Msg::getCode() const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:88: warning: no uniquely matching class member found for 
-  void Msg::setCode(const MsgCodeType value)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:93: warning: documented symbol `MsgData Msg::getData' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:98: warning: documented symbol `QString Msg::getDataAsString' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:110: warning: documented symbol `void Msg::parseIN' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:123: warning: documented symbol `QJsonObject Msg::parseOUT' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:145: warning: documented symbol `QByteArray Msg::getDataAsByteArray' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:156: warning: no uniquely matching class member found for 
-  void Msg::setData(const DataByteVect &dataBytes)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:163: warning: documented symbol `void Msg::setDataByte' was not declared or defined.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:176: warning: no uniquely matching class member found for 
-  QJsonObject Msg::ParseToJson() const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/msg.cpp:193: warning: no uniquely matching class member found for 
-  void Msg::ParseFromJson(const QJsonObject &jsonObj)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/PrettyMsg.cpp:15: warning: no matching class member found for 
-  PrettyMsg< ConcreteMsg >::PrettyMsg(const IMsg &originalMsg)
-Possible candidates:
-  PrettyMsg< ConcreteMsg >::PrettyMsg()
-  PrettyMsg< ConcreteMsg >::PrettyMsg(const ConcreteMsg &originalMsg)
-  PrettyMsg< ConcreteMsg >::PrettyMsg(const PrettyMsg &other)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/src/PrettyTimestampedMsg.cpp:15: warning: no matching class member found for 
-  PrettyTimestampedMsg< ConcreteTimestampedMsg >::PrettyTimestampedMsg(const ITimestampedMsg &originalMsg)
-Possible candidates:
-  PrettyTimestampedMsg< ConcreteTimestampedMsg >::PrettyTimestampedMsg()
-  PrettyTimestampedMsg< ConcreteTimestampedMsg >::PrettyTimestampedMsg(const ConcreteTimestampedMsg &originalMsg)
-  PrettyTimestampedMsg< ConcreteTimestampedMsg >::PrettyTimestampedMsg(const PrettyTimestampedMsg &other)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:16: warning: no uniquely matching class member found for 
-  TimestampedMsg MsgStorage::at(const size_t index)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:26: warning: no uniquely matching class member found for 
-  TimestampedMsg MsgStorage::operator[](const size_t index)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:31: warning: no uniquely matching class member found for 
-  void MsgStorage::clear()
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:37: warning: no uniquely matching class member found for 
-  int MsgStorage::size() const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:42: warning: no uniquely matching class member found for 
-  bool MsgStorage::isEmpty() const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:47: warning: no uniquely matching class member found for 
-  void MsgStorage::appendMsg(const TimestampedMsg &newMsg)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:54: warning: no uniquely matching class member found for 
-  QJsonDocument MsgStorage::ParseToJson() const
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:61: warning: no uniquely matching class member found for 
-  bool MsgStorage::ParseFromJson(const QJsonArray &jsonMsgsArray)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStorage/src/msgstorage.cpp:73: warning: no uniquely matching class member found for 
-  QString MsgStorage::saveMsgStorage(const QString &saveLocation)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/src/SendMsgPackage.cpp:23: warning: no uniquely matching class member found for 
-  void SendMsgPackage::prependMsg(const IMsg &msgToPrepend)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/src/SendMsgPackage.cpp:29: warning: no uniquely matching class member found for 
-  void SendMsgPackage::insertMsg(const int index, const IMsg &msgToAppend)
-
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/src/SendMsgPackage.cpp:67: warning: documented symbol `void SendMsgPackage::slt_removeMsgAllMatches' was not declared or defined.
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/csvmsgpackethandler.h:35: warning: explicit link request to 'Msgs' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/csvmsgpackethandler.h:44: warning: explicit link request to 'Msgs' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:150: warning: explicit link request to 'UserRole' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgCodeFilter/inc/MsgCodeFilter.h:6: warning: explicit link request to 'Imsg' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:47: warning: explicit link request to 'MainWindows' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/idmodel.h:85: warning: explicit link request to 'IDMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/idmodel.h:168: warning: explicit link request to 'IDMapping' could not be resolved
@@ -145,15 +18,6 @@ Possible candidates:
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:103: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:182: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:178: warning: explicit link request to 'MsgCodeTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:168: warning: explicit link request to 'IMsgCodeMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgDataMapping/inc/IMsgDataMappingStore.h:213: warning: explicit link request to 'IMsgDataMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgIDMapping/inc/IMsgIDMappingStore.h:169: warning: explicit link request to 'IMsgIDMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:55: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:83: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:86: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:94: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:56: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgTimespanFilter/inc/MsgTimespanFilter.h:33: warning: explicit link request to 'ITImestampedMsg' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:64: warning: explicit link request to 'MsgTypeReps' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:33: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
@@ -161,19 +25,13 @@ Possible candidates:
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:35: warning: explicit link request to 'MsgIDRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/InterfaceHandler/inc/devicehandler.h:7: warning: Found unknown command `\license'
-warning: Include graph for 'main.cpp' not generated, too many nodes. Consider increasing DOT_GRAPH_MAX_NODES.
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgCodeFilter/inc/MsgCodeFilter.h:6: warning: explicit link request to 'Imsg' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgCodeFilter/inc/MsgCodeFilter.h:6: warning: explicit link request to 'Imsg' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/csvmsgpackethandler.h:35: warning: explicit link request to 'Msgs' could not be resolved
@@ -215,29 +73,16 @@ warning: Include graph for 'main.cpp' not generated, too many nodes. Consider in
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/idmodel.h:164: warning: explicit link request to 'MsgIDTypes' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStream/inc/IMessageStream.h:91: warning: The following parameters of IMessageStream::slt_receiveMessage(const ITimestampedMsg &receivedMsg, const int index) are not documented:
   parameter 'index'
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:168: warning: explicit link request to 'IMsgCodeMappings' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:78: warning: explicit link request to 'sgnl_MappingAboutToBeAdded' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:78: warning: explicit link request to 'sgnl_MappingAdd' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:88: warning: explicit link request to 'sgnl_MappingAboutToBeRemoved' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:88: warning: explicit link request to 'sgnl_MappingRemoved' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:168: warning: explicit link request to 'IMsgCodeMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgDataMapping/inc/IMsgDataMappingStore.h:213: warning: explicit link request to 'IMsgDataMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgDataMapping/inc/IMsgDataMappingStore.h:213: warning: explicit link request to 'IMsgDataMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:55: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:63: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:83: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:55: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:63: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/IMsgIDFilterStore.h:83: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgIDMapping/inc/IMsgIDMappingStore.h:169: warning: explicit link request to 'IMsgIDMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgIDMapping/inc/IMsgIDMappingStore.h:169: warning: explicit link request to 'IMsgIDMappings' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:47: warning: explicit link request to 'MainWindows' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:150: warning: explicit link request to 'UserRole' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:47: warning: explicit link request to 'MainWindows' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:107: warning: explicit link request to 'UserRole' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/mainwindow.h:150: warning: explicit link request to 'UserRole' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/MsgCodeMapping.h:47: warning: argument 'messageFormat' of command @param is not found in the argument list of MsgCodeMapping::MsgCodeMapping(const MsgCodeType &code, const QString &name, const QColor &color)
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:168: warning: explicit link request to 'IMsgCodeMappings' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:78: warning: explicit link request to 'sgnl_MappingAboutToBeAdded' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:78: warning: explicit link request to 'sgnl_MappingAdd' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgCodeMapping/inc/IMsgCodeMappingStore.h:88: warning: explicit link request to 'sgnl_MappingAboutToBeRemoved' could not be resolved
@@ -252,7 +97,6 @@ warning: Include graph for 'main.cpp' not generated, too many nodes. Consider in
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:33: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:36: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:64: warning: explicit link request to 'MsgTypeReps' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgDataMapping/inc/IMsgDataMappingStore.h:213: warning: explicit link request to 'IMsgDataMappings' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:35: warning: explicit link request to 'MsgIDRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:66: warning: explicit link request to 'IDReps' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:28: warning: explicit link request to 'IDRep' could not be resolved
@@ -261,18 +105,7 @@ warning: Include graph for 'main.cpp' not generated, too many nodes. Consider in
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:35: warning: explicit link request to 'MsgIDRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:38: warning: explicit link request to 'IDRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:66: warning: explicit link request to 'IDReps' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:56: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:64: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:86: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:94: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:56: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:64: warning: explicit link request to 'MsgIDTpe' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:86: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgIDFilter/inc/MsgIDFilterStore.h:94: warning: explicit link request to 'MsgIDTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/MsgIDMapping/inc/IMsgIDMappingStore.h:169: warning: explicit link request to 'IMsgIDMappings' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStream/inc/MsgStreamStore.h:39: warning: explicit link request to 'PrettyTimestampedMsg<TimestampedMsg>' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgTimespanFilter/inc/MsgTimespanFilter.h:33: warning: explicit link request to 'ITImestampedMsg' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgTimespanFilter/inc/MsgTimespanFilter.h:33: warning: explicit link request to 'ITImestampedMsg' could not be resolved
+/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageStream/inc/MsgStreamStore.h:39: warning: Unsupported xml/html tag <TimestampedMsg> found
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:98: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:103: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:178: warning: explicit link request to 'MsgCodeTypes' could not be resolved
@@ -286,10 +119,8 @@ warning: Include graph for 'main.cpp' not generated, too many nodes. Consider in
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:182: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-</home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/>:1: warning: explicit link request to 'IMsgPackageModel' could not be resolved
 </home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/>:1: warning: explicit link request to 'MsgTypeRep' could not be resolved
 </home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/>:1: warning: explicit link request to 'MsgIDRep' could not be resolved
-</home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgCodeFilter/inc/>:1: warning: explicit link request to 'Imsg' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
@@ -298,11 +129,7 @@ warning: Include graph for 'main.cpp' not generated, too many nodes. Consider in
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgCodeFilter/inc/MsgCodeFilter.h:6: warning: explicit link request to 'Imsg' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageFilter/MsgCodeFilter/inc/MsgCodeFilter.h:6: warning: explicit link request to 'Imsg' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved

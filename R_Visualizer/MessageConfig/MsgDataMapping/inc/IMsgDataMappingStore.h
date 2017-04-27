@@ -210,7 +210,7 @@ public slots:
 
     /**
      * @brief Slot that clears the store by removed all contained
-     * #IMsgDataMappings from the store
+     * #IMsgDataMapping from the store
      */
     virtual void slt_ClearStore()
     {

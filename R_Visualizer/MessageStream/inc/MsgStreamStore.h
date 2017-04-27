@@ -38,7 +38,7 @@ public:
     /**
      * @brief Appends a copy of the passed pretty message to the store
      * 
-     * \note constructs an empty #PrettyTimestampedMsg<TimestampedMsg> if none
+     * \note constructs an empty #PrettyTimestampedMsg <TimestampedMsg> if none
      * is given
      * 
      * \returns A reference to the appended IPrettyTimestampedMsg

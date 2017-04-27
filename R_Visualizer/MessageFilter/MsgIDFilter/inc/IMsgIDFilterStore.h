@@ -52,7 +52,7 @@ public:
     virtual bool containsMsgID(const MsgIDType &msgID) const = 0;
 
     /**
-     * @brief Returns the #MsgIDTpe at the specified index
+     * @brief Returns the #MsgIDType at the specified index
      * 
      * @returns A const reference of the #MsgIDType at the specified index in
      * the store
@@ -60,7 +60,7 @@ public:
     virtual const MsgIDType &at(const int index) const = 0;
 
     /**
-     * @brief Returns the #MsgIDTpe at the specified index
+     * @brief Returns the #MsgIDType at the specified index
      * 
      * @returns A modifialbe reference to the #MsgIDType at the specified index
      * in the store
@@ -80,7 +80,7 @@ public:
     virtual int indexOf(const MsgIDType &msgID) const = 0;
 
     /**
-     * @brief Clears the store removing all currently contained #MsgIDTypes
+     * @brief Clears the store removing all currently contained #MsgIDType
      * 
      * @note Must emit #sgnl_AboutToBeCleared and #sgnl_Cleared
      */
