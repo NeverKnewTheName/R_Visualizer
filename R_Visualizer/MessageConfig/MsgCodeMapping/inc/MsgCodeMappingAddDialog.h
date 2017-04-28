@@ -36,7 +36,7 @@ private:
     QStringList inputMasks;
 
     int parseToNumber(QString numericalString);
-    QString parseToString(int number);
+    QString parseToString(const int number);
 
 private slots:
     void colorSelected(const QColor &color);

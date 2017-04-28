@@ -41,7 +41,6 @@ int MsgCodeMappingAddDialog::parseToNumber(QString numericalString)
     {
         idNumericalBase = 2;
         numericalString.replace(" ","").replace("0b","");
-        qDebug() << numericalString;
     }
     else
     {
@@ -50,27 +49,31 @@ int MsgCodeMappingAddDialog::parseToNumber(QString numericalString)
     return numericalString.toInt(0, idNumericalBase);
 }
 
-QString MsgCodeMappingAddDialog::parseToString(int number)
+QString MsgCodeMappingAddDialog::parseToString(const int number)
 {
     int idNumericalBase = ui->numericallFormatComboBox->currentIndex();
-    if(idNumericalBase == 0)
+
+    switch(idNumericalBase)
     {
-        idNumericalBase = 16;
+        case 0:
+            idNumericalBase = 16;
+            break;
+        case 1:
+            idNumericalBase = 10;
+            break;
+        case 2:
+            idNumericalBase = 2;
+            break;
+        default:
+            idNumericalBase = 10;
+            break;
     }
-    else if(idNumericalBase == 1)
-    {
-        idNumericalBase = 10;
-    }
-    else if(idNumericalBase == 2)
-    {
-        idNumericalBase = 2;
-    }
+
     return QString::number(number, idNumericalBase);
 }
 
 void MsgCodeMappingAddDialog::colorSelected(const QColor &color)
 {
-    qDebug() << "Color picked: " << color.name();
     ui->colorLineEdit->setStyleSheet(
             QString("QLineEdit { background: %1; }").arg(color.name())
             );

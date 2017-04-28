@@ -41,7 +41,6 @@ int MsgIDMappingAddDialog::parseToNumber(QString numericalString)
     {
         idNumericalBase = 2;
         numericalString.replace(" ","").replace("0b","");
-        qDebug() << numericalString;
     }
     else
     {
@@ -50,27 +49,30 @@ int MsgIDMappingAddDialog::parseToNumber(QString numericalString)
     return numericalString.toInt(0, idNumericalBase);
 }
 
-QString MsgIDMappingAddDialog::parseToString(int number)
+QString MsgIDMappingAddDialog::parseToString(const int number)
 {
     int idNumericalBase = ui->numericallFormatComboBox->currentIndex();
-    if(idNumericalBase == 0)
+
+    switch(idNumericalBase)
     {
-        idNumericalBase = 16;
+        case 0:
+            idNumericalBase = 16;
+            break;
+        case 1:
+            idNumericalBase = 10;
+            break;
+        case 2:
+            idNumericalBase = 2;
+            break;
+        default:
+            idNumericalBase = 10;
     }
-    else if(idNumericalBase == 1)
-    {
-        idNumericalBase = 10;
-    }
-    else if(idNumericalBase == 2)
-    {
-        idNumericalBase = 2;
-    }
+
     return QString::number(number, idNumericalBase);
 }
 
 void MsgIDMappingAddDialog::colorSelected(const QColor &color)
 {
-    qDebug() << "Color picked: " << color.name();
     ui->colorLineEdit->setStyleSheet(
             QString("QLineEdit { background: %1; }").arg(color.name())
             );
@@ -104,9 +106,9 @@ void MsgIDMappingAddDialog::on_numericallFormatComboBox_currentIndexChanged(
         int index
         )
 {
-    int enteredNumber = this->parseToNumber(ui->idLineEdit->text());
+    int enteredNumber =parseToNumber(ui->idLineEdit->text());
     ui->idLineEdit->setInputMask(inputMasks.at(index));
-    ui->idLineEdit->setText(this->parseToString(enteredNumber));
+    ui->idLineEdit->setText(parseToString(enteredNumber));
     ui->idLineEdit->setFocus();
     ui->idLineEdit->setCursorPosition(0);
     ui->idLineEdit->selectAll();

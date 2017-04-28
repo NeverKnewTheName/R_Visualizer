@@ -2,7 +2,6 @@ warning: source ./R_Visualizer/inc is not a readable file or directory... skippi
 warning: source ./R_Visualizer/src is not a readable file or directory... skipping.
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/ErrLogView/inc/errlogmodel.h:2: warning: the name `errorlogmodel.h' supplied as the second argument in the \file statement is not an input file
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/ErrLogView/inc/errlogview.h:2: warning: the name `errorlogview.h' supplied as the second argument in the \file statement is not an input file
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypeadddialog.h:2: warning: the name `msgtypeaddialog.h' supplied as the second argument in the \file statement is not an input file
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/src/SendMessages.cpp:6: warning: no matching class member found for 
   SendMessages::SendMessages(QObject *parent)
 Possible candidates:
