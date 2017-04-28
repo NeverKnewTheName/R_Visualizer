@@ -26,11 +26,8 @@ class AbstractMsgFieldLineEdit
 public:
     AbstractMsgFieldLineEdit();
 
-    virtual int convertStringToNumber(const QString &number) const;
-
-    virtual QString convertNumberToString(
-            const int number,
-            const int base
+    virtual int convertStringToNumber(
+            const QString &number
             ) const;
 };
 

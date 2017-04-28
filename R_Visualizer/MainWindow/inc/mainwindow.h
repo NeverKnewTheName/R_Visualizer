@@ -56,6 +56,10 @@ public:
             QWidget *widgetToAppend,
             const QString &widgetName
             );
+
+    void addToTesting(
+        QWidget *widgetToTest
+        );
     /* void setErrorDialog(ErrorLogView *errorLogDialog); */
 
 signals:

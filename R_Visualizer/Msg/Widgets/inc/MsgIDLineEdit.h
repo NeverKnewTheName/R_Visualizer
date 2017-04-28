@@ -41,15 +41,13 @@ class MsgIDLineEdit :
     Q_OBJECT
 
 public:
-    explicit MsgIDLineEdit(QWidget *parent = 0);
+    explicit MsgIDLineEdit(
+            IMsgIDMappingManager *msgIDMappingManager,
+            QWidget *parent = Q_NULLPTR
+            );
     ~MsgIDLineEdit();
 
     int convertStringToNumber(const QString &number) const;
-
-    QString convertNumberToString(
-            const int number,
-            const int base
-            ) const;
 
     MsgIDType getMsgID() const;
     void setMsgID(const MsgIDType &msgID);
@@ -59,14 +57,10 @@ public:
 
 private slots:
     void on_idLineEdit_textChanged(const QString &arg1);
-    void on_numFormatComboBox_currentIndexChanged(int index);
 
 private:
     Ui::MsgIDLineEdit *ui;
     IMsgIDMappingManager *msgIDMappingManager;
-    const QVector<std::tuple<int, QString, QString>> numData;
-    QStringList numFormatStringList;
-    QStringList numInputMasks;
 };
 
 /**

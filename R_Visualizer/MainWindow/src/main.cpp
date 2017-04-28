@@ -74,6 +74,11 @@
 #include "MsgStreamStore.h"
 #include "MsgStreamModel.h"
 
+#include "MsgIDLineEdit.h"
+#include "MsgCodeLineEdit.h"
+#include "MsgDataLineEdit.h"
+
+
 /* #include "errorlogentry.h" */
 
 int main(int argc, char *argv[])
@@ -93,7 +98,10 @@ int main(int argc, char *argv[])
     /* qRegisterMetaType <DataByteVect>("DataByteVect"); */
     /* qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry"); */
 
+
     MainWindow w;
+
+
     /* DeviceHandler *interfaceHandler = new DeviceHandler(); */
     IInterfaceHandler *interfaceHandler = new CANAnalyserInterfaceHandler(&w);
 
@@ -286,6 +294,16 @@ int main(int argc, char *argv[])
     //        sysOvrvWidget,
     //        &SystemOverview::slt_newMessage
     //        );
+
+    MsgIDLineEdit *msgIDLineEdit = new MsgIDLineEdit(
+                msgIDMappingManager
+                );
+    w.addToTesting(msgIDLineEdit);
+
+    MsgDataLineEdit *msgDataLineEdit = new MsgDataLineEdit(
+                msgDataMappingManager
+                );
+    w.addToTesting(msgDataLineEdit);
 
     w.show();
 

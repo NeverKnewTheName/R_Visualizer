@@ -82,6 +82,14 @@ void MainWindow::appendTabMenuWidget(
     ui->configTabWidget->addTab(widgetToAppend,widgetName);
 }
 
+void MainWindow::addToTesting(
+        QWidget *widgetToTest
+        )
+{
+    QWidget *widgetAtZero = ui->configTabWidget->widget(0);
+    widgetAtZero->layout()->addWidget(widgetToTest);
+}
+
 /* void MainWindow::setErrorDialog(ErrorLogView *errorLogDialog) */
 /* { */
 /*     this->errLogViewDiag = errorLogDialog; */

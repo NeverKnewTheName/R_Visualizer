@@ -30,6 +30,6 @@ HEADERS  += \
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \
-    $$PWD/ui/msgdatawidget.ui
+    $$PWD/ui/msgdatawidget.ui \
 
 include(Widgets/MsgWidgets.pri)
