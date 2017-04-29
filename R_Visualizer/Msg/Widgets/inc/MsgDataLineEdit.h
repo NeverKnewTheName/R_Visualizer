@@ -56,6 +56,18 @@ private:
 
     int convertToNumber(const QString &number) const;
 
+    QStringList extractBytes(
+            QString &number,
+            int base,
+            int width
+            );
+    QString numberFromBytes(
+            QStringList bytes,
+            int oldBase,
+            int newBase,
+            int width
+            );
+
 private slots:
     void on_dataLineEdit_textChanged(const QString &arg1);
 

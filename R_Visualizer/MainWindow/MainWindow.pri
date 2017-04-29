@@ -9,12 +9,15 @@ INCLUDEPATH += $$PWD/inc
 SOURCES += \
     $$PWD/src/main.cpp \
     $$PWD/src/mainwindow.cpp \
+    $$PWD/src/lineedittester.cpp \
 #    $$PWD/src/csvmsgpackethandler.cpp \
 
 HEADERS  += \
     $$PWD/inc/mainwindow.h \
     $$PWD/inc/IReportable.h \
+    $$PWD/inc/lineedittester.h \
 #    $$PWD/inc/csvmsgpackethandler.h \
 
 FORMS    += \
-    $$PWD/ui/mainwindow.ui
+    $$PWD/ui/mainwindow.ui \
+    $$PWD/ui/lineedittester.ui \

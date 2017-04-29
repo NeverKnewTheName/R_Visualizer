@@ -30,6 +30,9 @@ int MsgIDLineEdit::convertStringToNumber(
     const int num = msgIDMappingManager->getMsgIDToAlias(
                 number
                 ).getPrimitiveData();
+    /**
+     * checking for zero is valid here since 0 is an invalid MsgID anyway
+     */
     if(num)
     {
         return num;
@@ -38,6 +41,16 @@ int MsgIDLineEdit::convertStringToNumber(
     {
         return AbstractMsgFieldLineEdit::convertStringToNumber(number);
     }
+}
+
+MsgIDType MsgIDLineEdit::getMsgID() const
+{
+    return MsgIDType(convertStringToNumber(ui->idLineEdit->text()));
+}
+
+void MsgIDLineEdit::setMsgID(const MsgIDType &msgID)
+{
+    ui->idLineEdit->setText(static_cast<QString>(msgID));
 }
 
 void MsgIDLineEdit::on_idLineEdit_textChanged(const QString &arg1)

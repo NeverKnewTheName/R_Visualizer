@@ -135,6 +135,90 @@ QString MsgDataLineEdit::convertFormat(
         number = bytes.join(' ');
     }
     return number;
+    /* return numberFromBytes( */
+    /*         extractBytes( */
+    /*             number, */
+    /*             oldBase, */
+    /*             oldFieldWidth */
+    /*             ), */
+    /*         oldBase, */
+    /*         newBase, */
+    /*         newFieldWidth */
+    /*         ); */
+}
+
+QStringList MsgDataLineEdit::extractBytes(
+        QString &number,
+        int base,
+        int width
+        )
+{
+    QStringList bytes;
+
+    if(width == 0)
+    {
+        //There is no whitespace separated formatting
+        int num = number.toInt(0,base);
+
+        while(num)
+        {
+            qDebug() << "num: " << num;
+            bytes.prepend(
+                        QString::number(
+                            num & 0xFFu,
+                            base
+                            )
+                        );
+            num = num >> 8;
+        }
+    }
+    else
+    {
+        bytes = number.split(' '); //split into bytes
+    }
+
+    return bytes;
+}
+
+QString MsgDataLineEdit::numberFromBytes(
+        QStringList bytes,
+        int oldBase,
+        int newBase,
+        int width
+        )
+{
+    QString number;
+
+    if(width == 0)
+    {
+        //parse the bytes to a unformatted number
+
+        int num = 0;
+        int cntr = bytes.size();
+        for(QString &byte : bytes)
+        {
+           cntr--;
+           num += byte.toInt(0,oldBase) << 8 * cntr;
+        }
+
+        number = QString::number(num,newBase);
+    }
+    else
+    {
+        // The number string needs formatting
+        for(QString &byte : bytes)
+        {
+            byte = QString("%1").arg(
+                    byte.toInt(0,oldBase),
+                    width,
+                    newBase,
+                    QLatin1Char('0')
+                    );
+        }
+
+        number = bytes.join(' ');
+    }
+    return number;
 }
 
 int MsgDataLineEdit::convertToNumber(const QString &number) const
@@ -164,6 +248,9 @@ void MsgDataLineEdit::on_numFormatComboBox_currentIndexChanged(int index)
     ui->dataLineEdit->setInputMask(inputMask);
     ui->dataLineEdit->setText(number);
     ui->numPrefixLabel->setText(formatSpec);
+    ui->dataLineEdit->setFocus();
+    ui->dataLineEdit->setCursorPosition(0);
+    /* ui->dataLineEdit->selectAll(); */
 
     qDebug() << "Set Text: " << ui->dataLineEdit->text();
 

@@ -10,6 +10,12 @@
 #define MSGCODELINEEDIT_H
 
 #include <QWidget>
+#include <QCompleter>
+
+#include <AbstractMsgFieldLineEdit.h>
+#include "MsgCodeType.h"
+
+class IMsgCodeMappingManager;
 
 namespace Ui {
 class MsgCodeLineEdit;
@@ -25,21 +31,33 @@ class MsgCodeLineEdit;
 /**
  * @brief The MsgCodeLineEdit
  */
-class MsgCodeLineEdit : public QWidget
+class MsgCodeLineEdit :
+    public QWidget,
+    public AbstractMsgFieldLineEdit
 {
     Q_OBJECT
 
 public:
-    explicit MsgCodeLineEdit(QWidget *parent = 0);
+    explicit MsgCodeLineEdit(
+            IMsgCodeMappingManager *msgCodeMappingManager,
+            QWidget *parent = 0
+            );
     ~MsgCodeLineEdit();
+
+    int convertStringToNumber(const QString &number) const;
+
+    MsgCodeType getMsgCode() const;
+    void setMsgCode(const MsgCodeType &msgCode);
+
+    void setCompleter(QCompleter *completer);
+    void setMappingManager(IMsgCodeMappingManager *msgCodeMappingManager);
 
 private slots:
     void on_codeLineEdit_textChanged(const QString &arg1);
 
-    void on_numFormatComboBox_currentIndexChanged(int index);
-
 private:
     Ui::MsgCodeLineEdit *ui;
+    IMsgCodeMappingManager *msgCodeMappingManager;
 };
 
 /**

@@ -79,6 +79,8 @@
 #include "MsgDataLineEdit.h"
 
 
+#include "lineedittester.h"
+
 /* #include "errorlogentry.h" */
 
 int main(int argc, char *argv[])
@@ -299,6 +301,16 @@ int main(int argc, char *argv[])
                 msgIDMappingManager
                 );
     w.addToTesting(msgIDLineEdit);
+
+
+    MsgCodeLineEdit *msgCodeLineEdit = new MsgCodeLineEdit(
+                msgCodeMappingManager
+                );
+    w.addToTesting(msgCodeLineEdit);
+
+    LineEditTester *tester = new LineEditTester(msgCodeLineEdit);
+    w.addToTesting(tester);
+
 
     MsgDataLineEdit *msgDataLineEdit = new MsgDataLineEdit(
                 msgDataMappingManager
