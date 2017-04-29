@@ -12,6 +12,8 @@
 #include <QWidget>
 #include <QCompleter>
 
+#include <QMetaObject>
+
 #include <AbstractMsgFieldLineEdit.h>
 #include "MsgCodeType.h"
 
@@ -39,7 +41,7 @@ class MsgCodeLineEdit :
 
 public:
     explicit MsgCodeLineEdit(
-            IMsgCodeMappingManager *msgCodeMappingManager,
+            /* IMsgCodeMappingManager *msgCodeMappingManager, */
             QWidget *parent = 0
             );
     ~MsgCodeLineEdit();
@@ -53,11 +55,12 @@ public:
     void setMappingManager(IMsgCodeMappingManager *msgCodeMappingManager);
 
 private slots:
-    void on_codeLineEdit_textChanged(const QString &arg1);
+    void codeLineEditTextChanged(const QString &arg1);
 
 private:
     Ui::MsgCodeLineEdit *ui;
     IMsgCodeMappingManager *msgCodeMappingManager;
+    QMetaObject::Connection backGroundColorChangerConnection;
 };
 
 /**

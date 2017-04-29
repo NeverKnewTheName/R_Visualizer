@@ -10,6 +10,8 @@
 
 #include <QWidget>
 
+class ISendMsgSingle;
+
 namespace Ui {
 class SendMsgSingleWidget;
 }

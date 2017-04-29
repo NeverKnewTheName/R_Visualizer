@@ -16,6 +16,7 @@
 class ISendMsgSingle;
 class ISendMsgPackage;
 class IInterfaceHandler;
+class IMsg;
 
 /**
  * @addtogroup SendMessagesGroup
@@ -50,7 +51,6 @@ private:
     QVector<ISendMsgPackage *> sendMsgPackageInstances;
     IInterfaceHandler *interfaceHandler;
     UserRoleManagement::UserRole currentUserRole;
-
 };
 
 /**

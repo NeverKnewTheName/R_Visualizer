@@ -2,7 +2,7 @@
 #include "ui_lineedittester.h"
 
 LineEditTester::LineEditTester(
-        MsgCodeLineEdit *lineEdit,
+        MsgIDLineEdit *lineEdit,
         QWidget *parent
         ) :
     QWidget(parent),
@@ -19,5 +19,5 @@ LineEditTester::~LineEditTester()
 
 void LineEditTester::on_pushButton_clicked()
 {
-   ui->lineEdit->setText(static_cast<QString>(lineEdit->getMsgCode()));
+   ui->lineEdit->setText(static_cast<QString>(lineEdit->getMsgID()));
 }

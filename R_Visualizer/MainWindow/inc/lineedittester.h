@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "MsgCodeLineEdit.h"
+#include "MsgIDLineEdit.h"
 
 namespace Ui {
 class LineEditTester;
@@ -14,7 +14,8 @@ class LineEditTester : public QWidget
     Q_OBJECT
 
 public:
-    explicit LineEditTester(MsgCodeLineEdit *lineEdit,
+    explicit LineEditTester(
+            MsgIDLineEdit *lineEdit,
             QWidget *parent = 0
             );
     ~LineEditTester();
@@ -24,7 +25,7 @@ private slots:
 
 private:
     Ui::LineEditTester *ui;
-    MsgCodeLineEdit *lineEdit;
+    MsgIDLineEdit *lineEdit;
 };
 
 #endif // LINEEDITTESTER_H

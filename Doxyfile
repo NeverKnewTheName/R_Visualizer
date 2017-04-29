@@ -789,6 +789,8 @@ INPUT                  = ./R_Visualizer ./R_Visualizer/inc ./R_Visualizer/src \
                          ./R_Visualizer/MessageFilter/MsgCodeFilter ./R_Visualizer/MessageFilter/MsgCodeFilter/inc ./R_Visualizer/MessageFilter/MsgCodeFilter/src \
                          ./R_Visualizer/MessageFilter/MsgTimespanFilter ./R_Visualizer/MessageFilter/MsgTimespanFilter/inc ./R_Visualizer/MessageFilter/MsgTimespanFilter/src \
                          ./R_Visualizer/SendMessages ./R_Visualizer/SendMessages/inc ./R_Visualizer/SendMessages/src \
+                         ./R_Visualizer/SendMessages/SendMsgSingle ./R_Visualizer/SendMessages/SendMsgSingle/inc ./R_Visualizer/SendMessages/SendMsgSingle/src \
+                         ./R_Visualizer/SendMessages/SendMsgPackage ./R_Visualizer/SendMessages/SendMsgPackage/inc ./R_Visualizer/SendMessages/SendMsgPackage/src \
                          ./R_Visualizer/UserRoleManager ./R_Visualizer/UserRoleManager/inc ./R_Visualizer/UserRoleManager/src \
                          ./R_Visualizer/SystemOverview ./R_Visualizer/SystemOverview/inc ./R_Visualizer/SystemOverview/src \
                          ./R_Visualizer/SystemOverview/SysOvrvObj ./R_Visualizer/SystemOverview/SysOvrvObj/inc ./R_Visualizer/SystemOverview/SysOvrvObj/src \

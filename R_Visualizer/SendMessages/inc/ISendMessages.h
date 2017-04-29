@@ -14,6 +14,7 @@
 
 class ISendMsgSingle;
 class ISendMsgPackage;
+class IMsg;
 
 /**
  * @defgroup SendMessagesGroup Send Messages

@@ -10,6 +10,9 @@
 
 #include <QWidget>
 #include <QString>
+#include <QCompleter>
+#include <QEvent>
+#include <QLineEdit>
 
 #include <tuple>
 
@@ -30,6 +33,37 @@ class MsgDataLineEdit;
  *
  */
 
+class LineEditCursorHelper : public QObject
+{
+    Q_OBJECT
+
+    bool eventFilter(QObject *watched, QEvent *event)
+    {
+        QLineEdit *lineEdit = qobject_cast<QLineEdit*>(watched);
+
+        if(lineEdit && event->type() == QEvent::FocusIn)
+        {
+            QMetaObject::invokeMethod(this, "setCursor", Qt::QueuedConnection, Q_ARG(QWidget *, lineEdit));
+        }
+
+        return QObject::eventFilter(watched, event);
+    }
+
+    Q_INVOKABLE void setCursor(QWidget *widget)
+    {
+        QLineEdit *lineEdit = qobject_cast<QLineEdit*>(widget);
+        if(lineEdit)
+        {
+            const QString &currentText = lineEdit->text().trimmed();
+            lineEdit->setCursorPosition(currentText.length()+1);
+        }
+    }
+
+public:
+    LineEditCursorHelper(QObject *parent = Q_NULLPTR) : QObject(parent){}
+    void installHelper(QLineEdit *lineEdit){lineEdit->installEventFilter(this);}
+};
+
 /**
  * @brief The MsgDatLineEdit
  */
@@ -39,13 +73,16 @@ class MsgDataLineEdit : public QWidget
 
 public:
     explicit MsgDataLineEdit(
-            IMsgDataMappingManager *msgDataMappingManager,
+            /* IMsgDataMappingManager *msgDataMappingManager, */
             QWidget *parent = Q_NULLPTR
             );
     ~MsgDataLineEdit();
 
     MsgDataType getMsgData() const;
     void setMsgData(const MsgDataType &msgData);
+
+    void setCompleter(QCompleter *complter);
+    void setMappingManager(IMsgDataMappingManager *msgDataMappingManager);
 
 private:
     QString convertFormat(
@@ -76,6 +113,7 @@ private slots:
 private:
     Ui::MsgDataLineEdit *ui;
     IMsgDataMappingManager *msgDataMappingManager;
+    LineEditCursorHelper *lineEditCursorHelper;
     /**
      * @brief Vector contains tuples that contain information about the
      * formatting
@@ -93,6 +131,10 @@ private:
      */
     std::vector<std::tuple<int,int,QString,QString,QString>> formatData;
     int currentFormatIndex;
+
+    // QWidget interface
+protected:
+    void focusInEvent(QFocusEvent *event);
 };
 
 /**

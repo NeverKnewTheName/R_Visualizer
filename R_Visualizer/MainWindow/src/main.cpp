@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QDebug>
 
+#include <QCompleter>
+
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
@@ -78,6 +80,11 @@
 #include "MsgCodeLineEdit.h"
 #include "MsgDataLineEdit.h"
 
+#include "ISendMessages.h"
+#include "SendMessages.h"
+#include "ISendMsgSingle.h"
+#include "SendMsgSingle.h"
+#include "SendMsgSingleWidget.h"
 
 #include "lineedittester.h"
 
@@ -273,6 +280,13 @@ int main(int argc, char *argv[])
     //SendMessages *sndMsgsWidget = new SendMessages(
     //        messageConfig
     //        );
+
+    ISendMsgSingle *sendMsgSingle = new SendMsgSingle();
+    SendMsgSingleWidget *sendMsgSingleWidget =
+        new SendMsgSingleWidget(sendMsgSingle);
+
+    w.addToTesting(sendMsgSingleWidget);
+
     //sysOvrvWidget = new SystemOverview(
     //        messageConfig
     //        );
@@ -297,23 +311,45 @@ int main(int argc, char *argv[])
     //        &SystemOverview::slt_newMessage
     //        );
 
-    MsgIDLineEdit *msgIDLineEdit = new MsgIDLineEdit(
-                msgIDMappingManager
-                );
+    MsgIDLineEdit *msgIDLineEdit = new MsgIDLineEdit();
+
+    msgIDLineEdit->setMappingManager(msgIDMappingManager);
+
+    QCompleter *idAliasCompleter = new QCompleter();
+
+    idAliasCompleter->setModel(msgIDMappingModel);
+    idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
+    idAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    idAliasCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+    idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    msgIDLineEdit->setCompleter(idAliasCompleter);
+
     w.addToTesting(msgIDLineEdit);
 
+    LineEditTester *tester = new LineEditTester(msgIDLineEdit);
+    w.addToTesting(tester);
 
     MsgCodeLineEdit *msgCodeLineEdit = new MsgCodeLineEdit(
-                msgCodeMappingManager
                 );
+
+    msgCodeLineEdit->setMappingManager(msgCodeMappingManager);
+
+    QCompleter *codeAliasCompleter = new QCompleter();
+
+    codeAliasCompleter->setModel(msgCodeMappingModel);
+    codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
+    codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    codeAliasCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+    codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    msgCodeLineEdit->setCompleter(codeAliasCompleter);
+
     w.addToTesting(msgCodeLineEdit);
 
-    LineEditTester *tester = new LineEditTester(msgCodeLineEdit);
-    w.addToTesting(tester);
 
 
     MsgDataLineEdit *msgDataLineEdit = new MsgDataLineEdit(
-                msgDataMappingManager
                 );
     w.addToTesting(msgDataLineEdit);
 

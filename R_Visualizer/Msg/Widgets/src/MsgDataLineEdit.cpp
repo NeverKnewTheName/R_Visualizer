@@ -3,15 +3,17 @@
 
 #include "IMsgDataMappingManager.h"
 
+#include <QFocusEvent>
 #include <QDebug>
 
 MsgDataLineEdit::MsgDataLineEdit(
-        IMsgDataMappingManager *msgDataMappingManager,
+        /* IMsgDataMappingManager *msgDataMappingManager, */
         QWidget *parent
         ) :
     QWidget(parent),
     ui(new Ui::MsgDataLineEdit),
-    msgDataMappingManager(msgDataMappingManager),
+    msgDataMappingManager(Q_NULLPTR),
+    lineEditCursorHelper(new LineEditCursorHelper(this)),
     formatData({
             std::make_tuple(
                     16,
@@ -58,11 +60,29 @@ MsgDataLineEdit::MsgDataLineEdit(
     {
         ui->numFormatComboBox->addItem(std::get<4>(tuple));
     }
+
+    lineEditCursorHelper->installHelper(ui->dataLineEdit);
 }
 
 MsgDataLineEdit::~MsgDataLineEdit()
 {
     delete ui;
+}
+
+MsgDataType MsgDataLineEdit::getMsgData() const
+{
+}
+
+void setMsgData(const MsgDataType &msgData)
+{
+}
+
+void setCompleter(QCompleter *completer)
+{
+}
+
+void setMappingManager(const IMsgDataMappingManager *msgDataMappingManager)
+{
 }
 
 QString MsgDataLineEdit::convertFormat(
@@ -254,4 +274,15 @@ void MsgDataLineEdit::on_numFormatComboBox_currentIndexChanged(int index)
 
     qDebug() << "Set Text: " << ui->dataLineEdit->text();
 
+}
+
+
+void MsgDataLineEdit::focusInEvent(QFocusEvent *event)
+{
+    if(event->reason() == Qt::MouseFocusReason)
+    {
+        qDebug() << "GOT FOCUS";
+    }
+
+    QWidget::focusInEvent(event);
 }

@@ -1,6 +1,7 @@
 #include "SendMsgSingle.h"
 
-SendMsgSingle::SendMsgSingle()
+SendMsgSingle::SendMsgSingle(QObject *parent) :
+    ISendMsgSingle(parent)
 {
 }
 
@@ -10,7 +11,7 @@ SendMsgSingle::~SendMsgSingle()
 
 void SendMsgSingle::setMsg(const IMsg &msg)
 {
-    this->messageToSend = msg;
+    messageToSend = Msg(msg.getMsgID(),msg.getMsgCode(),msg.getMsgData());
 }
 
 void SendMsgSingle::setMsgID(const MsgIDType &msgID)
@@ -28,27 +29,12 @@ void SendMsgSingle::setMsgData(const MsgDataType &msgData)
     messageToSend.setMsgData(msgData);
 }
 
+void SendMsgSingle::sendMessage()
+{
+    emit sgnl_sendMessage(messageToSend);
+}
+
 void SendMsgSingle::sendMessage(const IMsg &msgToSend)
 {
-    emit sgnl_sendMsg(msgToSend);
-}
-
-void SendMsgSingle::slt_setMsg(const IMsg &msg)
-{
-    setMsg(msg);
-}
-
-void SendMsgSingle::slt_setMsgID(const MsgIDType &msgID)
-{
-    setMsgID(msgID);
-}
-
-void SendMsgSingle::slt_setMsgCode(const MsgCodeType &msgCode)
-{
-    setMsgCode(msgCode);
-}
-
-void SendMsgSingle::slt_setMsgData(const MsgDataType &msgData)
-{
-    setMsgData(msgData);
+    emit sgnl_sendMessage(msgToSend);
 }

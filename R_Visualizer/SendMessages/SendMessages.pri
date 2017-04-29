@@ -11,8 +11,6 @@ SOURCES += \
 #    $$PWD/src/sendmessages.cpp \
 #    $$PWD/src/sendmsgmodel.cpp \
     $$PWD/src/SendMessagesWidget.cpp \
-    $$PWD/src/SendMsgSingleWidget.cpp \
-    $$PWD/src/SendMsgPackageWidget.cpp
 
 HEADERS  += \
     $$PWD/inc/ISendMessages.h \
@@ -20,11 +18,10 @@ HEADERS  += \
 #    $$PWD/inc/sendmessages.h \
 #    $$PWD/inc/sendmsgmodel.h \
     $$PWD/inc/SendMessagesWidget.h \
-    $$PWD/inc/SendMsgSingleWidget.h \
-    $$PWD/inc/SendMsgPackageWidget.h
 
 FORMS    += \
 #    $$PWD/ui/sendmessages.ui \
     $$PWD/ui/sendmessageswidget.ui \
-    $$PWD/ui/sendmsgsinglewidget.ui \
-    $$PWD/ui/sendmsgpackagewidget.ui
+
+include(SendMsgSingle/SendMsgSingle.pri)
+include(SendMsgPackage/SendMsgPackage.pri)

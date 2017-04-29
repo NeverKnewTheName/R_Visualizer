@@ -8,12 +8,12 @@
 #include "IMsgCodeMappingManager.h"
 
 MsgCodeLineEdit::MsgCodeLineEdit(
-        IMsgCodeMappingManager *msgCodeMappingManager,
+        /* IMsgCodeMappingManager *msgCodeMappingManager, */
         QWidget *parent
         ) :
     QWidget(parent),
     ui(new Ui::MsgCodeLineEdit),
-    msgCodeMappingManager(msgCodeMappingManager)
+    msgCodeMappingManager(Q_NULLPTR)
 {
     ui->setupUi(this);
 }
@@ -53,7 +53,50 @@ void MsgCodeLineEdit::setMsgCode(const MsgCodeType &msgCode)
     ui->codeLineEdit->setText(static_cast<QString>(msgCode));
 }
 
-void MsgCodeLineEdit::on_codeLineEdit_textChanged(const QString &arg1)
+void MsgCodeLineEdit::setCompleter(QCompleter *completer)
 {
+    ui->codeLineEdit->setCompleter(completer);
+}
 
+void MsgCodeLineEdit::setMappingManager(
+        IMsgCodeMappingManager *msgCodeMappingManager
+        )
+{
+    this->msgCodeMappingManager = msgCodeMappingManager;
+
+    if(backGroundColorChangerConnection)
+    {
+        disconnect(backGroundColorChangerConnection);
+    }
+
+    if(msgCodeMappingManager != Q_NULLPTR)
+    {
+        backGroundColorChangerConnection =
+            connect(
+                ui->codeLineEdit,
+                &QLineEdit::textChanged,
+                this,
+                &MsgCodeLineEdit::codeLineEditTextChanged
+               );
+    }
+}
+
+void MsgCodeLineEdit::codeLineEditTextChanged(const QString &arg1)
+{
+    QColor newBackground;
+
+    if(msgCodeMappingManager != Q_NULLPTR)
+    {
+        newBackground = msgCodeMappingManager->getColorToAlias(arg1);
+    }
+
+    if(!newBackground.isValid())
+    {
+        newBackground = QColor(Qt::white);
+    }
+
+    ui->codeLineEdit->setStyleSheet(
+            QString("QLineEdit { background : %1;}")
+            .arg(newBackground.name())
+            );
 }

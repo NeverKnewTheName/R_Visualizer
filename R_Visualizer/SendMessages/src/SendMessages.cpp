@@ -3,8 +3,13 @@
 #include "ISendMsgSingle.h"
 #include "ISendMsgPackage.h"
 
-SendMessages::SendMessages(QObject *parent) : 
-    QObject(parent)
+SendMessages::SendMessages(
+        IInterfaceHandler *interfaceHandler,
+        QObject *parent
+        ) :
+    ISendMessages(parent),
+    interfaceHandler(interfaceHandler),
+    currentUserRole(UserRoleManagement::NormalUserRole)
 {
 }
 
@@ -32,7 +37,11 @@ void SendMessages::removeSendMsgPackage(ISendMsgPackage *sendMsgPackage)
     sendMsgPackageInstances.removeAll(sendMsgPackage);
 }
 
-void SendMessages::slt_applyUserRole(const UserRoleManagement::UserRole roleToApply)
+void SendMessages::sendMessage(const IMsg &msgToSend)
+{
+}
+
+void SendMessages::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
     currentUserRole = roleToApply;
 }

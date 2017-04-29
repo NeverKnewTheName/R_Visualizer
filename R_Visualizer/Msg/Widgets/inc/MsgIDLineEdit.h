@@ -11,9 +11,8 @@
 
 #include <QWidget>
 #include <QCompleter>
-#include <QStringList>
 
-#include <tuple>
+#include <QMetaObject>
 
 #include "AbstractMsgFieldLineEdit.h"
 #include "MsgIDType.h"
@@ -42,7 +41,7 @@ class MsgIDLineEdit :
 
 public:
     explicit MsgIDLineEdit(
-            IMsgIDMappingManager *msgIDMappingManager,
+            /* IMsgIDMappingManager *msgIDMappingManager, */
             QWidget *parent = Q_NULLPTR
             );
     ~MsgIDLineEdit();
@@ -56,11 +55,12 @@ public:
     void setMappingManager(IMsgIDMappingManager *msgIDMappingManager);
 
 private slots:
-    void on_idLineEdit_textChanged(const QString &arg1);
+    void idLineEditTextChanged(const QString &arg1);
 
 private:
     Ui::MsgIDLineEdit *ui;
     IMsgIDMappingManager *msgIDMappingManager;
+    QMetaObject::Connection backGroundColorChangerConnection;
 };
 
 /**

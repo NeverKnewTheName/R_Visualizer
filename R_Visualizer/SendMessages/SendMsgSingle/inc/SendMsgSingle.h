@@ -8,10 +8,9 @@
 #ifndef SENDMSGSINGLE_H
 #define SENDMSGSINGLE_H
 
-#include <QObject>
-
 #include "ISendMsgSingle.h"
 #include "Msg.h"
+
 
 /**
  * @addtogroup SendMessagesSingleGroup
@@ -22,11 +21,11 @@
 /**
  * @brief The SendMsgSingle
  */
-class SendMsgSingle : public QObject, public ISendMsgSingle
+class SendMsgSingle : public ISendMsgSingle
 {
     Q_OBJECT
 public:
-    SendMsgSingle();
+    SendMsgSingle(QObject *parent = Q_NULLPTR);
     virtual ~SendMsgSingle();
 
     virtual void setMsg(const IMsg &msg);
@@ -34,16 +33,8 @@ public:
     virtual void setMsgCode(const MsgCodeType &msgCode);
     virtual void setMsgData(const MsgDataType &msgData);
 
-    virtual void sendMessage(const IMsg &msgToSend = messageToSend);
-
-signals:
-    virtual void sgnl_sendMessage(const IMsg &msgToSend);
-
-public slots:
-    virtual void slt_setMsg(const IMsg &msg);
-    virtual void slt_setMsgID(const MsgIDType &msgID);
-    virtual void slt_setMsgCode(const MsgCodeType &msgCode);
-    virtual void slt_setMsgData(const MsgDataType &msgData);
+    virtual void sendMessage();
+    virtual void sendMessage(const IMsg &msgToSend);
 
 private:
     Msg messageToSend;
