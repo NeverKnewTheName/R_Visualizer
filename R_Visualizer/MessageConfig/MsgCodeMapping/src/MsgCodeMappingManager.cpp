@@ -85,6 +85,11 @@ void MsgCodeMappingManager::prettifyMsg(
     }
 }
 
+IMsgCodeMappingStore *MsgCodeMappingManager::getStore() const
+{
+    return msgCodeMappingStore;
+}
+
 void MsgCodeMappingManager::accept(FileParser *visitor)
 {
     msgCodeMappingStore->accept(visitor);

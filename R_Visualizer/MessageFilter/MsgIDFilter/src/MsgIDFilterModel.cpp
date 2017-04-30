@@ -53,6 +53,9 @@ QVariant MsgIDFilterModel::data(
         break;
     case Qt::CheckStateRole:
         break;
+    case Qt::UserRole:
+        return QVariant::fromValue<MsgIDType>(msgID);
+        break;
     }
     return QVariant();
 

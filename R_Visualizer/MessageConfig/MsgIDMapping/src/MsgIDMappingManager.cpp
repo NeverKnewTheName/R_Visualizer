@@ -68,6 +68,11 @@ void MsgIDMappingManager::removeMsgIDMapping(
     }
 }
 
+IMsgIDMappingStore *MsgIDMappingManager::getStore() const
+{
+    return msgIDMappingStore;
+}
+
 
 void MsgIDMappingManager::prettifyMsg(
         IPrettyMsg &msgToPrettify

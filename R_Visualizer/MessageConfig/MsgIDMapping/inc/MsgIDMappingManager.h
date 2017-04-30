@@ -46,6 +46,8 @@ public:
             /* const IMsgIDMapping &msgIDMapping */
             );
 
+    virtual IMsgIDMappingStore *getStore() const;
+
     virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;

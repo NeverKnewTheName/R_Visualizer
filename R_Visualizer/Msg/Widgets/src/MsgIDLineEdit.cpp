@@ -7,6 +7,9 @@
 
 #include "IMsgIDMappingManager.h"
 
+#include <QTimer>
+#include <QDebug>
+
 MsgIDLineEdit::MsgIDLineEdit(
         /* IMsgIDMappingManager *msgIDMappingManager, */
         QWidget *parent
@@ -16,6 +19,17 @@ MsgIDLineEdit::MsgIDLineEdit(
     msgIDMappingManager(Q_NULLPTR)
 {
     ui->setupUi(this);
+
+    connect(
+        ui->idLineEdit,
+        &QLineEdit::returnPressed,
+                [=](){ qDebug() << "ID editing finished"; emit sgnl_EditingFinished(); }
+        //this,
+        //&MsgIDLineEdit::sgnl_EditingFinished
+        );
+    //QTimer::singleShot(0, ui->idLineEdit, SLOT(setFocus()));
+    //QTimer::singleShot(0, ui->idLineEdit, SLOT(selectAll()));
+    ui->idLineEdit->setFocus();
 }
 
 MsgIDLineEdit::~MsgIDLineEdit()
@@ -56,6 +70,7 @@ MsgIDType MsgIDLineEdit::getMsgID() const
 void MsgIDLineEdit::setMsgID(const MsgIDType &msgID)
 {
     ui->idLineEdit->setText(static_cast<QString>(msgID));
+    ui->idLineEdit->selectAll();
 }
 
 void MsgIDLineEdit::setCompleter(QCompleter *completer)

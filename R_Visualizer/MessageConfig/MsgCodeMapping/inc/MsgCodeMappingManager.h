@@ -50,6 +50,8 @@ public:
             IPrettyMsg &msgToPrettify
             ) const;
 
+    virtual IMsgCodeMappingStore *getStore() const;
+
     virtual void accept(FileParser *visitor);
 
     // IUserRoleManageable interface

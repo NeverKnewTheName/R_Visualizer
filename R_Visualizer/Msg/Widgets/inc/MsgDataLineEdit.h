@@ -89,7 +89,7 @@ private:
             QString &number,
             const int oldFormatIndex,
             const int newFormatIndex
-            );
+            ) const;
 
     int convertToNumber(const QString &number) const;
 
@@ -104,6 +104,9 @@ private:
             int newBase,
             int width
             );
+
+signals:
+    void sgnl_EditingFinished();
 
 private slots:
     void on_dataLineEdit_textChanged(const QString &arg1);

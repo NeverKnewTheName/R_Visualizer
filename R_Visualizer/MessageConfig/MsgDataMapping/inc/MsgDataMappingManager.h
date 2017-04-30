@@ -54,6 +54,7 @@ public:
             const MsgCodeType &msgCode
             );
 
+    virtual IMsgDataMappingStore *getStore() const;
 
     virtual void accept(FileParser *visitor);
 

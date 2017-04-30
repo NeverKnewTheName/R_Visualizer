@@ -12,6 +12,7 @@
 #include "MsgIDType.h"
 
 class IMsgIDMapping;
+class IMsgIDMappingStore;
 
 /**
  * @defgroup MsgIDMappingGroup Message ID Mapping
@@ -48,7 +49,12 @@ public:
     virtual void removeMsgIDMapping(
             const MsgIDType &relatedMsgID
             ) = 0;
+
+    virtual IMsgIDMappingStore *getStore() const = 0;
 signals:
+    void sgnl_MsgIDMappingManagerChanged(
+            const IMsgIDMappingManager &mapping
+            );
 
 public slots:
     /**

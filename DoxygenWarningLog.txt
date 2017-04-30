@@ -21,17 +21,18 @@ warning: source ./R_Visualizer/src is not a readable file or directory... skippi
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:103: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:182: warning: explicit link request to 'MsgTypeMapping' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MessageConfig/inc/msgtypemodel.h:178: warning: explicit link request to 'MsgCodeTypes' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:64: warning: explicit link request to 'MsgTypeReps' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:33: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:66: warning: explicit link request to 'IDReps' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:35: warning: explicit link request to 'MsgIDRep' could not be resolved
+/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:64: warning: explicit link request to 'MsgTypeReps' could not be resolved
+/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:66: warning: explicit link request to 'IDReps' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/inc/ISendMessages.h:78: warning: explicit link request to 'UserRole' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/SendMsgPackage/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/InterfaceHandler/inc/devicehandler.h:7: warning: Found unknown command `\license'
+/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
@@ -41,6 +42,7 @@ warning: source ./R_Visualizer/src is not a readable file or directory... skippi
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/SendMsgPackage/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
+/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/csvmsgpackethandler.h:35: warning: explicit link request to 'Msgs' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/csvmsgpackethandler.h:44: warning: explicit link request to 'Msgs' could not be resolved
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/MainWindow/inc/csvmsgpackethandler.h:18: warning: explicit link request to 'Msgs' could not be resolved
@@ -130,19 +132,4 @@ warning: source ./R_Visualizer/src is not a readable file or directory... skippi
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 /home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
 </home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/SendMsgPackage/inc/>:1: warning: explicit link request to 'IMsgPackageModel' could not be resolved
-</home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/>:1: warning: explicit link request to 'MsgTypeRep' could not be resolved
-</home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/>:1: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:18: warning: explicit link request to 'MsgDataDelegaten' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SystemOverview/inc/systemoverview.h:32: warning: unable to resolve reference to `SysOvrvObjects' for \ref command
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/SendMsgPackage/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgdatadelegate.h:6: warning: explicit link request to 'MsgTypeRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/inc/msgiddelegate.h:6: warning: explicit link request to 'MsgIDRep' could not be resolved
-/home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/SendMessages/SendMsgPackage/inc/SendMsgPackageModel.h:6: warning: explicit link request to 'IMsgPackageModel' could not be resolved
+</home/r/QtWrkSpc/R_Visualizer_Build/R_Visualizer/Msg/i

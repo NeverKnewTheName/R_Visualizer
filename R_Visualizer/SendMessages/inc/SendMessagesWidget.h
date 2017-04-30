@@ -30,6 +30,8 @@ public:
             );
     ~SendMessagesWidget();
 
+    void addSendMsgSingleWidget(QWidget *sendMsgWidget);
+
 private:
     void connectSendMessages();
 

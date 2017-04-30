@@ -7,7 +7,7 @@
 MsgCodeMapping::MsgCodeMapping() :
     code(0x0),
     name(QString("")),
-    color(Qt::black)
+    color(Qt::white)
 {
 }
 

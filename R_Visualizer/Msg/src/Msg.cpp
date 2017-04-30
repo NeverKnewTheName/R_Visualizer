@@ -73,7 +73,7 @@ Msg::operator QString() const
     while(msgDataSize--)
     {
         tempMsgDataString.prepend(
-                static_cast<QString>(msgData.at(msgDataSize))
+                static_cast<QString>(msgData.at(msgDataSize)) + " "
                 );
     }
 

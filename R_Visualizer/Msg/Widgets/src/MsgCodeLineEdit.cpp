@@ -16,6 +16,13 @@ MsgCodeLineEdit::MsgCodeLineEdit(
     msgCodeMappingManager(Q_NULLPTR)
 {
     ui->setupUi(this);
+
+    connect(
+            ui->codeLineEdit,
+            &QLineEdit::editingFinished,
+            this,
+            &MsgCodeLineEdit::sgnl_EditingFinished
+           );
 }
 
 MsgCodeLineEdit::~MsgCodeLineEdit()
@@ -27,9 +34,14 @@ int MsgCodeLineEdit::convertStringToNumber(
         const QString &number
         ) const
 {
-    const int num = msgCodeMappingManager->getMsgCodeToAlias(
-                number
-                ).getPrimitiveData();
+    int num = 0;
+
+    if(msgCodeMappingManager != Q_NULLPTR)
+    {
+        num = msgCodeMappingManager->getMsgCodeToAlias(
+                    number
+                    ).getPrimitiveData();
+    }
     /**
      * checking for zero is valid here since 0 is an invalid MsgID anyway
      */

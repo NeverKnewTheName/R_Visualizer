@@ -19,6 +19,13 @@ SendMessagesWidget::~SendMessagesWidget()
     delete ui;
 }
 
+void SendMessagesWidget::addSendMsgSingleWidget(
+        QWidget *sendMsgWidget
+    )
+{
+    ui->verticalLayout->addWidget(sendMsgWidget);
+}
+
 void SendMessagesWidget::connectSendMessages()
 {
 }

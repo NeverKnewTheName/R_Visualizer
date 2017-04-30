@@ -50,6 +50,10 @@
 #include "MsgDataMappingWidget.h"
 #include "MessageConfigWidget.h"
 
+#include "MsgIDDelegate.h"
+#include "MsgCodeDelegate.h"
+#include "MsgDataDelegate.h"
+
 #include "IMessageFilter.h"
 #include "MessageFilter.h"
 #include "MessageFilterWidget.h"
@@ -82,6 +86,7 @@
 
 #include "ISendMessages.h"
 #include "SendMessages.h"
+#include "SendMessagesWidget.h"
 #include "ISendMsgSingle.h"
 #include "SendMsgSingle.h"
 #include "SendMsgSingleWidget.h"
@@ -208,6 +213,9 @@ int main(int argc, char *argv[])
             msgIDFilterModel
             );
 
+    MsgIDDelegate msgIDDelegate(msgIDMappingManager);
+    msgIDFilterWidget->setDelegate(&msgIDDelegate);
+
     IMsgCodeFilterStore *msgCodeFilterStore = new MsgCodeFilterStore();
     MsgCodeFilter *msgCodeFilter = new MsgCodeFilter(
             msgCodeFilterStore
@@ -276,16 +284,60 @@ int main(int argc, char *argv[])
             messageStreamWidget
             );
 
-    /* SendMessages *sendMessagesWidget; */
-    //SendMessages *sndMsgsWidget = new SendMessages(
-    //        messageConfig
-    //        );
+    ISendMessages *sendMessages = new SendMessages(
+            interfaceHandler
+            );
+    SendMessagesWidget *sendMessagesWidget = new SendMessagesWidget(
+            sendMessages
+            );
 
     ISendMsgSingle *sendMsgSingle = new SendMsgSingle();
-    SendMsgSingleWidget *sendMsgSingleWidget =
-        new SendMsgSingleWidget(sendMsgSingle);
 
-    w.addToTesting(sendMsgSingleWidget);
+    sendMessages->addSendMsgSingle(sendMsgSingle);
+
+    SendMsgSingleWidget *sendMsgSingleWidget = new SendMsgSingleWidget(
+            sendMsgSingle
+            );
+
+    sendMsgSingleWidget->setMsgIDMapping(
+            msgIDMappingManager
+            );
+
+    QCompleter *idAliasCompleter = new QCompleter();
+
+    idAliasCompleter->setModel(msgIDMappingModel);
+    idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
+    idAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    idAliasCompleter->setModelSorting(
+            QCompleter::CaseInsensitivelySortedModel
+            );
+    idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    sendMsgSingleWidget->setMsgIDCompleter(
+            idAliasCompleter
+            );
+
+    sendMsgSingleWidget->setMsgCodeMapping(
+            msgCodeMappingManager
+            );
+
+    QCompleter *codeAliasCompleter = new QCompleter();
+
+    codeAliasCompleter->setModel(msgCodeMappingModel);
+    codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
+    codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    codeAliasCompleter->setModelSorting(
+            QCompleter::CaseInsensitivelySortedModel
+            );
+    codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    sendMsgSingleWidget->setMsgCodeCompleter(
+            codeAliasCompleter
+            );
+
+    sendMessagesWidget->addSendMsgSingleWidget(sendMsgSingleWidget);
+
+    w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");
 
     //sysOvrvWidget = new SystemOverview(
     //        messageConfig
@@ -310,48 +362,6 @@ int main(int argc, char *argv[])
     //        sysOvrvWidget,
     //        &SystemOverview::slt_newMessage
     //        );
-
-    MsgIDLineEdit *msgIDLineEdit = new MsgIDLineEdit();
-
-    msgIDLineEdit->setMappingManager(msgIDMappingManager);
-
-    QCompleter *idAliasCompleter = new QCompleter();
-
-    idAliasCompleter->setModel(msgIDMappingModel);
-    idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
-    idAliasCompleter->setCompletionRole(Qt::DisplayRole);
-    idAliasCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-    idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
-
-    msgIDLineEdit->setCompleter(idAliasCompleter);
-
-    w.addToTesting(msgIDLineEdit);
-
-    LineEditTester *tester = new LineEditTester(msgIDLineEdit);
-    w.addToTesting(tester);
-
-    MsgCodeLineEdit *msgCodeLineEdit = new MsgCodeLineEdit(
-                );
-
-    msgCodeLineEdit->setMappingManager(msgCodeMappingManager);
-
-    QCompleter *codeAliasCompleter = new QCompleter();
-
-    codeAliasCompleter->setModel(msgCodeMappingModel);
-    codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
-    codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
-    codeAliasCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-    codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
-
-    msgCodeLineEdit->setCompleter(codeAliasCompleter);
-
-    w.addToTesting(msgCodeLineEdit);
-
-
-
-    MsgDataLineEdit *msgDataLineEdit = new MsgDataLineEdit(
-                );
-    w.addToTesting(msgDataLineEdit);
 
     w.show();
 

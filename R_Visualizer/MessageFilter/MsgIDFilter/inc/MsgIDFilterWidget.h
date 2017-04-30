@@ -9,6 +9,7 @@
 #define MSGIDFILTERWIDGET_H
 
 #include <QWidget>
+#include <QAbstractItemDelegate>
 
 #include "MsgIDType.h"
 
@@ -42,6 +43,8 @@ public:
 
     void addMsgID(const MsgIDType &msgIDToAdd);
     void removeMsgID(const MsgIDType &msgIDToRemove);
+
+    void setDelegate(QAbstractItemDelegate *delegate);
 
 signals:
     void sgnl_MsgIDAdded(const MsgIDType &addedMsgID);

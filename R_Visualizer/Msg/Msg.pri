@@ -33,3 +33,4 @@ FORMS    += \
     $$PWD/ui/msgdatawidget.ui \
 
 include(Widgets/MsgWidgets.pri)
+include(Delegates/MsgDelegates.pri)

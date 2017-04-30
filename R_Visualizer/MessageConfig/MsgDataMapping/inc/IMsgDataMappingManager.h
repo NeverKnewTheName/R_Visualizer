@@ -14,6 +14,7 @@
 
 class IMsgDataFormatter;
 class IMsgDataMapping;
+class IMsgDataMappingStore;
 
 /**
  * @defgroup MsgDataMappingGroup Message Data Mapping
@@ -57,6 +58,8 @@ public:
             const MsgIDType &msgID,
             const MsgCodeType &msgCode
             ) = 0;
+
+    virtual IMsgDataMappingStore *getStore() const = 0;
 
 signals:
 

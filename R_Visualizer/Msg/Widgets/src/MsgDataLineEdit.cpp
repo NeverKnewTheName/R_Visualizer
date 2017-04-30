@@ -56,6 +56,13 @@ MsgDataLineEdit::MsgDataLineEdit(
 {
     ui->setupUi(this);
 
+    connect(
+            ui->dataLineEdit,
+            &QLineEdit::editingFinished,
+            this,
+            &MsgDataLineEdit::sgnl_EditingFinished
+           );
+
     for(auto &tuple : formatData)
     {
         ui->numFormatComboBox->addItem(std::get<4>(tuple));
@@ -71,17 +78,37 @@ MsgDataLineEdit::~MsgDataLineEdit()
 
 MsgDataType MsgDataLineEdit::getMsgData() const
 {
+    QString number = ui->dataLineEdit->text().simplified();
+
+    int base = std::get<0>(formatData.at(currentFormatIndex));
+
+    const int fieldWidth = std::get<1>(formatData.at(currentFormatIndex));
+    if(fieldWidth == 0)
+    {
+        number = convertFormat(number, currentFormatIndex,0);
+        base = std::get<0>(formatData.at(0));
+    }
+
+    QStringList bytes = number.split(' ');
+
+    MsgDataType msgData;
+    for(const QString &byte : bytes)
+    {
+        msgData.append(MsgDataByteType(byte.toInt(0,base)));
+    }
+
+    return msgData;
 }
 
-void setMsgData(const MsgDataType &msgData)
+void MsgDataLineEdit::setMsgData(const MsgDataType &msgData)
 {
 }
 
-void setCompleter(QCompleter *completer)
+void MsgDataLineEdit::setCompleter(QCompleter *completer)
 {
 }
 
-void setMappingManager(const IMsgDataMappingManager *msgDataMappingManager)
+void MsgDataLineEdit::setMappingManager(IMsgDataMappingManager *msgDataMappingManager)
 {
 }
 
@@ -89,7 +116,7 @@ QString MsgDataLineEdit::convertFormat(
         QString &number,
         const int oldFormatIndex,
         const int newFormatIndex
-        )
+        ) const
 {
     const int oldBase = std::get<0>(formatData.at(oldFormatIndex));
     const int newBase = std::get<0>(formatData.at(newFormatIndex));

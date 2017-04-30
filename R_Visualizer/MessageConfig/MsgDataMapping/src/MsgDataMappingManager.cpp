@@ -91,6 +91,11 @@ void MsgDataMappingManager::removeMsgDataMapping(
     }
 }
 
+IMsgDataMappingStore *MsgDataMappingManager::getStore() const
+{
+    return msgDataMappingStore;
+}
+
 
 void MsgDataMappingManager::accept(FileParser *visitor)
 {

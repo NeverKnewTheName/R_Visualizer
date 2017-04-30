@@ -12,6 +12,7 @@
 #include "MsgCodeType.h"
 
 class IMsgCodeMapping;
+class IMsgCodeMappingStore;
 
 /**
  * @defgroup MsgCodeMappingGroup Message Code Mapping
@@ -48,6 +49,8 @@ public:
     virtual void removeMsgCodeMapping(
             const MsgCodeType &relatedMsgCode
             ) = 0;
+
+    virtual IMsgCodeMappingStore *getStore() const = 0;
 signals:
 
 public slots:

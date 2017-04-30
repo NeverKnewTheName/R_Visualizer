@@ -52,6 +52,11 @@ MsgIDFilterWidget::~MsgIDFilterWidget()
     delete ui;
 }
 
+void MsgIDFilterWidget::setDelegate(QAbstractItemDelegate *delegate)
+{
+    ui->idFilterListView->setItemDelegateForColumn(0,delegate);
+}
+
 void MsgIDFilterWidget::on_addFilterIDPushButton_clicked()
 {
     qsrand(qrand());
@@ -116,8 +121,10 @@ void MsgIDFilterWidget::init()
             dynamic_cast<QAbstractItemModel*>(msgIDFilterModel)
             );
     ui->idFilterListView->setModel(sortFilterProxyModel);
+    ui->idFilterListView->setAlternatingRowColors(true);
     ui->idFilterListView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->idFilterListView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->idFilterListView->setEditTriggers(QAbstractItemView::DoubleClicked);
     //ToDO
     //ui->idFilterListView->setItemDelegate(new IDEditorDelegate(this));
 

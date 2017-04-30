@@ -54,6 +54,9 @@ public:
     void setCompleter(QCompleter *completer);
     void setMappingManager(IMsgIDMappingManager *msgIDMappingManager);
 
+signals:
+    void sgnl_EditingFinished();
+
 private slots:
     void idLineEditTextChanged(const QString &arg1);
 

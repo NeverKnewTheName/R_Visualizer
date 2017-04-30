@@ -134,8 +134,10 @@ void MsgCodeFilterWidget::init()
             dynamic_cast<QAbstractItemModel*>(msgCodeFilterModel)
             );
     ui->codeFilterListView->setModel(sortFilterProxyModel);
+    ui->codeFilterListView->setAlternatingRowColors(true);
     ui->codeFilterListView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->codeFilterListView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->codeFilterListView->setEditTriggers(QAbstractItemView::DoubleClicked);
     //ToDO
     //ui->codeFilterListView->setItemDelegate(new CodeEditorDelegate(this));
 

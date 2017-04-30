@@ -3,6 +3,8 @@
 #include "ISendMsgSingle.h"
 #include "ISendMsgPackage.h"
 
+#include "IInterfaceHandler.h"
+
 SendMessages::SendMessages(
         IInterfaceHandler *interfaceHandler,
         QObject *parent
@@ -20,6 +22,13 @@ SendMessages::~SendMessages()
 void SendMessages::addSendMsgSingle(ISendMsgSingle *sendMsgSingle)
 {
     sendMsgSingleInstances.append(sendMsgSingle);
+
+    connect(
+            sendMsgSingle,
+            &ISendMsgSingle::sgnl_sendMessage,
+            this,
+            &ISendMessages::slt_SendMessage
+            );
 }
 
 void SendMessages::removeSendMsgSingle(ISendMsgSingle *sendMsgSingle)
@@ -39,6 +48,7 @@ void SendMessages::removeSendMsgPackage(ISendMsgPackage *sendMsgPackage)
 
 void SendMessages::sendMessage(const IMsg &msgToSend)
 {
+    interfaceHandler->sendMessage(msgToSend);
 }
 
 void SendMessages::applyUserRole(const UserRoleManagement::UserRole roleToApply)

@@ -9,8 +9,13 @@
 #define SENDMSGSINGLEWIDGET_H
 
 #include <QWidget>
+#include <QCompleter>
 
 class ISendMsgSingle;
+class IMsgIDMappingManager;
+class IMsgCodeMappingManager;
+class IMsgDataMappingManager;
+class IMsg;
 
 namespace Ui {
 class SendMsgSingleWidget;
@@ -35,6 +40,15 @@ public:
             QWidget *parent = 0
             );
     ~SendMsgSingleWidget();
+
+    void setMsgIDMapping(IMsgIDMappingManager *msgIDMappingManager);
+    void setMsgIDCompleter(QCompleter *msgIDCompleter);
+    void setMsgCodeMapping(IMsgCodeMappingManager *msgCodeMappingManager);
+    void setMsgCodeCompleter(QCompleter *msgCodeCompleter);
+    void setMsgDataMapping(IMsgDataMappingManager *msgDataMappingManager);
+
+private slots:
+    void on_sndMsgSendBtn_clicked();
 
 private:
     void connectSendMsgSingle();
