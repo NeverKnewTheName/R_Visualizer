@@ -142,13 +142,18 @@ signals:
      * @brief Signal is emitted during an active monitoring session when an
      * error was received from the connected interface
      */
-    void sgnl_ErrorReceived(const IMsg &receivedError);
+    void sgnl_ErrorReceived(const QString &receivedError);
 
     /**
      * @brief Signal is emitted when an error is detected by the
      * #IInterfaceHandler
      */
     void sgnl_Error(const QString &errorDescription);
+
+    void sgnl_Connected();
+    void sgnl_Disconnected();
+    void sgnl_SessionStarted();
+    void sgnl_SessionStopped();
 
 public slots:
     /**

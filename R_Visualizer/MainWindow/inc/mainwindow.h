@@ -21,6 +21,8 @@ class ErrorLogView;
 
 class TimestampedMsg;
 
+class IInterfaceHandler;
+
 namespace Ui {
 class MainWindow;
 }
@@ -42,7 +44,10 @@ public:
      * The constructor of the #MainWindow takes care of the construction of all modules
      * and everything that is needed for the execution of R_Visualizer.
      */
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(
+            IInterfaceHandler *interfaceHandler,
+            QWidget *parent = 0
+            );
     /**
      * \brief Destructs the #MainWindows object
      * 
@@ -68,6 +73,11 @@ signals:
     /* void errorReceived(Error_PacketPtr); */
 
     void sgnl_AddTestMessage(const TimestampedMsg &testMsg);
+
+    void sgnl_ConnectToInterface();
+    void sgnl_DisconnectFromInterface();
+    void sgnl_StartSession();
+    void sgnl_StopSession();
 
 private slots:
     /**
@@ -113,12 +123,15 @@ private slots:
      * The #UserRole affects the SwitchRoles button as well as advanced options in the menu.
      */
     void applyRole(UserRoleManagement::UserRole roleToSwitchTo);
-
     void on_actionSwitch_User_Role_triggered();
-
     void on_TestPB_1_clicked();
-
     void on_actionOpen_Error_Log_triggered();
+
+
+    void slt_InterfaceConnected();
+    void slt_InterfaceDisconnected();
+    void slt_InterfaceSessionStarted();
+    void slt_InterfaceSessionStopped();
 
 private:
     void initDeviceHandler();

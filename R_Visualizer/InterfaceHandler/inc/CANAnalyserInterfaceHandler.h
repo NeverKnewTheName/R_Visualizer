@@ -37,6 +37,7 @@ signals:
     void sgnl_DriverError(const QString &errorMessage);
 
 public slots:
+    void slt_Start();
     void slt_Stop();
 
 private:
@@ -44,7 +45,7 @@ private:
 
 private:
     QMutex stopMutex;
-    QMutex &driverAcccessMutex;
+    QMutex &driverAccessMutex;
     DeviceDriver &deviceDriver;
     bool stopReceiver;
 };
@@ -75,13 +76,22 @@ private:
     bool sendCANFrame(CAN_PacketPtr packet);
     virtual CAN_PacketPtr convertMsgToCANFrame(const IMsg &msgToConvert) const;
 
+signals:
+    /* void sgnl_StartReceiver(); */
+    /* void sgnl_StopReceiver(); */
+
 private slots:
     /* void slt_ScanForInterface(); */
+    void slt_DriverError(const QString &errorDescription);
 
 private:
+    QThread receiverThread;
     DeviceDriver canAnalyserDeviceDriver;
     /* QTimer timer; */
     QMutex driverAccessMutex;
+    QTimer *startReceiverTimer;
+    QTimer *stopReceiverTimer;
+    CANAlyserReceiveWorker *receiverWorker;
 
     bool connected;
     bool sessionInProgress;

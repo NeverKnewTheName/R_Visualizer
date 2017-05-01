@@ -36,13 +36,14 @@
 
 //#include "MessageStreamWidget.h"
 
-#define __DEBUG__
+#include "IInterfaceHandler.h"
 
-#ifdef __DEBUG__
 #include <QDebug>
-#endif //__DEBUG__
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(
+        IInterfaceHandler *interfaceHandler,
+        QWidget *parent
+        ) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     currentFileName(QString()),
@@ -56,6 +57,61 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connectErrorLog();
     connectUserRoleManager();
+
+    slt_InterfaceDisconnected();
+
+    connect(
+            interfaceHandler,
+            &IInterfaceHandler::sgnl_Connected,
+            this,
+            &MainWindow::slt_InterfaceConnected
+           );
+    connect(
+            interfaceHandler,
+            &IInterfaceHandler::sgnl_Disconnected,
+            this,
+            &MainWindow::slt_InterfaceDisconnected
+           );
+    connect(
+            interfaceHandler,
+            &IInterfaceHandler::sgnl_SessionStarted,
+            this,
+            &MainWindow::slt_InterfaceSessionStarted
+           );
+    connect(
+            interfaceHandler,
+            &IInterfaceHandler::sgnl_SessionStopped,
+            this,
+            &MainWindow::slt_InterfaceSessionStopped
+           );
+
+    connect(
+            this,
+            &MainWindow::sgnl_ConnectToInterface,
+            interfaceHandler,
+            &IInterfaceHandler::slt_Connect
+           );
+
+    connect(
+            this,
+            &MainWindow::sgnl_DisconnectFromInterface,
+            interfaceHandler,
+            &IInterfaceHandler::slt_Disconnect
+           );
+
+    connect(
+            this,
+            &MainWindow::sgnl_StartSession,
+            interfaceHandler,
+            &IInterfaceHandler::slt_StartSession
+           );
+
+    connect(
+            this,
+            &MainWindow::sgnl_StopSession,
+            interfaceHandler,
+            &IInterfaceHandler::slt_StopSession
+           );
 }
 
 MainWindow::~MainWindow()
@@ -211,11 +267,8 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionConnect_triggered()
 {
-#ifdef __DEBUG__
-    qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
-#endif //__DEBUG__
-
-//    if(m_IsConnectedToDevice)
+    emit sgnl_ConnectToInterface();
+      /* if(m_IsConnectedToDevice) */
 //    {
 //        //Disconnect
 //        ui->actionStart->setDisabled(true);
@@ -405,3 +458,40 @@ void MainWindow::on_actionOpen_Error_Log_triggered()
 //        emit errorReceived(qSharedPointerDynamicCast<Error_Packet>(ptr));
 //    }
 //}
+
+void MainWindow::slt_InterfaceConnected()
+{
+            ui->actionStart->setDisabled(false);
+            ui->actionStop->setDisabled(true);
+            ui->actionConnect->setIcon(
+                    QIcon(":/GUI/Icons/Icons/Network_Disconnected-32.png")
+                    );
+            ui->actionConnect->setText(QString("Disconnect"));
+            ui->actionConnect->setToolTip(
+                    QString("Disconnect from connected device")
+                    );
+}
+
+void MainWindow::slt_InterfaceDisconnected()
+{
+        ui->actionStart->setDisabled(true);
+        ui->actionStop->setDisabled(true);
+        ui->actionConnect->setIcon(
+                QIcon(":/GUI/Icons/Icons/Network-01-32.png")
+                );
+        ui->actionConnect->setText(QString("Connect"));
+        ui->actionConnect->setToolTip(QString("Connect to a device"));
+}
+
+void MainWindow::slt_InterfaceSessionStarted()
+{
+    ui->actionStart->setDisabled(true);
+    ui->actionStop->setDisabled(false);
+}
+
+void MainWindow::slt_InterfaceSessionStopped()
+{
+    ui->actionStop->setDisabled(true);
+    ui->actionStart->setDisabled(false);
+}
+

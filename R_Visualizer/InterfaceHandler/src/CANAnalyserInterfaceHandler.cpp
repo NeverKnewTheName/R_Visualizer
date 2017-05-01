@@ -3,6 +3,7 @@
 #include <QString>
 #include <QDebug>
 #include <QDateTime>
+#include <QMutexLocker>
 
 #include "IMsg.h"
 #include "ITimestampedMsg.h"
@@ -17,9 +18,62 @@ CANAnalyserInterfaceHandler::CANAnalyserInterfaceHandler(
         ) :
     IInterfaceHandler(parent),
     canAnalyserDeviceDriver(),
+    startReceiverTimer(new QTimer()),
+    stopReceiverTimer(new QTimer()),
+    receiverWorker(
+            new CANAlyserReceiveWorker(
+                driverAccessMutex,
+                canAnalyserDeviceDriver
+                )
+            ),
     connected(false),
     sessionInProgress(false)
 {
+    startReceiverTimer->setSingleShot(true);
+    stopReceiverTimer->setSingleShot(true);
+
+    receiverWorker->moveToThread(&receiverThread);
+    startReceiverTimer->moveToThread(&receiverThread);
+    stopReceiverTimer->moveToThread(&receiverThread);
+
+    connect(
+            startReceiverTimer,
+            &QTimer::timeout,
+            receiverWorker,
+            &CANAlyserReceiveWorker::slt_Start
+           );
+
+    connect(
+            stopReceiverTimer,
+            &QTimer::timeout,
+            receiverWorker,
+            &CANAlyserReceiveWorker::slt_Stop
+           );
+
+    connect(
+            receiverWorker,
+            &CANAlyserReceiveWorker::sgnl_MessageReceived,
+            this,
+            &IInterfaceHandler::sgnl_MessageReceived,
+            Qt::QueuedConnection
+           );
+
+    connect(
+            receiverWorker,
+            &CANAlyserReceiveWorker::sgnl_ErrorReceived,
+            this,
+            &IInterfaceHandler::sgnl_ErrorReceived,
+            Qt::QueuedConnection
+           );
+
+    connect(
+            receiverWorker,
+            &CANAlyserReceiveWorker::sgnl_DriverError,
+            this,
+            &CANAnalyserInterfaceHandler::slt_DriverError,
+            Qt::QueuedConnection
+           );
+
     /* connect( */
     /*         &timer, */
     /*         &QTimer::timeout, */
@@ -72,9 +126,12 @@ bool CANAnalyserInterfaceHandler::connectToInterface()
         }
 
     }
-    else if(canAnalyserDeviceDriver.error())
+    else
     {
+        if(canAnalyserDeviceDriver.error())
+        {
         emit sgnl_Error(canAnalyserDeviceDriver.getErrorString());
+        }
 
         return false;
     }
@@ -138,7 +195,8 @@ bool CANAnalyserInterfaceHandler::startSession()
         return false;
     }
 
-    //ToDO !!!
+    receiverThread.start();
+    startReceiverTimer->start(0);
 
     sessionInProgress = true;
     return true;
@@ -146,8 +204,7 @@ bool CANAnalyserInterfaceHandler::startSession()
 
 bool CANAnalyserInterfaceHandler::stopSession()
 {
-
-    //ToDO !!!
+    stopReceiverTimer->start(0);
 
     sessionInProgress = false;
     return true;
@@ -249,27 +306,46 @@ CAN_PacketPtr CANAnalyserInterfaceHandler::convertMsgToCANFrame(
     return packet;
 }
 
+void CANAnalyserInterfaceHandler::slt_DriverError(
+        const QString &errorDescription
+        )
+{
+    emit sgnl_Error(QString("DriverError: %1").arg(errorDescription));
+    disconnectFromInterface();
+}
+
 /* void CANAnalyserInterfaceHandler::slt_ScanForInterface() */
 /* { */
 /*     qDebug() << "Scanning!"; */
 /* } */
 
-CANAlyserReceiveWorkerThread::CANAlyserReceiveWorkerThread(
-        QMutex &driverAccessMutex
+CANAlyserReceiveWorker::CANAlyserReceiveWorker(
+        QMutex &driverAccessMutex,
+        DeviceDriver &deviceDriver
         ) :
     driverAccessMutex(driverAccessMutex),
+    deviceDriver(deviceDriver),
     stopReceiver(false)
 {
 
 }
 
-void CANAlyserReceiveWorkerThread::slt_Stop()
+void CANAlyserReceiveWorker::slt_Start()
 {
-    QMutexLocker(&stopMutex);
+    {
+        QMutexLocker stopLocker(&stopMutex);
+        stopReceiver = false;
+    }
+    listenForMessage();
+}
+
+void CANAlyserReceiveWorker::slt_Stop()
+{
+    QMutexLocker stopLocker(&stopMutex);
     stopReceiver = true;
 }
 
-void CANAlyserReceiveWorkerThread::run()
+void CANAlyserReceiveWorker::listenForMessage()
 {
     while (1)
     {
@@ -278,9 +354,11 @@ void CANAlyserReceiveWorkerThread::run()
         if (stopReceiver) return;
 
         QMutexLocker driverLock(&driverAccessMutex);
+        bool readSuccess = deviceDriver.readCANMessage(ptr);
 
-        if (m_driver.readCANMessage(ptr) && !ptr.isNull())
+        if ( readSuccess && !ptr.isNull())
         {
+            driverLock.unlock();
             QDateTime timestamp = ptr->timestamp();
             switch(ptr->type())
             {
@@ -306,7 +384,7 @@ void CANAlyserReceiveWorkerThread::run()
                         msgData
                         );
                 TimestampedMsg timestampedMsg(msg,timestamp);
-                emit sigMsgReceived(timestampedMsg);
+                emit sgnl_MessageReceived(timestampedMsg);
             }
                 break;
             case CAN_Packet::Error_Frame:
@@ -321,19 +399,23 @@ void CANAlyserReceiveWorkerThread::run()
 
                 /* ErrorLogEntry *errEntry = new ErrorLogEntry(timestamp,ErrMsg); */
                 /* emit sigErrorMsgReceived(errEntry); */
+                emit sgnl_ErrorReceived(ErrMsg);
             }
                 break;
             }
             //emit sigPacketReceived(ptr);
         }
-        else if (m_driver.error())
+        else
         {
-            emit sigError(m_driver.getErrorString());
-            qDebug() << "Driver error: " << m_driver.getErrorString();
-            m_stop = true;
-            m_driver.disconnectDevice();
-            m_connected = false;
-            return;
+            if (deviceDriver.error())
+            {
+                emit sgnl_DriverError(deviceDriver.getErrorString());
+                qDebug() << "Driver error: " << deviceDriver.getErrorString();
+                stopReceiver = true;
+                /* deviceDriver.disconnectDevice(); */
+                /* m_connected = false; */
+                return;
+            }
         }
     }
 }
