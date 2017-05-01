@@ -39,10 +39,6 @@ void MessageStreamWidget::init()
     const int sectionCount = horzHeader->count() - 1;
     const int sectionLength = horzHeader->length() / horzHeader->count();
 
-    qDebug() << "HorzHeader count: " << horzHeader->count();
-    qDebug() << "HorzHeader length: " << horzHeader->length();
-    qDebug() << "HorzHeader sectionLength: " << sectionLength;
-
     for(int i = 0; i < sectionCount; ++i)
     {
         horzHeader->setSectionResizeMode(i,QHeaderView::Interactive);

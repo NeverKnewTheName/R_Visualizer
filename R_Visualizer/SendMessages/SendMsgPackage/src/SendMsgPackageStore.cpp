@@ -85,23 +85,20 @@ void SendMsgPackageStore::clear()
 void SendMsgPackageStore::removeAt(const int index)
 {
     emit sgnl_msgAboutToBeRemoved(index,1);
-    msgStorage.removeAt(index);
+    msgStorage.remove(index);
     emit sgnl_msgRemoved(index,1);
 }
 
 void SendMsgPackageStore::removeMsgs(const int index, int count)
 {
-    if(index+count >= msgStorage.size())
+    if(index+count > msgStorage.size())
     {
         return;
     }
 
     emit sgnl_msgAboutToBeRemoved(index,count);
 
-    while(count--)
-    {
-        msgStorage.removeAt(index+count);
-    }
+    msgStorage.remove(index,count);
 
     emit sgnl_msgRemoved(index,count);
 }

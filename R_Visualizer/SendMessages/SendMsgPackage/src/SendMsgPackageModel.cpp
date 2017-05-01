@@ -57,14 +57,10 @@ QVariant SendMsgPackageModel::data(const QModelIndex &index, int role) const
                 const MsgDataType &msgData = msgAtIndex.getMsgData();
                 for(const MsgDataByteType &byte : msgData)
                 {
-                    msgDataAsString.prepend(static_cast<QString>(byte) + " ");
-                }
-                if(!msgDataAsString.isEmpty())
-                {
-                    msgDataAsString.prepend("0x ");
+                    msgDataAsString.append(static_cast<QString>(byte) + " ");
                 }
 
-                return msgDataAsString.simplified();
+                return msgDataAsString.trimmed();
             }
                 break;
             default:
@@ -218,7 +214,7 @@ void SendMsgPackageModel::slt_msgAboutToBeRemoved(
         const int count
         )
 {
-    beginRemoveRows(QModelIndex(),index,index+count);
+    beginRemoveRows(QModelIndex(),index,index+count-1);
 }
 
 void SendMsgPackageModel::slt_msgRemoved(

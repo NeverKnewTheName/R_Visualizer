@@ -1,8 +1,12 @@
 #include "SendMsgPackageWidget.h"
 #include "ui_sendmsgpackagewidget.h"
 
+#include <QHeaderView>
+
 #include "ISendMsgPackage.h"
 #include "ISendMsgPackageStore.h"
+
+#include "SendMsgPackageAddDialog.h"
 
 #include "IMsgIDMappingManager.h"
 #include "IMsgCodeMappingManager.h"
@@ -37,22 +41,65 @@ SendMsgPackageWidget::~SendMsgPackageWidget()
 
 void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
 {
-    qsrand(qrand());
-    MsgDataType testMsgData;
+    //qsrand(qrand());
+    //MsgDataType testMsgData;
+//
+    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
+    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
+    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
+    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
+//
+    //Msg testMsg(MsgIDType(qrand()&0xFFFF),MsgCodeType(qrand()&0xFF),testMsgData);
 
-    testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    testMsgData.append(MsgDataByteType(qrand() &0xffu));
+    SendMsgPackageAddDialog *sendMsgPackageAddDialog =
+            new SendMsgPackageAddDialog(
+                msgIDMappingManager,
+                msgCodeMappingManager,
+                this
+                );
 
-    Msg testMsg(MsgIDType(qrand()&0xFFFF),MsgCodeType(qrand()&0xFF),testMsgData);
+    //connect(
+            //sendMsgPackageAddDialog,
+            //&SendMsgPackageAddDialog::sgnl_commit,
+            //sendMsgPackage,
+            //&ISendMsgPackage::slt_appendMsg
+            //);
 
-    sendMsgPackage->appendMsg(testMsg);
+    connect(
+                sendMsgPackageAddDialog,
+                &SendMsgPackageAddDialog::sgnl_commit,
+                [=](const IMsg &msg){
+                    QItemSelectionModel *selectionModel =
+                       ui->sndPckgTableView->selectionModel();
+
+                    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+
+                    if(selectionIndexList.size())
+                    {
+                        const int row = selectionIndexList.last().row() + 1;
+                        sendMsgPackage->insertMsg(row,msg);
+                    }
+                    else
+                    {
+                        sendMsgPackage->appendMsg(msg);
+                    }
+                }
+            );
+
+    sendMsgPackageAddDialog->exec();
 }
 
 void SendMsgPackageWidget::on_sndPcktRmvBtn_clicked()
 {
+    QItemSelectionModel *selectionModel =
+       ui->sndPckgTableView->selectionModel();
 
+    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+
+    sendMsgPackage->removeMsgs(
+            selectionIndexList.first().row(),
+            selectionIndexList.size()
+            );
 }
 
 void SendMsgPackageWidget::on_sndPcktLoadBtn_clicked()
@@ -77,7 +124,6 @@ void SendMsgPackageWidget::on_sndPcktClrBtn_clicked()
 
 void SendMsgPackageWidget::init()
 {
-    ui->setupUi(this);
     ui->sndPckgTableView->setModel(&sendMsgPackageModel);
     ui->sndPckgTableView->setAlternatingRowColors(true);
     ui->sndPckgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -86,5 +132,17 @@ void SendMsgPackageWidget::init()
     //ToDO
     //ui->codeFilterListView->setItemDelegate(new CodeEditorDelegate(this));
 
-    //ToDO SCROLL TO BOTTOM
+    QHeaderView *horzHeader = ui->sndPckgTableView->horizontalHeader();
+
+    const int sectionCount = horzHeader->count() - 1;
+    const int sectionLength = horzHeader->length() / horzHeader->count();
+
+    for(int i = 0; i < sectionCount; ++i)
+    {
+        horzHeader->setSectionResizeMode(i,QHeaderView::Interactive);
+    }
+
+    horzHeader->setDefaultSectionSize(sectionLength);
+
+    horzHeader->setStretchLastSection(true);
 }

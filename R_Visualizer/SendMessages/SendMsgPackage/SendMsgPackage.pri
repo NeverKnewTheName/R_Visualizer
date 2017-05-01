@@ -6,6 +6,7 @@ SOURCES += \
     $$PWD/src/SendMsgPackageStore.cpp \
     $$PWD/src/SendMsgPackageModel.cpp \
     $$PWD/src/SendMsgPackageWidget.cpp \
+    $$PWD/src/SendMsgPackageAddDialog.cpp
 
 HEADERS  += \
     $$PWD/inc/ISendMsgPackage.h \
@@ -15,6 +16,8 @@ HEADERS  += \
     $$PWD/inc/SendMsgPackageStore.h \
     $$PWD/inc/SendMsgPackageModel.h \
     $$PWD/inc/SendMsgPackageWidget.h \
+    $$PWD/inc/SendMsgPackageAddDialog.h
 
 FORMS    += \
     $$PWD/ui/sendmsgpackagewidget.ui \
+    $$PWD/ui/sendmsgpackageadddialog.ui
