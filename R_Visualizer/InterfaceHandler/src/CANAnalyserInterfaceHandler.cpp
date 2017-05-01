@@ -253,3 +253,87 @@ CAN_PacketPtr CANAnalyserInterfaceHandler::convertMsgToCANFrame(
 /* { */
 /*     qDebug() << "Scanning!"; */
 /* } */
+
+CANAlyserReceiveWorkerThread::CANAlyserReceiveWorkerThread(
+        QMutex &driverAccessMutex
+        ) :
+    driverAccessMutex(driverAccessMutex),
+    stopReceiver(false)
+{
+
+}
+
+void CANAlyserReceiveWorkerThread::slt_Stop()
+{
+    QMutexLocker(&stopMutex);
+    stopReceiver = true;
+}
+
+void CANAlyserReceiveWorkerThread::run()
+{
+    while (1)
+    {
+        CAN_PacketPtr ptr;
+        QMutexLocker locker(&stopMutex);
+        if (stopReceiver) return;
+
+        QMutexLocker driverLock(&driverAccessMutex);
+
+        if (m_driver.readCANMessage(ptr) && !ptr.isNull())
+        {
+            QDateTime timestamp = ptr->timestamp();
+            switch(ptr->type())
+            {
+            case CAN_Packet::Data_Frame:
+            {
+                Data_PacketPtr dataPtr =
+                    qSharedPointerDynamicCast<Data_Packet>(ptr);
+
+                MsgDataType msgData;
+
+                QByteArray canData = dataPtr->frame().data;
+                MsgCodeType code =
+                    static_cast<MsgCodeType>(canData.at(0) & 0xFFu);
+
+                for(int i = 1; i < canData.size(); i++)
+                {
+                    msgData.append(MsgDataByteType(canData.at(i)));
+                }
+
+                Msg msg(
+                        MsgIDType(dataPtr->frame().ID_Standard),
+                        MsgCodeType(code),
+                        msgData
+                        );
+                TimestampedMsg timestampedMsg(msg,timestamp);
+                emit sigMsgReceived(timestampedMsg);
+            }
+                break;
+            case CAN_Packet::Error_Frame:
+            {
+                Error_PacketPtr errPtr =
+                    qSharedPointerDynamicCast<Error_Packet>(ptr);
+                QString ErrMsg =
+                    QString("TX Coutner: %1\nRX Counter: %2\nDetails:%3")
+                        .arg(errPtr->TX_Error_Counter())
+                        .arg(errPtr->RX_Error_Counter())
+                        .arg(errPtr->Status_Register_String());
+
+                /* ErrorLogEntry *errEntry = new ErrorLogEntry(timestamp,ErrMsg); */
+                /* emit sigErrorMsgReceived(errEntry); */
+            }
+                break;
+            }
+            //emit sigPacketReceived(ptr);
+        }
+        else if (m_driver.error())
+        {
+            emit sigError(m_driver.getErrorString());
+            qDebug() << "Driver error: " << m_driver.getErrorString();
+            m_stop = true;
+            m_driver.disconnectDevice();
+            m_connected = false;
+            return;
+        }
+    }
+}

@@ -60,7 +60,7 @@ MsgDataLineEdit::MsgDataLineEdit(
 
     connect(
             ui->dataLineEdit,
-            &QLineEdit::editingFinished,
+            &QLineEdit::returnPressed,
             this,
             &MsgDataLineEdit::sgnl_EditingFinished
            );
@@ -108,7 +108,7 @@ void MsgDataLineEdit::setMsgData(const MsgDataType &msgData)
     QString msgDataAsString;
     for(const MsgDataByteType &byte : msgData)
     {
-        msgDataAsString.prepend(static_cast<QString>(byte) + " ");
+        msgDataAsString.append(QString::number(byte.getPrimitiveData(),16) + " ");
     }
     ui->dataLineEdit->setText(msgDataAsString.trimmed());
     QTimer::singleShot(0,ui->dataLineEdit,SLOT(setFocus()));

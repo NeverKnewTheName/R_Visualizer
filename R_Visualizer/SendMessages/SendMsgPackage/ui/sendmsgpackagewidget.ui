@@ -63,6 +63,13 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Load Matrix</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="sndPcktSendBtn">
           <property name="toolTip">
            <string>Send the current message packet</string>

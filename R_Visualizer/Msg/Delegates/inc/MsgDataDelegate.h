@@ -70,6 +70,10 @@ public slots:
 
 private:
     IMsgDataMappingManager *msgDataMappingManager;
+
+    // QAbstractItemDelegate interface
+public:
+    virtual void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 /**

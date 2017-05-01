@@ -102,13 +102,13 @@ QVariant SendMsgPackageModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
             case SendMsgPackageModel::COL_MsgID:
-                return msgAtIndex.getMsgID();
+                return QVariant::fromValue<MsgIDType>(msgAtIndex.getMsgID());
                 break;
             case SendMsgPackageModel::COL_MsgCode:
-                return msgAtIndex.getMsgCode();
+                return QVariant::fromValue<MsgCodeType>(msgAtIndex.getMsgCode());
                 break;
             case SendMsgPackageModel::COL_MsgData:
-                return QVariant::fromValue(msgAtIndex.getMsgData());
+                return QVariant::fromValue<MsgDataType>(msgAtIndex.getMsgData());
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
@@ -139,11 +139,15 @@ bool SendMsgPackageModel::setData(
         switch(col)
         {
             case SendMsgPackageModel::COL_MsgID:
-                msgAtIndex.setMsgID(value.value<MsgIDType>());
+                msgAtIndex.setMsgID(
+                        MsgIDType(value.value<MsgIDType::type>())
+                        );
                 edited = true;
                 break;
             case SendMsgPackageModel::COL_MsgCode:
-                msgAtIndex.setMsgCode(value.value<MsgCodeType>());
+                msgAtIndex.setMsgCode(
+                        MsgCodeType(value.value<MsgCodeType::type>())
+                            );
                 edited = true;
                 break;
             case SendMsgPackageModel::COL_MsgData:

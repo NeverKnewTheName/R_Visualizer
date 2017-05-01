@@ -1,6 +1,8 @@
 #include "MsgWidget.h"
 #include "ui_msgwidget.h"
 
+#include <QTimer>
+
 MsgWidget::MsgWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MsgWidget),
@@ -8,6 +10,10 @@ MsgWidget::MsgWidget(QWidget *parent) :
     msgCodeMappingManager(Q_NULLPTR)
 {
     ui->setupUi(this);
+    setTabOrder(ui->msgIDWidget,ui->msgCodeWidget);
+    setTabOrder(ui->msgCodeWidget,ui->msgDataWidget);
+
+    QTimer::singleShot(0,ui->msgIDWidget,SLOT(setFocus()));
 }
 
 MsgWidget::~MsgWidget()

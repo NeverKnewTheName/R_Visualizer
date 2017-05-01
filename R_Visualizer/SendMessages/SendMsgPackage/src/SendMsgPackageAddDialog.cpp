@@ -8,6 +8,7 @@
 #include "MsgCodeMappingModel.h"
 
 #include <QCompleter>
+#include <QTimer>
 
 SendMsgPackageAddDialog::SendMsgPackageAddDialog(
         IMsgIDMappingManager *msgIDMappingManager,
@@ -18,6 +19,8 @@ SendMsgPackageAddDialog::SendMsgPackageAddDialog(
     ui(new Ui::SendMsgPackageAddDialog)
 {
     ui->setupUi(this);
+
+    setTabOrder(ui->msgWidget,ui->buttonBox);
 
     if(msgIDMappingManager != Q_NULLPTR)
     {
@@ -62,6 +65,8 @@ SendMsgPackageAddDialog::SendMsgPackageAddDialog(
 
         ui->msgWidget->setMsgCodeCompleter(codeAliasCompleter);
     }
+
+    //QTimer::singleShot(0,ui->msgWidget,SLOT(setFocus()));
 }
 
 SendMsgPackageAddDialog::~SendMsgPackageAddDialog()

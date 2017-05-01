@@ -357,6 +357,10 @@ int main(int argc, char *argv[])
     SendMsgPackageWidget *sendMsgPackageWidget =
             new SendMsgPackageWidget(sendMsgPackage);
 
+    sendMsgPackageWidget->setMsgIDMappingManager(msgIDMappingManager);
+    sendMsgPackageWidget->setMsgCodeMappingManager(msgCodeMappingManager);
+    sendMsgPackageWidget->setMsgDataMappingManager(msgDataMappingManager);
+
     sendMessagesWidget->addSendMsgPackageWidget(sendMsgPackageWidget);
 
     w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");

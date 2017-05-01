@@ -65,7 +65,7 @@ void MsgIDDelegate::paint(
 
     painter->drawText(
             option.rect,
-            Qt::TextWordWrap | Qt::AlignLeft,
+            Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
             alias
             );
 

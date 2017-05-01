@@ -12,6 +12,9 @@
 #include "IMsgCodeMappingManager.h"
 #include "IMsgDataMappingManager.h"
 
+#include "MsgIDDelegate.h"
+#include "MsgCodeDelegate.h"
+#include "MsgDataDelegate.h"
 
 SendMsgPackageWidget::SendMsgPackageWidget(
         ISendMsgPackage *sendMsgPackage,
@@ -32,6 +35,47 @@ SendMsgPackageWidget::SendMsgPackageWidget(
 SendMsgPackageWidget::~SendMsgPackageWidget()
 {
     delete ui;
+}
+
+void SendMsgPackageWidget::setMsgIDMappingManager(
+        IMsgIDMappingManager *msgIDMappingManager
+        )
+{
+    this->msgIDMappingManager = msgIDMappingManager;
+    if(msgIDMappingManager != Q_NULLPTR)
+    {
+        MsgIDDelegate *msgIDDelegate =
+            new MsgIDDelegate(msgIDMappingManager,ui->sndPckgTableView);
+        ui->sndPckgTableView->setItemDelegateForColumn(0,msgIDDelegate);
+    }
+}
+
+void SendMsgPackageWidget::setMsgCodeMappingManager(
+        IMsgCodeMappingManager *msgCodeMappingManager
+        )
+{
+    this->msgCodeMappingManager = msgCodeMappingManager;
+
+    if(msgCodeMappingManager != Q_NULLPTR)
+    {
+        MsgCodeDelegate *msgCodeDelegate =
+            new MsgCodeDelegate(msgCodeMappingManager,ui->sndPckgTableView);
+        ui->sndPckgTableView->setItemDelegateForColumn(1,msgCodeDelegate);
+    }
+}
+
+void SendMsgPackageWidget::setMsgDataMappingManager(
+        IMsgDataMappingManager *msgDataMappingManager
+        )
+{
+    this->msgDataMappingManager = msgDataMappingManager;
+
+    if(msgDataMappingManager != Q_NULLPTR)
+    {
+        MsgDataDelegate *msgDataDelegate =
+            new MsgDataDelegate(msgDataMappingManager,ui->sndPckgTableView);
+        ui->sndPckgTableView->setItemDelegateForColumn(2,msgDataDelegate);
+    }
 }
 
 #include "Msg.h"
@@ -96,10 +140,13 @@ void SendMsgPackageWidget::on_sndPcktRmvBtn_clicked()
 
     QModelIndexList selectionIndexList = selectionModel->selectedRows();
 
-    sendMsgPackage->removeMsgs(
-            selectionIndexList.first().row(),
-            selectionIndexList.size()
-            );
+    if(selectionIndexList.size())
+    {
+        sendMsgPackage->removeMsgs(
+                selectionIndexList.first().row(),
+                selectionIndexList.size()
+                );
+    }
 }
 
 void SendMsgPackageWidget::on_sndPcktLoadBtn_clicked()
@@ -145,4 +192,10 @@ void SendMsgPackageWidget::init()
     horzHeader->setDefaultSectionSize(sectionLength);
 
     horzHeader->setStretchLastSection(true);
+
+}
+
+void SendMsgPackageWidget::on_pushButton_clicked()
+{
+   //ToDO
 }

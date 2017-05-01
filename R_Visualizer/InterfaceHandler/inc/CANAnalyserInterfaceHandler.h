@@ -1,8 +1,16 @@
+/**
+ * @file CANAnalyserInterfaceHandler.h
+ * @author Christian Neuberger
+ * @date date
+ *
+ * @brief CAN-Analyser USB-Interface Handler
+ */
 #ifndef CANANALYSERINTERFACEHANDLER_H
 #define CANANALYSERINTERFACEHANDLER_H
 
 #include <QTimer>
 #include <QMutex>
+#include <QThread>
 
 #include "IInterfaceHandler.h"
 
@@ -14,6 +22,36 @@
  * @{
  */
 
+class CANAlyserReceiveWorker : public QObject
+{
+    Q_OBJECT
+public:
+    CANAlyserReceiveWorker(
+            QMutex &driverAccessMutex,
+            DeviceDriver &deviceDriver
+            );
+
+signals:
+    void sgnl_MessageReceived(const ITimestampedMsg &receivedMsg);
+    void sgnl_ErrorReceived(const QString &errorMessage);
+    void sgnl_DriverError(const QString &errorMessage);
+
+public slots:
+    void slt_Stop();
+
+private:
+    void listenForMessage();
+
+private:
+    QMutex stopMutex;
+    QMutex &driverAcccessMutex;
+    DeviceDriver &deviceDriver;
+    bool stopReceiver;
+};
+
+/**
+ * @brief The CANAnalyserInterfaceHandler
+ */
 class CANAnalyserInterfaceHandler : public IInterfaceHandler
 {
     Q_OBJECT

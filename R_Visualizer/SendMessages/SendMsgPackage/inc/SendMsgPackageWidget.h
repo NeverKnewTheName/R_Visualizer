@@ -38,7 +38,7 @@ public:
 
     void setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager);
     void setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager);
-    void setMsgCodeMappingManager(IMsgDataMappingManager *msgDataMappingManager);
+    void setMsgDataMappingManager(IMsgDataMappingManager *msgDataMappingManager);
 
 private slots:
     void on_sndPcktAddBtn_clicked();
@@ -47,6 +47,8 @@ private slots:
     void on_sndPcktStoreBtn_clicked();
     void on_sndPcktSendBtn_clicked();
     void on_sndPcktClrBtn_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     void init();
