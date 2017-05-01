@@ -118,11 +118,14 @@ int main(int argc, char *argv[])
     /* qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry"); */
 
 
-    IInterfaceHandler *interfaceHandler = new CANAnalyserInterfaceHandler();
 
-    MainWindow w(interfaceHandler);
+    MainWindow w;
+
+    IInterfaceHandler *interfaceHandler =
+            new CANAnalyserInterfaceHandler();
 
     interfaceHandler->setParent(&w);
+    w.connectInterfaceHandler(interfaceHandler);
 
 
     IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();

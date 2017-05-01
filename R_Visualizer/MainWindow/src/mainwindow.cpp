@@ -41,7 +41,6 @@
 #include <QDebug>
 
 MainWindow::MainWindow(
-        IInterfaceHandler *interfaceHandler,
         QWidget *parent
         ) :
     QMainWindow(parent),
@@ -60,6 +59,15 @@ MainWindow::MainWindow(
 
     slt_InterfaceDisconnected();
 
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::connectInterfaceHandler(IInterfaceHandler *interfaceHandler)
+{
     connect(
             interfaceHandler,
             &IInterfaceHandler::sgnl_Connected,
@@ -112,11 +120,6 @@ MainWindow::MainWindow(
             interfaceHandler,
             &IInterfaceHandler::slt_StopSession
            );
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 
 void MainWindow::setMessageStreamWidget(QWidget *msgStreamWidget)
@@ -267,7 +270,10 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionConnect_triggered()
 {
-    emit sgnl_ConnectToInterface();
+    if(m_IsConnectedToDevice)
+        emit sgnl_DisconnectFromInterface();
+    else
+        emit sgnl_ConnectToInterface();
       /* if(m_IsConnectedToDevice) */
 //    {
 //        //Disconnect
@@ -447,26 +453,28 @@ void MainWindow::on_actionOpen_Error_Log_triggered()
 
 void MainWindow::slt_InterfaceConnected()
 {
-            ui->actionStart->setDisabled(false);
-            ui->actionStop->setDisabled(true);
-            ui->actionConnect->setIcon(
-                    QIcon(":/GUI/Icons/Icons/Network_Disconnected-32.png")
+    ui->actionStart->setDisabled(false);
+    ui->actionStop->setDisabled(true);
+    ui->actionConnect->setIcon(
+        QIcon(":/GUI/Icons/Icons/Network_Disconnected-32.png")
+        );
+    ui->actionConnect->setText(QString("Disconnect"));
+    ui->actionConnect->setToolTip(
+        QString("Disconnect from connected device")
                     );
-            ui->actionConnect->setText(QString("Disconnect"));
-            ui->actionConnect->setToolTip(
-                    QString("Disconnect from connected device")
-                    );
+    m_IsConnectedToDevice = true;
 }
 
 void MainWindow::slt_InterfaceDisconnected()
 {
-        ui->actionStart->setDisabled(true);
-        ui->actionStop->setDisabled(true);
-        ui->actionConnect->setIcon(
-                QIcon(":/GUI/Icons/Icons/Network-01-32.png")
-                );
-        ui->actionConnect->setText(QString("Connect"));
-        ui->actionConnect->setToolTip(QString("Connect to a device"));
+    ui->actionStart->setDisabled(true);
+    ui->actionStop->setDisabled(true);
+    ui->actionConnect->setIcon(
+        QIcon(":/GUI/Icons/Icons/Network-01-32.png")
+        );
+    ui->actionConnect->setText(QString("Connect"));
+    ui->actionConnect->setToolTip(QString("Connect to a device"));
+    m_IsConnectedToDevice = false;
 }
 
 void MainWindow::slt_InterfaceSessionStarted()

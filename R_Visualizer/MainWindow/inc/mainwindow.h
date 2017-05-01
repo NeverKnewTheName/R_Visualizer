@@ -45,7 +45,6 @@ public:
      * and everything that is needed for the execution of R_Visualizer.
      */
     explicit MainWindow(
-            IInterfaceHandler *interfaceHandler,
             QWidget *parent = 0
             );
     /**
@@ -56,6 +55,7 @@ public:
      */
     ~MainWindow();
 
+    void connectInterfaceHandler(IInterfaceHandler *interfaceHandler);
     void setMessageStreamWidget(QWidget *msgStreamWidget);
     void appendTabMenuWidget(
             QWidget *widgetToAppend,

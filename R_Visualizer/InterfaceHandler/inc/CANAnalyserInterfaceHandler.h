@@ -32,7 +32,7 @@ public:
             );
 
 signals:
-    void sgnl_MessageReceived(const ITimestampedMsg &receivedMsg);
+    void sgnl_MessageReceived(const TimestampedMsg &receivedMsg);
     void sgnl_ErrorReceived(const QString &errorMessage);
     void sgnl_DriverError(const QString &errorMessage);
 
@@ -77,15 +77,15 @@ private:
     virtual CAN_PacketPtr convertMsgToCANFrame(const IMsg &msgToConvert) const;
 
 signals:
-    /* void sgnl_StartReceiver(); */
-    /* void sgnl_StopReceiver(); */
+    void sgnl_StartReceiver();
+    void sgnl_StopReceiver();
 
 private slots:
     /* void slt_ScanForInterface(); */
     void slt_DriverError(const QString &errorDescription);
 
 private:
-    QThread receiverThread;
+    QThread *receiverThread;
     DeviceDriver canAnalyserDeviceDriver;
     /* QTimer timer; */
     QMutex driverAccessMutex;

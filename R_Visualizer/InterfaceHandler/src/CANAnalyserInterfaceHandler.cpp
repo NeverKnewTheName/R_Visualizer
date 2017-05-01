@@ -18,36 +18,40 @@ CANAnalyserInterfaceHandler::CANAnalyserInterfaceHandler(
         ) :
     IInterfaceHandler(parent),
     canAnalyserDeviceDriver(),
-    startReceiverTimer(new QTimer()),
-    stopReceiverTimer(new QTimer()),
+    //startReceiverTimer(new QTimer()),
+    //stopReceiverTimer(new QTimer()),
     receiverWorker(
             new CANAlyserReceiveWorker(
                 driverAccessMutex,
                 canAnalyserDeviceDriver
                 )
             ),
+    receiverThread(new QThread()),
     connected(false),
     sessionInProgress(false)
 {
-    startReceiverTimer->setSingleShot(true);
-    stopReceiverTimer->setSingleShot(true);
+    //startReceiverTimer->setSingleShot(true);
+    //stopReceiverTimer->setSingleShot(true);
 
-    receiverWorker->moveToThread(&receiverThread);
-    startReceiverTimer->moveToThread(&receiverThread);
-    stopReceiverTimer->moveToThread(&receiverThread);
+    receiverWorker->moveToThread(receiverThread);
+    //startReceiverTimer->moveToThread(receiverThread);
+    //stopReceiverTimer->moveToThread(receiverThread);
+
 
     connect(
-            startReceiverTimer,
-            &QTimer::timeout,
+            this,
+            &CANAnalyserInterfaceHandler::sgnl_StartReceiver,
             receiverWorker,
-            &CANAlyserReceiveWorker::slt_Start
+            &CANAlyserReceiveWorker::slt_Start,
+            Qt::QueuedConnection
            );
 
     connect(
-            stopReceiverTimer,
-            &QTimer::timeout,
+            this,
+            &CANAnalyserInterfaceHandler::sgnl_StopReceiver,
             receiverWorker,
-            &CANAlyserReceiveWorker::slt_Stop
+            &CANAlyserReceiveWorker::slt_Stop,
+            Qt::QueuedConnection
            );
 
     connect(
@@ -83,10 +87,15 @@ CANAnalyserInterfaceHandler::CANAnalyserInterfaceHandler(
 
     /* timer.setInterval(1000); */
     /* timer.start(); */
+
+    //receiverThread->start();
 }
 
 CANAnalyserInterfaceHandler::~CANAnalyserInterfaceHandler()
 {
+    disconnectFromInterface();
+    receiverThread->quit();
+    receiverThread->wait();
 }
 
 
@@ -220,8 +229,9 @@ bool CANAnalyserInterfaceHandler::startSession()
 
     driverLock.unlock();
 
-    receiverThread.start();
-    startReceiverTimer->start(0);
+    receiverThread->start();
+    emit sgnl_StartReceiver();
+    //startReceiverTimer->start(1);
 
     sessionInProgress = true;
 
@@ -254,7 +264,8 @@ bool CANAnalyserInterfaceHandler::stopSession()
         return false;
     }
 
-    stopReceiverTimer->start(0);
+    emit sgnl_StopReceiver();
+    //stopReceiverTimer->start(1);
 
     sessionInProgress = false;
 

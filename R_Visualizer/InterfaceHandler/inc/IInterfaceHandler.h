@@ -15,6 +15,7 @@
 
 class IMsg;
 class ITimestampedMsg;
+class TimestampedMsg;
 
 /**
  * @defgroup InterfaceHandlerGroup Interface Handler
@@ -136,7 +137,7 @@ signals:
      * @brief Signal is emitted during an active monitoring session when a
      * messages is received from the connected interface
      */
-    void sgnl_MessageReceived(const ITimestampedMsg &receivedMsg);
+    void sgnl_MessageReceived(const TimestampedMsg &receivedMsg);
 
     /**
      * @brief Signal is emitted during an active monitoring session when an
