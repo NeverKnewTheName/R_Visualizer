@@ -317,26 +317,12 @@ void MainWindow::on_actionConnect_triggered()
 
 void MainWindow::on_actionStart_triggered()
 {
-#ifdef __DEBUG__
-    qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
-#endif //__DEBUG__
-
-    ui->actionStart->setDisabled(true);
-    ui->actionStop->setDisabled(false);
-//    m_deviceHandler.sltStartCapture();
+    emit sgnl_StartSession();
 }
 
 void MainWindow::on_actionStop_triggered()
 {
-#ifdef __DEBUG__
-    qDebug() << __PRETTY_FUNCTION__ << " - Triggered";
-#endif //__DEBUG__
-
-    ui->actionStart->setDisabled(false);
-    ui->actionStop->setDisabled(true);
-//    m_deviceHandler.sltStopCapture();
-    //Somehow the device cannot be restarted without a disconnect...
-    emit ui->actionConnect->triggered();
+    emit sgnl_StopSession();
 }
 
 void MainWindow::applyRole(UserRoleManagement::UserRole roleToSwitchTo)

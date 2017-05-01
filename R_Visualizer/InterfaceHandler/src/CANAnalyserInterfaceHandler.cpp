@@ -149,6 +149,7 @@ bool CANAnalyserInterfaceHandler::connectToInterface()
         return false;
     }
 
+    emit sgnl_Connected();
     return true;
 }
 
@@ -169,6 +170,8 @@ bool CANAnalyserInterfaceHandler::disconnectFromInterface()
         if(disconnectSuccessfull)
         {
             connected = false;
+
+            emit sgnl_Disconnected();
             return true;
         }
         else
@@ -178,6 +181,7 @@ bool CANAnalyserInterfaceHandler::disconnectFromInterface()
         }
     }
 
+    emit sgnl_Disconnected();
     return true;
 }
 
@@ -195,18 +199,66 @@ bool CANAnalyserInterfaceHandler::startSession()
         return false;
     }
 
+    QMutexLocker driverLock(&driverAccessMutex);
+    DeviceDriver::DeviceStates state =
+        canAnalyserDeviceDriver.getCurrentDeviceState();
+
+    if(!(
+            state == DeviceDriver::STATE_USBCaptureInit ||
+            state == DeviceDriver::STATE_CaptureViaUSB
+      ))
+    {
+        emit sgnl_Error(QString("Device State Mismatch!"));
+        return false;
+    }
+
+    if(!canAnalyserDeviceDriver.sendStartCommand())
+    {
+        emit sgnl_Error(QString("Error starting Session!"));
+        return false;
+    }
+
+    driverLock.unlock();
+
     receiverThread.start();
     startReceiverTimer->start(0);
 
     sessionInProgress = true;
+
+    emit sgnl_SessionStarted();
     return true;
 }
 
 bool CANAnalyserInterfaceHandler::stopSession()
 {
+    if(!connected)
+    {
+        emit sgnl_Error(QString("Cannot stop session when not connected!"));
+        return false;
+    }
+
+    QMutexLocker driverLock(&driverAccessMutex);
+
+    DeviceDriver::DeviceStates state =
+        canAnalyserDeviceDriver.getCurrentDeviceState();
+
+    if( state != DeviceDriver::STATE_CaptureViaUSB )
+    {
+        emit sgnl_Error(QString("Device State Mismatch"));
+        return false;
+    }
+
+    if(!canAnalyserDeviceDriver.sendStopCommand())
+    {
+        emit sgnl_Error(QString("Error stopping Session"));
+        return false;
+    }
+
     stopReceiverTimer->start(0);
 
     sessionInProgress = false;
+
+    emit sgnl_SessionStopped();
     return true;
 }
 

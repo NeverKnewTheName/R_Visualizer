@@ -15,8 +15,6 @@
 
 #include <QDebug>
 
-#include "ideditordelegate.h"
-
 #include "fileparser.h"
 #include "csvinparser.h"
 #include "csvoutparser.h"
