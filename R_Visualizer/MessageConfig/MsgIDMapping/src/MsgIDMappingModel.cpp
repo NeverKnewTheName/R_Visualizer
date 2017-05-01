@@ -13,6 +13,22 @@ MsgIDMappingModel::MsgIDMappingModel(
     QAbstractTableModel(parent),
     msgIDMappingStore(msgIDMappingStore)
 {
+    if(msgIDMappingStore == Q_NULLPTR)
+    {
+        //ERROR
+    }
+    QVector<MsgIDType> msgIDs =
+            msgIDMappingStore->getContainedMsgIDs();
+    if(msgIDs.size())
+    {
+        beginInsertRows(QModelIndex(),0,msgIDs.size());
+        msgIDStore = msgIDs;
+        //for(const MsgIDType &msgID : msgIDs)
+        //{
+            //msgIDStore.append(msgID);
+        //}
+        endInsertRows();
+    }
     connectToStore();
 }
 
@@ -67,7 +83,7 @@ Qt::ItemFlags MsgIDMappingModel::flags(const QModelIndex &index) const
     {
         case MsgIDMappingModel::COL_Alias:
         case MsgIDMappingModel::COL_Color:
-            itemFlags |= Qt::ItemIsSelectable;
+            itemFlags |= Qt::ItemIsEditable;
         case MsgIDMappingModel::COL_ID:
             itemFlags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
     }

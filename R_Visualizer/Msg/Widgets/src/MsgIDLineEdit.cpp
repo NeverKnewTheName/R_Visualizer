@@ -4,6 +4,7 @@
 #include <QString>
 #include <QColor>
 #include <QColor>
+#include <QPainter>
 
 #include "IMsgIDMappingManager.h"
 
@@ -27,9 +28,12 @@ MsgIDLineEdit::MsgIDLineEdit(
         //this,
         //&MsgIDLineEdit::sgnl_EditingFinished
         );
-    //QTimer::singleShot(0, ui->idLineEdit, SLOT(setFocus()));
-    //QTimer::singleShot(0, ui->idLineEdit, SLOT(selectAll()));
-    ui->idLineEdit->setFocus();
+
+    connect(
+        ui->idLineEdit,
+        &QLineEdit::customContextMenuRequested,
+        [=](){ qDebug() << "CutomContextMenuRequested";}
+    );
 }
 
 MsgIDLineEdit::~MsgIDLineEdit()
@@ -70,7 +74,9 @@ MsgIDType MsgIDLineEdit::getMsgID() const
 void MsgIDLineEdit::setMsgID(const MsgIDType &msgID)
 {
     ui->idLineEdit->setText(static_cast<QString>(msgID));
-    ui->idLineEdit->selectAll();
+    QTimer::singleShot(0,ui->idLineEdit,SLOT(selectAll()));
+    QTimer::singleShot(0,ui->idLineEdit,SLOT(setFocus()));
+    //ui->idLineEdit->selectAll();
 }
 
 void MsgIDLineEdit::setCompleter(QCompleter *completer)
@@ -119,4 +125,18 @@ void MsgIDLineEdit::idLineEditTextChanged(const QString &arg1)
             QString("QLineEdit { background : %1;}")
             .arg(newBackground.name())
             );
+}
+
+
+QSize MsgIDLineEdit::sizeHint() const
+{
+    return ui->idLineEdit->sizeHint();
+}
+
+
+void MsgIDLineEdit::paintEvent(QPaintEvent *event)
+{
+    QSize lineEditSize = ui->idLineEdit->size();
+    QSize widgetSize = size();
+    QWidget::paintEvent(event);
 }

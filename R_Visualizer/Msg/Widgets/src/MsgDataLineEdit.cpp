@@ -4,6 +4,8 @@
 #include "IMsgDataMappingManager.h"
 
 #include <QFocusEvent>
+#include <QTimer>
+
 #include <QDebug>
 
 MsgDataLineEdit::MsgDataLineEdit(
@@ -102,14 +104,14 @@ MsgDataType MsgDataLineEdit::getMsgData() const
 
 void MsgDataLineEdit::setMsgData(const MsgDataType &msgData)
 {
-}
-
-void MsgDataLineEdit::setCompleter(QCompleter *completer)
-{
-}
-
-void MsgDataLineEdit::setMappingManager(IMsgDataMappingManager *msgDataMappingManager)
-{
+    ui->numFormatComboBox->setCurrentIndex(0);
+    QString msgDataAsString;
+    for(const MsgDataByteType &byte : msgData)
+    {
+        msgDataAsString.prepend(static_cast<QString>(byte) + " ");
+    }
+    ui->dataLineEdit->setText(msgDataAsString.trimmed());
+    QTimer::singleShot(0,ui->dataLineEdit,SLOT(setFocus()));
 }
 
 QString MsgDataLineEdit::convertFormat(

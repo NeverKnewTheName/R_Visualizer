@@ -18,40 +18,28 @@
 /**
  * @brief The SendMsgPackage
  */
-class SendMsgPackage : public QObject, public ISendMsgPackage
+class SendMsgPackage : public ISendMsgPackage
 {
     Q_OBJECT
 public:
     SendMsgPackage(
             ISendMsgPackageStore *sendMsgPackageStore,
-            IMessageConfig *msgConfig,
             QObject *parent = Q_NULLPTR
             );
     virtual ~SendMsgPackage();
 
-    void appendMsg(const IMsg &msgToAppend);
-    void removeMsgFirstMatch(const IMsg &msgToRemove);
-    void removeMsgLastMatch(const IMsg &msgToRemove);
-    void removeMsgsAllMatches(const IMsg &msgToRemove);
+    virtual void appendMsg(const IMsg &msgToAppend);
+    virtual void prependMsg(const IMsg &msgToAppend);
+    virtual void insertMsg(const int index, const IMsg &msgToAppend);
+    virtual void removeAt(const int index);
+    virtual void removeMsgs(const int index, int count);
+
+    virtual ISendMsgPackageStore *getStore() const;
 
     virtual void sendMessages();
 
-signals:
-    void sgnl_sendMsg(const IMsg &msgToSend);
-    void sgnl_msgAppended();
-    void sgnl_msgPrepended();
-    void sgnl_msgRemoved();
-
-public slots:
-    void slt_appendMsg(const IMsg &msgToAppend);
-    void slt_removeMsgFirstMatch(const IMsg &msgToRemove);
-    void slt_removeMsgLastMatch(const IMsg &msgToRemove);
-    void slt_removeMsgsAllMatches(const IMsg &msgToRemove);
-
 private:
     ISendMsgPackageStore *sendMsgPackageStore;
-    IMessageConfig *msgConfig;
-
 };
 
 #endif /* SENDMSGPACKAGE_H */

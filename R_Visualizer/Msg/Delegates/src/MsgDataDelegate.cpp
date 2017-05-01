@@ -11,6 +11,12 @@ MsgDataDelegate::MsgDataDelegate(
     QStyledItemDelegate(parent),
     msgDataMappingManager(msgDataMappingManager)
 {
+    connect(
+            msgDataMappingManager,
+            &IMsgDataMappingManager::sgnl_MsgDataMappingManagerChanged,
+            this,
+            &MsgDataDelegate::slt_MappingHasChanged
+           );
 }
 
 MsgDataDelegate::~MsgDataDelegate()
@@ -23,6 +29,40 @@ void MsgDataDelegate::paint(
         const QModelIndex &index
         ) const
 {
+    QStyledItemDelegate::paint(painter,option,index);
+    const MsgDataType &msgData = index.data(Qt::UserRole).value<MsgDataType>();
+
+    //QString alias = msgDataMappingManager->getMsgDataFormatter();
+
+    //if(alias.isEmpty())
+    //{
+        //alias = static_cast<QString>(msgData);
+    //}
+//
+    //const QColor &colorRep = msgDataMappingManager->getColorToMsgData(msgData);
+//
+    //painter->save();
+//
+    //painter->setFont(option.font);
+    //painter->setRenderHint(QPainter::TextAntialiasing);
+    //painter->fillRect(
+            //option.rect,
+            //(
+                    //(option.state & QStyle::State_Selected) ?
+                        //option.palette.highlight() :
+                //(option.features & QStyleOptionViewItem::Alternate) ?
+                //colorRep.darker(100) :
+                //colorRep
+            //)
+            //);
+//
+    //painter->drawText(
+            //option.rect,
+            //Qt::TextWordWrap | Qt::AlignLeft,
+            //alias
+            //);
+//
+    //painter->restore();
 }
 
 QSize MsgDataDelegate::sizeHint(
@@ -30,6 +70,7 @@ QSize MsgDataDelegate::sizeHint(
         const QModelIndex &index
         ) const
 {
+    QStyledItemDelegate::sizeHint(option,index);
 }
 
 QWidget *MsgDataDelegate::createEditor(

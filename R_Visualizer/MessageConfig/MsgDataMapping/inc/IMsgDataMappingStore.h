@@ -125,6 +125,8 @@ public:
      */
     virtual void clear() = 0;
 
+    virtual QVector<MessageTypeIdentifier> getContainedTypeIdentifiers() const = 0;
+
 signals:
     /**
      * @brief Signal must be emitted before a new #IMsgDataMapping is added to

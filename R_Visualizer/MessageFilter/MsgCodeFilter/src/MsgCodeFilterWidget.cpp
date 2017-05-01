@@ -12,6 +12,8 @@
 
 #include "MsgCodeFilter.h"
 #include "MsgCodeFilterModel.h"
+#include "MsgCodeFilterAddDialog.h"
+#include "IMsgCodeMappingManager.h"
 
 
 MsgCodeFilterWidget::MsgCodeFilterWidget(
@@ -22,7 +24,8 @@ MsgCodeFilterWidget::MsgCodeFilterWidget(
     QWidget(parent),
     ui(new Ui::MsgCodeFilterWidget),
     msgCodeFilter(msgCodeFilter),
-    msgCodeFilterModel(msgCodeFilterModel)
+    msgCodeFilterModel(msgCodeFilterModel),
+    msgCodeMappingManager(Q_NULLPTR)
 {
     init();
     ui->enableCodeFilterCheckBox->setChecked(
@@ -66,6 +69,29 @@ void MsgCodeFilterWidget::removeMsgCode(
     msgCodeFilter->removeMsgCodeFromFilter(msgCodeToRemove);
 }
 
+void MsgCodeFilterWidget::setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager)
+{
+    static QMetaObject::Connection mappingManagerUpdateConnection;
+
+    this->msgCodeMappingManager = msgCodeMappingManager;
+
+    if(mappingManagerUpdateConnection)
+    {
+        disconnect(mappingManagerUpdateConnection);
+    }
+
+    mappingManagerUpdateConnection = connect(
+            msgCodeMappingManager,
+            &IMsgCodeMappingManager::sgnl_MsgCodeMappingManagerChanged,
+            [=](){ ui->codeFilterListView->reset(); }
+            );
+}
+
+void MsgCodeFilterWidget::setDelegate(QAbstractItemDelegate *delegate)
+{
+    ui->codeFilterListView->setItemDelegateForColumn(0,delegate);
+}
+
 void MsgCodeFilterWidget::on_filterCodeLoadBtn_clicked()
 {
 
@@ -78,10 +104,24 @@ void MsgCodeFilterWidget::on_filterCodeStoreBtn_clicked()
 
 void MsgCodeFilterWidget::on_addFilterCodePushButton_clicked()
 {
-    qsrand(qrand());
-    MsgCodeType randomMsgCode(qrand() %100);
+    //qsrand(qrand());
+    //MsgCodeType randomMsgCode(qrand() %100);
 
-    slt_addMsgCode(randomMsgCode);
+    //slt_addMsgCode(randomMsgCode);
+
+    MsgCodeFilterAddDialog *msgCodeFilterAddDialog = new MsgCodeFilterAddDialog(
+                msgCodeMappingManager,
+                this
+                );
+
+    connect(
+            msgCodeFilterAddDialog,
+            &MsgCodeFilterAddDialog::sgnl_commit,
+            this,
+            &MsgCodeFilterWidget::slt_addMsgCode
+           );
+
+    msgCodeFilterAddDialog->exec();
 }
 
 void MsgCodeFilterWidget::on_rmvFilterCodePushButton_clicked()

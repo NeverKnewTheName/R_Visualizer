@@ -106,3 +106,7 @@ void MsgCodeMappingStore::accept(FileParser *visitor)
     visitor->visit(*this);
 }
 
+QVector<MsgCodeType> MsgCodeMappingStore::getContainedMsgCodes() const
+{
+    return msgCodeMappingStore.keys().toVector();
+}

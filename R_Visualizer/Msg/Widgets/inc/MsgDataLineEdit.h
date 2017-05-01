@@ -81,9 +81,6 @@ public:
     MsgDataType getMsgData() const;
     void setMsgData(const MsgDataType &msgData);
 
-    void setCompleter(QCompleter *complter);
-    void setMappingManager(IMsgDataMappingManager *msgDataMappingManager);
-
 private:
     QString convertFormat(
             QString &number,

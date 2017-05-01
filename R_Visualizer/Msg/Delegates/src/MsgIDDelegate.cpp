@@ -92,10 +92,6 @@ QSize MsgIDDelegate::sizeHint(
     const QFontMetrics fontMetrics(font);
 
     return fontMetrics.size(Qt::TextWordWrap, alias);
-    /* const int aliasWidth = fontMetrics.width(alias); */
-    /* const int aliasHeight = fontMetrics; */
-
-    /* return QSize(aliasWidth, aliasHeight); */
 }
 
 QWidget *MsgIDDelegate::createEditor(
@@ -104,12 +100,8 @@ QWidget *MsgIDDelegate::createEditor(
             const QModelIndex &index
         ) const
 {
-    //return new QLineEdit(parent);
-
     MsgIDLineEdit *msgIDLineEdit = new MsgIDLineEdit(parent);
     msgIDLineEdit->setMappingManager(msgIDMappingManager);
-
-    qDebug() << __PRETTY_FUNCTION__;
 
     connect(
             msgIDLineEdit,
@@ -146,11 +138,7 @@ void MsgIDDelegate::setEditorData(
     MsgIDLineEdit *msgIDLineEdit = qobject_cast<MsgIDLineEdit*>(editor);
     if(msgIDLineEdit)
     {
-        //QSignalBlocker editorSignalBlocker(msgIDLineEdit);
-        //msgIDLineEdit->setMsgID(index.data(Qt::UserRole).value<MsgIDType>());
-        qDebug() << __PRETTY_FUNCTION__;
-        msgIDLineEdit->setMsgID(MsgIDType(0x100));
-        msgIDLineEdit->setFocus();
+        msgIDLineEdit->setMsgID(index.data(Qt::UserRole).value<MsgIDType>());
     }
     else
     {
@@ -167,7 +155,6 @@ void MsgIDDelegate::setModelData(
     MsgIDLineEdit *msgIDLineEdit = qobject_cast<MsgIDLineEdit*>(editor);
     if(msgIDLineEdit)
     {
-        qDebug() << __PRETTY_FUNCTION__;
         const MsgIDType &msgIDToSet = msgIDLineEdit->getMsgID();
 
         model->setData(
@@ -190,7 +177,6 @@ void MsgIDDelegate::slt_MappingHasChanged(
 
 void MsgIDDelegate::slt_CommitAndCloseEditor()
 {
-    qDebug() << __PRETTY_FUNCTION__;
     MsgIDLineEdit *editor = qobject_cast<MsgIDLineEdit *>(sender());
 
     emit commitData(editor);
@@ -200,7 +186,5 @@ void MsgIDDelegate::slt_CommitAndCloseEditor()
 
 void MsgIDDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    qDebug() << __PRETTY_FUNCTION__;
-    qDebug() << editor->geometry();
     editor->setGeometry(option.rect);
 }

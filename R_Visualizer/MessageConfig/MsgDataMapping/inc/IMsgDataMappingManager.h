@@ -62,6 +62,7 @@ public:
     virtual IMsgDataMappingStore *getStore() const = 0;
 
 signals:
+    void sgnl_MsgDataMappingManagerChanged(const IMsgDataMappingManager &changedMappingManager);
 
 public slots:
 

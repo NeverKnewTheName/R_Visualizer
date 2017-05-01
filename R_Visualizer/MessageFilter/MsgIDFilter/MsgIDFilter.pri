@@ -11,6 +11,7 @@ SOURCES += \
     $$PWD/src/MsgIDFilterStore.cpp \
     $$PWD/src/MsgIDFilterModel.cpp \
     $$PWD/src/MsgIDFilterWidget.cpp \
+    $$PWD/src/MsgIDFilterAddDialog.cpp
 
 HEADERS  += \
     $$PWD/inc/IMsgIDFilter.h \
@@ -19,7 +20,9 @@ HEADERS  += \
     $$PWD/inc/MsgIDFilterStore.h \
     $$PWD/inc/MsgIDFilterWidget.h \
     $$PWD/inc/MsgIDFilterModel.h \
+    $$PWD/inc/MsgIDFilterAddDialog.h
 
 FORMS    += \
     $$PWD/ui/filteridadddialog.ui \
     $$PWD/ui/msgidfilterwidget.ui \
+    $$PWD/ui/msgidfilteradddialog.ui

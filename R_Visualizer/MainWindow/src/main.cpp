@@ -90,6 +90,11 @@
 #include "ISendMsgSingle.h"
 #include "SendMsgSingle.h"
 #include "SendMsgSingleWidget.h"
+#include "ISendMsgPackage.h"
+#include "SendMsgPackage.h"
+#include "SendMsgPackageWidget.h"
+#include "ISendMsgPackageStore.h"
+#include "SendMsgPackageStore.h"
 
 #include "lineedittester.h"
 
@@ -213,6 +218,8 @@ int main(int argc, char *argv[])
             msgIDFilterModel
             );
 
+    msgIDFilterWidget->setMsgIDMappingManager(msgIDMappingManager);
+
     MsgIDDelegate msgIDDelegate(msgIDMappingManager);
     msgIDFilterWidget->setDelegate(&msgIDDelegate);
 
@@ -231,6 +238,11 @@ int main(int argc, char *argv[])
             msgCodeFilter,
             msgCodeFilterModel
             );
+
+    msgCodeFilterWidget->setMsgCodeMappingManager(msgCodeMappingManager);
+
+    MsgCodeDelegate msgCodeDelegate(msgCodeMappingManager);
+    msgCodeFilterWidget->setDelegate(&msgCodeDelegate);
 
     MsgTimespanFilter *msgTimestampFilter = new MsgTimespanFilter();
 
@@ -336,6 +348,16 @@ int main(int argc, char *argv[])
             );
 
     sendMessagesWidget->addSendMsgSingleWidget(sendMsgSingleWidget);
+
+    ISendMsgPackageStore *sendMsgPackageStore = new SendMsgPackageStore();
+    ISendMsgPackage *sendMsgPackage = new SendMsgPackage(sendMsgPackageStore);
+
+    sendMessages->addSendMsgPackage(sendMsgPackage);
+
+    SendMsgPackageWidget *sendMsgPackageWidget =
+            new SendMsgPackageWidget(sendMsgPackage);
+
+    sendMessagesWidget->addSendMsgPackageWidget(sendMsgPackageWidget);
 
     w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");
 

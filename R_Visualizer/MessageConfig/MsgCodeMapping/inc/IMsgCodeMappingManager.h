@@ -52,6 +52,7 @@ public:
 
     virtual IMsgCodeMappingStore *getStore() const = 0;
 signals:
+    void sgnl_MsgCodeMappingManagerChanged(const IMsgCodeMappingManager &changedMappingManager);
 
 public slots:
     virtual void slt_addMsgCodeMapping(const IMsgCodeMapping &msgMapping)

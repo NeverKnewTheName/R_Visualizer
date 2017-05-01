@@ -137,3 +137,8 @@ void MsgDataMappingStore::accept(FileParser *visitor)
 {
     visitor->visit(*this);
 }
+
+QVector<MessageTypeIdentifier> MsgDataMappingStore::getContainedTypeIdentifiers() const
+{
+    return msgDataMappingStore.keys().toVector();
+}

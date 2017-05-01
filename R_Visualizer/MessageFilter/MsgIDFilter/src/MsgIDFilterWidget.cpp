@@ -12,6 +12,8 @@
 
 #include "MsgIDFilter.h"
 #include "MsgIDFilterModel.h"
+#include "MsgIDFilterAddDialog.h"
+#include "IMsgIDMappingManager.h"
 
 MsgIDFilterWidget::MsgIDFilterWidget(
         MsgIDFilter *msgIDFilter,
@@ -21,7 +23,8 @@ MsgIDFilterWidget::MsgIDFilterWidget(
     QWidget(parent),
     ui(new Ui::MsgIDFilterWidget),
     msgIDFilter(msgIDFilter),
-    msgIDFilterModel(msgIDFilterModel)
+    msgIDFilterModel(msgIDFilterModel),
+    msgIDMappingManager(Q_NULLPTR)
 {
     init();
 
@@ -52,6 +55,24 @@ MsgIDFilterWidget::~MsgIDFilterWidget()
     delete ui;
 }
 
+void MsgIDFilterWidget::setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager)
+{
+    static QMetaObject::Connection mappingManagerUpdateConnection;
+
+    this->msgIDMappingManager = msgIDMappingManager;
+
+    if(mappingManagerUpdateConnection)
+    {
+        disconnect(mappingManagerUpdateConnection);
+    }
+
+    mappingManagerUpdateConnection = connect(
+            msgIDMappingManager,
+            &IMsgIDMappingManager::sgnl_MsgIDMappingManagerChanged,
+            [=](){ ui->idFilterListView->reset(); }
+            );
+}
+
 void MsgIDFilterWidget::setDelegate(QAbstractItemDelegate *delegate)
 {
     ui->idFilterListView->setItemDelegateForColumn(0,delegate);
@@ -59,10 +80,24 @@ void MsgIDFilterWidget::setDelegate(QAbstractItemDelegate *delegate)
 
 void MsgIDFilterWidget::on_addFilterIDPushButton_clicked()
 {
-    qsrand(qrand());
-    MsgIDType randomMsgID(qrand() %100);
+    //qsrand(qrand());
+    //MsgIDType randomMsgID(qrand() %100);
+//
+    //slt_addMsgID(randomMsgID);
 
-    slt_addMsgID(randomMsgID);
+    MsgIDFilterAddDialog *msgIDFilterAddDialog = new MsgIDFilterAddDialog(
+                msgIDMappingManager,
+                this
+                );
+
+    connect(
+            msgIDFilterAddDialog,
+            &MsgIDFilterAddDialog::sgnl_commit,
+            this,
+            &MsgIDFilterWidget::slt_addMsgID
+           );
+
+    msgIDFilterAddDialog->exec();
 }
 
 void MsgIDFilterWidget::on_rmvFilterIDPushButton_clicked()

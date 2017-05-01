@@ -39,6 +39,12 @@ void SendMessages::removeSendMsgSingle(ISendMsgSingle *sendMsgSingle)
 void SendMessages::addSendMsgPackage(ISendMsgPackage *sendMsgPackage)
 {
     sendMsgPackageInstances.append(sendMsgPackage);
+    connect(
+            sendMsgPackage,
+            &ISendMsgPackage::sgnl_sendMsg,
+            this,
+            &ISendMessages::slt_SendMessage
+            );
 }
 
 void SendMessages::removeSendMsgPackage(ISendMsgPackage *sendMsgPackage)

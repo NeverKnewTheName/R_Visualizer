@@ -13,6 +13,22 @@ MsgCodeMappingModel::MsgCodeMappingModel(
     QAbstractTableModel(parent),
     msgCodeMappingStore(msgCodeMappingStore)
 {
+    if(msgCodeMappingStore == Q_NULLPTR)
+    {
+        //ERROR
+    }
+    QVector<MsgCodeType> msgCodes =
+            msgCodeMappingStore->getContainedMsgCodes();
+    if(msgCodes.size())
+    {
+        beginInsertRows(QModelIndex(),0,msgCodes.size());
+        msgCodeStore = msgCodes;
+        //for(const MsgCodeType &msgCode : msgCodes)
+        //{
+            //msgCodeStore.append(msgCode);
+        //}
+        endInsertRows();
+    }
     connectToStore();
 }
 
@@ -97,6 +113,9 @@ QVariant MsgCodeMappingModel::data(
         case Qt::TextAlignmentRole:
             break;
         case Qt::CheckStateRole:
+            break;
+        case Qt::UserRole:
+            return QVariant::fromValue<MsgCodeType>(msgCode);
             break;
     }
     return QVariant();
@@ -192,7 +211,7 @@ Qt::ItemFlags MsgCodeMappingModel::flags(
     {
         case MsgCodeMappingModel::COL_Alias:
         case MsgCodeMappingModel::COL_Color:
-            itemFlags |= Qt::ItemIsSelectable;
+            itemFlags |= Qt::ItemIsEditable;
         case MsgCodeMappingModel::COL_Code:
             itemFlags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
     }

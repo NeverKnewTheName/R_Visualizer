@@ -2,11 +2,10 @@
 
 SendMsgPackage::SendMsgPackage(
         ISendMsgPackageStore *sendMsgPackageStore,
-        IMessageConfig *msgConfig,
-        QObject *parent) :
-    QObject(parent),
-    sendMsgPackageStore(sendMsgPackageStore),
-    msgConfig(msgConfig)
+        QObject *parent
+        ) :
+    ISendMsgPackage(parent),
+    sendMsgPackageStore(sendMsgPackageStore)
 {
 }
 
@@ -16,14 +15,14 @@ SendMsgPackage::~SendMsgPackage()
 
 void SendMsgPackage::appendMsg(const IMsg &msgToAppend)
 {
-    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->appendMsg(msgToAppend);
-    msgConfig->prettifyMsg(prettifiedMsg);
+    IMsg &msg = sendMsgPackageStore->appendMsg(msgToAppend);
 }
 
 void SendMsgPackage::prependMsg(const IMsg &msgToPrepend)
 {
-    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->prependMsg(Append);
-    msgConfig->prettifyMsg(prettifiedMsg);
+    IMsg &msg = sendMsgPackageStore->prependMsg(
+                msgToPrepend
+                );
 }
 
 void SendMsgPackage::insertMsg(
@@ -31,40 +30,34 @@ void SendMsgPackage::insertMsg(
         const IMsg &msgToAppend
         )
 {
-    IPrettyMsg &prettifiedMsg = sendMsgPackageStore->insertMsg(
+    IMsg &msg = sendMsgPackageStore->insertMsg(
             index, msgToAppend
-            );
-    msgConfig->prettifyMsg(prettifiedMsg);
+                );
 }
 
-void SendMsgPackage::removeMsgFirstMatch(const IMsg &msgToRemove)
+void SendMsgPackage::removeAt(const int index)
 {
+    sendMsgPackageStore->removeAt(index);
 }
 
-void SendMsgPackage::removeMsgLastMatch(const IMsg &msgToRemove)
+void SendMsgPackage::removeMsgs(const int index, int count)
 {
+    sendMsgPackageStore->removeMsgs(index,count);
 }
 
-void SendMsgPackage::removeMsgsAllMatches(const IMsg &msgToRemove)
+ISendMsgPackageStore *SendMsgPackage::getStore() const
 {
+    return sendMsgPackageStore;
 }
 
-void SendMsgPackage::slt_appendMsg(const IMsg &msgToAppend)
+void SendMsgPackage::sendMessages()
 {
-    appendMsg(msgToAppend);
-}
+    const int size = sendMsgPackageStore->size();
 
-void SendMsgPackage::slt_removeMsgFirstMatch(const IMsg &msgToRemove)
-{
-
-}
-
-void SendMsgPackage::slt_removeMsgLastMatch(const IMsg &msgToRemove)
-{
-
-}
-
-void SendMsgPackage::slt_removeMsgAllMatches(const IMsg &msgToRemove)
-{
+    for(int i = 0; i < size; ++i)
+    {
+        const IMsg &msg = sendMsgPackageStore->at(i);
+        emit sgnl_sendMsg(msg);
+    }
 
 }

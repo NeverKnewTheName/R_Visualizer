@@ -17,6 +17,18 @@ MsgDataMappingModel::MsgDataMappingModel(
     QAbstractTableModel(parent),
     msgDataMappingStore(msgDataMappingStore)
 {
+    if(msgDataMappingStore == Q_NULLPTR)
+    {
+        //ERROR
+    }
+    QVector<MessageTypeIdentifier> msgTypes =
+            msgDataMappingStore->getContainedTypeIdentifiers();
+    if(msgTypes.size())
+    {
+        beginInsertRows(QModelIndex(),0,msgTypes.size());
+        msgIdentifierStore = msgTypes;
+        endInsertRows();
+    }
     connectToStore();
 }
 
@@ -116,6 +128,11 @@ QVariant MsgDataMappingModel::data(
         break;
     case Qt::CheckStateRole:
         break;
+    case Qt::UserRole:
+        return QVariant::fromValue<IMsgDataFormatter *>(
+                    msgDataMappingStore->getMsgDataFormatter(msgType)
+                    );
+        break;
     }
 
     return QVariant();
@@ -132,7 +149,7 @@ Qt::ItemFlags MsgDataMappingModel::flags(
     {
         case MsgDataMappingModel::COL_FormatString:
         case MsgDataMappingModel::COL_Color:
-            itemFlags |= Qt::ItemIsSelectable;
+            itemFlags |= Qt::ItemIsEditable;
         case MsgDataMappingModel::COL_ID:
         case MsgDataMappingModel::COL_Code:
             itemFlags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;

@@ -126,7 +126,9 @@ public:
      */
     virtual void clear();
 
-    void accept(FileParser *visitor);
+    virtual void accept(FileParser *visitor);
+
+    virtual QVector<MessageTypeIdentifier> getContainedTypeIdentifiers() const;
 
 private:
     QHash<MessageTypeIdentifier, MsgDataMapping> msgDataMappingStore;

@@ -10,6 +10,7 @@
 
 #include "IMsgDataFormatter.h"
 
+
 #include <QString>
 #include <QColor>
 
@@ -65,5 +66,6 @@ private:
     QString formatString;
     QColor defaultColor;
 };
+
 
 #endif /* MSGDATAFORMATTER_H */

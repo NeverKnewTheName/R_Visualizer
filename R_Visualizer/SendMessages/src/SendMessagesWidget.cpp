@@ -2,6 +2,8 @@
 #include "ui_sendmessageswidget.h"
 
 #include "ISendMessages.h"
+#include "ISendMsgSingle.h"
+#include "ISendMsgPackage.h"
 
 SendMessagesWidget::SendMessagesWidget(
         ISendMessages *sendMessages,
@@ -22,6 +24,11 @@ SendMessagesWidget::~SendMessagesWidget()
 void SendMessagesWidget::addSendMsgSingleWidget(
         QWidget *sendMsgWidget
     )
+{
+    ui->verticalLayout->addWidget(sendMsgWidget);
+}
+
+void SendMessagesWidget::addSendMsgPackageWidget(QWidget *sendMsgWidget)
 {
     ui->verticalLayout->addWidget(sendMsgWidget);
 }

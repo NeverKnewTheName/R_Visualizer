@@ -100,6 +100,8 @@ public:
      */
     virtual void clear() = 0;
 
+    virtual QVector<MsgIDType> getContainedMsgIDs() const = 0;
+
 signals:
     /**
      * @brief Signal must be emitted before a new #IMsgIDMapping is added to the

@@ -99,6 +99,8 @@ public:
      */
     virtual void clear() = 0;
 
+    virtual QVector<MsgCodeType> getContainedMsgCodes() const = 0;
+
 signals:
     /**
      * @brief Signal must be emitted before a new #IMsgCodeMapping is added to the

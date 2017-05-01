@@ -8,15 +8,21 @@
 #ifndef ISENDMSGPACKAGE_H
 #define ISENDMSGPACKAGE_H
 
+#include <QObject>
+
 class IMsg;
+
+class ISendMsgPackageStore;
 
 /**
  * @brief The ISendMsgPackage interface
  */
-class ISendMsgPackage
+class ISendMsgPackage : public QObject
 {
+    Q_OBJECT
 public:
-    virtual ~ISendMsgPackage();
+    ISendMsgPackage(QObject *parent = Q_NULLPTR) : QObject(parent){}
+    virtual ~ISendMsgPackage(){}
 
     virtual void appendMsg(const IMsg &msgToAppend) = 0;
     virtual void prependMsg(const IMsg &msgToAppend) = 0;
@@ -28,26 +34,44 @@ public:
      */
     virtual void insertMsg(const int index, const IMsg &msgToAppend) = 0;
 
-    virtual void removeMsgFirstMatch(const IMsg &msgToRemove) = 0;
-    virtual void removeMsgLastMatch(const IMsg &msgToRemove) = 0;
-    virtual void removeMsgsAllMatches(const IMsg &msgToRemove) = 0;
+    virtual void removeAt(const int index) = 0;
+    virtual void removeMsgs(const int index, int count) = 0;
 
     virtual void sendMessages() = 0;
 
+    virtual ISendMsgPackageStore *getStore() const = 0;
+
 signals:
-    virtual void sgnl_sendMsg(const IMsg &msgToSend) = 0;
-    virtual void sgnl_msgAppended() = 0;
-    virtual void sgnl_msgPrepended() = 0;
-    virtual void sgnl_msgRemoved() = 0;
+    void sgnl_sendMsg(const IMsg &msgToSend);
+    void sgnl_msgAppended();
+    void sgnl_msgPrepended();
+    void sgnl_msgRemoved();
 
 public slots:
-    virtual void slt_appendMsg(const IMsg &msgToAppend) = 0;
-    virtual void slt_prependMsg(const IMsg &msgToPrepend) = 0;
-    virtual void slt_insertMsg(const int index, const IMsg &msgToInsert) = 0;
-    virtual void slt_removeMsgFirstMatch(const IMsg &msgToRemove) = 0;
-    virtual void slt_removeMsgLastMatch(const IMsg &msgToRemove) = 0;
-    virtual void slt_removeMsgsAllMatches(const IMsg &msgToRemove) = 0;
+    virtual void slt_appendMsg(const IMsg &msgToAppend)
+    {
+        appendMsg(msgToAppend);
+    }
 
+    virtual void slt_prependMsg(const IMsg &msgToPrepend)
+    {
+        prependMsg(msgToPrepend);
+    }
+
+    virtual void slt_insertMsg(const int index, const IMsg &msgToInsert)
+    {
+        insertMsg(index,msgToInsert);
+    }
+
+    virtual void slt_removeAt(const int index)
+    {
+        removeAt(index);
+    }
+
+    virtual void slt_removeMsgs(const int index, int count)
+    {
+        removeMsgs(index,count);
+    }
 };
 
 #endif /* ISENDMSGPACKAGE_H */

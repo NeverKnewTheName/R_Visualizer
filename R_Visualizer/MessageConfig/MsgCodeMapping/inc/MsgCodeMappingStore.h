@@ -56,6 +56,10 @@ public:
 
 private:
     QHash<MsgCodeType, MsgCodeMapping> msgCodeMappingStore;
+
+    // IMsgCodeMappingStore interface
+public:
+    QVector<MsgCodeType> getContainedMsgCodes() const;
 };
 
 /**

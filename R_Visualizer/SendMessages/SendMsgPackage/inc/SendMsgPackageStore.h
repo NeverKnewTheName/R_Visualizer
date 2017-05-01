@@ -12,12 +12,13 @@
 #include <QVector>
 
 #include "ISendMsgPackageStore.h"
-#include "PrettyMsg.h"
+#include "IMsg.h"
+#include "Msg.h"
 
 /**
  * @brief The SendMsgPackageStore
  */
-class SendMsgPackageStore : public QObject, public ISendMsgPackageStore
+class SendMsgPackageStore : public ISendMsgPackageStore
 {
     Q_OBJECT
 public:
@@ -36,57 +37,32 @@ public:
      * with the returned #IPrettyMsg reference without being concerned about
      * these details.
      */
-    virtual IPrettyMsg &appendMsg(const IPrettyMsg &msgToAppend = PrettyMsg<Msg>());
+    virtual IMsg &appendMsg(const IMsg &msgToAppend = Msg());
 
-    virtual IPrettyMsg &appendMsg(const IMsg &msgToAppend);
-
-    virtual IPrettyMsg &prependMsg(const IPrettyMsg &msgToAppend = PrettyMsg<Msg>());
-    virtual IPrettyMsg &prependMsg(const IMsg &msgToAppend);
+    virtual IMsg &prependMsg(const IMsg &msgToAppend = Msg());
     /**
      * @brief Inserts the given message at index
      * 
      * \note If index is greater than the current size of the package, the
      * given message is appended to the current end of the package
      */
-    virtual IPrettyMsg &insertMsg(
+    virtual IMsg &insertMsg(
             const int index,
-            const IPrettyMsg &msgToAppend = PrettyMsg<Msg>()
+            const IMsg &msgToAppend = Msg()
             );
 
-    virtual IPrettyMsg &insertMsg(
-            const int index,
-            const IMsg &msgToAppend
-            );
+    virtual void removeAt(const int index);
+    virtual void removeMsgs(const int index, int count);
 
-    virtual void removeMsgFirstMatch(const IPrettyMsg &msgToRemove);
+    virtual int size() const;
 
-    virtual void removeMsgLastMatch(const IPrettyMsg &msgToRemove);
+    virtual const IMsg &at(const int index) const;
+    virtual IMsg &at(const int index);
 
-    virtual void removeMsgsAllMatches(const IPrettyMsg &msgToRemove);
-
-signals:
-    void sgnl_msgAboutToBeAppended();
-    void sgnl_msgAppended();
-
-    void sgnl_msgAboutToBePrepended();
-    void sgnl_msgPrepended();
-
-    void sgnl_msgAboutToBeInserted(const int index);
-    void sgnl_msgInserted();
-
-    void sgnl_msgAboutToBeRemoved();
-    void sgnl_msgRemoved();
-
-public slots:
-    void slt_appendMsg(const IPrettyMsg &msgToAppend);
-    void slt_prependMsg(const IPrettyMsg &msgToPrepend);
-    void slt_insertMsg(const int index, const IPrettyMsg &msgToInsert);
-    void slt_removeMsgFirstMatch(const IPrettyMsg &msgToRemove);
-    void slt_removeMsgLastMatch(const IPrettyMsg &msgToRemove);
-    void slt_removeMsgsAllMatches(const IPrettyMsg &msgToRemove);
+    virtual void clear();
 
 private:
-    QVector<PrettyMsg<Msg>> msgStorage;
+    QVector<Msg> msgStorage;
 };
 
 #endif /* SENDMSGPACKAGESTORE_H */

@@ -64,6 +64,14 @@ private:
     Ui::MsgIDLineEdit *ui;
     IMsgIDMappingManager *msgIDMappingManager;
     QMetaObject::Connection backGroundColorChangerConnection;
+
+    // QWidget interface
+public:
+    QSize sizeHint() const;
+
+    // QWidget interface
+protected:
+    void paintEvent(QPaintEvent *event);
 };
 
 /**

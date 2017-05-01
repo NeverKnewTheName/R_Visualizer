@@ -8,6 +8,7 @@
 #ifndef IMSGDATAFORMATTER_H
 #define IMSGDATAFORMATTER_H
 
+#include <QMetaType>
 #include <QString>
 #include <QColor>
 
@@ -78,5 +79,7 @@ public:
         return  new Derived(static_cast<const Derived &>(*this));
     }
 };
+
+Q_DECLARE_METATYPE(IMsgDataFormatter *)
 
 #endif /* IMSGDATAFORMATTER_H */

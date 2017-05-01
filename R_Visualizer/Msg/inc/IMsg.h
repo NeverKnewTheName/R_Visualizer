@@ -8,6 +8,8 @@
 #ifndef IMSG_H
 #define IMSG_H
 
+#include <QMetaType>
+
 #include "IFileParsable.h"
 #include "fileparser.h"
 
@@ -65,6 +67,9 @@ public:
 
     //virtual IMsg &operator =(const IMsg &msgToAssign) = 0;
 };
+
+Q_DECLARE_METATYPE(IMsg *)
+Q_DECLARE_METATYPE(const IMsg *)
 
 /**
  * @brief CRTP clone helper to clone #IMsg derivates with only a pointer to the

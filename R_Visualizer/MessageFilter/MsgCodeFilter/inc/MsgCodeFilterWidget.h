@@ -9,11 +9,13 @@
 #define MSGCODEFILTERWIDGET_H
 
 #include <QWidget>
+#include <QAbstractItemDelegate>
 
 #include "MsgCodeType.h"
 
 class MsgCodeFilter;
 class MsgCodeFilterModel;
+class IMsgCodeMappingManager;
 
 namespace Ui {
 class MsgCodeFilterWidget;
@@ -43,6 +45,9 @@ public:
     void addMsgCode(const MsgCodeType &msgCodeToAdd);
     void removeMsgCode(const MsgCodeType &msgCodeToRemove);
 
+    void setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager);
+    void setDelegate(QAbstractItemDelegate *delegate);
+
 signals:
     void sgnl_MsgCodeAdded(const MsgCodeType &addedMsgCode);
     void sgnl_MsgCodeRemoved(const MsgCodeType &removedMsgCode);
@@ -56,11 +61,8 @@ public slots:
 
 private slots:
     void on_filterCodeLoadBtn_clicked();
-
     void on_filterCodeStoreBtn_clicked();
-
     void on_addFilterCodePushButton_clicked();
-
     void on_rmvFilterCodePushButton_clicked();
 
     /* void on_enableCodeFilterCheckBox_toggled(bool checked); */
@@ -74,6 +76,7 @@ private:
     Ui::MsgCodeFilterWidget *ui;
     MsgCodeFilter *msgCodeFilter;
     MsgCodeFilterModel *msgCodeFilterModel;
+    IMsgCodeMappingManager *msgCodeMappingManager;
 };
 
 /**

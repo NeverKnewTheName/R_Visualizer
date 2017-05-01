@@ -97,3 +97,9 @@ void MsgIDMappingStore::accept(FileParser *visitor)
 {
     visitor->visit(*this);
 }
+
+
+QVector<MsgIDType> MsgIDMappingStore::getContainedMsgIDs() const
+{
+    return msgIDMappingStore.keys().toVector();
+}

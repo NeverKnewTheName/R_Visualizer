@@ -13,8 +13,9 @@
 
 #include "MsgIDType.h"
 
-class MsgIDFilterModel;
 class MsgIDFilter;
+class MsgIDFilterModel;
+class IMsgIDMappingManager;
 
 namespace Ui {
 class MsgIDFilterWidget;
@@ -44,6 +45,7 @@ public:
     void addMsgID(const MsgIDType &msgIDToAdd);
     void removeMsgID(const MsgIDType &msgIDToRemove);
 
+    void setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager);
     void setDelegate(QAbstractItemDelegate *delegate);
 
 signals:
@@ -59,11 +61,8 @@ public slots:
 
 private slots:
     void on_addFilterIDPushButton_clicked();
-
     void on_rmvFilterIDPushButton_clicked();
-
     void on_filterIDSaveBtn_clicked();
-
     void on_filterIDLoadBtn_clicked();
 
     /* void on_enableIDFilterCheckBox_toggled(bool checked); */
@@ -77,6 +76,7 @@ private:
     Ui::MsgIDFilterWidget *ui;
     MsgIDFilter *msgIDFilter;
     MsgIDFilterModel *msgIDFilterModel;
+    IMsgIDMappingManager *msgIDMappingManager;
 };
 
 /**

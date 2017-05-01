@@ -4,6 +4,7 @@
 #include <QString>
 #include <QColor>
 #include <QColor>
+#include <QTimer>
 
 #include "IMsgCodeMappingManager.h"
 
@@ -19,7 +20,7 @@ MsgCodeLineEdit::MsgCodeLineEdit(
 
     connect(
             ui->codeLineEdit,
-            &QLineEdit::editingFinished,
+            &QLineEdit::returnPressed,
             this,
             &MsgCodeLineEdit::sgnl_EditingFinished
            );
@@ -63,6 +64,8 @@ MsgCodeType MsgCodeLineEdit::getMsgCode() const
 void MsgCodeLineEdit::setMsgCode(const MsgCodeType &msgCode)
 {
     ui->codeLineEdit->setText(static_cast<QString>(msgCode));
+    QTimer::singleShot(0,ui->codeLineEdit,SLOT(selectAll()));
+    QTimer::singleShot(0,ui->codeLineEdit,SLOT(setFocus()));
 }
 
 void MsgCodeLineEdit::setCompleter(QCompleter *completer)

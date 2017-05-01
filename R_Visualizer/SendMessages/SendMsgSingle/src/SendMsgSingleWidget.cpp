@@ -60,7 +60,7 @@ void SendMsgSingleWidget::setMsgDataMapping(
         IMsgDataMappingManager *msgDataMappingManager
         )
 {
-    ui->msgDataWidget->setMappingManager(msgDataMappingManager);
+    //ui->msgDataWidget->setMappingManager(msgDataMappingManager);
 }
 
 void SendMsgSingleWidget::on_sndMsgSendBtn_clicked()

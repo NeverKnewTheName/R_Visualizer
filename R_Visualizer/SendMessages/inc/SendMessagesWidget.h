@@ -11,6 +11,8 @@
 #include <QWidget>
 
 class ISendMessages;
+class SendMsgSingleWidget;
+class SendMsgPackageWidget;
 
 namespace Ui {
 class SendMessagesWidget;
@@ -31,6 +33,7 @@ public:
     ~SendMessagesWidget();
 
     void addSendMsgSingleWidget(QWidget *sendMsgWidget);
+    void addSendMsgPackageWidget(QWidget *sendMsgWidget);
 
 private:
     void connectSendMessages();

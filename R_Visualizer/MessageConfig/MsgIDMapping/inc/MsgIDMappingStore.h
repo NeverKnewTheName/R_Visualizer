@@ -53,8 +53,11 @@ public:
 
     virtual void accept(FileParser *visitor);
 
+    QVector<MsgIDType> getContainedMsgIDs() const;
+
 private:
     QHash<MsgIDType, MsgIDMapping> msgIDMappingStore;
+
 };
 
 /**
