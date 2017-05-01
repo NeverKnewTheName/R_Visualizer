@@ -1,10 +1,14 @@
 #include "SystemOverview.h"
 
-#include "SystemOverviewNotifier.h"
+#include "IMsg.h"
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
 
-SystemOverview::SystemOverview(QObject *parent) :
-    QObject(parent),
-    notifier(new SystemOverviewNotifier(this, this))
+SystemOverview::SystemOverview(
+        QObject *parent
+        ) :
+    ISystemOverview(parent)
 {
 
 }
@@ -15,7 +19,9 @@ SystemOverview::~SystemOverview()
 
 void SystemOverview::receiveMsg(const IMsg &receivedMsg)
 {
-    //ToDo
+    const MsgIDType &msgID = receivedMsg.getMsgID();
+    const MsgCodeType &msgCode = receivedMsg.getMsgCode();
+    const MsgDataType &msgData = receivedMsg.getMsgData();
 }
 
 void SystemOverview::applyUserRole(const UserRoleManagement::UserRole roleToApply)

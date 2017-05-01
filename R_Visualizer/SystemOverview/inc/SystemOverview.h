@@ -16,7 +16,7 @@ class SystemOverviewNotifier;
 /**
  * @brief The SystemOverview
  */
-class SystemOverview : public QObject, public ISystemOverview
+class SystemOverview : public ISystemOverview
 {
     Q_OBJECT
 public:
@@ -29,7 +29,7 @@ public:
     virtual SystemOverviewNotifier *getNotifier();
 
 private:
-    SystemOverviewNotifier *notifier;
+
 };
 
 #endif // SYSTEMOVERVIEW_H
