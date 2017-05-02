@@ -20,15 +20,17 @@ class SystemOverview : public ISystemOverview
 {
     Q_OBJECT
 public:
-    explicit SystemOverview(QObject *parent = 0);
+    explicit SystemOverview(
+            ISystemOverviewObjectStore *systemOverviewObjectStore,
+            QObject *parent = Q_NULLPTR
+            );
     virtual ~SystemOverview();
 
     virtual void receiveMsg(const IMsg &receivedMsg);
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
-    virtual SystemOverviewNotifier *getNotifier();
-
 private:
+    ISystemOverviewObjectStore *systemOverviewObjectStore;
 
 };
 

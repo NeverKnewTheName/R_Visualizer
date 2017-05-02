@@ -6,9 +6,11 @@
 #include "MsgDataType.h"
 
 SystemOverview::SystemOverview(
+        ISystemOverviewObjectStore *systemOverviewObjectStore,
         QObject *parent
         ) :
-    ISystemOverview(parent)
+    ISystemOverview(parent),
+    systemOverviewObjectStore(systemOverviewObjectStore)
 {
 
 }
@@ -27,9 +29,4 @@ void SystemOverview::receiveMsg(const IMsg &receivedMsg)
 void SystemOverview::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
     //ToDo
-}
-
-SystemOverviewNotifier *SystemOverview::getNotifier()
-{
-    return notifier;
 }
