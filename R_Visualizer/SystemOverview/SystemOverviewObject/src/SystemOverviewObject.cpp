@@ -12,35 +12,61 @@ SystemOverviewObject::SystemOverviewObject(
         ) :
     ISystemOverviewObject(parent)
     objectManager(new SysOverviewObjectShapeManager()),
+    resizeManager(
     objColor(Qt::lightGray),
     objName("INVALID"),
     objBoundingRect(0,0,100,100)
 {
+    setFlags(
+            QGraphicsItem::ItemIsFocusable |
+            QGraphicsItem::ItemIsSelectable |
+            QGraphics::ItemSendsGeometryChanges |
+            QGraphics::ItemSendsScenePositionChanges
+        );
 }
 
 SystemOverviewObject::SystemOverviewObject(
-                const QColor &color,
                 const QString &name,
+                const QColor &color,
+                const QSizeF &size,
                 ISysOverviewObjectManager *objectManager,
                 QGraphicsItem *parent = Q_NULLPTR
             ) :
     ISystemOverviewObject(parent),
     objectManager(objectManager),
-    objColor(color),
     objName(objName),
-    objBoundingRect(0,0,100,100)
+    objColor(color),
+    objBoundingRect(QPaintF(0,0),size)
 {
+    setFlags(
+            QGraphicsItem::ItemIsFocusable |
+            QGraphicsItem::ItemIsSelectable |
+            QGraphics::ItemSendsGeometryChanges |
+            QGraphics::ItemSendsScenePositionChanges
+        );
 }
-
-SystemOverviewObject::
 
 QRectF SystemOverviewObject::boundingRect() const
 {
-    return objBoundingRect;
+    return resizeManager->getBoundingRect();
 }
 
-void SystemOverviewObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void SystemOverviewObject::paint(
+        QPainter *painter,
+        const QStyleOptionGraphicsItem *option,
+        QWidget *widget
+        )
 {
+    if(resizeEnabled)
+    {
+        resizeManager->paint(painter);
+    }
+
+    const QRectF &boundingRect = resizeManager->getBoundingRect();
+
+    QColor fillColor(getCurObjColor);
+
+    shapeManager->paint(painter, boundingRect, fillColor);
 }
 
 void SystemOverviewObject::focusInEvent(QFocusEvent *event)
@@ -53,10 +79,14 @@ void SystemOverviewObject::focusOutEvent(QFocusEvent *event)
 
 void SystemOverviewObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
+    Q_UNUSED(event)
+    setCursor(QCursor(Qt::OpenHandCursor));
 }
 
 void SystemOverviewObject::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
+    Q_UNUSED(event)
+    setCursor(QCursor(Qt::ArrowCursor));
 }
 
 void SystemOverviewObject::setObjectName(const QString &name)
@@ -171,4 +201,21 @@ void SystemOverviewObject::enableMoving(const bool enabled)
 bool SystemOverviewObject::isMovingEnabled() const
 {
 
+}
+
+QColor SystemOverviewObject::getCurObjColor() const
+{
+    if(isSelected())
+    {
+        QColor objColor(getColor());
+        if(objColor.alphaF()<0.1)
+        {
+            objColor.setAlphaF(0.1);
+        }
+        return objColor.darker();
+    }
+    else
+    {
+        return getColor();
+    }
 }

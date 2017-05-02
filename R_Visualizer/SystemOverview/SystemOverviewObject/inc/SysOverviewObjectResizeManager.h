@@ -10,17 +10,29 @@
 
 #include "ISysOverviewObjectResizeManager.h"
 
+class ISystemOverviewObject;
+
 /**
  * @brief The SysOverviewObjectResizeManager
  */
 class SysOverviewObjectResizeManager
 {
 public:
-    SysOverviewObjectResizeManager();
+    SysOverviewObjectResizeManager(
+            ISystemOverviewObject &sysOverviewObject,
+            const QsizeF &size = QSizeF(100,100)
+            );
     virtual ~SysOverviewObjectResizeManager();
 
+    virtual void paint(QPainter *painter) = 0;
+
+    virtual void setSize(const QSizeF &size);
+    virtual QSizeF getSize() const;
+
+    virtual QRectF getBoundingRect() const;
+
 private:
-    
+    ISystemOverviewObject &sysOverviewObject;
 
 };
 

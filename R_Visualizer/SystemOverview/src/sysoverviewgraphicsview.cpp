@@ -3,7 +3,7 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QPointF>
-#include "sysovrvobject.h"
+#include "ISystemOverviewObject.h"
 
 #include <QDebug>
 
@@ -23,7 +23,10 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
     qDebug() << "Pos: " << event->pos();
     QPointF currentMousePos = mapToScene(event->pos());
     qDebug() << "CurMousePos mapped: " << currentMousePos;
-    SysOvrvObject *currentObject = qgraphicsitem_cast<SysOvrvObject*>(itemAt(event->pos()));
+    ISystemOverviewObject *currentObject =
+        qgraphicsitem_cast<ISystemOverviewObject*>(
+                itemAt(event->pos())
+                );
 
     if(currentObject == Q_NULLPTR)
     {
@@ -37,7 +40,10 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
         while(currentObject->parentItem() != Q_NULLPTR)
         {
             // Get to top level object!
-            currentObject = qgraphicsitem_cast<SysOvrvObject*>(currentObject->parentItem());
+            currentObject =
+                qgraphicsitem_cast<ISystemOverviewObject*>(
+                        currentObject->parentItem()
+                        );
         }
 
         QAction * actionRmv = menu.addAction("Remove Object");
@@ -58,14 +64,20 @@ void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-SysOvrvObject *SysOverviewGraphicsView::getObjAtPos(const QPointF &pos) const
+ISystemOverviewObject *SysOverviewGraphicsView::getObjAtPos(const QPointF &pos) const
 {
-    SysOvrvObject *currentObject = qgraphicsitem_cast<SysOvrvObject*>(itemAt(mapFromScene(pos)));
+    ISystemOverviewObject *currentObject =
+        qgraphicsitem_cast<ISystemOverviewObject*>(
+                itemAt(mapFromScene(pos))
+                );
 
     while(currentObject != Q_NULLPTR)
     {
         // Get to top level object!
-        SysOvrvObject *tempObj = qgraphicsitem_cast<SysOvrvObject*>(currentObject->parentItem());
+        ISystemOverviewObject *tempObj =
+            qgraphicsitem_cast<ISystemOverviewObject*>(
+                    currentObject->parentItem()
+                    );
 
         if(tempObj == Q_NULLPTR)
         {
@@ -82,4 +94,3 @@ void SysOverviewGraphicsView::enableEditing(const bool enable)
 {
     editingEnabled = enable;
 }
-

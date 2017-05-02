@@ -10,6 +10,10 @@
 
 #include "ISystemOverviewObject.h"
 
+#include <QString>
+#include <QColor>
+#include <QSizeF>
+
 /**
  * @brief The SystemOverviewObject
  */
@@ -20,8 +24,9 @@ public:
             QGraphicsItem *parent = Q_NULLPTR
             );
     SystemOverviewObject(
-            const QColor &color,
             const QString &name,
+            const QColor &color = QColor(Qt::lightGray),
+            const QSizeF &size = QSizeF(100,100),
             ISysOverviewObjectManager *objectManager,
             QGraphicsItem *parent = Q_NULLPTR
             );
@@ -73,11 +78,11 @@ public:
 private:
     ISysOverviewObjectManager *objManager;
     ISysOverviewObjectResizeManager *resizeManager;
-    QColor objColor;
     QString objName;
+    QColor objColor;
     QRectF objBoundingRect;
-
-
+    bool resizeEnabled;
+    bool movingEnabled;
 };
 
 #endif /* SYSTEMOVERVIEWOBJECT_H */
