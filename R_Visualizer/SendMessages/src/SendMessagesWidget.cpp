@@ -28,7 +28,9 @@ void SendMessagesWidget::addSendMsgSingleWidget(
     ui->verticalLayout->addWidget(sendMsgWidget);
 }
 
-void SendMessagesWidget::addSendMsgPackageWidget(QWidget *sendMsgWidget)
+void SendMessagesWidget::addSendMsgPackageWidget(
+        QWidget *sendMsgWidget
+        )
 {
     ui->verticalLayout->addWidget(sendMsgWidget);
 }

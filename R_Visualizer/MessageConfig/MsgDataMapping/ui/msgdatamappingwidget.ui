@@ -62,7 +62,10 @@
       <item row="6" column="2">
        <widget class="QPushButton" name="msgDataAddBtn">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new ID configuration entry to the current ID configuration. The ID configuration tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new Message Data Mapping to the current configuration. The Message Data Mapping Creator Tool is called.&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
          <string>Add</string>
@@ -72,7 +75,10 @@
       <item row="6" column="3">
        <widget class="QPushButton" name="msgDataRemoveBtn">
         <property name="toolTip">
-         <string>Remove the selected entry from the current ID configuration.</string>
+         <string>Remove the selected entry from the current configuration.</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
          <string>Remove</string>
@@ -82,20 +88,26 @@
       <item row="5" column="2">
        <widget class="QPushButton" name="msgDataLoadBtn">
         <property name="toolTip">
-         <string>Load an ID configuration (*.json)</string>
+         <string>Load a Message Data Configuration (*.json)</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
-         <string>Load</string>
+         <string>Open</string>
         </property>
        </widget>
       </item>
       <item row="5" column="3">
        <widget class="QPushButton" name="msgDataStoreBtn">
         <property name="toolTip">
-         <string>Save the current ID configuration (*.json) to a file</string>
+         <string>Save the current Message Data Mapping configuration to a file (*.json) </string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
-         <string>Store</string>
+         <string>Save</string>
         </property>
        </widget>
       </item>

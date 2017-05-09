@@ -36,7 +36,10 @@
       <item row="6" column="2">
        <widget class="QPushButton" name="msgCodeRemoveBtn">
         <property name="toolTip">
-         <string>Remove the selected entry from the current Message Type configuration.</string>
+         <string>Remove the selected entry from the current configuration.</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
          <string>Remove</string>
@@ -72,7 +75,10 @@
       <item row="6" column="1">
        <widget class="QPushButton" name="msgCodeAddBtn">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new Message Type configuration entry to the current Message Type configuration. The Message Type configuration tool is called&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a new Message Code Mapping to the current configuration. The Message Code Mapping Creator tool is called&lt;/p&gt;&lt;p&gt;The new entry will be appended to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
          <string>Add</string>
@@ -82,20 +88,26 @@
       <item row="5" column="1">
        <widget class="QPushButton" name="msgCodeLoadBtn">
         <property name="toolTip">
-         <string>Load an Message Type configuration (*.json)</string>
+         <string>Open a Message Code Mapping configuration (*.json)</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
-         <string>Load</string>
+         <string>Open</string>
         </property>
        </widget>
       </item>
       <item row="5" column="2">
        <widget class="QPushButton" name="msgCodeStoreBtn">
         <property name="toolTip">
-         <string>Save the current Message Type configuration (*.json) to a file</string>
+         <string>Save the current Message Code Mapping configuration to a file (*.json)</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
         </property>
         <property name="text">
-         <string>Store</string>
+         <string>Save</string>
         </property>
        </widget>
       </item>

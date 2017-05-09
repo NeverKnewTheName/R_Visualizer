@@ -63,58 +63,67 @@ MainWindow::MainWindow(
 
 MainWindow::~MainWindow()
 {
+    for(QMetaObject::Connection connection : interfaceHandlerConnections)
+    {
+        disconnect(connection);
+    }
     delete ui;
 }
 
 void MainWindow::connectInterfaceHandler(IInterfaceHandler *interfaceHandler)
 {
-    connect(
+    for(QMetaObject::Connection connection : interfaceHandlerConnections)
+    {
+        disconnect(connection);
+    }
+
+    interfaceHandlerConnections << connect(
             interfaceHandler,
             &IInterfaceHandler::sgnl_Connected,
             this,
             &MainWindow::slt_InterfaceConnected
            );
-    connect(
+    interfaceHandlerConnections << connect(
             interfaceHandler,
             &IInterfaceHandler::sgnl_Disconnected,
             this,
             &MainWindow::slt_InterfaceDisconnected
            );
-    connect(
+    interfaceHandlerConnections << connect(
             interfaceHandler,
             &IInterfaceHandler::sgnl_SessionStarted,
             this,
             &MainWindow::slt_InterfaceSessionStarted
            );
-    connect(
+    interfaceHandlerConnections << connect(
             interfaceHandler,
             &IInterfaceHandler::sgnl_SessionStopped,
             this,
             &MainWindow::slt_InterfaceSessionStopped
            );
 
-    connect(
+    interfaceHandlerConnections << connect(
             this,
             &MainWindow::sgnl_ConnectToInterface,
             interfaceHandler,
             &IInterfaceHandler::slt_Connect
            );
 
-    connect(
+    interfaceHandlerConnections << connect(
             this,
             &MainWindow::sgnl_DisconnectFromInterface,
             interfaceHandler,
             &IInterfaceHandler::slt_Disconnect
            );
 
-    connect(
+    interfaceHandlerConnections << connect(
             this,
             &MainWindow::sgnl_StartSession,
             interfaceHandler,
             &IInterfaceHandler::slt_StartSession
            );
 
-    connect(
+    interfaceHandlerConnections << connect(
             this,
             &MainWindow::sgnl_StopSession,
             interfaceHandler,

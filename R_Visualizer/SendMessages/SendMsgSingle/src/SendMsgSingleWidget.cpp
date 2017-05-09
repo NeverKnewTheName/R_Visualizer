@@ -12,6 +12,8 @@
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
 
+#include "MsgWidget.h"
+
 SendMsgSingleWidget::SendMsgSingleWidget(
         ISendMsgSingle *sendMsgSingle,
         QWidget *parent
@@ -32,28 +34,28 @@ void SendMsgSingleWidget::setMsgIDMapping(
         IMsgIDMappingManager *msgIDMappingManager
         )
 {
-    ui->msgIDWidget->setMappingManager(msgIDMappingManager);
+    ui->msgWidget->setMsgIDMapping(msgIDMappingManager);
 }
 
 void SendMsgSingleWidget::setMsgIDCompleter(
         QCompleter *msgIDCompleter
         )
 {
-    ui->msgIDWidget->setCompleter(msgIDCompleter);
+    ui->msgWidget->setMsgIDCompleter(msgIDCompleter);
 }
 
 void SendMsgSingleWidget::setMsgCodeMapping(
         IMsgCodeMappingManager *msgCodeMappingManager
         )
 {
-    ui->msgCodeWidget->setMappingManager(msgCodeMappingManager);
+    ui->msgWidget->setMsgCodeMapping(msgCodeMappingManager);
 }
 
 void SendMsgSingleWidget::setMsgCodeCompleter(
         QCompleter *msgCodeCompleter
         )
 {
-    ui->msgCodeWidget->setCompleter(msgCodeCompleter);
+    ui->msgWidget->setMsgCodeCompleter(msgCodeCompleter);
 }
 
 void SendMsgSingleWidget::setMsgDataMapping(
@@ -65,11 +67,14 @@ void SendMsgSingleWidget::setMsgDataMapping(
 
 void SendMsgSingleWidget::on_sndMsgSendBtn_clicked()
 {
-    const MsgIDType msgID = ui->msgIDWidget->getMsgID();
-    const MsgCodeType msgCode = ui->msgCodeWidget->getMsgCode();
-    const MsgDataType msgData = ui->msgDataWidget->getMsgData();
-
-    Msg msgToSend(msgID,msgCode,msgData);
+    Msg msgToSend(ui->msgWidget->getMsg());
 
     sendMsgSingle->sendMessage(msgToSend);
+}
+
+void SendMsgSingleWidget::on_sndMsgAddToPackageBtn_clicked()
+{
+    Msg msgToAdd(ui->msgWidget->getMsg());
+
+    emit sgnl_AddToPackage(msgToAdd);
 }

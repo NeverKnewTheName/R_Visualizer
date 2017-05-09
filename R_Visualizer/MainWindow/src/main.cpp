@@ -367,6 +367,13 @@ int main(int argc, char *argv[])
 
     sendMessagesWidget->addSendMsgPackageWidget(sendMsgPackageWidget);
 
+    QObject::connect(
+                sendMsgSingleWidget,
+                &SendMsgSingleWidget::sgnl_AddToPackage,
+                sendMsgPackage,
+                &ISendMsgPackage::slt_appendMsg
+                );
+
     w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");
 
     //sysOvrvWidget = new SystemOverview(

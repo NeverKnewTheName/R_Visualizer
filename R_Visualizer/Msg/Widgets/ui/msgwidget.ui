@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>708</width>
-    <height>68</height>
+    <height>81</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -123,9 +123,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MsgCodeLineEdit</class>
+   <class>MsgDataLineEdit</class>
    <extends>QWidget</extends>
-   <header location="global">MsgCodeLineEdit.h</header>
+   <header location="global">MsgDataLineEdit.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -135,9 +135,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MsgDataLineEdit</class>
+   <class>MsgCodeLineEdit</class>
    <extends>QWidget</extends>
-   <header location="global">MsgDataLineEdit.h</header>
+   <header location="global">MsgCodeLineEdit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

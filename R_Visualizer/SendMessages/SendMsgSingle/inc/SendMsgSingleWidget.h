@@ -47,8 +47,13 @@ public:
     void setMsgCodeCompleter(QCompleter *msgCodeCompleter);
     void setMsgDataMapping(IMsgDataMappingManager *msgDataMappingManager);
 
+signals:
+    void sgnl_AddToPackage(const IMsg &msgToAdd);
+
 private slots:
     void on_sndMsgSendBtn_clicked();
+
+    void on_sndMsgAddToPackageBtn_clicked();
 
 private:
     void connectSendMsgSingle();

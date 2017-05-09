@@ -27,78 +27,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <item>
-       <widget class="QSplitter" name="splitter">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <widget class="QFrame" name="frame">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="2,0">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>ID/Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="MsgIDLineEdit" name="msgIDWidget" native="true"/>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QFrame" name="frame_2">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5" stretch="2,0">
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Code/Type</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="MsgCodeLineEdit" name="msgCodeWidget" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QFrame" name="frame_3">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4" stretch="6,0">
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Data</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="MsgDataLineEdit" name="msgDataWidget" native="true"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
+       <widget class="MsgWidget" name="msgWidget" native="true"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -146,9 +75,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="sndMsgAddToPacketBtn">
+         <widget class="QPushButton" name="sndMsgAddToPackageBtn">
           <property name="text">
-           <string>Add to Packet</string>
+           <string>Add to Package</string>
           </property>
          </widget>
         </item>
@@ -161,21 +90,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MsgDataLineEdit</class>
+   <class>MsgWidget</class>
    <extends>QWidget</extends>
-   <header location="global">MsgDataLineEdit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MsgIDLineEdit</class>
-   <extends>QWidget</extends>
-   <header location="global">MsgIDLineEdit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MsgCodeLineEdit</class>
-   <extends>QWidget</extends>
-   <header location="global">MsgCodeLineEdit.h</header>
+   <header location="global">MsgWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

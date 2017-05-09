@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>447</width>
-    <height>203</height>
+    <height>209</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,6 +69,12 @@
         </item>
         <item>
          <widget class="QCheckBox" name="enableTimestampFromFilterCheckBox">
+          <property name="toolTip">
+           <string>Enable the Message Timestamp From Filter</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>10000</number>
+          </property>
           <property name="text">
            <string>Enabled</string>
           </property>
@@ -122,6 +128,12 @@
         </item>
         <item>
          <widget class="QCheckBox" name="enableTimestampToFilterCheckBox">
+          <property name="toolTip">
+           <string>Enable the Message Timestamp To Filter</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>10000</number>
+          </property>
           <property name="text">
            <string>Enabled</string>
           </property>
@@ -162,6 +174,12 @@
         </item>
         <item>
          <widget class="QCheckBox" name="globalEnableTimestampFilterCheckBox">
+          <property name="toolTip">
+           <string>Enable the Message Timestamp Filter (the individual Filters still need to be enabled)</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>10000</number>
+          </property>
           <property name="text">
            <string>Global Enabled</string>
           </property>
@@ -173,15 +191,27 @@
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QPushButton" name="filterTimestampLoadBtn">
+          <property name="toolTip">
+           <string>Open a Message Timestamp Filter configuration (*.json)</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>10000</number>
+          </property>
           <property name="text">
-           <string>Load</string>
+           <string>Open</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="filterTimestampSaveBtn">
+          <property name="toolTip">
+           <string>Save the current Message Timestamp Filter Configuration (*.json)</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>10000</number>
+          </property>
           <property name="text">
-           <string>Store</string>
+           <string>Save</string>
           </property>
          </widget>
         </item>
@@ -200,6 +230,12 @@
         </item>
         <item>
          <widget class="QCheckBox" name="invertTimestampFilterCheckBox">
+          <property name="toolTip">
+           <string>Invert the Message Timestamp Filter</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>10000</number>
+          </property>
           <property name="text">
            <string>Inverted</string>
           </property>

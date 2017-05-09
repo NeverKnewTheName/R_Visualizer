@@ -166,6 +166,8 @@ private:
 
     UserRoleManager userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
     bool m_IsConnectedToDevice; //!< Keeps track of whether an interface ot an R_Sys is connected
+
+    QList<QMetaObject::Connection> interfaceHandlerConnections;
 };
 
 #endif // MAINWINDOW_H

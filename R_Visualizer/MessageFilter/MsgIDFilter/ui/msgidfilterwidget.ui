@@ -38,13 +38,25 @@
       </item>
       <item row="2" column="0">
        <widget class="QPushButton" name="filterIDLoadBtn">
+        <property name="toolTip">
+         <string>Open a Message ID Filter configuration</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
+        </property>
         <property name="text">
-         <string>Load</string>
+         <string>Open</string>
         </property>
        </widget>
       </item>
       <item row="2" column="3">
        <widget class="QCheckBox" name="enableIDFilterCheckBox">
+        <property name="toolTip">
+         <string>Enable the Message ID Filter</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
+        </property>
         <property name="text">
          <string>Enabled</string>
         </property>
@@ -65,13 +77,25 @@
       </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="filterIDSaveBtn">
+        <property name="toolTip">
+         <string>Save the current Message ID Filter configuration</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
+        </property>
         <property name="text">
-         <string>Store</string>
+         <string>Save</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
        <widget class="QPushButton" name="addFilterIDPushButton">
+        <property name="toolTip">
+         <string>Add a new ID to the Message ID Filter</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
+        </property>
         <property name="text">
          <string>Add</string>
         </property>
@@ -79,6 +103,12 @@
       </item>
       <item row="3" column="1">
        <widget class="QPushButton" name="rmvFilterIDPushButton">
+        <property name="toolTip">
+         <string>Remove the selected ID from the Message ID Filter</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
+        </property>
         <property name="text">
          <string>Remove</string>
         </property>
@@ -99,6 +129,12 @@
       </item>
       <item row="3" column="3">
        <widget class="QCheckBox" name="invertIDFilterCheckBox">
+        <property name="toolTip">
+         <string>Invert the Message ID Filter</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>10000</number>
+        </property>
         <property name="text">
          <string>Inverted</string>
         </property>
