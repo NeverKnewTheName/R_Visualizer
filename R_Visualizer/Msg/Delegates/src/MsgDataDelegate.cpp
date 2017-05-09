@@ -3,6 +3,8 @@
 #include "IMsgDataMappingManager.h"
 
 #include "MsgDataLineEdit.h"
+#include "IMsg.h"
+#include "IMsgDataFormatter.h"
 
 #include <QPainter>
 
@@ -32,39 +34,33 @@ void MsgDataDelegate::paint(
         ) const
 {
     QStyledItemDelegate::paint(painter,option,index);
-    const MsgDataType &msgData = index.data(Qt::UserRole).value<MsgDataType>();
+    const IMsg *msg = index.data(Qt::UserRole + 1).value<const IMsg *>();
 
-    //QString alias = msgDataMappingManager->getMsgDataFormatter();
+    const QString &msgDataAsString = msgDataMappingManager->parseMsgDataToString(*msg);
+    const QColor &msgDataAsColor = msgDataMappingManager->parseMsgDataToColor(*msg);
 
-    //if(alias.isEmpty())
-    //{
-        //alias = static_cast<QString>(msgData);
-    //}
-//
-    //const QColor &colorRep = msgDataMappingManager->getColorToMsgData(msgData);
-//
-    //painter->save();
-//
-    //painter->setFont(option.font);
-    //painter->setRenderHint(QPainter::TextAntialiasing);
-    //painter->fillRect(
-            //option.rect,
-            //(
-                    //(option.state & QStyle::State_Selected) ?
-                        //option.palette.highlight() :
-                //(option.features & QStyleOptionViewItem::Alternate) ?
-                //colorRep.darker(100) :
-                //colorRep
-            //)
-            //);
-//
-    //painter->drawText(
-            //option.rect,
-            //Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
-            //alias
-            //);
-//
-    //painter->restore();
+    painter->save();
+
+    painter->setFont(option.font);
+    painter->setRenderHint(QPainter::TextAntialiasing);
+    painter->fillRect(
+            option.rect,
+            (
+                    (option.state & QStyle::State_Selected) ?
+                        option.palette.highlight() :
+                (option.features & QStyleOptionViewItem::Alternate) ?
+                msgDataAsColor.darker(100) :
+                msgDataAsColor
+            )
+            );
+
+    painter->drawText(
+            option.rect,
+            Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
+            msgDataAsString
+            );
+
+    painter->restore();
 }
 
 QSize MsgDataDelegate::sizeHint(
@@ -72,22 +68,19 @@ QSize MsgDataDelegate::sizeHint(
         const QModelIndex &index
         ) const
 {
-    QStyledItemDelegate::sizeHint(option,index);
-    const MsgDataType &msgData = index.data(Qt::UserRole).value<MsgDataType>();
+    //QStyledItemDelegate::sizeHint(option,index);
+    const IMsg *msg = index.data(Qt::UserRole + 1).value<const IMsg *>();
 
-    QString alias; // msgDataMappingManager->getAliasToMsgData(msgData);
-
-    /* if(alias.isEmpty()) */
-    /* { */
-    /*     alias = static_cast<QString>(msgData); */
-    /* } */
+    const QString &msgDataAsString = msgDataMappingManager->parseMsgDataToString(*msg);
 
     /* const QStyle *appStyle( QApplication::style() ); */
     QFont font(option.font);
 
     const QFontMetrics fontMetrics(font);
 
-    return fontMetrics.size(Qt::TextWordWrap, alias);
+    return fontMetrics.boundingRect(option.rect,Qt::TextWordWrap,msgDataAsString).size();
+
+    return fontMetrics.size(Qt::TextWordWrap, msgDataAsString);
 }
 
 QWidget *MsgDataDelegate::createEditor(

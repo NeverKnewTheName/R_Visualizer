@@ -86,10 +86,14 @@ QSize MsgIDDelegate::sizeHint(
         alias = static_cast<QString>(msgID);
     }
 
+    qDebug() << option.rect;
+
     /* const QStyle *appStyle( QApplication::style() ); */
     QFont font(option.font);
 
     const QFontMetrics fontMetrics(font);
+
+    return fontMetrics.boundingRect(option.rect,Qt::TextWordWrap,alias).size();
 
     return fontMetrics.size(Qt::TextWordWrap, alias);
 }

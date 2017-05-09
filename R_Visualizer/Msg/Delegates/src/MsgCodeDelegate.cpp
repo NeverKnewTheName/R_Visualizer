@@ -91,6 +91,8 @@ QSize MsgCodeDelegate::sizeHint(
 
     const QFontMetrics fontMetrics(font);
 
+    return fontMetrics.boundingRect(option.rect,Qt::TextWordWrap,alias).size();
+
     return fontMetrics.size(Qt::TextWordWrap, alias);
 }
 

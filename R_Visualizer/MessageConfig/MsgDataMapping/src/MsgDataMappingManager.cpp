@@ -32,6 +32,51 @@ void MsgDataMappingManager::prettifyMsg(
     /* msgDataMappingStore-> */
 }
 
+QString MsgDataMappingManager::parseMsgDataToString(const IMsg &msg) const
+{
+    const MsgIDType &msgID = msg.getMsgID();
+    const MsgCodeType &msgCode = msg.getMsgCode();
+    const MsgDataType &msgData = msg.getMsgData();
+
+    IMsgDataFormatter *msgDataFormatter =
+            getMsgDataFormatter(msgID,msgCode);
+
+    if(msgDataFormatter != Q_NULLPTR)
+    {
+        return msgDataFormatter->parseMsgDataToString(msg);
+    }
+    else
+    {
+        QString msgDataAsString;
+
+        for(const MsgDataByteType msgDataByte : msgData)
+        {
+            msgDataAsString.append(static_cast<QString>(msgDataByte) + " ");
+        }
+
+        return msgDataAsString.trimmed();
+    }
+}
+
+QColor MsgDataMappingManager::parseMsgDataToColor(const IMsg &msg) const
+{
+    const MsgIDType &msgID = msg.getMsgID();
+    const MsgCodeType &msgCode = msg.getMsgCode();
+    const MsgDataType &msgData = msg.getMsgData();
+
+    IMsgDataFormatter *msgDataFormatter =
+            getMsgDataFormatter(msgID,msgCode);
+
+    if(msgDataFormatter != Q_NULLPTR)
+    {
+        return msgDataFormatter->parseMsgDataToColor(msg);
+    }
+    else
+    {
+        return QColor(Qt::white);
+    }
+}
+
 IMsgDataFormatter *MsgDataMappingManager::getMsgDataFormatter(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode

@@ -12,6 +12,7 @@
 #include "IMsgDataMappingStore.h"
 
 class FileParser;
+class IMsg;
 
 /**
  * @addtogroup MsgDataMappingGroup
@@ -34,6 +35,9 @@ public:
     virtual void prettifyMsg(
             IPrettyMsg &msgToPrettify
             ) const;
+
+    virtual QString parseMsgDataToString(const IMsg &msg) const;
+    virtual QColor parseMsgDataToColor(const IMsg &msg) const;
 
     virtual IMsgDataFormatter *getMsgDataFormatter(
             const MsgIDType &msgID,
@@ -62,6 +66,7 @@ public:
 
 private:
     IMsgDataMappingStore *msgDataMappingStore;
+
 };
 
 /**

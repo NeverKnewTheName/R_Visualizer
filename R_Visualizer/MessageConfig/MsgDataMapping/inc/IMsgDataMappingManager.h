@@ -16,6 +16,8 @@ class IMsgDataFormatter;
 class IMsgDataMapping;
 class IMsgDataMappingStore;
 
+class IMsg;
+
 /**
  * @defgroup MsgDataMappingGroup Message Data Mapping
  * @ingroup MsgMappingGroup
@@ -39,6 +41,9 @@ public:
         IMsgMappingManager(parent)
     {}
     virtual ~IMsgDataMappingManager(){}
+
+    virtual QString parseMsgDataToString(const IMsg &msg) const = 0;
+    virtual QColor parseMsgDataToColor(const IMsg &msg) const = 0;
 
     virtual IMsgDataFormatter *getMsgDataFormatter(
             const MsgIDType &msgID,

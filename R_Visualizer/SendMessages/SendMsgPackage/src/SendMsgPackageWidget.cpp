@@ -1,6 +1,7 @@
 #include "SendMsgPackageWidget.h"
 #include "ui_sendmsgpackagewidget.h"
 
+#include <QTableView>
 #include <QHeaderView>
 
 #include "ISendMsgPackage.h"
@@ -176,10 +177,19 @@ void SendMsgPackageWidget::init()
     ui->sndPckgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->sndPckgTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->sndPckgTableView->setEditTriggers(QAbstractItemView::DoubleClicked);
-    //ToDO
-    //ui->codeFilterListView->setItemDelegate(new CodeEditorDelegate(this));
 
     QHeaderView *horzHeader = ui->sndPckgTableView->horizontalHeader();
+
+    ui->sndPckgTableView->verticalHeader()
+            ->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    connect(
+            ui->sndPckgTableView->horizontalHeader(),
+            &QHeaderView::sectionResized,
+                [=](){
+                    ui->sndPckgTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                }
+            );
 
     const int sectionCount = horzHeader->count() - 1;
     const int sectionLength = horzHeader->length() / horzHeader->count();

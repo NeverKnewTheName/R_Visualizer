@@ -63,19 +63,13 @@ MainWindow::MainWindow(
 
 MainWindow::~MainWindow()
 {
-    for(QMetaObject::Connection connection : interfaceHandlerConnections)
-    {
-        disconnect(connection);
-    }
+    disconnectInterfaceHandler();
     delete ui;
 }
 
 void MainWindow::connectInterfaceHandler(IInterfaceHandler *interfaceHandler)
 {
-    for(QMetaObject::Connection connection : interfaceHandlerConnections)
-    {
-        disconnect(connection);
-    }
+    disconnectInterfaceHandler();
 
     interfaceHandlerConnections << connect(
             interfaceHandler,
@@ -207,6 +201,14 @@ void MainWindow::connectUserRoleManager()
     connect(this, &MainWindow::switchUserRoles, this, &MainWindow::applyRole);
 
     emit switchUserRoles(UserRoleManagement::NormalUserRole);
+}
+
+void MainWindow::disconnectInterfaceHandler()
+{
+    for(QMetaObject::Connection connection : interfaceHandlerConnections)
+    {
+        disconnect(connection);
+    }
 }
 
 void MainWindow::on_actionNew_triggered()

@@ -143,6 +143,8 @@ private:
     void initUserRoleManager();
     void connectUserRoleManager();
 
+    void disconnectInterfaceHandler();
+
     Ui::MainWindow *ui; //!< The User Interface that was created by QT
     QString currentFileName;
 
