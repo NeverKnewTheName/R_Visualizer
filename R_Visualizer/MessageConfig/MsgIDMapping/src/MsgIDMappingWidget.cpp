@@ -6,6 +6,8 @@
 
 #include "MsgIDMappingAddDialog.h"
 
+#include "MsgIDMappingEditorDelegate.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -169,10 +171,8 @@ void MsgIDMappingWidget::init()
     ui->idTableView->verticalHeader()->hide();
     ui->idTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->idTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    //ToDO
-    //ui->idTableView->setItemDelegate(new IDEditorDelegate(this));
 
-    //ToDO SCROLL TO BOTTOM
+    ui->idTableView->setItemDelegate(new MsgIDMappingEditorDelegate(ui->idTableView));
 }
 
 void MsgIDMappingWidget::connectModel()

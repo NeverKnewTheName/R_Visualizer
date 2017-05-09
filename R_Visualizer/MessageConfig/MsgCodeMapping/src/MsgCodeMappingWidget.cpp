@@ -8,6 +8,8 @@
 
 #include "MsgCodeMapping.h"
 
+#include "MsgCodeMappingEditorDelegate.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -177,10 +179,8 @@ void MsgCodeMappingWidget::init()
     ui->codeTableView->verticalHeader()->hide();
     ui->codeTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->codeTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    //ToDO
-    //ui->codeTableView->setItemDelegate(new CodeEditorDelegate(this));
 
-    //ToDO SCROLL TO BOTTOM
+    ui->codeTableView->setItemDelegate(new MsgCodeMappingEditorDelegate(ui->codeTableView));
 }
 
 void MsgCodeMappingWidget::connectModel()

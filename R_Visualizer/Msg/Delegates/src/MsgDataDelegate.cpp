@@ -78,9 +78,11 @@ QSize MsgDataDelegate::sizeHint(
 
     const QFontMetrics fontMetrics(font);
 
-    return fontMetrics.boundingRect(option.rect,Qt::TextWordWrap,msgDataAsString).size();
-
-    return fontMetrics.size(Qt::TextWordWrap, msgDataAsString);
+    return fontMetrics.boundingRect(
+                option.rect,
+                Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
+                msgDataAsString
+                ).size();
 }
 
 QWidget *MsgDataDelegate::createEditor(

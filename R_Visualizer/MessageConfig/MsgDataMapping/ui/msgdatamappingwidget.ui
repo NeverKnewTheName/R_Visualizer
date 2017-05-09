@@ -29,7 +29,7 @@
       <item row="0" column="0" rowspan="5" colspan="7">
        <widget class="QTableView" name="msgDataTableView">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ID configuration browser which shows all currently available IDs and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole ID configuration with the Load button or Add/Remove  IDs to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string/>
         </property>
        </widget>
       </item>

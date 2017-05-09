@@ -29,7 +29,7 @@
       <item row="0" column="0" rowspan="5" colspan="6">
        <widget class="QTableView" name="codeTableView">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Message Type configuration browser which shows all currently available Message Types and their parsing configuration.&lt;/p&gt;&lt;p&gt;Either load a whole Message Type configuration with the Load button or Add/Remove Message Types to the current configuration. &lt;/p&gt;&lt;p&gt;The current configuration can be saved (*.json) with the store button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string/>
         </property>
        </widget>
       </item>
