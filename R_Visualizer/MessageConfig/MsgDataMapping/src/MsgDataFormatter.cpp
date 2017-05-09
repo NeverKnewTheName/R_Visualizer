@@ -2,6 +2,12 @@
 
 #include "IMsg.h"
 
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+
+#include <QVariant>
+#include <QStringList>
+
 MsgDataFormatter::MsgDataFormatter(
         const QString &formatString,
         const QColor &defaultColor
@@ -41,11 +47,76 @@ QColor MsgDataFormatter::getDefaultColor() const
 
 QString MsgDataFormatter::parseMsgDataToString(const IMsg &msgToParse) const
 {
-    const MsgIDType &msgID = msgToParse.getMsgID();
-    const MsgCodeType &msgCode = msgToParse.getMsgCode();
     const MsgDataType &msgData = msgToParse.getMsgData();
 
-    return QString("MsgData parsed");
+    QString formattedData(formatString);
+
+    int dataSize = msgData.size();
+
+    while(dataSize--)
+    {
+        QString dataTokenString("#Data%1#");
+        formattedData.replace(dataTokenString.arg(dataSize),QString::number(msgData.at(dataSize).getPrimitiveData()));
+    }
+
+    QRegularExpression operationParseRegEx(QString("#OP#\\((\\d\\.\\.?\\d*)#([+-*/%&|^]|(>>)|(<<))#(\\d\\.?\\d*)\\)#\\/OP#"));
+    operationParseRegEx.setPatternOptions(QRegularExpression::DontCaptureOption);
+    QString operationString = QRegularExpressionMatch(operationParseRegEx.match(formattedData)).captured();
+
+    while(!operationString.isEmpty())
+    {
+        QString parsedOperation = operationString;
+        QVariant operationResult;
+        parsedOperation.remove("#OP#(").remove(")#OP#");
+        QStringList operands = parsedOperation.split("#");
+
+        QString operation = operands.at(1);
+        if(!operation.compare("+"))
+        {
+            operationResult.setValue(operands.first().toInt() + operands.last().toInt());
+        }
+        else if(!operation.compare("-"))
+        {
+            operationResult.setValue(operands.first().toInt() - operands.last().toInt());
+        }
+        else if(!operation.compare("*"))
+        {
+            operationResult.setValue(operands.first().toInt() * operands.last().toInt());
+        }
+        else if(!operation.compare("/"))
+        {
+            operationResult.setValue(operands.first().toInt() / operands.last().toInt());
+        }
+        else if(!operation.compare("%"))
+        {
+            operationResult.setValue(operands.first().toInt() % operands.last().toInt());
+        }
+        else if(!operation.compare("<<"))
+        {
+            operationResult.setValue(operands.first().toInt() << operands.last().toInt());
+        }
+        else if(!operation.compare(">>"))
+        {
+            operationResult.setValue(operands.first().toInt() >> operands.last().toInt());
+        }
+        else if(!operation.compare("&"))
+        {
+            operationResult.setValue(operands.first().toInt() & operands.last().toInt());
+        }
+        else if(!operation.compare("|"))
+        {
+            operationResult.setValue(operands.first().toInt() | operands.last().toInt());
+        }
+        else if(!operation.compare("^"))
+        {
+            operationResult.setValue(operands.first().toInt() ^ operands.last().toInt());
+        }
+
+        formattedData.replace(operationString, operationResult.value<QString>());
+        operationString = QRegularExpressionMatch(operationParseRegEx.match(formattedData)).captured();
+    }
+
+    return formattedData;
 }
 
 QColor MsgDataFormatter::parseMsgDataToColor(const IMsg &msgToParse) const

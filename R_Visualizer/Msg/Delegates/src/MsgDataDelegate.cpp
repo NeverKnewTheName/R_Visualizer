@@ -82,7 +82,7 @@ QSize MsgDataDelegate::sizeHint(
                 option.rect,
                 Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
                 msgDataAsString
-                ).size();
+                ).marginsAdded(QMargins(4,4,4,4)).size();
 }
 
 QWidget *MsgDataDelegate::createEditor(

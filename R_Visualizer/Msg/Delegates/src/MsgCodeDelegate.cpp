@@ -95,7 +95,7 @@ QSize MsgCodeDelegate::sizeHint(
                 option.rect,
                 Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
                 alias
-                ).size();
+                ).marginsAdded(QMargins(4,4,4,4)).size();
 }
 
 QWidget *MsgCodeDelegate::createEditor(

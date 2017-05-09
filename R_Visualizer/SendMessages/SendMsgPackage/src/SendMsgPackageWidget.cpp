@@ -3,6 +3,8 @@
 
 #include <QTableView>
 #include <QHeaderView>
+#include <QTimer>
+#include <QDebug>
 
 #include "ISendMsgPackage.h"
 #include "ISendMsgPackageStore.h"
@@ -178,6 +180,10 @@ void SendMsgPackageWidget::init()
     ui->sndPckgTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->sndPckgTableView->setEditTriggers(QAbstractItemView::DoubleClicked);
 
+    /*QFont tableViewFont = ui->sndPckgTableView->font();*/
+    /*tableViewFont.setPointSize(12);*/
+    /*ui->sndPckgTableView->setFont(tableViewFont);*/
+
     QHeaderView *horzHeader = ui->sndPckgTableView->horizontalHeader();
 
     ui->sndPckgTableView->verticalHeader()
@@ -187,7 +193,12 @@ void SendMsgPackageWidget::init()
             ui->sndPckgTableView->horizontalHeader(),
             &QHeaderView::sectionResized,
                 [=](){
-                    ui->sndPckgTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                    QTimer::singleShot(50,
+                        [=](){
+                            ui->sndPckgTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                            qDebug() << "sendPckgTableView resized!";
+                        }
+                    );
                 }
             );
 
