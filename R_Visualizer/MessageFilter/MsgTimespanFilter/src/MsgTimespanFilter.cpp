@@ -117,6 +117,11 @@ bool MsgTimespanFilter::applyInversion(
     return isInverted ? !intermediateFilterResult : intermediateFilterResult;
 }
 
+void MsgTimespanFilter::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
+}
+
 void MsgTimespanFilter::applyUserRole(
         const UserRoleManagement::UserRole roleToApply
         )

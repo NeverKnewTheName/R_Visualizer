@@ -4,6 +4,7 @@
 #include <QString>
 #include <QColor>
 
+#include <QSharedPointer>
 #include <QDebug>
 
 #include "IMsgDataFormatter.h"
@@ -109,19 +110,21 @@ QVariant MsgDataMappingModel::data(
             break;
         case MsgDataMappingModel::COL_FormatString:
             return
-                msgDataMappingStore->getMsgDataFormatter(msgType)->getFormatString();
+                msgDataMappingStore->getMsgDataMapping(msgType).getMsgDataFormatString();
             break;
         case MsgDataMappingModel::COL_Color:
             return
-                msgDataMappingStore->getMsgDataFormatter(msgType)->getDefaultColor();
+                msgDataMappingStore->getMsgDataMapping(msgType).getMsgDataDefaultColor();
             break;
         }
+        break;
+    case Qt::SizeHintRole:
         break;
     case Qt::FontRole:
         break;
     case Qt::BackgroundRole:
         return QBrush(
-                msgDataMappingStore->getMsgDataFormatter(msgType)->getDefaultColor()
+                msgDataMappingStore->getMsgDataMapping(msgType).getMsgDataDefaultColor()
                 );
         break;
     case Qt::TextAlignmentRole:
@@ -129,7 +132,7 @@ QVariant MsgDataMappingModel::data(
     case Qt::CheckStateRole:
         break;
     case Qt::UserRole:
-        return QVariant::fromValue<IMsgDataFormatter *>(
+        return QVariant::fromValue<QSharedPointer<IMsgDataFormatter>>(
                     msgDataMappingStore->getMsgDataFormatter(msgType)
                     );
         break;
@@ -169,8 +172,8 @@ bool MsgDataMappingModel::setData(
     bool altered = false;
 
     const MessageTypeIdentifier &msgType = msgIdentifierStore.at(row);
-    IMsgDataFormatter *msgDataFormatter =
-        msgDataMappingStore->getMsgDataFormatter(msgType);
+    IMsgDataMapping &msgDataMapping =
+            msgDataMappingStore->getMsgDataMapping(msgType);
 
     switch(role)
     {
@@ -178,11 +181,11 @@ bool MsgDataMappingModel::setData(
         switch(col)
         {
             case MsgDataMappingModel::COL_FormatString:
-                msgDataFormatter->setFormatString(value.value<QString>());
+                msgDataMapping.setMsgDataFormatString(value.value<QString>());
                 altered = true;
                 break;
             case MsgDataMappingModel::COL_Color:
-                msgDataFormatter->setDefaultColor(value.value<QColor>());
+                msgDataMapping.setMsgDataDefaultColor(value.value<QColor>());
                 altered = true;
                 break;
         }
@@ -352,6 +355,7 @@ void MsgDataMappingModel::slt_AboutToBeCleared()
 
 void MsgDataMappingModel::slt_Cleared()
 {
+    msgIdentifierStore.clear();
     endResetModel();
 }
 

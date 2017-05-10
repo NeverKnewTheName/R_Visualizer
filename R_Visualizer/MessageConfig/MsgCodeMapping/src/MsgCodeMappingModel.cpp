@@ -255,10 +255,7 @@ void MsgCodeMappingModel::removeMsgCodeMapping(
 
 void MsgCodeMappingModel::clear()
 {
-    beginResetModel();
-    msgCodeStore.clear();
     msgCodeMappingStore->clear();
-    endResetModel();
 }
 
 void MsgCodeMappingModel::accept(FileParser *visitor)
@@ -305,6 +302,7 @@ void MsgCodeMappingModel::slt_AboutToBeCleared()
 
 void MsgCodeMappingModel::slt_Cleared()
 {
+    msgCodeStore.clear();
     endResetModel();
 }
 

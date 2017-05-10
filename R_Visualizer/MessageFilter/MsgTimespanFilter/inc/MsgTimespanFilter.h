@@ -75,6 +75,10 @@ private:
 
     bool timestampFromFilterEnabled;
     bool timestampToFilterEnabled;
+
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor);
 };
 
 /**

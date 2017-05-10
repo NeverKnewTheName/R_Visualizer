@@ -72,3 +72,14 @@ bool MsgCodeFilter::applyInversion(const bool intermediateFilterResult) const
 void MsgCodeFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {
 }
+
+
+void MsgCodeFilter::accept(FileParser *visitor)
+{
+    msgCodeFilterStore->accept(visitor);
+}
+
+void MsgCodeFilter::clear()
+{
+    msgCodeFilterStore->clear();
+}

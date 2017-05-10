@@ -23,8 +23,9 @@
 #include "MsgDataType.h"
 #include "MessageTypeIdentifier.h"
 
+#include "IMsgDataFormatter.h"
+
 class IMsgDataMapping;
-class IMsgDataFormatter;
 
 class IMsgDataMappingStore : public QObject, public IFileParsable
 {
@@ -44,12 +45,12 @@ public:
      * @retval IMsgDataFormatter* A valid #IMsgDataFormatter
      * @retval Q_NULLPTR No matching #IMsgDataMapping was found in the store
      */
-    virtual IMsgDataFormatter *getMsgDataFormatter(
+    virtual QSharedPointer<IMsgDataFormatter> getMsgDataFormatter(
             const MsgIDType &msgID,
             const MsgCodeType &msgCode
             ) const = 0;
 
-    virtual IMsgDataFormatter *getMsgDataFormatter(
+    virtual QSharedPointer<IMsgDataFormatter> getMsgDataFormatter(
             const MessageTypeIdentifier &msgType
             ) const = 0;
 

@@ -13,7 +13,7 @@ MsgDataMappingStore::~MsgDataMappingStore()
 {
 }
 
-IMsgDataFormatter *MsgDataMappingStore::getMsgDataFormatter(
+QSharedPointer<IMsgDataFormatter> MsgDataMappingStore::getMsgDataFormatter(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode
         ) const
@@ -21,7 +21,7 @@ IMsgDataFormatter *MsgDataMappingStore::getMsgDataFormatter(
     return getMsgDataFormatter(MessageTypeIdentifier(msgID,msgCode));
 }
 
-IMsgDataFormatter *MsgDataMappingStore::getMsgDataFormatter(
+QSharedPointer<IMsgDataFormatter> MsgDataMappingStore::getMsgDataFormatter(
         const MessageTypeIdentifier &msgType
         ) const
 {

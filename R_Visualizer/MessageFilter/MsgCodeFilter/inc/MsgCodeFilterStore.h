@@ -39,6 +39,10 @@ public:
 
 private:
     QVector<MsgCodeType> msgCodeVector;
+
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor);
 };
 
 /**

@@ -39,6 +39,8 @@ public:
             const MsgIDType &msgIDToRemove
             ) = 0;
 
+    virtual void clear() = 0;
+
 public slots:
     virtual void slt_addMsgIDToFilter(const MsgIDType &msgIDToAdd)
     {

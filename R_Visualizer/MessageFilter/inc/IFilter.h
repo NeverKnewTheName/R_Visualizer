@@ -11,6 +11,7 @@
 #include <QObject>
 
 #include "IUserRoleManager.h"
+#include "IFileParsable.h"
 
 /**
  * @addtogroup MsgFilterGroup
@@ -21,7 +22,7 @@
 /**
  * @brief The #IFilter interface
  */
-class IFilter : public QObject
+class IFilter : public QObject, public IFileParsable
 {
     Q_OBJECT
 public:

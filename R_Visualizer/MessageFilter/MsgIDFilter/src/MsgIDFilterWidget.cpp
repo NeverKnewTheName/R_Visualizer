@@ -15,6 +15,11 @@
 #include "MsgIDFilterAddDialog.h"
 #include "IMsgIDMappingManager.h"
 
+#include "csvinparser.h"
+#include "csvoutparser.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
+
 MsgIDFilterWidget::MsgIDFilterWidget(
         MsgIDFilter *msgIDFilter,
         MsgIDFilterModel *msgIDFilterModel,
@@ -118,12 +123,62 @@ void MsgIDFilterWidget::on_rmvFilterIDPushButton_clicked()
 
 void MsgIDFilterWidget::on_filterIDSaveBtn_clicked()
 {
-
+    QString saveLoc = QFileDialog::getSaveFileName(
+            this,
+            QString("Save as"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    } else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        JsonOutParser jsonOutParser;
+        msgIDFilter->accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
+        //ToDO check for error (-1)
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
 }
 
 void MsgIDFilterWidget::on_filterIDLoadBtn_clicked()
 {
-
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        msgIDFilter->clear();
+        //ToDO
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(
+                QJsonDocument::fromJson(jsonOpenFile.readAll())
+                );
+        msgIDFilter->accept(&jsonInParser);
+        /* idModel.ParseFromJson(jsonOpenFile.readAll());
+         * //ToDO check for error (-1) */
+        // parse file
+        // populate ui
+    }
+    // close file
+    jsonOpenFile.close();
 }
 
 /* void MsgIDFilterWidget::on_enableIDFilterCheckBox_toggled(bool checked) */

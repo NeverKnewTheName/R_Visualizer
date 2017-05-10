@@ -1,21 +1,21 @@
 #ifndef FILEPARSER_H
 #define FILEPARSER_H
 
-class Msg;
-class TimestampedMsg;
-class MsgStreamStore;
+class IMsg;
+class ITimestampedMsg;
+class IMsgStreamStore;
 class MsgStorage;
 class TimestampedMsgStorage;
-/* class SendMsgPackageStore; */
-class MsgIDMappingStore;
-class MsgIDMapping;
-class MsgCodeMappingStore;
-class MsgCodeMapping;
-class MsgDataMappingStore;
-class MsgDataMapping;
-class MsgIDFilterStore;
-class MsgCodeFilterStore;
-class MsgTimespanFilter;
+class ISendMsgPackageStore;
+class IMsgIDMappingStore;
+class IMsgIDMapping;
+class IMsgCodeMappingStore;
+class IMsgCodeMapping;
+class IMsgDataMappingStore;
+class IMsgDataMapping;
+class IMsgIDFilterStore;
+class IMsgCodeFilterStore;
+class IMsgTimespanFilter;
 
 /* class SysOvrvObject; */
 /* class SysOvrvTextLabel; */
@@ -29,21 +29,21 @@ public:
     FileParser(){}
     virtual ~FileParser(){}
 
-    virtual void visit(Msg &visitor) = 0;
-    virtual void visit(TimestampedMsg &visitor) = 0;
-    virtual void visit(MsgStreamStore &visitor) = 0;
+    virtual void visit(IMsg &visitor) = 0;
+    virtual void visit(ITimestampedMsg &visitor) = 0;
+    virtual void visit(IMsgStreamStore &visitor) = 0;
     virtual void visit(MsgStorage &visitor) = 0;
     virtual void visit(TimestampedMsgStorage &visitor) = 0;
-    /* virtual void visit(SendMsgPackageStore &visitor) = 0; */
-    virtual void visit(MsgIDMappingStore &visitor) = 0;
-    virtual void visit(MsgIDMapping &visitor) = 0;
-    virtual void visit(MsgCodeMappingStore &visitor) = 0;
-    virtual void visit(MsgCodeMapping &visitor) = 0;
-    virtual void visit(MsgDataMappingStore &visitor) = 0;
-    virtual void visit(MsgDataMapping &visitor) = 0;
-    virtual void visit(MsgIDFilterStore &visitor) = 0;
-    virtual void visit(MsgCodeFilterStore &visitor) = 0;
-    virtual void visit(MsgTimespanFilter &visitor) = 0;
+    virtual void visit(ISendMsgPackageStore &visitor) = 0;
+    virtual void visit(IMsgIDMappingStore &visitor) = 0;
+    virtual void visit(IMsgIDMapping &visitor) = 0;
+    virtual void visit(IMsgCodeMappingStore &visitor) = 0;
+    virtual void visit(IMsgCodeMapping &visitor) = 0;
+    virtual void visit(IMsgDataMappingStore &visitor) = 0;
+    virtual void visit(IMsgDataMapping &visitor) = 0;
+    virtual void visit(IMsgIDFilterStore &visitor) = 0;
+    virtual void visit(IMsgCodeFilterStore &visitor) = 0;
+    virtual void visit(IMsgTimespanFilter &visitor) = 0;
 
     /* virtual void visit(SysOvrvObject &visitor) = 0; */
     /* virtual void visit(SysOvrvTextLabel &visitor) = 0; */

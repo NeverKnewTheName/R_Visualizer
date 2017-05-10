@@ -90,6 +90,7 @@ void MsgIDMappingWidget::on_idLoadBtn_clicked()
     }
     else
     {
+        msgIDMappingModel->clear();
         //ToDO
         // read file content
         JsonInParser jsonInParser;

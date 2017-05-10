@@ -252,10 +252,7 @@ void MsgIDMappingModel::removeMsgIDMapping(const MsgIDType &relatedMsgID)
 
 void MsgIDMappingModel::clear()
 {
-    beginResetModel();
-    msgIDStore.clear();
     msgIDMappingStore->clear();
-    endResetModel();
 }
 
 void MsgIDMappingModel::accept(FileParser *visitor)
@@ -303,6 +300,7 @@ void MsgIDMappingModel::slt_AboutToBeCleared()
 
 void MsgIDMappingModel::slt_Cleared()
 {
+    msgIDStore.clear();
     endResetModel();
 }
 

@@ -43,12 +43,12 @@ public:
      * #IMsgDataMapping that is related to the specified #MsgIDType and
      * #MsgCodeType
      */
-    virtual IMsgDataFormatter *getMsgDataFormatter(
+    virtual QSharedPointer<IMsgDataFormatter> getMsgDataFormatter(
             const MsgIDType &msgID,
             const MsgCodeType &msgCode
             ) const;
 
-    virtual IMsgDataFormatter *getMsgDataFormatter(
+    virtual QSharedPointer<IMsgDataFormatter> getMsgDataFormatter(
             const MessageTypeIdentifier &msgType
             ) const;
 

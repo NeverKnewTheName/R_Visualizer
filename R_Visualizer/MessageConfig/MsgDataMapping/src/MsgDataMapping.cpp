@@ -1,27 +1,35 @@
 #include "MsgDataMapping.h"
 
+#include "MsgDataFormatter.h"
+
 MsgDataMapping::MsgDataMapping() :
     msgID(),
     msgCode(),
-    msgDataFormatter(Q_NULLPTR)
+    msgDataFormatter(new MsgDataFormatter()),
+    msgDataFormatString(),
+    msgDataDefaultColor()
 {
 }
 
 MsgDataMapping::MsgDataMapping(const MsgDataMapping &other) :
     msgID(other.msgID),
     msgCode(other.msgCode),
-    msgDataFormatter(other.msgDataFormatter)
+    msgDataFormatter(other.msgDataFormatter->cloneFormatter()),
+    msgDataFormatString(other.msgDataFormatString),
+    msgDataDefaultColor(other.msgDataDefaultColor)
 {
 }
 
 MsgDataMapping::MsgDataMapping(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode,
-        IMsgDataFormatter *msgDataFormatter
+        const IMsgDataFormatter &msgDataFormatter
         ) :
     msgID(msgID),
     msgCode(msgCode),
-    msgDataFormatter(msgDataFormatter)
+    msgDataFormatter(msgDataFormatter.cloneFormatter()),
+    msgDataFormatString(msgDataFormatter.getFormatString()),
+    msgDataDefaultColor(msgDataFormatter.getDefaultColor())
 {
 }
 
@@ -49,14 +57,44 @@ void MsgDataMapping::setMsgCode(const MsgCodeType &msgCode)
     this->msgCode = msgCode;
 }
 
-IMsgDataFormatter *MsgDataMapping::getMsgDataFormatter() const
+QSharedPointer<IMsgDataFormatter> MsgDataMapping::getMsgDataFormatter() const
 {
     return msgDataFormatter;
 }
 
-void MsgDataMapping::setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter)
+void MsgDataMapping::setMsgDataFormatter(
+        const IMsgDataFormatter &msgDataFormatter
+        )
 {
-    this->msgDataFormatter = msgDataFormatter;
+    this->msgDataFormatter.reset(msgDataFormatter.cloneFormatter());
+    this->msgDataFormatter->setFormatString(msgDataFormatString);
+    this->msgDataFormatter->setDefaultColor(msgDataDefaultColor);
+}
+
+QString MsgDataMapping::getMsgDataFormatString() const
+{
+    return msgDataFormatString;
+}
+
+void MsgDataMapping::setMsgDataFormatString(
+        const QString &msgDataFormatString
+        )
+{
+    msgDataFormatter->setFormatString(msgDataFormatString);
+    this->msgDataFormatString = msgDataFormatString;
+}
+
+QColor MsgDataMapping::getMsgDataDefaultColor() const
+{
+    return msgDataDefaultColor;
+}
+
+void MsgDataMapping::setMsgDataDefaultColor(
+        const QColor &msgDataDefaultColor
+        )
+{
+    msgDataFormatter->setDefaultColor(msgDataDefaultColor);
+    this->msgDataDefaultColor = msgDataDefaultColor;
 }
 
 QString MsgDataMapping::parseMsgData(const IMsg &msg) const
@@ -71,10 +109,23 @@ QString MsgDataMapping::parseMsgData(const IMsg &msg) const
     return msgDataFormatter->parseMsgDataToString(msg);
 }
 
+MsgDataMapping &MsgDataMapping::operator =(const MsgDataMapping &other)
+{
+    this->msgID = other.getMsgID();
+    this->msgCode = other.getMsgCode();
+    this->msgDataFormatString = other.getMsgDataFormatString();
+    this->msgDataDefaultColor = other.getMsgDataDefaultColor();
+    this->msgDataFormatter = other.getMsgDataFormatter();
+
+    return *this;
+}
+
 IMsgDataMapping &MsgDataMapping::operator =(const IMsgDataMapping &other)
 {
     this->msgID = other.getMsgID();
     this->msgCode = other.getMsgCode();
+    this->msgDataFormatString = other.getMsgDataFormatString();
+    this->msgDataDefaultColor = other.getMsgDataDefaultColor();
     this->msgDataFormatter = other.getMsgDataFormatter();
 
     return *this;

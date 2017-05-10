@@ -8,12 +8,15 @@
 #ifndef MSGDATAMAPPING_H
 #define MSGDATAMAPPING_H
 
+#include <QSharedPointer>
+
 #include "IMsgDataMapping.h"
-#include "IMsgDataFormatter.h"
 
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
+
+#include "IMsgDataFormatter.h"
 
 /**
  * @addtogroup MsgDataMappingGroup
@@ -34,7 +37,7 @@ public:
     MsgDataMapping(
             const MsgIDType &msgID,
             const MsgCodeType &msgCode,
-            IMsgDataFormatter *msgDataFormatter
+            const IMsgDataFormatter &msgDataFormatter
             );
     virtual ~MsgDataMapping();
 
@@ -44,11 +47,28 @@ public:
     MsgCodeType getMsgCode() const;
     void setMsgCode(const MsgCodeType &msgCode);
 
-    IMsgDataFormatter *getMsgDataFormatter() const;
-    void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter);
+    QString getMsgDataFormatString() const;
+    void  setMsgDataFormatString(
+            const QString &msgDataFormatString
+            );
+
+    QColor getMsgDataDefaultColor() const;
+    void setMsgDataDefaultColor(
+            const QColor &defaultColor
+            );
+
+    QSharedPointer<IMsgDataFormatter> getMsgDataFormatter() const;
+    /**
+     * @brief Resets the contained #IMsgDataFormatter to the specified one
+     * 
+     * @note The Format String and the Default Color of this #MsgDataMapping
+     * are applied to the new #IMsgDataFormatter
+     */
+    void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter);
 
     QString parseMsgData(const IMsg &msg) const;
 
+    MsgDataMapping &operator =(const MsgDataMapping &other);
     IMsgDataMapping &operator =(const IMsgDataMapping &other);
     bool operator ==(const MsgDataMapping &other) const;
     bool operator ==(const IMsgDataMapping &other) const;
@@ -69,7 +89,9 @@ public:
 private:
     MsgIDType msgID;
     MsgCodeType msgCode;
-    IMsgDataFormatter *msgDataFormatter;
+    QSharedPointer<IMsgDataFormatter> msgDataFormatter;
+    QString msgDataFormatString;
+    QColor msgDataDefaultColor;
 };
 
 /**

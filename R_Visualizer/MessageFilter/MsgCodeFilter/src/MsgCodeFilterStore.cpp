@@ -1,5 +1,7 @@
 #include "MsgCodeFilterStore.h"
 
+#include "fileparser.h"
+
 #include <QString>
 #include <QDebug>
 
@@ -70,4 +72,9 @@ void MsgCodeFilterStore::clear()
     emit sgnl_AboutToBeCleared();
     msgCodeVector.clear();
     emit sgnl_Cleared();
+}
+
+void MsgCodeFilterStore::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
 }

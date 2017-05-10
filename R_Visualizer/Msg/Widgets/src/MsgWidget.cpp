@@ -10,8 +10,8 @@ MsgWidget::MsgWidget(QWidget *parent) :
     msgCodeMappingManager(Q_NULLPTR)
 {
     ui->setupUi(this);
-    setTabOrder(ui->msgIDWidget,ui->msgCodeWidget);
     setTabOrder(ui->msgCodeWidget,ui->msgDataWidget);
+    setTabOrder(ui->msgIDWidget,ui->msgCodeWidget);
 
     QTimer::singleShot(0,ui->msgIDWidget,SLOT(setFocus()));
 }

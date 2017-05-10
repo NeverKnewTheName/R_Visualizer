@@ -11,6 +11,7 @@
 #include <QObject>
 
 #include "MsgIDType.h"
+#include "IFileParsable.h"
 
 /**
  * @addtogroup MsgIDFilterGroup
@@ -21,7 +22,7 @@
 /**
  * @brief The IMsgIDFilterStore interface
  */
-class IMsgIDFilterStore : public QObject
+class IMsgIDFilterStore : public QObject, public IFileParsable
 {
     Q_OBJECT
 public:

@@ -3,6 +3,15 @@
 
 #include "MsgTimespanFilter.h"
 
+#include <QFileDialog>
+
+#include "csvinparser.h"
+#include "csvoutparser.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
+
+#include <QDebug>
+
 MsgTimespanFilterWidget::MsgTimespanFilterWidget(
         IMsgTimespanFilter *msgTimestampFilter,
         QWidget *parent
@@ -127,15 +136,51 @@ MsgTimespanFilterWidget::~MsgTimespanFilterWidget()
 
 /* } */
 
-/* void MsgTimespanFilterWidget::on_filterTimestampLoadBtn_clicked() */
-/* { */
+void MsgTimespanFilterWidget::on_filterTimestampLoadBtn_clicked()
+{
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(
+                QJsonDocument::fromJson(jsonOpenFile.readAll())
+                );
+        msgTimestampFilter->accept(&jsonInParser);
+    }
+    jsonOpenFile.close();
+}
 
-/* } */
-
-/* void MsgTimespanFilterWidget::on_filterTimestampSaveBtn_clicked() */
-/* { */
-
-/* } */
+void MsgTimespanFilterWidget::on_filterTimestampSaveBtn_clicked()
+{
+    QString saveLoc = QFileDialog::getSaveFileName(
+            this,
+            QString("Save as"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    } else
+    {
+        JsonOutParser jsonOutParser;
+        msgTimestampFilter->accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
+    }
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
+}
 
 /* void MsgTimespanFilterWidget::on_checkBox_toggled(bool checked) */
 /* { */

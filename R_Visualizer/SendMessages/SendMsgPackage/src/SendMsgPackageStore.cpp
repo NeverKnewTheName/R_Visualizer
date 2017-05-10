@@ -82,6 +82,11 @@ void SendMsgPackageStore::clear()
     emit sgnl_Cleared();
 }
 
+void SendMsgPackageStore::accept(FileParser *visitor)
+{
+    visitor->visit(*this);
+}
+
 void SendMsgPackageStore::removeAt(const int index)
 {
     emit sgnl_msgAboutToBeRemoved(index,1);

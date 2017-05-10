@@ -19,6 +19,13 @@
 #include "MsgCodeDelegate.h"
 #include "MsgDataDelegate.h"
 
+#include <QFileDialog>
+
+#include "csvinparser.h"
+#include "csvoutparser.h"
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
+
 SendMsgPackageWidget::SendMsgPackageWidget(
         ISendMsgPackage *sendMsgPackage,
         QWidget *parent
@@ -154,12 +161,62 @@ void SendMsgPackageWidget::on_sndPcktRmvBtn_clicked()
 
 void SendMsgPackageWidget::on_sndPcktLoadBtn_clicked()
 {
-
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        sendMsgPackage->getStore()->clear();
+        //ToDO
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(
+                QJsonDocument::fromJson(jsonOpenFile.readAll())
+                );
+        sendMsgPackage->getStore()->accept(&jsonInParser);
+        /* idModel.ParseFromJson(jsonOpenFile.readAll());
+         * //ToDO check for error (-1) */
+        // parse file
+        // populate ui
+    }
+    // close file
+    jsonOpenFile.close();
 }
 
 void SendMsgPackageWidget::on_sndPcktStoreBtn_clicked()
 {
-
+    QString saveLoc = QFileDialog::getSaveFileName(
+            this,
+            QString("Save as"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    } else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        JsonOutParser jsonOutParser;
+        sendMsgPackage->getStore()->accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
+        //ToDO check for error (-1)
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
 }
 
 void SendMsgPackageWidget::on_sndPcktSendBtn_clicked()

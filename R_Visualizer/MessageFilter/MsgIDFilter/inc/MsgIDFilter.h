@@ -66,6 +66,14 @@ private:
     bool isEnabled;
     bool isInverted;
 
+
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor);
+
+    // IMsgIDFilter interface
+public:
+    virtual void clear();
 };
 
 /**

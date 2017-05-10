@@ -94,6 +94,10 @@ private:
      * @brief Vector to store the #MsgIDType for the #MsgIDFilterStore
      */
     QVector<MsgIDType> msgIDVector;
+
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor);
 };
 
 /**

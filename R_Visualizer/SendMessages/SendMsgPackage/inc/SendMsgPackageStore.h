@@ -63,6 +63,10 @@ public:
 
 private:
     QVector<Msg> msgStorage;
+
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor);
 };
 
 #endif /* SENDMSGPACKAGESTORE_H */

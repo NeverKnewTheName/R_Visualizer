@@ -19,7 +19,6 @@
 
 #include <QDebug>
 
-#include "fileparser.h"
 #include "csvinparser.h"
 #include "csvoutparser.h"
 #include "jsoninparser.h"
@@ -96,6 +95,7 @@ void MsgCodeMappingWidget::on_msgCodeLoadBtn_clicked()
     }
     else
     {
+        msgCodeMappingModel->clear();
         //ToDO
         // read file content
         JsonInParser jsonInParser;

@@ -68,6 +68,16 @@ bool MsgIDFilter::applyInversion(const bool intermediateFilterResult) const
     return isInverted ? !intermediateFilterResult : intermediateFilterResult;
 }
 
+void MsgIDFilter::accept(FileParser *visitor)
+{
+    msgIDFilterStore->accept(visitor);
+}
+
+void MsgIDFilter::clear()
+{
+    msgIDFilterStore->clear();
+}
+
 
 void MsgIDFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)
 {

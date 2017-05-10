@@ -120,6 +120,10 @@ QString MsgDataLineEdit::convertFormat(
         const int newFormatIndex
         ) const
 {
+    if(number.isEmpty())
+    {
+        return number;
+    }
     const int oldBase = std::get<0>(formatData.at(oldFormatIndex));
     const int newBase = std::get<0>(formatData.at(newFormatIndex));
     const int oldFieldWidth = std::get<1>(formatData.at(oldFormatIndex));

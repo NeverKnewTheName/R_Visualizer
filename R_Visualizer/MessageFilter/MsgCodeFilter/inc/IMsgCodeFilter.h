@@ -39,6 +39,8 @@ public:
             const MsgCodeType &msgCodeToRemove
             ) = 0;
 
+    virtual void clear() = 0;
+
 public slots:
     virtual void slt_addMsgCodeToFilter(
             const MsgCodeType &msgCodeToAdd

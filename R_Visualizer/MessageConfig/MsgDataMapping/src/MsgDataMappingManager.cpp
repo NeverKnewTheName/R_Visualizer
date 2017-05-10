@@ -4,6 +4,7 @@
 #include "IMsgDataFormatter.h"
 #include "IMsgDataMapping.h"
 
+#include <QSharedPointer>
 #include <QString>
 #include <QDebug>
 
@@ -38,7 +39,7 @@ QString MsgDataMappingManager::parseMsgDataToString(const IMsg &msg) const
     const MsgCodeType &msgCode = msg.getMsgCode();
     const MsgDataType &msgData = msg.getMsgData();
 
-    IMsgDataFormatter *msgDataFormatter =
+    QSharedPointer<IMsgDataFormatter> msgDataFormatter =
             getMsgDataFormatter(msgID,msgCode);
 
     if(msgDataFormatter != Q_NULLPTR)
@@ -64,7 +65,7 @@ QColor MsgDataMappingManager::parseMsgDataToColor(const IMsg &msg) const
     const MsgCodeType &msgCode = msg.getMsgCode();
     const MsgDataType &msgData = msg.getMsgData();
 
-    IMsgDataFormatter *msgDataFormatter =
+    QSharedPointer<IMsgDataFormatter> msgDataFormatter =
             getMsgDataFormatter(msgID,msgCode);
 
     if(msgDataFormatter != Q_NULLPTR)
@@ -77,7 +78,7 @@ QColor MsgDataMappingManager::parseMsgDataToColor(const IMsg &msg) const
     }
 }
 
-IMsgDataFormatter *MsgDataMappingManager::getMsgDataFormatter(
+QSharedPointer<IMsgDataFormatter> MsgDataMappingManager::getMsgDataFormatter(
         const MsgIDType &msgID,
         const MsgCodeType &msgCode
         ) const
@@ -87,7 +88,7 @@ IMsgDataFormatter *MsgDataMappingManager::getMsgDataFormatter(
         return msgDataMappingStore->getMsgDataFormatter(msgID,msgCode);
     }
 
-    return Q_NULLPTR;
+    return QSharedPointer<IMsgDataFormatter>(Q_NULLPTR);
 }
 
 QString MsgDataMappingManager::getMsgDataFormatString(

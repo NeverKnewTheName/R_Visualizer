@@ -12,10 +12,12 @@
 
 #include "IMsg.h"
 
+#include "IFileParsable.h"
+
 /**
  * @brief The ISendMsgPackageStore interface
  */
-class ISendMsgPackageStore : public QObject
+class ISendMsgPackageStore : public QObject, public IFileParsable
 {
     Q_OBJECT
 public:

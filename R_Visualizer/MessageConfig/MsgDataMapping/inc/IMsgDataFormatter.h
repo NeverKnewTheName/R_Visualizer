@@ -11,6 +11,7 @@
 #include <QMetaType>
 #include <QString>
 #include <QColor>
+#include <QSharedPointer>
 
 class IMsg;
 
@@ -81,5 +82,12 @@ public:
 };
 
 Q_DECLARE_METATYPE(IMsgDataFormatter *)
+
+/**
+ * @brief IMsgDataFormatterSharedPtr is a QSharedPointer to share a pointer to a #IMsgDataFormatter
+ */
+//typedef QSharedPointer<IMsgDataFormatter> IMsgDataFormatterSharedPtr;
+
+Q_DECLARE_METATYPE(QSharedPointer<IMsgDataFormatter>)
 
 #endif /* IMSGDATAFORMATTER_H */

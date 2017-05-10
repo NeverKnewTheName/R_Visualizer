@@ -72,7 +72,7 @@ private:
     QDateTime msgTimestamp;
 };
 
-Q_DECLARE_METATYPE(TimestampedMsg);
+Q_DECLARE_METATYPE(TimestampedMsg)
 
 /**
  * @}

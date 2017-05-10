@@ -1,19 +1,19 @@
 #include "csvoutparser.h"
 
-#include "Msg.h"
-#include "TimestampedMsg.h"
-#include "MsgStreamStore.h"
+#include "IMsg.h"
+#include "ITimestampedMsg.h"
+#include "IMsgStreamStore.h"
 #include "msgstorage.h"
-/* #include "SendMsgPackageStore.h" */
-#include "MsgIDMappingStore.h"
-#include "MsgIDMapping.h"
-#include "MsgCodeMappingStore.h"
-#include "MsgCodeMapping.h"
-#include "MsgDataMappingStore.h"
-#include "MsgDataMapping.h"
-#include "MsgIDFilterStore.h"
-#include "MsgCodeFilterStore.h"
-#include "MsgTimespanFilter.h"
+#include "SendMsgPackageStore.h"
+#include "IMsgIDMappingStore.h"
+#include "IMsgIDMapping.h"
+#include "IMsgCodeMappingStore.h"
+#include "IMsgCodeMapping.h"
+#include "IMsgDataMappingStore.h"
+#include "IMsgDataMapping.h"
+#include "IMsgIDFilterStore.h"
+#include "IMsgCodeFilterStore.h"
+#include "IMsgTimespanFilter.h"
 
 #include <QDebug>
 
@@ -25,15 +25,15 @@ CsvOutParser::~CsvOutParser()
 {
 }
 
-void CsvOutParser::visit(Msg &visitor)
+void CsvOutParser::visit(IMsg &visitor)
 {
 }
 
-void CsvOutParser::visit(TimestampedMsg &visitor)
+void CsvOutParser::visit(ITimestampedMsg &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgStreamStore &visitor)
+void CsvOutParser::visit(IMsgStreamStore &visitor)
 {
 }
 
@@ -45,43 +45,43 @@ void CsvOutParser::visit(TimestampedMsgStorage &visitor)
 {
 }
 
-/* void CsvOutParser::visit(SendMsgPackageStore &visitor) */
-/* { */
-/* } */
-
-void CsvOutParser::visit(MsgIDMappingStore &visitor)
+void CsvOutParser::visit(ISendMsgPackageStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgIDMapping &visitor)
+void CsvOutParser::visit(IMsgIDMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgCodeMappingStore &visitor)
+void CsvOutParser::visit(IMsgIDMapping &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgCodeMapping &visitor)
+void CsvOutParser::visit(IMsgCodeMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgDataMappingStore &visitor)
+void CsvOutParser::visit(IMsgCodeMapping &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgDataMapping &visitor)
+void CsvOutParser::visit(IMsgDataMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgIDFilterStore &visitor)
+void CsvOutParser::visit(IMsgDataMapping &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgCodeFilterStore &visitor)
+void CsvOutParser::visit(IMsgIDFilterStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgTimespanFilter &visitor)
+void CsvOutParser::visit(IMsgCodeFilterStore &visitor)
+{
+}
+
+void CsvOutParser::visit(IMsgTimespanFilter &visitor)
 {
 }
 

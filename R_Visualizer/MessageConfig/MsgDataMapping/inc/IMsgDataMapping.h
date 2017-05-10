@@ -8,13 +8,13 @@
 #ifndef IMSGDATAMAPPING_H
 #define IMSGDATAMAPPING_H
 
-#include <memory>
-
 #include <QString>
+#include <QColor>
 
 #include "IMsg.h"
 #include "IFileParsable.h"
-#include "IMsgDataFormatter.h"
+
+class IMsgDataFormatter;
 
 /**
  * @addtogroup MsgDataMappingGroup
@@ -39,8 +39,18 @@ public:
     virtual MsgCodeType getMsgCode() const = 0;
     virtual void setMsgCode(const MsgCodeType &code) = 0;
 
-    virtual IMsgDataFormatter *getMsgDataFormatter() const = 0;
-    virtual void setMsgDataFormatter(IMsgDataFormatter *msgDataFormatter) = 0;
+    virtual QString getMsgDataFormatString() const = 0;
+    virtual void  setMsgDataFormatString(
+            const QString &msgDataFormatString
+            ) = 0;
+
+    virtual QColor getMsgDataDefaultColor() const = 0;
+    virtual void setMsgDataDefaultColor(
+            const QColor &defaultColor
+            ) = 0;
+
+    virtual QSharedPointer<IMsgDataFormatter> getMsgDataFormatter() const = 0;
+    virtual void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter) = 0;
 
     virtual QString parseMsgData(const IMsg &msg) const = 0;
 };

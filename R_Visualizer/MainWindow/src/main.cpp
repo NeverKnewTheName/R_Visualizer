@@ -40,8 +40,8 @@
 #include "MsgCodeMappingModel.h"
 #include "MsgCodeMappingWidget.h"
 #include "IMsgDataMappingManager.h"
-#include "MsgDataMappingManager.h"
 #include "IMsgDataMapping.h"
+#include "MsgDataMappingManager.h"
 #include "MsgDataMapping.h"
 #include "IMsgDataMappingStore.h"
 #include "MsgDataMappingStore.h"
@@ -116,6 +116,7 @@ int main(int argc, char *argv[])
     /* qRegisterMetaType <MsgData>("MsgData"); */
     /* qRegisterMetaType <DataByteVect>("DataByteVect"); */
     /* qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry"); */
+    /* qRegisterMetaType <IMsgDataFormatterSharedPtr>("IMsgDataFormatterSharedPtr"); */
 
 
 

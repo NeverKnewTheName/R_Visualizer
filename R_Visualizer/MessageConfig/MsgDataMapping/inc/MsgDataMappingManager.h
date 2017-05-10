@@ -39,7 +39,7 @@ public:
     virtual QString parseMsgDataToString(const IMsg &msg) const;
     virtual QColor parseMsgDataToColor(const IMsg &msg) const;
 
-    virtual IMsgDataFormatter *getMsgDataFormatter(
+    virtual QSharedPointer<IMsgDataFormatter> getMsgDataFormatter(
             const MsgIDType &msgID,
             const MsgCodeType &msgCode
             ) const;

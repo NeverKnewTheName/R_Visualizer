@@ -43,9 +43,9 @@ private slots:
 
     /* void on_invertTimestampFilterCheckBox_toggled(bool checked); */
 
-    /* void on_filterTimestampLoadBtn_clicked(); */
+    void on_filterTimestampLoadBtn_clicked();
 
-    /* void on_filterTimestampSaveBtn_clicked(); */
+    void on_filterTimestampSaveBtn_clicked();
 
     /* void on_checkBox_toggled(bool checked); */
 

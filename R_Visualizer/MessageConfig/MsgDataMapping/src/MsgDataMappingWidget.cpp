@@ -5,6 +5,7 @@
 #include "MsgDataMappingModel.h"
 
 #include "MsgDataMappingAddDialog.h"
+#include "MsgDataMappingEditorDelegate.h"
 
 #include <QFile>
 #include <QFileDialog>
@@ -88,6 +89,7 @@ void MsgDataMappingWidget::on_msgDataLoadBtn_clicked()
     }
     else
     {
+        msgDataMappingModel->clear();
         //ToDO
         // read file content
         JsonInParser jsonInParser;
@@ -163,7 +165,7 @@ void MsgDataMappingWidget::slt_MsgDataMappingAddFinished(
     MsgDataMapping tempMsgDataMapping(
             msgID,
             msgCode,
-            new MsgDataFormatter(
+            MsgDataFormatter(
                 formatString,
                 defaultColor
                 )
@@ -188,10 +190,8 @@ void MsgDataMappingWidget::init()
     ui->msgDataTableView->verticalHeader()->hide();
     ui->msgDataTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->msgDataTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    //ToDO
-    //ui->msgDataTableView->setItemDelegate(new IDEditorDelegate(this));
 
-    //ToDO SCROLL TO BOTTOM
+    ui->msgDataTableView->setItemDelegate(new MsgDataMappingEditorDelegate(ui->msgDataTableView));
 }
 
 void MsgDataMappingWidget::connectModel()
