@@ -10,6 +10,8 @@
 
 #include <QObject>
 
+#include "IFileParsable.h"
+
 class ITimestampedMsg;
 
 class IMsgMappingManager;
@@ -28,7 +30,7 @@ class IPrettyTimestampedMsg;
 /**
  * @brief The #IMessageStream interface
  */
-class IMessageStream : public QObject
+class IMessageStream : public QObject, public IFileParsable
 {
     Q_OBJECT
 public:
@@ -41,19 +43,29 @@ public:
     /**
      * @brief Appends the specified message to the stream
      */
-    virtual bool appendMsg(const ITimestampedMsg &msgToAppend) = 0;
+    virtual bool appendMsg(
+            const ITimestampedMsg &msgToAppend,
+            const int indexInStore
+            ) = 0;
 
     /**
      * @brief Prepends the specified messages to the stream
      */
-    virtual bool prependMsg(const ITimestampedMsg &msgToPrepend) = 0;
+    virtual bool prependMsg(
+            const ITimestampedMsg &msgToPrepend,
+            const int indexInStore
+            ) = 0;
 
     /**
      * @brief Clears the stream
      */
     virtual void clear() = 0;
 
+    virtual void setCurrentStartIndex(const int newStartIndex) = 0;
+    virtual int getCurrentStartIndex() const = 0;
     virtual void setCurrentEndIndex(const int newEndIndex) = 0;
+    virtual int getCurrentEndIndex() const = 0;
+
 
     /**
      * @brief Updates the stream by the mappingToUpdate #IMsgDataMappingManager
@@ -76,6 +88,14 @@ public:
             const ITimestampedMsgFilter &filterToUpdate
             ) = 0;
 
+    virtual bool fetchPrevious() = 0;
+    virtual bool fetchNext() = 0;
+    virtual bool fetchTop() = 0;
+    virtual bool fetchBottom() = 0;
+
+    virtual bool getContinuousFlag() const = 0;
+    virtual void setContinuousFlag(bool value) = 0;
+
 signals:
     void sgnl_AppendMsg(const IPrettyTimestampedMsg &msgToAppend);
 
@@ -93,10 +113,7 @@ public slots:
             const int index
             )
     {
-        if(appendMsg(receivedMsg))
-        {
-            setCurrentEndIndex(index);
-        }
+        appendMsg(receivedMsg,index);
     }
 
     /**

@@ -11,6 +11,12 @@ MsgTimespanFilter::MsgTimespanFilter(QObject *parent) :
     timestampFromFilterEnabled(false),
     timestampToFilterEnabled(false)
 {
+    connect(
+            this,
+            &IMsgTimespanFilter::sgnl_TimestampFilterChanged,
+            this,
+            &IMsgTimespanFilter::sgnl_filterChanged
+            );
 }
 
 MsgTimespanFilter::~MsgTimespanFilter()
@@ -47,6 +53,8 @@ bool MsgTimespanFilter::filterTimestamp(
 void MsgTimespanFilter::enableFilter(const bool enable)
 {
     this->isEnabled = enable;
+    emit sgnl_filterEnabled(enable);
+    emit sgnl_TimestampFilterChanged(*this);
 }
 
 bool MsgTimespanFilter::isFilterEnabled() const
@@ -57,6 +65,11 @@ bool MsgTimespanFilter::isFilterEnabled() const
 void MsgTimespanFilter::invertFilter(const bool invert)
 {
     this->isInverted = invert;
+    emit sgnl_filterInverted(invert);
+    if(isEnabled)
+    {
+        emit sgnl_TimestampFilterChanged(*this);
+    }
 }
 
 bool MsgTimespanFilter::isFilterInverted() const
@@ -73,8 +86,10 @@ void MsgTimespanFilter::setTimestampFrom( const QDateTime &timestampFrom)
         emit sgnl_TimestampToChanged(timestampTo);
     }
     emit sgnl_TimestampFromChanged(timestampFrom);
-    emit sgnl_filterChanged(*this);
-    emit sgnl_TimestampFilterChanged(*this);
+    if(isEnabled && timestampFromFilterEnabled)
+    {
+        emit sgnl_TimestampFilterChanged(*this);
+    }
 }
 
 QDateTime MsgTimespanFilter::getTimestampFrom() const
@@ -91,8 +106,10 @@ void MsgTimespanFilter::setTimestampTo( const QDateTime &timestampTo)
         emit sgnl_TimestampFromChanged(timestampFrom);
     }
     emit sgnl_TimestampToChanged(timestampTo);
-    emit sgnl_filterChanged(*this);
-    emit sgnl_TimestampFilterChanged(*this);
+    if(isEnabled && timestampToFilterEnabled)
+    {
+        emit sgnl_TimestampFilterChanged(*this);
+    }
 }
 
 QDateTime MsgTimespanFilter::getTimestampTo() const
@@ -102,12 +119,12 @@ QDateTime MsgTimespanFilter::getTimestampTo() const
 
 bool MsgTimespanFilter::greaterThanTimestampFrom(const QDateTime &timestamp) const
 {
-    return timestampFrom > timestamp;
+    return timestampFrom <= timestamp;
 }
 
 bool MsgTimespanFilter::lowerThanTimestampTo(const QDateTime &timestamp) const
 {
-    return timestampTo < timestamp;
+    return timestampTo >= timestamp;
 }
 
 bool MsgTimespanFilter::applyInversion(
@@ -134,7 +151,10 @@ void MsgTimespanFilter::enableTimestampFilterFrom(
 {
     timestampFromFilterEnabled = enabled;
 
-    emit sgnl_TimestampFilterChanged(*this);
+    if(isEnabled)
+    {
+        emit sgnl_TimestampFilterChanged(*this);
+    }
 }
 
 bool MsgTimespanFilter::isTimestampFilterFromEnabled() const
@@ -148,7 +168,10 @@ void MsgTimespanFilter::enableTimestampFilterTo(
 {
     timestampToFilterEnabled = enabled;
 
-    emit sgnl_TimestampFilterChanged(*this);
+    if(isEnabled)
+    {
+        emit sgnl_TimestampFilterChanged(*this);
+    }
 }
 
 bool MsgTimespanFilter::isTimestampFilterToEnabled() const

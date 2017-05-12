@@ -7,6 +7,24 @@ MsgDataMappingStore::MsgDataMappingStore(
         ) :
     IMsgDataMappingStore(parent)
 {
+    connect(
+            this,
+            &IMsgDataMappingStore::sgnl_Cleared,
+            this,
+            &IMsgDataMappingStore::sgnl_MappingHasChanged
+            );
+    connect(
+            this,
+            &IMsgDataMappingStore::sgnl_MsgDataMappingAdded,
+            this,
+            &IMsgDataMappingStore::sgnl_MappingHasChanged
+            );
+    connect(
+            this,
+            &IMsgDataMappingStore::sgnl_MsgDataMappingRemoved,
+            this,
+            &IMsgDataMappingStore::sgnl_MappingHasChanged
+            );
 }
 
 MsgDataMappingStore::~MsgDataMappingStore()

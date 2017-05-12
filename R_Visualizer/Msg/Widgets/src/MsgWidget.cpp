@@ -49,6 +49,7 @@ void MsgWidget::setMsgIDMapping(IMsgIDMappingManager *msgIDMappingManager)
 
 void MsgWidget::setMsgIDCompleter(QCompleter *msgIDCompleter)
 {
+    msgIDCompleter->setParent(ui->msgIDWidget);
     ui->msgIDWidget->setCompleter(msgIDCompleter);
 }
 
@@ -59,5 +60,6 @@ void MsgWidget::setMsgCodeMapping(IMsgCodeMappingManager *msgCodeMappingManager)
 
 void MsgWidget::setMsgCodeCompleter(QCompleter *msgCodeCompleter)
 {
+    msgCodeCompleter->setParent(ui->msgCodeWidget);
     ui->msgCodeWidget->setCompleter(msgCodeCompleter);
 }

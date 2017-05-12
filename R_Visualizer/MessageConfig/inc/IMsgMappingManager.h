@@ -32,6 +32,7 @@ class IMsgMappingManager :
     public IUserRoleManageable,
     public IFileParsable
 {
+    Q_OBJECT
 public:
     IMsgMappingManager(
             QObject *parent = Q_NULLPTR

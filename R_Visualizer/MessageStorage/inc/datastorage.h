@@ -113,7 +113,10 @@ public:
      *       (also this will trigger the container on the other side to be serialized
      *       and the next container to be loaded into RAM)
      */
-    DataStorage(const typename DataContainer::size_type ContainerSize = 1000, const typename DataContainer::size_type NrOfContainersToKeepInRAM = 3) :
+    DataStorage(
+            const typename DataContainer::size_type ContainerSize = 1000,
+            const typename DataContainer::size_type NrOfContainersToKeepInRAM = 3
+            ) :
         ContainerSize((!ContainerSize) ? 1 : ContainerSize),
         NrOfContainersToKeepInRAM((!NrOfContainersToKeepInRAM) ? 1 : NrOfContainersToKeepInRAM),
         ContainerInRAMIndexMapping(NrOfContainersToKeepInRAM),
@@ -568,7 +571,7 @@ public:
         CurrentNrOfContainers = 0;
         CurrentFileNr = 0;
         QFileInfoList fileInfLst = DataStorageTempDir.entryInfoList();
-        for(auto &&fileInf : fileInfLst)
+        for(const QFileInfo &fileInf : fileInfLst)
         {
             if(!fileInf.isFile())
                 continue;

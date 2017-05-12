@@ -11,6 +11,14 @@ MsgCodeMappingManager::MsgCodeMappingManager(
     IMsgCodeMappingManager(parent),
     msgCodeMappingStore(msgCodeMappingStore)
 {
+    connect(
+            msgCodeMappingStore,
+            &IMsgCodeMappingStore::sgnl_MappingHasChanged,
+            [=](){
+                emit sgnl_MsgCodeMappingManagerChanged(*this);
+                emit sgnl_MappingManagerChanged(*this);
+                }
+            );
 }
 
 MsgCodeMappingManager::~MsgCodeMappingManager()
@@ -82,6 +90,11 @@ void MsgCodeMappingManager::prettifyMsg(
         msgToPrettify.setMsgCodeColorRepresentation(
                 msgCodeMappingStore->getColorToMsgCode(msgCode)
                 );
+    }
+    else
+    {
+        msgToPrettify.setMsgCodePlainTextAlias(static_cast<QString>(msgCode));
+        msgToPrettify.setMsgCodeColorRepresentation(Qt::white);
     }
 }
 

@@ -298,3 +298,9 @@ void MsgStreamModel::connectMsgStreamStore()
             &MsgStreamModel::slt_storeCleared
            );
 }
+
+
+Qt::ItemFlags MsgStreamModel::flags(const QModelIndex &index) const
+{
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+}

@@ -144,11 +144,13 @@ bool MsgCodeMappingModel::setData(
                     msgCodeMapping.setPlainTextAlias(
                             value.value<QString>()
                             );
+                    altered = true;
                     break;
                 case MsgCodeMappingModel::COL_Color:
                     msgCodeMapping.setColorRepresentation(
                             value.value<QColor>()
                             );
+                    altered = true;
                     break;
             }
             break;

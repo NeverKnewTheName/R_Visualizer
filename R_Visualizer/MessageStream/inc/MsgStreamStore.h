@@ -98,6 +98,8 @@ public:
      */
     virtual void clear();
 
+    virtual int getBufferSize() const;
+
 private:
     int bufferSize;
     /**

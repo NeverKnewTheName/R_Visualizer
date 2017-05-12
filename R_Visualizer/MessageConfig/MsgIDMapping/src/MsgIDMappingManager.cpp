@@ -11,6 +11,14 @@ MsgIDMappingManager::MsgIDMappingManager(
     IMsgIDMappingManager(parent),
     msgIDMappingStore(msgIDMappingStore)
 {
+    connect(
+            msgIDMappingStore,
+            &IMsgIDMappingStore::sgnl_MappingHasChanged,
+            [=](){
+                emit sgnl_MsgIDMappingManagerChanged(*this);
+                emit sgnl_MappingManagerChanged(*this);
+                }
+            );
 }
 
 MsgIDMappingManager::~MsgIDMappingManager()
@@ -88,6 +96,11 @@ void MsgIDMappingManager::prettifyMsg(
         msgToPrettify.setMsgIDColorRepresentation(
                 msgIDMappingStore->getColorToMsgID(msgID)
                 );
+    }
+    else
+    {
+        msgToPrettify.setMsgIDPlainTextAlias(static_cast<QString>(msgID));
+        msgToPrettify.setMsgIDColorRepresentation(Qt::white);
     }
 }
 

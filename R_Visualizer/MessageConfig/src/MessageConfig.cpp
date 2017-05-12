@@ -17,6 +17,24 @@ MessageConfig::MessageConfig(
     msgCodeMappingManager(msgCodeMappingManager),
     msgDataMappingManager(msgDataMappingManager)
 {
+    connect(
+            msgIDMappingManager,
+            &IMsgIDMappingManager::sgnl_MappingManagerChanged,
+            this,
+            &IMessageConfig::sgnl_MappingManagerChanged
+            );
+    connect(
+            msgCodeMappingManager,
+            &IMsgCodeMappingManager::sgnl_MappingManagerChanged,
+            this,
+            &IMessageConfig::sgnl_MappingManagerChanged
+            );
+    connect(
+            msgDataMappingManager,
+            &IMsgDataMappingManager::sgnl_MappingManagerChanged,
+            this,
+            &IMessageConfig::sgnl_MappingManagerChanged
+            );
 }
 
 MessageConfig::~MessageConfig()
@@ -40,62 +58,9 @@ void MessageConfig::prettifyMsgByMappingManager(
     mappingToApply.prettifyMsg(msgToPrettify);
 }
 
-/* QCompleter *MessageConfig::createAliasCompleterForMapping( */
-/*         const IMessageConfig::MessageMappingTypes mappingType, */
-/*         QObject *parent */
-/*         ) */
-/* { */
-/*     switch(mappingType) */
-/*     { */
-/*     case IMessageConfig::MessageIDMappingType: */
-/*         //return createIDNameCompleter(parent); */
-/*         break; */
-/*     case IMessageConfig::MessageCodeMappingType: */
-/*         //return createCodeNameCompleter(parent); */
-/*         break; */
-/*     case IMessageConfig::MessageDataMappingType: */
-/*         return Q_NULLPTR; */
-/*         break; */
-/*     default: */
-/*         return Q_NULLPTR; */
-/*     } */
-/* } */
-
 void MessageConfig::applyUserRole(
         const UserRoleManagement::UserRole roleToApply
         )
 {
     //ToDO
 }
-
-//MessageConfigNotifier *MessageConfig::getNotifier()
-//{
-    //return msgConfigNotifier;
-//}
-
-//ToTHINK DEPRECATED?
-//void MessageConfig::accept(FileParser *visitor)
-//{
-//    visitor->visit(*this);
-//}
-
-/* void MessageConfig::slt_ApplyRole(const UserRoleManagement::UserRole roleToApply) */
-/* { */
-/*     emit IMessageConfig::sgnl_PropagateUserRole(roleToApply); */
-/* } */
-
-
-//QCompleter *MessageConfig::createIDNameCompleter(
-        //QObject *parent
-        //) const
-//{
-    //return msgIDMapping->createIDNameCompleter(parent);
-//}
-
-//QCompleter *MessageConfig::createCodeNameCompleter(
-        //QObject *parent
-        //) const
-//{
-    //return msgCodeMapping->createCodeNameCompleter(parent);
-//}
-

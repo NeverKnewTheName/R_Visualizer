@@ -251,6 +251,7 @@ int main(int argc, char *argv[])
 
     MsgTimespanFilter *msgTimestampFilter = new MsgTimespanFilter();
 
+    messageFilter->addFilter(msgTimestampFilter);
     MsgTimespanFilterWidget *msgTimestampFilterWidget =
         new MsgTimespanFilterWidget(msgTimestampFilter);
 
@@ -325,9 +326,9 @@ int main(int argc, char *argv[])
     idAliasCompleter->setModel(msgIDMappingModel);
     idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
     idAliasCompleter->setCompletionRole(Qt::DisplayRole);
-    idAliasCompleter->setModelSorting(
-            QCompleter::CaseInsensitivelySortedModel
-            );
+    //idAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
     idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
     sendMsgSingleWidget->setMsgIDCompleter(
@@ -343,9 +344,9 @@ int main(int argc, char *argv[])
     codeAliasCompleter->setModel(msgCodeMappingModel);
     codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
     codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
-    codeAliasCompleter->setModelSorting(
-            QCompleter::CaseInsensitivelySortedModel
-            );
+    //codeAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
     codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
     sendMsgSingleWidget->setMsgCodeCompleter(

@@ -87,6 +87,10 @@ private:
 
 private:
     IMsgStreamStore *msgStreamStore;
+
+    // QAbstractItemModel interface
+public:
+    virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 };
 
 /**

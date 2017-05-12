@@ -13,6 +13,8 @@
 #include "IMessageStream.h"
 #include "IMsgStreamStore.h"
 
+#include "rsimpleringbuff.h"
+
 class TimestampedMsgStorage;
 class IMessageConfig;
 class IMessageFilter;
@@ -62,19 +64,28 @@ public:
     /**
      * @brief Appends the specified message to the stream
      */
-    virtual bool appendMsg(const ITimestampedMsg &msgToAppend);
+    virtual bool appendMsg(
+            const ITimestampedMsg &msgToAppend,
+            const int indexInStore
+            );
 
     /**
      * @brief Prepends the specified messages to the stream
      */
-    virtual bool prependMsg(const ITimestampedMsg &msgToPrepend);
+    virtual bool prependMsg(
+            const ITimestampedMsg &msgToPrepend,
+            const int indexInStore
+            );
 
     /**
      * @brief Clears the stream
      */
     virtual void clear();
 
+    virtual void setCurrentStartIndex(const int newStartIndex);
+    virtual int getCurrentStartIndex() const;
     virtual void setCurrentEndIndex(const int newEndIndex);
+    virtual int getCurrentEndIndex() const;
 
     /**
      * @brief Updates the stream by the mappingToUpdate #IMsgDataMappingManager
@@ -103,6 +114,15 @@ private:
     void connectMsgStorage();
     void connectMsgStreamStore();
 
+    virtual bool appendHelper(
+            const ITimestampedMsg &msgToAppend,
+            const int indexInStore
+            );
+    virtual bool prependHelper(
+            const ITimestampedMsg &msgToPrepend,
+            const int indexInStore
+            );
+
 private:
     IMessageConfig *msgConfig;
     IMessageFilter *msgFilter;
@@ -112,9 +132,21 @@ private:
      * incoming messages to be displayed in the #MessageStream
      */
     TimestampedMsgStorage &msgStorage;
+    RSimpleDestructiveRingBuff<int> indexStore;
+    bool continuousFlag;
 
-    int currentStartIndex;
-    int currentEndIndex;
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor);
+
+    // IMessageStream interface
+public:
+    virtual bool fetchPrevious();
+    virtual bool fetchNext();
+    virtual bool fetchTop();
+    virtual bool fetchBottom();
+    bool getContinuousFlag() const;
+    void setContinuousFlag(bool value);
 };
 
 /**

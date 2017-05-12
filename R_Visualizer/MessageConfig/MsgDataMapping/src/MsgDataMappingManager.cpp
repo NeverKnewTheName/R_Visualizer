@@ -15,6 +15,14 @@ MsgDataMappingManager::MsgDataMappingManager(
     IMsgDataMappingManager(parent),
     msgDataMappingStore(msgDataMappingStore)
 {
+    connect(
+            msgDataMappingStore,
+            &IMsgDataMappingStore::sgnl_MappingHasChanged,
+            [=](){
+                emit sgnl_MsgDataMappingManagerChanged(*this);
+                emit sgnl_MappingManagerChanged(*this);
+                }
+            );
 }
 
 MsgDataMappingManager::~MsgDataMappingManager()

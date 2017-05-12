@@ -66,11 +66,23 @@ bool MessageFilter::filterMessageByFilter(
 void MessageFilter::addFilter(IMsgFilter *filterToAdd)
 {
     msgFilterStore.append(filterToAdd);
+    connect(
+            filterToAdd,
+            &IMsgFilter::sgnl_MsgFilterChanged,
+            this,
+            &IMessageFilter::sgnl_MsgFilterHasChanged
+            );
 }
 
 void MessageFilter::addFilter(ITimestampedMsgFilter *filterToAdd)
 {
     timestampedMsgFilterStore.append(filterToAdd);
+    connect(
+            filterToAdd,
+            &ITimestampedMsgFilter::sgnl_TimestampFilterChanged,
+            this,
+            &IMessageFilter::sgnl_TimestampFilterHasChanged
+            );
 }
 
 /* void MessageFilter::removeFilter(IFilter *filterToRemove) */
@@ -81,11 +93,13 @@ void MessageFilter::addFilter(ITimestampedMsgFilter *filterToAdd)
 void MessageFilter::removeFilter(IMsgFilter *filterToRemove)
 {
     msgFilterStore.removeAll(filterToRemove);
+    disconnect(filterToRemove);
 }
 
 void MessageFilter::removeFilter(ITimestampedMsgFilter *filterToRemove)
 {
     timestampedMsgFilterStore.removeAll(filterToRemove);
+    disconnect(filterToRemove);
 }
 
 void MessageFilter::applyUserRole(const UserRoleManagement::UserRole roleToApply)

@@ -44,22 +44,80 @@ void JsonInParser::setJsonDocument(const QJsonDocument &jsonDoc)
 
 void JsonInParser::visit(IMsg &visitor)
 {
+    const QJsonObject &tempIMsgJsonObject = currentJsonValuePtr->toObject();
+
+    MsgIDType msgID(static_cast<MsgIDType::type>(tempIMsgJsonObject["MsgID"].toInt()));
+    MsgCodeType msgCode(static_cast<MsgCodeType::type>(tempIMsgJsonObject["MsgCode"].toInt()));
+    MsgDataType msgData;
+
+    const QJsonArray &tempMsgDataJsonArray = tempIMsgJsonObject["MsgData"].toArray();
+
+    for(const QJsonValue &dataByte : tempMsgDataJsonArray)
+    {
+        msgData.append(MsgDataByteType(static_cast<MsgDataByteType::type>(dataByte.toInt())));
+    }
+
+    visitor.setMsgID(msgID);
+    visitor.setMsgCode(msgCode);
+    visitor.setMsgData(msgData);
 }
 
 void JsonInParser::visit(ITimestampedMsg &visitor)
 {
+    const QJsonObject &tempITimestampedMsgJsonObject = currentJsonValuePtr->toObject();
+
+    visitor.setTimestamp(
+                QDateTime::fromString(
+                    tempITimestampedMsgJsonObject["MsgTimestamp"].toString(),
+                    "dd.MM.yyyy - hh:mm:ss.zzz"
+                )
+            );
+
+    visit(dynamic_cast<IMsg &>(visitor));
 }
 
 void JsonInParser::visit(IMsgStreamStore &visitor)
 {
+    const QJsonArray &tempIMsgStreamStoreJsonArray = currentJsonValuePtr->toArray();
+
+    for(const QJsonValue &msgJsonObject : tempIMsgStreamStoreJsonArray)
+    {
+        currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(msgJsonObject));
+        TimestampedMsg tempTimestampedMsg;
+        visit(tempTimestampedMsg);
+
+        visitor.appendMsg(tempTimestampedMsg);
+    }
 }
 
 void JsonInParser::visit(MsgStorage &visitor)
 {
+    const QJsonArray &tempMsgStorageJsonArray = currentJsonValuePtr->toArray();
+
+    for(const QJsonValue &tempMsgJsonObject : tempMsgStorageJsonArray)
+    {
+        currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+                    new QJsonValue(tempMsgJsonObject)
+                    );
+        Msg tempMsg;
+        tempMsg.accept(this);
+        visitor.appendMsg(tempMsg);
+    }
 }
 
 void JsonInParser::visit(TimestampedMsgStorage &visitor)
 {
+    const QJsonArray &tempTimestampedMsgStorageJsonArray = currentJsonValuePtr->toArray();
+
+    for(const QJsonValue &tempTimestampedMsgJsonObject : tempTimestampedMsgStorageJsonArray)
+    {
+        currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+                    new QJsonValue(tempTimestampedMsgJsonObject)
+                    );
+        TimestampedMsg tempTimestampedMsg;
+        tempTimestampedMsg.accept(this);
+        visitor.appendMsg(tempTimestampedMsg);
+    }
 }
 
 void JsonInParser::visit(ISendMsgPackageStore &visitor)

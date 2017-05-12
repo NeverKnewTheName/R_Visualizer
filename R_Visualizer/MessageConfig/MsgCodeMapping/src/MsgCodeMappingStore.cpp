@@ -3,6 +3,24 @@
 MsgCodeMappingStore::MsgCodeMappingStore(QObject *parent) :
     IMsgCodeMappingStore(parent)
 {
+    connect(
+            this,
+            &IMsgCodeMappingStore::sgnl_Cleared,
+            this,
+            &IMsgCodeMappingStore::sgnl_MappingHasChanged
+            );
+    connect(
+            this,
+            &IMsgCodeMappingStore::sgnl_MsgCodeMappingAdded,
+            this,
+            &IMsgCodeMappingStore::sgnl_MappingHasChanged
+            );
+    connect(
+            this,
+            &IMsgCodeMappingStore::sgnl_MsgCodeMappingRemoved,
+            this,
+            &IMsgCodeMappingStore::sgnl_MappingHasChanged
+            );
 }
 
 MsgCodeMappingStore::~MsgCodeMappingStore()

@@ -86,6 +86,9 @@ public:
      */
     virtual void clear() = 0;
 
+
+    virtual int getBufferSize() const = 0;
+
 signals:
     /**
      * @brief Emitted before a pretty message is appended to the store

@@ -38,6 +38,19 @@ public:
             );
     ~MessageStreamWidget();
 
+private slots:
+    void on_loadBtn_clicked();
+
+    void on_storeBtn_clicked();
+
+    void on_scrollTopBtn_clicked();
+
+    void on_scrollBottomBtn_clicked();
+
+    void on_followUpCheckBox_toggled(bool checked);
+
+    void on_clearStreamBtn_clicked();
+
 private:
     void init();
     void connectToMessageStream();

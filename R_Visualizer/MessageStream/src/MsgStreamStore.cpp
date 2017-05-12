@@ -139,3 +139,8 @@ void MsgStreamStore::clear()
     msgStorage.clear();
     emit sgnl_storeCleared();
 }
+
+int MsgStreamStore::getBufferSize() const
+{
+    return bufferSize;
+}

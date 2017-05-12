@@ -8,6 +8,24 @@
 MsgIDFilterStore::MsgIDFilterStore(QObject *parent) :
     IMsgIDFilterStore(parent)
 {
+    connect(
+            this,
+            &IMsgIDFilterStore::sgnl_MsgIDAdded,
+            this,
+            &IMsgIDFilterStore::sgnl_HasChanged
+            );
+    connect(
+            this,
+            &IMsgIDFilterStore::sgnl_MsgIDRemoved,
+            this,
+            &IMsgIDFilterStore::sgnl_HasChanged
+            );
+    connect(
+            this,
+            &IMsgIDFilterStore::sgnl_Cleared,
+            this,
+            &IMsgIDFilterStore::sgnl_HasChanged
+            );
 }
 
 MsgIDFilterStore::~MsgIDFilterStore()

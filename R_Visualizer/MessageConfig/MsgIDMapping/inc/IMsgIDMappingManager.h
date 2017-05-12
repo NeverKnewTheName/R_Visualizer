@@ -34,7 +34,14 @@ public:
             QObject *parent = Q_NULLPTR
             ) :
         IMsgMappingManager(parent)
-        {}
+        {
+            connect(
+                    this,
+                    &IMsgIDMappingManager::sgnl_MsgIDMappingManagerChanged,
+                    this,
+                    &IMsgIDMappingManager::sgnl_MappingManagerChanged
+                    );
+        }
     virtual ~IMsgIDMappingManager(){}
 
     virtual MsgIDType getMsgIDToAlias(const QString &alias) const = 0;
@@ -51,6 +58,7 @@ public:
             ) = 0;
 
     virtual IMsgIDMappingStore *getStore() const = 0;
+
 signals:
     void sgnl_MsgIDMappingManagerChanged(
             const IMsgIDMappingManager &mapping

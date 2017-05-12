@@ -8,6 +8,24 @@
 MsgCodeFilterStore::MsgCodeFilterStore(QObject *parent) :
     IMsgCodeFilterStore(parent)
 {
+    connect(
+            this,
+            &IMsgCodeFilterStore::sgnl_MsgCodeAdded,
+            this,
+            &IMsgCodeFilterStore::sgnl_HasChanged
+            );
+    connect(
+            this,
+            &IMsgCodeFilterStore::sgnl_MsgCodeRemoved,
+            this,
+            &IMsgCodeFilterStore::sgnl_HasChanged
+            );
+    connect(
+            this,
+            &IMsgCodeFilterStore::sgnl_Cleared,
+            this,
+            &IMsgCodeFilterStore::sgnl_HasChanged
+            );
 }
 
 MsgCodeFilterStore::~MsgCodeFilterStore()

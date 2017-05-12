@@ -178,10 +178,7 @@ signals:
     /**
      * @brief Signal must be emitted when a contained mapping is changed
      */
-    void sgnl_MappingHasChanged(
-            const MsgIDType &msgID,
-            const MsgCodeType &msgCode
-            );
+    void sgnl_MappingHasChanged();
 
 public slots:
     /**

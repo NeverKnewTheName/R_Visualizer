@@ -105,8 +105,18 @@ void JsonOutParser::visit(ITimestampedMsg &visitor)
             );
 }
 
+#include "PrettyTimestampedMsg.h"
 void JsonOutParser::visit(IMsgStreamStore &visitor)
 {
+    QJsonArray tempIMsgStreamJsonArray;
+
+    const int msgStreamStoreSize = visitor.size();
+
+    for(int i = 0; i < msgStreamStoreSize; ++i)
+    {
+        //PrettyTimestampedMsg prettyTimestampedMsg(visitor.at(i));
+        //visit(dynamic_cast<IMsg>(prettyTimestampedMsg));
+    }
 }
 
 void JsonOutParser::visit(MsgStorage &visitor)

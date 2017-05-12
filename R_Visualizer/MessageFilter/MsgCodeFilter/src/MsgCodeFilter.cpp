@@ -9,6 +9,22 @@ MsgCodeFilter::MsgCodeFilter(
     isEnabled(false),
     isInverted(false)
 {
+    connect(
+            msgCodeFilterStore,
+            &IMsgCodeFilterStore::sgnl_HasChanged,
+                [=](){
+                        if(isEnabled)
+                        {
+                            emit sgnl_MsgFilterChanged(*this);
+                        }
+                    }
+            );
+    connect(
+            this,
+            &IMsgCodeFilter::sgnl_MsgFilterChanged,
+            this,
+            &IMsgCodeFilter::sgnl_filterChanged
+            );
 }
 
 MsgCodeFilter::~MsgCodeFilter()
@@ -31,6 +47,7 @@ void MsgCodeFilter::enableFilter(const bool enable)
 {
     isEnabled = enable;
     emit sgnl_filterEnabled(isEnabled);
+    emit sgnl_MsgFilterChanged(*this);
 }
 
 bool MsgCodeFilter::isFilterEnabled() const
@@ -42,6 +59,10 @@ void MsgCodeFilter::invertFilter(const bool inverted)
 {
     isInverted = inverted;
     emit sgnl_filterInverted(isInverted);
+    if(isEnabled)
+    {
+        emit sgnl_MsgFilterChanged(*this);
+    }
 }
 
 bool MsgCodeFilter::isFilterInverted() const
@@ -52,15 +73,11 @@ bool MsgCodeFilter::isFilterInverted() const
 void MsgCodeFilter::addMsgCodeToFilter(const MsgCodeType &msgCodeToAdd)
 {
     msgCodeFilterStore->addMsgCode(msgCodeToAdd);
-    emit sgnl_filterChanged(*this);
-    emit sgnl_MsgFilterChanged(*this);
 }
 
 void MsgCodeFilter::removeMsgCodeFromFilter(const MsgCodeType &msgCodeToRemove)
 {
     msgCodeFilterStore->removeMsgCode(msgCodeToRemove);
-    emit sgnl_filterChanged(*this);
-    emit sgnl_MsgFilterChanged(*this);
 }
 
 bool MsgCodeFilter::applyInversion(const bool intermediateFilterResult) const

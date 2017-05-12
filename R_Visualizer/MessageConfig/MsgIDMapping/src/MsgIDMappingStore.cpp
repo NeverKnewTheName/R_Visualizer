@@ -3,6 +3,24 @@
 MsgIDMappingStore::MsgIDMappingStore(QObject *parent) :
     IMsgIDMappingStore(parent)
 {
+    connect(
+            this,
+            &IMsgIDMappingStore::sgnl_Cleared,
+            this,
+            &IMsgIDMappingStore::sgnl_MappingHasChanged
+            );
+    connect(
+            this,
+            &IMsgIDMappingStore::sgnl_MsgIDMappingAdded,
+            this,
+            &IMsgIDMappingStore::sgnl_MappingHasChanged
+            );
+    connect(
+            this,
+            &IMsgIDMappingStore::sgnl_MsgIDMappingRemoved,
+            this,
+            &IMsgIDMappingStore::sgnl_MappingHasChanged
+            );
 }
 
 MsgIDMappingStore::~MsgIDMappingStore()
