@@ -123,9 +123,9 @@ QWidget *MsgCodeDelegate::createEditor(
     codeAliasCompleter->setModel(msgCodeMappingModel);
     codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
     codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
-    codeAliasCompleter->setModelSorting(
-            QCompleter::CaseInsensitivelySortedModel
-            );
+    //codeAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
     codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
     msgCodeLineEdit->setCompleter(codeAliasCompleter);

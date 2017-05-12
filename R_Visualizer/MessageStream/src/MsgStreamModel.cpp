@@ -72,10 +72,13 @@ QVariant MsgStreamModel::data(
             case MsgStreamModel::MsgStreamHeaderCol_Timestamp:
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Name:
+                return msgAtIndex.getMsgIDSizeHint();
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Type:
+                return msgAtIndex.getMsgCodeSizeHint();
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Data:
+                return msgAtIndex.getMsgDataSizeHint();
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";

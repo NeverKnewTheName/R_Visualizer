@@ -36,9 +36,9 @@ SendMsgPackageAddDialog::SendMsgPackageAddDialog(
         idAliasCompleter->setModel(msgIDMappingModel);
         idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
         idAliasCompleter->setCompletionRole(Qt::DisplayRole);
-        idAliasCompleter->setModelSorting(
-                QCompleter::CaseInsensitivelySortedModel
-                );
+        //idAliasCompleter->setModelSorting(
+                //QCompleter::CaseInsensitivelySortedModel
+                //);
         idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
         ui->msgWidget->setMsgIDCompleter(idAliasCompleter);
@@ -58,9 +58,9 @@ SendMsgPackageAddDialog::SendMsgPackageAddDialog(
         codeAliasCompleter->setModel(msgCodeMappingModel);
         codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
         codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
-        codeAliasCompleter->setModelSorting(
-                QCompleter::CaseInsensitivelySortedModel
-                );
+        //codeAliasCompleter->setModelSorting(
+                //QCompleter::CaseInsensitivelySortedModel
+                //);
         codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
         ui->msgWidget->setMsgCodeCompleter(codeAliasCompleter);

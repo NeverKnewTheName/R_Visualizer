@@ -38,7 +38,10 @@ void MsgDataMappingManager::prettifyMsg(
     const MsgCodeType &msgCode = msgToPrettify.getMsgCode();
     const MsgDataType &msgData = msgToPrettify.getMsgData();
 
-    /* msgDataMappingStore-> */
+    QSharedPointer<IMsgDataFormatter> msgDataFormatter =
+            msgDataMappingStore->getMsgDataFormatter(msgID,msgCode);
+
+    msgToPrettify.setMsgDataFormatter(*msgDataFormatter);
 }
 
 QString MsgDataMappingManager::parseMsgDataToString(const IMsg &msg) const

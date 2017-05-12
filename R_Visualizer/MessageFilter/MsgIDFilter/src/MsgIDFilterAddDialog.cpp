@@ -31,9 +31,9 @@ MsgIDFilterAddDialog::MsgIDFilterAddDialog(
         idAliasCompleter->setModel(msgIDMappingModel);
         idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
         idAliasCompleter->setCompletionRole(Qt::DisplayRole);
-        idAliasCompleter->setModelSorting(
-                QCompleter::CaseInsensitivelySortedModel
-                );
+        //idAliasCompleter->setModelSorting(
+                //QCompleter::CaseInsensitivelySortedModel
+                //);
         idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
         ui->idLineEdit->setCompleter(idAliasCompleter);

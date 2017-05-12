@@ -217,6 +217,30 @@ private:
     QString msgCodePlainTextAlias;
     QColor msgIDColorRepresentation;
     QColor msgCodeColorRepresentation;
+
+    // IMsg interface
+public:
+    operator QString() const
+    {
+    }
+
+    // IPrettyMsgData interface
+public:
+    QSize getMsgDataSizeHint() const
+    {
+    }
+
+    // IPrettyMsgCode interface
+public:
+    QSize getMsgCodeSizeHint() const
+    {
+    }
+
+    // IPrettyMsgID interface
+public:
+    QSize getMsgIDSizeHint() const
+    {
+    }
 };
 
 /**

@@ -37,6 +37,8 @@ public:
     virtual void setMsgIDColorRepresentation(
             const QColor &msgIDColorRepresentation
             ) = 0;
+
+    virtual QSize getMsgIDSizeHint() const = 0;
 };
 
 /**
@@ -53,6 +55,8 @@ public:
     virtual void setMsgCodeColorRepresentation(
             const QColor &msgCodeColorRepresentation
             ) = 0;
+
+    virtual QSize getMsgCodeSizeHint() const = 0;
 };
 
 /**
@@ -68,6 +72,8 @@ public:
     virtual void setMsgDataFormatter(
             const IMsgDataFormatter &msgDataFormatter
             ) = 0;
+
+    virtual QSize getMsgDataSizeHint() const = 0;
 };
 
 /**

@@ -11,6 +11,8 @@
 #include <QString>
 #include <QColor>
 #include <QDateTime>
+#include <QFont>
+#include <QFontMetrics>
 #include <memory>
 
 #include "IPrettyMsg.h"
@@ -172,6 +174,39 @@ public:
            std::unique_ptr<IMsgDataFormatter>(
                    msgDataFormatter.cloneFormatter()
                    );
+    }
+
+    QSize getMsgIDSizeHint() const
+    {
+        QFont font;
+
+        const QFontMetrics fontMetrics(font);
+
+        return fontMetrics.size(Qt::TextWordWrap, msgIDPlainTextAlias);
+    }
+
+    QSize getMsgCodeSizeHint() const
+    {
+        QFont font;
+
+        const QFontMetrics fontMetrics(font);
+
+        return fontMetrics.size(Qt::TextWordWrap, msgIDPlainTextAlias);
+    }
+
+    QSize getMsgDataSizeHint() const
+    {
+        QFont font;
+
+        const QFontMetrics fontMetrics(font);
+
+        if(msgDataFormatterUniqPtr.get() != nullptr)
+        {
+            const QString &msgDataPlainText = msgDataFormatterUniqPtr->parseMsgDataToString(*this);
+
+            return fontMetrics.size(Qt::TextWordWrap, msgDataPlainText);
+        }
+        return QSize();
     }
 
     IMsg *cloneMsg() const

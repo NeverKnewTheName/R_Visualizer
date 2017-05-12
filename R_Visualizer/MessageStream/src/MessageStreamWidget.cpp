@@ -2,6 +2,7 @@
 #include "ui_messagestreamwidget.h"
 
 #include <QHeaderView>
+#include <QTimer>
 
 #include "IMessageStream.h"
 #include "MsgStreamModel.h"
@@ -50,6 +51,22 @@ void MessageStreamWidget::init()
     ui->msgStreamTableView->setAlternatingRowColors(true);
 
     QHeaderView *horzHeader = ui->msgStreamTableView->horizontalHeader();
+
+    ui->msgStreamTableView->verticalHeader()
+            ->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    connect(
+            ui->msgStreamTableView->horizontalHeader(),
+            &QHeaderView::sectionResized,
+                [=](){
+                    QTimer::singleShot(50,
+                        [=](){
+                            ui->msgStreamTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                            qDebug() << "sendPckgTableView resized!";
+                        }
+                    );
+                }
+            );
 
     const int sectionCount = horzHeader->count() - 1;
     const int sectionLength = horzHeader->length() / horzHeader->count();
