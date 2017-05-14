@@ -513,7 +513,7 @@ public:
      */
     friend inline uint qHash(
             const MsgFieldTypeTemplate<T,OpaqueT> &key,
-            uint seed
+            uint seed = 0
             )
     {
         return qHash(key.field, seed);

@@ -87,10 +87,7 @@ private slots:
 private:
     QThread *receiverThread;
     DeviceDriver canAnalyserDeviceDriver;
-    /* QTimer timer; */
     QMutex driverAccessMutex;
-    QTimer *startReceiverTimer;
-    QTimer *stopReceiverTimer;
     CANAlyserReceiveWorker *receiverWorker;
 
     bool connected;

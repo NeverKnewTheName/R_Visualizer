@@ -41,35 +41,34 @@ public:
      */
     PrettyTimestampedMsg() :
         originalMsg(),
-        msgDataFormatterUniqPtr(Q_NULLPTR),
         msgIDPlainTextAlias("Default"),
         msgCodePlainTextAlias("Default"),
+        msgDataPlainText("Default"),
         msgIDColorRepresentation(Qt::white),
-        msgCodeColorRepresentation(Qt::white)
+        msgCodeColorRepresentation(Qt::white),
+        msgDataColor(Qt::white)
     {
     }
 
     PrettyTimestampedMsg(const ConcreteTimestampedMsg &originalMsg) :
         originalMsg(originalMsg),
-        msgDataFormatterUniqPtr(Q_NULLPTR),
         msgIDPlainTextAlias(static_cast<QString>(originalMsg.getMsgID())),
         msgCodePlainTextAlias(static_cast<QString>(originalMsg.getMsgCode())),
+        msgDataPlainText(static_cast<QString>(originalMsg.getMsgData())),
         msgIDColorRepresentation(Qt::white),
-        msgCodeColorRepresentation(Qt::white)
+        msgCodeColorRepresentation(Qt::white),
+        msgDataColor(Qt::white)
     {
     }
 
     PrettyTimestampedMsg(const PrettyTimestampedMsg &other) :
         originalMsg(other.originalMsg),
-        msgDataFormatterUniqPtr(
-                other.msgDataFormatterUniqPtr ?
-                other.msgDataFormatterUniqPtr->cloneFormatter() :
-                Q_NULLPTR
-                ),
         msgIDPlainTextAlias(other.msgIDPlainTextAlias),
         msgCodePlainTextAlias(other.msgCodePlainTextAlias),
+        msgDataPlainText(other.msgDataPlainText),
         msgIDColorRepresentation(other.msgIDColorRepresentation),
-        msgCodeColorRepresentation(other.msgCodeColorRepresentation)
+        msgCodeColorRepresentation(other.msgCodeColorRepresentation),
+        msgDataColor(other.msgDataColor)
     {
     }
 
@@ -79,16 +78,13 @@ public:
 
     PrettyTimestampedMsg &operator =(const PrettyTimestampedMsg &other)
     {
-        this->msgDataFormatterUniqPtr = std::unique_ptr<IMsgDataFormatter>(
-            other.msgDataFormatterUniqPtr ?
-            other.msgDataFormatterUniqPtr->cloneFormatter() :
-            Q_NULLPTR
-                    );
         this->originalMsg = other.originalMsg;
         this->msgIDPlainTextAlias = other.msgIDPlainTextAlias;
         this->msgCodePlainTextAlias = other.msgCodePlainTextAlias;
+        this->msgDataPlainText = other.msgDataPlainText;
         this->msgIDColorRepresentation = other.msgIDColorRepresentation;
         this->msgCodeColorRepresentation = other.msgCodeColorRepresentation;
+        this->msgDataColor = other.msgDataColor;
 
         return *this;
     }
@@ -134,46 +130,24 @@ public:
         this->msgCodeColorRepresentation = msgCodeColorRepresentation;
     }
 
-    /**
-     * //ToTHINK
-     * MAYBE DO NOT PROCESS MSG DATA FOR EACH FUNCTION CALL HERE...
-     */
-    QString getParsedMsgDataString() const
+    QString getMsgDataPlainText() const
     {
-        //Check if the MsgDataFormatter is a nullptr
-        if(msgDataFormatterUniqPtr.get() == nullptr)
-        {
-            QString msgDataAsDefaultString;
-            MsgDataType msgData = getMsgData();
-            for(const MsgDataByteType &dataByte : msgData)
-            {
-                QString msgDataByteAsString("0x%1 ");
-                msgDataByteAsString.arg(static_cast<QString>(dataByte));
-                msgDataAsDefaultString.prepend(msgDataByteAsString);
-            }
-            return msgDataAsDefaultString;
-        }
-
-        return msgDataFormatterUniqPtr->parseMsgDataToString(*this);
+        return msgDataPlainText;
     }
 
-    QColor getParsedMsgDataColor() const
+    void setMsgDataPlainText(const QString &msgDataPlainText)
     {
-        //Check if the MsgDataFormatter is a nullptr
-        if(msgDataFormatterUniqPtr.get() == nullptr)
-        {
-            return QColor(Qt::white);
-        }
-
-        return msgDataFormatterUniqPtr->parseMsgDataToColor(*this);
+        this->msgDataPlainText = msgDataPlainText;
     }
 
-    void setMsgDataFormatter(const IMsgDataFormatter &msgDataFormatter)
+    QColor getMsgDataColor() const
     {
-        this->msgDataFormatterUniqPtr =
-           std::unique_ptr<IMsgDataFormatter>(
-                   msgDataFormatter.cloneFormatter()
-                   );
+        return msgDataColor;
+    }
+
+    void setMsgDataColor(const QColor &msgDataColor)
+    {
+        this->msgDataColor = msgDataColor;
     }
 
     QSize getMsgIDSizeHint() const
@@ -200,13 +174,7 @@ public:
 
         const QFontMetrics fontMetrics(font);
 
-        if(msgDataFormatterUniqPtr.get() != nullptr)
-        {
-            const QString &msgDataPlainText = msgDataFormatterUniqPtr->parseMsgDataToString(*this);
-
-            return fontMetrics.size(Qt::TextWordWrap, msgDataPlainText);
-        }
-        return QSize();
+        return fontMetrics.size(Qt::TextWordWrap, msgDataPlainText);
     }
 
     IMsg *cloneMsg() const
@@ -245,6 +213,7 @@ public:
     {
         originalMsg.setTimestamp(newTimestamp);
     }
+
     const QDateTime getTimestamp() const
     {
         return originalMsg.getTimestamp();
@@ -262,11 +231,12 @@ public:
 
 private:
     ConcreteTimestampedMsg originalMsg;
-    std::unique_ptr<IMsgDataFormatter> msgDataFormatterUniqPtr;
     QString msgIDPlainTextAlias;
     QString msgCodePlainTextAlias;
+    QString msgDataPlainText;
     QColor msgIDColorRepresentation;
     QColor msgCodeColorRepresentation;
+    QColor msgDataColor;
 };
 
 /**

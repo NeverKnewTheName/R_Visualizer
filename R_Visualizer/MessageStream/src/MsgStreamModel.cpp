@@ -59,7 +59,7 @@ QVariant MsgStreamModel::data(
                 return msgAtIndex.getMsgCodePlainTextAlias();
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Data:
-                return msgAtIndex.getParsedMsgDataString();
+                return msgAtIndex.getMsgDataPlainText();
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
@@ -72,13 +72,13 @@ QVariant MsgStreamModel::data(
             case MsgStreamModel::MsgStreamHeaderCol_Timestamp:
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Name:
-                return msgAtIndex.getMsgIDSizeHint();
+                //return msgAtIndex.getMsgIDSizeHint();
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Type:
-                return msgAtIndex.getMsgCodeSizeHint();
+                //return msgAtIndex.getMsgCodeSizeHint();
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Data:
-                return msgAtIndex.getMsgDataSizeHint();
+                //return msgAtIndex.getMsgDataSizeHint();
                 break;
             default:
                 qDebug() << "ERROR: " << "Unknown COLUMN";
@@ -98,7 +98,7 @@ QVariant MsgStreamModel::data(
                 return QBrush(msgAtIndex.getMsgCodeColorRepresentation());
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Data:
-                return QBrush(msgAtIndex.getParsedMsgDataColor());
+                return QBrush(msgAtIndex.getMsgDataColor());
                 break;
         }
         //Background is drawn by delegate

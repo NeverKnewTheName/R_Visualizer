@@ -17,26 +17,18 @@ CANAnalyserInterfaceHandler::CANAnalyserInterfaceHandler(
         QObject *parent
         ) :
     IInterfaceHandler(parent),
+    receiverThread(new QThread()),
     canAnalyserDeviceDriver(),
-    //startReceiverTimer(new QTimer()),
-    //stopReceiverTimer(new QTimer()),
     receiverWorker(
             new CANAlyserReceiveWorker(
                 driverAccessMutex,
                 canAnalyserDeviceDriver
                 )
             ),
-    receiverThread(new QThread()),
     connected(false),
     sessionInProgress(false)
 {
-    //startReceiverTimer->setSingleShot(true);
-    //stopReceiverTimer->setSingleShot(true);
-
     receiverWorker->moveToThread(receiverThread);
-    //startReceiverTimer->moveToThread(receiverThread);
-    //stopReceiverTimer->moveToThread(receiverThread);
-
 
     connect(
             this,
@@ -231,7 +223,6 @@ bool CANAnalyserInterfaceHandler::startSession()
 
     receiverThread->start();
     emit sgnl_StartReceiver();
-    //startReceiverTimer->start(1);
 
     sessionInProgress = true;
 
@@ -265,7 +256,6 @@ bool CANAnalyserInterfaceHandler::stopSession()
     }
 
     emit sgnl_StopReceiver();
-    //stopReceiverTimer->start(1);
 
     sessionInProgress = false;
 

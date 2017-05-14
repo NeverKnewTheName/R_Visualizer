@@ -1,184 +1,26 @@
 [
     {
         "MsgCode": 2,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 256
-    },
-    {
-        "MsgCode": 2,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 256
-    },
-    {
-        "MsgCode": 2,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
+        "MsgDataDefaultColor": "#aaffff",
+        "MsgDataFormatString": "Data1: #Data0#\nData2: #Data1#",
         "MsgID": 256
     },
     {
         "MsgCode": 3,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
+        "MsgDataDefaultColor": "#ffe3b5",
+        "MsgDataFormatString": "Data1: #Data0#\nData2: #Data1#\nData3: #Data2#",
         "MsgID": 256
     },
     {
         "MsgCode": 3,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 256
-    },
-    {
-        "MsgCode": 3,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 2,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 2,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 2,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 3,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 3,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 3,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
+        "MsgDataDefaultColor": "#aaaa7f",
+        "MsgDataFormatString": "This\nIs\nA\nReally\nLong\nMessage\nFormat\nString\nFor\nMessage\nData",
         "MsgID": 288
     },
     {
         "MsgCode": 4,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
+        "MsgDataDefaultColor": "#f1b2de",
+        "MsgDataFormatString": "This is a long horizontal string that represents a message data part",
         "MsgID": 288
-    },
-    {
-        "MsgCode": 4,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 4,
-        "MsgData": [
-            17,
-            34,
-            51,
-            68
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 4,
-        "MsgData": [
-            17
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 4,
-        "MsgData": [
-            17
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 4,
-        "MsgData": [
-            51,
-            7
-        ],
-        "MsgID": 288
-    },
-    {
-        "MsgCode": 3,
-        "MsgData": [
-            18,
-            52,
-            86,
-            120
-        ],
-        "MsgID": 256
     }
 ]

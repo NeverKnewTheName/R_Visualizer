@@ -41,7 +41,16 @@ void MsgDataMappingManager::prettifyMsg(
     QSharedPointer<IMsgDataFormatter> msgDataFormatter =
             msgDataMappingStore->getMsgDataFormatter(msgID,msgCode);
 
-    msgToPrettify.setMsgDataFormatter(*msgDataFormatter);
+    if(msgDataFormatter != Q_NULLPTR)
+    {
+        msgToPrettify.setMsgDataPlainText(msgDataFormatter->parseMsgDataToString(msgToPrettify));
+        msgToPrettify.setMsgDataColor(msgDataFormatter->parseMsgDataToColor(msgToPrettify));
+    }
+    else
+    {
+        msgToPrettify.setMsgDataPlainText(static_cast<QString>(msgData));
+        msgToPrettify.setMsgDataColor(QColor(Qt::white));
+    }
 }
 
 QString MsgDataMappingManager::parseMsgDataToString(const IMsg &msg) const
@@ -59,14 +68,7 @@ QString MsgDataMappingManager::parseMsgDataToString(const IMsg &msg) const
     }
     else
     {
-        QString msgDataAsString;
-
-        for(const MsgDataByteType msgDataByte : msgData)
-        {
-            msgDataAsString.append(static_cast<QString>(msgDataByte) + " ");
-        }
-
-        return msgDataAsString.trimmed();
+        return static_cast<QString>(msgData);
     }
 }
 

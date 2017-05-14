@@ -67,10 +67,13 @@ class IPrettyMsgData
 public:
     virtual ~IPrettyMsgData(){}
 
-    virtual QString getParsedMsgDataString() const = 0;
-    virtual QColor getParsedMsgDataColor() const = 0;
-    virtual void setMsgDataFormatter(
-            const IMsgDataFormatter &msgDataFormatter
+    virtual QString getMsgDataPlainText() const = 0;
+    virtual void setMsgDataPlainText(
+            const QString &msgDataPlainText
+            ) = 0;
+    virtual QColor getMsgDataColor() const = 0;
+    virtual void setMsgDataColor(
+            const QColor &msgDataColor
             ) = 0;
 
     virtual QSize getMsgDataSizeHint() const = 0;

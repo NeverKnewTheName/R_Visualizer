@@ -43,7 +43,14 @@ QSharedPointer<IMsgDataFormatter> MsgDataMappingStore::getMsgDataFormatter(
         const MessageTypeIdentifier &msgType
         ) const
 {
-    return msgDataMappingStore[msgType].getMsgDataFormatter();
+    if(msgDataMappingStore.contains(msgType))
+    {
+        return msgDataMappingStore[msgType].getMsgDataFormatter();
+    }
+    else
+    {
+        return QSharedPointer<IMsgDataFormatter>(Q_NULLPTR);
+    }
 }
 
 IMsgDataMapping &MsgDataMappingStore::getMsgDataMapping(
