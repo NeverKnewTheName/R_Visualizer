@@ -2,6 +2,8 @@
 
 #include "MsgDataMappingModel.h"
 
+#include "MsgDataFormatStringEditorDialog.h"
+
 #include <QLineEdit>
 #include <QColorDialog>
 
@@ -20,14 +22,15 @@ QWidget *MsgDataMappingEditorDelegate::createEditor(QWidget *parent, const QStyl
     {
     case MsgDataMappingModel::COL_FormatString:
     {
-        QLineEdit *formatStringLineEdit = new QLineEdit(parent);
+        MsgDataFormatStringEditorDialog *formatStringEditor =
+                new MsgDataFormatStringEditorDialog(parent);
         connect(
-                formatStringLineEdit,
-                &QLineEdit::editingFinished,
+                formatStringEditor,
+                &MsgDataFormatStringEditorDialog::accepted,
                 this,
                 &MsgDataMappingEditorDelegate::commitAndCloseEditor
                 );
-        return formatStringLineEdit;
+        return formatStringEditor;
     }
         break;
     case MsgDataMappingModel::COL_Color:
@@ -54,7 +57,8 @@ void MsgDataMappingEditorDelegate::setEditorData(QWidget *editor, const QModelIn
     switch(col)
     {
     case MsgDataMappingModel::COL_FormatString:
-        qobject_cast<QLineEdit*>(editor)->setText(index.data().toString());
+        qobject_cast<MsgDataFormatStringEditorDialog*>(editor)
+                ->setFormatString(index.data().toString());
         break;
     case MsgDataMappingModel::COL_Color:
         qobject_cast<QColorDialog*>(editor)->setCurrentColor(index.data().value<QColor>());
@@ -72,8 +76,9 @@ void MsgDataMappingEditorDelegate::setModelData(QWidget *editor, QAbstractItemMo
     {
     case MsgDataMappingModel::COL_FormatString:
     {
-        QLineEdit *formatLineEdit = qobject_cast<QLineEdit*>(editor);
-        model->setData(index, formatLineEdit->text(),Qt::EditRole);
+        MsgDataFormatStringEditorDialog *formatStringEditor =
+                qobject_cast<MsgDataFormatStringEditorDialog*>(editor);
+        model->setData(index, formatStringEditor->getFormatString(),Qt::EditRole);
     }
         break;
     case MsgDataMappingModel::COL_Color:

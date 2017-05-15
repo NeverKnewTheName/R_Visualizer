@@ -68,6 +68,19 @@ void MessageStreamWidget::init()
                 }
             );
 
+    connect(
+            msgStream,
+            &IMessageStream::sgnl_Update,
+                [=](){
+                    QTimer::singleShot(50,
+                        [=](){
+                            ui->msgStreamTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                            //qDebug() << "msgStreamTableView resized!";
+                        }
+                    );
+                }
+            );
+
     const int sectionCount = horzHeader->count() - 1;
     const int sectionLength = horzHeader->length() / horzHeader->count();
 
@@ -88,6 +101,13 @@ void MessageStreamWidget::init()
     //ui->codeFilterListView->setItemDelegate(new CodeEditorDelegate(this));
 
     //ToDO SCROLL TO BOTTOM
+
+    //connect(
+                //msgStream,
+                //&IMessageStream::sgnl_Update,
+                //ui->msgStreamTableView,
+                //static_cast<void (QTableView::*)()>(&QTableView::update)
+                //);
 }
 
 void MessageStreamWidget::connectToMessageStream()

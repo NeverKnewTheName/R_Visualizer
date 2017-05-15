@@ -209,7 +209,6 @@ bool MsgDataMappingModel::setData(
 
     if(altered)
     {
-        //ToDO EMIT SIGNALS!!! URGENT!!!
         emit dataChanged(index, index);
         emit sgnl_MappingHasChanged(msgType.getID(),msgType.getCode());
         return true;

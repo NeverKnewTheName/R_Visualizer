@@ -35,17 +35,11 @@ public:
 
 private:
     Ui::MsgIDMappingAddDialog *ui;
-    QStringList inputMasks;
-
-    int parseToNumber(QString numericalString);
-    QString parseToString(const int number);
 
 private slots:
     void colorSelected(const QColor &color);
     void on_pushButton_clicked();
     void readyToCommit();
-
-    void on_numericallFormatComboBox_currentIndexChanged(int index);
 
 signals:
     void sgnl_commit(

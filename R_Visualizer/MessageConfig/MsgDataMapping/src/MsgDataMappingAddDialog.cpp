@@ -2,7 +2,18 @@
 #include "ui_msgdatamappingadddialog.h"
 
 #include <QDebug>
+#include <QCompleter>
 #include <QColorDialog>
+
+#include "IMsgIDMappingManager.h"
+#include "MsgIDLineEdit.h"
+#include "MsgIDMappingModel.h"
+
+#include "IMsgCodeMappingManager.h"
+#include "MsgCodeLineEdit.h"
+#include "MsgCodeMappingModel.h"
+
+#include "MsgDataFormatStringEditorDialog.h"
 
 MsgDataMappingAddDialog::MsgDataMappingAddDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,16 +27,6 @@ MsgDataMappingAddDialog::MsgDataMappingAddDialog(QWidget *parent) :
             this,
             &MsgDataMappingAddDialog::slt_ReadyToCommit
            );
-
-    numericalFormatStringList
-        << "\\0\\xhhhh"/*HEX*/
-       << "00000"/*DEC*/
-       << "\\0\\b bbbb\\ bbbb\\ bbbb\\ bbbb"/*BIN*/;
-
-    QStringList items;
-    items << "Hex" << "Dec" << "Bin";
-    ui->idNumericalFormatComboBox->addItems(items);
-    ui->codeNumericalFormatComboBox->addItems(items);
 }
 
 MsgDataMappingAddDialog::~MsgDataMappingAddDialog()
@@ -33,93 +34,46 @@ MsgDataMappingAddDialog::~MsgDataMappingAddDialog()
     delete ui;
 }
 
-int MsgDataMappingAddDialog::numericalSelectionToBase(
-        const int numericalSelection
-        )
+void MsgDataMappingAddDialog::setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager)
 {
-    switch(numericalSelection)
-    {
-        case 0:
-            return 16;
-            break;
-        case 1:
-            return 10;
-            break;
-        case 2:
-            return 2;
-            break;
-        default:
-            return 10;
-    }
-}
+    ui->msgIDLineEdit->setMappingManager(msgIDMappingManager);
+    QCompleter *idAliasCompleter = new QCompleter(ui->msgIDLineEdit);
 
-int MsgDataMappingAddDialog::parseIDStringToNumber()
-{
-    QString numericalString =
-        ui->idLineEdit->text();
-
-    return parseToNumber(
-            numericalString
+    MsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
+            msgIDMappingManager->getStore(),
+            ui->msgIDLineEdit
             );
+
+    idAliasCompleter->setModel(msgIDMappingModel);
+    idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
+    idAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    //idAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
+    idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    ui->msgIDLineEdit->setCompleter(idAliasCompleter);
 }
 
-int MsgDataMappingAddDialog::parseCodeStringToNumber()
+void MsgDataMappingAddDialog::setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager)
 {
-    QString numericalString =
-        ui->codeLineEdit->text();
+    ui->msgCodeLineEdit->setMappingManager(msgCodeMappingManager);
+    QCompleter *codeAliasCompleter = new QCompleter(ui->msgCodeLineEdit);
 
-    return parseToNumber(
-            numericalString
+    MsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
+            msgCodeMappingManager->getStore(),
+            ui->msgCodeLineEdit
             );
-}
 
-int MsgDataMappingAddDialog::parseToNumber(
-        QString numericalString
-        )
-{
-    int numericalBase;
-    if(numericalString.contains("0x"))
-    {
-        numericalBase = 16;
-    }
-    else if(numericalString.contains("0b"))
-    {
-        numericalBase = 2;
-        numericalString.replace(" ","").replace("0b","");
-    }
-    else
-    {
-        numericalBase = 10;
-    }
+    codeAliasCompleter->setModel(msgCodeMappingModel);
+    codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
+    codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    //codeAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
+    codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
-    return numericalString.toInt(0, numericalBase);
-}
-
-QString MsgDataMappingAddDialog::parseIDToString(const int id)
-{
-    const int numericalSelection =
-        ui->idNumericalFormatComboBox->currentIndex();
-
-    return parseToString(id,numericalSelection);
-}
-
-QString MsgDataMappingAddDialog::parseCodeToString(const int code)
-{
-    const int numericalSelection =
-        ui->codeNumericalFormatComboBox->currentIndex();
-
-    return parseToString(code,numericalSelection);
-}
-
-QString MsgDataMappingAddDialog::parseToString(
-        const int number,
-        const int numericalSelection
-        )
-{
-    return QString::number(
-            number,
-            numericalSelectionToBase(numericalSelection)
-            );
+    ui->msgCodeLineEdit->setCompleter(codeAliasCompleter);
 }
 
 void MsgDataMappingAddDialog::slt_ColorSelected(
@@ -135,40 +89,31 @@ void MsgDataMappingAddDialog::slt_ColorSelected(
 void MsgDataMappingAddDialog::slt_ReadyToCommit()
 {
     emit sgnl_Commit(
-            MsgIDType(parseIDStringToNumber()),
-            MsgCodeType(parseCodeStringToNumber()),
+            ui->msgIDLineEdit->getMsgID(),
+            ui->msgCodeLineEdit->getMsgCode(),
             ui->formatterPlainTextEdit->toPlainText(),
             QColor(ui->colorLineEdit->text())
             );
 }
 
-void MsgDataMappingAddDialog::on_idNumericalFormatComboBox_currentIndexChanged(
-        int index
-        )
-{
-    int enteredNumber = parseIDStringToNumber();
-    ui->idLineEdit->setInputMask(numericalFormatStringList.at(index));
-    ui->idLineEdit->setText(parseIDToString(enteredNumber));
-    ui->idLineEdit->setFocus();
-    ui->idLineEdit->setCursorPosition(0);
-    ui->idLineEdit->selectAll();
-}
-
-void MsgDataMappingAddDialog::on_codeNumericalFormatComboBox_currentIndexChanged(
-        int index
-        )
-{
-    int enteredNumber = parseCodeStringToNumber();
-    ui->codeLineEdit->setInputMask(numericalFormatStringList.at(index));
-    ui->codeLineEdit->setText(parseCodeToString(enteredNumber));
-    ui->codeLineEdit->setFocus();
-    ui->codeLineEdit->setCursorPosition(0);
-    ui->codeLineEdit->selectAll();
-}
-
 void MsgDataMappingAddDialog::on_formatterPushButton_clicked()
 {
+    MsgDataFormatStringEditorDialog *msgDataFormatStringEditor =
+            new MsgDataFormatStringEditorDialog(this);
 
+    connect(
+            msgDataFormatStringEditor,
+            &MsgDataFormatStringEditorDialog::sgnl_Commit,
+            [=](const QString &formatString){
+                ui->formatterPlainTextEdit->setPlainText(formatString);
+                }
+            );
+
+    msgDataFormatStringEditor->setFormatString(
+                ui->formatterPlainTextEdit->document()->toPlainText()
+                );
+
+    msgDataFormatStringEditor->exec();
 }
 
 void MsgDataMappingAddDialog::on_colorPickerPushButton_clicked()

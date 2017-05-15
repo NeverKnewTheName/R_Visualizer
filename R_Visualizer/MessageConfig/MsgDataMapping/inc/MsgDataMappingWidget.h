@@ -88,6 +88,8 @@ private:
     Ui::MsgDataMappingWidget *ui;
     IMsgDataMappingManager *msgDataMappingManager;
     MsgDataMappingModel *msgDataMappingModel;
+    IMsgIDMappingManager *msgIDMappingManager;
+    IMsgCodeMappingManager *msgCodeMappingManager;
 };
 
 /**

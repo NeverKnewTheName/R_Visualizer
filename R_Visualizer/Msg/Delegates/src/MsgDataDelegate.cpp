@@ -56,7 +56,7 @@ void MsgDataDelegate::paint(
 
     painter->drawText(
             option.rect,
-            Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
+            Qt::TextWordWrap | Qt::TextExpandTabs | Qt::AlignLeft | Qt::AlignVCenter,
             msgDataAsString
             );
 
@@ -80,7 +80,7 @@ QSize MsgDataDelegate::sizeHint(
 
     return fontMetrics.boundingRect(
                 option.rect,
-                Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignVCenter,
+                Qt::TextWordWrap | Qt::TextExpandTabs | Qt::AlignLeft | Qt::AlignVCenter,
                 msgDataAsString
                 ).marginsAdded(QMargins(0,4,0,4)).size();
 }

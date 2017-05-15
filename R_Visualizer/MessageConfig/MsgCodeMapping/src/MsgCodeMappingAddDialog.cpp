@@ -15,61 +15,11 @@ MsgCodeMappingAddDialog::MsgCodeMappingAddDialog(QWidget *parent) :
             this,
             &MsgCodeMappingAddDialog::readyToCommit
             );
-
-    inputMasks << "\\0\\xhh"/*HEX*/
-               << "000"/*DEC*/
-               << "\\0\\b bbbb\\ bbbb"/*BIN*/;
-
-    QStringList items;
-    items << "Hex" << "Dec" << "Bin";
-    ui->numericallFormatComboBox->addItems(items);
 }
 
 MsgCodeMappingAddDialog::~MsgCodeMappingAddDialog()
 {
     delete ui;
-}
-
-int MsgCodeMappingAddDialog::parseToNumber(QString numericalString)
-{
-    int idNumericalBase;
-    if(numericalString.contains("0x"))
-    {
-        idNumericalBase = 16;
-    }
-    else if(numericalString.contains("0b"))
-    {
-        idNumericalBase = 2;
-        numericalString.replace(" ","").replace("0b","");
-    }
-    else
-    {
-        idNumericalBase = 10;
-    }
-    return numericalString.toInt(0, idNumericalBase);
-}
-
-QString MsgCodeMappingAddDialog::parseToString(const int number)
-{
-    int idNumericalBase = ui->numericallFormatComboBox->currentIndex();
-
-    switch(idNumericalBase)
-    {
-        case 0:
-            idNumericalBase = 16;
-            break;
-        case 1:
-            idNumericalBase = 10;
-            break;
-        case 2:
-            idNumericalBase = 2;
-            break;
-        default:
-            idNumericalBase = 10;
-            break;
-    }
-
-    return QString::number(number, idNumericalBase);
 }
 
 void MsgCodeMappingAddDialog::colorSelected(const QColor &color)
@@ -83,7 +33,7 @@ void MsgCodeMappingAddDialog::colorSelected(const QColor &color)
 void MsgCodeMappingAddDialog::readyToCommit()
 {
     emit commit(
-            MsgCodeType(this->parseToNumber(ui->codeLineEdit->text())),
+            ui->msgCodeLineEdit->getMsgCode(),
             ui->nameLineEdit->text(),
             QColor(ui->colorLineEdit->text())
             );
@@ -99,16 +49,4 @@ void MsgCodeMappingAddDialog::on_colorPickerPushButton_clicked()
             &MsgCodeMappingAddDialog::colorSelected
             );
     colorPicker->exec();
-}
-
-void MsgCodeMappingAddDialog::on_numericallFormatComboBox_currentIndexChanged(
-        int index
-        )
-{
-    int enteredNumber = this->parseToNumber(ui->codeLineEdit->text());
-    ui->codeLineEdit->setInputMask(inputMasks.at(index));
-    ui->codeLineEdit->setText(this->parseToString(enteredNumber));
-    ui->codeLineEdit->setFocus();
-    ui->codeLineEdit->setCursorPosition(0);
-    ui->codeLineEdit->selectAll();
 }

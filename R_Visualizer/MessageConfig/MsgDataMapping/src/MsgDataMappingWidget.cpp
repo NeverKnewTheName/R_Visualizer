@@ -53,6 +53,7 @@ void MsgDataMappingWidget::setModel(MsgDataMappingModel *model)
 
 void MsgDataMappingWidget::setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager)
 {
+    this->msgIDMappingManager = msgIDMappingManager;
     MsgIDDelegate *msgIDDelegate = new MsgIDDelegate(
                 msgIDMappingManager,
                 ui->msgDataTableView
@@ -65,6 +66,7 @@ void MsgDataMappingWidget::setMsgIDMappingManager(IMsgIDMappingManager *msgIDMap
 
 void MsgDataMappingWidget::setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager)
 {
+    this->msgCodeMappingManager = msgCodeMappingManager;
     MsgCodeDelegate *msgCodeDelegate = new MsgCodeDelegate(
                 msgCodeMappingManager,
                 ui->msgDataTableView
@@ -163,6 +165,9 @@ void MsgDataMappingWidget::on_msgDataAddBtn_clicked()
             &MsgDataMappingWidget::slt_MsgDataMappingAddFinished
            );
 
+    msgDataMappingAddDialog->setMsgIDMappingManager(msgIDMappingManager);
+    msgDataMappingAddDialog->setMsgCodeMappingManager(msgCodeMappingManager);
+
     msgDataMappingAddDialog->exec();
     /* qsrand(qrand()); */
     /* MsgIDType msgID(qrand() %100); */
@@ -219,6 +224,8 @@ void MsgDataMappingWidget::init()
     ui->msgDataTableView->verticalHeader()->hide();
     ui->msgDataTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->msgDataTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+
+    //ui->msgDataTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     MsgDataMappingEditorDelegate *msgDataMappingEditorDelegate = new MsgDataMappingEditorDelegate(ui->msgDataTableView);
     ui->msgDataTableView->setItemDelegateForColumn(2,msgDataMappingEditorDelegate);

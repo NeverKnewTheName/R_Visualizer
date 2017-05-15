@@ -16,6 +16,9 @@
 #include "MsgIDType.h"
 #include "MsgCodeType.h"
 
+class IMsgIDMappingManager;
+class IMsgCodeMappingManager;
+
 namespace Ui {
 class MsgDataMappingAddDialog;
 }
@@ -37,20 +40,14 @@ public:
     explicit MsgDataMappingAddDialog(QWidget *parent = 0);
     ~MsgDataMappingAddDialog();
 
-private:
-    int numericalSelectionToBase(const int numericalSelection);
-    int parseIDStringToNumber();
-    int parseCodeStringToNumber();
-    int parseToNumber(
-            QString numericalString
-            );
+    void setMsgIDMappingManager(
+            IMsgIDMappingManager *msgIDMappingManager
+                                );
+    void setMsgCodeMappingManager(
+            IMsgCodeMappingManager *msgCodeMappingManager
+                                );
 
-    QString parseIDToString(const int id);
-    QString parseCodeToString(const int code);
-    QString parseToString(
-            const int number,
-            const int numericalSelection
-            );
+private:
 
 signals:
     void sgnl_Commit(
@@ -64,8 +61,6 @@ private slots:
     void slt_ColorSelected(const QColor &color);
     void slt_ReadyToCommit();
 
-    void on_idNumericalFormatComboBox_currentIndexChanged(int index);
-    void on_codeNumericalFormatComboBox_currentIndexChanged(int index);
     void on_formatterPushButton_clicked();
     void on_colorPickerPushButton_clicked();
 

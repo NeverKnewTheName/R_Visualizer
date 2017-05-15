@@ -33,18 +33,12 @@ public:
 
 private:
     Ui::MsgCodeMappingAddDialog *ui;
-    QStringList inputMasks;
-
-    int parseToNumber(QString numericalString);
-    QString parseToString(const int number);
 
 private slots:
     void colorSelected(const QColor &color);
     void readyToCommit();
 
     void on_colorPickerPushButton_clicked();
-
-    void on_numericallFormatComboBox_currentIndexChanged(int index);
 
 signals:
     void commit(

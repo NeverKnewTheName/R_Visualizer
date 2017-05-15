@@ -35,7 +35,7 @@
            <string>Load a message packet (*.json or *.csv)</string>
           </property>
           <property name="text">
-           <string>Load</string>
+           <string>Open</string>
           </property>
          </widget>
         </item>
@@ -45,7 +45,7 @@
            <string>Save the current message packet (*.json or *.csv)</string>
           </property>
           <property name="text">
-           <string>Store</string>
+           <string>Save</string>
           </property>
          </widget>
         </item>
@@ -65,7 +65,7 @@
         <item>
          <widget class="QPushButton" name="pushButton">
           <property name="text">
-           <string>Load Matrix</string>
+           <string>Open Matrix</string>
           </property>
          </widget>
         </item>

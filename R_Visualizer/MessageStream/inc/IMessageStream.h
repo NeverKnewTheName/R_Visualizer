@@ -98,6 +98,7 @@ public:
 
 signals:
     void sgnl_AppendMsg(const IPrettyTimestampedMsg &msgToAppend);
+    void sgnl_Update();
 
 public slots:
     /**

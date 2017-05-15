@@ -28,61 +28,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLineEdit" name="idLineEdit">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::ClickFocus</enum>
-          </property>
-          <property name="toolTip">
-           <string>Enter the code for the message to be parsed</string>
-          </property>
-          <property name="locale">
-           <locale language="English" country="UnitedStates"/>
-          </property>
-          <property name="inputMask">
-           <string>\0\xhh</string>
-          </property>
-          <property name="maxLength">
-           <number>4</number>
-          </property>
-          <property name="placeholderText">
-           <string/>
-          </property>
-          <property name="cursorMoveStyle">
-           <enum>Qt::LogicalMoveStyle</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="idNumericalFormatComboBox">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Select the input format of the code</string>
-          </property>
-          <property name="locale">
-           <locale language="English" country="UnitedStates"/>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="MsgIDLineEdit" name="msgIDLineEdit" native="true"/>
       </item>
       <item>
        <widget class="QLabel" name="codeLabel">
@@ -92,61 +38,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLineEdit" name="codeLineEdit">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::ClickFocus</enum>
-          </property>
-          <property name="toolTip">
-           <string>Enter the code for the message to be parsed</string>
-          </property>
-          <property name="locale">
-           <locale language="English" country="UnitedStates"/>
-          </property>
-          <property name="inputMask">
-           <string>\0\xhh</string>
-          </property>
-          <property name="maxLength">
-           <number>4</number>
-          </property>
-          <property name="placeholderText">
-           <string/>
-          </property>
-          <property name="cursorMoveStyle">
-           <enum>Qt::LogicalMoveStyle</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="codeNumericalFormatComboBox">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Select the input format of the code</string>
-          </property>
-          <property name="locale">
-           <locale language="English" country="UnitedStates"/>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="MsgCodeLineEdit" name="msgCodeLineEdit" native="true"/>
       </item>
      </layout>
     </widget>
@@ -255,6 +147,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MsgIDLineEdit</class>
+   <extends>QWidget</extends>
+   <header location="global">MsgIDLineEdit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MsgCodeLineEdit</class>
+   <extends>QWidget</extends>
+   <header location="global">MsgCodeLineEdit.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

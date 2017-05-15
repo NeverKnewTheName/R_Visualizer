@@ -132,6 +132,8 @@ void MessageStream::updateMsgMapping(
             mappingToUpdate
             );
     }
+
+    emit sgnl_Update();
 }
 
 void MessageStream::updateMsgFilter(
@@ -277,8 +279,6 @@ void MessageStream::connectMsgFilter()
 
 void MessageStream::connectMsgStorage()
 {
-    //ToDO
-    
     connect(
             &msgStorage,
             &TimestampedMsgStorage::sgnl_MsgAdded,
