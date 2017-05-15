@@ -144,6 +144,13 @@ void MessageStream::updateMsgFilter(
     int currentEndIndex = getCurrentEndIndex();
     indexStore.clear();
 
+    if(!msgStorage.size())
+    {
+        //Immediately exit if msgStorage is empty
+        return;
+    }
+
+
     const int msgStreamStoreBufferSize =
             msgStreamStore->getBufferSize();
 
@@ -200,6 +207,12 @@ void MessageStream::updateTimestampFilter(
     msgStreamStore->clear();
     int currentEndIndex = getCurrentEndIndex();
     indexStore.clear();
+
+    if(!msgStorage.size())
+    {
+        //Immediately exit if msgStorage is empty
+        return;
+    }
 
     const int msgStreamStoreBufferSize =
             msgStreamStore->getBufferSize();

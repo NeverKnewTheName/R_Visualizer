@@ -32,6 +32,13 @@ SendMsgSingleWidget::SendMsgSingleWidget(
     sendMsgSingle(sendMsgSingle)
 {
     ui->setupUi(this);
+
+    setTabOrder(ui->msgWidget,ui->sndMsgSendBtn);
+    setTabOrder(ui->sndMsgSendBtn,ui->sndMsgAddToPackageBtn);
+    setTabOrder(ui->sndMsgAddToPackageBtn,ui->openMsgBtn);
+    setTabOrder(ui->openMsgBtn,ui->saveMsgBtn);
+
+    ui->msgWidget->setFocus();
 }
 
 SendMsgSingleWidget::~SendMsgSingleWidget()
@@ -103,7 +110,6 @@ void SendMsgSingleWidget::on_openMsgBtn_clicked()
     }
     else
     {
-        //ToDO
         // read file content
         JsonInParser jsonInParser;
         jsonInParser.setJsonDocument(
@@ -112,10 +118,6 @@ void SendMsgSingleWidget::on_openMsgBtn_clicked()
         Msg msgToSet;
         msgToSet.accept(&jsonInParser);
         ui->msgWidget->setMsg(msgToSet);
-        /* idModel.ParseFromJson(jsonOpenFile.readAll());
-         * //ToDO check for error (-1) */
-        // parse file
-        // populate ui
     }
     // close file
     jsonOpenFile.close();
@@ -135,14 +137,9 @@ void SendMsgSingleWidget::on_saveMsgBtn_clicked()
         qDebug() << "error open file to save: " << jsonSaveFile.fileName();
     } else
     {
-        //ToDO
-        // extract ui content
-        // parse content to file format
-        // write to file
         JsonOutParser jsonOutParser;
         ui->msgWidget->getMsg().accept(&jsonOutParser);
         jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
-        //ToDO check for error (-1)
     }
     // close file
     jsonSaveFile.flush(); //always flush after write!
