@@ -81,6 +81,12 @@ MsgDataLineEdit::~MsgDataLineEdit()
 MsgDataType MsgDataLineEdit::getMsgData() const
 {
     QString number = ui->dataLineEdit->text().simplified();
+    MsgDataType msgData;
+
+    if(number.isEmpty())
+    {
+        return msgData;
+    }
 
     int base = std::get<0>(formatData.at(currentFormatIndex));
 
@@ -93,7 +99,6 @@ MsgDataType MsgDataLineEdit::getMsgData() const
 
     QStringList bytes = number.split(' ');
 
-    MsgDataType msgData;
     for(const QString &byte : bytes)
     {
         msgData.append(MsgDataByteType(byte.toInt(0,base)));
@@ -120,6 +125,8 @@ QString MsgDataLineEdit::convertFormat(
         const int newFormatIndex
         ) const
 {
+    number = number.simplified(); //remove leading and trailing whitespace
+
     if(number.isEmpty())
     {
         return number;
@@ -128,8 +135,6 @@ QString MsgDataLineEdit::convertFormat(
     const int newBase = std::get<0>(formatData.at(newFormatIndex));
     const int oldFieldWidth = std::get<1>(formatData.at(oldFormatIndex));
     const int newFieldWidth = std::get<1>(formatData.at(newFormatIndex));
-
-    number = number.simplified(); //remove leading and trailing whitespace
 
     //qDebug() << "Simplified number: " << number;
     QStringList bytes;

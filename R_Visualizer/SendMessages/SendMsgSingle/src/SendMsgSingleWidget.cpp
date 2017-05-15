@@ -1,6 +1,8 @@
 #include "SendMsgSingleWidget.h"
 #include "ui_sendmsgsinglewidget.h"
 
+#include <QFileDialog>
+
 #include "ISendMsgSingle.h"
 
 #include "IMsgIDMappingManager.h"
@@ -13,6 +15,13 @@
 #include "MsgDataType.h"
 
 #include "MsgWidget.h"
+
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
+#include "csvinparser.h"
+#include "csvoutparser.h"
+
+#include <QDebug>
 
 SendMsgSingleWidget::SendMsgSingleWidget(
         ISendMsgSingle *sendMsgSingle,
@@ -77,4 +86,66 @@ void SendMsgSingleWidget::on_sndMsgAddToPackageBtn_clicked()
     Msg msgToAdd(ui->msgWidget->getMsg());
 
     emit sgnl_AddToPackage(msgToAdd);
+}
+
+void SendMsgSingleWidget::on_openMsgBtn_clicked()
+{
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        //ToDO
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(
+                QJsonDocument::fromJson(jsonOpenFile.readAll())
+                );
+        Msg msgToSet;
+        msgToSet.accept(&jsonInParser);
+        ui->msgWidget->setMsg(msgToSet);
+        /* idModel.ParseFromJson(jsonOpenFile.readAll());
+         * //ToDO check for error (-1) */
+        // parse file
+        // populate ui
+    }
+    // close file
+    jsonOpenFile.close();
+}
+
+void SendMsgSingleWidget::on_saveMsgBtn_clicked()
+{
+    QString saveLoc = QFileDialog::getSaveFileName(
+            this,
+            QString("Save as"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    } else
+    {
+        //ToDO
+        // extract ui content
+        // parse content to file format
+        // write to file
+        JsonOutParser jsonOutParser;
+        ui->msgWidget->getMsg().accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
+        //ToDO check for error (-1)
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
+
 }

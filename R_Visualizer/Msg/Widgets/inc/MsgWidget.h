@@ -29,6 +29,7 @@ public:
     MsgDataType getMsgData() const;
 
     Msg getMsg() const;
+    void setMsg(const IMsg &msgToSet);
 
     void setMsgIDMapping(IMsgIDMappingManager *msgIDMappingManager);
     void setMsgIDCompleter(QCompleter *msgIDCompleter);

@@ -42,6 +42,13 @@ Msg MsgWidget::getMsg() const
     return assembledMsg;
 }
 
+void MsgWidget::setMsg(const IMsg &msgToSet)
+{
+    ui->msgIDWidget->setMsgID(msgToSet.getMsgID());
+    ui->msgCodeWidget->setMsgCode(msgToSet.getMsgCode());
+    ui->msgDataWidget->setMsgData(msgToSet.getMsgData());
+}
+
 void MsgWidget::setMsgIDMapping(IMsgIDMappingManager *msgIDMappingManager)
 {
     ui->msgIDWidget->setMappingManager(msgIDMappingManager);

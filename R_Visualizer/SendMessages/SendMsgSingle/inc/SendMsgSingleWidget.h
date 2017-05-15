@@ -55,6 +55,10 @@ private slots:
 
     void on_sndMsgAddToPackageBtn_clicked();
 
+    void on_openMsgBtn_clicked();
+
+    void on_saveMsgBtn_clicked();
+
 private:
     void connectSendMsgSingle();
 
