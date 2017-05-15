@@ -1,0 +1,50 @@
+[
+    {
+        "MsgCode": 1,
+        "MsgDataDefaultColor": "#b4eed1",
+        "MsgDataFormatString": "#OP#(#OP#(#Data0##<<#8)#/OP##+##Data1#)#/OP#",
+        "MsgID": 240
+    },
+    {
+        "MsgCode": 10,
+        "MsgDataDefaultColor": "#b9c6ff",
+        "MsgDataFormatString": "Nr of Columns: #Data0#\nNr of Rows: #Data1#",
+        "MsgID": 255
+    },
+    {
+        "MsgCode": 11,
+        "MsgDataDefaultColor": "#a0d3ff",
+        "MsgDataFormatString": "Address: #OP#(#Data1##+##OP#(#Data0##<<#8)#/OP#)#/OP#\nData: #OP#(#OP#(#Data2##&#128)#/OP##>>#7)#/OP# #OP#(#OP#(#Data2##&#64)#/OP##>>#6)#/OP# #OP#(#OP#(#Data2##&#32)#/OP##>>#5)#/OP# #OP#(#OP#(#Data2##&#16)#/OP##>>#4)#/OP# #OP#(#OP#(#Data2##&#8)#/OP##>>#3)#/OP# #OP#(#OP#(#Data2##&#4)#/OP##>>#2)#/OP# #OP#(#OP#(#Data2##&#2)#/OP##>>#1)#/OP# #OP#(#Data2##&#1)#/OP# #OP#(#OP#(#Data3##&#128)#/OP##>>#7)#/OP# #OP#(#OP#(#Data3##&#64)#/OP##>>#6)#/OP# #OP#(#OP#(#Data3##&#32)#/OP##>>#5)#/OP# #OP#(#OP#(#Data3##&#16)#/OP##>>#4)#/OP# #OP#(#OP#(#Data3##&#8)#/OP##>>#3)#/OP#",
+        "MsgID": 240
+    },
+    {
+        "MsgCode": 16,
+        "MsgDataDefaultColor": "#abffc7",
+        "MsgDataFormatString": "Tick Nr. #Data0#",
+        "MsgID": 240
+    },
+    {
+        "MsgCode": 83,
+        "MsgDataDefaultColor": "#ffe9ca",
+        "MsgDataFormatString": "Pump1 #Data1#\nPump2 #Data2# \nPump3 #Data3#\nPump4 #Data4#",
+        "MsgID": 256
+    },
+    {
+        "MsgCode": 163,
+        "MsgDataDefaultColor": "#ebcbff",
+        "MsgDataFormatString": "SeqNr: #Data0#\n#HEX#(#Data1#)#/HEX# #HEX#(#Data2#)#/HEX# #HEX#(#Data3#)#/HEX# #HEX#(#Data4#)#/HEX#",
+        "MsgID": 288
+    },
+    {
+        "MsgCode": 163,
+        "MsgDataDefaultColor": "#ebcbff",
+        "MsgDataFormatString": "SeqNr: #Data0#\n#HEX#(#Data1#)#/HEX# #HEX#(#Data2#)#/HEX# #HEX#(#Data3#)#/HEX# #HEX#(#Data4#)#/HEX#",
+        "MsgID": 289
+    },
+    {
+        "MsgCode": 112,
+        "MsgDataDefaultColor": "#fff5a9",
+        "MsgDataFormatString": "Channel: #OP#(#Data0##+#1)#/OP#\nTemp: #OP#(#Data2##|##OP#(#Data1##<<#8)#/OP#)#/OP# °C",
+        "MsgID": 272
+    }
+]

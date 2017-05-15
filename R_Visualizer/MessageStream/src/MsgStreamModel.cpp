@@ -116,10 +116,10 @@ QVariant MsgStreamModel::data(
                 return msgAtIndex.getTimestamp();
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Name:
-                return msgAtIndex.getMsgID();
+                return QVariant::fromValue<MsgIDType>(msgAtIndex.getMsgID());
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Type:
-                return msgAtIndex.getMsgCode();
+                return QVariant::fromValue<MsgCodeType>(msgAtIndex.getMsgCode());
                 break;
             case MsgStreamModel::MsgStreamHeaderCol_Data:
                 return QVariant::fromValue(msgAtIndex.getMsgData());

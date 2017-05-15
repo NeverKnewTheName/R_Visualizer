@@ -253,7 +253,7 @@ void SendMsgPackageWidget::init()
                     QTimer::singleShot(50,
                         [=](){
                             ui->sndPckgTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
-                            qDebug() << "sendPckgTableView resized!";
+                            //qDebug() << "sendPckgTableView resized!";
                         }
                     );
                 }

@@ -7,6 +7,11 @@
 #include "MsgDataMappingAddDialog.h"
 #include "MsgDataMappingEditorDelegate.h"
 
+#include "IMsgIDMappingManager.h"
+#include "MsgIDDelegate.h"
+#include "IMsgCodeMappingManager.h"
+#include "MsgCodeDelegate.h"
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -44,6 +49,30 @@ MsgDataMappingWidget::~MsgDataMappingWidget()
 void MsgDataMappingWidget::setModel(MsgDataMappingModel *model)
 {
     msgDataMappingModel = model;
+}
+
+void MsgDataMappingWidget::setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager)
+{
+    MsgIDDelegate *msgIDDelegate = new MsgIDDelegate(
+                msgIDMappingManager,
+                ui->msgDataTableView
+                );
+    ui->msgDataTableView->setItemDelegateForColumn(
+                MsgDataMappingModel::COL_ID,
+                msgIDDelegate
+                );
+}
+
+void MsgDataMappingWidget::setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager)
+{
+    MsgCodeDelegate *msgCodeDelegate = new MsgCodeDelegate(
+                msgCodeMappingManager,
+                ui->msgDataTableView
+                );
+    ui->msgDataTableView->setItemDelegateForColumn(
+                MsgDataMappingModel::COL_Code,
+                msgCodeDelegate
+                );
 }
 
 void MsgDataMappingWidget::on_msgDataStoreBtn_clicked()
@@ -191,7 +220,9 @@ void MsgDataMappingWidget::init()
     ui->msgDataTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->msgDataTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
 
-    ui->msgDataTableView->setItemDelegate(new MsgDataMappingEditorDelegate(ui->msgDataTableView));
+    MsgDataMappingEditorDelegate *msgDataMappingEditorDelegate = new MsgDataMappingEditorDelegate(ui->msgDataTableView);
+    ui->msgDataTableView->setItemDelegateForColumn(2,msgDataMappingEditorDelegate);
+    ui->msgDataTableView->setItemDelegateForColumn(3,msgDataMappingEditorDelegate);
 }
 
 void MsgDataMappingWidget::connectModel()

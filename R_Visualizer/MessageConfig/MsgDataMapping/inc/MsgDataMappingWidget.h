@@ -18,6 +18,8 @@ class IMsgDataMappingManager;
 class MsgDataMappingModel;
 class IMsgDataMapping;
 
+class IMsgIDMappingManager;
+class IMsgCodeMappingManager;
 
 namespace Ui {
 class MsgDataMappingWidget;
@@ -44,6 +46,9 @@ public:
     ~MsgDataMappingWidget();
 
     void setModel(MsgDataMappingModel *model);
+
+    void setMsgIDMappingManager(IMsgIDMappingManager *msgIDMappingManager);
+    void setMsgCodeMappingManager(IMsgCodeMappingManager *msgCodeMappingManager);
 
 signals:
     void sgnl_MappingsChanged();

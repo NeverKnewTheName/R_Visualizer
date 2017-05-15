@@ -62,7 +62,7 @@ void MessageStreamWidget::init()
                     QTimer::singleShot(50,
                         [=](){
                             ui->msgStreamTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
-                            qDebug() << "sendPckgTableView resized!";
+                            //qDebug() << "msgStreamTableView resized!";
                         }
                     );
                 }

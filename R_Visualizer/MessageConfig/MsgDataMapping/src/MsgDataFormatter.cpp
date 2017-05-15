@@ -8,6 +8,8 @@
 #include <QVariant>
 #include <QStringList>
 
+#include <QDebug>
+
 MsgDataFormatter::MsgDataFormatter(
         const QString &formatString,
         const QColor &defaultColor
@@ -59,8 +61,14 @@ QString MsgDataFormatter::parseMsgDataToString(const IMsg &msgToParse) const
         formattedData.replace(dataTokenString.arg(dataSize),QString::number(msgData.at(dataSize).getPrimitiveData()));
     }
 
-    QRegularExpression operationParseRegEx(QString("#OP#\\((\\d\\.\\.?\\d*)#([+-*/%&|^]|(>>)|(<<))#(\\d\\.?\\d*)\\)#\\/OP#"));
+    QString regExPattern("#OP#\\((\\d+)#([\\+\\-\\*\\/%&|^]|(>>)|(<<))#(\\d+)\\)#\\/OP#");
+    QRegularExpression operationParseRegEx(regExPattern);
     operationParseRegEx.setPatternOptions(QRegularExpression::DontCaptureOption);
+    if(!operationParseRegEx.isValid())
+    {
+        qDebug() << operationParseRegEx.errorString();
+        qDebug() << regExPattern;
+    }
     QString operationString = QRegularExpressionMatch(operationParseRegEx.match(formattedData)).captured();
 
     while(!operationString.isEmpty())
@@ -114,6 +122,39 @@ QString MsgDataFormatter::parseMsgDataToString(const IMsg &msgToParse) const
 
         formattedData.replace(operationString, operationResult.value<QString>());
         operationString = QRegularExpressionMatch(operationParseRegEx.match(formattedData)).captured();
+    }
+
+    // PARSE HEX
+    QRegularExpression numberConversionRegEx(QString("#HEX#\\(\\d+\\)#\\/HEX#"));
+    QString numConvString = QRegularExpressionMatch(numberConversionRegEx.match(formattedData)).captured();
+    while(!numConvString.isEmpty())
+    {
+        QString parsedNumber = numConvString;
+        parsedNumber.remove(QString("#HEX#(")).remove(QString(")#/HEX#"));
+        formattedData.replace(numConvString,QString("0x%1").arg(parsedNumber.toInt(),0,16));
+        numConvString = QRegularExpressionMatch(numberConversionRegEx.match(formattedData)).captured();
+    }
+
+    // PARSE OCT
+    numberConversionRegEx.setPattern(QString("#OCT#\\(\\d+\\)#\\/OCT#"));
+    numConvString = QRegularExpressionMatch(numberConversionRegEx.match(formattedData)).captured();
+    while(!numConvString.isEmpty())
+    {
+        QString parsedNumber = numConvString;
+        parsedNumber.remove(QString("#OCT#(")).remove(QString(")#/OCT#"));
+        formattedData.replace(numConvString,QString("0x%1").arg(parsedNumber.toInt(),0,8));
+        numConvString = QRegularExpressionMatch(numberConversionRegEx.match(formattedData)).captured();
+    }
+
+    // PARSE BIN
+    numberConversionRegEx.setPattern(QString("#BIN#\\(\\d+\\)#\\/BIN#"));
+    numConvString = QRegularExpressionMatch(numberConversionRegEx.match(formattedData)).captured();
+    while(!numConvString.isEmpty())
+    {
+        QString parsedNumber = numConvString;
+        parsedNumber.remove(QString("#BIN#(")).remove(QString(")#/BIN#"));
+        formattedData.replace(numConvString,QString("0x%1").arg(parsedNumber.toInt(),0,2));
+        numConvString = QRegularExpressionMatch(numberConversionRegEx.match(formattedData)).captured();
     }
 
     return formattedData;

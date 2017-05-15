@@ -194,6 +194,8 @@ int main(int argc, char *argv[])
             /* messageConfigWidget */
             );
 
+    msgDataMappingWidget->setMsgIDMappingManager(msgIDMappingManager);
+    msgDataMappingWidget->setMsgCodeMappingManager(msgCodeMappingManager);
 
     messageConfigWidget->appendMappingManagerWidget(msgIDMappingWidget);
     messageConfigWidget->appendMappingManagerWidget(msgCodeMappingWidget);

@@ -132,9 +132,24 @@ QVariant MsgDataMappingModel::data(
     case Qt::CheckStateRole:
         break;
     case Qt::UserRole:
-        return QVariant::fromValue<QSharedPointer<IMsgDataFormatter>>(
-                    msgDataMappingStore->getMsgDataFormatter(msgType)
+        switch(col)
+        {
+        case MsgDataMappingModel::COL_ID:
+            return QVariant::fromValue<MsgIDType>(msgType.getID());
+            break;
+        case MsgDataMappingModel::COL_Code:
+            return QVariant::fromValue<MsgCodeType>(msgType.getCode());
+            break;
+        case MsgDataMappingModel::COL_FormatString:
+            return QVariant::fromValue<QSharedPointer<IMsgDataFormatter>>(
+                        msgDataMappingStore->getMsgDataFormatter(msgType)
                     );
+            break;
+        case MsgDataMappingModel::COL_Color:
+            return
+                msgDataMappingStore->getMsgDataMapping(msgType).getMsgDataDefaultColor();
+            break;
+        }
         break;
     }
 
