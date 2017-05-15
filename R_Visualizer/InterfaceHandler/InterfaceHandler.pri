@@ -7,9 +7,14 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/devicehandler.cpp \
+    $$PWD/src/InterfaceHandler.cpp \
+    $$PWD/src/CANAnalyserInterfaceHandler.cpp \
+    #$$PWD/src/devicehandler.cpp \
 
 HEADERS  += \
-    $$PWD/inc/devicehandler.h \
+    $$PWD/inc/IInterfaceHandler.h \
+    $$PWD/inc/InterfaceHandler.h \
+    $$PWD/inc/CANAnalyserInterfaceHandler.h \
+    #$$PWD/inc/devicehandler.h \
 
 FORMS    += \

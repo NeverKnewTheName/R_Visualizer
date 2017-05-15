@@ -11,7 +11,7 @@
 
 /* #include "hugeqvector.h" */
 #include <QVector>
-#include "msg.h"
+#include "Msg.h"
 
 //! Takes care of parsing #Msg packages in CSV file format
 /**

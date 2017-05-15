@@ -3,7 +3,7 @@ INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
     $$PWD/src/hugeqvector.cpp \
-    $$PWD/src/msgstorage.cpp
+    # $$PWD/src/msgstorage.cpp
 
 HEADERS  += \
     $$PWD/inc/hugeqvector.h \

@@ -1,0 +1,4677 @@
+[
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:32.414"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:32.414"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:32.415"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:32.415"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:32.416"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.093"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.094"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.095"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.095"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.096"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.261"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.262"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.263"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.263"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.264"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.421"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.422"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.423"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.423"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.424"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.566"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.566"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.567"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.567"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.568"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.701"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.706"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.706"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.707"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.707"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.845"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.849"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.850"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.850"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.851"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.990"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.993"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.994"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.994"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:33.995"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.142"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.142"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.143"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.143"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.144"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.286"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.287"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.288"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.288"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.289"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.445"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.446"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.447"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.447"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.448"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.581"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.583"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.584"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.584"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.585"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.757"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.760"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.760"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.761"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.761"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.893"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.897"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.898"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.898"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:34.899"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.053"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.056"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.056"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.057"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.057"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.198"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.200"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.201"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.201"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.202"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.333"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.337"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.338"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.338"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.339"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.477"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.480"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.480"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.481"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.481"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.637"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.643"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.644"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.644"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.645"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.806"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.806"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.807"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.807"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.808"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.949"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.953"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.954"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.954"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:35.955"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.101"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.105"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.106"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.106"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.107"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.277"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.281"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.282"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.282"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:07:36.283"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.709"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.710"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.710"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.711"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.711"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.853"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.854"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.854"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.855"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.855"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.981"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.982"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.982"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.983"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:38.983"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.125"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.126"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.126"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.127"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.127"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.253"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.254"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.254"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.255"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.255"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.397"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.398"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.398"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.399"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.399"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.525"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.526"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.526"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.527"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.527"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.661"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.662"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.662"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.748"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.749"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.789"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.790"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.790"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.791"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.791"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.933"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.934"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.934"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.935"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:39.935"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.061"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.062"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.062"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.063"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.063"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.189"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.190"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.190"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.191"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.192"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.341"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.342"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.342"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.343"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.343"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.477"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.478"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.478"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.479"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.479"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.629"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.630"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.630"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.631"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.631"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.917"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.924"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.924"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.925"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:40.925"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.037"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.041"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.042"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.042"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.043"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.141"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.142"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.142"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.143"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.143"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.253"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.254"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.254"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.255"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.255"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.365"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.366"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.366"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.367"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.367"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.477"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.480"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.480"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.481"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.481"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.581"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.582"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.582"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.583"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.583"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.693"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.696"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.696"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.701"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.702"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.797"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.801"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.801"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.802"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.802"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.917"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.918"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.918"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.919"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:41.919"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.037"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.038"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.038"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.039"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.039"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.149"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.150"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.150"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.151"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.151"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.285"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.286"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.286"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.287"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.287"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.413"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.414"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.414"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.415"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.415"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.533"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.534"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.534"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.535"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.535"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.661"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.662"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.662"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.663"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.663"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.789"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.790"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.790"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.791"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.791"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.901"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.902"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.902"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.903"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:42.903"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.045"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.046"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.046"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.047"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.047"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.165"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.166"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.166"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.167"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.167"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.293"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.296"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.296"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.297"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.297"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.413"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.416"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.416"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.417"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.417"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.549"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.552"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.552"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.553"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.553"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.669"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.672"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.672"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.673"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.673"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.797"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.800"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.800"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.801"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.801"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.925"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.926"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.926"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.927"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:43.927"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.061"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.064"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.064"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.065"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.065"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.205"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.206"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.206"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.207"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.207"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.333"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.334"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.334"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.335"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.335"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.461"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.464"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.464"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.465"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.465"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.589"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.590"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.590"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.591"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.591"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.717"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.720"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.720"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.721"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.721"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.845"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.850"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.850"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.851"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.851"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.989"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.990"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.990"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.991"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:44.991"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.117"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.120"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.120"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.121"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.121"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.253"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.256"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.256"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.257"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.257"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.397"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.402"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.403"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.403"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.404"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.541"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.542"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.542"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.543"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.543"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.685"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.686"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.686"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.687"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.687"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.805"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.806"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.806"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.807"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.807"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.949"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.952"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.952"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.953"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:45.953"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.077"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.080"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.080"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.081"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.081"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.221"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.224"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.224"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.225"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.225"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.373"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.377"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.378"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.379"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.379"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.509"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.512"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.512"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.513"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.513"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.629"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.633"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.634"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.635"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.635"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            137,
+            39
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.765"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            36,
+            100
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.768"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            34,
+            53
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.769"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            0,
+            70,
+            86
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.769"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            1,
+            32,
+            36,
+            137
+        ],
+        "MsgID": 240,
+        "MsgTimestamp": "15.05.2017 - 17:08:46.770"
+    }
+]

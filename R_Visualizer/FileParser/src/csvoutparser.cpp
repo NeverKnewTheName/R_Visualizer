@@ -1,27 +1,19 @@
 #include "csvoutparser.h"
 
-#include "messagestream.h"
-#include "msgstreammodel.h"
+#include "IMsg.h"
+#include "ITimestampedMsg.h"
+#include "IMsgStreamStore.h"
 #include "msgstorage.h"
-#include "sendmessages.h"
-#include "sendmsgmodel.h"
-#include "msg.h"
-#include "messageconfig.h"
-#include "idmodel.h"
-#include "idrep.h"
-#include "msgtypemodel.h"
-#include "msgtyperep.h"
-#include "messagefilter.h"
-#include "filteridstore.h"
-#include "filtercodestore.h"
-#include "filtertimestampstore.h"
-#include "systemoverview.h"
-#include "sysovrvobject.h"
-#include "sysovrvtextlabel.h"
-#include "sysovrvtrigger.h"
-#include "errlogview.h"
-#include "errorlogentry.h"
-
+#include "SendMsgPackageStore.h"
+#include "IMsgIDMappingStore.h"
+#include "IMsgIDMapping.h"
+#include "IMsgCodeMappingStore.h"
+#include "IMsgCodeMapping.h"
+#include "IMsgDataMappingStore.h"
+#include "IMsgDataMapping.h"
+#include "IMsgIDFilterStore.h"
+#include "IMsgCodeFilterStore.h"
+#include "IMsgTimespanFilter.h"
 
 #include <QDebug>
 
@@ -33,11 +25,15 @@ CsvOutParser::~CsvOutParser()
 {
 }
 
-void CsvOutParser::visit(MessageStream &visitor)
+void CsvOutParser::visit(IMsg &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgStreamModel &visitor)
+void CsvOutParser::visit(ITimestampedMsg &visitor)
+{
+}
+
+void CsvOutParser::visit(IMsgStreamStore &visitor)
 {
 }
 
@@ -45,78 +41,68 @@ void CsvOutParser::visit(MsgStorage &visitor)
 {
 }
 
-void CsvOutParser::visit(SendMessages &visitor)
+void CsvOutParser::visit(TimestampedMsgStorage &visitor)
 {
 }
 
-void CsvOutParser::visit(SendMsgModel &visitor)
+void CsvOutParser::visit(ISendMsgPackageStore &visitor)
 {
 }
 
-void CsvOutParser::visit(Msg &visitor)
+void CsvOutParser::visit(IMsgIDMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MessageConfig &visitor)
+void CsvOutParser::visit(IMsgIDMapping &visitor)
 {
 }
 
-void CsvOutParser::visit(IDModel &visitor)
+void CsvOutParser::visit(IMsgCodeMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(IDRep &visitor)
+void CsvOutParser::visit(IMsgCodeMapping &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgTypeModel &visitor)
+void CsvOutParser::visit(IMsgDataMappingStore &visitor)
 {
 }
 
-void CsvOutParser::visit(MsgTypeRep &visitor)
+void CsvOutParser::visit(IMsgDataMapping &visitor)
 {
 }
 
-void CsvOutParser::visit(MessageFilter &visitor)
+void CsvOutParser::visit(IMsgIDFilterStore &visitor)
 {
 }
 
-void CsvOutParser::visit(FilterIDStore &visitor)
+void CsvOutParser::visit(IMsgCodeFilterStore &visitor)
 {
 }
 
-void CsvOutParser::visit(FilterCodeStore &visitor)
+void CsvOutParser::visit(IMsgTimespanFilter &visitor)
 {
 }
 
-void CsvOutParser::visit(FilterTimestampStore &visitor)
-{
-}
 
-void CsvOutParser::visit(SystemOverview &visitor)
-{
-}
 
-void CsvOutParser::visit(SysOvrvObject &visitor)
-{
-}
+/* void CsvOutParser::visit(SysOvrvObject &visitor) */
+/* { */
+/* } */
 
-void CsvOutParser::visit(SysOvrvTextLabel &visitor)
-{
-}
+/* void CsvOutParser::visit(SysOvrvTextLabel &visitor) */
+/* { */
+/* } */
 
-void CsvOutParser::visit(SysOvrvTrigger &visitor)
-{
-}
+/* void CsvOutParser::visit(SysOvrvTrigger &visitor) */
+/* { */
+/* } */
 
-void CsvOutParser::visit(ErrorLogView &visitor)
-{
-}
+/* void CsvOutParser::visit(ErrLogModel &visitor) */
+/* { */
+/* } */
 
-void CsvOutParser::visit(ErrLogModel &visitor)
-{
-}
-
-void CsvOutParser::visit(ErrorLogEntry &visitor)
-{
-}
+/* void CsvOutParser::visit(ErrorLogEntry &visitor) */
+/* { */
+/* } */

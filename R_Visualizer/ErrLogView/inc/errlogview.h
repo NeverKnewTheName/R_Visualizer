@@ -1,11 +1,9 @@
 /**
- * @file	errorlogview.h
- * @author	Christian Neuberger
+ * @file    errorlogview.h
+ * @author  Christian Neuberger
+ * \date    2016-03-20
  *
  * \brief Class to interact with the Error Log View Dialog
- *
- *
- *
  */
 
 #ifndef ERRORLOGVIEW_H
@@ -14,7 +12,6 @@
 #include <QDialog>
 #include <QAbstractButton>
 
-class FileParser;
 
 #include "errlogmodel.h"
 #include "IFileParsable.h"
@@ -23,7 +20,10 @@ namespace Ui {
 class ErrorLogView;
 }
 
-class ErrorLogView : public QDialog, public IFileParsable
+/**
+ * \brief The ErrorLogView
+ */
+class ErrorLogView : public QDialog
 {
     Q_OBJECT
 
@@ -33,8 +33,6 @@ public:
 
     ErrLogModel *getErrLogModel() const;
     void setErrLogModel(ErrLogModel *value);
-
-    void accept(FileParser *visitor);
 
 private slots:
 

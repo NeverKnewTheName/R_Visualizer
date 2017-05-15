@@ -122,12 +122,24 @@ public:
     /** 
      * \brief retrieves the current first element of the ring buffer
      * 
-     * The first element is the element pointed to by the ring buffer's
+     * \note The first element is the element pointed to by the ring buffer's
      * start pointer.
      */
     const T &first() const
     {
         return RBufBuffer.at(RBufStartIndex);
+    }
+
+    /**
+     * @brief Retrieve a modifiable reference to the first element of the ring
+     * buffer
+     * 
+     * \note The first element is the element pointed to by the ring buffer's
+     * start pointer.
+     */
+    T &first()
+    {
+        return RBufBuffer[RBufStartIndex];
     }
 
     /**
@@ -142,6 +154,18 @@ public:
     }
 
     /**
+     * \brief Retrieve a modifiable reference to the current last element of the
+     * ring buffer
+     * 
+     * The last element is the element pointed to by the ring buffer's
+     * end pointer
+     */
+    T &last()
+    {
+        return RBufBuffer[RBufEndIndex];
+    }
+
+    /**
      * \brief retrieves the current element at the given index
      */
     const T &at(const int index) const
@@ -151,6 +175,13 @@ public:
         return RBufBuffer.at(calcdIndex);
     }
 
+    /**
+     * @brief Retrieves a modifiable reference to the element currelty located
+     * at index
+     * 
+     * @note the index must be valid in all cases, because the vector is fixed
+     * size and pre-instantiated
+     */
     T &at(const int index)
     {
         const int calcdIndex = (index + RBufStartIndex ) % RBufSize;
@@ -237,6 +268,7 @@ private:
         return index;
     }
 
+private:
     QVector<T> RBufBuffer; //!< Buffer vector
     const int RBufSize;    //!< Maximum size of the buffer
     int RBufCurSize;       //!< Current size of the buffer/Current number of elements in the buffer

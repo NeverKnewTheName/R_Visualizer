@@ -7,26 +7,21 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/filteridstore.cpp \
-    $$PWD/src/filtercodestore.cpp \
-    $$PWD/src/filtertimestampstore.cpp \
-    $$PWD/src/filteriddelegate.cpp \
-    $$PWD/src/filtermsgtypedelegate.cpp \
-    $$PWD/src/messagefilter.cpp \
-    $$PWD/src/filteridadddialog.cpp \
-    $$PWD/src/filtercodeadddialog.cpp
+    $$PWD/src/MessageFilter.cpp \
+    $$PWD/src/MessageFilterWidget.cpp \
 
 HEADERS  += \
-    $$PWD/inc/filteridstore.h \
-    $$PWD/inc/filtercodestore.h \
-    $$PWD/inc/filtertimestampstore.h \
-    $$PWD/inc/filteriddelegate.h \
-    $$PWD/inc/filtermsgtypedelegate.h \
-    $$PWD/inc/messagefilter.h \
-    $$PWD/inc/filteridadddialog.h \
-    $$PWD/inc/filtercodeadddialog.h
+    $$PWD/inc/IMessageFilter.h \
+    $$PWD/inc/MessageFilter.h \
+    $$PWD/inc/MessageFilterWidget.h \
+    $$PWD/inc/IFilter.h \
+    $$PWD/inc/IMsgFilter.h \
+    $$PWD/inc/ITimestampedMsgFilter.h \
 
 FORMS    += \
+    $$PWD/ui/messagefilterwidget.ui \
     $$PWD/ui/messagefilter.ui \
-    $$PWD/ui/filteridadddialog.ui \
-    $$PWD/ui/filtercodeadddialog.ui
+
+include(MsgIDFilter/MsgIDFilter.pri)
+include(MsgCodeFilter/MsgCodeFilter.pri)
+include(MsgTimespanFilter/MsgTimespanFilter.pri)

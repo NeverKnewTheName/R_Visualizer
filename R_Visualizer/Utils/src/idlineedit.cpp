@@ -3,80 +3,97 @@
 #include <QString>
 #include <QColor>
 
-#include "messageconfig.h"
+#include "IMsgIDMappingManager.h"
 
 #include <QDebug>
 
 IDLineEdit::IDLineEdit( QWidget *parent ) :
     QLineEdit(parent),
-    msgConfig(nullptr)
+    msgIDMappingManager(Q_NULLPTR)
+    /* msgIDAliasCompleter(Q_NULLPTR) */
 {
 }
 
-IDLineEdit::IDLineEdit( const MessageConfig *msgConfig, QWidget *parent ) :
+IDLineEdit::IDLineEdit(
+        const IMsgIDMappingManager *msgIDMappingManager,
+        QCompleter *msgIDAliasCompleter,
+        QWidget *parent
+        ) :
     QLineEdit(parent),
-    msgConfig(msgConfig)
+    msgIDMappingManager(msgIDMappingManager)
+    /* msgIDAliasCompleter(msgIDAliasCompleter) */
 {
-    if(msgConfig != nullptr)
-    {
-        msgConfigChanged();
-    }
+    connectMsgIDMapping();
+    setCompleter(msgIDAliasCompleter);
 }
 
 IDLineEdit::~IDLineEdit()
 {
 }
 
-void IDLineEdit::setMsgConfig(const MessageConfig *msgConfig)
+void IDLineEdit::setMsgIDMapping(const IMsgIDMappingManager *msgIDMappingManagerManager)
 {
-    this->msgConfig = msgConfig;
-    if(msgConfig != nullptr)
-    {
-        msgConfigChanged();
-    }
+    this->msgIDMappingManager = msgIDMappingManagerManager;
+    connectMsgIDMapping();
 }
 
-MsgIDType IDLineEdit::getID() const
+MsgIDType IDLineEdit::getMsgID() const
 {
     const QString &idNameText = text();
-    bool conversionOK;
-    MsgIDType retrievedID = idNameText.toInt(&conversionOK, (idNameText.startsWith("0x")) ? 16 : 0);
-
-    /* If the Conversion failed (e.g. the entered value is neither a base 16 or 10 integer,
-     * the IDModel that is used for completion is queried for the editor content
-     */
-    if(!conversionOK)
-    {
-        if(msgConfig != nullptr)
-        {
-            retrievedID = msgConfig->getIDToName(idNameText);
-        }
-        else
-        {
-            retrievedID = 0;
-        }
-    }
-
-    qDebug() << "IDLineEdit getID: " << retrievedID;
+    MsgIDType retrievedID = convertTextToMsgID(idNameText);
+    qDebug() << "IDLineEdit getID: " << static_cast<QString>(retrievedID);
 
     return retrievedID;
 }
 
-void IDLineEdit::msgConfigChanged()
+void IDLineEdit::connectMsgIDMapping()
 {
+    if(msgIDMappingManager == Q_NULLPTR)
+    {
+        return;
+    }
     if(colorizeLineEditConnection)
     {
         QObject::disconnect(colorizeLineEditConnection);
     }
-    QCompleter *idCompleter = msgConfig->createIDNameCompleter(this);
-    setCompleter(idCompleter);
-    colorizeLineEditConnection = connect(this, &QLineEdit::textChanged, [=](const QString &text){
-            QColor color = msgConfig->getColorToIDName(text);
+    colorizeLineEditConnection = connect(
+        this,
+        &QLineEdit::textChanged, [=](const QString &text){
+            QColor color = msgIDMappingManager->getColorToAlias(text);
             QString colorName("white");
             if(color.isValid())
             {
                colorName = color.name();
             }
-            this->setStyleSheet(QString("background: %1").arg(colorName));
-            });
+            setStyleSheet(QString("background: %1").arg(colorName));
+        }
+        );
+}
+
+MsgIDType IDLineEdit::convertTextToMsgID(const QString &text) const
+{
+    bool conversionOK;
+    MsgIDType retrievedID(
+            text.toInt(
+                &conversionOK,
+                (text.startsWith("0x")) ? 16 : 0
+                )
+            );
+
+    /* If the Conversion failed (e.g. the entered value is neither a base 16 or
+     * 10 integer, the IDModel that is used for completion is queried for the
+     * editor content
+     */
+    if(!conversionOK)
+    {
+        if(msgIDMappingManager != Q_NULLPTR)
+        {
+            retrievedID = msgIDMappingManager->getMsgIDToAlias(text);
+        }
+        else
+        {
+            retrievedID = MsgIDType(0);
+        }
+    }
+    return retrievedID;
 }

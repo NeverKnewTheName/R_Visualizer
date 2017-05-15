@@ -759,7 +759,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # messages should be written. If left blank the output is written to standard
 # error (stderr).
 
-WARN_LOGFILE           = 
+WARN_LOGFILE           = "DoxygenWarningLog.txt"
 
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
@@ -772,14 +772,31 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ./R_Visualizer ./R_Visualizer/inc ./R_Visualizer/src \
+                         ./R_Visualizer/MainWindow ./R_Visualizer/MainWindow/inc ./R_Visualizer/MainWindow/src \
+                         ./R_Visualizer/FileParser ./R_Visualizer/FileParser/inc ./R_Visualizer/FileParser/src \
+                         ./R_Visualizer/InterfaceHandler ./R_Visualizer/InterfaceHandler/inc ./R_Visualizer/InterfaceHandler/src \
                          ./R_Visualizer/ErrLogView ./R_Visualizer/ErrLogView/inc ./R_Visualizer/ErrLogView/src \
                          ./R_Visualizer/Msg ./R_Visualizer/Msg/inc ./R_Visualizer/Msg/src \
+                         ./R_Visualizer/Msg/Widgets ./R_Visualizer/Msg/Widgets/inc ./R_Visualizer/Msg/Widgets/src \
+                         ./R_Visualizer/Msg/Delegates ./R_Visualizer/Msg/Delegates/inc ./R_Visualizer/Msg/Delegates/src \
+                         ./R_Visualizer/MessageStream ./R_Visualizer/MessageStream/inc ./R_Visualizer/MessageStream/src \
                          ./R_Visualizer/MessageStorage ./R_Visualizer/MessageStorage/inc ./R_Visualizer/MessageStorage/src \
                          ./R_Visualizer/MessageConfig ./R_Visualizer/MessageConfig/inc ./R_Visualizer/MessageConfig/src \
+                         ./R_Visualizer/MessageConfig/MsgIDMapping ./R_Visualizer/MessageConfig/MsgIDMapping/inc ./R_Visualizer/MessageConfig/MsgIDMapping/src \
+                         ./R_Visualizer/MessageConfig/MsgCodeMapping ./R_Visualizer/MessageConfig/MsgCodeMapping/inc ./R_Visualizer/MessageConfig/MsgCodeMapping/src \
+                         ./R_Visualizer/MessageConfig/MsgDataMapping ./R_Visualizer/MessageConfig/MsgDataMapping/inc ./R_Visualizer/MessageConfig/MsgDataMapping/src \
+                         ./R_Visualizer/MessageFilter ./R_Visualizer/MessageFilter/inc ./R_Visualizer/MessageFilter/src \
+                         ./R_Visualizer/MessageFilter/MsgIDFilter ./R_Visualizer/MessageFilter/MsgIDFilter/inc ./R_Visualizer/MessageFilter/MsgIDFilter/src \
+                         ./R_Visualizer/MessageFilter/MsgCodeFilter ./R_Visualizer/MessageFilter/MsgCodeFilter/inc ./R_Visualizer/MessageFilter/MsgCodeFilter/src \
+                         ./R_Visualizer/MessageFilter/MsgTimespanFilter ./R_Visualizer/MessageFilter/MsgTimespanFilter/inc ./R_Visualizer/MessageFilter/MsgTimespanFilter/src \
                          ./R_Visualizer/SendMessages ./R_Visualizer/SendMessages/inc ./R_Visualizer/SendMessages/src \
+                         ./R_Visualizer/SendMessages/SendMsgSingle ./R_Visualizer/SendMessages/SendMsgSingle/inc ./R_Visualizer/SendMessages/SendMsgSingle/src \
+                         ./R_Visualizer/SendMessages/SendMsgPackage ./R_Visualizer/SendMessages/SendMsgPackage/inc ./R_Visualizer/SendMessages/SendMsgPackage/src \
+                         ./R_Visualizer/UserRoleManager ./R_Visualizer/UserRoleManager/inc ./R_Visualizer/UserRoleManager/src \
                          ./R_Visualizer/SystemOverview ./R_Visualizer/SystemOverview/inc ./R_Visualizer/SystemOverview/src \
                          ./R_Visualizer/SystemOverview/SysOvrvObj ./R_Visualizer/SystemOverview/SysOvrvObj/inc ./R_Visualizer/SystemOverview/SysOvrvObj/src \
                          ./R_Visualizer/SystemOverview/SysOvrvTrigger ./R_Visualizer/SystemOverview/SysOvrvTrigger/inc ./R_Visualizer/SystemOverview/SysOvrvTrigger/src \
+                         ./R_Visualizer/Utils ./R_Visualizer/Utils/inc ./R_Visualizer/Utils/src \
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1612,7 +1629,7 @@ EXTRA_SEARCH_MAPPINGS  =
 # If the GENERATE_LATEX tag is set to YES, doxygen will generate LaTeX output.
 # The default value is: YES.
 
-GENERATE_LATEX         = NO
+GENERATE_LATEX         = YES
 
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1756,7 +1773,7 @@ LATEX_HIDE_INDICES     = NO
 # The default value is: NO.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_SOURCE_CODE      = NO
+LATEX_SOURCE_CODE      = YES
 
 # The LATEX_BIB_STYLE tag can be used to specify the style to use for the
 # bibliography, e.g. plainnat, or ieeetr. See
@@ -2005,7 +2022,7 @@ ENABLE_PREPROCESSING   = YES
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-MACRO_EXPANSION        = NO
+MACRO_EXPANSION        = YES
 
 # If the EXPAND_ONLY_PREDEF and MACRO_EXPANSION tags are both set to YES then
 # the macro expansion is limited to the macros specified with the PREDEFINED and
@@ -2382,7 +2399,7 @@ PLANTUML_INCLUDE_PATH  =
 # Minimum value: 0, maximum value: 10000, default value: 50.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_GRAPH_MAX_NODES    = 50
+DOT_GRAPH_MAX_NODES    = 100
 
 # The MAX_DOT_GRAPH_DEPTH tag can be used to set the maximum depth of the graphs
 # generated by dot. A depth value of 3 means that only nodes reachable from the

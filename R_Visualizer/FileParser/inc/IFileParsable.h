@@ -6,7 +6,6 @@ class FileParser;
 class IFileParsable
 {
 public:
-    IFileParsable(){}
     virtual ~IFileParsable(){}
 
     virtual void accept(FileParser *visitor) = 0;

@@ -1,3 +1,10 @@
+/**
+ * @file sysoverviewgraphicsview.h
+ * @author Christian Neuberger
+ * @date 2017-03-23
+ * 
+ * @brief Provides a GraphicsView specific for #SysOvrvObject
+ */
 #ifndef SYSOVERVIEWGRAPHICSVIEW_H
 #define SYSOVERVIEWGRAPHICSVIEW_H
 

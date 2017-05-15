@@ -1,567 +1,410 @@
 #include "mainwindow.h"
 #include <QApplication>
 
-#include "can_packet.h"
-#include "msg.h"
-#include "errorlogentry.h"
-
-// // // DEBUG // // //
+#include <QObject>
 #include <QDebug>
-#include <QElapsedTimer>
-#include <QThread>
-#include "msgparser.h"
-#include "msgdatawidget.h"
-/* #include "msgstorage.h" */
-#include "datastorage.h"
-#include <QJsonDocument>
-#include <QJsonArray>
-// // // DEBUG // // //
 
-int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
-void MsgStorageRemoveTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
-void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
-void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM);
+#include <QCompleter>
+
+#include "MsgIDType.h"
+#include "MsgCodeType.h"
+#include "MsgDataType.h"
+#include "Msg.h"
+#include "TimestampedMsg.h"
+
+#include "msgstorage.h"
+
+#include "IInterfaceHandler.h"
+#include "CANAnalyserInterfaceHandler.h"
+
+#include "UserRoleManager.h"
+
+#include "IMessageConfig.h"
+#include "MessageConfig.h"
+#include "IMsgIDMappingManager.h"
+#include "MsgIDMappingManager.h"
+#include "IMsgIDMapping.h"
+#include "MsgIDMapping.h"
+#include "IMsgIDMappingStore.h"
+#include "MsgIDMappingStore.h"
+#include "IMsgIDMappingModel.h"
+#include "MsgIDMappingModel.h"
+#include "MsgIDMappingWidget.h"
+#include "IMsgCodeMappingManager.h"
+#include "MsgCodeMappingManager.h"
+#include "IMsgCodeMapping.h"
+#include "MsgCodeMapping.h"
+#include "IMsgCodeMappingStore.h"
+#include "MsgCodeMappingStore.h"
+#include "IMsgCodeMappingModel.h"
+#include "MsgCodeMappingModel.h"
+#include "MsgCodeMappingWidget.h"
+#include "IMsgDataMappingManager.h"
+#include "IMsgDataMapping.h"
+#include "MsgDataMappingManager.h"
+#include "MsgDataMapping.h"
+#include "IMsgDataMappingStore.h"
+#include "MsgDataMappingStore.h"
+#include "IMsgDataMappingModel.h"
+#include "MsgDataMappingModel.h"
+#include "MsgDataMappingWidget.h"
+#include "MessageConfigWidget.h"
+
+#include "MsgIDDelegate.h"
+#include "MsgCodeDelegate.h"
+#include "MsgDataDelegate.h"
+
+#include "IMessageFilter.h"
+#include "MessageFilter.h"
+#include "MessageFilterWidget.h"
+#include "IFilter.h"
+#include "IMsgFilter.h"
+#include "ITimestampedMsgFilter.h"
+#include "MsgIDFilter.h"
+#include "IMsgIDFilterStore.h"
+#include "MsgIDFilterStore.h"
+#include "MsgIDFilterWidget.h"
+#include "MsgIDFilterModel.h"
+#include "MsgCodeFilter.h"
+#include "IMsgCodeFilterStore.h"
+#include "MsgCodeFilterStore.h"
+#include "MsgCodeFilterWidget.h"
+#include "MsgCodeFilterModel.h"
+#include "MsgTimespanFilter.h"
+#include "MsgTimespanFilterWidget.h"
+
+#include "IMessageStream.h"
+#include "MessageStream.h"
+#include "MessageStreamWidget.h"
+#include "IMsgStreamStore.h"
+#include "MsgStreamStore.h"
+#include "MsgStreamModel.h"
+
+#include "MsgIDLineEdit.h"
+#include "MsgCodeLineEdit.h"
+#include "MsgDataLineEdit.h"
+
+#include "ISendMessages.h"
+#include "SendMessages.h"
+#include "SendMessagesWidget.h"
+#include "ISendMsgSingle.h"
+#include "SendMsgSingle.h"
+#include "SendMsgSingleWidget.h"
+#include "ISendMsgPackage.h"
+#include "SendMsgPackage.h"
+#include "SendMsgPackageWidget.h"
+#include "ISendMsgPackageStore.h"
+#include "SendMsgPackageStore.h"
+
+#include "lineedittester.h"
+
+/* #include "errorlogentry.h" */
 
 int main(int argc, char *argv[])
 {
-/* #define __MSG_STORAGE_TEST__ */
-#ifndef __MSG_STORAGE_TEST__
-        QApplication a(argc, argv);
-
-        qRegisterMetaType <CAN_PacketPtr>("CAN_PacketPtr");
-        qRegisterMetaType <Data_PacketPtr>("Data_PacketPtr");
-        qRegisterMetaType <Error_PacketPtr>("Error_PacketPtr");
-        qRegisterMetaType <Msg>("Msg");
-        qRegisterMetaType <MsgData>("MsgData");
-        qRegisterMetaType <DataByteVect>("DataByteVect");
-        qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry");
-
-        MainWindow w;
-        w.show();
-
-        return a.exec();
-#else
-    QElapsedTimer myTimer;
-    const int NrMsgsToTest = 1000;
-    myTimer.start();
-    /* MsgStorageStoreLoadTest(NrMsgsToTest,5,3); */
-      /* MsgStorageTest(NrMsgsToTest, 100, 3); */
-    MsgStorageRemoveTest(NrMsgsToTest, 10, 3);
-    MsgStorageReplaceTest(NrMsgsToTest, 10, 3);
-
-    QFile isDone("DONE.NOTICE");
-
-    isDone.open(QIODevice::WriteOnly);
-
-    isDone.write(QString("Took: %1ms in total...").arg(myTimer.elapsed()).toLatin1());
-
-    isDone.flush();
-    isDone.close();
-
-    return 0;
-#endif
-}
-
-void MsgStorageReplaceTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
-{
-
-    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
-    QElapsedTimer myTimer;
-    quint64 elapsedTime;
-    quint64 elapsedTotal = 0;
-
-    int min = 100000;
-    int max = 0;
-
-    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
-
-    QFile log("MsgStorageReplaceTestLog.log");
-
-
-    if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "error open file to save: " << log.fileName();
-    }
-    else
-    {
-        qDebug() << "File Opened";
-    }
-
-    QTextStream logString(&log);
-    logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    logString << "\n\nNrOfMessages: " << NrOfMessages;
-    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
-    logString << "\n\n";
-
-    logString.flush();
-    log.flush();
-
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nAppending " << NrOfMessages << " Messages";
-    for(int i = 0; i < NrOfMessages; i++)
-    {
-        myTimer.restart();
-        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
-    }
-    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    int MsgStoreSize = msgStore.size();
-    const int itemsToReplace = MsgStoreSize/100;
-    int iter = itemsToReplace;
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nReplacing " << itemsToReplace << " Messages";
-    while(iter--)
-    {
-        int randomIndex = qrand()%(MsgStoreSize);
-        int randomInput = qrand()%(5000);
-        Msg randomMsg(QDateTime::currentDateTime(),randomInput,randomInput,DataByteVect());
-
-        logString << "\n\nReplacing index: " << randomIndex;
-        logString << "\n\tCurrent value: " << msgStore.at(randomIndex).getId();
-        logString << "\n\tReplacement: " << randomMsg.getId();
-        myTimer.restart();
-        msgStore.replace(randomIndex, randomMsg);
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\tTime taken: " << (double)elapsedTime << " ---Total: " << (double)elapsedTotal;
-        logString << "\n\tValue: " << msgStore.at(randomIndex).getId();
-        logString.flush();
-    }
-    logString << "\nMsgStorage Replacing total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/itemsToReplace << "ms";
-    logString << "\nMsgStorage Replacing min: " << min << " - max: " << max;
-    logString << "\n\nEND time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-
-    logString.flush();
-    log.flush();
-}
-
-void MsgStorageRemoveTest( const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
-{
-    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
-    QElapsedTimer myTimer;
-    quint64 elapsedTime;
-    quint64 elapsedTotal = 0;
-
-    int min = 100000;
-    int max = 0;
-
-    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
-
-    QFile log("MsgStorageDeleteTestLog.log");
-
-
-    if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "error open file to save: " << log.fileName();
-    }
-    else
-    {
-        qDebug() << "File Opened";
-    }
-
-    QTextStream logString(&log);
-    logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    logString << "\n\nNrOfMessages: " << NrOfMessages;
-    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
-    logString << "\n\n";
-
-    logString.flush();
-    log.flush();
-
-    logString << "\n\nAppending " << NrOfMessages << " Messages";
-    for(int i = 0; i < NrOfMessages; i++)
-    {
-        myTimer.restart();
-        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
-    }
-    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    int IndexToRemove = msgStore.size()-1;
-    logString << "\nDelete last element";
-    myTimer.restart();
-    msgStore.remove(IndexToRemove);
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage remove "<< IndexToRemove <<" nTh Element -> Time(ms): " << elapsedTime;
-
-    logString << "\nDelete first element";
-    myTimer.restart();
-    msgStore.remove(0);
-    elapsedTime = myTimer.elapsed();
-    logString << "\nMsgStorage remove "<< 0 <<" nTh Element -> Time(ms): " << elapsedTime;
-
-    logString.flush();
-    log.flush();
-
-    int MsgStoreSize = msgStore.size();
-    const int NrElemetnsToRemove = MsgStoreSize/100;
-    int removeIter = NrElemetnsToRemove;
-    logString << "\nRemoving: " << NrElemetnsToRemove << " Elements";
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    while(removeIter--)
-    {
-#define RANDOM_DELETE
-#ifdef RANDOM_DELETE
-        IndexToRemove = qrand()%(MsgStoreSize);
-#else
-        IndexToRemove = MsgStoreSize-1;
-#endif
-        int MsgIDToRemove = msgStore.at(IndexToRemove).getId();
-        logString << "\n\tDelete random element: " << IndexToRemove << " with its current value: " << MsgIDToRemove;
-
-        myTimer.restart();
-        msgStore.remove(IndexToRemove);
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\t\tMsgStorage removed " << IndexToRemove << " nTh Element -> Time(ms): " << elapsedTime;
-
-        MsgIDToRemove = msgStore.at(IndexToRemove).getId();
-        logString << "\n\t\tElement at index: " << IndexToRemove << " is now: " << MsgIDToRemove;
-
-        MsgStoreSize = msgStore.size();
-#ifdef PRINT_MSGSTORE_PER_ITERATION
-        int sizeOfMsgStore = MsgStoreSize;
-        logString << "\n\nMsgStore with size: " << sizeOfMsgStore;
-        while(sizeOfMsgStore--)
-        {
-            int Index = sizeOfMsgStore;
-            Msg msg(msgStore.at(Index));
-            logString << "\n\t\tIndex: " << Index << " retrieved: " << msg.getId();
-        }
-#endif
-        logString << "\n\tMsgStorage size: " << MsgStoreSize;
-#ifdef PRINT_MSGSTORE_PER_ITERATION
-        logString.flush();
-        log.flush();
-#endif
-    }
-    logString << "\n\tMsgStorage Remove total: " << elapsedTotal;
-    logString << "\n\tTime/Message: " << (double)elapsedTotal/NrElemetnsToRemove;
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nAppending " << NrOfMessages << " Messages";
-    for(int i = 0; i < NrOfMessages; i++)
-    {
-        myTimer.restart();
-        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
-    }
-    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    removeIter = NrElemetnsToRemove;
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nDeleting " << NrElemetnsToRemove << " Messages RANDOMLY without shrinking";
-    while(removeIter--)
-    {
-        IndexToRemove = qrand()%(MsgStoreSize);
-        int MsgIDToRemove = msgStore.at(IndexToRemove).getId();
-        logString << "\n\tDelete random element: " << IndexToRemove << " with its current value: " << MsgIDToRemove;
-
-        myTimer.restart();
-        msgStore.remove(IndexToRemove);
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\t\tMsgStorage removed " << IndexToRemove << " nTh Element -> Time(ms): " << elapsedTime;
-
-        MsgIDToRemove = msgStore.at(IndexToRemove).getId();
-        logString << "\n\t\tElement at index: " << IndexToRemove << " is now: " << MsgIDToRemove;
-        msgStore.append(Msg(QDateTime::currentDateTime(), qrand()%(5000),5,DataByteVect()));
-        MsgStoreSize = msgStore.size();
-    }
-    logString << "\nTOTAL time for removing without shrinking the MsgStorage: " << elapsedTotal;
-    logString << "\n\tTime/Message: " << (double)elapsedTotal/NrElemetnsToRemove;
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-
-    logString << "\n\nEND time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    logString.flush();
-    log.flush();
-    log.close();
-}
-
-
-int MsgStorageTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
-{
-    QElapsedTimer myTimer;
-    quint64 elapsedTime;
-    quint64 elapsedTotal = 0;
-
-    int min = 100000;
-    int max = 0;
-
-    QFile log("MsgStorageTestLog.log");
-    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
-
-    if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "error open file to save: " << log.fileName();
-    }
-    else
-    {
-        qDebug() << "File Opened";
-    }
-
-    QTextStream logString(&log);
-    logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    logString << "\n\nNrOfMessages: " << NrOfMessages;
-    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
-    logString << "\n\n";
-
-    logString.flush();
-    log.flush();
-
-    logString << "\n\nAppending " << NrOfMessages << " Messages";
-    for(int i = 0; i < NrOfMessages; i++)
-    {
-        myTimer.restart();
-        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
-    }
-    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    logString << "\nMemUsage (msgStore): " << msgStore.MemUsage();
-
-    const int sizeOfMsgStore = msgStore.size();
-    logString << "\nMsgStoreSize: " << sizeOfMsgStore;
-
-    logString.flush();
-    log.flush();
-
-    const int ElementsToRetrieve = sizeOfMsgStore/100;
-    int retrieveIter = ElementsToRetrieve;
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the BACK";
-    while(retrieveIter--)
-    {
-        int curIndex = sizeOfMsgStore-1 - retrieveIter;
-        logString << "\n\tCurrent index: " << curIndex;
-        myTimer.restart();
-        Msg msg(msgStore.at(curIndex));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
-    }
-    logString << "\n\tMsgStorage retrieve BACKWARD total: " << elapsedTotal;
-    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the FRONT";
-    for(int i = 0; i < ElementsToRetrieve; i++)
-    {
-        logString << "\n\tCurrent index: " << i;
-        myTimer.restart();
-        Msg msg(msgStore.at(i));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
-    }
-    logString << "\n\tMsgStorage retrieve FORWARD total: " << elapsedTotal;
-    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    retrieveIter = ElementsToRetrieve;
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages RANDOMLY";
-    while(retrieveIter--)
-    {
-        int RandomIndex = qrand()%NrOfMessages;
-        logString << "\n\tCurrent index: " << RandomIndex;
-        myTimer.restart();
-        Msg msg(msgStore.at(RandomIndex));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
-    }
-    logString << "\n\tMsgStorage retrieve RANDOMLY total: " << elapsedTotal;
-    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    logString << "\n\nEND time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    logString.flush();
-    log.flush();
-    log.close();
-
-    return 0;
-}
-
-void MsgStorageStoreLoadTest(const int NrOfMessages, const int ContainerSize, const int NrElemRAM)
-{
-    QElapsedTimer myTimer;
-    quint64 elapsedTime;
-    quint64 elapsedTotal = 0;
-
-    int min = 100000;
-    int max = 0;
-
-    QFile log("MsgStorageStoreLoadTestLog.log");
-    DataStorage<Msg> msgStore(ContainerSize, NrElemRAM);
-
-    if(!log.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "error open file to save: " << log.fileName();
-    }
-    else
-    {
-        qDebug() << "File Opened";
-    }
-
-    QTextStream logString(&log);
-    logString << "START time: " << QDateTime::currentDateTime().toString(QString("dd.MM.yyyy - hh:mm:ss.zzz"));
-    logString << "\n\nNrOfMessages: " << NrOfMessages;
-    logString << "\n\nContainerSize: " << ContainerSize << " NrElementsToKeepInRAM: " << NrElemRAM;
-    logString << "\n\n";
-
-    logString.flush();
-    log.flush();
-
-    logString << "\n\nAppending " << NrOfMessages << " Messages";
-    for(int i = 0; i < NrOfMessages; i++)
-    {
-        myTimer.restart();
-        msgStore.append(std::move(Msg(QDateTime::fromMSecsSinceEpoch(i),i,i,DataByteVect())));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\tMsgStorage appending "<< i <<" Time(ms): " << elapsedTime;
-    }
-    logString << "\nMsgStorage append total: " << elapsedTotal << " - Time/Msg: " << (double)elapsedTotal/NrOfMessages << "ms";
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
-
-    logString << "\nMemUsage (msgStore): " << msgStore.MemUsage();
-
-    const int sizeOfMsgStore = msgStore.size();
-    logString << "\nMsgStoreSize: " << sizeOfMsgStore;
-
-    logString.flush();
-    log.flush();
-
-    QFile MsgStoreSave(QString("MsgStoreSaveFile"));
-    if(!MsgStoreSave.open(QIODevice::ReadWrite))
-    {
-        qWarning() << "Failed to open file: " << MsgStoreSave.fileName();
-    }
-    else
-    {
-        qDebug() << "Opened file to save msgStore to: " << MsgStoreSave.fileName();
-    }
-
-    QJsonDocument docToSave;
-    logString << "\nSaving MsgStore to file";
-    myTimer.restart();
-    docToSave = msgStore.ParseToJson();
-    elapsedTime = myTimer.elapsed();
-
-    logString << "\n\tMsgStorage save total: " << elapsedTime;
-    logString << "\n\tTime/Message: " << (double)elapsedTime/NrOfMessages;
-    logString << "\nFile: " << docToSave.toJson();
-
-    qDebug() << "File: " << docToSave.toJson();
-    logString.flush();
-    log.flush();
-
-    MsgStoreSave.write(docToSave.toJson());
-    MsgStoreSave.flush();
-    MsgStoreSave.close();
-
-    logString << "\nSaving MsgStore to file";
-    myTimer.restart();
-    msgStore.ParseFromJson(docToSave.array());
-    elapsedTime = myTimer.elapsed();
-
-    logString << "\n\tMsgStorage load total: " << elapsedTime;
-    logString << "\n\tTime/Message: " << (double)elapsedTime/NrOfMessages;
-    logString.flush();
-    log.flush();
-
-    const int ElementsToRetrieve = sizeOfMsgStore;
-    int retrieveIter = ElementsToRetrieve;
-    elapsedTotal = 0;
-    min = 1000000;
-    max = 0;
-    logString << "\n\nRetrieving " << ElementsToRetrieve << " Messages from the BACK";
-    while(retrieveIter--)
-    {
-        int curIndex = sizeOfMsgStore - retrieveIter;
-        logString << "\n\tCurrent index: " << curIndex;
-        myTimer.restart();
-        Msg msg(msgStore.at(curIndex));
-        elapsedTime = myTimer.elapsed();
-        elapsedTotal += elapsedTime;
-        min = (min < elapsedTime) ? min : elapsedTime;
-        max = (max > elapsedTime) ? max : elapsedTime;
-        logString << "\n\t\tValue: " << msg.getId() << " time taken: " << elapsedTime;
-    }
-    logString << "\n\tMsgStorage retrieve BACKWARD total: " << elapsedTotal;
-    logString << "\n\tTime/Message: " << (double)elapsedTotal/ElementsToRetrieve;
-    logString << "\nMsgStorage append min: " << min << " - max: " << max;
-    logString.flush();
-    log.flush();
+    QApplication a(argc, argv);
+
+    /* qRegisterMetaType <CAN_PacketPtr>("CAN_PacketPtr"); */
+    /* qRegisterMetaType <Data_PacketPtr>("Data_PacketPtr"); */
+    /* qRegisterMetaType <Error_PacketPtr>("Error_PacketPtr"); */
+    qRegisterMetaType <MsgIDType>("MsgIDType");
+    qRegisterMetaType <MsgCodeType>("MsgCodeType");
+    qRegisterMetaType <MsgDataByteType>("MsgDataByteType");
+    qRegisterMetaType <MsgDataType>("MsgDataType");
+    qRegisterMetaType <Msg>("Msg");
+    qRegisterMetaType <TimestampedMsg>("TimestampedMsg");
+    /* qRegisterMetaType <MsgData>("MsgData"); */
+    /* qRegisterMetaType <DataByteVect>("DataByteVect"); */
+    /* qRegisterMetaType <ErrorLogEntry>("ErrorLogEntry"); */
+    /* qRegisterMetaType <IMsgDataFormatterSharedPtr>("IMsgDataFormatterSharedPtr"); */
+
+
+
+    MainWindow w;
+
+    IInterfaceHandler *interfaceHandler =
+            new CANAnalyserInterfaceHandler();
+
+    interfaceHandler->setParent(&w);
+    w.connectInterfaceHandler(interfaceHandler);
+
+
+    IMsgIDMappingStore *msgIDMappingStore = new MsgIDMappingStore();
+    IMsgIDMappingManager *msgIDMappingManager = new MsgIDMappingManager(
+            msgIDMappingStore
+            );
+    msgIDMappingStore->setParent(msgIDMappingManager);
+    MsgIDMappingModel *msgIDMappingModel = new MsgIDMappingModel(
+            msgIDMappingStore
+            );
+
+    IMsgCodeMappingStore *msgCodeMappingStore = new MsgCodeMappingStore();
+    IMsgCodeMappingManager *msgCodeMappingManager = new MsgCodeMappingManager(
+            msgCodeMappingStore
+            );
+    msgCodeMappingStore->setParent(msgCodeMappingManager);
+    MsgCodeMappingModel *msgCodeMappingModel = new MsgCodeMappingModel(
+            msgCodeMappingStore
+            );
+
+    IMsgDataMappingStore *msgDataMappingStore = new MsgDataMappingStore();
+    IMsgDataMappingManager *msgDataMappingManager = new MsgDataMappingManager(
+            msgDataMappingStore
+            );
+    msgDataMappingStore->setParent(msgDataMappingManager);
+    MsgDataMappingModel *msgDataMappingModel = new MsgDataMappingModel(
+            msgDataMappingStore
+            );
+
+
+    IMessageConfig *messageConfig = new MessageConfig(
+            msgIDMappingManager,
+            msgCodeMappingManager,
+            msgDataMappingManager,
+            &a
+            );
+    
+    msgIDMappingManager->setParent(messageConfig);
+    msgCodeMappingManager->setParent(messageConfig);
+    msgDataMappingManager->setParent(messageConfig);
+
+    MessageConfigWidget *messageConfigWidget = new MessageConfigWidget(
+            messageConfig
+            );
+
+    //Note: do not set messageConfigWidget as parent, because the actual parent
+    //will be the vertical layout of the messageConfigWidget...
+    MsgIDMappingWidget *msgIDMappingWidget = new MsgIDMappingWidget(
+            msgIDMappingManager,
+            msgIDMappingModel
+            /* messageConfigWidget */
+            );
+    //Note: do not set messageConfigWidget as parent, because the actual parent
+    //will be the vertical layout of the messageConfigWidget...
+    MsgCodeMappingWidget *msgCodeMappingWidget = new MsgCodeMappingWidget(
+            msgCodeMappingManager,
+            msgCodeMappingModel
+            /* messageConfigWidget */
+            );
+    //Note: do not set messageConfigWidget as parent, because the actual parent
+    //will be the vertical layout of the messageConfigWidget...
+    MsgDataMappingWidget *msgDataMappingWidget = new MsgDataMappingWidget(
+            msgDataMappingManager,
+            msgDataMappingModel
+            /* messageConfigWidget */
+            );
+
+    msgDataMappingWidget->setMsgIDMappingManager(msgIDMappingManager);
+    msgDataMappingWidget->setMsgCodeMappingManager(msgCodeMappingManager);
+
+    messageConfigWidget->appendMappingManagerWidget(msgIDMappingWidget);
+    messageConfigWidget->appendMappingManagerWidget(msgCodeMappingWidget);
+    messageConfigWidget->appendMappingManagerWidget(msgDataMappingWidget);
+
+    w.appendTabMenuWidget(messageConfigWidget, "Message Configuration");
+    /* messageConfigWidget->appendMappingWidget(); */
+
+    MessageFilter *messageFilter = new MessageFilter(&a);
+    MessageFilterWidget *messageFilterWidget =
+        new MessageFilterWidget();
+
+
+    IMsgIDFilterStore *msgIDFilterStore = new MsgIDFilterStore();
+    MsgIDFilter *msgIDFilter = new MsgIDFilter(
+            msgIDFilterStore
+            );
+
+    msgIDFilterStore->setParent(msgIDFilter);
+
+    messageFilter->addFilter(msgIDFilter);
+    MsgIDFilterModel *msgIDFilterModel = new MsgIDFilterModel(
+            msgIDFilterStore
+            );
+    MsgIDFilterWidget *msgIDFilterWidget = new MsgIDFilterWidget(
+            msgIDFilter,
+            msgIDFilterModel
+            );
+
+    msgIDFilterWidget->setMsgIDMappingManager(msgIDMappingManager);
+
+    MsgIDDelegate msgIDDelegate(msgIDMappingManager);
+    msgIDFilterWidget->setDelegate(&msgIDDelegate);
+
+    IMsgCodeFilterStore *msgCodeFilterStore = new MsgCodeFilterStore();
+    MsgCodeFilter *msgCodeFilter = new MsgCodeFilter(
+            msgCodeFilterStore
+            );
+
+    msgCodeFilterStore->setParent(msgCodeFilter);
+
+    messageFilter->addFilter(msgCodeFilter);
+    MsgCodeFilterModel *msgCodeFilterModel = new MsgCodeFilterModel(
+            msgCodeFilterStore
+            );
+    MsgCodeFilterWidget *msgCodeFilterWidget = new MsgCodeFilterWidget(
+            msgCodeFilter,
+            msgCodeFilterModel
+            );
+
+    msgCodeFilterWidget->setMsgCodeMappingManager(msgCodeMappingManager);
+
+    MsgCodeDelegate msgCodeDelegate(msgCodeMappingManager);
+    msgCodeFilterWidget->setDelegate(&msgCodeDelegate);
+
+    MsgTimespanFilter *msgTimestampFilter = new MsgTimespanFilter();
+
+    messageFilter->addFilter(msgTimestampFilter);
+    MsgTimespanFilterWidget *msgTimestampFilterWidget =
+        new MsgTimespanFilterWidget(msgTimestampFilter);
+
+    messageFilterWidget->addFilterWidget(msgIDFilterWidget);
+    messageFilterWidget->addFilterWidget(msgCodeFilterWidget);
+    messageFilterWidget->addFilterWidget(msgTimestampFilterWidget);
+
+    w.appendTabMenuWidget(messageFilterWidget, "Message Filter");
+
+
+    TimestampedMsgStorage timestampedMsgStorage;
+
+    QObject::connect(
+            &w,
+            &MainWindow::sgnl_AddTestMessage,
+            interfaceHandler,
+            &IInterfaceHandler::slt_SendMessage
+            );
+
+    QObject::connect(
+            interfaceHandler,
+            &IInterfaceHandler::sgnl_MessageReceived,
+            &timestampedMsgStorage,
+            &TimestampedMsgStorage::slt_addMsg
+            );
+
+    IMsgStreamStore *msgStreamStore = new MsgStreamStore(
+            50
+            );
+    MessageStream *messageStream = new MessageStream(
+            messageConfig,
+            messageFilter,
+            msgStreamStore,
+            timestampedMsgStorage,
+            &w
+            );
+
+    msgStreamStore->setParent(messageStream);
+
+    MsgStreamModel *msgStreamModel = new MsgStreamModel(msgStreamStore);
+
+    MessageStreamWidget *messageStreamWidget = new MessageStreamWidget(
+            messageStream,
+            msgStreamModel
+            );
+
+    w.setMessageStreamWidget(
+            messageStreamWidget
+            );
+
+    ISendMessages *sendMessages = new SendMessages(
+            interfaceHandler
+            );
+    SendMessagesWidget *sendMessagesWidget = new SendMessagesWidget(
+            sendMessages
+            );
+
+    ISendMsgSingle *sendMsgSingle = new SendMsgSingle();
+
+    sendMessages->addSendMsgSingle(sendMsgSingle);
+
+    SendMsgSingleWidget *sendMsgSingleWidget = new SendMsgSingleWidget(
+            sendMsgSingle
+            );
+
+    sendMsgSingleWidget->setMsgIDMapping(
+            msgIDMappingManager
+            );
+
+    QCompleter *idAliasCompleter = new QCompleter();
+
+    idAliasCompleter->setModel(msgIDMappingModel);
+    idAliasCompleter->setCompletionColumn(MsgIDMappingModel::COL_Alias);
+    idAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    //idAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
+    idAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    sendMsgSingleWidget->setMsgIDCompleter(
+            idAliasCompleter
+            );
+
+    sendMsgSingleWidget->setMsgCodeMapping(
+            msgCodeMappingManager
+            );
+
+    QCompleter *codeAliasCompleter = new QCompleter();
+
+    codeAliasCompleter->setModel(msgCodeMappingModel);
+    codeAliasCompleter->setCompletionColumn(MsgCodeMappingModel::COL_Alias);
+    codeAliasCompleter->setCompletionRole(Qt::DisplayRole);
+    //codeAliasCompleter->setModelSorting(
+            //QCompleter::CaseInsensitivelySortedModel
+            //);
+    codeAliasCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+    sendMsgSingleWidget->setMsgCodeCompleter(
+            codeAliasCompleter
+            );
+
+    sendMessagesWidget->addSendMsgSingleWidget(sendMsgSingleWidget);
+
+    ISendMsgPackageStore *sendMsgPackageStore = new SendMsgPackageStore();
+    ISendMsgPackage *sendMsgPackage = new SendMsgPackage(sendMsgPackageStore);
+
+    sendMessages->addSendMsgPackage(sendMsgPackage);
+
+    SendMsgPackageWidget *sendMsgPackageWidget =
+            new SendMsgPackageWidget(sendMsgPackage);
+
+    sendMsgPackageWidget->setMsgIDMappingManager(msgIDMappingManager);
+    sendMsgPackageWidget->setMsgCodeMappingManager(msgCodeMappingManager);
+    sendMsgPackageWidget->setMsgDataMappingManager(msgDataMappingManager);
+
+    sendMessagesWidget->addSendMsgPackageWidget(sendMsgPackageWidget);
+
+    QObject::connect(
+                sendMsgSingleWidget,
+                &SendMsgSingleWidget::sgnl_AddToPackage,
+                sendMsgPackage,
+                &ISendMsgPackage::slt_appendMsg
+                );
+
+    w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");
+
+    //sysOvrvWidget = new SystemOverview(
+    //        messageConfig
+    //        );
+    //errLogViewDiag = new ErrorLogView(&w);
+    /* SystemOverview *SystemOverviewWidget; */
+
+    /* ErrorLogView *errorLogViewDialog; */
+    /* UserRoleMngr userRoleManager; */
+    /* DeviceHandler interfaceHandler; */
+
+    //connect(
+    //        &interfaceHandler,
+    //        &DeviceHandler::sigMsgReceived,
+    //        &receivedMsgsStore,
+    //        &TimestampedMsgStorage::slt_addMsg,
+    //        Qt::QueuedConnection
+    //        );
+    //connect(
+    //        &receivedMsgsStore,
+    //        &TimestampedMsgStorage::sgnl_MsgAdded,
+    //        sysOvrvWidget,
+    //        &SystemOverview::slt_newMessage
+    //        );
+
+    w.show();
+
+    return a.exec();
 }

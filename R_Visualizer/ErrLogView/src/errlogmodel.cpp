@@ -90,7 +90,8 @@ void ErrLogModel::addErrEntry(ErrorLogEntry *errLogEntry)
 
 void ErrLogModel::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    //ToDo
+    //visitor->visit(*this);
 }
 
 void ErrLogModel::errLogMsgReceived(ErrorLogEntry *errLogEntry)

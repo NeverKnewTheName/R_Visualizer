@@ -35,11 +35,6 @@ ErrorLogView::~ErrorLogView()
     delete ui;
 }
 
-void ErrorLogView::accept(FileParser *visitor)
-{
-    visitor->visit(*this);
-}
-
 void ErrorLogView::on_savePB_clicked()
 {
     qDebug() << "ErrLogView" << "SAVE";

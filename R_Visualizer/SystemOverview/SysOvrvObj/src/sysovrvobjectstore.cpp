@@ -169,8 +169,8 @@ void SysOvrvObjectStore::updateObject(SysOvrvObject *obj)
 
 void SysOvrvObjectStore::slt_receiveMessage(const Msg &newMsg)
 {
-    const MsgIDType id = newMsg.getId();
-    const MsgCodeType code = newMsg.getCode();
+    const MsgIDType id = newMsg.getMsgID();
+    const MsgCodeType code = newMsg.getMsgCode();
     const TriggerIdentifier triggerIdentifier(id,code);
 
     qDebug() << "SysOvrvObjectStore::receiveMessage " << id << " " << code;

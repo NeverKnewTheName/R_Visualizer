@@ -43,5 +43,6 @@ void ErrorLogEntry::setDetailString(const QString &value)
 
 void ErrorLogEntry::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    //ToDo
+    //visitor->visit(*this);
 }

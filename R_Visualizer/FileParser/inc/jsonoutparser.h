@@ -1,3 +1,10 @@
+/**
+ * @file jsonoutparser.h
+ * @author Christian Neuberger
+ * @date 2017-04-15
+ * 
+ * @brief Visitor parser to parse objects to json
+ */
 #ifndef JSONOUTPARSER_H
 #define JSONOUTPARSER_H
 
@@ -9,6 +16,9 @@
 
 #include "fileparser.h"
 
+/**
+ * @brief The JsonOutParser
+ */
 class JsonOutParser : public FileParser
 {
 public:
@@ -17,28 +27,27 @@ public:
 
     QJsonDocument getJsonDocument() const;
 
-    void visit(MessageStream &visitor);
-    void visit(MsgStreamModel &visitor);
-    void visit(MsgStorage &visitor);
-    void visit(SendMessages &visitor);
-    void visit(SendMsgModel &visitor);
-    void visit(Msg &visitor);
-    void visit(MessageConfig &visitor);
-    void visit(IDModel &visitor);
-    void visit(IDRep &visitor);
-    void visit(MsgTypeModel &visitor);
-    void visit(MsgTypeRep &visitor);
-    void visit(MessageFilter &visitor);
-    void visit(FilterIDStore &visitor);
-    void visit(FilterCodeStore &visitor);
-    void visit(FilterTimestampStore &visitor);
-    void visit(SystemOverview &visitor);
-    void visit(SysOvrvObject &visitor);
-    void visit(SysOvrvTextLabel &visitor);
-    void visit(SysOvrvTrigger &visitor);
-    void visit(ErrorLogView &visitor);
-    void visit(ErrLogModel &visitor);
-    void visit(ErrorLogEntry &visitor);
+    virtual void visit(IMsg &visitor);
+    virtual void visit(ITimestampedMsg &visitor);
+    virtual void visit(IMsgStreamStore &visitor);
+    virtual void visit(MsgStorage &visitor);
+    virtual void visit(TimestampedMsgStorage &visitor);
+    virtual void visit(ISendMsgPackageStore &visitor);
+    virtual void visit(IMsgIDMappingStore &visitor);
+    virtual void visit(IMsgIDMapping &visitor);
+    virtual void visit(IMsgCodeMappingStore &visitor);
+    virtual void visit(IMsgCodeMapping &visitor);
+    virtual void visit(IMsgDataMappingStore &visitor);
+    virtual void visit(IMsgDataMapping &visitor);
+    virtual void visit(IMsgIDFilterStore &visitor);
+    virtual void visit(IMsgCodeFilterStore &visitor);
+    virtual void visit(IMsgTimespanFilter &visitor);
+
+    /* virtual void visit(SysOvrvObject &visitor); */
+    /* virtual void visit(SysOvrvTextLabel &visitor); */
+    /* virtual void visit(SysOvrvTrigger &visitor); */
+    /* virtual void visit(ErrLogModel &visitor); */
+    /* virtual void visit(ErrorLogEntry &visitor); */
 
 private:
     std::unique_ptr<QJsonValue> currentJsonValuePtr;

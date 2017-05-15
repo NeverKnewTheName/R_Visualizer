@@ -9,37 +9,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "can_packet.h"
-#include "devicehandler.h"
+/* #include "can_packet.h" */
+/* #include "devicehandler.h" */
 
-/*
- * Custom Widgets
- */
-/* #include "messagestream.h" */
-class MessageStream;
-/* #include "messageconfig.h" */
-class MessageConfig;
-/* #include "messagefilter.h" */
-class MessageFilter;
-/* #include "sendmessages.h" */
-class SendMessages;
-/* #include "systemoverview.h" */
-class SystemOverview;
-
-/* #include "errlogview.h" */
-class ErrorLogView;
-
-/*
- * Custom Models
- */
-#include "msgstorage.h" // Model for the MessageStream Widget
-#include "sendmsgmodel.h" // Model for the SendMessages Widget
-#include "idmodel.h" // ID Model for the MessageConfig Widget
-#include "msgtypemodel.h" // MessageType Model for the MessageConfig Widget
-
-#include "userrolemngr.h"
+#include "UserRoleManager.h"
 
 #include <QMainWindow>
+
+class MessageStreamWidget;
+class ErrorLogView;
+
+class TimestampedMsg;
+
+class IInterfaceHandler;
 
 namespace Ui {
 class MainWindow;
@@ -62,7 +44,9 @@ public:
      * The constructor of the #MainWindow takes care of the construction of all modules
      * and everything that is needed for the execution of R_Visualizer.
      */
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(
+            QWidget *parent = 0
+            );
     /**
      * \brief Destructs the #MainWindows object
      * 
@@ -71,13 +55,29 @@ public:
      */
     ~MainWindow();
 
+    void connectInterfaceHandler(IInterfaceHandler *interfaceHandler);
+    void setMessageStreamWidget(QWidget *msgStreamWidget);
+    void appendTabMenuWidget(
+            QWidget *widgetToAppend,
+            const QString &widgetName
+            );
+
+    void addToTesting(
+        QWidget *widgetToTest
+        );
+    /* void setErrorDialog(ErrorLogView *errorLogDialog); */
+
 signals:
-    void sigSendCANPacket(CAN_PacketPtr);
-    void switchUserRoles(UserRoleMngr::UserRole roleToSwitchTo);
-    void changedDataAcquisitionMode(bool state);
-    void queryFetchRow(int direction);
-    void dataReceived(Data_PacketPtr);
-    void errorReceived(Error_PacketPtr);
+    void switchUserRoles(UserRoleManagement::UserRole roleToSwitchTo);
+    /* void dataReceived(Data_PacketPtr); */
+    /* void errorReceived(Error_PacketPtr); */
+
+    void sgnl_AddTestMessage(const TimestampedMsg &testMsg);
+
+    void sgnl_ConnectToInterface();
+    void sgnl_DisconnectFromInterface();
+    void sgnl_StartSession();
+    void sgnl_StopSession();
 
 private slots:
     /**
@@ -117,40 +117,25 @@ private slots:
      */
     void on_actionStop_triggered();
 
-    void idAddFinished(const MsgIDType id, const QString &name, const QColor &color);
-    void msgTypeAddFinished(const MsgCodeType code, const QString &codeName, const QString &messageFormat, const QColor &color);
-
     /**
      * \brief Applies the new role to the #MainWindow
      * 
      * The #UserRole affects the SwitchRoles button as well as advanced options in the menu.
      */
-    void applyRole(UserRoleMngr::UserRole roleToSwitchTo);
-
+    void applyRole(UserRoleManagement::UserRole roleToSwitchTo);
     void on_actionSwitch_User_Role_triggered();
-    void scrollBarMsgTableViewMoved(int position);
-
-    void autoScroll();
-    void updateSlider(int direction);
-    void scrollToGetMoreContent(bool enabled);
-
     void on_TestPB_1_clicked();
-
     void on_actionOpen_Error_Log_triggered();
 
-    void messageReceived(CAN_PacketPtr ptr);
+
+    void slt_InterfaceConnected();
+    void slt_InterfaceDisconnected();
+    void slt_InterfaceSessionStarted();
+    void slt_InterfaceSessionStopped();
 
 private:
     void initDeviceHandler();
     void connectDeviceHandler();
-
-    void initMessageStream();
-    void connectMessageStream();
-    void initTabs();
-    void connectSystemOverview();
-    void connectSendMessages();
-    void connectMessageConfig();
-    void connectMessageFilter();
 
     void initErrorLog();
     void connectErrorLog();
@@ -158,11 +143,10 @@ private:
     void initUserRoleManager();
     void connectUserRoleManager();
 
-    void initMsgsTableView();
+    void disconnectInterfaceHandler();
 
     Ui::MainWindow *ui; //!< The User Interface that was created by QT
     QString currentFileName;
-    MsgStorage receivedMsgsStore;
 
     //Maybe use pointers and dynamic allocation here... QObject hierarchy and garbage collection...
     /*
@@ -174,20 +158,18 @@ private:
      * For the configuration widgets the parent is the QTabWidget that is
      * inside of the MainWindow.
      */
-    MessageConfig *msgConfigWidget;
-    MessageFilter *msgFilterWidget;
-    MessageStream *msgStream;
-    SendMessages *sndMsgsWidget;
-    SystemOverview *sysOvrvWidget;
+    //MessageConfig *msgConfigWidget;
+    //MessageFilter *msgFilterWidget;
+    //MessageStream *msgStream;
+    //SendMessages *sndMsgsWidget;
+    //SystemOverview *sysOvrvWidget;
 
-    ErrorLogView *errLogViewDiag;
-    int currErrCntr;
-    int totalErrCntr;
+    //ErrorLogView *errLogViewDiag;
 
-    UserRoleMngr userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
+    UserRoleManager userRoleMngr; //!< The #UserRoleMngr that keeps track of the current #UserRole
     bool m_IsConnectedToDevice; //!< Keeps track of whether an interface ot an R_Sys is connected
 
-    DeviceHandler m_deviceHandler; /**< #DeviceHandler */
+    QList<QMetaObject::Connection> interfaceHandlerConnections;
 };
 
 #endif // MAINWINDOW_H

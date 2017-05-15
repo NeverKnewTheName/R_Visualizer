@@ -7,9 +7,13 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/userrolemngr.cpp \
+    $$PWD/src/UserRoleManager.cpp \
+    #$$PWD/src/userrolemngr.cpp \
 
 HEADERS  += \
-    $$PWD/inc/userrolemngr.h \
+    $$PWD/inc/IUserRoleManager.h \
+    $$PWD/inc/UserRoleManager.h \
+    $$PWD/inc/IUserRoleManageable.h \
+    #$$PWD/inc/userrolemngr.h \
 
 FORMS    += \

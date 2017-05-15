@@ -50,19 +50,15 @@
         <attribute name="toolTip">
          <string>Configure the tool itself</string>
         </attribute>
-        <widget class="QPushButton" name="TestPB_1">
-         <property name="geometry">
-          <rect>
-           <x>80</x>
-           <y>50</y>
-           <width>80</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Test_1</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="TestPB_1">
+           <property name="text">
+            <string>Test_1</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>
@@ -87,6 +83,8 @@
     <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_Error_Log"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuTrace">
     <property name="title">
@@ -216,10 +214,35 @@
     <string>Open Error Log</string>
    </property>
   </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="../../res/ressources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>519</x>
+     <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

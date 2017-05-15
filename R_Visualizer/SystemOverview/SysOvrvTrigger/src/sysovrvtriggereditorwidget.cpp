@@ -40,8 +40,8 @@ void SysOvrvTriggerEditorWidget::RUpdatewidgetdata(const QModelIndex &index)
     triggerToEdit = static_cast<SysOvrvTrigger*>(index.data(Qt::UserRole+1).value<void *>());
     currentID = static_cast<MsgIDType>(index.parent().parent().data().toUInt());
     currentCode = static_cast<MsgCodeType>(index.parent().data().toUInt());
-    ui->IDLineEdit->setText(QString::number(currentID));
-    ui->CodeLineEdit->setText(QString::number(currentCode));
+    ui->IDLineEdit->setText(static_cast<QString>(currentID));
+    ui->CodeLineEdit->setText(static_cast<QString>(currentCode));
 
     EvaluatorTablemodel *oldModel = evaluatorModel;
 
