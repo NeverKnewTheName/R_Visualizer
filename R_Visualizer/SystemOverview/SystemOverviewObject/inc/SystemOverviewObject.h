@@ -27,7 +27,7 @@ public:
             const QString &name,
             const QColor &color = QColor(Qt::lightGray),
             const QSizeF &size = QSizeF(100,100),
-            ISysOverviewObjectManager *objectManager,
+            ISysOverviewObjectManager *objectManager = Q_NULLPTR,
             QGraphicsItem *parent = Q_NULLPTR
             );
     virtual ~SystemOverviewObject();
@@ -56,6 +56,7 @@ public:
     virtual QSizeF getSize() const;
     virtual void setColor(const QColor &color);
     virtual QColor getColor() const;
+    virtual QColor getCurObjColor() const;
 
     virtual SysOverviewTextLabel *addLabel();
     virtual SysOverviewTextLabel *addLabel(SysOverviewTextLabel *label);

@@ -3,16 +3,21 @@
 #include "ISysOverviewObjectManager.h"
 #include "ISysOverviewObjectResizeManager.h"
 
-#include "ISysOverviewShapeManager.h"
+#include "ISysOverviewObjectManager.h"
+#include "SysOverviewObjectShapeManager.h"
+
+#include "SysOverviewObjectResizeManager.h"
 
 #include "SysOverviewTextLabel.h"
 
+#include <QCursor>
+
 SystemOverviewObject::SystemOverviewObject(
-            QGraphicsItem *parent = Q_NULLPTR
+            QGraphicsItem *parent
         ) :
-    ISystemOverviewObject(parent)
-    objectManager(new SysOverviewObjectShapeManager()),
-    resizeManager(
+    ISystemOverviewObject(parent),
+    objManager(new SysOverviewObjectShapeManager(*this)),
+    resizeManager(new SysOverviewObjectResizeManager(*this)),
     objColor(Qt::lightGray),
     objName("INVALID"),
     objBoundingRect(0,0,100,100)
@@ -20,8 +25,8 @@ SystemOverviewObject::SystemOverviewObject(
     setFlags(
             QGraphicsItem::ItemIsFocusable |
             QGraphicsItem::ItemIsSelectable |
-            QGraphics::ItemSendsGeometryChanges |
-            QGraphics::ItemSendsScenePositionChanges
+            QGraphicsItem::ItemSendsGeometryChanges |
+            QGraphicsItem::ItemSendsScenePositionChanges
         );
 }
 
@@ -30,20 +35,25 @@ SystemOverviewObject::SystemOverviewObject(
                 const QColor &color,
                 const QSizeF &size,
                 ISysOverviewObjectManager *objectManager,
-                QGraphicsItem *parent = Q_NULLPTR
+                QGraphicsItem *parent
             ) :
     ISystemOverviewObject(parent),
-    objectManager(objectManager),
+    objManager(objectManager),
     objName(objName),
     objColor(color),
-    objBoundingRect(QPaintF(0,0),size)
+    objBoundingRect(QPointF(0,0),size)
 {
     setFlags(
             QGraphicsItem::ItemIsFocusable |
             QGraphicsItem::ItemIsSelectable |
-            QGraphics::ItemSendsGeometryChanges |
-            QGraphics::ItemSendsScenePositionChanges
-        );
+            QGraphicsItem::ItemSendsGeometryChanges |
+            QGraphicsItem::ItemSendsScenePositionChanges
+                );
+}
+
+SystemOverviewObject::~SystemOverviewObject()
+{
+
 }
 
 QRectF SystemOverviewObject::boundingRect() const
@@ -64,9 +74,9 @@ void SystemOverviewObject::paint(
 
     const QRectF &boundingRect = resizeManager->getBoundingRect();
 
-    QColor fillColor(getCurObjColor);
+    QColor fillColor(getCurObjColor());
 
-    shapeManager->paint(painter, boundingRect, fillColor);
+    objManager->paint(painter, boundingRect, fillColor);
 }
 
 void SystemOverviewObject::focusInEvent(QFocusEvent *event)
@@ -133,7 +143,7 @@ void SystemOverviewObject::setSize(const QSizeF &size)
 
 QSizeF SystemOverviewObject::getSize() const
 {
-    resizeManager->getSize();
+    return resizeManager->getSize();
 }
 
 void SystemOverviewObject::setColor(const QColor &color)

@@ -96,6 +96,13 @@
 #include "ISendMsgPackageStore.h"
 #include "SendMsgPackageStore.h"
 
+#include "ISystemOverview.h"
+#include "SystemOverview.h"
+#include "SystemOverviewWidget.h"
+#include "ISystemOverviewObjectStore.h"
+#include "SystemOverviewObjectStore.h"
+
+
 #include "lineedittester.h"
 
 /* #include "errorlogentry.h" */
@@ -379,6 +386,22 @@ int main(int argc, char *argv[])
                 );
 
     w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");
+
+    ISystemOverviewObjectStore *systemOverviewObjectStore =
+            new SystemOverviewObjectStore();
+    ISystemOverview *systemOverview = new SystemOverview(
+                systemOverviewObjectStore
+                );
+
+    systemOverviewObjectStore->setParent(systemOverview);
+
+
+    SystemOverviewWidget *systemOverviewWidget =
+            new SystemOverviewWidget(
+                systemOverview
+                );
+
+    w.appendTabMenuWidget(systemOverviewWidget, "System Overview");
 
     //sysOvrvWidget = new SystemOverview(
     //        messageConfig

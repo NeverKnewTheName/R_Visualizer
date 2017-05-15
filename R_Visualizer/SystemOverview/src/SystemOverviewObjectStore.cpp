@@ -1,5 +1,7 @@
 #include "SystemOverviewObjectStore.h"
 
+#include "ISystemOverviewObject.h"
+
 
 SystemOverviewObjectStore::SystemOverviewObjectStore(
         QObject *parent
@@ -12,11 +14,7 @@ SystemOverviewObjectStore::~SystemOverviewObjectStore()
 {
 }
 
-SystemOverviewObjectStore::addSystemOverviewObject(ISysOverviewObject *object)
+void SystemOverviewObjectStore::addSystemOverviewObject(ISystemOverviewObject *object)
 {
-    sysOverviewObjStore->insert(object->getName(),object);
+    sysOverviewObjStore.insert(object->getObjectName(),object);
 }
-
-SystemOverviewObjectStore::
-
-SystemOverviewObjectStore::

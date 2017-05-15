@@ -24,9 +24,9 @@ public:
             );
     virtual ~SystemOverviewObjectStore();
 
-    virtual void addSystemOverviewObject(ISysOverviewObject *object);
+    virtual void addSystemOverviewObject(ISystemOverviewObject *object);
 private:
-    QHash<QString,ISysOverviewObject *> sysOverviewObjStore;
+    QHash<QString,ISystemOverviewObject *> sysOverviewObjStore;
 
 };
 

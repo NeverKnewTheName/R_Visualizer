@@ -31,9 +31,9 @@ public:
 signals:
 
 public slots:
-    virtual void slt_ReceiveMsg(const IMsg &receiveMsg)
+    virtual void slt_ReceiveMsg(const IMsg &receivedMsg)
     {
-        receiveMsg(receiveMsg);
+        receiveMsg(receivedMsg);
     }
 
 };

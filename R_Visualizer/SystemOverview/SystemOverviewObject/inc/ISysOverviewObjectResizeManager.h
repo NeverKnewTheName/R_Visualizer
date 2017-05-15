@@ -23,10 +23,10 @@ public:
 
     virtual void paint(QPainter *painter) = 0;
 
-    virtual void setSize(const QSizeF &size);
-    virtual QSizeF getSize() const;
+    virtual void setSize(const QSizeF &size) = 0;
+    virtual QSizeF getSize() const = 0;
 
-    virtual QRectF getBoundingRect() const;
+    virtual QRectF getBoundingRect() const = 0;
 };
 
 #endif /* ISYSOVERVIEWOBJECTRESIZEMANAGER_H */

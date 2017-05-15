@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-class ISysOverviewObject;
+class ISystemOverviewObject;
 
 /**
  * @brief The ISystemOverviewObjectStore interface
@@ -28,7 +28,7 @@ public:
     }
     virtual ~ISystemOverviewObjectStore(){}
 
-    virtual void addSystemOverviewObject(ISysOverviewObject *object) = 0;
+    virtual void addSystemOverviewObject(ISystemOverviewObject *object) = 0;
 };
 
 #endif /* ISYSTEMOVERVIEWOBJECTSTORE_H */

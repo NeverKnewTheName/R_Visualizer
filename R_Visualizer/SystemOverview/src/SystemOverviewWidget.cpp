@@ -1,9 +1,13 @@
 #include "SystemOverviewWidget.h"
 #include "ui_systemoverviewwidget.h"
 
-SystemOverviewWidget::SystemOverviewWidget(QWidget *parent) :
+SystemOverviewWidget::SystemOverviewWidget(
+        ISystemOverview *systemOverview,
+        QWidget *parent
+        ) :
     QWidget(parent),
-    ui(new Ui::SystemOverviewWidget)
+    ui(new Ui::SystemOverviewWidget),
+    systemOverview(systemOverview)
 {
     ui->setupUi(this);
 }

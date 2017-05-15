@@ -1,5 +1,7 @@
 #include "SystemOverview.h"
 
+#include "ISystemOverviewObjectStore.h"
+
 #include "IMsg.h"
 #include "MsgIDType.h"
 #include "MsgCodeType.h"

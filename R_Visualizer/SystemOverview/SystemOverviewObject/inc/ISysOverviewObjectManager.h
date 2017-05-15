@@ -24,7 +24,7 @@ public:
             QPainter *painter,
             const QRectF &boundingRect,
             const QColor &color
-            );
+            ) = 0;
 };
 
 #endif /* ISYSOVERVIEWOBJECTMANAGER_H */

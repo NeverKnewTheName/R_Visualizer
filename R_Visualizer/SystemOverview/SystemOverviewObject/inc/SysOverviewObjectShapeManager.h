@@ -28,7 +28,7 @@ public:
     };
 
     SysOverviewObjectShapeManager(
-            ISystemOverviewObject *sysOverviewObject,
+            ISystemOverviewObject &sysOverviewObject,
             SysOverviewObjectShapes shape = SysOvrvShape_Rectangle
             /* QObject *parent = Q_NULLPTR */
             );
@@ -47,7 +47,7 @@ public:
     static QStringList listShapes();
 
 private:
-    ISystemOverviewObject *sysOverviewObject;
+    ISystemOverviewObject &sysOverviewObject;
     SysOverviewObjectShapes shape;
 };
 

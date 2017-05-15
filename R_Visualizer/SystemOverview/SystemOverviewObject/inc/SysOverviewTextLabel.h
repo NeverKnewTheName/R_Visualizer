@@ -18,7 +18,7 @@ class SysOverviewTextLabel : public QGraphicsSimpleTextItem
 public:
     SysOverviewTextLabel(
             const QString &text = QString(""),
-            QGraphicsItem *parent
+            QGraphicsItem *parent = Q_NULLPTR
             );
     virtual ~SysOverviewTextLabel();
 

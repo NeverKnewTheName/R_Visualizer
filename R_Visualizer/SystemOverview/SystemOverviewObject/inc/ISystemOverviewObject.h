@@ -52,6 +52,7 @@ public:
 
     virtual void setColor(const QColor &color) = 0;
     virtual QColor getColor() const = 0;
+    virtual QColor getCurObjColor() const = 0;
 
     virtual SysOverviewTextLabel *addLabel() = 0;
     virtual SysOverviewTextLabel *addLabel(SysOverviewTextLabel *label) = 0;

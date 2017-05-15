@@ -11,7 +11,7 @@
 #include <QObject>
 #include "ISystemOverview.h"
 
-class SystemOverviewNotifier;
+class ISystemOverviewObjectStore;
 
 /**
  * @brief The SystemOverview
