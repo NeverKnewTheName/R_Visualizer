@@ -46,5 +46,11 @@
         "MsgDataDefaultColor": "#fff5a9",
         "MsgDataFormatString": "Channel: #OP#(#Data0##+#1)#/OP#\nTemp: #OP#(#Data2##|##OP#(#Data1##<<#8)#/OP#)#/OP# °C",
         "MsgID": 272
+    },
+    {
+        "MsgCode": 11,
+        "MsgDataDefaultColor": "#a0d3ff",
+        "MsgDataFormatString": "Address: #OP#(#Data1##+##OP#(#Data0##<<#8)#/OP#)#/OP#\nData: #OP#(#OP#(#Data2##&#128)#/OP##>>#7)#/OP# #OP#(#OP#(#Data2##&#64)#/OP##>>#6)#/OP# #OP#(#OP#(#Data2##&#32)#/OP##>>#5)#/OP# #OP#(#OP#(#Data2##&#16)#/OP##>>#4)#/OP# #OP#(#OP#(#Data2##&#8)#/OP##>>#3)#/OP# #OP#(#OP#(#Data2##&#4)#/OP##>>#2)#/OP# #OP#(#OP#(#Data2##&#2)#/OP##>>#1)#/OP# #OP#(#Data2##&#1)#/OP# #OP#(#OP#(#Data3##&#128)#/OP##>>#7)#/OP# #OP#(#OP#(#Data3##&#64)#/OP##>>#6)#/OP# #OP#(#OP#(#Data3##&#32)#/OP##>>#5)#/OP# #OP#(#OP#(#Data3##&#16)#/OP##>>#4)#/OP# #OP#(#OP#(#Data3##&#8)#/OP##>>#3)#/OP#",
+        "MsgID": 255
     }
 ]

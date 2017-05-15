@@ -74,9 +74,14 @@ QString MsgDataFormatter::parseMsgDataToString(const IMsg &msgToParse) const
     while(!operationString.isEmpty())
     {
         QString parsedOperation = operationString;
+        qDebug() << "Operation to parse: " << parsedOperation;
+
         QVariant operationResult;
-        parsedOperation.remove("#OP#(").remove(")#OP#");
+        parsedOperation.remove("#OP#(").remove(")#/OP#");
+        qDebug() << "Operation to parse: " << parsedOperation;
+
         QStringList operands = parsedOperation.split("#");
+        qDebug() << "Operands: " << operands;
 
         QString operation = operands.at(1);
         if(!operation.compare("+"))
@@ -119,6 +124,8 @@ QString MsgDataFormatter::parseMsgDataToString(const IMsg &msgToParse) const
         {
             operationResult.setValue(operands.first().toInt() ^ operands.last().toInt());
         }
+
+        qDebug() << "Operation Result: " << operationResult;
 
         formattedData.replace(operationString, operationResult.value<QString>());
         operationString = QRegularExpressionMatch(operationParseRegEx.match(formattedData)).captured();
