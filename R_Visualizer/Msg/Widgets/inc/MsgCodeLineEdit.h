@@ -64,6 +64,10 @@ private:
     Ui::MsgCodeLineEdit *ui;
     IMsgCodeMappingManager *msgCodeMappingManager;
     QMetaObject::Connection backGroundColorChangerConnection;
+
+    // QWidget interface
+protected:
+    void focusInEvent(QFocusEvent *event);
 };
 
 /**

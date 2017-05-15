@@ -27,6 +27,12 @@ MsgDataMappingAddDialog::MsgDataMappingAddDialog(QWidget *parent) :
             this,
             &MsgDataMappingAddDialog::slt_ReadyToCommit
            );
+    setTabOrder(ui->msgIDLineEdit,ui->msgCodeLineEdit);
+    setTabOrder(ui->msgCodeLineEdit,ui->formatterPlainTextEdit);
+    setTabOrder(ui->formatterPlainTextEdit,ui->formatterPushButton);
+    setTabOrder(ui->formatterPushButton,ui->buttonBox);
+
+    ui->msgIDLineEdit->setFocus();
 }
 
 MsgDataMappingAddDialog::~MsgDataMappingAddDialog()

@@ -15,6 +15,13 @@ MsgCodeMappingAddDialog::MsgCodeMappingAddDialog(QWidget *parent) :
             this,
             &MsgCodeMappingAddDialog::readyToCommit
             );
+
+    setTabOrder(ui->msgCodeLineEdit,ui->nameLineEdit);
+    setTabOrder(ui->nameLineEdit,ui->colorLineEdit);
+    setTabOrder(ui->colorLineEdit,ui->colorPickerPushButton);
+    setTabOrder(ui->colorPickerPushButton,ui->buttonBox);
+
+    ui->msgCodeLineEdit->setFocus();
 }
 
 MsgCodeMappingAddDialog::~MsgCodeMappingAddDialog()

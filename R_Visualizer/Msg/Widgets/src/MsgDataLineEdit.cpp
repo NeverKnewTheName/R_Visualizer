@@ -131,7 +131,7 @@ QString MsgDataLineEdit::convertFormat(
 
     number = number.simplified(); //remove leading and trailing whitespace
 
-    qDebug() << "Simplified number: " << number;
+    //qDebug() << "Simplified number: " << number;
     QStringList bytes;
 
     if(oldFieldWidth == 0)
@@ -141,7 +141,7 @@ QString MsgDataLineEdit::convertFormat(
 
         while(num)
         {
-            qDebug() << "num: " << num;
+            //qDebug() << "num: " << num;
             bytes.prepend(
                         QString::number(
                             num & 0xFFu,
@@ -156,7 +156,7 @@ QString MsgDataLineEdit::convertFormat(
         bytes = number.split(' '); //split into bytes
     }
 
-    qDebug() << "Splits: " << bytes;
+    //qDebug() << "Splits: " << bytes;
 
     if(newFieldWidth == 0)
     {
@@ -215,7 +215,7 @@ QStringList MsgDataLineEdit::extractBytes(
 
         while(num)
         {
-            qDebug() << "num: " << num;
+            //qDebug() << "num: " << num;
             bytes.prepend(
                         QString::number(
                             num & 0xFFu,
@@ -287,11 +287,11 @@ void MsgDataLineEdit::on_numFormatComboBox_currentIndexChanged(int index)
 {
     QString number = ui->dataLineEdit->text();
 
-    qDebug() << "Old Number: " << number;
+    //qDebug() << "Old Number: " << number;
 
     convertFormat(number,currentFormatIndex,index);
 
-    qDebug() << "New Number: " << number;
+    //qDebug() << "New Number: " << number;
 
     currentFormatIndex = index;
 
@@ -305,17 +305,12 @@ void MsgDataLineEdit::on_numFormatComboBox_currentIndexChanged(int index)
     ui->dataLineEdit->setCursorPosition(0);
     /* ui->dataLineEdit->selectAll(); */
 
-    qDebug() << "Set Text: " << ui->dataLineEdit->text();
+    //qDebug() << "Set Text: " << ui->dataLineEdit->text();
 
 }
 
 
 void MsgDataLineEdit::focusInEvent(QFocusEvent *event)
 {
-    if(event->reason() == Qt::MouseFocusReason)
-    {
-        qDebug() << "GOT FOCUS";
-    }
-
-    QWidget::focusInEvent(event);
+    ui->dataLineEdit->setFocus();
 }

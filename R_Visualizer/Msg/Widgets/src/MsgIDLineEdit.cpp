@@ -24,9 +24,8 @@ MsgIDLineEdit::MsgIDLineEdit(
     connect(
         ui->idLineEdit,
         &QLineEdit::returnPressed,
-                [=](){ qDebug() << "ID editing finished"; emit sgnl_EditingFinished(); }
-        //this,
-        //&MsgIDLineEdit::sgnl_EditingFinished
+        this,
+        &MsgIDLineEdit::sgnl_EditingFinished
         );
 
     connect(
@@ -139,4 +138,9 @@ void MsgIDLineEdit::paintEvent(QPaintEvent *event)
     QSize lineEditSize = ui->idLineEdit->size();
     QSize widgetSize = size();
     QWidget::paintEvent(event);
+}
+
+void MsgIDLineEdit::focusInEvent(QFocusEvent *event)
+{
+    ui->idLineEdit->setFocus();
 }

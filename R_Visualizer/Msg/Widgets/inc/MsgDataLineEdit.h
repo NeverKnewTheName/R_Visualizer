@@ -55,7 +55,12 @@ class LineEditCursorHelper : public QObject
         if(lineEdit)
         {
             const QString &currentText = lineEdit->text().trimmed();
-            lineEdit->setCursorPosition(currentText.length()+1);
+            int offset = 0;
+            if(!currentText.isEmpty())
+            {
+                offset = 1;
+            }
+            lineEdit->setCursorPosition(currentText.length()+offset);
         }
     }
 

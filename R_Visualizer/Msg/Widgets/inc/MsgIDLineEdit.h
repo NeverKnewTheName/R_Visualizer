@@ -72,6 +72,10 @@ public:
     // QWidget interface
 protected:
     void paintEvent(QPaintEvent *event);
+
+    // QWidget interface
+protected:
+    void focusInEvent(QFocusEvent *event);
 };
 
 /**

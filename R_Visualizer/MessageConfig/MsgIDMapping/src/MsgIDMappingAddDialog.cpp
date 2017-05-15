@@ -15,6 +15,13 @@ MsgIDMappingAddDialog::MsgIDMappingAddDialog(QWidget *parent) :
             this,
             &MsgIDMappingAddDialog::readyToCommit
             );
+
+    setTabOrder(ui->msgIDLineEdit,ui->nameLineEdit);
+    setTabOrder(ui->nameLineEdit,ui->colorLineEdit);
+    setTabOrder(ui->colorLineEdit,ui->pushButton);
+    setTabOrder(ui->pushButton,ui->buttonBox);
+
+    ui->msgIDLineEdit->setFocus();
 }
 
 MsgIDMappingAddDialog::~MsgIDMappingAddDialog()

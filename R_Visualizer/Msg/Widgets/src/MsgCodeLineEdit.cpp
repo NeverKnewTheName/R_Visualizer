@@ -113,5 +113,10 @@ void MsgCodeLineEdit::codeLineEditTextChanged(const QString &arg1)
     ui->codeLineEdit->setStyleSheet(
             QString("QLineEdit { background : %1;}")
             .arg(newBackground.name())
-            );
+                );
+}
+
+void MsgCodeLineEdit::focusInEvent(QFocusEvent *event)
+{
+    ui->codeLineEdit->setFocus();
 }

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Msg Data Format String Editor</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
