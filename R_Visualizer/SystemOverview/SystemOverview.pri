@@ -13,6 +13,7 @@ SOURCES += \
     #$$PWD/src/isysovrvelement.cpp \
     $$PWD/src/SystemOverviewWidget.cpp \
     $$PWD/src/SystemOverviewObjectStore.cpp \
+    $$PWD/src/SystemOverviewGraphicsView.cpp
 
 HEADERS  += \
     $$PWD/inc/ISystemOverview.h \
@@ -23,6 +24,7 @@ HEADERS  += \
     $$PWD/inc/SystemOverviewWidget.h \
     $$PWD/inc/ISystemOverviewObjectStore.h \
     $$PWD/inc/SystemOverviewObjectStore.h \
+    $$PWD/inc/SystemOverviewGraphicsView.h
 
 FORMS    += \
     #$$PWD/ui/systemoverview.ui \

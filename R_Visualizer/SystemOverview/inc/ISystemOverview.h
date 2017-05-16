@@ -10,9 +10,13 @@
 
 #include <QObject>
 
+#include <QPointF>
+
 #include "IUserRoleManager.h"
 
-class SystemOverviewNotifier;
+#include <QDebug>
+
+class ISystemOverviewObject;
 class IMsg;
 
 /**
@@ -34,6 +38,21 @@ public slots:
     virtual void slt_ReceiveMsg(const IMsg &receivedMsg)
     {
         receiveMsg(receivedMsg);
+    }
+
+    virtual void slt_RequestAddObject(const QPointF &position)
+    {
+        qDebug() << "Add Object Request at: " << position;
+    }
+
+    virtual void slt_RequestRemoveObject(ISystemOverviewObject *objectToRemove)
+    {
+        qDebug() << "Remove Object Request";
+    }
+
+    virtual void slt_RequestEditObject(ISystemOverviewObject *objectToEdit)
+    {
+        qDebug() << "Edit Object Request";
     }
 
 };
