@@ -1,0 +1,32 @@
+[
+    {
+        "MsgID": 240,
+        "MsgIDAlias": "Master",
+        "MsgIDColorRep": "#abd0ff"
+    },
+    {
+        "MsgID": 272,
+        "MsgIDAlias": "Temp",
+        "MsgIDColorRep": "#ff9c9c"
+    },
+    {
+        "MsgID": 256,
+        "MsgIDAlias": "Pump",
+        "MsgIDColorRep": "#d0b4ff"
+    },
+    {
+        "MsgID": 289,
+        "MsgIDAlias": "Valve1",
+        "MsgIDColorRep": "#b17f9e"
+    },
+    {
+        "MsgID": 288,
+        "MsgIDAlias": "Valve0",
+        "MsgIDColorRep": "#ca8fca"
+    },
+    {
+        "MsgID": 255,
+        "MsgIDAlias": "PC",
+        "MsgIDColorRep": "#ffaa7f"
+    }
+]

@@ -1,4 +1,5 @@
 DEPENDPATH += $$PWD
+INCPATH += $$PWD
 
 SOURCES += \
     $$PWD/templatevalueevaluatorcreatorwidget.cpp

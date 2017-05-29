@@ -1,6 +1,7 @@
 /**
- * @file	errorlogentry.h
- * @author	Christian Neuberger
+ * @file    errorlogentry.h
+ * @author  Christian Neuberger
+ * @date 2016-03-20
  *
  * \brief Represents one entry of the error log.
  *
@@ -16,7 +17,14 @@
 
 #include <QMetaType>
 
-class ErrorLogEntry
+class FileParser;
+
+#include "IFileParsable.h"
+
+/**
+ * \brief The ErrorLogEntry
+ */
+class ErrorLogEntry : public IFileParsable
 {
 public:
     ErrorLogEntry();
@@ -28,6 +36,8 @@ public:
 
     QString getDetailString() const;
     void setDetailString(const QString &value);
+
+    void accept(FileParser *visitor);
 
 private:
     QDateTime timestamp;

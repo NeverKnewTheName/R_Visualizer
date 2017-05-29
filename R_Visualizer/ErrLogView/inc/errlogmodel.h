@@ -1,11 +1,9 @@
 /**
- * @file	errorlogmodel.h
- * @author	Christian Neuberger
+ * \file    errorlogmodel.h
+ * \author  Christian Neuberger
+ * \date 2016-03-20
  *
  * \brief Model that maintains the Error Log.
- *
- *
- *
  */
 
 #ifndef ERRLOGMODEL_H
@@ -15,10 +13,23 @@
 #include "hugeqvector.h"
 
 class ErrorLogEntry;
+class FileParser;
 
-class ErrLogModel : public QAbstractTableModel
+#include "IFileParsable.h"
+
+/**
+ * @brief The ErrLogModel
+ */
+class ErrLogModel : public QAbstractTableModel, public IFileParsable
 {
 public:
+    enum HeaderCols
+    {
+        COL_TIMESTAMP,
+        COL_DETAILS,
+        COL_NR_OF_COLS
+    };
+
     ErrLogModel(QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
@@ -29,12 +40,8 @@ public:
 
     void addErrEntry(ErrorLogEntry *errLogEntry);
 
-    enum HeaderCols
-    {
-        COL_TIMESTAMP,
-        COL_DETAILS,
-        COL_NR_OF_COLS
-    };
+    void accept(FileParser *visitor);
+
 private:
     HugeQVector<ErrorLogEntry> errLogStore;
     friend class MainWindow;

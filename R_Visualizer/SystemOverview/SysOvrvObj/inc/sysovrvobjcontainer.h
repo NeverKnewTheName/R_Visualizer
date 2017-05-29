@@ -6,7 +6,7 @@
 //#include <QPointF>
 
 //#include "sysovrvobject.h"
-//#include "msg.h"
+//#include "Msg.h"
 
 //class SysOvrvObjContainer : public QGraphicsItem
 //{

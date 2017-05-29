@@ -1,5 +1,7 @@
 #include "errorlogentry.h"
 
+#include "fileparser.h"
+
 ErrorLogEntry::ErrorLogEntry() :
     timestamp(QDateTime()),
     detailString(QString())
@@ -37,4 +39,10 @@ QString ErrorLogEntry::getDetailString() const
 void ErrorLogEntry::setDetailString(const QString &value)
 {
     detailString = value;
+}
+
+void ErrorLogEntry::accept(FileParser *visitor)
+{
+    //ToDo
+    //visitor->visit(*this);
 }

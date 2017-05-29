@@ -2,67 +2,95 @@
 
 #include <QMenu>
 #include <QContextMenuEvent>
-#include "sysovrvobject.h"
+#include <QPointF>
+#include "ISystemOverviewObject.h"
 
 #include <QDebug>
 
 SysOverviewGraphicsView::SysOverviewGraphicsView(QWidget *parent) :
     QGraphicsView(parent),
-    currentObject(NULL)
+    editingEnabled(false)
 {
-    sysOvrvObjStore = new SysOvrvObjectStore(this);
 }
 
 void SysOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
+    if(!editingEnabled)
+    {
+        return;
+    }
     QMenu menu(this);
     qDebug() << "Pos: " << event->pos();
-    currentMousePos = mapToScene(event->pos());
+    QPointF currentMousePos = mapToScene(event->pos());
     qDebug() << "CurMousePos mapped: " << currentMousePos;
-    currentObject = qgraphicsitem_cast<SysOvrvObject*>(itemAt(event->pos()));
+    ISystemOverviewObject *currentObject =
+        qgraphicsitem_cast<ISystemOverviewObject*>(
+                itemAt(event->pos())
+                );
 
-    if(currentObject == NULL)
+    if(currentObject == Q_NULLPTR)
     {
         QAction * actionAdd = menu.addAction("Add Object");
-        connect(actionAdd, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::addObject);
+        connect(actionAdd, &QAction::triggered, [=](){
+                emit sgnl_addObjRequest(currentMousePos);
+                });
     }
     else
     {
-        while(currentObject->parentItem() != NULL)
-            currentObject = qgraphicsitem_cast<SysOvrvObject*>(currentObject->parentItem());
+        while(currentObject->parentItem() != Q_NULLPTR)
+        {
+            // Get to top level object!
+            currentObject =
+                qgraphicsitem_cast<ISystemOverviewObject*>(
+                        currentObject->parentItem()
+                        );
+        }
 
         QAction * actionRmv = menu.addAction("Remove Object");
         QAction * actionEdit = menu.addAction("Edit Object");
         QAction * actionDuplctObj = menu.addAction("Duplicate Object");
-//        connect(actionRmv, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::rmvObject);
-        QAction::connect(actionRmv, &QAction::triggered, [this] () {
-            sysOvrvObjStore->removeObject(currentObject);
+
+        QAction::connect(actionRmv, &QAction::triggered, [=](){
+                emit sgnl_removeObjRequest(currentObject);
         } );
-//        connect(actionEdit, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::updtObject);
-        QAction::connect(actionEdit, &QAction::triggered, [this] () {
-            sysOvrvObjStore->updateObject(currentObject);
+        QAction::connect(actionEdit, &QAction::triggered, [=](){
+                emit sgnl_updateObjRequest(currentObject);
         } );
-//        connect(actionDuplctObj, &QAction::triggered, this->sysOvrvObjStore, &SysOvrvObjectStore::duplicateObject);
-        QAction::connect(actionDuplctObj, &QAction::triggered, [this] () {
-            sysOvrvObjStore->duplicateObject();
+        QAction::connect(actionDuplctObj, &QAction::triggered, [=](){
+                emit sgnl_duplicateObjRequest(currentObject);
         } );
     }
 
     menu.exec(event->globalPos());
 }
 
-SysOvrvObject *SysOverviewGraphicsView::getCurrentObject() const
+ISystemOverviewObject *SysOverviewGraphicsView::getObjAtPos(const QPointF &pos) const
 {
+    ISystemOverviewObject *currentObject =
+        qgraphicsitem_cast<ISystemOverviewObject*>(
+                itemAt(mapFromScene(pos))
+                );
+
+    while(currentObject != Q_NULLPTR)
+    {
+        // Get to top level object!
+        ISystemOverviewObject *tempObj =
+            qgraphicsitem_cast<ISystemOverviewObject*>(
+                    currentObject->parentItem()
+                    );
+
+        if(tempObj == Q_NULLPTR)
+        {
+            break;
+        }
+
+        currentObject = tempObj;
+    }
+
     return currentObject;
 }
 
-SysOvrvObjectStore *SysOverviewGraphicsView::getObjectStore() const
+void SysOverviewGraphicsView::enableEditing(const bool enable)
 {
-    return sysOvrvObjStore;
+    editingEnabled = enable;
 }
-
-const QPointF &SysOverviewGraphicsView::GetCurrentMousePos() const
-{
-    return currentMousePos;
-}
-

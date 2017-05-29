@@ -1,0 +1,21 @@
+digraph g{
+    MsgModel -> MsgStream;
+    
+    IdModel -> MsgConfig;
+    MsgTypeModel -> MsgConfig;
+
+    FilterIDStore -> MsgFilter;
+    FilterCodeStore -> MsgFilter;
+    FilterTimestampStore -> MsgFilter;
+
+    MsgStream -> {IdModel, MsgTypeModel}
+    MsgModel -> {FilterIDStore, FilterCodeStore, FilterTimestampStore}
+    MsgFilter -> {IdModel, MsgTypeModel}
+
+
+    MsgStream[shape=polygon];
+    MsgConfig[shape=polygon];
+    MsgFilter[shape=polygon];
+
+    {rank = same; MsgStream; MsgConfig; MsgFilter}
+}

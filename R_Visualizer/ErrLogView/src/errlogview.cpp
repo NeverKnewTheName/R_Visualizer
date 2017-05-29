@@ -6,6 +6,8 @@
 
 #include <QDebug>
 
+#include "fileparser.h"
+
 ErrorLogView::ErrorLogView(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ErrorLogView)

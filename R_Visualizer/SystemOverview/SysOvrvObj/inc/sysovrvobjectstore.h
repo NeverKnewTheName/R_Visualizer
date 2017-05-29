@@ -9,33 +9,68 @@
 
 class Msg;
 
+struct TriggerIdentifier
+{
+    const MsgIDType id;
+    const MsgCodeType code;
+    TriggerIdentifier(const MsgIDType id, const MsgCodeType code) :
+        id(id),
+        code(code)
+    {}
+
+    TriggerIdentifier(const TriggerIdentifier &other) :
+        id(other.id),
+        code(other.code)
+    {}
+
+    bool operator==(const TriggerIdentifier &other)
+    {
+        return ((id == other.id) && (code == other.code));
+    }
+
+};
+
+inline bool operator==(const TriggerIdentifier &triggerID1, const TriggerIdentifier &triggerID2)
+{
+    return triggerID1 == triggerID2;
+}
+
+inline uint qHash(const TriggerIdentifier &key, uint seed)
+{
+    return ((static_cast<MsgIDType::type>(key.id) << (8*sizeof(MsgCodeType::type))) & static_cast<MsgCodeType::type>(key.code)) + seed;
+}
+
+
+
 class SysOvrvObjectStore : public QObject
 {
     Q_OBJECT
+
 public:
     explicit SysOvrvObjectStore(QObject *parent = 0);
 
-    QHash<QString, SysOvrvObject *> getObjectStore() const;
+    QVector<SysOvrvObject *> getObjectStore() const;
     void addMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj);
     void removeMesageToWatch(const MsgIDType id, const MsgCodeType code, SysOvrvObject *relatedSysOvrvObj);
+
+    void addObject(SysOvrvObject *obj);
+    void removeObject(SysOvrvObject *obj);
+    void updateObject(SysOvrvObject *obj);
+
 private:
-    QHash<QString, SysOvrvObject*> objectStore;
-    QHash<MsgIDType, QHash<MsgCodeType, QVector<SysOvrvObject*>>> msgParserStore;
-    QPointF curObjPos;
+    QVector<SysOvrvObject*> objectStore;
+    QHash<TriggerIdentifier, QVector<SysOvrvObject*>> objectTriggerStore;
 
 signals:
-    void objectAddedToStore(SysOvrvObject *addedObject, QPointF &pos);
-    void objectRemovedFromStore(SysOvrvObject *removedObject);
+    void sgnl_objectAddedToStore(SysOvrvObject *addedObject);
+    void sgnl_objectRemovedFromStore(SysOvrvObject *removedObject);
 
 public slots:
-    void addObject();
-    void rmvObject();
-    void updtObject();
-    void duplicateObject();
-    void addObjToStore(SysOvrvObject *objToAdd);
-    void removeObject(SysOvrvObject *objToRmv);
-    void updateObject(SysOvrvObject *objToUpdt);
-    void receiveMessage(Data_PacketPtr ptr);
+    void slt_receiveMessage(const Msg &newMsg);
+
+    void slt_addObject(SysOvrvObject *objToAdd);
+    void slt_removeObject(SysOvrvObject *objToRmv);
+    void slt_updateObject(SysOvrvObject *objToUpdt);
 };
 
 #endif // SYSOVRVOBJECTSTORE_H

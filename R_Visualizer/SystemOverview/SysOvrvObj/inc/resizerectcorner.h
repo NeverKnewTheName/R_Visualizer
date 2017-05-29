@@ -11,15 +11,17 @@ public:
     enum { Type = UserType + 4 };
     typedef enum _CornerPos
     {
-        topLeftCorner,
-        bottomLeftCorner,
-        topRightCorner,
-        bottomRightCorner,
+        TopLeftCorner,
+        BottomLeftCorner,
+        TopRightCorner,
+        BottomRightCorner,
         TotalNrOfCorners
     } CornerPos;
 
-    ResizeRectCorner(CornerPos cornerPos, qreal size = 10, ResizableGraphicsItem *parent = Q_NULLPTR);
-    ResizeRectCorner(ResizeRectCorner &&ToMove);
+    ResizeRectCorner(const CornerPos cornerPos, const qreal size = 10, ResizableGraphicsItem *parent = Q_NULLPTR);
+    ResizeRectCorner(const ResizeRectCorner &other);
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
 
     CornerPos getCornerPos() const;
     void setCornerPos(CornerPos cornerPos);
@@ -27,7 +29,7 @@ public:
     qreal getCornerSize();
     void setCornerSize(const qreal &value);
 
-    void setPosition(const QPointF &pos);
+    void updatePosition();
 
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
@@ -43,32 +45,4 @@ public:
     int type() const;
 };
 
-class ResizableGraphicsItem : public QGraphicsItem
-{
-public:
-    enum { Type = UserType + 1 };
-    ResizableGraphicsItem(QGraphicsItem *parent = Q_NULLPTR);
-    virtual ~ResizableGraphicsItem();
-
-    virtual void resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y);
-    virtual void enableResizing(bool isOn = true);
-    bool getResizeEnabled() const;
-
-    virtual void setWidth(const qreal newWidth) = 0;
-    virtual qreal getWidth() const = 0;
-    virtual void setHeight(const qreal newHeight) = 0;
-    virtual qreal getHeight() const = 0;
-
-    void initResizeCorners(const QRectF &boundingRect);
-
-private:
-    ResizeRectCorner resizeCorners[4];
-    bool resizeEnabled;
-
-    // QGraphicsItem interface
-public:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    int type() const;
-};
 #endif // RESIZERECTCORNER_H

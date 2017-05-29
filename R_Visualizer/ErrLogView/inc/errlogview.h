@@ -1,25 +1,28 @@
 /**
- * @file	errorlogview.h
- * @author	Christian Neuberger
+ * @file    errorlogview.h
+ * @author  Christian Neuberger
+ * \date    2016-03-20
  *
  * \brief Class to interact with the Error Log View Dialog
- *
- *
- *
  */
 
 #ifndef ERRORLOGVIEW_H
 #define ERRORLOGVIEW_H
 
-#include "errlogmodel.h"
-
 #include <QDialog>
 #include <QAbstractButton>
+
+
+#include "errlogmodel.h"
+#include "IFileParsable.h"
 
 namespace Ui {
 class ErrorLogView;
 }
 
+/**
+ * \brief The ErrorLogView
+ */
 class ErrorLogView : public QDialog
 {
     Q_OBJECT

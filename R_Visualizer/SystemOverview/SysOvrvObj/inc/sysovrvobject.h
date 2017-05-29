@@ -6,10 +6,10 @@
 #include <QImage>
 #include <QPixmap>
 
-#include "resizerectcorner.h"
+#include "resizeablegraphicsitem.h"
 #include "sysovrvtextlabel.h"
 #include "sysovrvtrigger.h"
-#include "msg.h"
+#include "Msg.h"
 
 /**
  * @brief The SysOvrvObject class is a graphical object that represents a part of the system or is a part of another object.
@@ -28,50 +28,34 @@ public:
         ObjShape_Image,
         NR_of_ObjShapes
     }ObjShapeType;
+    /* Q_ENUM(_ObjShapeType) */
 
     SysOvrvObject(QGraphicsItem *parent = Q_NULLPTR);
     SysOvrvObject(const SysOvrvObject &ToCopy);
     SysOvrvObject(SysOvrvObject &&ToMove);
     virtual ~SysOvrvObject();
 
+    virtual SysOvrvObject *clone() const = 0;
+    virtual SysOvrvObject *move() = 0;
+
     static QString translateObjShapeTypeToString(ObjShapeType type);
     static QStringList getShapesAsStringList();
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR) Q_DECL_OVERRIDE;
     int type() const;
 
 
-    QColor getMyColor() const;
-    void setMyColor(const QColor &value);
+    QColor getObjColor() const;
+    QColor getCurObjColor() const;
+    void setObjColor(const QColor &value);
 
     QString getObjName() const;
     void setObjName(const QString &value);
 
-    /**
-     * @brief loadImageFromFile loads an image file into the \ref SysOvrvObject that is selected via an file open dialog
-     * @param parent The QWidget the file open dialog shall be spawned in
-     */
-    void loadImageFromFile(QWidget *parent = Q_NULLPTR);
-    /**
-     * @brief loadImageFromFile loads an image file into the \ref SysOvrvObject specified by the FilePath
-     * @param FilePath Path to the image file to load
-     */
-    void loadImageFromFile(const QString &FilePath);
+    virtual ObjShapeType getShape() const = 0;
 
-    /**
-     * @brief setShape sets the shape of the \ref SysOvrvObject to the specified shape
-     * @param shape Shape to set the \ref SysOvrvObject to
-     *
-     * \note This function will call \ref updateShape to force a redrawing of the internal QPixMap
-     *
-     */
-    void setShape(ObjShapeType shape);
-    /**
-     * @brief getShape Returns the current shape of the \ref SysOvrvObject as a \ref ObjShapeType
-     * @return Current shape as a \ref ObjShapeType
-     */
-    ObjShapeType getShape() const;
+    void selectObject(const bool isSelected = true);
 
     /**
      * @brief addLabel adds a new \ref SysOvrvTextLabel to the \ref SysOvrvObject by creating a new \ref SysOvrvTextLabel
@@ -91,7 +75,8 @@ public:
      * @param y
      * @return
      */
-    SysOvrvTextLabel * addLabel(const QString &text, qreal x, qreal y);
+    SysOvrvTextLabel * addLabel(const QString &text, const qreal x, const qreal y);
+    //DEPRECATED
     void removeLabel(SysOvrvTextLabel *label);
 
     /**
@@ -107,17 +92,13 @@ public:
     void setAsChild(bool isChild);
     bool isAChild() const;
 
-    QVector<SysOvrvObject *> getChidSysOvrvObjects();
+    QVector<SysOvrvObject *> getChildSysOvrvObjects();
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     QString getHashedName() const;
 
     QByteArray parseToJson() const;
     void parseFromJson(QByteArray &jsonByteArray);
-
-    QPixmap getObjPixMap() const;
-    void setObjPixMap(const QPixmap &value);
-
 
     void setParentSysOvrvObj(SysOvrvObject *parentSysOvrvObj);
 
@@ -129,14 +110,11 @@ private:
     const unsigned int localObjCntr;
     QRectF m_BoundingRect;
     QString objName;
-    QColor myColor;
-    ObjShapeType shapeType;
+    QColor objColor;
     bool isChildObject;
     bool isEditable;
     bool doubleClicked;
-    QPixmap ObjPixMap;
 
-    void updateShape(const QRectF &rect = QRectF());
     void setupSysOvrvObject();
 
 protected:
@@ -150,13 +128,11 @@ protected:
 
     // ResizableGraphicsItem interface
 public:
-    void resize(ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y);
-    void setWidth(const qreal newWidth);
-    qreal getWidth() const;
-    void setHeight(const qreal newHeight);
-    qreal getHeight() const;
+    virtual void resize(const ResizeRectCorner::CornerPos AnchorPoint, qreal x, qreal y) Q_DECL_OVERRIDE;
+    virtual void setWidth(const qreal newWidth) Q_DECL_OVERRIDE;
+    virtual qreal getWidth() const Q_DECL_OVERRIDE;
+    virtual void setHeight(const qreal newHeight) Q_DECL_OVERRIDE;
+    virtual qreal getHeight() const Q_DECL_OVERRIDE;
 };
-
-
 
 #endif // SYSOVRVOBJECT_H

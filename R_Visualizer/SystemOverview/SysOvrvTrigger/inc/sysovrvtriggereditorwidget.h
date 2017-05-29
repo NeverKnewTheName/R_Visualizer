@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "msg.h"
+#include "Msg.h"
 
 class SysOvrvTrigger;
 class EvaluatorTablemodel;

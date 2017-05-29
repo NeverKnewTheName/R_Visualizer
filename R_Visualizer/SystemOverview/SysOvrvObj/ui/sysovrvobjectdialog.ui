@@ -55,6 +55,32 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="transparencyLbl">
+         <property name="text">
+          <string>Transparency:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="transparencySpinBox">
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <property name="showGroupSeparator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <double>100.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>100.000000000000000</double>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>

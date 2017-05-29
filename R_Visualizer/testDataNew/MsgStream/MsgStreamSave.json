@@ -1,0 +1,92 @@
+[
+    {
+        "MsgCode": 13,
+        "MsgData": [
+            82,
+            37,
+            87
+        ],
+        "MsgID": 13,
+        "MsgTimestamp": "11.05.2017 - 12:19:15.568"
+    },
+    {
+        "MsgCode": 57,
+        "MsgData": [
+            95,
+            39,
+            72
+        ],
+        "MsgID": 96,
+        "MsgTimestamp": "11.05.2017 - 12:19:15.719"
+    },
+    {
+        "MsgCode": 78,
+        "MsgData": [
+            45,
+            19,
+            48
+        ],
+        "MsgID": 47,
+        "MsgTimestamp": "11.05.2017 - 12:19:15.847"
+    },
+    {
+        "MsgCode": 60,
+        "MsgData": [
+            80,
+            92,
+            4
+        ],
+        "MsgID": 85,
+        "MsgTimestamp": "11.05.2017 - 12:19:15.991"
+    },
+    {
+        "MsgCode": 26,
+        "MsgData": [
+            93,
+            67,
+            46
+        ],
+        "MsgID": 66,
+        "MsgTimestamp": "11.05.2017 - 12:19:16.103"
+    },
+    {
+        "MsgCode": 65,
+        "MsgData": [
+            17,
+            46,
+            36
+        ],
+        "MsgID": 38,
+        "MsgTimestamp": "11.05.2017 - 12:19:16.263"
+    },
+    {
+        "MsgCode": 11,
+        "MsgData": [
+            25,
+            11,
+            18
+        ],
+        "MsgID": 11,
+        "MsgTimestamp": "11.05.2017 - 12:19:16.391"
+    },
+    {
+        "MsgCode": 57,
+        "MsgData": [
+            24,
+            27,
+            36
+        ],
+        "MsgID": 51,
+        "MsgTimestamp": "11.05.2017 - 12:19:16.527"
+    },
+    {
+        "MsgCode": 88,
+        "MsgData": [
+            85,
+            85,
+            30
+        ],
+        "MsgID": 64,
+        "MsgTimestamp": "11.05.2017 - 12:19:16.658"
+    }
+]

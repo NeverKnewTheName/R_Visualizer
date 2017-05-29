@@ -1,0 +1,17 @@
+[
+    {
+        "MsgCode": 2,
+        "MsgCodeAlias": "Start",
+        "MsgCodeColorRep": "#aaff7f"
+    },
+    {
+        "MsgCode": 3,
+        "MsgCodeAlias": "Stop",
+        "MsgCodeColorRep": "#ffff7f"
+    },
+    {
+        "MsgCode": 4,
+        "MsgCodeAlias": "SOS_Stop",
+        "MsgCodeColorRep": "#ffaa7f"
+    }
+]

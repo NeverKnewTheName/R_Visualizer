@@ -56,7 +56,7 @@ void SysOvrvTrigger::removeEvaluator(TemplateValueEvaluator *value)
 SysOvrvColorChangeTrigger::SysOvrvColorChangeTrigger(SysOvrvObject *objToTrigger) :
     SysOvrvTrigger(objToTrigger,ColorChangeTrigger)
 {
-    initialColor = QColor(objToTrigger->getMyColor());
+    initialColor = QColor(objToTrigger->getObjColor());
     colorToChangeTo = QColor(Qt::white);
 }
 
@@ -70,11 +70,11 @@ void SysOvrvColorChangeTrigger::trigger(QByteArray &canData)
 
     if(Evaluation != true)
     {
-        m_pObjToTrigger->setMyColor(initialColor);
+        m_pObjToTrigger->setObjColor(initialColor);
         return;
     }
 
-    m_pObjToTrigger->setMyColor(colorToChangeTo);
+    m_pObjToTrigger->setObjColor(colorToChangeTo);
 
     qDebug() << "ColorChangeTrigger";
 }

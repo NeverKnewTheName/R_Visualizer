@@ -1,0 +1,54 @@
+MainWindow
+    MessageConfigWidget
+    MessageFilterWidget
+    MessageStreamWidget
+    SendMessagesWidget
+    SystemOverviewWidget
+    InterfaceConfigurationDialog
+    ErrorLogViewDialog
+
+
+MessageConfig
+
+
+MessageFilter
+    MessageConfig
+
+
+MessageStorage
+
+
+MessageStream
+    MessageStorage
+    MessageConfig
+    MessageFilter
+
+
+SendMessages
+    MessageConfig
+
+
+SystemOverview
+    MessageStorage
+    MessageConfig
+
+
+ErrorLogView
+    InterfaceHandler
+
+
+UserRoleManager
+    MainWindowWidget
+    MessageConfigWidget
+    MessageFilterWidget
+    MessageStreamWidget
+    SendMessagesWidget
+    SystemOverviewWidget
+    InterfaceConfigurationDialog
+    ErrorLogViewDialog
+
+
+InterfaceHandler
+    MainWindowWidget
+
+

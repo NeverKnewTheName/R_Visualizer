@@ -7,38 +7,30 @@ DEPENDPATH += $$PWD/inc
 INCLUDEPATH += $$PWD/inc
 
 SOURCES += \
-    $$PWD/src/msg.cpp \
-    $$PWD/src/msgmodel.cpp \
-    $$PWD/src/msgdelegate.cpp \
-    $$PWD/src/idmodel.cpp \
-    $$PWD/src/idrep.cpp \
-    $$PWD/src/msgtypemodel.cpp \
-    $$PWD/src/msgtyperep.cpp \
-    $$PWD/src/msgtableview.cpp \
-    $$PWD/src/hugeqvector.cpp \
-    $$PWD/src/msgdisplaywidget.cpp \
-    $$PWD/src/msgiddelegate.cpp \
-    $$PWD/src/msgdatadelegate.cpp \
-    $$PWD/src/msgdatawidget.cpp \
-    $$PWD/src/msgstorage.cpp
+    $$PWD/src/Msg.cpp \
+    # $$PWD/src/msgtableview.cpp \
+    # $$PWD/src/msgdatawidget.cpp \
+    $$PWD/src/TimestampedMsg.cpp \
 
 HEADERS  += \
-    $$PWD/inc/msg.h \
-    $$PWD/inc/msgmodel.h \
-    $$PWD/inc/msgdelegate.h \
-    $$PWD/inc/idmodel.h \
-    $$PWD/inc/idrep.h \
-    $$PWD/inc/msgtypemodel.h \
-    $$PWD/inc/msgtyperep.h \
-    $$PWD/inc/msgtableview.h \
-    $$PWD/inc/hugeqvector.h \
-    $$PWD/inc/msgdisplaywidget.h \
-    $$PWD/inc/msgiddelegate.h \
-    $$PWD/inc/msgdatadelegate.h \
-    $$PWD/inc/msgdatawidget.h \
-    $$PWD/inc/msgstorage.h
-
+    $$PWD/inc/MsgFieldType.h \
+    # $$PWD/inc/IMsgFieldType.h \
+    $$PWD/inc/MsgIDType.h \
+    $$PWD/inc/MsgCodeType.h \
+    $$PWD/inc/MsgDataType.h \
+    $$PWD/inc/MessageTypeIdentifier.h \
+    $$PWD/inc/IMsg.h \
+    $$PWD/inc/ITimestamp.h \
+    $$PWD/inc/ITimestampedMsg.h \
+    $$PWD/inc/TimestampedMsg.h \
+    $$PWD/inc/Msg.h \
+    $$PWD/inc/IPrettyMsg.h \
+    $$PWD/inc/PrettyMsg.h \
+    $$PWD/inc/PrettyTimestampedMsg.h \
 
 FORMS    += \
     $$PWD/ui/msgdisplaywidget.ui \
-    $$PWD/ui/msgdatawidget.ui
+    $$PWD/ui/msgdatawidget.ui \
+
+include(Widgets/MsgWidgets.pri)
+include(Delegates/MsgDelegates.pri)

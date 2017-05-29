@@ -1,3 +1,14 @@
-/build-*
+/build*
+.build
 /Docu/*
 *.pro.user*
+*.user
+*.swp
+tag
+cscope.out
+types_c.taghl
+R_Visualizer_Build.pro.user
+*.orig
+tags
+types_c.taghl
+cscope.out

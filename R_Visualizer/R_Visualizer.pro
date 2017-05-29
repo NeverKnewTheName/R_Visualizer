@@ -19,22 +19,10 @@ INCLUDEPATH += ../CAN_Analyser_USB_Driver/
 
 
 SOURCES += \
-    ./src/main.cpp \
-    ./src/mainwindow.cpp \
-    ./src/csvmsgpackethandler.cpp \
-    ./src/devicehandler.cpp \
-    ./src/userrolemngr.cpp \
-    ./src/msgparser.cpp
 
 HEADERS  += \
-    ./inc/mainwindow.h \
-    ./inc/csvmsgpackethandler.h \
-    ./inc/devicehandler.h \
-    ./inc/userrolemngr.h \
-    ./inc/msgparser.h
 
 FORMS    += \
-    ./ui/mainwindow.ui
 
 RESOURCES += \
     ./res/ressources.qrc
@@ -53,9 +41,17 @@ win32 {
     LIBS += -L../CAN_Analyser_USB_Driver/ -lusb_driver
 }
 
+include(MainWindow/MainWindow.pri)
+include(InterfaceHandler/InterfaceHandler.pri)
+include(UserRoleManager/UserRoleManager.pri)
 include(Msg/Msg.pri)
-include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
-include(SystemOverview/SystemOverview.pri)
-include(SendMessages/SendMessages.pri)
+include(MessageStorage/MessageStorage.pri)
+include(MessageStream/MessageStream.pri)
 include(MessageConfig/MessageConfig.pri)
-include(ErrLogView/ErrLogView.pri)
+include(MessageFilter/MessageFilter.pri)
+include(SendMessages/SendMessages.pri)
+include(SystemOverview/SystemOverview.pri)
+#include(ErrLogView/ErrLogView.pri)
+include(Utils/Utils.pri)
+include(FileParser/FileParser.pri)
+include(../R_Visualizer_Utilities/R_Visualizer_Utilities.pri)
