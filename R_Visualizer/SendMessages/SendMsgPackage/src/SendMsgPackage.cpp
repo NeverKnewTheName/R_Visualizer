@@ -1,11 +1,14 @@
 #include "SendMsgPackage.h"
 
+#include <QTimer>
+
 SendMsgPackage::SendMsgPackage(
         ISendMsgPackageStore *sendMsgPackageStore,
         QObject *parent
         ) :
     ISendMsgPackage(parent),
-    sendMsgPackageStore(sendMsgPackageStore)
+    sendMsgPackageStore(sendMsgPackageStore),
+    sendDelay(5)
 {
 }
 
@@ -57,7 +60,13 @@ void SendMsgPackage::sendMessages()
     for(int i = 0; i < size; ++i)
     {
         const IMsg &msg = sendMsgPackageStore->at(i);
-        emit sgnl_sendMsg(msg);
+        QTimer::singleShot(
+                sendDelay,
+                [&](){
+                    emit sgnl_sendMsg(msg);
+                }
+                );
+
     }
 
 }

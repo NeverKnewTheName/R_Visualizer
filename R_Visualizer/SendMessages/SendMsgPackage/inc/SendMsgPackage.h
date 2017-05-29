@@ -40,6 +40,7 @@ public:
 
 private:
     ISendMsgPackageStore *sendMsgPackageStore;
+    int sendDelay;
 };
 
 #endif /* SENDMSGPACKAGE_H */

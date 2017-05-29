@@ -297,7 +297,7 @@ void SendMsgPackageWidget::on_pushButton_clicked()
         QString csvMatrixString(csvMatrixFile.readAll());
 
         QVector<Msg> messages =
-            csvMatrixHandler->parseCsvMsgPacket(csvMatrixString);
+            csvMatrixHandler.parseCsvMsgPacket(csvMatrixString);
 
         for(const Msg &msg : messages)
         {
