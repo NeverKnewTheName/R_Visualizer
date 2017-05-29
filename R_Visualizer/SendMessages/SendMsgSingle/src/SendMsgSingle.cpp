@@ -12,21 +12,25 @@ SendMsgSingle::~SendMsgSingle()
 void SendMsgSingle::setMsg(const IMsg &msg)
 {
     messageToSend = Msg(msg.getMsgID(),msg.getMsgCode(),msg.getMsgData());
+    emit sgnl_msgHasChanged(messageToSend);
 }
 
 void SendMsgSingle::setMsgID(const MsgIDType &msgID)
 {
     messageToSend.setMsgID(msgID);
+    emit sgnl_msgHasChanged(messageToSend);
 }
 
 void SendMsgSingle::setMsgCode(const MsgCodeType &msgCode)
 {
     messageToSend.setMsgCode(msgCode);
+    emit sgnl_msgHasChanged(messageToSend);
 }
 
 void SendMsgSingle::setMsgData(const MsgDataType &msgData)
 {
     messageToSend.setMsgData(msgData);
+    emit sgnl_msgHasChanged(messageToSend);
 }
 
 void SendMsgSingle::sendMessage()

@@ -81,6 +81,11 @@ void SendMsgSingleWidget::setMsgDataMapping(
     //ui->msgDataWidget->setMappingManager(msgDataMappingManager);
 }
 
+void SendMsgSingleWidget::slt_MsgChanged(const IMsg &msg)
+{
+    ui->msgWidget->setMsg(msg);
+}
+
 void SendMsgSingleWidget::on_sndMsgSendBtn_clicked()
 {
     Msg msgToSend(ui->msgWidget->getMsg());
@@ -117,7 +122,7 @@ void SendMsgSingleWidget::on_openMsgBtn_clicked()
                 );
         Msg msgToSet;
         msgToSet.accept(&jsonInParser);
-        ui->msgWidget->setMsg(msgToSet);
+        /* ui->msgWidget->setMsg(msgToSet); */
     }
     // close file
     jsonOpenFile.close();

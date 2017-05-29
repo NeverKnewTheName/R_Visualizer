@@ -267,12 +267,12 @@ bool CANAnalyserInterfaceHandler::sendMessage(const IMsg &msgToSend)
 {
     /////////DEBUG//////////
     
-    emit sgnl_MessageReceived(
-            TimestampedMsg(
-                msgToSend,
-                QDateTime::currentDateTime()
-                )
-            );
+    /* emit sgnl_MessageReceived( */
+    /*         TimestampedMsg( */
+    /*             msgToSend, */
+    /*             QDateTime::currentDateTime() */
+    /*             ) */
+    /*         ); */
     
     /////////DEBUG//////////
 

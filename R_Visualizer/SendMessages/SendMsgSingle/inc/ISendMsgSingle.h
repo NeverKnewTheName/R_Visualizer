@@ -43,6 +43,7 @@ public:
 
 signals:
     void sgnl_sendMessage(const IMsg &msgToSend);
+    void sgnl_msgHasChanged(const IMsg &msg);
 
 public slots:
     virtual void slt_setMsg(const IMsg &msg)
