@@ -70,3 +70,13 @@ void SendMsgPackage::sendMessages()
     }
 
 }
+
+int SendMsgPackage::getSendDelay() const
+{
+    return sendDelay;
+}
+
+void SendMsgPackage::setSendDelay(const int sendDelay)
+{
+    this->sendDelay = sendDelay;
+}

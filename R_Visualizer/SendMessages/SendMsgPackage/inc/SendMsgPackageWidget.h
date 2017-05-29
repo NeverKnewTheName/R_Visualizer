@@ -50,6 +50,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_sendDelaySpinBox_valueChanged(int arg1);
+
 private:
     void init();
 

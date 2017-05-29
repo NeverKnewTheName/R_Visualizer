@@ -38,6 +38,9 @@ public:
 
     virtual void sendMessages();
 
+    virtual int getSendDelay() const;
+    virtual void setSendDelay(const int sendDelay);
+
 private:
     ISendMsgPackageStore *sendMsgPackageStore;
     int sendDelay;

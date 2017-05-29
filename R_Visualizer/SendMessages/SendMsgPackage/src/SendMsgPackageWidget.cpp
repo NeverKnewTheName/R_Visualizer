@@ -234,6 +234,8 @@ void SendMsgPackageWidget::on_sndPcktClrBtn_clicked()
 
 void SendMsgPackageWidget::init()
 {
+    ui->sendDelaySpinBox->setValue(sendMsgPackage->getSendDelay());
+
     ui->sndPckgTableView->setModel(&sendMsgPackageModel);
     ui->sndPckgTableView->setAlternatingRowColors(true);
     ui->sndPckgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -272,7 +274,6 @@ void SendMsgPackageWidget::init()
     horzHeader->setDefaultSectionSize(sectionLength);
 
     horzHeader->setStretchLastSection(true);
-
 }
 
 void SendMsgPackageWidget::on_pushButton_clicked()
@@ -306,4 +307,9 @@ void SendMsgPackageWidget::on_pushButton_clicked()
     }
     // close file
     csvMatrixFile.close();
+}
+
+void SendMsgPackageWidget::on_sendDelaySpinBox_valueChanged(int arg1)
+{
+    sendMsgPackage->setSendDelay(arg1);
 }
