@@ -21,6 +21,8 @@
 
 #include <QFileDialog>
 
+#include "csvmsgpackethandler.h"
+
 #include "csvinparser.h"
 #include "csvoutparser.h"
 #include "jsoninparser.h"
@@ -126,7 +128,8 @@ void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
                     QItemSelectionModel *selectionModel =
                        ui->sndPckgTableView->selectionModel();
 
-                    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+                    QModelIndexList selectionIndexList =
+                    selectionModel->selectedRows();
 
                     if(selectionIndexList.size())
                     {
@@ -234,12 +237,10 @@ void SendMsgPackageWidget::init()
     ui->sndPckgTableView->setModel(&sendMsgPackageModel);
     ui->sndPckgTableView->setAlternatingRowColors(true);
     ui->sndPckgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->sndPckgTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->sndPckgTableView->setSelectionMode(
+            QAbstractItemView::ContiguousSelection
+            );
     ui->sndPckgTableView->setEditTriggers(QAbstractItemView::DoubleClicked);
-
-    /*QFont tableViewFont = ui->sndPckgTableView->font();*/
-    /*tableViewFont.setPointSize(12);*/
-    /*ui->sndPckgTableView->setFont(tableViewFont);*/
 
     QHeaderView *horzHeader = ui->sndPckgTableView->horizontalHeader();
 
@@ -252,7 +253,8 @@ void SendMsgPackageWidget::init()
                 [=](){
                     QTimer::singleShot(50,
                         [=](){
-                            ui->sndPckgTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                            ui->sndPckgTableView->verticalHeader()
+                            ->resizeSections(QHeaderView::ResizeToContents);
                             //qDebug() << "sendPckgTableView resized!";
                         }
                     );
@@ -275,5 +277,33 @@ void SendMsgPackageWidget::init()
 
 void SendMsgPackageWidget::on_pushButton_clicked()
 {
-   //ToDO
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "CSV File (*.csv)"
+            );
+    qDebug() << openLoc;
+    QFile csvMatrixFile(openLoc);
+    if(!csvMatrixFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << csvMatrixFile.fileName();
+    }
+    else
+    {
+        sendMsgPackage->getStore()->clear();
+
+        CsvMsgPacketHandler csvMatrixHandler;
+
+        QString csvMatrixString(csvMatrixFile.readAll());
+
+        QVector<Msg> messages =
+            csvMatrixHandler->parseCsvMsgPacket(csvMatrixString);
+
+        for(const Msg &msg : messages)
+        {
+            sendMsgPackage->appendMsg(msg);
+        }
+    }
+    // close file
+    csvMatrixFile.close();
 }
