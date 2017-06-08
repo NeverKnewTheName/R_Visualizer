@@ -46,12 +46,14 @@ SendMsgPackage::SendMsgPackage(
             &SendMsgPackageSendingWorker::slt_AbortSending,
             Qt::QueuedConnection
            );
+    sendMsgsWorkerThread->start();
 
 }
 
 SendMsgPackage::~SendMsgPackage()
 {
     emit sgnl_AbortSending();
+    sendMsgsWorkerThread->quit();
     sendMsgsWorkerThread->wait();
     delete senderWorker;
 }

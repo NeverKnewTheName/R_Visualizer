@@ -355,7 +355,7 @@ CAN_PacketPtr CANAnalyserInterfaceHandler::convertMsgToCANFrame(
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(canFrame);
-    
+
     return packet;
 }
 
