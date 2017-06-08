@@ -52,7 +52,7 @@ SendMsgPackage::SendMsgPackage(
 SendMsgPackage::~SendMsgPackage()
 {
     emit sgnl_AbortSending();
-    senderWorker->wait();
+    sendMsgsWorkerThread->wait();
     delete senderWorker;
 }
 
