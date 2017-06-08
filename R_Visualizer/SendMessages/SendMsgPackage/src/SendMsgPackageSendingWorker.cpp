@@ -50,12 +50,15 @@ void SendMsgPackageSendingWorker::slt_SetSendingDelay(const int sendingDelay)
 
 void SendMsgPackageSendingWorker::slt_StartSending()
 {
-    QMutexLocker mutexLock(&sendingMutex);
-    sendingActive = true;
+    {
+        QMutexLocker mutexLock(&sendingMutex);
+        sendingActive = true;
+    }
     sendMessages();
 }
 
 void SendMsgPackageSendingWorker::slt_AbortSending()
 {
+    QMutexLocker mutexLock(&sendingMutex);
     sendingActive = false;
 }

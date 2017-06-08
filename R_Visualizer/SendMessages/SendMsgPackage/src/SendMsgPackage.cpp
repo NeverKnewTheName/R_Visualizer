@@ -18,10 +18,42 @@ SendMsgPackage::SendMsgPackage(
             )
 {
     senderWorker->moveToThread(sendMsgsWorkerThread);
+    connect(
+            this,
+            &SendMsgPackage::sgnl_setMsgPackage,
+            senderWorker,
+            &SendMsgPackageSendingWorker::slt_SetMessages,
+            Qt::QueuedConnection
+           );
+    connect(
+            this,
+            &SendMsgPackage::sgnl_setSendingDelay,
+            senderWorker,
+            &SendMsgPackageSendingWorker::slt_SetSendingDelay,
+            Qt::QueuedConnection
+           );
+    connect(
+            this,
+            &SendMsgPackage::sgnl_StartSending,
+            senderWorker,
+            &SendMsgPackageSendingWorker::slt_StartSending,
+            Qt::QueuedConnection
+           );
+    connect(
+            this,
+            &SendMsgPackage::sgnl_AbortSending,
+            senderWorker,
+            &SendMsgPackageSendingWorker::slt_AbortSending,
+            Qt::QueuedConnection
+           );
+
 }
 
 SendMsgPackage::~SendMsgPackage()
 {
+    emit sgnl_AbortSending();
+    senderWorker->wait();
+    delete senderWorker;
 }
 
 void SendMsgPackage::appendMsg(const IMsg &msgToAppend)
