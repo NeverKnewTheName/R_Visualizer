@@ -11,6 +11,7 @@
 #include <QObject>
 
 #include "IMsg.h"
+#include "Msg.h"
 
 #include "IFileParsable.h"
 
@@ -54,6 +55,8 @@ public:
     virtual IMsg &at(const int index) = 0;
 
     virtual void clear() = 0;
+
+    virtual QVector<Msg> getMessagesAsVector() const = 0;
 
 signals:
     void sgnl_msgAboutToBeInserted(

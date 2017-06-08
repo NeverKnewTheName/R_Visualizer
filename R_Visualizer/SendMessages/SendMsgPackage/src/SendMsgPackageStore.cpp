@@ -82,6 +82,11 @@ void SendMsgPackageStore::clear()
     emit sgnl_Cleared();
 }
 
+QVector<Msg> SendMsgPackageStore::getMessagesAsVector() const
+{
+    return msgStorage;
+}
+
 void SendMsgPackageStore::accept(FileParser *visitor)
 {
     visitor->visit(*this);

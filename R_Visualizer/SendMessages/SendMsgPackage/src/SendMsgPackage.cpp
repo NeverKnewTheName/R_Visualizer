@@ -8,8 +8,16 @@ SendMsgPackage::SendMsgPackage(
         ) :
     ISendMsgPackage(parent),
     sendMsgPackageStore(sendMsgPackageStore),
-    sendDelay(5)
+    sendMsgsWorkerThread(new QThread()),
+    sendDelay(5),
+    senderWorker(
+            new SendMsgPackageSendingWorker(
+                sendMsgWorkerMutex,
+                sendDelay
+                )
+            )
 {
+    senderWorker->moveToThread(sendMsgsWorkerThread);
 }
 
 SendMsgPackage::~SendMsgPackage()
@@ -57,17 +65,22 @@ void SendMsgPackage::sendMessages()
 {
     const int size = sendMsgPackageStore->size();
 
-    for(int i = 0; i < size; ++i)
-    {
-        const IMsg &msg = sendMsgPackageStore->at(i);
-        QTimer::singleShot(
-                sendDelay,
-                [&](){
-                    emit sgnl_sendMsg(msg);
-                }
-                );
+    emit sgnl_setMsgPackage(
+            sendMsgPackageStore->getMessagesAsVector()
+            );
+    emit sgnl_StartSending();
 
-    }
+    /* for(int i = 0; i < size; ++i) */
+    /* { */
+    /*     const IMsg &msg = sendMsgPackageStore->at(i); */
+    /*     QTimer::singleShot( */
+    /*             sendDelay, */
+    /*             [&](){ */
+    /*                 emit sgnl_sendMsg(msg); */
+    /*             } */
+    /*             ); */
+
+    /* } */
 
 }
 
@@ -79,4 +92,5 @@ int SendMsgPackage::getSendDelay() const
 void SendMsgPackage::setSendDelay(const int sendDelay)
 {
     this->sendDelay = sendDelay;
+    emit sgnl_setSendingDelay(sendDelay);
 }

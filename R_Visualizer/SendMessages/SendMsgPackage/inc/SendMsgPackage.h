@@ -9,11 +9,14 @@
 #define SENDMSGPACKAGE_H
 
 #include <QObject>
+#include <QThread>
 
 #include "ISendMsgPackage.h"
 #include "ISendMsgPackageStore.h"
 #include "IMessageConfig.h"
 #include "Msg.h"
+
+#include "SendMsgPackageSendingWorker.h"
 
 /**
  * @brief The SendMsgPackage
@@ -41,9 +44,18 @@ public:
     virtual int getSendDelay() const;
     virtual void setSendDelay(const int sendDelay);
 
+signals:
+    void sgnl_setMsgPackage(const QVector<Msg> &messages);
+    void sgnl_setSendingDelay(const int sendingDelay);
+    void sgnl_StartSending();
+    void sgnl_AbortSending();
+
 private:
     ISendMsgPackageStore *sendMsgPackageStore;
+    QThread *sendMsgsWorkerThread;
+    QMutex sendMsgWorkerMutex;
     int sendDelay;
+    SendMsgPackageSendingWorker *senderWorker;
 };
 
 #endif /* SENDMSGPACKAGE_H */
