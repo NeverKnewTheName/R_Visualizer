@@ -20,12 +20,11 @@ SendMsgPackageSendingWorker::~SendMsgPackageSendingWorker()
 
 void SendMsgPackageSendingWorker::sendMessages()
 {
-    QMutexLocker mutexLock(&sendingMutex);
-    const int messagesSize = messagesToSend.size();
-    for(int i = 0; i < messagesSize; ++i)
+    for(const IMsg &msg : messagesToSend)
     {
         QThread::msleep(sendingDelay);
-        emit sgnl_SendMessage(messagesToSend.at(i));
+        emit sgnl_SendMessage(msg);
+        QMutexLocker mutexLock(&sendingMutex);
         if(!sendingActive)
         {
             break;
