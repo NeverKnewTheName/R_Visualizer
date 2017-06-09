@@ -76,4 +76,8 @@ public:
     virtual bool isMovingEnabled() const = 0;
 };
 
+typedef QSharedPointer<ISystemOverviewObject> ISysOvrvObjPtr;
+
+Q_DECLARE_METATYPE(ISysOvrvObjPtr)
+
 #endif /* ISYSTEMOVERVIEWOBJECT_H */

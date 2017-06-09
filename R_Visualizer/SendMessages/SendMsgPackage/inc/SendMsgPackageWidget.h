@@ -47,9 +47,7 @@ private slots:
     void on_sndPcktStoreBtn_clicked();
     void on_sndPcktSendBtn_clicked();
     void on_sndPcktClrBtn_clicked();
-
     void on_pushButton_clicked();
-
     void on_sendDelaySpinBox_valueChanged(int arg1);
 
 private:

@@ -4,6 +4,8 @@
 #include "ISystemOverview.h"
 #include "ISystemOverviewObject.h"
 
+#include "SysOverviewObjectDialog.h"
+
 SystemOverviewWidget::SystemOverviewWidget(
         ISystemOverview *systemOverview,
         QWidget *parent
@@ -16,8 +18,13 @@ SystemOverviewWidget::SystemOverviewWidget(
     connect(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestAddObject,
-            systemOverview,
-            &ISystemOverview::slt_RequestAddObject
+                [=](const QPointF &pos){
+                    SysOverviewObjectDialog *objDiag =
+                            new SysOverviewObjectDialog(this);
+
+                    objDiag->setAttribute(Qt::WA_DeleteOnClose);
+                    objDiag->exec();
+                }
             );
     connect(
             ui->sysOverviewGraphicsView,
@@ -28,8 +35,13 @@ SystemOverviewWidget::SystemOverviewWidget(
     connect(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestEditObject,
-            systemOverview,
-            &ISystemOverview::slt_RequestEditObject
+                [=](){
+                    SysOverviewObjectDialog *objDiag =
+                            new SysOverviewObjectDialog(this);
+
+                    objDiag->setAttribute(Qt::WA_DeleteOnClose);
+                    objDiag->exec();
+                }
             );
 }
 

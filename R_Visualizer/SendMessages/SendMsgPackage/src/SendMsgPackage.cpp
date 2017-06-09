@@ -44,14 +44,27 @@ SendMsgPackage::SendMsgPackage(
             &SendMsgPackage::sgnl_AbortSending,
             senderWorker,
             &SendMsgPackageSendingWorker::slt_AbortSending,
-            Qt::QueuedConnection
+            Qt::DirectConnection
            );
+
     connect(
             senderWorker,
             &SendMsgPackageSendingWorker::sgnl_SendMessage,
             this,
             &SendMsgPackage::sgnl_SendStdMsg,
             Qt::DirectConnection
+           );
+    connect(
+            senderWorker,
+            &SendMsgPackageSendingWorker::sgnl_SendingStarted,
+            this,
+            &ISendMsgPackage::sgnl_SendingStarted
+           );
+    connect(
+            senderWorker,
+            &SendMsgPackageSendingWorker::sgnl_SendingFinished,
+            this,
+            &ISendMsgPackage::sgnl_SendingFinished
            );
 
     sendMsgsWorkerThread->start();
@@ -105,8 +118,6 @@ ISendMsgPackageStore *SendMsgPackage::getStore() const
 
 void SendMsgPackage::sendMessages()
 {
-    const int size = sendMsgPackageStore->size();
-
     emit sgnl_setMsgPackage(
             sendMsgPackageStore->getMessagesAsVector()
             );

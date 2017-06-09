@@ -25,6 +25,7 @@ public:
         SysOvrvShape_Ellipse,
         SysOvrvShape_Circle,
         SysOvrvShape_Triangle,
+        SysOvrvShape_NR_OF_SHAPES
     };
 
     SysOverviewObjectShapeManager(

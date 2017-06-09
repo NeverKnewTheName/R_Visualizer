@@ -42,6 +42,21 @@ SendMsgPackageWidget::SendMsgPackageWidget(
 {
     ui->setupUi(this);
     init();
+
+    connect(
+            sendMsgPackage,
+            &ISendMsgPackage::sgnl_SendingStarted,
+            [=](){
+                ui->sndPcktSendBtn->setDisabled(true);
+            }
+           );
+    connect(
+            sendMsgPackage,
+            &ISendMsgPackage::sgnl_SendingFinished,
+            [=](){
+                ui->sndPcktSendBtn->setEnabled(true);
+            }
+           );
 }
 
 SendMsgPackageWidget::~SendMsgPackageWidget()
@@ -90,37 +105,14 @@ void SendMsgPackageWidget::setMsgDataMappingManager(
     }
 }
 
-#include "Msg.h"
-#include "MsgIDType.h"
-#include "MsgCodeType.h"
-#include "MsgDataType.h"
-
 void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
 {
-    //qsrand(qrand());
-    //MsgDataType testMsgData;
-//
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-//
-    //Msg testMsg(MsgIDType(qrand()&0xFFFF),MsgCodeType(qrand()&0xFF),testMsgData);
-
     SendMsgPackageAddDialog *sendMsgPackageAddDialog =
             new SendMsgPackageAddDialog(
                 msgIDMappingManager,
                 msgCodeMappingManager,
                 this
                 );
-
-    //connect(
-            //sendMsgPackageAddDialog,
-            //&SendMsgPackageAddDialog::sgnl_commit,
-            //sendMsgPackage,
-            //&ISendMsgPackage::slt_appendMsg
-            //);
-
     connect(
                 sendMsgPackageAddDialog,
                 &SendMsgPackageAddDialog::sgnl_commit,
@@ -143,6 +135,7 @@ void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
                 }
             );
 
+    sendMsgPackageAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     sendMsgPackageAddDialog->exec();
 }
 

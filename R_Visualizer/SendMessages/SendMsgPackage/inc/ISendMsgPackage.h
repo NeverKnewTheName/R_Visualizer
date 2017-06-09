@@ -52,6 +52,9 @@ signals:
     void sgnl_msgPrepended();
     void sgnl_msgRemoved();
 
+    void sgnl_SendingStarted();
+    void sgnl_SendingFinished();
+
 public slots:
     virtual void slt_appendMsg(const IMsg &msgToAppend)
     {

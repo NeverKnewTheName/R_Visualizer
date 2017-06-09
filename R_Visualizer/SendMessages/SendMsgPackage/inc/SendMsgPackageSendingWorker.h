@@ -26,6 +26,8 @@ public:
 
 signals:
     void sgnl_SendMessage(const Msg &msg);
+    void sgnl_SendingStarted();
+    void sgnl_SendingFinished();
 
 public slots:
     void slt_SetMessages(const QVector<Msg> &messages);

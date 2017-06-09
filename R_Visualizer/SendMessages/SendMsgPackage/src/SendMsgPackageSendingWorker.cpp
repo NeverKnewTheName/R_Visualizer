@@ -20,6 +20,7 @@ SendMsgPackageSendingWorker::~SendMsgPackageSendingWorker()
 
 void SendMsgPackageSendingWorker::sendMessages()
 {
+    emit sgnl_SendingStarted();
     for(const IMsg &msg : messagesToSend)
     {
         QThread::msleep(sendingDelay);
@@ -31,6 +32,7 @@ void SendMsgPackageSendingWorker::sendMessages()
             break;
         }
     }
+    emit sgnl_SendingFinished();
 }
 
 void SendMsgPackageSendingWorker::slt_SetMessages(const QVector<Msg> &messages)

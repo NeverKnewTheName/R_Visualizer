@@ -175,6 +175,7 @@ void MsgCodeFilterWidget::on_addFilterCodePushButton_clicked()
             &MsgCodeFilterWidget::slt_addMsgCode
            );
 
+    msgCodeFilterAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     msgCodeFilterAddDialog->exec();
 }
 

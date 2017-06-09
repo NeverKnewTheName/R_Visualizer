@@ -141,6 +141,7 @@ void MsgCodeMappingWidget::on_msgCodeAddBtn_clicked()
             &MsgCodeMappingWidget::slt_MsgCodeMappingAddFinished
            );
 
+    msgCodeMappingAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     msgCodeMappingAddDialog->exec();
 }
 

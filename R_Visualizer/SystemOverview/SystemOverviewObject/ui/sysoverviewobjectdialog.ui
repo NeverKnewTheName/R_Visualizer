@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SysOverviewObjectDialog</class>
+ <widget class="QDialog" name="SysOverviewObjectDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>952</width>
+    <height>708</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="objectPropertiesForm">
+     <item row="0" column="0">
+      <widget class="QLabel" name="nameLbl">
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="shapeLbl">
+       <property name="text">
+        <string>Shape</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="colorLbl">
+       <property name="text">
+        <string>Color</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="colorLE">
+         <property name="inputMask">
+          <string>\0\xHHHHHH</string>
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="colorPickerBtn">
+         <property name="text">
+          <string>Color Picker</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="transparencyLbl">
+         <property name="text">
+          <string>Transparency</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="transparencySpinBox">
+         <property name="showGroupSeparator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="suffix">
+          <string notr="true">%</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nameLE"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="shapeComboBox"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="objectEditorLayout">
+     <item>
+      <widget class="QGraphicsView" name="objectPreviewGrahicsView"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="editorBtnLayout">
+       <item>
+        <widget class="QPushButton" name="addObjectBtn">
+         <property name="text">
+          <string>Add Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeObjectBtn">
+         <property name="text">
+          <string>Remove Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editObjectBtn">
+         <property name="text">
+          <string>Edit Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addLabelBtn">
+         <property name="text">
+          <string>Add Label</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeLabelBtn">
+         <property name="text">
+          <string>Remove Label</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addTriggerBtn">
+         <property name="text">
+          <string>Add Trigger</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeTriggerBtn">
+         <property name="text">
+          <string>Remove Trigger</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editTriggerBtn">
+         <property name="text">
+          <string>Edit Trigger</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::Open|QDialogButtonBox::Reset|QDialogButtonBox::Save</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>nameLE</tabstop>
+  <tabstop>shapeComboBox</tabstop>
+  <tabstop>colorLE</tabstop>
+  <tabstop>colorPickerBtn</tabstop>
+  <tabstop>transparencySpinBox</tabstop>
+  <tabstop>addObjectBtn</tabstop>
+  <tabstop>removeObjectBtn</tabstop>
+  <tabstop>editObjectBtn</tabstop>
+  <tabstop>addLabelBtn</tabstop>
+  <tabstop>removeLabelBtn</tabstop>
+  <tabstop>addTriggerBtn</tabstop>
+  <tabstop>removeTriggerBtn</tabstop>
+  <tabstop>editTriggerBtn</tabstop>
+  <tabstop>objectPreviewGrahicsView</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SysOverviewObjectDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SysOverviewObjectDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

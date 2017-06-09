@@ -102,6 +102,7 @@ void MsgIDFilterWidget::on_addFilterIDPushButton_clicked()
             &MsgIDFilterWidget::slt_addMsgID
            );
 
+    msgIDFilterAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     msgIDFilterAddDialog->exec();
 }
 

@@ -6,6 +6,7 @@ SOURCES += \
     $$PWD/src/SysOverviewObjectShapeManager.cpp \
     $$PWD/src/SysOverviewObjectImageManager.cpp \
     $$PWD/src/SysOverviewObjectResizeManager.cpp \
+    $$PWD/src/SysOverviewObjectDialog.cpp
 
 HEADERS  += \
     $$PWD/inc/ISystemOverviewObject.h \
@@ -15,6 +16,8 @@ HEADERS  += \
     $$PWD/inc/SysOverviewObjectImageManager.h \
     $$PWD/inc/ISysOverviewObjectResizeManager.h \
     $$PWD/inc/SysOverviewObjectResizeManager.h \
+    $$PWD/inc/SysOverviewObjectDialog.h
 
 FORMS    += \
+    $$PWD/ui/sysoverviewobjectdialog.ui
 

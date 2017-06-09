@@ -64,5 +64,6 @@ void SystemOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 );
     }
 
+    sysOvrvContextMenu->setAttribute(Qt::WA_DeleteOnClose);
     sysOvrvContextMenu->exec(event->globalPos());
 }
