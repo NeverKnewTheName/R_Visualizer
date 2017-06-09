@@ -46,6 +46,14 @@ SendMsgPackage::SendMsgPackage(
             &SendMsgPackageSendingWorker::slt_AbortSending,
             Qt::QueuedConnection
            );
+    connect(
+            senderWorker,
+            &SendMsgPackageSendingWorker::sgnl_SendMessage,
+            this,
+            &ISendMsgPackage::sgnl_sendMsg,
+            Qt::DirectConnection
+           );
+
     sendMsgsWorkerThread->start();
 
 }
