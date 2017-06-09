@@ -50,7 +50,7 @@ SendMsgPackage::SendMsgPackage(
             senderWorker,
             &SendMsgPackageSendingWorker::sgnl_SendMessage,
             this,
-            &ISendMsgPackage::sgnl_sendMsg,
+            &SendMsgPackage::sgnl_SendStdMsg,
             Qt::DirectConnection
            );
 

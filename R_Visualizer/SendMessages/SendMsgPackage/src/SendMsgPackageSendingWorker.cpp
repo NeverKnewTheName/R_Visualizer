@@ -23,7 +23,8 @@ void SendMsgPackageSendingWorker::sendMessages()
     for(const IMsg &msg : messagesToSend)
     {
         QThread::msleep(sendingDelay);
-        emit sgnl_SendMessage(msg);
+        Msg toSend(msg.getMsgID(), msg.getMsgCode(), msg.getMsgData());
+        emit sgnl_SendMessage(toSend);
         QMutexLocker mutexLock(&sendingMutex);
         if(!sendingActive)
         {

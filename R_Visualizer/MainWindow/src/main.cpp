@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType <MsgDataByteType>("MsgDataByteType");
     qRegisterMetaType <MsgDataType>("MsgDataType");
     qRegisterMetaType <Msg>("Msg");
+    /* qRegisterMetaType <IMsg>("IMsg"); */
     qRegisterMetaType <TimestampedMsg>("TimestampedMsg");
     /* qRegisterMetaType <MsgData>("MsgData"); */
     /* qRegisterMetaType <DataByteVect>("DataByteVect"); */

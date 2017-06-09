@@ -25,7 +25,7 @@ public:
     virtual ~SendMsgPackageSendingWorker();
 
 signals:
-    void sgnl_SendMessage(const IMsg &msg);
+    void sgnl_SendMessage(const Msg &msg);
 
 public slots:
     void slt_SetMessages(const QVector<Msg> &messages);

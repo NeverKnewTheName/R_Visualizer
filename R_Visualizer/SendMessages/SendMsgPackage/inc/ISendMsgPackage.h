@@ -11,6 +11,7 @@
 #include <QObject>
 
 class IMsg;
+class Msg;
 
 class ISendMsgPackageStore;
 
@@ -46,6 +47,7 @@ public:
 
 signals:
     void sgnl_sendMsg(const IMsg &msgToSend);
+    void sgnl_SendStdMsg(const Msg &msg);
     void sgnl_msgAppended();
     void sgnl_msgPrepended();
     void sgnl_msgRemoved();

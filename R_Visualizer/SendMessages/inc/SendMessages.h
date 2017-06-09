@@ -17,6 +17,7 @@ class ISendMsgSingle;
 class ISendMsgPackage;
 class IInterfaceHandler;
 class IMsg;
+class Msg;
 
 /**
  * @addtogroup SendMessagesGroup
@@ -43,6 +44,7 @@ public:
     virtual void removeSendMsgPackage(ISendMsgPackage *sendMsgPackageToAdd);
 
     virtual void sendMessage(const IMsg &msgToSend);
+    virtual void sendMessage(const Msg &msgToSend);
 
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
 
