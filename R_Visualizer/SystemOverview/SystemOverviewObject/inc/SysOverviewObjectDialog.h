@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QGraphicsScene>
 #include <QSharedPointer>
+#include <QAbstractButton>
 
 #include "ISystemOverviewObject.h"
 #include "SystemOverviewObject.h"
@@ -23,6 +24,9 @@ public:
             );
 
     ~SysOverviewObjectDialog();
+
+private:
+    void setupDialog();
 
 signals:
     void sgnl_CommitObject(ISysOvrvObjPtr obj);
@@ -56,10 +60,13 @@ private slots:
 
     void on_nameLE_editingFinished();
 
+    void on_buttonBox_rejected();
+
 private:
     Ui::SysOverviewObjectDialog *ui;
     QGraphicsScene scene;
-    ISysOvrvObjPtr sysOvrvObject;
+    ISysOvrvObjPtr sysOvrvObj;
+    ISysOvrvObjPtr sysOvrvObjSave;
 };
 
 #endif // SYSOVERVIEWOBJECTDIALOG_H

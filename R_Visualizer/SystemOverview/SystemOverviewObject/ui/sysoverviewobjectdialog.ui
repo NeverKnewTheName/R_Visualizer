@@ -42,7 +42,10 @@
        <item>
         <widget class="QLineEdit" name="colorLE">
          <property name="inputMask">
-          <string>\0\xHHHHHH</string>
+          <string>\#HHHHHH</string>
+         </property>
+         <property name="text">
+          <string>#000000</string>
          </property>
          <property name="placeholderText">
           <string/>

@@ -43,6 +43,12 @@ void SystemOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
             objectAtMousePos = qgraphicsitem_cast<ISystemOverviewObject*>(objectAtMousePos->parentItem());
         }
 
+        if(objectAtMousePos == Q_NULLPTR)
+        {
+            sysOvrvContextMenu->deleteLater();
+            return;
+        }
+
         QAction *actionRemove = sysOvrvContextMenu->addAction("Remove Object");
         QAction *actionEdit = sysOvrvContextMenu->addAction("Edit Object");
 
@@ -51,7 +57,7 @@ void SystemOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 &QAction::triggered,
                 [=](){
                     qDebug() << "Remove Object at: " << currentMousePos;
-                    emit sgnl_RequestRemoveObject(objectAtMousePos);
+                    emit sgnl_RequestRemoveObject(objectAtMousePos->getObjectName());
                     }
                 );
         connect(
@@ -59,7 +65,7 @@ void SystemOverviewGraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 &QAction::triggered,
                 [=](){
                     qDebug() << "Edit Object at: " << currentMousePos;
-                    emit sgnl_RequestEditObject(objectAtMousePos);
+                    emit sgnl_RequestEditObject(objectAtMousePos->getObjectName());
                     }
                 );
     }

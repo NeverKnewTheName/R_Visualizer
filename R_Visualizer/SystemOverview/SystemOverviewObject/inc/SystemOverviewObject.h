@@ -47,10 +47,10 @@ protected:
 public:
     virtual void setObjectName(const QString &name);
     virtual QString getObjectName() const;
-    virtual ISysOverviewObjectResizeManager *getResizeManager() const;
-    virtual void setResizeManager(ISysOverviewObjectResizeManager *resizeManager);
-    virtual ISysOverviewObjectManager *getShapeManager() const;
-    virtual void setShapeManager(ISysOverviewObjectManager *shapeManager);
+    virtual SysOvrvObjectResizeManagerPtr getResizeManager() const;
+    virtual void setResizeManager(SysOvrvObjectResizeManagerPtr resizeManager);
+    virtual SysOvrvObjectManagerPtr getShapeManager() const;
+    virtual void setShapeManager(SysOvrvObjectManagerPtr shapeManager);
 
     virtual void setSize(const QSizeF &size);
     virtual QSizeF getSize() const;
@@ -58,18 +58,18 @@ public:
     virtual QColor getColor() const;
     virtual QColor getCurObjColor() const;
 
-    virtual SysOverviewTextLabel *addLabel();
-    virtual SysOverviewTextLabel *addLabel(SysOverviewTextLabel *label);
-    virtual SysOverviewTextLabel *addLabel(
+    /* virtual SysOverviewTextLabel *addLabel(); */
+    virtual SysOvrvTextLabelPtr addLabel(SysOvrvTextLabelPtr label);
+    virtual SysOvrvTextLabelPtr addLabel(
             const QString &text,
             const qreal x,
             const qreal y
             );
-    virtual void removeLabel(SysOverviewTextLabel *label);
-    virtual QVector<SysOverviewTextLabel *> getLabels() const;
+    virtual void removeLabel(SysOvrvTextLabelPtr label);
+    virtual QVector<SysOvrvTextLabelPtr > getLabels() const;
 
-    virtual void addChildObject(ISystemOverviewObject *child);
-    virtual QVector<ISystemOverviewObject *> getChildObjects() const;
+    virtual void addChildObject(ISysOvrvObjPtr child);
+    virtual QVector<ISysOvrvObjPtr> getChildObjects() const;
 
     virtual void enableResizing(const bool enabled);
     virtual bool isResizingEnabled() const;
@@ -77,8 +77,8 @@ public:
     virtual bool isMovingEnabled() const;
 
 private:
-    ISysOverviewObjectManager *objManager;
-    ISysOverviewObjectResizeManager *resizeManager;
+    SysOvrvObjectManagerPtr objManager;
+    SysOvrvObjectResizeManagerPtr resizeManager;
     QString objName;
     QColor objColor;
     QRectF objBoundingRect;

@@ -4,6 +4,10 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneHoverEvent>
 
+#include <QLineEdit>
+#include <QInputDialog>
+#include <QCursor>
+
 SysOverviewTextLabel::SysOverviewTextLabel(
         const QString &text,
         QGraphicsItem *parent
@@ -22,7 +26,7 @@ SysOverviewTextLabel::~SysOverviewTextLabel()
 
 void SysOverviewTextLabel::setEditable(const bool enable)
 {
-    editable(enable);
+    editable = enable;
     setFlag(QGraphicsItem::ItemIsMovable,enable);
 }
 
@@ -31,6 +35,8 @@ bool SysOverviewTextLabel::isEditable() const
     return editable;
 }
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
 void SysOverviewTextLabel::textEdit()
 {
     if(editable)
@@ -66,7 +72,7 @@ void SysOverviewTextLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(editable)
     {
         setCursor(QCursor(Qt::ClosedHandCursor));
-    {
+    }
 }
 
 void SysOverviewTextLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

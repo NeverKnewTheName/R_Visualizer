@@ -17,7 +17,8 @@ class ISystemOverviewObject;
 /**
  * @brief The SysOverviewObjectResizeManager
  */
-class SysOverviewObjectResizeManager : public ISysOverviewObjectResizeManager
+class SysOverviewObjectResizeManager :
+        public ISysOverviewObjectResizeManagerCRTPHelper<SysOverviewObjectResizeManager>
 {
 public:
     SysOverviewObjectResizeManager(
@@ -35,7 +36,7 @@ public:
 
 private:
     ISystemOverviewObject &sysOverviewObject;
-
+    QSizeF size;
 };
 
 #endif /* SYSOVERVIEWOBJECTRESIZEMANAGER_H */

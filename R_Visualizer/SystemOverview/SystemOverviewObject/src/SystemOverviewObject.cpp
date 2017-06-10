@@ -22,9 +22,11 @@ SystemOverviewObject::SystemOverviewObject(
     objName("INVALID"),
     objBoundingRect(0,0,100,100)
 {
+    resizeManager->setSize(QSizeF(100,100));
     setFlags(
             QGraphicsItem::ItemIsFocusable |
             QGraphicsItem::ItemIsSelectable |
+            QGraphicsItem::ItemIsMovable |
             QGraphicsItem::ItemSendsGeometryChanges |
             QGraphicsItem::ItemSendsScenePositionChanges
         );
@@ -39,13 +41,16 @@ SystemOverviewObject::SystemOverviewObject(
             ) :
     ISystemOverviewObject(parent),
     objManager(objectManager),
+    resizeManager(new SysOverviewObjectResizeManager(*this)),
     objName(objName),
     objColor(color),
     objBoundingRect(QPointF(0,0),size)
 {
+    resizeManager->setSize(size);
     setFlags(
             QGraphicsItem::ItemIsFocusable |
             QGraphicsItem::ItemIsSelectable |
+            QGraphicsItem::ItemIsMovable |
             QGraphicsItem::ItemSendsGeometryChanges |
             QGraphicsItem::ItemSendsScenePositionChanges
                 );
@@ -67,6 +72,8 @@ void SystemOverviewObject::paint(
         QWidget *widget
         )
 {
+    painter->save();
+
     if(resizeEnabled)
     {
         resizeManager->paint(painter);
@@ -74,9 +81,9 @@ void SystemOverviewObject::paint(
 
     const QRectF &boundingRect = resizeManager->getBoundingRect();
 
-    QColor fillColor(getCurObjColor());
+    objManager->paint(painter, boundingRect, isSelected());
 
-    objManager->paint(painter, boundingRect, fillColor);
+    painter->restore();
 }
 
 void SystemOverviewObject::focusInEvent(QFocusEvent *event)
@@ -109,32 +116,29 @@ QString SystemOverviewObject::getObjectName() const
     return objName;
 }
 
-ISysOverviewObjectResizeManager *SystemOverviewObject::getResizeManager() const
+SysOvrvObjectResizeManagerPtr SystemOverviewObject::getResizeManager() const
 {
-    return resizeManager;
+    return SysOvrvObjectResizeManagerPtr(resizeManager->clone());
 }
 
-void SystemOverviewObject::setResizeManager(ISysOverviewObjectResizeManager *resizeManager)
+void SystemOverviewObject::setResizeManager(SysOvrvObjectResizeManagerPtr resizeManager)
 {
-    if(resizeManager != Q_NULLPTR)
-    {
-        delete this->resizeManager;
-        this->resizeManager = resizeManager;
-        update();
-    }
-}
-
-ISysOverviewObjectManager *SystemOverviewObject::getShapeManager() const
-{
-    return objManager;
-}
-
-void SystemOverviewObject::setShapeManager(ISysOverviewObjectManager *shapeManager)
-{
-    this->objManager = shapeManager;
+    this->resizeManager.reset(resizeManager.release());
+//    this->resizeManager = resizeManager;
     update();
 }
 
+SysOvrvObjectManagerPtr SystemOverviewObject::getShapeManager() const
+{
+    return SysOvrvObjectManagerPtr(objManager->clone());
+}
+
+void SystemOverviewObject::setShapeManager(SysOvrvObjectManagerPtr shapeManager)
+{
+//    this->objManager = shapeManager;
+    this->objManager.reset(shapeManager.release());
+    update();
+}
 
 void SystemOverviewObject::setSize(const QSizeF &size)
 {
@@ -157,38 +161,42 @@ QColor SystemOverviewObject::getColor() const
     return objColor;
 }
 
-SysOverviewTextLabel *SystemOverviewObject::addLabel()
-{
+/* SysOverviewTextLabel *SystemOverviewObject::addLabel() */
+/* { */
+/* */
+/* } */
 
-}
-
-SysOverviewTextLabel *SystemOverviewObject::addLabel(SysOverviewTextLabel *label)
+SysOvrvTextLabelPtr SystemOverviewObject::addLabel(SysOvrvTextLabelPtr label)
 {
     label->setParentItem(this);
 }
 
-SysOverviewTextLabel *SystemOverviewObject::addLabel(const QString &text, const qreal x, const qreal y)
+SysOvrvTextLabelPtr SystemOverviewObject::addLabel(
+        const QString &text,
+        const qreal x,
+        const qreal y
+        )
 {
 
 }
 
-void SystemOverviewObject::removeLabel(SysOverviewTextLabel *label)
+void SystemOverviewObject::removeLabel(SysOvrvTextLabelPtr label)
 {
     label->setParentItem(Q_NULLPTR);
     //label->deleteLater();
 }
 
-QVector<SysOverviewTextLabel *> SystemOverviewObject::getLabels() const
+QVector<SysOvrvTextLabelPtr> SystemOverviewObject::getLabels() const
 {
 
 }
 
-void SystemOverviewObject::addChildObject(ISystemOverviewObject *child)
+void SystemOverviewObject::addChildObject(ISysOvrvObjPtr child)
 {
 
 }
 
-QVector<ISystemOverviewObject *> SystemOverviewObject::getChildObjects() const
+QVector<ISysOvrvObjPtr> SystemOverviewObject::getChildObjects() const
 {
 
 }

@@ -9,16 +9,18 @@
 #define SYSOVERVIEWOBJECTSHAPEMANAGER_H
 
 #include "ISysOverviewObjectManager.h"
+#include <memory>
 
 class ISystemOverviewObject;
 
 /**
  * @brief The SysOverviewObjectShapeManager
  */
-class SysOverviewObjectShapeManager : public ISysOverviewObjectManager
+class SysOverviewObjectShapeManager :
+        public ISysOverviewObjectManagerCRTPHelper<SysOverviewObjectShapeManager>
 {
 public:
-    enum SysOverviewObjectShapes
+    enum SysOverviewObjectShape
     {
         SysOvrvShape_Rectangle,
         SysOvrvShape_Square,
@@ -30,26 +32,32 @@ public:
 
     SysOverviewObjectShapeManager(
             ISystemOverviewObject &sysOverviewObject,
-            SysOverviewObjectShapes shape = SysOvrvShape_Rectangle
+            SysOverviewObjectShape shape = SysOvrvShape_Rectangle
             /* QObject *parent = Q_NULLPTR */
             );
     virtual ~SysOverviewObjectShapeManager();
 
-    virtual SysOverviewObjectShapes getShape() const;
-    virtual void setShape(const SysOverviewObjectShapes &shape) const;
+    virtual SysOverviewObjectShape getShape() const;
+    virtual void setShape(const SysOverviewObjectShape &shape);
+
+    virtual QColor getColor() const;
+    virtual void setColor(const QColor &color);
 
     virtual void paint(
             QPainter *painter,
             const QRectF &boundingRect,
-            const QColor &color
+            const bool selected
             );
 
-    static QString translateShapeToString(const SysOverviewObjectShapes &shape);
+    static QString translateShapeToString(const SysOverviewObjectShape &shape);
     static QStringList listShapes();
 
 private:
     ISystemOverviewObject &sysOverviewObject;
-    SysOverviewObjectShapes shape;
+    QColor objColor;
+    SysOverviewObjectShape shape;
 };
+
+typedef std::unique_ptr<SysOverviewObjectShapeManager> SysOvrvObjectShapeManagerPtr;
 
 #endif /* SYSOVERVIEWOBJECTSHAPEMANAGER_H */

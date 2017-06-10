@@ -10,7 +10,7 @@
 
 #include <QGraphicsView>
 
-class ISystemOverviewObject;
+#include "ISystemOverviewObject.h"
 
 /**
  * @brief The SystemOverviewGraphicsView class
@@ -23,8 +23,8 @@ public:
 
 signals:
     void sgnl_RequestAddObject(const QPointF &position);
-    void sgnl_RequestRemoveObject(ISystemOverviewObject *objectToRemove);
-    void sgnl_RequestEditObject(ISystemOverviewObject *objectToEdit);
+    void sgnl_RequestRemoveObject(const QString &objectToRemoveName);
+    void sgnl_RequestEditObject(const QString &objectToEditName);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event);

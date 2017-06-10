@@ -9,6 +9,10 @@
 #define SYSTEMOVERVIEWWIDGET_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+
+#include <ISystemOverviewObjectStore.h>
+#include <ISystemOverviewObject.h>
 
 class ISystemOverview;
 
@@ -30,9 +34,13 @@ public:
             );
     virtual ~SystemOverviewWidget();
 
+    void addObject(ISysOvrvObjPtr objectToAdd);
+
 private:
     Ui::SystemOverviewWidget *ui;
     ISystemOverview *systemOverview;
+    ISystemOverviewObjectStore *objStore;
+    QGraphicsScene sysOvrvScene;
 };
 
 #endif // SYSTEMOVERVIEWWIDGET_H

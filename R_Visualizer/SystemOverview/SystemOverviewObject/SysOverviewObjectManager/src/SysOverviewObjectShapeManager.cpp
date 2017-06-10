@@ -2,9 +2,13 @@
 
 SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
         ISystemOverviewObject &sysOverviewObject,
-        SysOverviewObjectShapeManager::SysOverviewObjectShapes shape
+        SysOverviewObjectShapeManager::SysOverviewObjectShape shape
         ) :
+    ISysOverviewObjectManagerCRTPHelper(
+        ISysOverviewObjectManager::ShapeType
+        ),
     sysOverviewObject(sysOverviewObject),
+    objColor(Qt::lightGray),
     shape(shape)
 {
 
@@ -15,21 +19,48 @@ SysOverviewObjectShapeManager::~SysOverviewObjectShapeManager()
 
 }
 
-SysOverviewObjectShapeManager::SysOverviewObjectShapes SysOverviewObjectShapeManager::getShape() const
+SysOverviewObjectShapeManager::SysOverviewObjectShape SysOverviewObjectShapeManager::getShape() const
 {
-
+    return this->shape;
 }
 
-void SysOverviewObjectShapeManager::setShape(const SysOverviewObjectShapeManager::SysOverviewObjectShapes &shape) const
+void SysOverviewObjectShapeManager::setShape(
+        const SysOverviewObjectShapeManager::SysOverviewObjectShape &shape
+        )
 {
-
+    this->shape = shape;
 }
 
-void SysOverviewObjectShapeManager::paint(QPainter *painter, const QRectF &boundingRect, const QColor &color)
+QColor SysOverviewObjectShapeManager::getColor() const
+{
+    return objColor;
+}
+
+void SysOverviewObjectShapeManager::setColor(const QColor &color)
+{
+    objColor = color;
+}
+
+void SysOverviewObjectShapeManager::paint(
+        QPainter *painter,
+        const QRectF &boundingRect,
+        const bool selected
+        )
 {
     painter->save();
 
-    painter->setBrush(QBrush(color));
+    QColor curObjColor(objColor);
+
+    if(selected)
+    {
+        if(curObjColor.alphaF()<0.1)
+        {
+            curObjColor.setAlphaF(0.1);
+        }
+        curObjColor = curObjColor.darker();
+    }
+
+    painter->setBrush(QBrush(curObjColor));
     painter->setPen(QColor(Qt::black));
 
     switch(shape)
@@ -50,11 +81,12 @@ void SysOverviewObjectShapeManager::paint(QPainter *painter, const QRectF &bound
         painter->drawEllipse(boundingRect);
         break;
     }
+
     painter->restore();
 }
 
 QString SysOverviewObjectShapeManager::translateShapeToString(
-        const SysOverviewObjectShapeManager::SysOverviewObjectShapes &shape
+        const SysOverviewObjectShapeManager::SysOverviewObjectShape &shape
         )
 {
     switch(shape)
@@ -86,7 +118,7 @@ QStringList SysOverviewObjectShapeManager::listShapes()
 
     for(int cntr = 0; cntr < SysOvrvShape_NR_OF_SHAPES; ++cntr)
     {
-        shapeNames << translateShapeToString(cntr);
+        shapeNames << translateShapeToString(static_cast<SysOverviewObjectShape>(cntr));
     }
 
     return shapeNames;

@@ -21,12 +21,24 @@ class ISysOverviewObjectResizeManager
 public:
     virtual ~ISysOverviewObjectResizeManager(){}
 
+    virtual ISysOverviewObjectResizeManager *clone() const = 0;
+
     virtual void paint(QPainter *painter) = 0;
 
     virtual void setSize(const QSizeF &size) = 0;
     virtual QSizeF getSize() const = 0;
 
     virtual QRectF getBoundingRect() const = 0;
+};
+
+template<class Derivate>
+class ISysOverviewObjectResizeManagerCRTPHelper : public ISysOverviewObjectResizeManager
+{
+public:
+    virtual ISysOverviewObjectResizeManager *clone() const
+    {
+        return new Derivate(static_cast<const Derivate &>(*this));
+    }
 };
 
 #endif /* ISYSOVERVIEWOBJECTRESIZEMANAGER_H */
