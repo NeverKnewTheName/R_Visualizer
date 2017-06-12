@@ -241,6 +241,13 @@ public:
     QSize getMsgIDSizeHint() const
     {
     }
+
+    // IMsg interface
+public:
+    MessageTypeIdentifier getMsgType() const
+    {
+        return MessageTypeIdentifier(originalMsg.getMsgID(), originalMsg.getMsgCode());
+    }
 };
 
 /**

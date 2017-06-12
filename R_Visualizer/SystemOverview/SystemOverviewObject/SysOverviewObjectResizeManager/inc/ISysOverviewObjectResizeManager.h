@@ -15,6 +15,8 @@
 
 #include "ResizeRectCorner.h"
 
+#include "ISystemOverviewObject.h"
+
 /**
  * @brief The ISysOverviewObjectResizeManager interface
  */
@@ -24,6 +26,10 @@ public:
     virtual ~ISysOverviewObjectResizeManager(){}
 
     virtual ISysOverviewObjectResizeManager *clone() const = 0;
+
+    virtual void setSysOverviewObject(
+            ISystemOverviewObject *newSysOverviewObject
+            ) = 0;
 
     virtual void paint(QPainter *painter) = 0;
 

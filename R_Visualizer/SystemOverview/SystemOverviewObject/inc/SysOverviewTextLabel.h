@@ -20,6 +20,11 @@ public:
             const QString &text = QString(""),
             QGraphicsItem *parent = Q_NULLPTR
             );
+
+    SysOverviewTextLabel(
+            const SysOverviewTextLabel &copy
+            );
+
     virtual ~SysOverviewTextLabel();
 
     void setEditable(const bool enable);

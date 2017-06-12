@@ -3,14 +3,24 @@
 #include "ISysOverviewObjectResizeManager.h"
 #include <QGraphicsSceneMouseEvent>
 
+#include <QCursor>
+
+#include <QDebug>
+
+int ResizeRectCorner::constructCount = 0;
+
 ResizeRectCorner::ResizeRectCorner() :
     QGraphicsRectItem(QRectF(0,0,10,10)),
     resizeManager(Q_NULLPTR),
     cornerPos(CornerPos_TopLeft)
 {
-    setFlag(QGraphicsItem::ItemIsMovable,false);
-    setFlag(QGraphicsItem::ItemIsFocusable,false);
-    setFlag(QGraphicsItem::ItemIsSelectable,false);
+    setFlag(QGraphicsItem::ItemIsMovable);
+//    setFlag(QGraphicsItem::ItemIsFocusable,false);
+//    setFlag(QGraphicsItem::ItemIsSelectable,false);
+    setAcceptHoverEvents(true);
+
+    constructCount++;
+    qDebug() << "ResizeRectCorner -- Default Constructor: " << constructCount;
 }
 
 ResizeRectCorner::ResizeRectCorner(
@@ -22,9 +32,13 @@ ResizeRectCorner::ResizeRectCorner(
     resizeManager(resizeManager),
     cornerPos(cornerPos)
 {
-    setFlag(QGraphicsItem::ItemIsMovable,false);
-    setFlag(QGraphicsItem::ItemIsFocusable,false);
-    setFlag(QGraphicsItem::ItemIsSelectable,false);
+    setFlag(QGraphicsItem::ItemIsMovable);
+//    setFlag(QGraphicsItem::ItemIsFocusable,false);
+//    setFlag(QGraphicsItem::ItemIsSelectable,false);
+    setAcceptHoverEvents(true);
+
+    constructCount++;
+    qDebug() << "ResizeRectCorner -- Constructor: " << constructCount;
 }
 
 ResizeRectCorner::ResizeRectCorner(
@@ -34,6 +48,20 @@ ResizeRectCorner::ResizeRectCorner(
     resizeManager(copy.resizeManager),
     cornerPos(copy.cornerPos)
 {
+    setFlag(QGraphicsItem::ItemIsMovable);
+//    setFlag(QGraphicsItem::ItemIsFocusable,false);
+//    setFlag(QGraphicsItem::ItemIsSelectable,false);
+    setAcceptHoverEvents(true);
+
+    constructCount++;
+    qDebug() << "ResizeRectCorner -- COPY: " << constructCount;
+}
+
+ResizeRectCorner::~ResizeRectCorner()
+{
+    constructCount--;
+    setParentItem(Q_NULLPTR);
+    qDebug() << "ResizeRectCorner -- DESTRUCTOR: " << constructCount;
 }
 
 void ResizeRectCorner::setPosition(const QPointF &pos)
@@ -50,16 +78,14 @@ void ResizeRectCorner::setPosition(const QPointF &pos)
         break;
     case CornerPos_BottomLeft:
         calcPos.setX(calcPos.x()-10);
-        calcPos.setY(calcPos.y()+10);
         break;
     case CornerPos_BottomRight:
-        calcPos.setY(calcPos.y()+10);
         break;
     default:
         break;
     }
 
-    setPos(pos);
+    setPos(calcPos);
 }
 
 void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -75,10 +101,10 @@ void ResizeRectCorner::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void ResizeRectCorner::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-
+    setCursor(QCursor(Qt::SizeAllCursor));
 }
 
 void ResizeRectCorner::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-
+    setCursor(QCursor(Qt::ArrowCursor));
 }

@@ -1,8 +1,12 @@
 #include "SysOverviewObjectResizeManager.h"
 #include "ISystemOverviewObject.h"
 
+#include <QDebug>
+
+int SysOverviewObjectResizeManager::objCounter = 0;
+
 SysOverviewObjectResizeManager::SysOverviewObjectResizeManager(
-        ISystemOverviewObject &sysOverviewObject,
+        ISystemOverviewObject *sysOverviewObject,
         const QSizeF &size
         ) :
     sysOverviewObject(sysOverviewObject),
@@ -13,6 +17,9 @@ SysOverviewObjectResizeManager::SysOverviewObjectResizeManager(
 {
     initResizeCorners();
     enableResize(resizeEnabled);
+
+    objCounter++;
+    qDebug() << "ResizeManager -- Constructor: " << objCounter;
 }
 
 SysOverviewObjectResizeManager::SysOverviewObjectResizeManager(
@@ -26,11 +33,25 @@ SysOverviewObjectResizeManager::SysOverviewObjectResizeManager(
 {
     initResizeCorners();
     enableResize(resizeEnabled);
+
+    objCounter++;
+    qDebug() << "ResizeManager -- CopyConstructor: " << objCounter;
 }
 
 SysOverviewObjectResizeManager::~SysOverviewObjectResizeManager()
 {
+    resizeCorners.clear();
+    objCounter--;
+    qDebug() << "ResizeManager -- Destructor: " << objCounter;
+}
 
+void SysOverviewObjectResizeManager::setSysOverviewObject(
+        ISystemOverviewObject *newSysOverviewObject
+                                                          )
+{
+    sysOverviewObject = newSysOverviewObject;
+    initResizeCorners();
+    initResizeCornersPositions();
 }
 
 void SysOverviewObjectResizeManager::paint(QPainter *painter)
@@ -42,7 +63,7 @@ void SysOverviewObjectResizeManager::setSize(const QSizeF &size)
 {
     this->size = size;
     boundingRect = QRectF(QPointF(0,0),size);
-    sysOverviewObject.update();
+    sysOverviewObject->update();
 }
 
 QSizeF SysOverviewObjectResizeManager::getSize() const
@@ -113,6 +134,7 @@ void SysOverviewObjectResizeManager::resize(
     }
     if(newWidth > 0 )
     {
+        sysOverviewObject->prepareSizeChange();
         size.setWidth(newWidth);
     }
     if(newHeight <= 0.1)
@@ -122,46 +144,48 @@ void SysOverviewObjectResizeManager::resize(
     }
     if(newHeight > 0 )
     {
+        sysOverviewObject->prepareSizeChange();
         size.setHeight(newHeight);
     }
 
-    sysOverviewObject.move(distX,distY);
-    sysOverviewObject.update();
+
+    sysOverviewObject->move(distX,distY);
 }
 
 QRectF SysOverviewObjectResizeManager::getBoundingRect() const
 {
-    return boundingRect;
+    return QRectF(0,0,size.width(),size.height());
 }
 
 void SysOverviewObjectResizeManager::initResizeCorners()
 {
+    resizeCorners.clear();
     resizeCorners.append(
                 ResizeRectCorner(
                     ResizeRectCorner::CornerPos_TopLeft,
                     this,
-                    &sysOverviewObject
+                    sysOverviewObject
                   )
                 );
     resizeCorners.append(
                 ResizeRectCorner(
                     ResizeRectCorner::CornerPos_TopRight,
                     this,
-                    &sysOverviewObject
+                    sysOverviewObject
                   )
                 );
     resizeCorners.append(
                 ResizeRectCorner(
                     ResizeRectCorner::CornerPos_BottomLeft,
                     this,
-                    &sysOverviewObject
+                    sysOverviewObject
                   )
                 );
     resizeCorners.append(
                 ResizeRectCorner(
                     ResizeRectCorner::CornerPos_BottomRight,
                     this,
-                    &sysOverviewObject
+                    sysOverviewObject
                   )
                 );
     resizeCorners.resize(4);
@@ -169,6 +193,7 @@ void SysOverviewObjectResizeManager::initResizeCorners()
 
 void SysOverviewObjectResizeManager::initResizeCornersPositions()
 {
+    QRectF boundingRect(getBoundingRect());
     resizeCorners[0].setPosition(boundingRect.topLeft());
     resizeCorners[1].setPosition(boundingRect.topRight());
     resizeCorners[2].setPosition(boundingRect.bottomLeft());

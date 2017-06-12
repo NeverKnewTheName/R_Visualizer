@@ -18,6 +18,17 @@ SysOverviewTextLabel::SysOverviewTextLabel(
 {
 }
 
+SysOverviewTextLabel::SysOverviewTextLabel(
+        const SysOverviewTextLabel &copy
+        ) :
+    QGraphicsSimpleTextItem(copy.text(),copy.parentItem()),
+    editable(copy.editable),
+    doubleClicked(false)
+{
+    setEditable(copy.editable);
+    setPos(copy.pos());
+}
+
 SysOverviewTextLabel::~SysOverviewTextLabel()
 {
 

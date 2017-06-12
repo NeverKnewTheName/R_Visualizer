@@ -65,6 +65,11 @@ private slots:
     void on_buttonBox_rejected();
 
 private:
+    static void setupSysOvrvObj(ISysOvrvObjPtr obj);
+    static void setupChildSysOvrvObj(ISysOvrvObjPtr obj);
+    static void prepareSysOvrvObjForCommit(ISysOvrvObjPtr obj);
+
+private:
     Ui::SysOverviewObjectDialog *ui;
     QGraphicsScene scene;
     ISysOvrvObjPtr sysOvrvObj;

@@ -17,3 +17,4 @@ FORMS    += \
 
 include(SysOverviewObjectManager/SysOverviewObjectManager.pri)
 include(SysOverviewObjectResizeManager/SysOverviewObjectResizeManager.pri)
+include(SysOverviewObjectTrigger/SysOverviewObjectTrigger.pri)

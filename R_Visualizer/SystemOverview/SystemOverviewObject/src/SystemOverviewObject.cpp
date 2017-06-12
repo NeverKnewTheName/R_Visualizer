@@ -11,14 +11,27 @@
 #include "SysOverviewTextLabel.h"
 
 #include <QCursor>
+#include <QFocusEvent>
 
 SystemOverviewObject::SystemOverviewObject(
             QGraphicsItem *parent
         ) :
-    ISystemOverviewObject(parent),
-    objManager(new SysOverviewObjectShapeManager(*this)),
-    resizeManager(new SysOverviewObjectResizeManager(*this)),
-    objName("INVALID")
+    ISystemOverviewObjectCRTPHelper(parent),
+    objManager(
+        new SysOverviewObjectShapeManager(
+            this
+            )
+        ),
+    resizeManager(
+        new SysOverviewObjectResizeManager(
+            this
+            )
+        ),
+    objName("INVALID"),
+    resizeEnabled(false),
+    movingEnabled(false),
+    editingEnabled(false),
+    highlighted(false)
 {
     resizeManager->setSize(QSizeF(100,100));
     setFlags(
@@ -28,6 +41,7 @@ SystemOverviewObject::SystemOverviewObject(
             QGraphicsItem::ItemSendsGeometryChanges |
             QGraphicsItem::ItemSendsScenePositionChanges
         );
+    updateToolTip();
 }
 
 SystemOverviewObject::SystemOverviewObject(
@@ -36,12 +50,21 @@ SystemOverviewObject::SystemOverviewObject(
                 ISysOverviewObjectManager *objectManager,
                 QGraphicsItem *parent
             ) :
-    ISystemOverviewObject(parent),
+    ISystemOverviewObjectCRTPHelper(parent),
     objManager(objectManager),
-    resizeManager(new SysOverviewObjectResizeManager(*this)),
-    objName(objName)
+    resizeManager(
+        new SysOverviewObjectResizeManager(
+            this
+            )
+        ),
+    objName(objName),
+    resizeEnabled(false),
+    movingEnabled(false),
+    editingEnabled(false),
+    highlighted(false)
 {
     resizeManager->setSize(size);
+    objManager->setSysOverviewObject(this);
     setFlags(
             QGraphicsItem::ItemIsFocusable |
             QGraphicsItem::ItemIsSelectable |
@@ -49,11 +72,53 @@ SystemOverviewObject::SystemOverviewObject(
             QGraphicsItem::ItemSendsGeometryChanges |
             QGraphicsItem::ItemSendsScenePositionChanges
                 );
+    updateToolTip();
+}
+
+SystemOverviewObject::SystemOverviewObject(
+        const SystemOverviewObject &copy
+        ) :
+    ISystemOverviewObjectCRTPHelper(copy.parentItem()),
+    objManager(copy.objManager->clone()),
+    resizeManager(copy.resizeManager->clone()),
+    objName(copy.objName),
+    resizeEnabled(copy.resizeEnabled),
+    movingEnabled(copy.movingEnabled),
+    editingEnabled(copy.editingEnabled),
+    highlighted(copy.highlighted)
+{
+    setPos(copy.pos());
+    enableResizing(resizeEnabled);
+    resizeManager->setSysOverviewObject(this);
+    objManager->setSysOverviewObject(this);
+
+    for(ISysOvrvObjPtr copyChild : copy.childObjects)
+    {
+        addChildObject(ISysOvrvObjPtr(copyChild->clone()));
+    }
+    for(SysOvrvTextLabelPtr copyLabel : copy.textLabels)
+    {
+        addLabel(
+                    SysOvrvTextLabelPtr(
+                        new SysOverviewTextLabel(*copyLabel)
+                        )
+                    );
+    }
+
+    setFlags(
+            QGraphicsItem::ItemIsFocusable |
+            QGraphicsItem::ItemIsSelectable |
+            QGraphicsItem::ItemIsMovable |
+            QGraphicsItem::ItemSendsGeometryChanges |
+            QGraphicsItem::ItemSendsScenePositionChanges
+                );
+    updateToolTip();
 }
 
 SystemOverviewObject::~SystemOverviewObject()
 {
-
+    objManager.reset();
+    resizeManager.reset();
 }
 
 QRectF SystemOverviewObject::boundingRect() const
@@ -76,17 +141,65 @@ void SystemOverviewObject::paint(
 
     const QRectF &boundingRect = resizeManager->getBoundingRect();
 
-    objManager->paint(painter, boundingRect, isSelected());
+    ISysOverviewObjectManager::ObjectState state =
+            ISysOverviewObjectManager::ObjectState_Normal;
+    if(isSelected())
+    {
+        state =
+                ISysOverviewObjectManager::ObjectState_Selected;
+    }
+    else if(highlighted)
+    {
+        state =
+                ISysOverviewObjectManager::ObjectState_Highlighted;
+    }
+
+    objManager->paint(painter, boundingRect, state);
 
     painter->restore();
 }
 
 void SystemOverviewObject::focusInEvent(QFocusEvent *event)
 {
+    if(isMovingEnabled())
+    {
+        setCursor(QCursor(Qt::SizeAllCursor));
+        setHighlighted(true);
+    }
+    if((parentItem() != Q_NULLPTR) && !isEditingEnabled())
+    {
+        ISystemOverviewObject *parent =
+                dynamic_cast<ISystemOverviewObject *>(parentItem());
+        if(parent != Q_NULLPTR)
+        {
+            parent->focusInEvent(event);
+            return;
+        }
+    }
+    else
+    {
+        for(ISysOvrvObjPtr child : childObjects)
+        {
+            child->setHighlighted(true);
+        }
+    }
 }
 
 void SystemOverviewObject::focusOutEvent(QFocusEvent *event)
 {
+    setCursor(QCursor(Qt::ArrowCursor));
+    setHighlighted(false);
+    ISystemOverviewObject *parent =
+            dynamic_cast<ISystemOverviewObject *>(parentItem());
+    if(parent != Q_NULLPTR)
+    {
+        parent->focusOutEvent(event);
+    }
+    for(ISysOvrvObjPtr child : childObjects)
+    {
+        child->setHighlighted(false);
+    }
+    QGraphicsItem::focusOutEvent(event);
 }
 
 void SystemOverviewObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -101,9 +214,25 @@ void SystemOverviewObject::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     setCursor(QCursor(Qt::ArrowCursor));
 }
 
+void SystemOverviewObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if((parentItem() != Q_NULLPTR) && !isMovingEnabled())
+    {
+        ISystemOverviewObject *parent =
+                dynamic_cast<ISystemOverviewObject *>(parentItem());
+        if(parent != Q_NULLPTR)
+        {
+            parent->mouseMoveEvent(event);
+            return;
+        }
+    }
+    QGraphicsItem::mouseMoveEvent(event);
+}
+
 void SystemOverviewObject::setObjectName(const QString &name)
 {
     objName = name;
+    updateToolTip();
 }
 
 QString SystemOverviewObject::getObjectName() const
@@ -134,11 +263,6 @@ void SystemOverviewObject::setShapeManager(SysOvrvObjectManagerPtr shapeManager)
     this->objManager.reset(shapeManager.release());
     update();
 }
-
-/* SysOverviewTextLabel *SystemOverviewObject::addLabel() */
-/* { */
-/* */
-/* } */
 
 SysOvrvTextLabelPtr SystemOverviewObject::addLabel(SysOvrvTextLabelPtr label)
 {
@@ -223,24 +347,86 @@ ISysOvrvObjPtr SystemOverviewObject::convertObjectPointer(
 
 void SystemOverviewObject::enableResizing(const bool enabled)
 {
+    resizeEnabled = enabled;
     resizeManager->enableResize(enabled);
+}
+
+void SystemOverviewObject::enableChildrenResizing(const bool enabled)
+{
+    for(ISysOvrvObjPtr child : childObjects)
+    {
+        child->enableResizing(enabled);
+    }
 }
 
 bool SystemOverviewObject::isResizingEnabled() const
 {
+    return resizeEnabled;
 }
 
 void SystemOverviewObject::enableMoving(const bool enabled)
 {
+    movingEnabled = enabled;
+//    setFlag(QGraphicsItem::ItemIsMovable, enabled);
+}
 
+void SystemOverviewObject::enableChildrenMoving(const bool enabled)
+{
+    for(ISysOvrvObjPtr child : childObjects)
+    {
+        child->enableMoving(enabled);
+    }
 }
 
 bool SystemOverviewObject::isMovingEnabled() const
 {
+    return movingEnabled;
+}
 
+void SystemOverviewObject::enableEditing(const bool enabled)
+{
+    editingEnabled = enabled;
+    setFlag(QGraphicsItem::ItemIsSelectable,enabled);
+}
+
+void SystemOverviewObject::enableChildrenEditing(const bool enabled)
+{
+    for(ISysOvrvObjPtr child : childObjects)
+    {
+        child->enableEditing(enabled);
+    }
+}
+
+bool SystemOverviewObject::isEditingEnabled() const
+{
+    return editingEnabled;
 }
 
 void SystemOverviewObject::move(qreal x, qreal y)
 {
+    prepareGeometryChange();
     moveBy(x,y);
+    update();
+}
+
+void SystemOverviewObject::prepareSizeChange()
+{
+    prepareGeometryChange();
+}
+
+void SystemOverviewObject::setHighlighted(const bool enabled)
+{
+    highlighted = enabled;
+    for(ISysOvrvObjPtr child : childObjects)
+    {
+        child->setHighlighted(enabled);
+    }
+    update();
+}
+
+void SystemOverviewObject::updateToolTip()
+{
+    QString childTip("Nr. ChildObjects: ");
+    childTip.append(QString::number(childObjects.size(),10));
+    setToolTip(objName + QString("\n") + childTip);
 }

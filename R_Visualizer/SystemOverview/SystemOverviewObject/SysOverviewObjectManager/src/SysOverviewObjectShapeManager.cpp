@@ -4,7 +4,7 @@
 #include "SysOverviewObjectColorManager.h"
 
 SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
-        ISystemOverviewObject &sysOverviewObject,
+        ISystemOverviewObject *sysOverviewObject,
         SysOverviewObjectShapeManager::SysOverviewObjectShape shape
         ) :
     ISysOverviewObjectManagerCRTPHelper(
@@ -22,7 +22,7 @@ SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
 }
 
 SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
-        ISystemOverviewObject &sysOverviewObject,
+        ISystemOverviewObject *sysOverviewObject,
         SysOvrvObjColorManagerPtr colorManager,
         SysOverviewObjectShapeManager::SysOverviewObjectShape shape
         ) :
@@ -54,6 +54,11 @@ SysOverviewObjectShapeManager::~SysOverviewObjectShapeManager()
 
 }
 
+void SysOverviewObjectShapeManager::setSysOverviewObject(ISystemOverviewObject *newSysOverviewObject)
+{
+    this->sysOverviewObject = newSysOverviewObject;
+}
+
 SysOverviewObjectShapeManager::SysOverviewObjectShape SysOverviewObjectShapeManager::getShape() const
 {
     return this->shape;
@@ -76,30 +81,42 @@ void SysOverviewObjectShapeManager::setColorManager(
         )
 {
     this->colorManager.reset(colorManager.release());
-    sysOverviewObject.update();
+    sysOverviewObject->update();
 }
 
 void SysOverviewObjectShapeManager::paint(
         QPainter *painter,
         const QRectF &boundingRect,
-        const bool selected
+        const ObjectState objectState
         )
 {
     painter->save();
 
-    QColor curObjColor;
+    QColor curObjFillColor;
+    QColor curObjBorderColor =
+            colorManager->getBorderColor();
 
-    if(selected)
+    switch(objectState)
     {
-        curObjColor = colorManager->getHighlightFillColor();
-    }
-    else
-    {
-        curObjColor = colorManager->getFillColor();
+    case ObjectState_Normal:
+        curObjFillColor = colorManager->getFillColor();
+        break;
+    case ObjectState_Highlighted:
+        curObjFillColor = colorManager->getHighlightFillColor();
+        break;
+    case ObjectState_Selected:
+        curObjFillColor = colorManager->getHighlightFillColor();
+        curObjFillColor.darker(100);
+        curObjBorderColor = QColor(Qt::blue);
+        break;
+    case ObjectState_Disabled:
+        curObjFillColor = QColor(Qt::gray);
+        curObjBorderColor = QColor(Qt::lightGray);
+        break;
     }
 
-    painter->setBrush(QBrush(curObjColor));
-    painter->setPen(colorManager->getBorderColor());
+    painter->setBrush(QBrush(curObjFillColor));
+    painter->setPen(curObjBorderColor);
 
     switch(shape)
     {
@@ -143,7 +160,7 @@ void SysOverviewObjectShapeManager::paint(
 
 void SysOverviewObjectShapeManager::update()
 {
-    sysOverviewObject.update();
+    sysOverviewObject->update();
 }
 
 QString SysOverviewObjectShapeManager::translateShapeToString(
@@ -184,3 +201,4 @@ QStringList SysOverviewObjectShapeManager::listShapes()
 
     return shapeNames;
 }
+

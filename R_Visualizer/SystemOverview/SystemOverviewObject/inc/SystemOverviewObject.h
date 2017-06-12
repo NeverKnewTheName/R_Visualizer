@@ -17,7 +17,8 @@
 /**
  * @brief The SystemOverviewObject
  */
-class SystemOverviewObject : public ISystemOverviewObject
+class SystemOverviewObject :
+        public ISystemOverviewObjectCRTPHelper<SystemOverviewObject>
 {
 public:
     SystemOverviewObject(
@@ -29,6 +30,10 @@ public:
             ISysOverviewObjectManager *objectManager = Q_NULLPTR,
             QGraphicsItem *parent = Q_NULLPTR
             );
+
+    SystemOverviewObject(
+        const SystemOverviewObject &copy
+            );
     virtual ~SystemOverviewObject();
 
     // QGraphicsItem interface
@@ -37,10 +42,13 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:
-    virtual void focusInEvent(QFocusEvent *event);
-    virtual void focusOutEvent(QFocusEvent *event);
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
+public:
+    virtual void focusInEvent(QFocusEvent *event);
+    virtual void focusOutEvent(QFocusEvent *event);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     // ISystemOverviewObject interface
 public:
@@ -68,11 +76,24 @@ public:
     ISysOvrvObjPtr convertObjectPointer(ISystemOverviewObject *object) const;
 
     virtual void enableResizing(const bool enabled);
+    virtual void enableChildrenResizing(const bool enabled);
     virtual bool isResizingEnabled() const;
+
     virtual void enableMoving(const bool enabled);
+    virtual void enableChildrenMoving(const bool enabled);
     virtual bool isMovingEnabled() const;
 
+    virtual void enableEditing(const bool enabled);
+    virtual void enableChildrenEditing(const bool enabled);
+    virtual bool isEditingEnabled() const;
+
     virtual void move(qreal x, qreal y);
+    virtual void prepareSizeChange();
+
+    virtual void setHighlighted(const bool enabled);
+
+private:
+    void updateToolTip();
 
 private:
     SysOvrvObjectManagerPtr objManager;
@@ -82,6 +103,8 @@ private:
     QString objName;
     bool resizeEnabled;
     bool movingEnabled;
+    bool editingEnabled;
+    bool highlighted;
 };
 
 #endif /* SYSTEMOVERVIEWOBJECT_H */

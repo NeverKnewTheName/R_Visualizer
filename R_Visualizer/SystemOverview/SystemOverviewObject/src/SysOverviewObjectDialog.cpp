@@ -14,26 +14,16 @@ SysOverviewObjectDialog::SysOverviewObjectDialog(
     ui(new Ui::SysOverviewObjectDialog),
     scene(this),
     sysOvrvObj(sysOvrvObj),
-    sysOvrvObjSave(new SystemOverviewObject())
+    sysOvrvObjSave(sysOvrvObj->clone())
 {
     ui->setupUi(this);
     ui->objectPreviewGrahicsView->setScene(&scene);
 
     if(!sysOvrvObj.isNull())
     {
-        sysOvrvObjSave->setObjectName(sysOvrvObj->getObjectName());
-        sysOvrvObjSave->setShapeManager(std::move(sysOvrvObj->getShapeManager()));
-        sysOvrvObjSave->setResizeManager(std::move(sysOvrvObj->getResizeManager()));
-
-        QVector<SysOvrvTextLabelPtr> textLabels =
-                sysOvrvObj->getLabels();
-        for( SysOvrvTextLabelPtr label : textLabels)
-        {
-            label->setEditable(true);
-        }
+        setupSysOvrvObj(sysOvrvObj);
 
         scene.addItem(sysOvrvObj.data());
-        sysOvrvObj->enableResizing(true);
         setupDialog();
     }
     setupButtons();
@@ -178,11 +168,12 @@ void SysOverviewObjectDialog::on_addObjectBtn_clicked()
                 newObj,
                 this
                 );
+
     connect(
             addDialog,
             &SysOverviewObjectDialog::sgnl_CommitObject,
             [=](ISysOvrvObjPtr obj){
-                sysOvrvObj->enableResizing(false);
+                setupChildSysOvrvObj(obj);
                 sysOvrvObj->addChildObject(obj);
             }
         );
@@ -224,7 +215,7 @@ void SysOverviewObjectDialog::on_editObjectBtn_clicked()
             addDialog,
             &SysOverviewObjectDialog::sgnl_CommitObject,
             [=](ISysOvrvObjPtr obj){
-                sysOvrvObj->enableResizing(false);
+                setupChildSysOvrvObj(obj);
                 sysOvrvObj->addChildObject(obj);
             }
         );
@@ -232,7 +223,7 @@ void SysOverviewObjectDialog::on_editObjectBtn_clicked()
             addDialog,
             &SysOverviewObjectDialog::rejected,
             [=](){
-                sysOvrvObj->enableResizing(false);
+                setupChildSysOvrvObj(objToEdit);
                 sysOvrvObj->addChildObject(objToEdit);
             }
         );
@@ -257,6 +248,7 @@ void SysOverviewObjectDialog::on_addLabelBtn_clicked()
                     )
                 );
     objToEdit->addLabel(newLabel);
+    newLabel->setPos(-20,-20);
     newLabel->setEditable(true);
     newLabel->textEdit(this);
 }
@@ -306,7 +298,7 @@ void SysOverviewObjectDialog::on_shapeComboBox_currentIndexChanged(int index)
 
         objShapeManager.reset(
                     new SysOverviewObjectShapeManager(
-                        *sysOvrvObj,
+                        sysOvrvObj.data(),
                         std::move(colorManager),
                         static_cast<SysOverviewObjectShapeManager::SysOverviewObjectShape>(index)
                         )
@@ -383,13 +375,7 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
             if(!sysOvrvObj.isNull())
             {
                 scene.removeItem(sysOvrvObj.data());
-                QVector<SysOvrvTextLabelPtr> textLabels =
-                        sysOvrvObj->getLabels();
-                for( SysOvrvTextLabelPtr label : textLabels)
-                {
-                    label->setEditable(false);
-                }
-                sysOvrvObj->enableResizing(false);
+                prepareSysOvrvObjForCommit(sysOvrvObj);
                 emit sgnl_CommitObject(std::move(this->sysOvrvObj));
             }
             break;
@@ -403,28 +389,19 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
         switch(ui->buttonBox->standardButton(button))
         {
         case QDialogButtonBox::Abort:
-            QVector<SysOvrvTextLabelPtr> textLabels =
-                    sysOvrvObj->getLabels();
-            for( SysOvrvTextLabelPtr label : textLabels)
-            {
-                label->setEditable(false);
-            }
-            sysOvrvObj->enableResizing(false);
+            prepareSysOvrvObjForCommit(sysOvrvObj);
             scene.removeItem(sysOvrvObj.data());
             break;
         }
         break;
     case QDialogButtonBox::ResetRole:
-        sysOvrvObj->setObjectName(sysOvrvObjSave->getObjectName());
-        sysOvrvObj->setShapeManager(std::move(sysOvrvObjSave->getShapeManager()));
-        sysOvrvObj->setResizeManager(std::move(sysOvrvObjSave->getResizeManager()));
+        selectedObj.clear();
+        selectedTextLabel.clear();
+        scene.removeItem(sysOvrvObj.data());
+        sysOvrvObj.reset(sysOvrvObjSave->clone());
+        scene.addItem(sysOvrvObj.data());
         setupDialog();
-        QVector<SysOvrvTextLabelPtr> textLabels =
-                sysOvrvObj->getLabels();
-        for( SysOvrvTextLabelPtr label : textLabels)
-        {
-            label->setEditable(true);
-        }
+        setupSysOvrvObj(sysOvrvObj);
         break;
     }
 }
@@ -440,4 +417,59 @@ void SysOverviewObjectDialog::on_nameLE_editingFinished()
 void SysOverviewObjectDialog::on_buttonBox_rejected()
 {
 
+}
+
+void SysOverviewObjectDialog::setupSysOvrvObj(ISysOvrvObjPtr obj)
+{
+    QVector<SysOvrvTextLabelPtr> textLabels =
+            obj->getLabels();
+    for( SysOvrvTextLabelPtr label : textLabels)
+    {
+        label->setEditable(true);
+    }
+
+    obj->enableResizing(true);
+    obj->enableEditing(true);
+    obj->enableMoving(true);
+    QVector<ISysOvrvObjPtr> directChildren =
+            obj->getChildObjects();
+    for(ISysOvrvObjPtr directChild : directChildren)
+    {
+        directChild->enableResizing(true);
+        directChild->enableMoving(true);
+        directChild->enableEditing(true);
+    }
+}
+
+void SysOverviewObjectDialog::setupChildSysOvrvObj(ISysOvrvObjPtr obj)
+{
+    QVector<SysOvrvTextLabelPtr> textLabels =
+            obj->getLabels();
+    for(SysOvrvTextLabelPtr label : textLabels)
+    {
+        label->setEditable(false);
+    }
+    obj->enableResizing(true);
+    obj->enableEditing(true);
+    obj->enableMoving(true);
+    obj->enableChildrenEditing(false);
+    obj->enableChildrenMoving(false);
+    obj->enableChildrenResizing(false);
+}
+
+void SysOverviewObjectDialog::prepareSysOvrvObjForCommit(ISysOvrvObjPtr obj)
+{
+    QVector<SysOvrvTextLabelPtr> textLabels =
+            obj->getLabels();
+    for(SysOvrvTextLabelPtr label : textLabels)
+    {
+        label->setEditable(false);
+    }
+    obj->enableResizing(false);
+    obj->enableEditing(false);
+    obj->enableMoving(true);
+    obj->enableResizing(false);
+    obj->enableChildrenEditing(false);
+    obj->enableChildrenMoving(false);
+    obj->enableChildrenResizing(false);
 }

@@ -44,6 +44,13 @@ public:
     {}
     virtual ~ISystemOverviewObject(){}
 
+    virtual ISystemOverviewObject *clone() const = 0;
+
+public:
+    virtual void focusInEvent(QFocusEvent *event) = 0;
+    virtual void focusOutEvent(QFocusEvent *event) = 0;
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event) = 0;
+
     virtual void setObjectName(const QString &name) = 0;
     virtual QString getObjectName() const = 0;
 
@@ -79,15 +86,36 @@ public:
             ) const = 0;
 
     virtual void enableResizing(const bool enabled) = 0;
+    virtual void enableChildrenResizing(const bool enabled) = 0;
     virtual bool isResizingEnabled() const = 0;
 
     virtual void enableMoving(const bool enabled) = 0;
+    virtual void enableChildrenMoving(const bool enabled) = 0;
     virtual bool isMovingEnabled() const = 0;
 
+    virtual void enableEditing(const bool enabled) = 0;
+    virtual void enableChildrenEditing(const bool enabled) = 0;
+    virtual bool isEditingEnabled() const = 0;
+
     virtual void move(qreal x, qreal y) = 0;
+    virtual void prepareSizeChange() = 0;
+
+    virtual void setHighlighted(const bool enabled) = 0;
 };
 
-
 Q_DECLARE_METATYPE(ISysOvrvObjPtr)
+
+template<class Derived>
+class ISystemOverviewObjectCRTPHelper :
+        public ISystemOverviewObject
+{
+public:
+    using ISystemOverviewObject::ISystemOverviewObject;
+
+    virtual ISystemOverviewObject *clone() const
+    {
+        return new Derived(static_cast<const Derived &>(*this));
+    }
+};
 
 #endif /* ISYSTEMOVERVIEWOBJECT_H */

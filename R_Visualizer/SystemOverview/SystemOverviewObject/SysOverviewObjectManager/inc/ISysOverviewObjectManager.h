@@ -12,6 +12,8 @@
 #include <QRectF>
 #include <QColor>
 
+class ISystemOverviewObject;
+
 /**
  * @brief The ISysOverviewObjectManager interface
  */
@@ -26,14 +28,26 @@ public:
         UserType
     };
 
+    enum ObjectState
+    {
+        ObjectState_Normal,
+        ObjectState_Selected,
+        ObjectState_Highlighted,
+        ObjectState_Disabled
+    };
+
+
     virtual ~ISysOverviewObjectManager(){}
 
+    virtual void setSysOverviewObject(
+            ISystemOverviewObject *newSysOverviewObject
+            ) = 0;
     virtual ISysOverviewObjectManager *clone() const = 0;
 
     virtual void paint(
             QPainter *painter,
             const QRectF &boundingRect,
-            const bool selected
+            const ObjectState objectState
             ) = 0;
 
     ObjectType getType() const

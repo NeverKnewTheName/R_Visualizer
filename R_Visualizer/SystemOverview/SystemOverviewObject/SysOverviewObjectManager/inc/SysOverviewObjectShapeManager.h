@@ -33,12 +33,12 @@ public:
     };
 
     SysOverviewObjectShapeManager(
-            ISystemOverviewObject &sysOverviewObject,
+            ISystemOverviewObject *sysOverviewObject,
             SysOverviewObjectShape shape = SysOvrvShape_Rectangle
             /* QObject *parent = Q_NULLPTR */
             );
     SysOverviewObjectShapeManager(
-            ISystemOverviewObject &sysOverviewObject,
+            ISystemOverviewObject *sysOverviewObject,
             SysOvrvObjColorManagerPtr colorManager,
             SysOverviewObjectShape shape = SysOvrvShape_Rectangle
             /* QObject *parent = Q_NULLPTR */
@@ -50,6 +50,10 @@ public:
 
     virtual ~SysOverviewObjectShapeManager();
 
+    virtual void setSysOverviewObject(
+            ISystemOverviewObject *newSysOverviewObject
+            );
+
     virtual SysOverviewObjectShape getShape() const;
     virtual void setShape(const SysOverviewObjectShape &shape);
 
@@ -59,7 +63,7 @@ public:
     virtual void paint(
             QPainter *painter,
             const QRectF &boundingRect,
-            const bool selected
+            const ObjectState objectState
             );
 
     void update();
@@ -68,9 +72,10 @@ public:
     static QStringList listShapes();
 
 private:
-    ISystemOverviewObject &sysOverviewObject;
+    ISystemOverviewObject *sysOverviewObject;
     SysOvrvObjColorManagerPtr colorManager;
     SysOverviewObjectShape shape;
+
 };
 
 typedef std::unique_ptr<SysOverviewObjectShapeManager> SysOvrvObjectShapeManagerPtr;

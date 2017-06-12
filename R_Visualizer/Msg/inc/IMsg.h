@@ -17,6 +17,8 @@
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
 
+#include "MessageTypeIdentifier.h"
+
 /**
  * @defgroup MessageGroup Message
  *
@@ -62,6 +64,8 @@ public:
      * \brief Retrieve the message's data
      */
     virtual const MsgDataType getMsgData() const = 0;
+
+    virtual MessageTypeIdentifier getMsgType() const = 0;
 
     virtual operator QString() const = 0;
 

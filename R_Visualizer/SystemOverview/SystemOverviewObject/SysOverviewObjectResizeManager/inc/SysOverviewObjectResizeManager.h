@@ -13,7 +13,7 @@
 #include <QSizeF>
 #include "ResizeRectCorner.h"
 
-class ISystemOverviewObject;
+#include "ISystemOverviewObject.h"
 
 /**
  * @brief The SysOverviewObjectResizeManager
@@ -23,7 +23,7 @@ class SysOverviewObjectResizeManager :
 {
 public:
     SysOverviewObjectResizeManager(
-            ISystemOverviewObject &sysOverviewObject,
+            ISystemOverviewObject *sysOverviewObject,
             const QSizeF &size = QSizeF(100,100)
             );
 
@@ -32,6 +32,10 @@ public:
             );
 
     virtual ~SysOverviewObjectResizeManager();
+
+    virtual void setSysOverviewObject(
+            ISystemOverviewObject *newSysOverviewObject
+            );
 
     virtual void paint(QPainter *painter);
 
@@ -53,11 +57,13 @@ private:
     void initResizeCornersPositions();
 
 private:
-    ISystemOverviewObject &sysOverviewObject;
+    ISystemOverviewObject *sysOverviewObject;
     QSizeF size;
     QRectF boundingRect;
     bool resizeEnabled;
     QVector<ResizeRectCorner> resizeCorners;
+
+    static int objCounter;
 
 };
 

@@ -24,6 +24,8 @@ public:
             );
     ResizeRectCorner(const ResizeRectCorner &copy);
 
+    ~ResizeRectCorner();
+
     void setPosition(const QPointF &pos);
 
 protected:
@@ -34,6 +36,8 @@ protected:
 private:
     const CornerPos cornerPos;
     ISysOverviewObjectResizeManager *resizeManager;
+
+    static int constructCount;
 };
 
 #endif // RESIZERECTCORNER_H

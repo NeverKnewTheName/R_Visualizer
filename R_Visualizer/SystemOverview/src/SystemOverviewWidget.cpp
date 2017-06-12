@@ -8,6 +8,8 @@
 #include "SystemOverviewObjectStore.h"
 #include "SysOverviewObjectDialog.h"
 
+#include <QInputDialog>
+
 SystemOverviewWidget::SystemOverviewWidget(
         ISystemOverview *systemOverview,
         QWidget *parent
@@ -24,12 +26,12 @@ SystemOverviewWidget::SystemOverviewWidget(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestAddObject,
                 [=](const QPointF &pos){
-                    ISysOvrvObjPtr newObj(new SystemOverviewObject());
-                    SysOverviewObjectDialog *objDiag =
-                            new SysOverviewObjectDialog(
-                                newObj,
-                                this
-                                );
+                        ISysOvrvObjPtr newObj(new SystemOverviewObject());
+                        SysOverviewObjectDialog * objDiag =
+                                new SysOverviewObjectDialog(
+                                    newObj,
+                                    this
+                                    );
 
                     connect(
                             objDiag,
@@ -43,6 +45,23 @@ SystemOverviewWidget::SystemOverviewWidget(
                             &SysOverviewObjectDialog::sgnl_CommitObject,
                             [=](ISysOvrvObjPtr obj){
                                 obj->setPos(pos);
+                                QString objectName = obj->getObjectName();
+                                while(
+                                      objectName.isEmpty() ||
+                                      (objectName.compare("INVALID") == 0) ||
+                                      !systemOverview->getObject(objectName).isNull()
+                                      )
+                                {
+                                    //Object already exists!
+                                    objectName = QInputDialog::getText(
+                                                this,
+                                                QString("Enter Name for Object"),
+                                                QString("Object Name:"),
+                                                QLineEdit::Normal,
+                                                objectName
+                                                );
+                                    obj->setObjectName(objectName);
+                                }
                                 systemOverview
                                         ->addObject(
                                             std::move(obj)
@@ -74,7 +93,7 @@ SystemOverviewWidget::SystemOverviewWidget(
                 [=](const QString &objName){
                     ISysOvrvObjPtr obj = systemOverview->getObject(objName);
                     systemOverview->removeObject(obj);
-                    SysOverviewObjectDialog *objDiag =
+                    SysOverviewObjectDialog * objDiag =
                             new SysOverviewObjectDialog(
                                 obj,
                                 this

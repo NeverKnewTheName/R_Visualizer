@@ -64,6 +64,11 @@ const MsgDataType Msg::getMsgData() const
     return msgData;
 }
 
+MessageTypeIdentifier Msg::getMsgType() const
+{
+    return MessageTypeIdentifier(msgID, msgCode);
+}
+
 Msg::operator QString() const
 {
     QString tempMsgDataString("");

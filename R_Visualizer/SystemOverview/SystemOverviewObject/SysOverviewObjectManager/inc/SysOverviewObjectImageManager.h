@@ -13,10 +13,13 @@
 #include <QImage>
 #include <QPixmap>
 
+class ISystemOverviewObject;
+
 /**
  * @brief The SysOverviewObjectImageManager
  */
-class SysOverviewObjectImageManager
+class SysOverviewObjectImageManager :
+        public ISysOverviewObjectManagerCRTPHelper<SysOverviewObjectImageManager>
 {
 public:
     SysOverviewObjectImageManager(
@@ -29,6 +32,10 @@ public:
             );
     virtual ~SysOverviewObjectImageManager();
 
+    virtual void setSysOverviewObject(
+            ISystemOverviewObject *newSysOverviewObject
+            );
+
     virtual void setImage(const QImage &image);
     virtual void setImage(const QPixmap &image);
     virtual QPixmap getImage() const;
@@ -37,12 +44,13 @@ public:
     virtual void paint(
             QPainter *painter,
             const QRectF &boundingRect,
-            const QColor &color
+            const ObjectState objectState
             );
 
 private:
     ISystemOverviewObject *sysOverviewObject;
     QPixmap image;
+
 };
 
 #endif /* SYSOVERVIEWOBJECTIMAGEMANAGER_H */
