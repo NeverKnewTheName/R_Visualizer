@@ -14,6 +14,8 @@
 #include <QColor>
 #include <QSizeF>
 
+//class SysOvrvObjTriggerPtr;
+
 /**
  * @brief The SystemOverviewObject
  */
@@ -92,6 +94,23 @@ public:
 
     virtual void setHighlighted(const bool enabled);
 
+    virtual void addObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToAdd
+            );
+    virtual void addChildObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToAdd
+            );
+
+    virtual void removeObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToRemove
+            );
+    virtual void removeChildObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToRemove
+            );
+
+    virtual QVector<SysOvrvObjTriggerPtr> getLocalObjectTriggers() const;
+    virtual QVector<SysOvrvObjTriggerPtr> getGlobalObjectTriggers() const;
+
 private:
     void updateToolTip();
 
@@ -100,6 +119,8 @@ private:
     SysOvrvObjectResizeManagerPtr resizeManager;
     QVector<SysOvrvTextLabelPtr> textLabels;
     QVector<ISysOvrvObjPtr> childObjects;
+    QVector<SysOvrvObjTriggerPtr> globalTriggers;
+    QVector<SysOvrvObjTriggerPtr> localTriggers;
     QString objName;
     bool resizeEnabled;
     bool movingEnabled;

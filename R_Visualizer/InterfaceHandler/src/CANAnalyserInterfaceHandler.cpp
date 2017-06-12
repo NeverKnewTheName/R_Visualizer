@@ -263,16 +263,19 @@ bool CANAnalyserInterfaceHandler::stopSession()
     return true;
 }
 
+#define __DEBUG_CANINTERFACEHANDLER__
 bool CANAnalyserInterfaceHandler::sendMessage(const IMsg &msgToSend)
 {
     /////////DEBUG//////////
     
-    /* emit sgnl_MessageReceived( */
-    /*         TimestampedMsg( */
-    /*             msgToSend, */
-    /*             QDateTime::currentDateTime() */
-    /*             ) */
-    /*         ); */
+#ifdef __DEBUG_CANINTERFACEHANDLER__
+    emit sgnl_MessageReceived(
+            TimestampedMsg(
+                msgToSend,
+                QDateTime::currentDateTime()
+                )
+            );
+#endif /* __DEBUG_CANINTERFACEHANDLER__ */
     
     /////////DEBUG//////////
 

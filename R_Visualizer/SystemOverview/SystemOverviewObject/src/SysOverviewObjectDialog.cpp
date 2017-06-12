@@ -269,9 +269,46 @@ void SysOverviewObjectDialog::on_removeLabelBtn_clicked()
     sysOvrvObj->removeLabel(textLabel);
 }
 
+#include "SysOverviewObjectColorTrigger.h"
+#include "SysOvrvObjColorTriggerDialog.h"
 void SysOverviewObjectDialog::on_addTriggerBtn_clicked()
 {
+    if(!selectedObj.isNull())
+    {
+        ISysOvrvObjPtr objToAddTriggerTo = selectedObj;
 
+        SysOvrvObjColorTriggerDialog *colorTriggerDiag =
+                new SysOvrvObjColorTriggerDialog(
+                    objToAddTriggerTo.data(),
+                    this
+                    );
+
+        connect(
+                    colorTriggerDiag,
+                    &SysOvrvObjColorTriggerDialog::sgnl_commitTrigger,
+                    [=](SysOvrvObjTriggerPtr trigger){
+                            objToAddTriggerTo->addObjectTrigger(
+                                        trigger
+                                        );
+                        }
+
+                    );
+        colorTriggerDiag->setAttribute(Qt::WA_DeleteOnClose);
+        colorTriggerDiag->exec();
+
+        //selectedObj->addObjectTrigger(
+        //            SysOvrvObjTriggerPtr(
+        //                new SysOverviewObjectColorTrigger(
+        //                    selectedObj.data(),
+        //                    QColor(Qt::red),
+        //                    MessageTypeIdentifier(
+        //                        MsgIDType(0x100),
+        //                        MsgCodeType(0x2)
+        //                        )
+        //                    )
+        //                )
+        //            );
+    }
 }
 
 void SysOverviewObjectDialog::on_removeTriggerBtn_clicked()

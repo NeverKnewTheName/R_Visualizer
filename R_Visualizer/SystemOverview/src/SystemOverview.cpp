@@ -35,9 +35,18 @@ SystemOverview::~SystemOverview()
 
 void SystemOverview::receiveMsg(const IMsg &receivedMsg)
 {
-    const MsgIDType &msgID = receivedMsg.getMsgID();
-    const MsgCodeType &msgCode = receivedMsg.getMsgCode();
-    const MsgDataType &msgData = receivedMsg.getMsgData();
+    const MessageTypeIdentifier &msgType = receivedMsg.getMsgType();
+
+    QVector<ISysOvrvObjPtr> objects = systemOverviewObjectStore->getObjects();
+    for(ISysOvrvObjPtr object : objects)
+    {
+        QVector<SysOvrvObjTriggerPtr> triggers =
+                object->getGlobalObjectTriggers();
+        for(SysOvrvObjTriggerPtr trigger : triggers)
+        {
+            trigger->trigger(receivedMsg);
+        }
+    }
 }
 
 void SystemOverview::applyUserRole(const UserRoleManagement::UserRole roleToApply)

@@ -23,3 +23,5 @@ HEADERS  += \
 FORMS    += \
     $$PWD/ui/sysovrvobjtriggerdialog.ui \
     $$PWD/ui/sysovrvtriggereditorwidget.ui
+
+include(SysOvrvTriggerEvaluator/SysOvrvTriggerEvaluator.pri)

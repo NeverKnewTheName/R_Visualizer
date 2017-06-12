@@ -404,12 +404,12 @@ int main(int argc, char *argv[])
 
     w.appendTabMenuWidget(systemOverviewWidget, "System Overview");
 
-    //connect(
-    //        &receivedMsgsStore,
-    //        &TimestampedMsgStorage::sgnl_MsgAdded,
-    //        sysOvrvWidget,
-    //        &SystemOverview::slt_newMessage
-    //        );
+    QObject::connect(
+            &timestampedMsgStorage,
+            &TimestampedMsgStorage::sgnl_MsgAdded,
+            systemOverview,
+            &ISystemOverview::slt_ReceiveMsg
+            );
 
     //errLogViewDiag = new ErrorLogView(&w);
 

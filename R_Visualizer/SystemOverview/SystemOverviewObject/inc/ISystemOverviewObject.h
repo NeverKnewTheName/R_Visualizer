@@ -17,8 +17,11 @@
 #include <QGraphicsItem>
 #include <QSharedPointer>
 
+#include "ISysOverviewObjectTrigger.h"
+
 class ISysOverviewObjectResizeManager;
 class ISysOverviewObjectManager;
+
 
 class SysOverviewTextLabel;
 
@@ -101,6 +104,24 @@ public:
     virtual void prepareSizeChange() = 0;
 
     virtual void setHighlighted(const bool enabled) = 0;
+
+    virtual void addObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToAdd
+            ) = 0;
+    virtual void addChildObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToAdd
+            ) = 0;
+
+    virtual void removeObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToRemove
+            ) = 0;
+    virtual void removeChildObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToRemove
+            ) = 0;
+
+    virtual QVector<SysOvrvObjTriggerPtr> getLocalObjectTriggers() const = 0;
+    virtual QVector<SysOvrvObjTriggerPtr> getGlobalObjectTriggers() const = 0;
+
 };
 
 Q_DECLARE_METATYPE(ISysOvrvObjPtr)

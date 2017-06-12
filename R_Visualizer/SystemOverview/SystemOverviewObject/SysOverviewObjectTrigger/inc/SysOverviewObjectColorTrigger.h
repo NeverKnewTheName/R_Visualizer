@@ -11,27 +11,38 @@ public:
     SysOverviewObjectColorTrigger(
             ISystemOverviewObject *objectToTrigger,
             const QColor &colorToChangeTo,
-            const MessageTypeIdentifier &msgTypeTrigger
+            SysOvrvObjTriggerEvaluatorPtr triggerEvaluator
             );
     virtual ~SysOverviewObjectColorTrigger();
 
-    // ISysOverviewObjectTrigger interface
-public:
     virtual QColor getTriggerColor() const;
     virtual void setTriggerColor(const QColor &triggerColor);
-    virtual bool triggers(const MessageTypeIdentifier &msgType) const;
+
+    // ISysOverviewObjectTrigger interface
+public:
     virtual void trigger(const IMsg &msg);
-    virtual void setSysOverviewObject(ISystemOverviewObject *sysOverviewObject);
+
+    virtual SysOvrvObjTriggerEvaluatorPtr getTriggerEvaluator() const;
+
+    virtual void setTriggerEvaluator(
+            SysOvrvObjTriggerEvaluatorPtr triggerEvaluator
+            );
+
+    virtual void setSysOverviewObject(
+            ISystemOverviewObject *sysOverviewObject
+            );
+
+    virtual bool isTriggered() const;
 
 private:
     void applyColorTrigger();
 
 private:
     ISystemOverviewObject *objectToTrigger;
+    SysOvrvObjTriggerEvaluatorPtr triggerEvaluator;
     QColor originalColor;
     QColor triggerColor;
-    MessageTypeIdentifier msgTypeTrigger;
-    bool isTriggered;
+    bool triggered;
 };
 
 #endif // SYSOVERVIEWOBJECTCOLORTRIGGER_H

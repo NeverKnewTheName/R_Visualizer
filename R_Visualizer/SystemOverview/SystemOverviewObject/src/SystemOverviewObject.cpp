@@ -1,12 +1,12 @@
 #include "SystemOverviewObject.h"
 
-#include "ISysOverviewObjectManager.h"
 #include "ISysOverviewObjectResizeManager.h"
+#include "SysOverviewObjectResizeManager.h"
 
 #include "ISysOverviewObjectManager.h"
 #include "SysOverviewObjectShapeManager.h"
 
-#include "SysOverviewObjectResizeManager.h"
+#include "ISysOverviewObjectTrigger.h"
 
 #include "SysOverviewTextLabel.h"
 
@@ -57,7 +57,7 @@ SystemOverviewObject::SystemOverviewObject(
             this
             )
         ),
-    objName(objName),
+    objName(name),
     resizeEnabled(false),
     movingEnabled(false),
     editingEnabled(false),
@@ -422,6 +422,54 @@ void SystemOverviewObject::setHighlighted(const bool enabled)
         child->setHighlighted(enabled);
     }
     update();
+}
+
+void SystemOverviewObject::addObjectTrigger(SysOvrvObjTriggerPtr triggerToAdd)
+{
+    localTriggers.append(triggerToAdd);
+    addChildObjectTrigger(triggerToAdd);
+}
+
+void SystemOverviewObject::addChildObjectTrigger(SysOvrvObjTriggerPtr triggerToAdd)
+{
+    globalTriggers.append(triggerToAdd);
+
+    ISystemOverviewObject *parent =
+            dynamic_cast<ISystemOverviewObject*>(parentItem());
+    if(parent != Q_NULLPTR)
+    {
+        parent->addChildObjectTrigger(triggerToAdd);
+    }
+}
+
+void SystemOverviewObject::removeObjectTrigger(SysOvrvObjTriggerPtr triggerToRemove)
+{
+    if(localTriggers.removeAll(triggerToRemove) > 0)
+    {
+        removeChildObjectTrigger(triggerToRemove);
+    }
+}
+
+void SystemOverviewObject::removeChildObjectTrigger(SysOvrvObjTriggerPtr triggerToRemove)
+{
+    globalTriggers.removeAll(triggerToRemove);
+
+    ISystemOverviewObject *parent =
+            dynamic_cast<ISystemOverviewObject*>(parentItem());
+    if(parent != Q_NULLPTR)
+    {
+        parent->removeChildObjectTrigger(triggerToRemove);
+    }
+}
+
+QVector<SysOvrvObjTriggerPtr> SystemOverviewObject::getLocalObjectTriggers() const
+{
+    return localTriggers;
+}
+
+QVector<SysOvrvObjTriggerPtr> SystemOverviewObject::getGlobalObjectTriggers() const
+{
+    return globalTriggers;
 }
 
 void SystemOverviewObject::updateToolTip()
