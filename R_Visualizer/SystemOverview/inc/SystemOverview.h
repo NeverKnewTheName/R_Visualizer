@@ -10,6 +10,7 @@
 
 #include <QObject>
 #include "ISystemOverview.h"
+#include "ISystemOverviewObject.h"
 
 class ISystemOverviewObjectStore;
 
@@ -28,6 +29,14 @@ public:
 
     virtual void receiveMsg(const IMsg &receivedMsg);
     virtual void applyUserRole(const UserRoleManagement::UserRole roleToApply);
+
+    virtual void addObject(ISysOvrvObjPtr object);
+    virtual void removeObject(ISysOvrvObjPtr object);
+    virtual void removeObject(const QString &objectName);
+
+    virtual ISysOvrvObjPtr getObject(const QString &objectName) const;
+
+    virtual void clear();
 
 private:
     ISystemOverviewObjectStore *systemOverviewObjectStore;

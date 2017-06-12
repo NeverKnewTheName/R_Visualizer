@@ -15,7 +15,6 @@ SystemOverviewWidget::SystemOverviewWidget(
     QWidget(parent),
     ui(new Ui::SystemOverviewWidget),
     systemOverview(systemOverview),
-    objStore(new SystemOverviewObjectStore(this)),
     sysOvrvScene(this)
 {
     ui->setupUi(this);
@@ -43,7 +42,11 @@ SystemOverviewWidget::SystemOverviewWidget(
                             objDiag,
                             &SysOverviewObjectDialog::sgnl_CommitObject,
                             [=](ISysOvrvObjPtr obj){
-                                addObject(std::move(obj));
+                                obj->setPos(pos);
+                                systemOverview
+                                        ->addObject(
+                                            std::move(obj)
+                                            );
                             }
                         );
                     connect(
@@ -62,20 +65,15 @@ SystemOverviewWidget::SystemOverviewWidget(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestRemoveObject,
                 [=](const QString &objName){
-                    ISysOvrvObjPtr obj = objStore->getObj(objName);
-                    if(obj == Q_NULLPTR)
-                    {
-                        return;
-                    }
-                    objStore->removeObj(objName);
+                    systemOverview->removeObject(objName);
                 }
             );
     connect(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestEditObject,
                 [=](const QString &objName){
-                    ISysOvrvObjPtr obj = objStore->getObj(objName);
-                    objStore->removeObj(objName);
+                    ISysOvrvObjPtr obj = systemOverview->getObject(objName);
+                    systemOverview->removeObject(obj);
                     SysOverviewObjectDialog *objDiag =
                             new SysOverviewObjectDialog(
                                 obj,
@@ -85,7 +83,10 @@ SystemOverviewWidget::SystemOverviewWidget(
                             objDiag,
                             &SysOverviewObjectDialog::sgnl_CommitObject,
                             [=](ISysOvrvObjPtr obj){
-                                addObject(std::move(obj));
+                                systemOverview
+                                        ->addObject(
+                                            std::move(obj)
+                                            );
                             }
                         );
                     connect(
@@ -100,7 +101,10 @@ SystemOverviewWidget::SystemOverviewWidget(
                             &SysOverviewObjectDialog::rejected,
                             [=](){
                                 qDebug() << "Edit -- rejected";
-                                addObject(obj);
+                                systemOverview
+                                        ->addObject(
+                                            std::move(obj)
+                                            );
                             }
                         );
 
@@ -110,15 +114,15 @@ SystemOverviewWidget::SystemOverviewWidget(
             );
 
     connect(
-            objStore,
-            &ISystemOverviewObjectStore::sgnl_objectAdded,
+            systemOverview,
+            &ISystemOverview::sgnl_objectAdded,
             [=](ISysOvrvObjPtr obj){
                     sysOvrvScene.addItem(obj.data());
                 }
             );
     connect(
-            objStore,
-            &ISystemOverviewObjectStore::sgnl_objectRemoved,
+            systemOverview,
+            &ISystemOverview::sgnl_objectRemoved,
             [=](ISysOvrvObjPtr obj){
                     sysOvrvScene.removeItem(obj.data());
                 }
@@ -127,11 +131,6 @@ SystemOverviewWidget::SystemOverviewWidget(
 
 SystemOverviewWidget::~SystemOverviewWidget()
 {
-    objStore->clear();
+    systemOverview->clear();
     delete ui;
-}
-
-void SystemOverviewWidget::addObject(ISysOvrvObjPtr objectToAdd)
-{
-    objStore->addSystemOverviewObject(std::move(objectToAdd));
 }

@@ -22,21 +22,109 @@ SysOverviewObjectDialog::SysOverviewObjectDialog(
     if(!sysOvrvObj.isNull())
     {
         sysOvrvObjSave->setObjectName(sysOvrvObj->getObjectName());
-        sysOvrvObjSave->setColor(sysOvrvObj->getColor());
         sysOvrvObjSave->setShapeManager(std::move(sysOvrvObj->getShapeManager()));
         sysOvrvObjSave->setResizeManager(std::move(sysOvrvObj->getResizeManager()));
 
+        QVector<SysOvrvTextLabelPtr> textLabels =
+                sysOvrvObj->getLabels();
+        for( SysOvrvTextLabelPtr label : textLabels)
+        {
+            label->setEditable(true);
+        }
+
         scene.addItem(sysOvrvObj.data());
+        sysOvrvObj->enableResizing(true);
         setupDialog();
     }
+    setupButtons();
 
     ui->shapeComboBox->addItems(SysOverviewObjectShapeManager::listShapes());
     /* ui->shapeComboBox->setCurrentIndex(sysOvrvObj->getShapeManager()->getShape()); */
+
+    connect(
+                &scene,
+                &QGraphicsScene::focusItemChanged,
+                [=](){
+                    qDebug() << "FOCus changed";
+                }
+                );
+    connect(
+                &scene,
+                &QGraphicsScene::selectionChanged,
+                [=](){
+                    qDebug() << "Selection changed";
+                    QList<QGraphicsItem *> selectedItems =
+                            scene.selectedItems();
+                    setupButtons();
+                    selectedObj.clear();
+                    selectedTextLabel.clear();
+
+                    if(selectedItems.size() == 1)
+                    {
+                        //Valid only if one item is selected!
+                        ISystemOverviewObject *sysOvrvObj =
+                                dynamic_cast<ISystemOverviewObject*>(
+                                    selectedItems.first()
+                                    );
+                        if(sysOvrvObj != Q_NULLPTR)
+                        {
+                            if(sysOvrvObj == this->sysOvrvObj.data())
+                            {
+                                //Object is current object
+                                selectedObj = this->sysOvrvObj;
+                                //if object is parent
+                                ui->addLabelBtn->setEnabled(true);
+                            }
+                            else
+                            {
+                                //Object is a child of current object
+                                selectedObj =
+                                        this->sysOvrvObj->convertObjectPointer(
+                                            sysOvrvObj
+                                            );
+                                if(selectedObj.isNull())
+                                {
+                                    return;
+                                }
+                                //if object is child
+                                ui->removeObjectBtn->setEnabled(true);
+                                ui->editObjectBtn->setEnabled(true);
+                            }
+
+                            ui->addTriggerBtn->setEnabled(true);
+                            ui->removeTriggerBtn->setEnabled(true);
+                            ui->editTriggerBtn->setEnabled(true);
+
+                            qDebug() << selectedObj->getObjectName();
+                        }
+                        else
+                        {
+                            SysOverviewTextLabel *textLabel =
+                                    dynamic_cast<SysOverviewTextLabel *>(
+                                        selectedItems.first()
+                                        );
+                            if(textLabel != Q_NULLPTR)
+                            {
+                                selectedTextLabel =
+                                        this->sysOvrvObj
+                                            ->convertLabelPointer(textLabel);
+                                if(!selectedTextLabel.isNull())
+                                {
+                                    ui->removeLabelBtn->setEnabled(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            );
 }
 
 SysOverviewObjectDialog::~SysOverviewObjectDialog()
 {
-    scene.removeItem(sysOvrvObj.data());
+    if(!sysOvrvObj.isNull())
+    {
+        scene.removeItem(sysOvrvObj.data());
+    }
     delete ui;
     qDebug() << "SysOvrvObjDiag Destroyed!";
 }
@@ -51,10 +139,28 @@ void SysOverviewObjectDialog::setupDialog()
                 );
     if(objShapeManager.get() != Q_NULLPTR)
     {
-        const QColor &objColor = objShapeManager->getColor();
+        SysOvrvObjColorManagerPtr objColorManager(
+                    objShapeManager->getColorManager()
+                    );
+        const QColor &objColor = objColorManager->getFillColor();
         ui->colorLE->setText(objColor.name());
+        ui->colorLE->setStyleSheet(
+                    QString("QLineEdit { background: %1; }")
+                        .arg(objColor.name())
+                    );
         ui->transparencySpinBox->setValue(static_cast<int>(objColor.alphaF()*100));
     }
+}
+
+void SysOverviewObjectDialog::setupButtons()
+{
+    ui->removeObjectBtn->setDisabled(true);
+    ui->editObjectBtn->setDisabled(true);
+    ui->addLabelBtn->setDisabled(true);
+    ui->removeLabelBtn->setDisabled(true);
+    ui->addTriggerBtn->setDisabled(true);
+    ui->removeTriggerBtn->setDisabled(true);
+    ui->editTriggerBtn->setDisabled(true);
 }
 
 void SysOverviewObjectDialog::on_colorPickerBtn_clicked()
@@ -64,27 +170,111 @@ void SysOverviewObjectDialog::on_colorPickerBtn_clicked()
 
 void SysOverviewObjectDialog::on_addObjectBtn_clicked()
 {
-
+    scene.clearSelection();
+    scene.clearFocus();
+    ISysOvrvObjPtr newObj(new SystemOverviewObject());
+    SysOverviewObjectDialog *addDialog =
+            new SysOverviewObjectDialog(
+                newObj,
+                this
+                );
+    connect(
+            addDialog,
+            &SysOverviewObjectDialog::sgnl_CommitObject,
+            [=](ISysOvrvObjPtr obj){
+                sysOvrvObj->enableResizing(false);
+                sysOvrvObj->addChildObject(obj);
+            }
+        );
+    addDialog->setAttribute(Qt::WA_DeleteOnClose);
+    addDialog->exec();
 }
 
 void SysOverviewObjectDialog::on_removeObjectBtn_clicked()
 {
-
+    ISysOvrvObjPtr objToRemove = selectedObj;
+    if(objToRemove.isNull() || (objToRemove == sysOvrvObj))
+    {
+        return;
+    }
+    scene.clearSelection();
+    scene.clearFocus();
+    sysOvrvObj->removeChildObject(objToRemove);
+    selectedObj.clear();
 }
 
 void SysOverviewObjectDialog::on_editObjectBtn_clicked()
 {
+    ISysOvrvObjPtr objToEdit = selectedObj;
+    scene.clearSelection();
+    scene.clearFocus();
+    selectedObj.clear();
+    if(objToEdit.isNull() || (objToEdit == sysOvrvObj))
+    {
+        return;
+    }
+    sysOvrvObj->removeChildObject(objToEdit);
 
+    SysOverviewObjectDialog *addDialog =
+            new SysOverviewObjectDialog(
+                objToEdit,
+                this
+                );
+    connect(
+            addDialog,
+            &SysOverviewObjectDialog::sgnl_CommitObject,
+            [=](ISysOvrvObjPtr obj){
+                sysOvrvObj->enableResizing(false);
+                sysOvrvObj->addChildObject(obj);
+            }
+        );
+    connect(
+            addDialog,
+            &SysOverviewObjectDialog::rejected,
+            [=](){
+                sysOvrvObj->enableResizing(false);
+                sysOvrvObj->addChildObject(objToEdit);
+            }
+        );
+    addDialog->setAttribute(Qt::WA_DeleteOnClose);
+    addDialog->exec();
 }
 
 void SysOverviewObjectDialog::on_addLabelBtn_clicked()
 {
-
+    ISysOvrvObjPtr objToEdit = selectedObj;
+    scene.clearSelection();
+    scene.clearFocus();
+    selectedObj.clear();
+    if(objToEdit.isNull() || (objToEdit != sysOvrvObj))
+    {
+        return;
+    }
+    SysOvrvTextLabelPtr newLabel(
+                new SysOverviewTextLabel(
+                    QString("PlaceHolder"),
+                    sysOvrvObj.data()
+                    )
+                );
+    objToEdit->addLabel(newLabel);
+    newLabel->setEditable(true);
+    newLabel->textEdit(this);
 }
 
 void SysOverviewObjectDialog::on_removeLabelBtn_clicked()
 {
+    if(selectedTextLabel.isNull())
+    {
+        return;
+    }
 
+    SysOvrvTextLabelPtr textLabel = selectedTextLabel;
+
+    selectedTextLabel.clear();
+    scene.clearSelection();
+    scene.clearFocus();
+
+    sysOvrvObj->removeLabel(textLabel);
 }
 
 void SysOverviewObjectDialog::on_addTriggerBtn_clicked()
@@ -104,7 +294,25 @@ void SysOverviewObjectDialog::on_editTriggerBtn_clicked()
 
 void SysOverviewObjectDialog::on_shapeComboBox_currentIndexChanged(int index)
 {
+    SysOvrvObjectShapeManagerPtr objShapeManager(
+                dynamic_cast<SysOverviewObjectShapeManager *>(
+                    sysOvrvObj->getShapeManager().release()
+                    )
+                );
+    if(objShapeManager.get() != Q_NULLPTR)
+    {
+        SysOvrvObjColorManagerPtr colorManager =
+                objShapeManager->getColorManager();
 
+        objShapeManager.reset(
+                    new SysOverviewObjectShapeManager(
+                        *sysOvrvObj,
+                        std::move(colorManager),
+                        static_cast<SysOverviewObjectShapeManager::SysOverviewObjectShape>(index)
+                        )
+                    );
+        sysOvrvObj->setShapeManager(std::move(objShapeManager));
+    }
 }
 
 void SysOverviewObjectDialog::on_transparencySpinBox_valueChanged(int arg1)
@@ -121,9 +329,13 @@ void SysOverviewObjectDialog::on_transparencySpinBox_valueChanged(int arg1)
                 );
     if(objShapeManager.get() != Q_NULLPTR)
     {
-        QColor objColor = objShapeManager->getColor();
+        SysOvrvObjColorManagerPtr objColorManager(
+                    objShapeManager->getColorManager()
+                    );
+        QColor objColor = objColorManager->getFillColor();
         objColor.setAlphaF(arg1/100.0);
-        objShapeManager->setColor(objColor);
+        objColorManager->setFillColor(objColor);
+        objShapeManager->setColorManager(std::move(objColorManager));
         sysOvrvObj->setShapeManager(std::move(objShapeManager));
     }
 }
@@ -147,7 +359,11 @@ void SysOverviewObjectDialog::on_colorLE_editingFinished()
                         );
             if(objShapeManager.get() != Q_NULLPTR)
             {
-                objShapeManager->setColor(colorToSet);
+                SysOvrvObjColorManagerPtr objColorManager(
+                            objShapeManager->getColorManager().release()
+                            );
+                objColorManager->setFillColor(colorToSet);
+                objShapeManager->setColorManager(std::move(objColorManager));
                 sysOvrvObj->setShapeManager(std::move(objShapeManager));
             }
         }
@@ -156,6 +372,8 @@ void SysOverviewObjectDialog::on_colorLE_editingFinished()
 
 void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
+    scene.clearSelection();
+    scene.clearFocus();
     switch(ui->buttonBox->buttonRole(button))
     {
     case QDialogButtonBox::AcceptRole:
@@ -165,6 +383,13 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
             if(!sysOvrvObj.isNull())
             {
                 scene.removeItem(sysOvrvObj.data());
+                QVector<SysOvrvTextLabelPtr> textLabels =
+                        sysOvrvObj->getLabels();
+                for( SysOvrvTextLabelPtr label : textLabels)
+                {
+                    label->setEditable(false);
+                }
+                sysOvrvObj->enableResizing(false);
                 emit sgnl_CommitObject(std::move(this->sysOvrvObj));
             }
             break;
@@ -178,6 +403,13 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
         switch(ui->buttonBox->standardButton(button))
         {
         case QDialogButtonBox::Abort:
+            QVector<SysOvrvTextLabelPtr> textLabels =
+                    sysOvrvObj->getLabels();
+            for( SysOvrvTextLabelPtr label : textLabels)
+            {
+                label->setEditable(false);
+            }
+            sysOvrvObj->enableResizing(false);
             scene.removeItem(sysOvrvObj.data());
             break;
         }
@@ -187,6 +419,12 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
         sysOvrvObj->setShapeManager(std::move(sysOvrvObjSave->getShapeManager()));
         sysOvrvObj->setResizeManager(std::move(sysOvrvObjSave->getResizeManager()));
         setupDialog();
+        QVector<SysOvrvTextLabelPtr> textLabels =
+                sysOvrvObj->getLabels();
+        for( SysOvrvTextLabelPtr label : textLabels)
+        {
+            label->setEditable(true);
+        }
         break;
     }
 }

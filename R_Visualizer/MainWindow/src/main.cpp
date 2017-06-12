@@ -404,29 +404,17 @@ int main(int argc, char *argv[])
 
     w.appendTabMenuWidget(systemOverviewWidget, "System Overview");
 
-    //sysOvrvWidget = new SystemOverview(
-    //        messageConfig
-    //        );
-    //errLogViewDiag = new ErrorLogView(&w);
-    /* SystemOverview *SystemOverviewWidget; */
-
-    /* ErrorLogView *errorLogViewDialog; */
-    /* UserRoleMngr userRoleManager; */
-    /* DeviceHandler interfaceHandler; */
-
-    //connect(
-    //        &interfaceHandler,
-    //        &DeviceHandler::sigMsgReceived,
-    //        &receivedMsgsStore,
-    //        &TimestampedMsgStorage::slt_addMsg,
-    //        Qt::QueuedConnection
-    //        );
     //connect(
     //        &receivedMsgsStore,
     //        &TimestampedMsgStorage::sgnl_MsgAdded,
     //        sysOvrvWidget,
     //        &SystemOverview::slt_newMessage
     //        );
+
+    //errLogViewDiag = new ErrorLogView(&w);
+
+    /* ErrorLogView *errorLogViewDialog; */
+    /* UserRoleMngr userRoleManager; */
 
     w.show();
 

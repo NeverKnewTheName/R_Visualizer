@@ -34,12 +34,9 @@ public:
             );
     virtual ~SystemOverviewWidget();
 
-    void addObject(ISysOvrvObjPtr objectToAdd);
-
 private:
     Ui::SystemOverviewWidget *ui;
     ISystemOverview *systemOverview;
-    ISystemOverviewObjectStore *objStore;
     QGraphicsScene sysOvrvScene;
 };
 

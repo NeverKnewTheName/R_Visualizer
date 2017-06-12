@@ -13,6 +13,8 @@
 
 class ISystemOverviewObject;
 
+#include "ISysOverviewObjectColorManager.h"
+
 /**
  * @brief The SysOverviewObjectShapeManager
  */
@@ -35,13 +37,24 @@ public:
             SysOverviewObjectShape shape = SysOvrvShape_Rectangle
             /* QObject *parent = Q_NULLPTR */
             );
+    SysOverviewObjectShapeManager(
+            ISystemOverviewObject &sysOverviewObject,
+            SysOvrvObjColorManagerPtr colorManager,
+            SysOverviewObjectShape shape = SysOvrvShape_Rectangle
+            /* QObject *parent = Q_NULLPTR */
+            );
+
+    SysOverviewObjectShapeManager(
+            const SysOverviewObjectShapeManager &copy
+            );
+
     virtual ~SysOverviewObjectShapeManager();
 
     virtual SysOverviewObjectShape getShape() const;
     virtual void setShape(const SysOverviewObjectShape &shape);
 
-    virtual QColor getColor() const;
-    virtual void setColor(const QColor &color);
+    virtual SysOvrvObjColorManagerPtr getColorManager() const;
+    virtual void setColorManager(SysOvrvObjColorManagerPtr colorManager);
 
     virtual void paint(
             QPainter *painter,
@@ -49,12 +62,14 @@ public:
             const bool selected
             );
 
+    void update();
+
     static QString translateShapeToString(const SysOverviewObjectShape &shape);
     static QStringList listShapes();
 
 private:
     ISystemOverviewObject &sysOverviewObject;
-    QColor objColor;
+    SysOvrvObjColorManagerPtr colorManager;
     SysOverviewObjectShape shape;
 };
 

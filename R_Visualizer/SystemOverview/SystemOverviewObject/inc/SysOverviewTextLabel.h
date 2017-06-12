@@ -25,7 +25,7 @@ public:
     void setEditable(const bool enable);
     bool isEditable() const;
 
-    void textEdit();
+    void textEdit(QWidget *widget);
 
     // QGraphicsItem interface
 protected:

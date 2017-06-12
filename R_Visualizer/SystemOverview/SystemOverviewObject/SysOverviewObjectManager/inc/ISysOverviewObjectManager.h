@@ -78,7 +78,6 @@ template<class Derived>
 class ISysOverviewObjectManagerCRTPHelper : public ISysOverviewObjectManager
 {
 public:
-
     using ISysOverviewObjectManager::ISysOverviewObjectManager;
 
     virtual ISysOverviewObjectManager *clone() const

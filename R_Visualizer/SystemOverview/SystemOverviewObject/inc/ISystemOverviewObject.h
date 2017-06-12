@@ -15,6 +15,7 @@
 #include <QColor>
 
 #include <QGraphicsItem>
+#include <QSharedPointer>
 
 class ISysOverviewObjectResizeManager;
 class ISysOverviewObjectManager;
@@ -23,7 +24,7 @@ class SysOverviewTextLabel;
 
 #include <memory>
 
-typedef std::unique_ptr<SysOverviewTextLabel> SysOvrvTextLabelPtr;
+typedef QSharedPointer<SysOverviewTextLabel> SysOvrvTextLabelPtr;
 typedef std::unique_ptr<ISysOverviewObjectResizeManager> SysOvrvObjectResizeManagerPtr;
 typedef std::unique_ptr<ISysOverviewObjectManager> SysOvrvObjectManagerPtr;
 
@@ -56,13 +57,6 @@ public:
             SysOvrvObjectManagerPtr shapeManager
             ) = 0;
 
-    virtual void setSize(const QSizeF &size) = 0;
-    virtual QSizeF getSize() const = 0;
-
-    virtual void setColor(const QColor &color) = 0;
-    virtual QColor getColor() const = 0;
-    virtual QColor getCurObjColor() const = 0;
-
     /* virtual SysOverviewTextLabel *addLabel() = 0; */
     virtual SysOvrvTextLabelPtr addLabel(SysOvrvTextLabelPtr label) = 0;
     virtual SysOvrvTextLabelPtr addLabel(
@@ -72,17 +66,25 @@ public:
             ) = 0;
 
     virtual void removeLabel(SysOvrvTextLabelPtr label) = 0;
-
     virtual QVector<SysOvrvTextLabelPtr > getLabels() const = 0;
+    virtual SysOvrvTextLabelPtr convertLabelPointer(
+            SysOverviewTextLabel *label
+            ) const = 0;
 
     virtual void addChildObject(ISysOvrvObjPtr child) = 0;
+    virtual void removeChildObject(ISysOvrvObjPtr child) = 0;
     virtual QVector<ISysOvrvObjPtr > getChildObjects() const = 0;
+    virtual ISysOvrvObjPtr convertObjectPointer(
+            ISystemOverviewObject *object
+            ) const = 0;
 
     virtual void enableResizing(const bool enabled) = 0;
     virtual bool isResizingEnabled() const = 0;
 
     virtual void enableMoving(const bool enabled) = 0;
     virtual bool isMovingEnabled() const = 0;
+
+    virtual void move(qreal x, qreal y) = 0;
 };
 
 

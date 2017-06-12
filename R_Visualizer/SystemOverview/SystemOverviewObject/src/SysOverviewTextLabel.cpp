@@ -16,7 +16,6 @@ SysOverviewTextLabel::SysOverviewTextLabel(
     editable(false),
     doubleClicked(false)
 {
-    setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
 SysOverviewTextLabel::~SysOverviewTextLabel()
@@ -28,6 +27,8 @@ void SysOverviewTextLabel::setEditable(const bool enable)
 {
     editable = enable;
     setFlag(QGraphicsItem::ItemIsMovable,enable);
+    setFlag(QGraphicsItem::ItemIsFocusable,enable);
+    setFlag(QGraphicsItem::ItemIsSelectable,enable);
 }
 
 bool SysOverviewTextLabel::isEditable() const
@@ -35,16 +36,14 @@ bool SysOverviewTextLabel::isEditable() const
     return editable;
 }
 
-#include <QGraphicsScene>
-#include <QGraphicsView>
-void SysOverviewTextLabel::textEdit()
+void SysOverviewTextLabel::textEdit(QWidget *widget)
 {
     if(editable)
     {
         bool ok;
         //ToDO... Find a way to open the dialog in the current position...
         QString inputText = QInputDialog::getText(
-                this->scene()->views().at(0)->parentWidget(),
+                widget,
                 QString("Object text"),
                 QString("Text:"),
                 QLineEdit::Normal,
@@ -83,7 +82,7 @@ void SysOverviewTextLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         setCursor(QCursor(Qt::OpenHandCursor));
         if(doubleClicked)
         {
-            textEdit();
+//            textEdit();
         }
     }
 

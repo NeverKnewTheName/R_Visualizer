@@ -8,6 +8,7 @@
 
 #include "ISystemOverviewObject.h"
 #include "SystemOverviewObject.h"
+#include "SysOverviewTextLabel.h"
 
 namespace Ui {
 class SysOverviewObjectDialog;
@@ -27,6 +28,7 @@ public:
 
 private:
     void setupDialog();
+    void setupButtons();
 
 signals:
     void sgnl_CommitObject(ISysOvrvObjPtr obj);
@@ -67,6 +69,9 @@ private:
     QGraphicsScene scene;
     ISysOvrvObjPtr sysOvrvObj;
     ISysOvrvObjPtr sysOvrvObjSave;
+
+    ISysOvrvObjPtr selectedObj;
+    SysOvrvTextLabelPtr selectedTextLabel;
 };
 
 #endif // SYSOVERVIEWOBJECTDIALOG_H

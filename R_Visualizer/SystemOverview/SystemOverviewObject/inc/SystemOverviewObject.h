@@ -25,7 +25,6 @@ public:
             );
     SystemOverviewObject(
             const QString &name,
-            const QColor &color = QColor(Qt::lightGray),
             const QSizeF &size = QSizeF(100,100),
             ISysOverviewObjectManager *objectManager = Q_NULLPTR,
             QGraphicsItem *parent = Q_NULLPTR
@@ -52,12 +51,6 @@ public:
     virtual SysOvrvObjectManagerPtr getShapeManager() const;
     virtual void setShapeManager(SysOvrvObjectManagerPtr shapeManager);
 
-    virtual void setSize(const QSizeF &size);
-    virtual QSizeF getSize() const;
-    virtual void setColor(const QColor &color);
-    virtual QColor getColor() const;
-    virtual QColor getCurObjColor() const;
-
     /* virtual SysOverviewTextLabel *addLabel(); */
     virtual SysOvrvTextLabelPtr addLabel(SysOvrvTextLabelPtr label);
     virtual SysOvrvTextLabelPtr addLabel(
@@ -67,21 +60,26 @@ public:
             );
     virtual void removeLabel(SysOvrvTextLabelPtr label);
     virtual QVector<SysOvrvTextLabelPtr > getLabels() const;
+    SysOvrvTextLabelPtr convertLabelPointer(SysOverviewTextLabel *label) const;
 
     virtual void addChildObject(ISysOvrvObjPtr child);
+    virtual void removeChildObject(ISysOvrvObjPtr child);
     virtual QVector<ISysOvrvObjPtr> getChildObjects() const;
+    ISysOvrvObjPtr convertObjectPointer(ISystemOverviewObject *object) const;
 
     virtual void enableResizing(const bool enabled);
     virtual bool isResizingEnabled() const;
     virtual void enableMoving(const bool enabled);
     virtual bool isMovingEnabled() const;
 
+    virtual void move(qreal x, qreal y);
+
 private:
     SysOvrvObjectManagerPtr objManager;
     SysOvrvObjectResizeManagerPtr resizeManager;
+    QVector<SysOvrvTextLabelPtr> textLabels;
+    QVector<ISysOvrvObjPtr> childObjects;
     QString objName;
-    QColor objColor;
-    QRectF objBoundingRect;
     bool resizeEnabled;
     bool movingEnabled;
 };

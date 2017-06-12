@@ -11,6 +11,7 @@
 #include "ISysOverviewObjectResizeManager.h"
 
 #include <QSizeF>
+#include "ResizeRectCorner.h"
 
 class ISystemOverviewObject;
 
@@ -25,6 +26,11 @@ public:
             ISystemOverviewObject &sysOverviewObject,
             const QSizeF &size = QSizeF(100,100)
             );
+
+    SysOverviewObjectResizeManager(
+            const SysOverviewObjectResizeManager &copy
+            );
+
     virtual ~SysOverviewObjectResizeManager();
 
     virtual void paint(QPainter *painter);
@@ -32,11 +38,27 @@ public:
     virtual void setSize(const QSizeF &size);
     virtual QSizeF getSize() const;
 
+    virtual void enableResize(const bool enabled);
+
+    virtual void resize(
+            const ResizeRectCorner::CornerPos cornerPos,
+            qreal x,
+            qreal y
+            );
+
     virtual QRectF getBoundingRect() const;
+
+private:
+    void initResizeCorners();
+    void initResizeCornersPositions();
 
 private:
     ISystemOverviewObject &sysOverviewObject;
     QSizeF size;
+    QRectF boundingRect;
+    bool resizeEnabled;
+    QVector<ResizeRectCorner> resizeCorners;
+
 };
 
 #endif /* SYSOVERVIEWOBJECTRESIZEMANAGER_H */

@@ -13,6 +13,8 @@
 #include <QRectF>
 #include <QSizeF>
 
+#include "ResizeRectCorner.h"
+
 /**
  * @brief The ISysOverviewObjectResizeManager interface
  */
@@ -27,6 +29,14 @@ public:
 
     virtual void setSize(const QSizeF &size) = 0;
     virtual QSizeF getSize() const = 0;
+
+    virtual void resize(
+            const ResizeRectCorner::CornerPos cornerPos,
+            qreal x,
+            qreal y
+            ) = 0;
+
+    virtual void enableResize(const bool enabled) = 0;
 
     virtual QRectF getBoundingRect() const = 0;
 };

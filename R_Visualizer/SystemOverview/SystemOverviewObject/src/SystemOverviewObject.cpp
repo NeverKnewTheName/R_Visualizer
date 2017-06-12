@@ -18,9 +18,7 @@ SystemOverviewObject::SystemOverviewObject(
     ISystemOverviewObject(parent),
     objManager(new SysOverviewObjectShapeManager(*this)),
     resizeManager(new SysOverviewObjectResizeManager(*this)),
-    objColor(Qt::lightGray),
-    objName("INVALID"),
-    objBoundingRect(0,0,100,100)
+    objName("INVALID")
 {
     resizeManager->setSize(QSizeF(100,100));
     setFlags(
@@ -34,7 +32,6 @@ SystemOverviewObject::SystemOverviewObject(
 
 SystemOverviewObject::SystemOverviewObject(
                 const QString &name,
-                const QColor &color,
                 const QSizeF &size,
                 ISysOverviewObjectManager *objectManager,
                 QGraphicsItem *parent
@@ -42,9 +39,7 @@ SystemOverviewObject::SystemOverviewObject(
     ISystemOverviewObject(parent),
     objManager(objectManager),
     resizeManager(new SysOverviewObjectResizeManager(*this)),
-    objName(objName),
-    objColor(color),
-    objBoundingRect(QPointF(0,0),size)
+    objName(objName)
 {
     resizeManager->setSize(size);
     setFlags(
@@ -140,27 +135,6 @@ void SystemOverviewObject::setShapeManager(SysOvrvObjectManagerPtr shapeManager)
     update();
 }
 
-void SystemOverviewObject::setSize(const QSizeF &size)
-{
-    resizeManager->setSize(size);
-}
-
-QSizeF SystemOverviewObject::getSize() const
-{
-    return resizeManager->getSize();
-}
-
-void SystemOverviewObject::setColor(const QColor &color)
-{
-    objColor = color;
-    update();
-}
-
-QColor SystemOverviewObject::getColor() const
-{
-    return objColor;
-}
-
 /* SysOverviewTextLabel *SystemOverviewObject::addLabel() */
 /* { */
 /* */
@@ -169,6 +143,9 @@ QColor SystemOverviewObject::getColor() const
 SysOvrvTextLabelPtr SystemOverviewObject::addLabel(SysOvrvTextLabelPtr label)
 {
     label->setParentItem(this);
+    textLabels.append(label);
+    label->setPos(mapToScene(pos()));
+    return label;
 }
 
 SysOvrvTextLabelPtr SystemOverviewObject::addLabel(
@@ -177,38 +154,80 @@ SysOvrvTextLabelPtr SystemOverviewObject::addLabel(
         const qreal y
         )
 {
-
+    SysOvrvTextLabelPtr newLabel(new SysOverviewTextLabel(text,this));
+    newLabel->setPos(x,y);
+    return addLabel(newLabel);
 }
 
 void SystemOverviewObject::removeLabel(SysOvrvTextLabelPtr label)
 {
-    label->setParentItem(Q_NULLPTR);
+    QGraphicsItem *labelParent = label->parentItem();
+    if(labelParent == this)
+    {
+        label->setParentItem(Q_NULLPTR);
+        textLabels.removeAll(label);
+    }
     //label->deleteLater();
 }
 
 QVector<SysOvrvTextLabelPtr> SystemOverviewObject::getLabels() const
 {
+    return textLabels;
+}
 
+SysOvrvTextLabelPtr SystemOverviewObject::convertLabelPointer(SysOverviewTextLabel *label) const
+{
+    for(SysOvrvTextLabelPtr labelPtr : textLabels)
+    {
+        if(labelPtr.data() == label)
+        {
+            return labelPtr;
+        }
+    }
+    return SysOvrvTextLabelPtr(Q_NULLPTR);
 }
 
 void SystemOverviewObject::addChildObject(ISysOvrvObjPtr child)
 {
+    child->setParentItem(this);
+    if(!childObjects.contains(child))
+    {
+        childObjects.append(child);
+    }
+}
 
+void SystemOverviewObject::removeChildObject(ISysOvrvObjPtr child)
+{
+    child->setParentItem(Q_NULLPTR);
+    childObjects.removeAll(child);
 }
 
 QVector<ISysOvrvObjPtr> SystemOverviewObject::getChildObjects() const
 {
+    return childObjects;
+}
 
+ISysOvrvObjPtr SystemOverviewObject::convertObjectPointer(
+        ISystemOverviewObject *object
+        ) const
+{
+    for(ISysOvrvObjPtr objPtr : childObjects)
+    {
+        if(objPtr.data() == object)
+        {
+            return objPtr;
+        }
+    }
+    return ISysOvrvObjPtr(Q_NULLPTR);
 }
 
 void SystemOverviewObject::enableResizing(const bool enabled)
 {
-
+    resizeManager->enableResize(enabled);
 }
 
 bool SystemOverviewObject::isResizingEnabled() const
 {
-
 }
 
 void SystemOverviewObject::enableMoving(const bool enabled)
@@ -221,19 +240,7 @@ bool SystemOverviewObject::isMovingEnabled() const
 
 }
 
-QColor SystemOverviewObject::getCurObjColor() const
+void SystemOverviewObject::move(qreal x, qreal y)
 {
-    if(isSelected())
-    {
-        QColor objColor(getColor());
-        if(objColor.alphaF()<0.1)
-        {
-            objColor.setAlphaF(0.1);
-        }
-        return objColor.darker();
-    }
-    else
-    {
-        return getColor();
-    }
+    moveBy(x,y);
 }

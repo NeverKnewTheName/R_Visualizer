@@ -1,5 +1,8 @@
 #include "SysOverviewObjectShapeManager.h"
 
+#include "ISystemOverviewObject.h"
+#include "SysOverviewObjectColorManager.h"
+
 SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
         ISystemOverviewObject &sysOverviewObject,
         SysOverviewObjectShapeManager::SysOverviewObjectShape shape
@@ -8,10 +11,42 @@ SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
         ISysOverviewObjectManager::ShapeType
         ),
     sysOverviewObject(sysOverviewObject),
-    objColor(Qt::lightGray),
+    colorManager(
+        SysOvrvObjColorManagerPtr(
+            new SysOverviewObjectColorManager(this)
+            )
+        ),
     shape(shape)
 {
 
+}
+
+SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
+        ISystemOverviewObject &sysOverviewObject,
+        SysOvrvObjColorManagerPtr colorManager,
+        SysOverviewObjectShapeManager::SysOverviewObjectShape shape
+        ) :
+    ISysOverviewObjectManagerCRTPHelper(
+        ISysOverviewObjectManager::ShapeType
+        ),
+    sysOverviewObject(sysOverviewObject),
+    colorManager(std::move(colorManager)),
+    shape(shape)
+{
+    this->colorManager->setShapeManager(this);
+}
+
+SysOverviewObjectShapeManager::SysOverviewObjectShapeManager(
+        const SysOverviewObjectShapeManager &copy
+        ) :
+    ISysOverviewObjectManagerCRTPHelper(
+        ISysOverviewObjectManager::ShapeType
+        ),
+    sysOverviewObject(copy.sysOverviewObject),
+    colorManager(copy.colorManager->clone()),
+    shape(copy.shape)
+{
+    this->colorManager->setShapeManager(this);
 }
 
 SysOverviewObjectShapeManager::~SysOverviewObjectShapeManager()
@@ -31,14 +66,17 @@ void SysOverviewObjectShapeManager::setShape(
     this->shape = shape;
 }
 
-QColor SysOverviewObjectShapeManager::getColor() const
+SysOvrvObjColorManagerPtr SysOverviewObjectShapeManager::getColorManager() const
 {
-    return objColor;
+    return SysOvrvObjColorManagerPtr(colorManager->clone());
 }
 
-void SysOverviewObjectShapeManager::setColor(const QColor &color)
+void SysOverviewObjectShapeManager::setColorManager(
+        SysOvrvObjColorManagerPtr colorManager
+        )
 {
-    objColor = color;
+    this->colorManager.reset(colorManager.release());
+    sysOverviewObject.update();
 }
 
 void SysOverviewObjectShapeManager::paint(
@@ -49,19 +87,19 @@ void SysOverviewObjectShapeManager::paint(
 {
     painter->save();
 
-    QColor curObjColor(objColor);
+    QColor curObjColor;
 
     if(selected)
     {
-        if(curObjColor.alphaF()<0.1)
-        {
-            curObjColor.setAlphaF(0.1);
-        }
-        curObjColor = curObjColor.darker();
+        curObjColor = colorManager->getHighlightFillColor();
+    }
+    else
+    {
+        curObjColor = colorManager->getFillColor();
     }
 
     painter->setBrush(QBrush(curObjColor));
-    painter->setPen(QColor(Qt::black));
+    painter->setPen(colorManager->getBorderColor());
 
     switch(shape)
     {
@@ -78,11 +116,34 @@ void SysOverviewObjectShapeManager::paint(
         painter->drawEllipse(boundingRect);
         break;
     case SysOvrvShape_Triangle:
-        painter->drawEllipse(boundingRect);
+    {
+        QPointF rectTopMiddle(
+                    (
+                        (
+                            boundingRect.right() -
+                            boundingRect.left()
+                         ) /
+                        2
+                    ),
+                    boundingRect.top()
+                    );
+        QPainterPath path(rectTopMiddle);
+
+        path.lineTo(boundingRect.bottomRight());
+        path.lineTo(boundingRect.bottomLeft());
+        path.lineTo(rectTopMiddle);
+
+        painter->drawPath(path);
+    }
         break;
     }
 
     painter->restore();
+}
+
+void SysOverviewObjectShapeManager::update()
+{
+    sysOverviewObject.update();
 }
 
 QString SysOverviewObjectShapeManager::translateShapeToString(
