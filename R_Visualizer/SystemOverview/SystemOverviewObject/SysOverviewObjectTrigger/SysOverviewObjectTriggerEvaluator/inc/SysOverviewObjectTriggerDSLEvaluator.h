@@ -22,6 +22,7 @@ public:
     virtual MessageTypeIdentifier getMsgType() const;
     virtual void setMsgType(const MessageTypeIdentifier &msgType);
     virtual bool evaluate(const IMsg &msgToEvaluate) const;
+    virtual QString evaluateToString(const IMsg &msgToEvaluate) const;
 
 private:
     MessageTypeIdentifier msgType;

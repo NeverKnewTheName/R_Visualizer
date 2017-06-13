@@ -5,13 +5,17 @@
 
 #include <QColor>
 
-class SysOverviewObjectColorTrigger : public ISysOverviewObjectTrigger
+class SysOverviewObjectColorTrigger :
+        public ISysOverviewObjectTriggerCRTPHelper<SysOverviewObjectColorTrigger>
 {
 public:
     SysOverviewObjectColorTrigger(
             ISystemOverviewObject *objectToTrigger,
             const QColor &colorToChangeTo,
             SysOvrvObjTriggerEvaluatorPtr triggerEvaluator
+            );
+    SysOverviewObjectColorTrigger(
+            const SysOverviewObjectColorTrigger &copy
             );
     virtual ~SysOverviewObjectColorTrigger();
 

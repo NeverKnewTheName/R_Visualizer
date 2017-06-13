@@ -32,6 +32,18 @@ SysOverviewObjectColorTrigger::SysOverviewObjectColorTrigger(
     }
 }
 
+SysOverviewObjectColorTrigger::SysOverviewObjectColorTrigger(
+        const SysOverviewObjectColorTrigger &copy
+        ) :
+    objectToTrigger(copy.objectToTrigger),
+    triggerEvaluator(copy.triggerEvaluator->clone()),
+    originalColor(copy.originalColor),
+    triggerColor(copy.triggerColor),
+    triggered(copy.triggered)
+{
+
+}
+
 SysOverviewObjectColorTrigger::~SysOverviewObjectColorTrigger()
 {
 //    SysOvrvObjectShapeManagerPtr objManager(

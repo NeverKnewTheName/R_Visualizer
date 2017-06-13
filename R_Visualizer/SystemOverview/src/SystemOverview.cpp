@@ -7,6 +7,9 @@
 #include "MsgCodeType.h"
 #include "MsgDataType.h"
 
+#include "ISysOverviewLabelTrigger.h"
+#include "SysOverviewTextLabel.h"
+
 SystemOverview::SystemOverview(
         ISystemOverviewObjectStore *systemOverviewObjectStore,
         QObject *parent
@@ -45,6 +48,16 @@ void SystemOverview::receiveMsg(const IMsg &receivedMsg)
         for(SysOvrvObjTriggerPtr trigger : triggers)
         {
             trigger->trigger(receivedMsg);
+        }
+        QVector<SysOvrvTextLabelPtr> labels =
+                object->getGlobalLabes();
+        for(SysOvrvTextLabelPtr label : labels)
+        {
+            QVector<SysOvrvLabelTriggerPtr> labelTrigger = label->getTriggers();
+            for(SysOvrvLabelTriggerPtr trigger : labelTrigger)
+            {
+                trigger->trigger(receivedMsg);
+            }
         }
     }
 }

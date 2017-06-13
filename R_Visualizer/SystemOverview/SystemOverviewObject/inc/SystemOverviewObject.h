@@ -68,8 +68,11 @@ public:
             const qreal x,
             const qreal y
             );
+    virtual SysOvrvTextLabelPtr addChildLabel(SysOvrvTextLabelPtr label);
+
     virtual void removeLabel(SysOvrvTextLabelPtr label);
-    virtual QVector<SysOvrvTextLabelPtr > getLabels() const;
+    virtual QVector<SysOvrvTextLabelPtr> getLabels() const;
+    virtual QVector<SysOvrvTextLabelPtr> getGlobalLabes() const;
     SysOvrvTextLabelPtr convertLabelPointer(SysOverviewTextLabel *label) const;
 
     virtual void addChildObject(ISysOvrvObjPtr child);
@@ -118,6 +121,7 @@ private:
     SysOvrvObjectManagerPtr objManager;
     SysOvrvObjectResizeManagerPtr resizeManager;
     QVector<SysOvrvTextLabelPtr> textLabels;
+    QVector<SysOvrvTextLabelPtr> globalTextLabels;
     QVector<ISysOvrvObjPtr> childObjects;
     QVector<SysOvrvObjTriggerPtr> globalTriggers;
     QVector<SysOvrvObjTriggerPtr> localTriggers;

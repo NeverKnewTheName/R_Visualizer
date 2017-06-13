@@ -14,3 +14,4 @@ FORMS    += \
     $$PWD/ui/sysovrvobjcolortriggerdialog.ui
 
 include(SysOverviewObjectTriggerEvaluator/SysOverviewObjectTriggerEvaluator.pri)
+include(SysOverviewLabelTrigger/SysOverviewLabelTrigger.pri)

@@ -8,6 +8,8 @@
 #include <QInputDialog>
 #include <QCursor>
 
+#include "ISystemOverviewObject.h"
+
 SysOverviewTextLabel::SysOverviewTextLabel(
         const QString &text,
         QGraphicsItem *parent
@@ -67,6 +69,26 @@ void SysOverviewTextLabel::textEdit(QWidget *widget)
             setText(inputText);
         }
     }
+}
+
+void SysOverviewTextLabel::setLabelText(const QString &text)
+{
+    setText(text);
+}
+
+void SysOverviewTextLabel::trigger(const IMsg &msg)
+{
+
+}
+
+void SysOverviewTextLabel::addTrigger(SysOvrvLabelTriggerPtr trigger)
+{
+    labelTrigger.append(trigger);
+}
+
+QVector<SysOvrvLabelTriggerPtr> SysOverviewTextLabel::getTriggers()
+{
+    return labelTrigger;
 }
 
 

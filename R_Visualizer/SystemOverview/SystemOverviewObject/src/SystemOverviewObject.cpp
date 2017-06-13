@@ -269,7 +269,7 @@ SysOvrvTextLabelPtr SystemOverviewObject::addLabel(SysOvrvTextLabelPtr label)
     label->setParentItem(this);
     textLabels.append(label);
     label->setPos(mapToScene(pos()));
-    return label;
+    return addChildLabel(label);
 }
 
 SysOvrvTextLabelPtr SystemOverviewObject::addLabel(
@@ -281,6 +281,19 @@ SysOvrvTextLabelPtr SystemOverviewObject::addLabel(
     SysOvrvTextLabelPtr newLabel(new SysOverviewTextLabel(text,this));
     newLabel->setPos(x,y);
     return addLabel(newLabel);
+}
+
+SysOvrvTextLabelPtr SystemOverviewObject::addChildLabel(SysOvrvTextLabelPtr label)
+{
+    globalTextLabels.append(label);
+    ISystemOverviewObject *parent =
+            dynamic_cast<ISystemOverviewObject*>(parentItem());
+    if(parent != Q_NULLPTR)
+    {
+        parent->addChildLabel(label);
+    }
+
+    return label;
 }
 
 void SystemOverviewObject::removeLabel(SysOvrvTextLabelPtr label)
@@ -297,6 +310,11 @@ void SystemOverviewObject::removeLabel(SysOvrvTextLabelPtr label)
 QVector<SysOvrvTextLabelPtr> SystemOverviewObject::getLabels() const
 {
     return textLabels;
+}
+
+QVector<SysOvrvTextLabelPtr> SystemOverviewObject::getGlobalLabes() const
+{
+    return globalTextLabels;
 }
 
 SysOvrvTextLabelPtr SystemOverviewObject::convertLabelPointer(SysOverviewTextLabel *label) const

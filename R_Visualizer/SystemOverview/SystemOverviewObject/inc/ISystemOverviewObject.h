@@ -74,9 +74,11 @@ public:
             const qreal x,
             const qreal y
             ) = 0;
+    virtual SysOvrvTextLabelPtr addChildLabel(SysOvrvTextLabelPtr label) = 0;
 
     virtual void removeLabel(SysOvrvTextLabelPtr label) = 0;
     virtual QVector<SysOvrvTextLabelPtr > getLabels() const = 0;
+    virtual QVector<SysOvrvTextLabelPtr> getGlobalLabes() const = 0;
     virtual SysOvrvTextLabelPtr convertLabelPointer(
             SysOverviewTextLabel *label
             ) const = 0;

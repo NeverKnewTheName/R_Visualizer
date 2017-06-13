@@ -14,8 +14,7 @@ class ISysOverviewObjectTrigger
 public:
     virtual ~ISysOverviewObjectTrigger(){}
 
-    virtual QColor getTriggerColor() const = 0;
-    virtual void setTriggerColor(const QColor &triggerColor) = 0;
+    virtual ISysOverviewObjectTrigger *clone() const = 0;
 
     virtual void trigger(
             const IMsg &msg
@@ -35,5 +34,16 @@ public:
 };
 
 typedef QSharedPointer<ISysOverviewObjectTrigger> SysOvrvObjTriggerPtr;
+
+template<class Derived>
+class ISysOverviewObjectTriggerCRTPHelper :
+        public ISysOverviewObjectTrigger
+{
+public:
+    virtual ISysOverviewObjectTrigger *clone() const
+    {
+        return new Derived(static_cast<const Derived &>(*this));
+    }
+};
 
 #endif // ISYSOVERVIEWOBJECTTRIGGER_H

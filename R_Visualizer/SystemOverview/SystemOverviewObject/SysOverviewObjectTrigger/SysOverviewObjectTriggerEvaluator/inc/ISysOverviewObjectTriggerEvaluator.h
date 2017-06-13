@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <QString>
+
 class IMsg;
 class MessageTypeIdentifier;
 
@@ -27,7 +29,6 @@ public:
     virtual void setMsgType(const MessageTypeIdentifier &msgType) = 0;
 
     virtual bool evaluate(const IMsg &msgToEvaluate) const = 0;
-
 };
 
 typedef std::unique_ptr<ISysOverviewObjectTriggerEvaluator> SysOvrvObjTriggerEvaluatorPtr;

@@ -101,6 +101,9 @@ SysOverviewObjectDialog::SysOverviewObjectDialog(
                                 if(!selectedTextLabel.isNull())
                                 {
                                     ui->removeLabelBtn->setEnabled(true);
+                                    ui->addTriggerBtn->setEnabled(true);
+                                    ui->removeTriggerBtn->setEnabled(true);
+                                    ui->editTriggerBtn->setEnabled(true);
                                 }
                             }
                         }
@@ -271,6 +274,7 @@ void SysOverviewObjectDialog::on_removeLabelBtn_clicked()
 
 #include "SysOverviewObjectColorTrigger.h"
 #include "SysOvrvObjColorTriggerDialog.h"
+#include "SysOverviewLabelTextChangeTriggerDialog.h"
 void SysOverviewObjectDialog::on_addTriggerBtn_clicked()
 {
     if(!selectedObj.isNull())
@@ -308,6 +312,27 @@ void SysOverviewObjectDialog::on_addTriggerBtn_clicked()
         //                    )
         //                )
         //            );
+    }
+    else if(!selectedTextLabel.isNull())
+    {
+        SysOvrvTextLabelPtr labelToTrigger = selectedTextLabel;
+        SysOverviewLabelTextChangeTriggerDialog *textChangeDiag =
+                new SysOverviewLabelTextChangeTriggerDialog(
+                    labelToTrigger.data(),
+                    this
+                    );
+        connect(
+                    textChangeDiag,
+                    &SysOverviewLabelTextChangeTriggerDialog::sgnl_commitTrigger,
+                    [=](SysOvrvLabelTriggerPtr trigger){
+                            labelToTrigger->addTrigger(
+                                        trigger
+                                        );
+                        }
+                    );
+
+        textChangeDiag->setAttribute(Qt::WA_DeleteOnClose);
+        textChangeDiag->exec();
     }
 }
 
