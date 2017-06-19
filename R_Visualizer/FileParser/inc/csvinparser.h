@@ -35,11 +35,23 @@ public:
     virtual void visit(IMsgCodeFilterStore &visitor);
     virtual void visit(IMsgTimespanFilter &visitor);
 
+    virtual void visit(ISystemOverviewObject &visitor);
+
     /* virtual void visit(SysOvrvObject &visitor); */
     /* virtual void visit(SysOvrvTextLabel &visitor); */
     /* virtual void visit(SysOvrvTrigger &visitor); */
     /* virtual void visit(ErrLogModel &visitor); */
     /* virtual void visit(ErrorLogEntry &visitor); */
+
+    // FileParser interface
+public:
+    virtual void visit(ISysOverviewObjectManager &visitor);
+    virtual void visit(ISysOverviewObjectColorManager &visitor);
+    virtual void visit(ISysOverviewObjectResizeManager &visitor);
+    virtual void visit(SysOverviewTextLabel &visitor);
+    virtual void visit(ISysOverviewObjectTrigger &visitor);
+    virtual void visit(ISysOverviewLabelTrigger &visitor);
+    virtual void visit(ISysOverviewObjectTriggerEvaluator &visitor);
 };
 
 #endif /* CSVINPARSER_H */

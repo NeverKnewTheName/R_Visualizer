@@ -15,6 +15,15 @@
 #include "IMsgCodeFilterStore.h"
 #include "IMsgTimespanFilter.h"
 
+#include "ISystemOverviewObject.h"
+#include "ISysOverviewObjectManager.h"
+#include "ISysOverviewObjectColorManager.h"
+#include "ISysOverviewObjectResizeManager.h"
+#include "SysOverviewTextLabel.h"
+#include "ISysOverviewObjectTrigger.h"
+#include "ISysOverviewLabelTrigger.h"
+#include "ISysOverviewObjectTriggerEvaluator.h"
+
 #include <QDebug>
 
 CsvOutParser::CsvOutParser()
@@ -85,7 +94,38 @@ void CsvOutParser::visit(IMsgTimespanFilter &visitor)
 {
 }
 
+void CsvOutParser::visit(ISystemOverviewObject &visitor)
+{
 
+}
+
+void CsvOutParser::visit(ISysOverviewObjectManager &visitor)
+{
+}
+
+void CsvOutParser::visit(ISysOverviewObjectColorManager &visitor)
+{
+}
+
+void CsvOutParser::visit(ISysOverviewObjectResizeManager &visitor)
+{
+}
+
+void CsvOutParser::visit(SysOverviewTextLabel &visitor)
+{
+}
+
+void CsvOutParser::visit(ISysOverviewObjectTrigger &visitor)
+{
+}
+
+void CsvOutParser::visit(ISysOverviewLabelTrigger &visitor)
+{
+}
+
+void CsvOutParser::visit(ISysOverviewObjectTriggerEvaluator &visitor)
+{
+}
 
 /* void CsvOutParser::visit(SysOvrvObject &visitor) */
 /* { */

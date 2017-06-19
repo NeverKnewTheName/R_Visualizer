@@ -17,6 +17,15 @@ class IMsgIDFilterStore;
 class IMsgCodeFilterStore;
 class IMsgTimespanFilter;
 
+class ISystemOverviewObject;
+class ISysOverviewObjectManager;
+class ISysOverviewObjectColorManager;
+class ISysOverviewObjectResizeManager;
+class SysOverviewTextLabel;
+class ISysOverviewObjectTrigger;
+class ISysOverviewLabelTrigger;
+class ISysOverviewObjectTriggerEvaluator;
+
 /* class SysOvrvObject; */
 /* class SysOvrvTextLabel; */
 /* class SysOvrvTrigger; */
@@ -44,6 +53,15 @@ public:
     virtual void visit(IMsgIDFilterStore &visitor) = 0;
     virtual void visit(IMsgCodeFilterStore &visitor) = 0;
     virtual void visit(IMsgTimespanFilter &visitor) = 0;
+
+    virtual void visit(ISystemOverviewObject &visitor) = 0;
+    virtual void visit(ISysOverviewObjectManager &visitor) = 0;
+    virtual void visit(ISysOverviewObjectColorManager &visitor) = 0;
+    virtual void visit(ISysOverviewObjectResizeManager &visitor) = 0;
+    virtual void visit(SysOverviewTextLabel &visitor) = 0;
+    virtual void visit(ISysOverviewObjectTrigger &visitor) = 0;
+    virtual void visit(ISysOverviewLabelTrigger &visitor) = 0;
+    virtual void visit(ISysOverviewObjectTriggerEvaluator &visitor) = 0;
 
     /* virtual void visit(SysOvrvObject &visitor) = 0; */
     /* virtual void visit(SysOvrvTextLabel &visitor) = 0; */

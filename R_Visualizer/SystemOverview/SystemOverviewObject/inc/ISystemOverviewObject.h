@@ -19,6 +19,9 @@
 
 #include "ISysOverviewObjectTrigger.h"
 
+#include "IFileParsable.h"
+#include "fileparser.h"
+
 class ISysOverviewObjectResizeManager;
 class ISysOverviewObjectManager;
 
@@ -37,7 +40,9 @@ typedef QSharedPointer<ISystemOverviewObject> ISysOvrvObjPtr;
 /**
  * @brief The ISystemOverviewObject interface
  */
-class ISystemOverviewObject : public QGraphicsItem
+class ISystemOverviewObject :
+        public QGraphicsItem,
+        public IFileParsable
 {
 public:
     ISystemOverviewObject(
@@ -138,6 +143,13 @@ public:
     virtual ISystemOverviewObject *clone() const
     {
         return new Derived(static_cast<const Derived &>(*this));
+    }
+
+    // IFileParsable interface
+public:
+    virtual void accept(FileParser *visitor)
+    {
+        visitor->visit(*this);
     }
 };
 

@@ -18,6 +18,15 @@
 #include "IMsgCodeFilterStore.h"
 #include "IMsgTimespanFilter.h"
 
+#include "ISystemOverviewObject.h"
+#include "ISysOverviewObjectManager.h"
+#include "ISysOverviewObjectColorManager.h"
+#include "ISysOverviewObjectResizeManager.h"
+#include "SysOverviewTextLabel.h"
+#include "ISysOverviewObjectTrigger.h"
+#include "ISysOverviewLabelTrigger.h"
+#include "ISysOverviewObjectTriggerEvaluator.h"
+
 #include <QDebug>
 
 JsonInParser::JsonInParser()
@@ -329,9 +338,41 @@ void JsonInParser::visit(IMsgTimespanFilter &visitor)
                     tempIMsgTimespanFilterJsonObject["FilterTimespanTo"].toString(),
                     "dd.MM.yyyy - hh:mm:ss.zzz"
                     )
-                );
+            );
 }
 
+void JsonInParser::visit(ISystemOverviewObject &visitor)
+{
+
+}
+
+void JsonInParser::visit(ISysOverviewObjectManager &visitor)
+{
+}
+
+void JsonInParser::visit(ISysOverviewObjectColorManager &visitor)
+{
+}
+
+void JsonInParser::visit(ISysOverviewObjectResizeManager &visitor)
+{
+}
+
+void JsonInParser::visit(SysOverviewTextLabel &visitor)
+{
+}
+
+void JsonInParser::visit(ISysOverviewObjectTrigger &visitor)
+{
+}
+
+void JsonInParser::visit(ISysOverviewLabelTrigger &visitor)
+{
+}
+
+void JsonInParser::visit(ISysOverviewObjectTriggerEvaluator &visitor)
+{
+}
 
 
 /* void JsonInParser::visit(SysOvrvObject &visitor) */

@@ -75,6 +75,11 @@ void SysOverviewObjectColorTrigger::setTriggerColor(const QColor &triggerColor)
     }
 }
 
+QColor SysOverviewObjectColorTrigger::getOriginalColor() const
+{
+    return originalColor;
+}
+
 void SysOverviewObjectColorTrigger::trigger(const IMsg &msg)
 {
     triggered = triggerEvaluator->evaluate(msg);
@@ -126,4 +131,10 @@ void SysOverviewObjectColorTrigger::applyColorTrigger()
         objManager->setColorManager(std::move(colorManager));
         objectToTrigger->setShapeManager(std::move(objManager));
     }
+}
+
+
+ISysOverviewObjectTrigger::TriggerType SysOverviewObjectColorTrigger::getTriggerType() const
+{
+    return ISysOverviewObjectTrigger::TriggerType_ColorChangeTrigger;
 }

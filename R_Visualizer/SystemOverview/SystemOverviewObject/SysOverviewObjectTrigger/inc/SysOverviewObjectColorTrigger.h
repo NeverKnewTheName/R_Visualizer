@@ -22,6 +22,8 @@ public:
     virtual QColor getTriggerColor() const;
     virtual void setTriggerColor(const QColor &triggerColor);
 
+    virtual QColor getOriginalColor() const;
+
     // ISysOverviewObjectTrigger interface
 public:
     virtual void trigger(const IMsg &msg);
@@ -47,6 +49,10 @@ private:
     QColor originalColor;
     QColor triggerColor;
     bool triggered;
+
+    // ISysOverviewObjectTrigger interface
+public:
+    virtual ISysOverviewObjectTrigger::TriggerType getTriggerType() const;
 };
 
 #endif // SYSOVERVIEWOBJECTCOLORTRIGGER_H

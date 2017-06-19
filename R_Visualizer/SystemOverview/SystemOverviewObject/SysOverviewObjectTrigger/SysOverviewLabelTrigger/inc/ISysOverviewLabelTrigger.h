@@ -12,9 +12,17 @@ class IMsg;
 class ISysOverviewLabelTrigger
 {
 public:
+    enum TriggerType
+    {
+        TriggerType_TextChangeTrigger,
+        TriggerType_NR_OF_TRIGGER_TYPES
+    };
+
     virtual ~ISysOverviewLabelTrigger(){}
 
     virtual ISysOverviewLabelTrigger *clone() const = 0;
+
+    virtual TriggerType getTriggerType() const = 0;
 
     virtual void trigger(
             const IMsg &msg

@@ -322,3 +322,13 @@ QString SysOverviewObjectTriggerDSLEvaluator::evaluateToString(
         return formattedData;
     }
 }
+
+QString SysOverviewObjectTriggerDSLEvaluator::getFormatString() const
+{
+    return formatString;
+}
+
+void SysOverviewObjectTriggerDSLEvaluator::setFormatString(const QString &value)
+{
+    formatString = value;
+}

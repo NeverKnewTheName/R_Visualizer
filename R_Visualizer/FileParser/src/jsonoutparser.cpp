@@ -15,6 +15,18 @@
 #include "IMsgCodeFilterStore.h"
 #include "IMsgTimespanFilter.h"
 
+#include "ISystemOverviewObject.h"
+#include "ISysOverviewObjectManager.h"
+#include "SysOverviewObjectShapeManager.h"
+#include "SysOverviewObjectImageManager.h"
+#include "ISysOverviewObjectColorManager.h"
+#include "ISysOverviewObjectResizeManager.h"
+#include "SysOverviewTextLabel.h"
+#include "ISysOverviewObjectTrigger.h"
+#include "ISysOverviewLabelTrigger.h"
+#include "ISysOverviewObjectTriggerEvaluator.h"
+
+#include <QBuffer>
 #include <QDebug>
 
 JsonOutParser::JsonOutParser()
@@ -334,9 +346,385 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 
     currentJsonValuePtr = std::unique_ptr<QJsonValue>(
             new QJsonValue(tempIMsgTimespanFilterJsonObject)
-            );
+                );
 }
 
+void JsonOutParser::visit(ISystemOverviewObject &visitor)
+{
+    QJsonObject tempISysOverviewObjJsonObject;
+
+    const QString objectName = visitor.getObjectName();
+
+    tempISysOverviewObjJsonObject["ObjectName"] = objectName;
+    tempISysOverviewObjJsonObject["ObjectPosition_X"] =
+            static_cast<const double>(visitor.x());
+    tempISysOverviewObjJsonObject["ObjectPosition_Y"] =
+            static_cast<const double>(visitor.y());
+
+    SysOvrvObjectManagerPtr objManager =
+            visitor.getShapeManager();
+    this->visit(*objManager);
+    tempISysOverviewObjJsonObject["ObjectManager"] =
+            currentJsonValuePtr->toObject();
+
+    SysOvrvObjectResizeManagerPtr objResizeManager =
+            visitor.getResizeManager();
+    this->visit(*objResizeManager);
+    tempISysOverviewObjJsonObject["ObjectResizeManager"] = objectName;
+            currentJsonValuePtr->toObject();
+
+    const QVector<SysOvrvTextLabelPtr> objLocalLabels =
+            visitor.getLabels();
+
+    QJsonArray tempObjLabelsJsonArray;
+    for(SysOvrvTextLabelPtr labelPtr : objLocalLabels)
+    {
+        this->visit(*labelPtr);
+        tempObjLabelsJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewObjJsonObject["ObjectLabels"] =
+            tempObjLabelsJsonArray;
+
+    const QVector<SysOvrvObjTriggerPtr> objLocalTriggers =
+            visitor.getLocalObjectTriggers();
+
+    QJsonArray tempObjTriggerJsonArray;
+    for(SysOvrvObjTriggerPtr triggerPtr : objLocalTriggers)
+    {
+        this->visit(*triggerPtr);
+        tempObjTriggerJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewObjJsonObject["ObjectTriggers"] =
+            tempObjTriggerJsonArray;
+
+    const QVector<ISysOvrvObjPtr> childObjects =
+            visitor.getChildObjects();
+    QJsonArray tempObjChildObjJsonArray;
+
+    for(ISysOvrvObjPtr childObjPtr : childObjects)
+    {
+        this->visit(*childObjPtr);
+        tempObjChildObjJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewObjJsonObject["ObjectChildObjects"] =
+            tempObjChildObjJsonArray;
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjJsonObject)
+                );
+}
+
+void JsonOutParser::visit(ISysOverviewObjectManager &visitor)
+{
+    QJsonObject tempISysOverviewObjManagerJsonObject;
+    const ISysOverviewObjectManager::ObjectType objManagerType =
+            visitor.getType();
+
+    tempISysOverviewObjManagerJsonObject["ObjectManagerType"] =
+            static_cast<const int>(objManagerType);
+
+    switch(objManagerType)
+    {
+    case ISysOverviewObjectManager::ShapeType:
+    {
+        QJsonObject tempSysOverviewObjectShapeManager;
+        try
+        {
+            SysOverviewObjectShapeManager &shapeManager =
+                    dynamic_cast<SysOverviewObjectShapeManager &>(visitor);
+
+            tempSysOverviewObjectShapeManager["ObjectShapeManager_Shape"] =
+                    static_cast<const int>(shapeManager.getShape());
+
+            SysOvrvObjColorManagerPtr colorManager =
+                    shapeManager.getColorManager();
+
+            this->visit(*colorManager);
+
+            tempSysOverviewObjectShapeManager["ObjectShapeManager_ColorManager"] =
+                    currentJsonValuePtr->toObject();
+
+            tempISysOverviewObjManagerJsonObject["ShapeManager"] =
+                    tempSysOverviewObjectShapeManager;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    case ISysOverviewObjectManager::ImageType:
+    {
+        QJsonObject tempSysOverviewObjectImageManager;
+        try
+        {
+            SysOverviewObjectImageManager &imageManager =
+                    dynamic_cast<SysOverviewObjectImageManager &>(visitor);
+            QByteArray bytes;
+            QBuffer buffer(&bytes);
+            buffer.open(QIODevice::WriteOnly);
+            imageManager.getImage().save(&buffer, "PNG");
+
+            tempSysOverviewObjectImageManager["SerializedImagePNG"] =
+                    QString(bytes);
+
+            tempISysOverviewObjManagerJsonObject["ImageManager"] =
+                    tempSysOverviewObjectImageManager;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjManagerJsonObject)
+                );
+}
+
+void JsonOutParser::visit(ISysOverviewObjectColorManager &visitor)
+{
+    QJsonObject tempISysOverviewObjectColorManagerJsonObject;
+
+    tempISysOverviewObjectColorManagerJsonObject["BorderColor"] =
+            visitor.getBorderColor().name();
+    tempISysOverviewObjectColorManagerJsonObject["FillColor"] =
+            visitor.getFillColor().name();
+    tempISysOverviewObjectColorManagerJsonObject["Transparency"] =
+            static_cast<const double>(visitor.getTransparency());
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectColorManagerJsonObject)
+                );
+}
+
+void JsonOutParser::visit(ISysOverviewObjectResizeManager &visitor)
+{
+    QJsonObject tempISysOverviewObjectResizeManagerJsonObject;
+
+    tempISysOverviewObjectResizeManagerJsonObject["Width"] =
+            visitor.getSize().width();
+    tempISysOverviewObjectResizeManagerJsonObject["Height"] =
+            visitor.getSize().height();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectResizeManagerJsonObject)
+                );
+}
+
+void JsonOutParser::visit(SysOverviewTextLabel &visitor)
+{
+    QJsonObject tempISysOverviewTextLabelJsonObject;
+
+    tempISysOverviewTextLabelJsonObject["LabelText"] =
+            visitor.text();
+    tempISysOverviewTextLabelJsonObject["LabelPosition_X"] =
+            static_cast<const double>(visitor.x());
+    tempISysOverviewTextLabelJsonObject["LabelPosition_Y"] =
+            static_cast<const double>(visitor.y());
+
+    const QVector<SysOvrvLabelTriggerPtr> labelTriggers =
+            visitor.getTriggers();
+
+    QJsonArray labelTriggersJsonArray;
+    for(SysOvrvLabelTriggerPtr labelTriggerPtr : labelTriggers)
+    {
+        this->visit(*labelTriggerPtr);
+        labelTriggersJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewTextLabelJsonObject["LabelTriggers"] =
+            labelTriggersJsonArray;
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewTextLabelJsonObject)
+                );
+}
+
+#include "SysOverviewObjectColorTrigger.h"
+void JsonOutParser::visit(ISysOverviewObjectTrigger &visitor)
+{
+    QJsonObject tempISysOverviewObjectTriggerJsonObject;
+
+    const ISysOverviewObjectTrigger::TriggerType triggerType =
+            visitor.getTriggerType();
+
+    switch(triggerType)
+    {
+    case ISysOverviewObjectTrigger::TriggerType_ColorChangeTrigger:
+    {
+        try
+        {
+            SysOverviewObjectColorTrigger &colorChangeTrigger =
+                    dynamic_cast<SysOverviewObjectColorTrigger &>(visitor);
+
+            QJsonObject tempColorChangeTriggerJsonObject;
+
+            tempColorChangeTriggerJsonObject["TriggerColor"] =
+                    colorChangeTrigger.getTriggerColor().name();
+
+            tempColorChangeTriggerJsonObject["OriginalColor"] =
+                    colorChangeTrigger.getOriginalColor().name();
+
+            tempISysOverviewObjectTriggerJsonObject["ColorChangeTrigger"] =
+                    tempColorChangeTriggerJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    SysOvrvObjTriggerEvaluatorPtr triggerEvaluator =
+            visitor.getTriggerEvaluator();
+
+    this->visit(*triggerEvaluator);
+
+    tempISysOverviewObjectTriggerJsonObject["TriggerEvaluator"] =
+            currentJsonValuePtr->toObject();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectTriggerJsonObject)
+                );
+}
+
+#include "SysOverviewLabelTextChangeTrigger.h"
+void JsonOutParser::visit(ISysOverviewLabelTrigger &visitor)
+{
+    QJsonObject tempISysOverviewObjectLableTriggerJsonObject;
+
+    const ISysOverviewLabelTrigger::TriggerType triggerType =
+            visitor.getTriggerType();
+
+    switch(triggerType)
+    {
+    case ISysOverviewLabelTrigger::TriggerType_TextChangeTrigger:
+    {
+        try
+        {
+            SysOverviewLabelTextChangeTrigger &textChangeTrigger =
+                    dynamic_cast<SysOverviewLabelTextChangeTrigger &>(visitor);
+
+            QJsonObject tempTextChangeTriggerJsonObject;
+
+            tempISysOverviewObjectLableTriggerJsonObject["TextChangeTrigger"] =
+                    tempTextChangeTriggerJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    SysOvrvObjTriggerEvaluatorPtr triggerEvaluator =
+            visitor.getTriggerEvaluator();
+
+    this->visit(*triggerEvaluator);
+
+    tempISysOverviewObjectLableTriggerJsonObject["TriggerEvaluator"] =
+            currentJsonValuePtr->toObject();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectLableTriggerJsonObject)
+                );
+}
+
+#include "SysOverviewObjectTriggerMsgTypeEvaluator.h"
+#include "SysOverviewObjectTriggerDSLEvaluator.h"
+void JsonOutParser::visit(ISysOverviewObjectTriggerEvaluator &visitor)
+{
+    QJsonObject tempISysOverviewObjectTriggerEvaluatorJsonObject;
+
+    const MessageTypeIdentifier msgType = visitor.getMsgType();
+
+    QJsonObject tempMsgTypeJsonObject;
+
+    tempMsgTypeJsonObject["MessageID"] =
+            static_cast<const int>(msgType.getID().getPrimitiveData());
+    tempMsgTypeJsonObject["MessageCode"] =
+            static_cast<const int>(msgType.getCode().getPrimitiveData());
+
+    tempISysOverviewObjectTriggerEvaluatorJsonObject["MsgType"] =
+            tempMsgTypeJsonObject;
+
+    const ISysOverviewObjectTriggerEvaluator::EvaluatorType type =
+            visitor.getType();
+
+    switch(type)
+    {
+    case ISysOverviewObjectTriggerEvaluator::EvaluatorType_MsgTypeEvaluator:
+    {
+        try
+        {
+            SysOverviewObjectTriggerMsgTypeEvaluator &msgTypeEvaluator =
+                    dynamic_cast<SysOverviewObjectTriggerMsgTypeEvaluator &>(visitor);
+            QJsonObject msgTypeEvaluatorJsonObject;
+
+            tempISysOverviewObjectTriggerEvaluatorJsonObject["MsgTypeEvaluator"] =
+                    msgTypeEvaluatorJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    case ISysOverviewObjectTriggerEvaluator::EvaluatorType_DSLEvaluator:
+    {
+        try
+        {
+            SysOverviewObjectTriggerDSLEvaluator &dslEvaluator =
+                    dynamic_cast<SysOverviewObjectTriggerDSLEvaluator &>(visitor);
+
+            QJsonObject dslEvalutorJsonObject;
+            dslEvalutorJsonObject["FormatString"] =
+                dslEvaluator.getFormatString();
+
+            tempISysOverviewObjectTriggerEvaluatorJsonObject["DSLEvaluator"] =
+                    dslEvalutorJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    case ISysOverviewObjectTriggerEvaluator::EvaluatorType_ParserEvaluator:
+    {
+//        ToDO
+          QJsonObject parserEvalutorJsonObject;
+
+          tempISysOverviewObjectTriggerEvaluatorJsonObject["ParserEvaluator"] =
+                   parserEvalutorJsonObject;
+    }
+        break;
+    }
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectTriggerEvaluatorJsonObject)
+                );
+}
 
 
 /* void JsonOutParser::visit(SysOvrvObject &visitor) */

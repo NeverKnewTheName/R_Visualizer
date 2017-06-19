@@ -33,6 +33,10 @@ private:
     SysOverviewTextLabel *textLabel;
     SysOvrvObjTriggerEvaluatorPtr triggerEvaluator;
     bool triggered;
+
+    // ISysOverviewLabelTrigger interface
+public:
+    virtual ISysOverviewLabelTrigger::TriggerType getTriggerType() const;
 };
 
 #endif // SYSOVERVIEWLABELTEXTCHANGETRIGGER_H

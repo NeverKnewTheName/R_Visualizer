@@ -75,3 +75,9 @@ bool SysOverviewLabelTextChangeTrigger::isTriggered() const
 {
     return triggered;
 }
+
+
+ISysOverviewLabelTrigger::TriggerType SysOverviewLabelTextChangeTrigger::getTriggerType() const
+{
+    return ISysOverviewLabelTrigger::TriggerType_TextChangeTrigger;
+}

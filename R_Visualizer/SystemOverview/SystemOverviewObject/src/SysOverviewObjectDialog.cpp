@@ -442,8 +442,10 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
             }
             break;
         case QDialogButtonBox::Save:
+            //ToDO
             break;
         case QDialogButtonBox::Open:
+            //ToDO
             break;
         }
         break;

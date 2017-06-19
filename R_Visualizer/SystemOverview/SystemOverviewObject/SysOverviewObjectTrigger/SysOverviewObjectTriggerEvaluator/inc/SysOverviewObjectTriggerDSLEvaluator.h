@@ -16,6 +16,8 @@ public:
 
     virtual ~SysOverviewObjectTriggerDSLEvaluator();
 
+
+
     // ISysOverviewObjectTriggerEvaluator interface
 public:
     virtual EvaluatorType getType() const;
@@ -23,6 +25,9 @@ public:
     virtual void setMsgType(const MessageTypeIdentifier &msgType);
     virtual bool evaluate(const IMsg &msgToEvaluate) const;
     virtual QString evaluateToString(const IMsg &msgToEvaluate) const;
+
+    QString getFormatString() const;
+    void setFormatString(const QString &value);
 
 private:
     MessageTypeIdentifier msgType;
