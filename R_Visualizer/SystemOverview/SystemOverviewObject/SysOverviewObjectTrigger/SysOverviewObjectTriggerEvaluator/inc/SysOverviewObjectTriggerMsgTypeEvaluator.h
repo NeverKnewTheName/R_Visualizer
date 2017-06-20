@@ -8,6 +8,7 @@ class SysOverviewObjectTriggerMsgTypeEvaluator :
         public ISysOverviewObjectTriggerEvaluatorCRTPHelper<SysOverviewObjectTriggerMsgTypeEvaluator>
 {
 public:
+    SysOverviewObjectTriggerMsgTypeEvaluator();
     SysOverviewObjectTriggerMsgTypeEvaluator(
             const MessageTypeIdentifier &msgType
             );

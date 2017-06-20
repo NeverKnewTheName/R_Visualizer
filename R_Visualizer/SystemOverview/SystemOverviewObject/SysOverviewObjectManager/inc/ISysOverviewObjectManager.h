@@ -12,6 +12,8 @@
 #include <QRectF>
 #include <QColor>
 
+#include <memory>
+
 class ISystemOverviewObject;
 
 /**
@@ -87,6 +89,8 @@ protected:
 private:
     ObjectType type;
 };
+
+typedef std::unique_ptr<ISysOverviewObjectManager> SysOvrvObjectManagerPtr;
 
 template<class Derived>
 class ISysOverviewObjectManagerCRTPHelper : public ISysOverviewObjectManager

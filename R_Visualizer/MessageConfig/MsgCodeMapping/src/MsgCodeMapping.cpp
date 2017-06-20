@@ -100,5 +100,5 @@ bool MsgCodeMapping::operator ==(const IMsgCodeMapping &other) const
 
 void MsgCodeMapping::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }

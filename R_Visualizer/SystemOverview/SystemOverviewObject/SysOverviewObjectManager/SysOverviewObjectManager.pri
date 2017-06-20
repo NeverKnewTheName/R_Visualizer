@@ -4,14 +4,22 @@ INCLUDEPATH += $$PWD/inc
 SOURCES += \
     $$PWD/src/SysOverviewObjectShapeManager.cpp \
     $$PWD/src/SysOverviewObjectImageManager.cpp \
-    $$PWD/src/SysOverviewObjectColorManager.cpp
+    $$PWD/src/SysOverviewObjectColorManager.cpp \
+    $$PWD/src/SysOverviewObjectShapeManagerWidget.cpp \
+    $$PWD/src/SysOverviewObjectManagerWidget.cpp \
+    $$PWD/src/ISysOverviewObjectManagerSubWidget.cpp
 
 HEADERS  += \
     $$PWD/inc/ISysOverviewObjectManager.h \
     $$PWD/inc/SysOverviewObjectShapeManager.h \
     $$PWD/inc/SysOverviewObjectImageManager.h \
     $$PWD/inc/ISysOverviewObjectColorManager.h \
-    $$PWD/inc/SysOverviewObjectColorManager.h
+    $$PWD/inc/SysOverviewObjectColorManager.h \
+    $$PWD/inc/SysOverviewObjectShapeManagerWidget.h \
+    $$PWD/inc/SysOverviewObjectManagerWidget.h \
+    $$PWD/inc/ISysOverviewObjectManagerSubWidget.h
 
 FORMS    += \
+    $$PWD/ui/sysoverviewobjectshapemanagerwidget.ui \
+    $$PWD/ui/sysoverviewobjectmanagerwidget.ui \
 

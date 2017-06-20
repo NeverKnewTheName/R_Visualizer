@@ -64,7 +64,7 @@ SystemOverviewWidget::SystemOverviewWidget(
                                 }
                                 systemOverview
                                         ->addObject(
-                                            std::move(obj)
+                                            obj
                                             );
                             }
                         );
@@ -80,6 +80,7 @@ SystemOverviewWidget::SystemOverviewWidget(
                     objDiag->exec();
                 }
             );
+
     connect(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestRemoveObject,
@@ -87,6 +88,7 @@ SystemOverviewWidget::SystemOverviewWidget(
                     systemOverview->removeObject(objName);
                 }
             );
+
     connect(
             ui->sysOverviewGraphicsView,
             &SystemOverviewGraphicsView::sgnl_RequestEditObject,
@@ -102,9 +104,26 @@ SystemOverviewWidget::SystemOverviewWidget(
                             objDiag,
                             &SysOverviewObjectDialog::sgnl_CommitObject,
                             [=](ISysOvrvObjPtr obj){
+                                QString objectName = obj->getObjectName();
+                                while(
+                                      objectName.isEmpty() ||
+                                      (objectName.compare("INVALID") == 0) ||
+                                      !systemOverview->getObject(objectName).isNull()
+                                      )
+                                {
+                                    //Object already exists!
+                                    objectName = QInputDialog::getText(
+                                                this,
+                                                QString("Enter Name for Object"),
+                                                QString("Object Name:"),
+                                                QLineEdit::Normal,
+                                                objectName
+                                                );
+                                    obj->setObjectName(objectName);
+                                }
                                 systemOverview
                                         ->addObject(
-                                            std::move(obj)
+                                            obj
                                             );
                             }
                         );
@@ -120,9 +139,11 @@ SystemOverviewWidget::SystemOverviewWidget(
                             &SysOverviewObjectDialog::rejected,
                             [=](){
                                 qDebug() << "Edit -- rejected";
+                                ISysOvrvObjPtr originalObj =
+                                        objDiag->getObject();
                                 systemOverview
                                         ->addObject(
-                                            std::move(obj)
+                                            originalObj
                                             );
                             }
                         );

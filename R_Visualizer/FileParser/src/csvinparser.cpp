@@ -35,116 +35,116 @@ CsvInParser::~CsvInParser()
 {
 }
 
-void CsvInParser::visit(IMsg &visitor)
+void CsvInParser::visit(IMsg *visitor)
 {
 }
 
-void CsvInParser::visit(ITimestampedMsg &visitor)
+void CsvInParser::visit(ITimestampedMsg *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgStreamStore &visitor)
+void CsvInParser::visit(IMsgStreamStore *visitor)
 {
 }
 
-void CsvInParser::visit(MsgStorage &visitor)
+void CsvInParser::visit(MsgStorage *visitor)
 {
 }
 
-void CsvInParser::visit(TimestampedMsgStorage &visitor)
+void CsvInParser::visit(TimestampedMsgStorage *visitor)
 {
 }
 
-void CsvInParser::visit(ISendMsgPackageStore &visitor)
+void CsvInParser::visit(ISendMsgPackageStore *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgIDMappingStore &visitor)
+void CsvInParser::visit(IMsgIDMappingStore *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgIDMapping &visitor)
+void CsvInParser::visit(IMsgIDMapping *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgCodeMappingStore &visitor)
+void CsvInParser::visit(IMsgCodeMappingStore *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgCodeMapping &visitor)
+void CsvInParser::visit(IMsgCodeMapping *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgDataMappingStore &visitor)
+void CsvInParser::visit(IMsgDataMappingStore *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgDataMapping &visitor)
+void CsvInParser::visit(IMsgDataMapping *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgIDFilterStore &visitor)
+void CsvInParser::visit(IMsgIDFilterStore *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgCodeFilterStore &visitor)
+void CsvInParser::visit(IMsgCodeFilterStore *visitor)
 {
 }
 
-void CsvInParser::visit(IMsgTimespanFilter &visitor)
+void CsvInParser::visit(IMsgTimespanFilter *visitor)
 {
 }
 
-void CsvInParser::visit(ISystemOverviewObject &visitor)
+void CsvInParser::visit(ISystemOverviewObject *visitor)
 {
 
 }
 
-void CsvInParser::visit(ISysOverviewObjectManager &visitor)
+void CsvInParser::visit(ISysOverviewObjectManager *visitor)
 {
 }
 
-void CsvInParser::visit(ISysOverviewObjectColorManager &visitor)
+void CsvInParser::visit(ISysOverviewObjectColorManager *visitor)
 {
 }
 
-void CsvInParser::visit(ISysOverviewObjectResizeManager &visitor)
+void CsvInParser::visit(ISysOverviewObjectResizeManager *visitor)
 {
 }
 
-void CsvInParser::visit(SysOverviewTextLabel &visitor)
+void CsvInParser::visit(SysOverviewTextLabel *visitor)
 {
 }
 
-void CsvInParser::visit(ISysOverviewObjectTrigger &visitor)
+void CsvInParser::visit(ISysOverviewObjectTrigger *visitor)
 {
 }
 
-void CsvInParser::visit(ISysOverviewLabelTrigger &visitor)
+void CsvInParser::visit(ISysOverviewLabelTrigger *visitor)
 {
 }
 
-void CsvInParser::visit(ISysOverviewObjectTriggerEvaluator &visitor)
+void CsvInParser::visit(ISysOverviewObjectTriggerEvaluator *visitor)
 {
 }
 
-/* void CsvInParser::visit(SysOvrvObject &visitor) */
+/* void CsvInParser::visit(SysOvrvObject *visitor) */
 /* { */
 /* } */
 
-/* void CsvInParser::visit(SysOvrvTextLabel &visitor) */
+/* void CsvInParser::visit(SysOvrvTextLabel *visitor) */
 /* { */
 /* } */
 
-/* void CsvInParser::visit(SysOvrvTrigger &visitor) */
+/* void CsvInParser::visit(SysOvrvTrigger *visitor) */
 /* { */
 /* } */
 
-/* void CsvInParser::visit(ErrLogModel &visitor) */
+/* void CsvInParser::visit(ErrLogModel *visitor) */
 /* { */
 /* } */
 
-/* void CsvInParser::visit(ErrorLogEntry &visitor) */
+/* void CsvInParser::visit(ErrorLogEntry *visitor) */
 /* { */
 /* } */
 

@@ -111,5 +111,5 @@ TimestampedMsg::operator QString() const
 
 void TimestampedMsg::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }

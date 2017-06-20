@@ -45,6 +45,11 @@ SysOverviewObjectResizeManager::~SysOverviewObjectResizeManager()
     qDebug() << "ResizeManager -- Destructor: " << objCounter;
 }
 
+ISysOverviewObjectResizeManager::ResizeManagerType SysOverviewObjectResizeManager::getType() const
+{
+    return ISysOverviewObjectResizeManager::ResizeManagerType_RectCornerResizeManager;
+}
+
 void SysOverviewObjectResizeManager::setSysOverviewObject(
         ISystemOverviewObject *newSysOverviewObject
                                                           )

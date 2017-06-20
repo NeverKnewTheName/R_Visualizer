@@ -23,90 +23,13 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="shapeLbl">
-       <property name="text">
-        <string>Shape</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="colorLbl">
-       <property name="text">
-        <string>Color</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="colorLE">
-         <property name="inputMask">
-          <string>\#HHHHHH</string>
-         </property>
-         <property name="text">
-          <string>#000000</string>
-         </property>
-         <property name="placeholderText">
-          <string/>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="colorPickerBtn">
-         <property name="text">
-          <string>Color Picker</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="transparencyLbl">
-         <property name="text">
-          <string>Transparency</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="transparencySpinBox">
-         <property name="showGroupSeparator" stdset="0">
-          <bool>false</bool>
-         </property>
-         <property name="suffix">
-          <string notr="true">%</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>100</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="nameLE"/>
      </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="shapeComboBox"/>
-     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="SysOverviewObjectManagerWidget" name="objectManagerWidget" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="objectEditorLayout">
@@ -203,12 +126,16 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SysOverviewObjectManagerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">SysOverviewObjectManagerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>nameLE</tabstop>
-  <tabstop>shapeComboBox</tabstop>
-  <tabstop>colorLE</tabstop>
-  <tabstop>colorPickerBtn</tabstop>
-  <tabstop>transparencySpinBox</tabstop>
   <tabstop>addObjectBtn</tabstop>
   <tabstop>removeObjectBtn</tabstop>
   <tabstop>editObjectBtn</tabstop>
@@ -220,38 +147,5 @@
   <tabstop>objectPreviewGrahicsView</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>SysOverviewObjectDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>SysOverviewObjectDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

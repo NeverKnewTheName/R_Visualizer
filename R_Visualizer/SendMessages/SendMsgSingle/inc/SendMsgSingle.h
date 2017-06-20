@@ -28,6 +28,7 @@ public:
     SendMsgSingle(QObject *parent = Q_NULLPTR);
     virtual ~SendMsgSingle();
 
+    virtual IMsgPtr getMsg() const;
     virtual void setMsg(const IMsg &msg);
     virtual void setMsgID(const MsgIDType &msgID);
     virtual void setMsgCode(const MsgCodeType &msgCode);

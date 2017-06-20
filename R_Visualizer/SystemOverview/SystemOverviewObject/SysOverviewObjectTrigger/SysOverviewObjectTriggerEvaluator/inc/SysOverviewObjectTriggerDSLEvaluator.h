@@ -9,9 +9,10 @@ class SysOverviewObjectTriggerDSLEvaluator :
         public ISysOverviewObjectTriggerEvaluatorCRTPHelper<SysOverviewObjectTriggerDSLEvaluator>
 {
 public:
+    SysOverviewObjectTriggerDSLEvaluator();
     SysOverviewObjectTriggerDSLEvaluator(
             const MessageTypeIdentifier &msgType,
-            const QString &formatString
+            const QString &formatString = QString("")
             );
 
     virtual ~SysOverviewObjectTriggerDSLEvaluator();

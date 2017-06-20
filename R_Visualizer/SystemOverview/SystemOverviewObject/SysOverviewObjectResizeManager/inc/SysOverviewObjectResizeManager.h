@@ -33,6 +33,8 @@ public:
 
     virtual ~SysOverviewObjectResizeManager();
 
+    virtual ISysOverviewObjectResizeManager::ResizeManagerType getType() const;
+
     virtual void setSysOverviewObject(
             ISystemOverviewObject *newSysOverviewObject
             );

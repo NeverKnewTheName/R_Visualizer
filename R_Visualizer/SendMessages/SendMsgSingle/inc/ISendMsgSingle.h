@@ -33,6 +33,7 @@ public:
     ISendMsgSingle(QObject *parent = Q_NULLPTR) : QObject(parent){}
     virtual ~ISendMsgSingle(){}
 
+    virtual IMsgPtr getMsg() const = 0;
     virtual void setMsg(const IMsg &msg) = 0;
     virtual void setMsgID(const MsgIDType &msgID) = 0;
     virtual void setMsgCode(const MsgCodeType &msgCode) = 0;
@@ -62,7 +63,6 @@ public slots:
     {
         setMsgData(msgData);
     }
-
 };
 
 /**

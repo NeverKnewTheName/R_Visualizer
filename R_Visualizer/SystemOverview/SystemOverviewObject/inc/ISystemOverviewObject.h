@@ -22,8 +22,8 @@
 #include "IFileParsable.h"
 #include "fileparser.h"
 
-class ISysOverviewObjectResizeManager;
-class ISysOverviewObjectManager;
+#include "ISysOverviewObjectResizeManager.h"
+#include "ISysOverviewObjectManager.h"
 
 
 class SysOverviewTextLabel;
@@ -31,8 +31,6 @@ class SysOverviewTextLabel;
 #include <memory>
 
 typedef QSharedPointer<SysOverviewTextLabel> SysOvrvTextLabelPtr;
-typedef std::unique_ptr<ISysOverviewObjectResizeManager> SysOvrvObjectResizeManagerPtr;
-typedef std::unique_ptr<ISysOverviewObjectManager> SysOvrvObjectManagerPtr;
 
 class ISystemOverviewObject;
 typedef QSharedPointer<ISystemOverviewObject> ISysOvrvObjPtr;
@@ -149,7 +147,7 @@ public:
 public:
     virtual void accept(FileParser *visitor)
     {
-        visitor->visit(*this);
+        visitor->visit(this);
     }
 };
 

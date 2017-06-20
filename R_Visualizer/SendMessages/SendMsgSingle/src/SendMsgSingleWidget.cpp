@@ -39,6 +39,15 @@ SendMsgSingleWidget::SendMsgSingleWidget(
     setTabOrder(ui->openMsgBtn,ui->saveMsgBtn);
 
     ui->msgWidget->setFocus();
+
+    ui->msgWidget->setMsg(*sendMsgSingle->getMsg());
+
+    connect(
+            sendMsgSingle,
+            &ISendMsgSingle::sgnl_msgHasChanged,
+            this,
+            &SendMsgSingleWidget::slt_MsgChanged
+            );
 }
 
 SendMsgSingleWidget::~SendMsgSingleWidget()
@@ -122,6 +131,7 @@ void SendMsgSingleWidget::on_openMsgBtn_clicked()
                 );
         Msg msgToSet;
         msgToSet.accept(&jsonInParser);
+        sendMsgSingle->setMsg(msgToSet);
         /* ui->msgWidget->setMsg(msgToSet); */
     }
     // close file

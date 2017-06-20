@@ -9,7 +9,7 @@ class SysOverviewLabelTextChangeTrigger :
 public:
     SysOverviewLabelTextChangeTrigger(
             SysOverviewTextLabel *textLabel,
-            SysOvrvObjTriggerEvaluatorPtr triggerEvaluator
+            SysOvrvObjTriggerEvaluatorPtr triggerEvaluator = Q_NULLPTR
             );
     SysOverviewLabelTextChangeTrigger(
             const SysOverviewLabelTextChangeTrigger &copy

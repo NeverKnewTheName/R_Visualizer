@@ -162,7 +162,7 @@ public:
 
     void accept(FileParser *visitor)
     {
-        visitor->visit(*this);
+        visitor->visit(this);
     }
 signals:
     virtual void sgnl_MsgAdded(const Msg &addedMsg, const int index);
@@ -216,7 +216,7 @@ public:
 
     void accept(FileParser *visitor)
     {
-        visitor->visit(*this);
+        visitor->visit(this);
     }
 
 signals:

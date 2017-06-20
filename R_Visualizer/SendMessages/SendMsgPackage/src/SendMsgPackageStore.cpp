@@ -89,7 +89,7 @@ QVector<Msg> SendMsgPackageStore::getMessagesAsVector() const
 
 void SendMsgPackageStore::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }
 
 void SendMsgPackageStore::removeAt(const int index)

@@ -117,6 +117,11 @@ SystemOverviewObject::SystemOverviewObject(
 
 SystemOverviewObject::~SystemOverviewObject()
 {
+    this->textLabels.clear();
+    this->globalTextLabels.clear();
+    this->localTriggers.clear();
+    this->globalTriggers.clear();
+    this->childObjects.clear();
     objManager.reset();
     resizeManager.reset();
 }

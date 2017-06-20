@@ -108,5 +108,5 @@ Msg::operator QString() const
 
 void Msg::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }

@@ -3,6 +3,11 @@
 #include "IMsg.h"
 #include "MessageTypeIdentifier.h"
 
+SysOverviewObjectTriggerMsgTypeEvaluator::SysOverviewObjectTriggerMsgTypeEvaluator()
+{
+
+}
+
 SysOverviewObjectTriggerMsgTypeEvaluator::SysOverviewObjectTriggerMsgTypeEvaluator(
             const MessageTypeIdentifier &msgType
         ) :

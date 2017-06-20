@@ -147,5 +147,5 @@ bool MsgDataMapping::operator ==(const IMsgDataMapping &other) const
 
 void MsgDataMapping::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }

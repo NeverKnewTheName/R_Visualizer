@@ -25,10 +25,13 @@ public:
             );
 
     ~SysOverviewObjectDialog();
+    ISysOvrvObjPtr getObject() const;
 
 private:
     void setupDialog();
     void setupButtons();
+    void saveSysOverviewObj();
+    void openSysOverviewObj();
 
 signals:
     void sgnl_CommitObject(ISysOvrvObjPtr obj);
@@ -51,12 +54,6 @@ private slots:
     void on_removeTriggerBtn_clicked();
 
     void on_editTriggerBtn_clicked();
-
-    void on_shapeComboBox_currentIndexChanged(int index);
-
-    void on_transparencySpinBox_valueChanged(int arg1);
-
-    void on_colorLE_editingFinished();
 
     void on_buttonBox_clicked(QAbstractButton *button);
 

@@ -11,6 +11,11 @@
 #include <QDebug>
 
 
+SysOverviewObjectTriggerDSLEvaluator::SysOverviewObjectTriggerDSLEvaluator()
+{
+
+}
+
 SysOverviewObjectTriggerDSLEvaluator::SysOverviewObjectTriggerDSLEvaluator(
         const MessageTypeIdentifier &msgType,
         const QString &formatString

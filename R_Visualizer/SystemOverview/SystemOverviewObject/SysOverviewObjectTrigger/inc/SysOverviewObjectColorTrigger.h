@@ -10,6 +10,9 @@ class SysOverviewObjectColorTrigger :
 {
 public:
     SysOverviewObjectColorTrigger(
+            ISystemOverviewObject *objectToTrigger
+            );
+    SysOverviewObjectColorTrigger(
             ISystemOverviewObject *objectToTrigger,
             const QColor &colorToChangeTo,
             SysOvrvObjTriggerEvaluatorPtr triggerEvaluator

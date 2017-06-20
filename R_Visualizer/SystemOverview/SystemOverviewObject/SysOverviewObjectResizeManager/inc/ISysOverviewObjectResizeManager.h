@@ -15,7 +15,9 @@
 
 #include "ResizeRectCorner.h"
 
-#include "ISystemOverviewObject.h"
+class ISystemOverviewObject;
+
+#include <memory>
 
 /**
  * @brief The ISysOverviewObjectResizeManager interface
@@ -23,7 +25,15 @@
 class ISysOverviewObjectResizeManager
 {
 public:
+    enum ResizeManagerType
+    {
+        ResizeManagerType_RectCornerResizeManager,
+        ResizeManagerType_NR_OF_RESIZE_MANAGER_TYPES
+    };
+
     virtual ~ISysOverviewObjectResizeManager(){}
+
+    virtual ResizeManagerType getType() const = 0;
 
     virtual ISysOverviewObjectResizeManager *clone() const = 0;
 
@@ -46,6 +56,8 @@ public:
 
     virtual QRectF getBoundingRect() const = 0;
 };
+
+typedef std::unique_ptr<ISysOverviewObjectResizeManager> SysOvrvObjectResizeManagerPtr;
 
 template<class Derivate>
 class ISysOverviewObjectResizeManagerCRTPHelper : public ISysOverviewObjectResizeManager

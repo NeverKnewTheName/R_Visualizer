@@ -9,6 +9,28 @@
 #include <QDebug>
 
 SysOverviewObjectColorTrigger::SysOverviewObjectColorTrigger(
+        ISystemOverviewObject *objectToTrigger
+        ) :
+    objectToTrigger(objectToTrigger),
+    triggerEvaluator(),
+    originalColor(Qt::lightGray),
+    triggerColor(Qt::gray),
+    triggered(false)
+{
+    SysOvrvObjectShapeManagerPtr objManager(
+                dynamic_cast<SysOverviewObjectShapeManager *>(
+                    objectToTrigger->getShapeManager().release()
+                    )
+                );
+    if(objManager.get() != nullptr)
+    {
+        SysOvrvObjColorManagerPtr colorManager =
+                objManager->getColorManager();
+        originalColor = colorManager->getFillColor();
+    }
+}
+
+SysOverviewObjectColorTrigger::SysOverviewObjectColorTrigger(
         ISystemOverviewObject *objectToTrigger,
         const QColor &colorToChangeTo,
         SysOvrvObjTriggerEvaluatorPtr triggerEvaluator

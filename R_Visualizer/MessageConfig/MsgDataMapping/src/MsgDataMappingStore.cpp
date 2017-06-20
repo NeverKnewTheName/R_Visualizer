@@ -160,7 +160,7 @@ void MsgDataMappingStore::clear()
 
 void MsgDataMappingStore::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }
 
 QVector<MessageTypeIdentifier> MsgDataMappingStore::getContainedTypeIdentifiers() const

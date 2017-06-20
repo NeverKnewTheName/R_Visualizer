@@ -28,7 +28,7 @@ public:
             );
     SysOverviewObjectImageManager(
             ISystemOverviewObject *sysOverviewObject,
-            const QPixmap &image
+            const QPixmap &image = QPixmap()
             );
     virtual ~SysOverviewObjectImageManager();
 

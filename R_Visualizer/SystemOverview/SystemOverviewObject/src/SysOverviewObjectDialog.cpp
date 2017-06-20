@@ -4,6 +4,15 @@
 #include "SysOverviewObjectShapeManager.h"
 #include "SysOverviewObjectResizeManager.h"
 
+#include "SysOverviewObjectManagerWidget.h"
+
+#include <QFileDialog>
+
+#include "jsoninparser.h"
+#include "jsonoutparser.h"
+#include "csvinparser.h"
+#include "csvoutparser.h"
+
 #include <QDebug>
 
 SysOverviewObjectDialog::SysOverviewObjectDialog(
@@ -17,7 +26,9 @@ SysOverviewObjectDialog::SysOverviewObjectDialog(
     sysOvrvObjSave(sysOvrvObj->clone())
 {
     ui->setupUi(this);
+    ui->objectManagerWidget->updateSysOverviewObject(sysOvrvObj);
     ui->objectPreviewGrahicsView->setScene(&scene);
+
 
     if(!sysOvrvObj.isNull())
     {
@@ -27,9 +38,6 @@ SysOverviewObjectDialog::SysOverviewObjectDialog(
         setupDialog();
     }
     setupButtons();
-
-    ui->shapeComboBox->addItems(SysOverviewObjectShapeManager::listShapes());
-    /* ui->shapeComboBox->setCurrentIndex(sysOvrvObj->getShapeManager()->getShape()); */
 
     connect(
                 &scene,
@@ -122,27 +130,14 @@ SysOverviewObjectDialog::~SysOverviewObjectDialog()
     qDebug() << "SysOvrvObjDiag Destroyed!";
 }
 
+ISysOvrvObjPtr SysOverviewObjectDialog::getObject() const
+{
+    return sysOvrvObj;
+}
+
 void SysOverviewObjectDialog::setupDialog()
 {
     ui->nameLE->setText(sysOvrvObj->getObjectName());
-    SysOvrvObjectShapeManagerPtr objShapeManager(
-                dynamic_cast<SysOverviewObjectShapeManager *>(
-                    sysOvrvObj->getShapeManager().release()
-                    )
-                );
-    if(objShapeManager.get() != Q_NULLPTR)
-    {
-        SysOvrvObjColorManagerPtr objColorManager(
-                    objShapeManager->getColorManager()
-                    );
-        const QColor &objColor = objColorManager->getFillColor();
-        ui->colorLE->setText(objColor.name());
-        ui->colorLE->setStyleSheet(
-                    QString("QLineEdit { background: %1; }")
-                        .arg(objColor.name())
-                    );
-        ui->transparencySpinBox->setValue(static_cast<int>(objColor.alphaF()*100));
-    }
 }
 
 void SysOverviewObjectDialog::setupButtons()
@@ -154,6 +149,65 @@ void SysOverviewObjectDialog::setupButtons()
     ui->addTriggerBtn->setDisabled(true);
     ui->removeTriggerBtn->setDisabled(true);
     ui->editTriggerBtn->setDisabled(true);
+}
+
+void SysOverviewObjectDialog::saveSysOverviewObj()
+{
+    QString saveLoc = QFileDialog::getSaveFileName(
+            this,
+            QString("Save as"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << saveLoc;
+    QFile jsonSaveFile(saveLoc);
+    if(!jsonSaveFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "error open file to save: " << jsonSaveFile.fileName();
+    }
+    else
+    {
+        JsonOutParser jsonOutParser;
+        sysOvrvObj->accept(&jsonOutParser);
+        jsonSaveFile.write(jsonOutParser.getJsonDocument().toJson());
+    }
+    // close file
+    jsonSaveFile.flush(); //always flush after write!
+    jsonSaveFile.close();
+
+}
+
+void SysOverviewObjectDialog::openSysOverviewObj()
+{
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "JSON File (*.json)"
+            );
+    qDebug() << openLoc;
+    QFile jsonOpenFile(openLoc);
+    if(!jsonOpenFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << jsonOpenFile.fileName();
+    }
+    else
+    {
+        // read file content
+        JsonInParser jsonInParser;
+        jsonInParser.setJsonDocument(
+                QJsonDocument::fromJson(jsonOpenFile.readAll())
+                );
+        ISysOvrvObjPtr newSysOvrvObj(
+                    new SystemOverviewObject()
+                    );
+        newSysOvrvObj->accept(&jsonInParser);
+        scene.removeItem(sysOvrvObj.data());
+        sysOvrvObj = newSysOvrvObj;
+        scene.addItem(sysOvrvObj.data());
+        setupSysOvrvObj(sysOvrvObj);
+        setupDialog();
+    }
+    // close file
+    jsonOpenFile.close();
 }
 
 void SysOverviewObjectDialog::on_colorPickerBtn_clicked()
@@ -346,84 +400,6 @@ void SysOverviewObjectDialog::on_editTriggerBtn_clicked()
 
 }
 
-void SysOverviewObjectDialog::on_shapeComboBox_currentIndexChanged(int index)
-{
-    SysOvrvObjectShapeManagerPtr objShapeManager(
-                dynamic_cast<SysOverviewObjectShapeManager *>(
-                    sysOvrvObj->getShapeManager().release()
-                    )
-                );
-    if(objShapeManager.get() != Q_NULLPTR)
-    {
-        SysOvrvObjColorManagerPtr colorManager =
-                objShapeManager->getColorManager();
-
-        objShapeManager.reset(
-                    new SysOverviewObjectShapeManager(
-                        sysOvrvObj.data(),
-                        std::move(colorManager),
-                        static_cast<SysOverviewObjectShapeManager::SysOverviewObjectShape>(index)
-                        )
-                    );
-        sysOvrvObj->setShapeManager(std::move(objShapeManager));
-    }
-}
-
-void SysOverviewObjectDialog::on_transparencySpinBox_valueChanged(int arg1)
-{
-    if(sysOvrvObj.isNull())
-    {
-        return;
-    }
-
-    SysOvrvObjectShapeManagerPtr objShapeManager(
-                dynamic_cast<SysOverviewObjectShapeManager *>(
-                    sysOvrvObj->getShapeManager().release()
-                    )
-                );
-    if(objShapeManager.get() != Q_NULLPTR)
-    {
-        SysOvrvObjColorManagerPtr objColorManager(
-                    objShapeManager->getColorManager()
-                    );
-        QColor objColor = objColorManager->getFillColor();
-        objColor.setAlphaF(arg1/100.0);
-        objColorManager->setFillColor(objColor);
-        objShapeManager->setColorManager(std::move(objColorManager));
-        sysOvrvObj->setShapeManager(std::move(objShapeManager));
-    }
-}
-
-void SysOverviewObjectDialog::on_colorLE_editingFinished()
-{
-    QColor colorToSet(ui->colorLE->text());
-    if(colorToSet.isValid())
-    {
-        colorToSet.setAlphaF(ui->transparencySpinBox->value()/100.0);
-        ui->colorLE->setStyleSheet(
-                    QString("QLineEdit { background: %1; }")
-                        .arg(colorToSet.name())
-                    );
-        if(!sysOvrvObj.isNull())
-        {
-            SysOvrvObjectShapeManagerPtr objShapeManager(
-                        dynamic_cast<SysOverviewObjectShapeManager *>(
-                            sysOvrvObj->getShapeManager().release()
-                            )
-                        );
-            if(objShapeManager.get() != Q_NULLPTR)
-            {
-                SysOvrvObjColorManagerPtr objColorManager(
-                            objShapeManager->getColorManager().release()
-                            );
-                objColorManager->setFillColor(colorToSet);
-                objShapeManager->setColorManager(std::move(objColorManager));
-                sysOvrvObj->setShapeManager(std::move(objShapeManager));
-            }
-        }
-    }
-}
-
 void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
     scene.clearSelection();
@@ -440,21 +416,28 @@ void SysOverviewObjectDialog::on_buttonBox_clicked(QAbstractButton *button)
                 prepareSysOvrvObjForCommit(sysOvrvObj);
                 emit sgnl_CommitObject(std::move(this->sysOvrvObj));
             }
+            accept();
             break;
         case QDialogButtonBox::Save:
-            //ToDO
+            saveSysOverviewObj();
             break;
         case QDialogButtonBox::Open:
-            //ToDO
+            openSysOverviewObj();
             break;
         }
         break;
     case QDialogButtonBox::RejectRole:
         switch(ui->buttonBox->standardButton(button))
         {
+        case QDialogButtonBox::Cancel:
+        case QDialogButtonBox::Close:
         case QDialogButtonBox::Abort:
-            prepareSysOvrvObjForCommit(sysOvrvObj);
+            selectedObj.clear();
+            selectedTextLabel.clear();
             scene.removeItem(sysOvrvObj.data());
+            sysOvrvObj.reset(sysOvrvObjSave->clone());
+            prepareSysOvrvObjForCommit(sysOvrvObj);
+            reject();
             break;
         }
         break;

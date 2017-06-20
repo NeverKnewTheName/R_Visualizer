@@ -19,6 +19,8 @@
 
 #include "MessageTypeIdentifier.h"
 
+#include <memory>
+
 /**
  * @defgroup MessageGroup Message
  *
@@ -72,6 +74,8 @@ public:
     //virtual IMsg &operator =(const IMsg &msgToAssign) = 0;
 };
 
+typedef std::unique_ptr<IMsg> IMsgPtr;
+
 Q_DECLARE_METATYPE(IMsg *)
 Q_DECLARE_METATYPE(const IMsg *)
 
@@ -96,7 +100,7 @@ public:
     }
     virtual void accept(FileParser *visitor)
     {
-        visitor->visit(static_cast<Derived &>(*this));
+        visitor->visit(static_cast<Derived *>(this));
     }
 };
 

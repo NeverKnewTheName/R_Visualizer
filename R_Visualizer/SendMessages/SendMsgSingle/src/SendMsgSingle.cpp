@@ -9,6 +9,11 @@ SendMsgSingle::~SendMsgSingle()
 {
 }
 
+IMsgPtr SendMsgSingle::getMsg() const
+{
+    return IMsgPtr(messageToSend.cloneMsg());
+}
+
 void SendMsgSingle::setMsg(const IMsg &msg)
 {
     messageToSend = Msg(msg.getMsgID(),msg.getMsgCode(),msg.getMsgData());
