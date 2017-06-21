@@ -24,6 +24,7 @@ void SysOverviewLabelTextChangeTriggerDialog::on_buttonBox_accepted()
     SysOvrvLabelTriggerPtr textChangeTrigger(
                 new SysOverviewLabelTextChangeTrigger(
                     textLabel,
+                    ui->textLineEdit->text(),
                     ui->evaluator->getEvaluator()
                     )
                 );

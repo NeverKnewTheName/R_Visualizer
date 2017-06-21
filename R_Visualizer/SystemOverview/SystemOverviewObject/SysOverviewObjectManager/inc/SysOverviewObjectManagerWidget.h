@@ -5,6 +5,8 @@
 
 #include "ISystemOverviewObject.h"
 
+class ISysOverviewObjectManagerSubWidget;
+
 namespace Ui {
 class SysOverviewObjectManagerWidget;
 }
@@ -26,6 +28,7 @@ public:
     void updateSysOverviewObject(ISysOvrvObjPtr sysOvrvObj);
 
 private:
+    void initWidget();
     void setupWidget();
 
 private slots:
@@ -34,6 +37,7 @@ private slots:
 private:
     Ui::SysOverviewObjectManagerWidget *ui;
     ISysOvrvObjPtr sysOvrvObj;
+    ISysOverviewObjectManagerSubWidget *currentWidget;
 };
 
 #endif // SYSOVERVIEWOBJECTMANAGERWIDGET_H

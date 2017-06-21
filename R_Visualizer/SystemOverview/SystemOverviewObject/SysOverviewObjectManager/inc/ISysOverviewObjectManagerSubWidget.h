@@ -1,3 +1,10 @@
+/**
+ * @file ISysOverviewObjectManagerSubWidget.h
+ * @author Christian Neuberger
+ * @date 2017-06-20
+ *
+ * @brief Interface for System Overview Object Manager sub-widgets
+ */
 #ifndef ISYSOVERVIEWOBJECTMANAGERSUBWIDGET_H
 #define ISYSOVERVIEWOBJECTMANAGERSUBWIDGET_H
 
@@ -5,6 +12,9 @@
 
 #include "ISystemOverviewObject.h"
 
+/**
+ * @brief The ISysOverviewObjectManagerSubWidget
+ */
 class ISysOverviewObjectManagerSubWidget : public QWidget
 {
     Q_OBJECT

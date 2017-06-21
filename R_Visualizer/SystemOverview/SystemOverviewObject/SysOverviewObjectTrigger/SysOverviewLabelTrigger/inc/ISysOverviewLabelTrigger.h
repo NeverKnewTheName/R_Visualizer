@@ -15,6 +15,7 @@ public:
     enum TriggerType
     {
         TriggerType_TextChangeTrigger,
+        TriggerType_TextEvaluatorTrigger,
         TriggerType_NR_OF_TRIGGER_TYPES
     };
 

@@ -18,11 +18,11 @@ SysOverviewObjectShapeManagerWidget::SysOverviewObjectShapeManagerWidget(
             ui->shapeComboBox,
             static_cast<void (QComboBox::*)(const int)>(&QComboBox::currentIndexChanged),
             [=](const int index){
-                if(!sysOvrvObj.isNull())
+                if(!this->sysOvrvObj.isNull())
                 {
                     SysOvrvObjectShapeManagerPtr objShapeManager(
                                 dynamic_cast<SysOverviewObjectShapeManager *>(
-                                    sysOvrvObj->getShapeManager().release()
+                                    this->sysOvrvObj->getShapeManager().release()
                                     )
                                 );
                     if(objShapeManager.get() != Q_NULLPTR)
@@ -32,12 +32,12 @@ SysOverviewObjectShapeManagerWidget::SysOverviewObjectShapeManagerWidget(
 
                         objShapeManager.reset(
                                     new SysOverviewObjectShapeManager(
-                                        sysOvrvObj.data(),
+                                        this->sysOvrvObj.data(),
                                         std::move(colorManager),
                                         static_cast<SysOverviewObjectShapeManager::SysOverviewObjectShape>(index)
                                         )
                                     );
-                        sysOvrvObj->setShapeManager(std::move(objShapeManager));
+                        this->sysOvrvObj->setShapeManager(std::move(objShapeManager));
                     }
                 }
             }

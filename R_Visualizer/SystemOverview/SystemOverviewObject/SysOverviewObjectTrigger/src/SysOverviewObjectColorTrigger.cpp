@@ -27,6 +27,7 @@ SysOverviewObjectColorTrigger::SysOverviewObjectColorTrigger(
         SysOvrvObjColorManagerPtr colorManager =
                 objManager->getColorManager();
         originalColor = colorManager->getFillColor();
+        triggerColor.setAlphaF(originalColor.alphaF());
     }
 }
 
@@ -91,6 +92,7 @@ QColor SysOverviewObjectColorTrigger::getTriggerColor() const
 void SysOverviewObjectColorTrigger::setTriggerColor(const QColor &triggerColor)
 {
     this->triggerColor = triggerColor;
+    this->triggerColor.setAlphaF(originalColor.alphaF());
     if(triggered)
     {
         applyColorTrigger();
@@ -129,6 +131,18 @@ void SysOverviewObjectColorTrigger::setSysOverviewObject(
         )
 {
     this->objectToTrigger = sysOverviewObject;
+    SysOvrvObjectShapeManagerPtr objManager(
+                dynamic_cast<SysOverviewObjectShapeManager *>(
+                    objectToTrigger->getShapeManager().release()
+                    )
+                );
+    if(objManager.get() != nullptr)
+    {
+        SysOvrvObjColorManagerPtr colorManager =
+                objManager->getColorManager();
+        originalColor = colorManager->getFillColor();
+        triggerColor.setAlphaF(originalColor.alphaF());
+    }
 }
 
 bool SysOverviewObjectColorTrigger::isTriggered() const
@@ -148,7 +162,9 @@ void SysOverviewObjectColorTrigger::applyColorTrigger()
         SysOvrvObjColorManagerPtr colorManager =
                 objManager->getColorManager();
         colorManager->setFillColor(
-                    triggered ? triggerColor : originalColor
+                    triggered ?
+                        triggerColor :
+                        originalColor
                                 );
         objManager->setColorManager(std::move(colorManager));
         objectToTrigger->setShapeManager(std::move(objManager));

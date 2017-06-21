@@ -503,7 +503,8 @@ void JsonInParser::visit(ISysOverviewObjectManager *visitor)
         QPixmap imageToSet;
         QByteArray imageRawData =
                 tempImageManagerJsonObject["SerializedImagePNG"].toString().toLatin1();
-        imageToSet.loadFromData(imageRawData, "PNG");
+
+        imageToSet.loadFromData(QByteArray::fromBase64(imageRawData), "PNG");
         imageManager->setImage(imageToSet);
     }
         break;

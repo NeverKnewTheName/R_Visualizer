@@ -31,7 +31,7 @@ SysOverviewObjectImageManager::~SysOverviewObjectImageManager()
 
 void SysOverviewObjectImageManager::setImage(const QImage &image)
 {
-
+    this->image = QPixmap::fromImage(image);
 }
 
 void SysOverviewObjectImageManager::setImage(const QPixmap &image)
@@ -51,10 +51,34 @@ void SysOverviewObjectImageManager::paint(
         const ISysOverviewObjectManager::ObjectState objectState
         )
 {
+    painter->save();
 
+    painter->drawPixmap(
+                boundingRect,
+                image,
+                QRectF(image.rect())
+                );
+
+    switch(objectState)
+    {
+    case ObjectState_Normal:
+        break;
+    case ObjectState_Selected:
+        painter->setPen(QPen(QBrush(QColor(Qt::blue)),2));
+    case ObjectState_Highlighted:
+        painter->setBrush(QColor(55,55,55,100));
+        painter->drawRect(boundingRect);
+        break;
+    case ObjectState_Disabled:
+        break;
+    }
+
+
+    painter->restore();
 }
 
 
 void SysOverviewObjectImageManager::setSysOverviewObject(ISystemOverviewObject *newSysOverviewObject)
 {
+    this->sysOverviewObject = newSysOverviewObject;
 }

@@ -24,10 +24,9 @@ class ISysOverviewObjectManager
 public:
     enum ObjectType
     {
-        INVALID_TYPE,
         ShapeType,
         ImageType,
-        UserType
+        UserType //NOT USED CURRENTLY
     };
 
     enum ObjectState
@@ -66,9 +65,6 @@ public:
     {
         switch(type)
         {
-        case INVALID_TYPE:
-            return QString("Invalid Type");
-            break;
         case ShapeType:
             return QString("Shape Type");
             break;
@@ -76,6 +72,7 @@ public:
             return QString("Image Type");
             break;
         case UserType:
+        default:
             return QString("User Type");
             break;
         }

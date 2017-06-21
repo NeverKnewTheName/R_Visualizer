@@ -470,7 +470,7 @@ void JsonOutParser::visit(ISysOverviewObjectManager *visitor)
             imageManager->getImage().save(&buffer, "PNG");
 
             tempSysOverviewObjectImageManager["SerializedImagePNG"] =
-                    QString(bytes);
+                    QString::fromLatin1(bytes.toBase64());
 
             tempISysOverviewObjManagerJsonObject["ImageManager"] =
                     tempSysOverviewObjectImageManager;

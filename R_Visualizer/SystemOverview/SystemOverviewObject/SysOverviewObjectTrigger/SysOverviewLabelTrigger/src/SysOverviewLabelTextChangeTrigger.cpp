@@ -6,10 +6,12 @@
 
 SysOverviewLabelTextChangeTrigger::SysOverviewLabelTextChangeTrigger(
         SysOverviewTextLabel *textLabel,
+        const QString &triggerText,
         SysOvrvObjTriggerEvaluatorPtr triggerEvaluator
         ) :
     textLabel(textLabel),
     triggerEvaluator(std::move(triggerEvaluator)),
+    triggerText(triggerText),
     triggered(false)
 {
 }
@@ -19,6 +21,7 @@ SysOverviewLabelTextChangeTrigger::SysOverviewLabelTextChangeTrigger(
         ) :
     textLabel(copy.textLabel),
     triggerEvaluator(copy.triggerEvaluator->clone()),
+    triggerText(copy.triggerText),
     triggered(copy.triggered)
 {
 
@@ -41,14 +44,13 @@ void SysOverviewLabelTextChangeTrigger::trigger(const IMsg &msg)
             return;
         }
 
-        const QString &newLabelText =
-                dslEvaluator->evaluateToString(msg);
-        if(newLabelText.isEmpty())
+        const bool needsToTrigger =
+                dslEvaluator->evaluate(msg);
+        if(needsToTrigger)
         {
-            return;
+            this->textLabel->setLabelText(triggerText);
         }
 
-        this->textLabel->setLabelText(newLabelText);
     }
 }
 
@@ -74,6 +76,16 @@ void SysOverviewLabelTextChangeTrigger::setSysOverviewLabel(
 bool SysOverviewLabelTextChangeTrigger::isTriggered() const
 {
     return triggered;
+}
+
+QString SysOverviewLabelTextChangeTrigger::getTriggerText() const
+{
+    return triggerText;
+}
+
+void SysOverviewLabelTextChangeTrigger::setTriggerText(const QString &value)
+{
+    triggerText = value;
 }
 
 

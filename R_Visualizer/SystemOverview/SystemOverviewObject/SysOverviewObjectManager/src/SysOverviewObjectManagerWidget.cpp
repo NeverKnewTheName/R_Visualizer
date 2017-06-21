@@ -1,21 +1,18 @@
 #include "SysOverviewObjectManagerWidget.h"
 #include "ui_sysoverviewobjectmanagerwidget.h"
 
+#include "ISysOverviewObjectManagerSubWidget.h"
 #include "SysOverviewObjectShapeManagerWidget.h"
+#include "SysOverviewObjectImageManagerWidget.h"
 
 SysOverviewObjectManagerWidget::SysOverviewObjectManagerWidget(
         QWidget *parent
         ) :
     QWidget(parent),
-    ui(new Ui::SysOverviewObjectManagerWidget)
+    ui(new Ui::SysOverviewObjectManagerWidget),
+    currentWidget(Q_NULLPTR)
 {
-    ui->setupUi(this);
-
-    QStringList objectTypes;
-    objectTypes << QString("Shape");
-    objectTypes << QString("Image");
-
-    ui->objectTypeComboBox->addItems(objectTypes);
+    initWidget();
 }
 
 SysOverviewObjectManagerWidget::SysOverviewObjectManagerWidget(
@@ -24,15 +21,10 @@ SysOverviewObjectManagerWidget::SysOverviewObjectManagerWidget(
         ) :
     QWidget(parent),
     ui(new Ui::SysOverviewObjectManagerWidget),
-    sysOvrvObj(sysOvrvObj)
+    sysOvrvObj(sysOvrvObj),
+    currentWidget(Q_NULLPTR)
 {
-    ui->setupUi(this);
-    QStringList objectTypes;
-    objectTypes << QString("Shape");
-    objectTypes << QString("Image");
-
-    ui->objectTypeComboBox->addItems(objectTypes);
-
+    initWidget();
     setupWidget();
 }
 
@@ -48,17 +40,18 @@ void SysOverviewObjectManagerWidget::updateSysOverviewObject(
     this->sysOvrvObj = sysOvrvObj;
 
     setupWidget();
-    QObjectList widgetList =
-        ui->widgetHolder->layout()->children();
+    currentWidget->updateSysOverviewObject(sysOvrvObj);
+}
 
-    if(!widgetList.isEmpty())
-    {
-        ISysOverviewObjectManagerSubWidget *childWidget =
-                dynamic_cast<ISysOverviewObjectManagerSubWidget*>(
-                    widgetList.first()
-                    );
-        childWidget->updateSysOverviewObject(sysOvrvObj);
-    }
+void SysOverviewObjectManagerWidget::initWidget()
+{
+    ui->setupUi(this);
+
+    QStringList objectTypes;
+    objectTypes << QString("Shape");
+    objectTypes << QString("Image");
+
+    ui->objectTypeComboBox->addItems(objectTypes);
 }
 
 void SysOverviewObjectManagerWidget::setupWidget()
@@ -72,26 +65,29 @@ void SysOverviewObjectManagerWidget::setupWidget()
 
 void SysOverviewObjectManagerWidget::on_objectTypeComboBox_currentIndexChanged(int index)
 {
-    static QWidget *oldWidget = Q_NULLPTR;
     QLayout *oldLayout = ui->widgetHolder->layout();
     if(oldLayout != Q_NULLPTR)
     {
-        if(oldWidget != Q_NULLPTR)
+        if(currentWidget != Q_NULLPTR)
         {
-            oldLayout->removeWidget(oldWidget);
-            delete oldWidget;
+            oldLayout->removeWidget(currentWidget);
+            delete currentWidget;
         }
         delete oldLayout;
     }
     QVBoxLayout *newLayout = new QVBoxLayout();
-    QWidget *newWidget;
-    switch(index)
+    ISysOverviewObjectManagerSubWidget *newWidget;
+    switch(static_cast<ISysOverviewObjectManager::ObjectType>(index))
     {
+    case ISysOverviewObjectManager::ImageType:
+        newWidget = new SysOverviewObjectImageManagerWidget(sysOvrvObj);
+        break;
+    case ISysOverviewObjectManager::ShapeType:
     default:
         newWidget = new SysOverviewObjectShapeManagerWidget(sysOvrvObj);
     }
     newLayout->addWidget(newWidget);
-    oldWidget = newWidget;
+    currentWidget = newWidget;
 
     ui->widgetHolder->setLayout(newLayout);
 }

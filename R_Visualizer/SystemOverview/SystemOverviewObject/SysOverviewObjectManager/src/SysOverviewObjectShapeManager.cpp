@@ -96,6 +96,8 @@ void SysOverviewObjectShapeManager::paint(
     QColor curObjBorderColor =
             colorManager->getBorderColor();
 
+    qreal borderWidth = painter->pen().width();
+
     switch(objectState)
     {
     case ObjectState_Normal:
@@ -108,6 +110,7 @@ void SysOverviewObjectShapeManager::paint(
         curObjFillColor = colorManager->getHighlightFillColor();
         curObjFillColor.darker(100);
         curObjBorderColor = QColor(Qt::blue);
+        borderWidth = 2;
         break;
     case ObjectState_Disabled:
         curObjFillColor = QColor(Qt::gray);
@@ -116,7 +119,8 @@ void SysOverviewObjectShapeManager::paint(
     }
 
     painter->setBrush(QBrush(curObjFillColor));
-    painter->setPen(curObjBorderColor);
+
+    painter->setPen(QPen(QBrush(curObjBorderColor),borderWidth));
 
     switch(shape)
     {

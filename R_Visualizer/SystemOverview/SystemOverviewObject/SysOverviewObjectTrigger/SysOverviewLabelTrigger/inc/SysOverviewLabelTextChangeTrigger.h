@@ -9,6 +9,7 @@ class SysOverviewLabelTextChangeTrigger :
 public:
     SysOverviewLabelTextChangeTrigger(
             SysOverviewTextLabel *textLabel,
+            const QString &triggerText = QString("Triggered"),
             SysOvrvObjTriggerEvaluatorPtr triggerEvaluator = Q_NULLPTR
             );
     SysOverviewLabelTextChangeTrigger(
@@ -16,6 +17,9 @@ public:
             );
 
     virtual ~SysOverviewLabelTextChangeTrigger();
+
+    QString getTriggerText() const;
+    void setTriggerText(const QString &value);
 
     // ISysOverviewLabelTrigger interface
 public:
@@ -32,6 +36,7 @@ public:
 private:
     SysOverviewTextLabel *textLabel;
     SysOvrvObjTriggerEvaluatorPtr triggerEvaluator;
+    QString triggerText;
     bool triggered;
 
     // ISysOverviewLabelTrigger interface
