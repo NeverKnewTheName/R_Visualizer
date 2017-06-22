@@ -15,6 +15,6 @@ HEADERS  += \
 FORMS    += \
     $$PWD/ui/sysoverviewobjectdialog.ui \
 
-include(SysOverviewObjectManager/SysOverviewObjectManager.pri)
-include(SysOverviewObjectResizeManager/SysOverviewObjectResizeManager.pri)
-include(SysOverviewObjectTrigger/SysOverviewObjectTrigger.pri)
+include(ObjectManager/SysOverviewObjectManager.pri)
+include(ResizeManager/SysOverviewObjectResizeManager.pri)
+include(ObjectTrigger/SysOverviewObjectTrigger.pri)
