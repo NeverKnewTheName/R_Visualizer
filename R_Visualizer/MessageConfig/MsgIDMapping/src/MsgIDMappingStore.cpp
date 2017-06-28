@@ -113,7 +113,7 @@ void MsgIDMappingStore::clear()
 
 void MsgIDMappingStore::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }
 
 

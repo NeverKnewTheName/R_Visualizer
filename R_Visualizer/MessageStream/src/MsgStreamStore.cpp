@@ -17,7 +17,7 @@ IPrettyTimestampedMsg &MsgStreamStore::appendMsg(
         const IPrettyTimestampedMsg &msgToAppend
         )
 {
-    qDebug() << static_cast<QString>(msgToAppend);
+    /* qDebug() << static_cast<QString>(msgToAppend); */
 
     const bool bufferOverflowing = msgStorage.size() >= bufferSize;
 

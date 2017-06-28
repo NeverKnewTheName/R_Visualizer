@@ -1,0 +1,100 @@
+digraph SysOvrv {
+    fontname = "Bitstream Vera Sans"
+        fontsize = 8
+        rankdir=BT
+        overlap=false
+        splines=true
+        
+        node [
+            fontname = "Bitstream Vera Sans"
+            fontsize = 8
+            shape=none
+            margin=0
+        ]
+
+        edge [
+            fontname = "Bitstream Vera Sans"
+            fontsize = 8
+        ]
+        
+        SysOvrvObjStore [
+                label = <
+                <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" ALIGN="LEFT" VALIGN="MIDDLE">
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="CENTER" VALIGN="MIDDLE">
+                    SysOvrvObjStore
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                </TABLE>
+                >
+            ]
+        SysOvrvObj [
+                label = <
+                <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" ALIGN="LEFT" VALIGN="MIDDLE">
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="CENTER" VALIGN="MIDDLE">
+                    SysOvrvObj
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                </TABLE>
+                >
+            ]
+        SysOvrvTextLabel [
+                label = <
+                <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" ALIGN="LEFT" VALIGN="MIDDLE">
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="CENTER" VALIGN="MIDDLE">
+                    SysOvrvTextLabel
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                </TABLE>
+                >
+            ]
+        ResizeRectCorner [
+                label = <
+                <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" ALIGN="LEFT" VALIGN="MIDDLE">
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="CENTER" VALIGN="MIDDLE">
+                    ResizeRectCorner
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                    <TR>
+                    <TD ALIGN="TEXT" BALIGN="LEFT" VALIGN="MIDDLE">
+                    </TD>
+                    </TR>
+                </TABLE>
+                >
+            ]
+            
+        SysOvrvObj -> SysOvrvObjStore[ dir=both arrowhead=diamond arrowtail=diamond ]
+        SysOvrvTextLabel -> SysOvrvObj[ arrowhead=diamond ]
+        ResizeRectCorner -> SysOvrvObj[ arrowhead=diamond ]
+    }

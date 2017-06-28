@@ -1,0 +1,32 @@
+[
+    {
+        "MsgID": 272,
+        "MsgIDAlias": "SomeSensor",
+        "MsgIDColorRep": "#ff9c9c"
+    },
+    {
+        "MsgID": 289,
+        "MsgIDAlias": "AnotherActor",
+        "MsgIDColorRep": "#b17f9e"
+    },
+    {
+        "MsgID": 288,
+        "MsgIDAlias": "YetAnotherActor",
+        "MsgIDColorRep": "#ca8fca"
+    },
+    {
+        "MsgID": 240,
+        "MsgIDAlias": "Master",
+        "MsgIDColorRep": "#abd0ff"
+    },
+    {
+        "MsgID": 255,
+        "MsgIDAlias": "PC",
+        "MsgIDColorRep": "#ffaa7f"
+    },
+    {
+        "MsgID": 256,
+        "MsgIDAlias": "SomeActor",
+        "MsgIDColorRep": "#d0b4ff"
+    }
+]

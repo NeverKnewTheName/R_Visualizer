@@ -17,6 +17,8 @@ class IMsg;
 class ITimestampedMsg;
 class TimestampedMsg;
 
+#include "Msg.h"
+
 /**
  * @defgroup InterfaceHandlerGroup Interface Handler
  * 
@@ -185,6 +187,11 @@ public slots:
     virtual void slt_SendMessage(const IMsg &msgToSend)
     {
         sendMessage(msgToSend);
+    }
+
+    virtual void slt_SendStdMessage(const Msg &stdMsgToSend)
+    {
+        sendMessage(stdMsgToSend);
     }
 
     /**

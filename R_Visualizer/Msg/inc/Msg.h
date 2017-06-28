@@ -47,6 +47,8 @@ public:
     void setMsgData(const MsgDataType &msgData);
     const MsgDataType getMsgData() const;
 
+    MessageTypeIdentifier getMsgType() const;
+
     operator QString() const;
 
     void accept(FileParser *visitor);
@@ -57,7 +59,7 @@ private:
     MsgDataType msgData;
 };
 
-Q_DECLARE_METATYPE(Msg);
+Q_DECLARE_METATYPE(Msg)
 
 /**
  * @}

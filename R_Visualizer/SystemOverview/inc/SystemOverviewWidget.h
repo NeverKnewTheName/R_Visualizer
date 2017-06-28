@@ -9,6 +9,12 @@
 #define SYSTEMOVERVIEWWIDGET_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+
+#include <ISystemOverviewObjectStore.h>
+#include <ISystemOverviewObject.h>
+
+class ISystemOverview;
 
 namespace Ui {
 class SystemOverviewWidget;
@@ -22,11 +28,16 @@ class SystemOverviewWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SystemOverviewWidget(QWidget *parent = 0);
-    ~SystemOverviewWidget();
+    explicit SystemOverviewWidget(
+            ISystemOverview *systemOverview,
+            QWidget *parent = Q_NULLPTR
+            );
+    virtual ~SystemOverviewWidget();
 
 private:
     Ui::SystemOverviewWidget *ui;
+    ISystemOverview *systemOverview;
+    QGraphicsScene sysOvrvScene;
 };
 
 #endif // SYSTEMOVERVIEWWIDGET_H

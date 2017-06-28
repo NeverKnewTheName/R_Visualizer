@@ -14,10 +14,13 @@
 #include <QColor>
 #include <QSizeF>
 
+//class SysOvrvObjTriggerPtr;
+
 /**
  * @brief The SystemOverviewObject
  */
-class SystemOverviewObject : public ISystemOverviewObject
+class SystemOverviewObject :
+        public ISystemOverviewObjectCRTPHelper<SystemOverviewObject>
 {
 public:
     SystemOverviewObject(
@@ -25,10 +28,13 @@ public:
             );
     SystemOverviewObject(
             const QString &name,
-            const QColor &color = QColor(Qt::lightGray),
             const QSizeF &size = QSizeF(100,100),
-            ISysOverviewObjectManager *objectManager,
+            ISysOverviewObjectManager *objectManager = Q_NULLPTR,
             QGraphicsItem *parent = Q_NULLPTR
+            );
+
+    SystemOverviewObject(
+        const SystemOverviewObject &copy
             );
     virtual ~SystemOverviewObject();
 
@@ -38,51 +44,92 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:
-    virtual void focusInEvent(QFocusEvent *event);
-    virtual void focusOutEvent(QFocusEvent *event);
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
+public:
+    virtual void focusInEvent(QFocusEvent *event);
+    virtual void focusOutEvent(QFocusEvent *event);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     // ISystemOverviewObject interface
 public:
     virtual void setObjectName(const QString &name);
     virtual QString getObjectName() const;
-    virtual ISysOverviewObjectResizeManager *getResizeManager() const;
-    virtual void setResizeManager(ISysOverviewObjectResizeManager *resizeManager);
-    virtual ISysOverviewObjectManager *getShapeManager() const;
-    virtual void setShapeManager(ISysOverviewObjectManager *shapeManager);
+    virtual SysOvrvObjectResizeManagerPtr getResizeManager() const;
+    virtual void setResizeManager(SysOvrvObjectResizeManagerPtr resizeManager);
+    virtual SysOvrvObjectManagerPtr getShapeManager() const;
+    virtual void setShapeManager(SysOvrvObjectManagerPtr shapeManager);
 
-    virtual void setSize(const QSizeF &size);
-    virtual QSizeF getSize() const;
-    virtual void setColor(const QColor &color);
-    virtual QColor getColor() const;
-
-    virtual SysOverviewTextLabel *addLabel();
-    virtual SysOverviewTextLabel *addLabel(SysOverviewTextLabel *label);
-    virtual SysOverviewTextLabel *addLabel(
+    /* virtual SysOverviewTextLabel *addLabel(); */
+    virtual SysOvrvTextLabelPtr addLabel(SysOvrvTextLabelPtr label);
+    virtual SysOvrvTextLabelPtr addLabel(
             const QString &text,
             const qreal x,
             const qreal y
             );
-    virtual void removeLabel(SysOverviewTextLabel *label);
-    virtual QVector<SysOverviewTextLabel *> getLabels() const;
+    virtual SysOvrvTextLabelPtr addChildLabel(SysOvrvTextLabelPtr label);
 
-    virtual void addChildObject(ISystemOverviewObject *child);
-    virtual QVector<ISystemOverviewObject *> getChildObjects() const;
+    virtual void removeLabel(SysOvrvTextLabelPtr label);
+    virtual QVector<SysOvrvTextLabelPtr> getLabels() const;
+    virtual QVector<SysOvrvTextLabelPtr> getGlobalLabes() const;
+    SysOvrvTextLabelPtr convertLabelPointer(SysOverviewTextLabel *label) const;
+
+    virtual void addChildObject(ISysOvrvObjPtr child);
+    virtual void removeChildObject(ISysOvrvObjPtr child);
+    virtual QVector<ISysOvrvObjPtr> getChildObjects() const;
+    ISysOvrvObjPtr convertObjectPointer(ISystemOverviewObject *object) const;
 
     virtual void enableResizing(const bool enabled);
+    virtual void enableChildrenResizing(const bool enabled);
     virtual bool isResizingEnabled() const;
+
     virtual void enableMoving(const bool enabled);
+    virtual void enableChildrenMoving(const bool enabled);
     virtual bool isMovingEnabled() const;
 
+    virtual void enableEditing(const bool enabled);
+    virtual void enableChildrenEditing(const bool enabled);
+    virtual bool isEditingEnabled() const;
+
+    virtual void move(qreal x, qreal y);
+    virtual void prepareSizeChange();
+
+    virtual void setHighlighted(const bool enabled);
+
+    virtual void addObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToAdd
+            );
+    virtual void addChildObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToAdd
+            );
+
+    virtual void removeObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToRemove
+            );
+    virtual void removeChildObjectTrigger(
+            SysOvrvObjTriggerPtr triggerToRemove
+            );
+
+    virtual QVector<SysOvrvObjTriggerPtr> getLocalObjectTriggers() const;
+    virtual QVector<SysOvrvObjTriggerPtr> getGlobalObjectTriggers() const;
+
 private:
-    ISysOverviewObjectManager *objManager;
-    ISysOverviewObjectResizeManager *resizeManager;
+    void updateToolTip();
+
+private:
+    SysOvrvObjectManagerPtr objManager;
+    SysOvrvObjectResizeManagerPtr resizeManager;
+    QVector<SysOvrvTextLabelPtr> textLabels;
+    QVector<SysOvrvTextLabelPtr> globalTextLabels;
+    QVector<ISysOvrvObjPtr> childObjects;
+    QVector<SysOvrvObjTriggerPtr> globalTriggers;
+    QVector<SysOvrvObjTriggerPtr> localTriggers;
     QString objName;
-    QColor objColor;
-    QRectF objBoundingRect;
     bool resizeEnabled;
     bool movingEnabled;
+    bool editingEnabled;
+    bool highlighted;
 };
 
 #endif /* SYSTEMOVERVIEWOBJECT_H */

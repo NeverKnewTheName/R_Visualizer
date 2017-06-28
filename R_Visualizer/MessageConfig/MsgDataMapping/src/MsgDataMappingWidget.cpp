@@ -168,6 +168,7 @@ void MsgDataMappingWidget::on_msgDataAddBtn_clicked()
     msgDataMappingAddDialog->setMsgIDMappingManager(msgIDMappingManager);
     msgDataMappingAddDialog->setMsgCodeMappingManager(msgCodeMappingManager);
 
+    msgDataMappingAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     msgDataMappingAddDialog->exec();
     /* qsrand(qrand()); */
     /* MsgIDType msgID(qrand() %100); */

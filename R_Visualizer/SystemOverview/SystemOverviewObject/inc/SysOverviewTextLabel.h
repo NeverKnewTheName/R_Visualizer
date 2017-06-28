@@ -10,6 +10,8 @@
 
 #include <QGraphicsSimpleTextItem>
 
+#include "ISysOverviewLabelTrigger.h"
+
 /**
  * @brief The SysOverviewTextLabel
  */
@@ -18,14 +20,25 @@ class SysOverviewTextLabel : public QGraphicsSimpleTextItem
 public:
     SysOverviewTextLabel(
             const QString &text = QString(""),
-            QGraphicsItem *parent
+            QGraphicsItem *parent = Q_NULLPTR
             );
+
+    SysOverviewTextLabel(
+            const SysOverviewTextLabel &copy
+            );
+
     virtual ~SysOverviewTextLabel();
 
     void setEditable(const bool enable);
     bool isEditable() const;
 
-    void textEdit();
+    void textEdit(QWidget *widget);
+    void setLabelText(const QString &text);
+
+    void trigger(const IMsg &msg);
+
+    void addTrigger(SysOvrvLabelTriggerPtr trigger);
+    QVector<SysOvrvLabelTriggerPtr> getTriggers();
 
     // QGraphicsItem interface
 protected:
@@ -41,6 +54,7 @@ protected:
 private:
     bool editable;
     bool doubleClicked;
+    QVector<SysOvrvLabelTriggerPtr> labelTrigger;
 
 };
 

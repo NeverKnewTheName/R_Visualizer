@@ -136,7 +136,7 @@ bool MsgTimespanFilter::applyInversion(
 
 void MsgTimespanFilter::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }
 
 void MsgTimespanFilter::applyUserRole(

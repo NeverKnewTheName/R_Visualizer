@@ -96,6 +96,13 @@
 #include "ISendMsgPackageStore.h"
 #include "SendMsgPackageStore.h"
 
+#include "ISystemOverview.h"
+#include "SystemOverview.h"
+#include "SystemOverviewWidget.h"
+#include "ISystemOverviewObjectStore.h"
+#include "SystemOverviewObjectStore.h"
+
+
 #include "lineedittester.h"
 
 /* #include "errorlogentry.h" */
@@ -112,6 +119,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType <MsgDataByteType>("MsgDataByteType");
     qRegisterMetaType <MsgDataType>("MsgDataType");
     qRegisterMetaType <Msg>("Msg");
+    /* qRegisterMetaType <IMsg>("IMsg"); */
     qRegisterMetaType <TimestampedMsg>("TimestampedMsg");
     /* qRegisterMetaType <MsgData>("MsgData"); */
     /* qRegisterMetaType <DataByteVect>("DataByteVect"); */
@@ -380,29 +388,33 @@ int main(int argc, char *argv[])
 
     w.appendTabMenuWidget(sendMessagesWidget, "Send Messages");
 
-    //sysOvrvWidget = new SystemOverview(
-    //        messageConfig
-    //        );
+    ISystemOverviewObjectStore *systemOverviewObjectStore =
+            new SystemOverviewObjectStore();
+    ISystemOverview *systemOverview = new SystemOverview(
+                systemOverviewObjectStore
+                );
+
+    systemOverviewObjectStore->setParent(systemOverview);
+
+
+    SystemOverviewWidget *systemOverviewWidget =
+            new SystemOverviewWidget(
+                systemOverview
+                );
+
+    w.appendTabMenuWidget(systemOverviewWidget, "System Overview");
+
+    QObject::connect(
+            &timestampedMsgStorage,
+            &TimestampedMsgStorage::sgnl_MsgAdded,
+            systemOverview,
+            &ISystemOverview::slt_ReceiveMsg
+            );
+
     //errLogViewDiag = new ErrorLogView(&w);
-    /* SystemOverview *SystemOverviewWidget; */
 
     /* ErrorLogView *errorLogViewDialog; */
     /* UserRoleMngr userRoleManager; */
-    /* DeviceHandler interfaceHandler; */
-
-    //connect(
-    //        &interfaceHandler,
-    //        &DeviceHandler::sigMsgReceived,
-    //        &receivedMsgsStore,
-    //        &TimestampedMsgStorage::slt_addMsg,
-    //        Qt::QueuedConnection
-    //        );
-    //connect(
-    //        &receivedMsgsStore,
-    //        &TimestampedMsgStorage::sgnl_MsgAdded,
-    //        sysOvrvWidget,
-    //        &SystemOverview::slt_newMessage
-    //        );
 
     w.show();
 

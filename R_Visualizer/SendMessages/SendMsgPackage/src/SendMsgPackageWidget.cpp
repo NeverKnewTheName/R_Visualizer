@@ -21,6 +21,8 @@
 
 #include <QFileDialog>
 
+#include "csvmsgpackethandler.h"
+
 #include "csvinparser.h"
 #include "csvoutparser.h"
 #include "jsoninparser.h"
@@ -40,6 +42,21 @@ SendMsgPackageWidget::SendMsgPackageWidget(
 {
     ui->setupUi(this);
     init();
+
+    connect(
+            sendMsgPackage,
+            &ISendMsgPackage::sgnl_SendingStarted,
+            [=](){
+                ui->sndPcktSendBtn->setDisabled(true);
+            }
+           );
+    connect(
+            sendMsgPackage,
+            &ISendMsgPackage::sgnl_SendingFinished,
+            [=](){
+                ui->sndPcktSendBtn->setEnabled(true);
+            }
+           );
 }
 
 SendMsgPackageWidget::~SendMsgPackageWidget()
@@ -88,37 +105,14 @@ void SendMsgPackageWidget::setMsgDataMappingManager(
     }
 }
 
-#include "Msg.h"
-#include "MsgIDType.h"
-#include "MsgCodeType.h"
-#include "MsgDataType.h"
-
 void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
 {
-    //qsrand(qrand());
-    //MsgDataType testMsgData;
-//
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-    //testMsgData.append(MsgDataByteType(qrand() &0xffu));
-//
-    //Msg testMsg(MsgIDType(qrand()&0xFFFF),MsgCodeType(qrand()&0xFF),testMsgData);
-
     SendMsgPackageAddDialog *sendMsgPackageAddDialog =
             new SendMsgPackageAddDialog(
                 msgIDMappingManager,
                 msgCodeMappingManager,
                 this
                 );
-
-    //connect(
-            //sendMsgPackageAddDialog,
-            //&SendMsgPackageAddDialog::sgnl_commit,
-            //sendMsgPackage,
-            //&ISendMsgPackage::slt_appendMsg
-            //);
-
     connect(
                 sendMsgPackageAddDialog,
                 &SendMsgPackageAddDialog::sgnl_commit,
@@ -126,7 +120,8 @@ void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
                     QItemSelectionModel *selectionModel =
                        ui->sndPckgTableView->selectionModel();
 
-                    QModelIndexList selectionIndexList = selectionModel->selectedRows();
+                    QModelIndexList selectionIndexList =
+                    selectionModel->selectedRows();
 
                     if(selectionIndexList.size())
                     {
@@ -140,6 +135,7 @@ void SendMsgPackageWidget::on_sndPcktAddBtn_clicked()
                 }
             );
 
+    sendMsgPackageAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     sendMsgPackageAddDialog->exec();
 }
 
@@ -231,15 +227,15 @@ void SendMsgPackageWidget::on_sndPcktClrBtn_clicked()
 
 void SendMsgPackageWidget::init()
 {
+    ui->sendDelaySpinBox->setValue(sendMsgPackage->getSendDelay());
+
     ui->sndPckgTableView->setModel(&sendMsgPackageModel);
     ui->sndPckgTableView->setAlternatingRowColors(true);
     ui->sndPckgTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->sndPckgTableView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->sndPckgTableView->setSelectionMode(
+            QAbstractItemView::ContiguousSelection
+            );
     ui->sndPckgTableView->setEditTriggers(QAbstractItemView::DoubleClicked);
-
-    /*QFont tableViewFont = ui->sndPckgTableView->font();*/
-    /*tableViewFont.setPointSize(12);*/
-    /*ui->sndPckgTableView->setFont(tableViewFont);*/
 
     QHeaderView *horzHeader = ui->sndPckgTableView->horizontalHeader();
 
@@ -252,7 +248,8 @@ void SendMsgPackageWidget::init()
                 [=](){
                     QTimer::singleShot(50,
                         [=](){
-                            ui->sndPckgTableView->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+                            ui->sndPckgTableView->verticalHeader()
+                            ->resizeSections(QHeaderView::ResizeToContents);
                             //qDebug() << "sendPckgTableView resized!";
                         }
                     );
@@ -270,10 +267,42 @@ void SendMsgPackageWidget::init()
     horzHeader->setDefaultSectionSize(sectionLength);
 
     horzHeader->setStretchLastSection(true);
-
 }
 
 void SendMsgPackageWidget::on_pushButton_clicked()
 {
-   //ToDO
+    QString openLoc = QFileDialog::getOpenFileName(
+            this,
+            QString("Open"),
+            QString(),
+            "CSV File (*.csv)"
+            );
+    qDebug() << openLoc;
+    QFile csvMatrixFile(openLoc);
+    if(!csvMatrixFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "error opening: " << csvMatrixFile.fileName();
+    }
+    else
+    {
+        sendMsgPackage->getStore()->clear();
+
+        CsvMsgPacketHandler csvMatrixHandler;
+
+        QString csvMatrixString(csvMatrixFile.readAll());
+
+        QVector<Msg> messages =
+            csvMatrixHandler.parseCsvMsgPacket(csvMatrixString);
+
+        for(const Msg &msg : messages)
+        {
+            sendMsgPackage->appendMsg(msg);
+        }
+    }
+    // close file
+    csvMatrixFile.close();
+}
+
+void SendMsgPackageWidget::on_sendDelaySpinBox_valueChanged(int arg1)
+{
+    sendMsgPackage->setSendDelay(arg1);
 }

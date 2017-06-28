@@ -48,6 +48,7 @@ void MsgIDMappingAddDialog::on_pushButton_clicked()
             &MsgIDMappingAddDialog::colorSelected
             );
 
+    colorPicker->setAttribute(Qt::WA_DeleteOnClose);
     colorPicker->exec();
 }
 

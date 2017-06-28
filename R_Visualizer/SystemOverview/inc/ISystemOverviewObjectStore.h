@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-class ISysOverviewObject;
+#include "ISystemOverviewObject.h"
 
 /**
  * @brief The ISystemOverviewObjectStore interface
@@ -28,7 +28,15 @@ public:
     }
     virtual ~ISystemOverviewObjectStore(){}
 
-    virtual void addSystemOverviewObject(ISysOverviewObject *object) = 0;
+    virtual void addSystemOverviewObject(ISysOvrvObjPtr object) = 0;
+    virtual ISysOvrvObjPtr getObj(const QString &objectName) = 0;
+    virtual void removeObj(const QString &objectName) = 0;
+    virtual QVector<ISysOvrvObjPtr> getObjects() const = 0;
+
+    virtual void clear() = 0;
+signals:
+    void sgnl_objectAdded(ISysOvrvObjPtr obj);
+    void sgnl_objectRemoved(ISysOvrvObjPtr obj);
 };
 
 #endif /* ISYSTEMOVERVIEWOBJECTSTORE_H */

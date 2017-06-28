@@ -55,5 +55,6 @@ void MsgCodeMappingAddDialog::on_colorPickerPushButton_clicked()
             this,
             &MsgCodeMappingAddDialog::colorSelected
             );
+    colorPicker->setAttribute(Qt::WA_DeleteOnClose);
     colorPicker->exec();
 }

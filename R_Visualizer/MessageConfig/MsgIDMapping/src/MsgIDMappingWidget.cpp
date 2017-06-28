@@ -134,8 +134,8 @@ void MsgIDMappingWidget::on_idAddBtn_clicked()
             &MsgIDMappingWidget::slt_MsgIDMappingAddFinished
            );
 
+    msgIDMappingAddDialog->setAttribute(Qt::WA_DeleteOnClose);
     msgIDMappingAddDialog->exec();
-
 }
 
 void MsgIDMappingWidget::slt_clear()

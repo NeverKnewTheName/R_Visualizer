@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SysOverviewObjectDialog</class>
+ <widget class="QDialog" name="SysOverviewObjectDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>952</width>
+    <height>708</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="objectPropertiesForm">
+     <item row="0" column="0">
+      <widget class="QLabel" name="nameLbl">
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nameLE"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="SysOverviewObjectManagerWidget" name="objectManagerWidget" native="true"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="objectEditorLayout">
+     <item>
+      <widget class="QGraphicsView" name="objectPreviewGrahicsView"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="editorBtnLayout">
+       <item>
+        <widget class="QPushButton" name="addObjectBtn">
+         <property name="text">
+          <string>Add Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeObjectBtn">
+         <property name="text">
+          <string>Remove Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editObjectBtn">
+         <property name="text">
+          <string>Edit Object</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addLabelBtn">
+         <property name="text">
+          <string>Add Label</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeLabelBtn">
+         <property name="text">
+          <string>Remove Label</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addTriggerBtn">
+         <property name="text">
+          <string>Add Trigger</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeTriggerBtn">
+         <property name="text">
+          <string>Remove Trigger</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editTriggerBtn">
+         <property name="text">
+          <string>Edit Trigger</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::Open|QDialogButtonBox::Reset|QDialogButtonBox::Save</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SysOverviewObjectManagerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">SysOverviewObjectManagerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>nameLE</tabstop>
+  <tabstop>addObjectBtn</tabstop>
+  <tabstop>removeObjectBtn</tabstop>
+  <tabstop>editObjectBtn</tabstop>
+  <tabstop>addLabelBtn</tabstop>
+  <tabstop>removeLabelBtn</tabstop>
+  <tabstop>addTriggerBtn</tabstop>
+  <tabstop>removeTriggerBtn</tabstop>
+  <tabstop>editTriggerBtn</tabstop>
+  <tabstop>objectPreviewGrahicsView</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

@@ -50,6 +50,9 @@ public:
 signals:
     void sgnl_AddToPackage(const IMsg &msgToAdd);
 
+public slots:
+    void slt_MsgChanged(const IMsg &msg);
+
 private slots:
     void on_sndMsgSendBtn_clicked();
 

@@ -15,6 +15,18 @@
 #include "IMsgCodeFilterStore.h"
 #include "IMsgTimespanFilter.h"
 
+#include "ISystemOverviewObject.h"
+#include "ISysOverviewObjectManager.h"
+#include "SysOverviewObjectShapeManager.h"
+#include "SysOverviewObjectImageManager.h"
+#include "ISysOverviewObjectColorManager.h"
+#include "ISysOverviewObjectResizeManager.h"
+#include "SysOverviewTextLabel.h"
+#include "ISysOverviewObjectTrigger.h"
+#include "ISysOverviewLabelTrigger.h"
+#include "ISysOverviewObjectTriggerEvaluator.h"
+
+#include <QBuffer>
 #include <QDebug>
 
 JsonOutParser::JsonOutParser()
@@ -61,14 +73,14 @@ QJsonDocument JsonOutParser::getJsonDocument() const
     return QJsonDocument();
 }
 
-void JsonOutParser::visit(IMsg &visitor)
+void JsonOutParser::visit(IMsg *visitor)
 {
     QJsonObject tempIMsgJsonObject;
     QJsonArray tempIMsgDataJsonArray;
 
-    const MsgIDType &msgID = visitor.getMsgID();
-    const MsgCodeType &msgCode = visitor.getMsgCode();
-    const MsgDataType &msgData = visitor.getMsgData();
+    const MsgIDType &msgID = visitor->getMsgID();
+    const MsgCodeType &msgCode = visitor->getMsgCode();
+    const MsgDataType &msgData = visitor->getMsgData();
 
     tempIMsgJsonObject["MsgID"] =
         QJsonValue(static_cast<int>(msgID.getPrimitiveData()));
@@ -88,11 +100,11 @@ void JsonOutParser::visit(IMsg &visitor)
             );
 }
 
-void JsonOutParser::visit(ITimestampedMsg &visitor)
+void JsonOutParser::visit(ITimestampedMsg *visitor)
 {
-    visit(dynamic_cast<IMsg &>(visitor));
+    visit(dynamic_cast<IMsg *>(visitor));
 
-    const QDateTime &msgTimestamp = visitor.getTimestamp();
+    const QDateTime &msgTimestamp = visitor->getTimestamp();
 
     QJsonObject tempITimestampedMsgJsonObject =
         currentJsonValuePtr->toObject();
@@ -106,28 +118,28 @@ void JsonOutParser::visit(ITimestampedMsg &visitor)
 }
 
 #include "PrettyTimestampedMsg.h"
-void JsonOutParser::visit(IMsgStreamStore &visitor)
+void JsonOutParser::visit(IMsgStreamStore *visitor)
 {
     QJsonArray tempIMsgStreamJsonArray;
 
-    const int msgStreamStoreSize = visitor.size();
+    const int msgStreamStoreSize = visitor->size();
 
     for(int i = 0; i < msgStreamStoreSize; ++i)
     {
-        //PrettyTimestampedMsg prettyTimestampedMsg(visitor.at(i));
+        //PrettyTimestampedMsg prettyTimestampedMsg(visitor->at(i));
         //visit(dynamic_cast<IMsg>(prettyTimestampedMsg));
     }
 }
 
-void JsonOutParser::visit(MsgStorage &visitor)
+void JsonOutParser::visit(MsgStorage *visitor)
 {
     QJsonArray tempMsgStorageJsonArray;
-    const int msgStorageSize = visitor.size();
+    const int msgStorageSize = visitor->size();
 
     for(int i = 0; i < msgStorageSize; ++i)
     {
-        Msg msgToParse(visitor.at(i));
-        visit(msgToParse);
+        Msg msgToParse(visitor->at(i));
+        visit(&msgToParse);
         tempMsgStorageJsonArray.append(currentJsonValuePtr->toObject());
     }
 
@@ -136,15 +148,15 @@ void JsonOutParser::visit(MsgStorage &visitor)
             );
 }
 
-void JsonOutParser::visit(TimestampedMsgStorage &visitor)
+void JsonOutParser::visit(TimestampedMsgStorage *visitor)
 {
     QJsonArray tempMsgStorageJsonArray;
-    const int msgStorageSize = visitor.size();
+    const int msgStorageSize = visitor->size();
 
     for(int i = 0; i < msgStorageSize; ++i)
     {
-        TimestampedMsg msgToParse(visitor.at(i));
-        visit(msgToParse);
+        TimestampedMsg msgToParse(visitor->at(i));
+        visit(&msgToParse);
         tempMsgStorageJsonArray.append(currentJsonValuePtr->toObject());
     }
 
@@ -153,15 +165,15 @@ void JsonOutParser::visit(TimestampedMsgStorage &visitor)
             );
 }
 
-void JsonOutParser::visit(ISendMsgPackageStore &visitor)
+void JsonOutParser::visit(ISendMsgPackageStore *visitor)
 {
     QJsonArray tempISendMsgPackageJsonArray;
 
-    const int msgPackageSize = visitor.size();
+    const int msgPackageSize = visitor->size();
 
     for(int i = 0; i < msgPackageSize; ++i)
     {
-        visit(visitor.at(i));
+        visit(&(visitor->at(i)));
         tempISendMsgPackageJsonArray.append(
                     currentJsonValuePtr->toObject()
                     );
@@ -172,15 +184,15 @@ void JsonOutParser::visit(ISendMsgPackageStore &visitor)
                 );
 }
 
-void JsonOutParser::visit(IMsgIDMappingStore &visitor)
+void JsonOutParser::visit(IMsgIDMappingStore *visitor)
 {
     QJsonArray tempIMsgIDMappingJsonArray;
 
-    const QVector<MsgIDType> &msgIDs = visitor.getContainedMsgIDs();
+    const QVector<MsgIDType> &msgIDs = visitor->getContainedMsgIDs();
 
     for(const MsgIDType &msgID : msgIDs)
     {
-        visit(visitor.getMsgIDMappingToMsgID(msgID));
+        visit(&(visitor->getMsgIDMappingToMsgID(msgID)));
         tempIMsgIDMappingJsonArray.append(currentJsonValuePtr->toObject());
     }
 
@@ -189,32 +201,32 @@ void JsonOutParser::visit(IMsgIDMappingStore &visitor)
             );
 }
 
-void JsonOutParser::visit(IMsgIDMapping &visitor)
+void JsonOutParser::visit(IMsgIDMapping *visitor)
 {
     QJsonObject tempIMsgIDMappingJsonObject;
 
     tempIMsgIDMappingJsonObject["MsgID"] =
-        visitor.getID().getPrimitiveData();
+        visitor->getID().getPrimitiveData();
     tempIMsgIDMappingJsonObject["MsgIDAlias"] =
-        visitor.getPlainTextAlias();
+        visitor->getPlainTextAlias();
     tempIMsgIDMappingJsonObject["MsgIDColorRep"] =
-        visitor.getColorRepresentation().name();
+        visitor->getColorRepresentation().name();
 
     currentJsonValuePtr = std::unique_ptr<QJsonValue>(
             new QJsonValue(tempIMsgIDMappingJsonObject)
             );
 }
 
-void JsonOutParser::visit(IMsgCodeMappingStore &visitor)
+void JsonOutParser::visit(IMsgCodeMappingStore *visitor)
 {
     QJsonArray tempIMsgCodeMappingJsonArray;
 
     const QVector<MsgCodeType> &msgCodes =
-        visitor.getContainedMsgCodes();
+        visitor->getContainedMsgCodes();
 
     for(const MsgCodeType &msgCode : msgCodes)
     {
-        visit(visitor.getMsgCodeMappingToMsgCode(msgCode));
+        visit(&(visitor->getMsgCodeMappingToMsgCode(msgCode)));
         tempIMsgCodeMappingJsonArray.append(
                 currentJsonValuePtr->toObject()
                 );
@@ -225,32 +237,32 @@ void JsonOutParser::visit(IMsgCodeMappingStore &visitor)
             );
 }
 
-void JsonOutParser::visit(IMsgCodeMapping &visitor)
+void JsonOutParser::visit(IMsgCodeMapping *visitor)
 {
     QJsonObject tempIMsgCodeMappingJsonObject;
 
     tempIMsgCodeMappingJsonObject["MsgCode"] =
-        visitor.getCode().getPrimitiveData();
+        visitor->getCode().getPrimitiveData();
     tempIMsgCodeMappingJsonObject["MsgCodeAlias"] =
-        visitor.getPlainTextAlias();
+        visitor->getPlainTextAlias();
     tempIMsgCodeMappingJsonObject["MsgCodeColorRep"] =
-        visitor.getColorRepresentation().name();
+        visitor->getColorRepresentation().name();
 
     currentJsonValuePtr = std::unique_ptr<QJsonValue>(
             new QJsonValue(tempIMsgCodeMappingJsonObject)
             );
 }
 
-void JsonOutParser::visit(IMsgDataMappingStore &visitor)
+void JsonOutParser::visit(IMsgDataMappingStore *visitor)
 {
     QJsonArray tempIMsgDataMappingJsonArray;
 
     const QVector<MessageTypeIdentifier> msgTypeIdentifierList =
-        visitor.getContainedTypeIdentifiers();
+        visitor->getContainedTypeIdentifiers();
 
     for(const MessageTypeIdentifier &msgTypeID : msgTypeIdentifierList)
     {
-        visit(visitor.getMsgDataMapping(msgTypeID));
+        visit(&(visitor->getMsgDataMapping(msgTypeID)));
         tempIMsgDataMappingJsonArray.append(
                 currentJsonValuePtr->toObject()
                 );
@@ -261,35 +273,35 @@ void JsonOutParser::visit(IMsgDataMappingStore &visitor)
             );
 }
 
-void JsonOutParser::visit(IMsgDataMapping &visitor)
+void JsonOutParser::visit(IMsgDataMapping *visitor)
 {
     QJsonObject tempIMsgDataMappingJsonObject;
 
     tempIMsgDataMappingJsonObject["MsgID"] =
-        visitor.getMsgID().getPrimitiveData();
+        visitor->getMsgID().getPrimitiveData();
     tempIMsgDataMappingJsonObject["MsgCode"] =
-        visitor.getMsgCode().getPrimitiveData();
+        visitor->getMsgCode().getPrimitiveData();
     tempIMsgDataMappingJsonObject["MsgDataFormatString"] =
-        visitor.getMsgDataFormatString();
+        visitor->getMsgDataFormatString();
     tempIMsgDataMappingJsonObject["MsgDataDefaultColor"] =
-        visitor.getMsgDataDefaultColor().name();
+        visitor->getMsgDataDefaultColor().name();
 
     currentJsonValuePtr = std::unique_ptr<QJsonValue>(
             new QJsonValue(tempIMsgDataMappingJsonObject)
             );
 }
 
-void JsonOutParser::visit(IMsgIDFilterStore &visitor)
+void JsonOutParser::visit(IMsgIDFilterStore *visitor)
 {
     QJsonArray tempIMsgIDFilterStoreJsonArray;
 
-    const int filterStoreSize = visitor.size();
+    const int filterStoreSize = visitor->size();
 
     for(int i = 0; i < filterStoreSize; ++i)
     {
         QJsonObject tempIMsgIDFilterJsonObject;
         tempIMsgIDFilterJsonObject["FilterMsgID"] =
-                static_cast<int>(visitor.at(i).getPrimitiveData());
+                static_cast<int>(visitor->at(i).getPrimitiveData());
         tempIMsgIDFilterStoreJsonArray.append(
                     tempIMsgIDFilterJsonObject
                     );
@@ -300,17 +312,17 @@ void JsonOutParser::visit(IMsgIDFilterStore &visitor)
             );
 }
 
-void JsonOutParser::visit(IMsgCodeFilterStore &visitor)
+void JsonOutParser::visit(IMsgCodeFilterStore *visitor)
 {
     QJsonArray tempIMsgCodeFilterStoreJsonArray;
 
-    const int filterStoreSize = visitor.size();
+    const int filterStoreSize = visitor->size();
 
     for(int i = 0; i < filterStoreSize; ++i)
     {
         QJsonObject tempIMsgCodeFilterJsonObject;
         tempIMsgCodeFilterJsonObject["FilterMsgCode"] =
-                static_cast<int>(visitor.at(i).getPrimitiveData());
+                static_cast<int>(visitor->at(i).getPrimitiveData());
 
         tempIMsgCodeFilterStoreJsonArray.append(
                     tempIMsgCodeFilterJsonObject
@@ -322,40 +334,427 @@ void JsonOutParser::visit(IMsgCodeFilterStore &visitor)
             );
 }
 
-void JsonOutParser::visit(IMsgTimespanFilter &visitor)
+void JsonOutParser::visit(IMsgTimespanFilter *visitor)
 {
     QJsonObject tempIMsgTimespanFilterJsonObject;
 
     tempIMsgTimespanFilterJsonObject["FilterTimespanFrom"] =
-            visitor.getTimestampFrom().toString("dd.MM.yyyy - hh:mm:ss.zzz");
+            visitor->getTimestampFrom().toString("dd.MM.yyyy - hh:mm:ss.zzz");
 
     tempIMsgTimespanFilterJsonObject["FilterTimespanTo"] =
-            visitor.getTimestampTo().toString("dd.MM.yyyy - hh:mm:ss.zzz");
+            visitor->getTimestampTo().toString("dd.MM.yyyy - hh:mm:ss.zzz");
 
     currentJsonValuePtr = std::unique_ptr<QJsonValue>(
             new QJsonValue(tempIMsgTimespanFilterJsonObject)
-            );
+                );
+}
+
+void JsonOutParser::visit(ISystemOverviewObject *visitor)
+{
+    QJsonObject tempISysOverviewObjJsonObject;
+
+    const QString objectName = visitor->getObjectName();
+
+    tempISysOverviewObjJsonObject["ObjectName"] = objectName;
+    tempISysOverviewObjJsonObject["ObjectPosition_X"] =
+            static_cast<const double>(visitor->x());
+    tempISysOverviewObjJsonObject["ObjectPosition_Y"] =
+            static_cast<const double>(visitor->y());
+
+    SysOvrvObjectManagerPtr objManager =
+            visitor->getShapeManager();
+    this->visit(objManager.get());
+    tempISysOverviewObjJsonObject["ObjectManager"] =
+            currentJsonValuePtr->toObject();
+
+    SysOvrvObjectResizeManagerPtr objResizeManager =
+            visitor->getResizeManager();
+    this->visit(objResizeManager.get());
+    tempISysOverviewObjJsonObject["ObjectResizeManager"] =
+            currentJsonValuePtr->toObject();
+
+    const QVector<SysOvrvTextLabelPtr> objLocalLabels =
+            visitor->getLabels();
+
+    QJsonArray tempObjLabelsJsonArray;
+    for(SysOvrvTextLabelPtr labelPtr : objLocalLabels)
+    {
+        this->visit(labelPtr.data());
+        tempObjLabelsJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewObjJsonObject["ObjectLabels"] =
+            tempObjLabelsJsonArray;
+
+    const QVector<SysOvrvObjTriggerPtr> objLocalTriggers =
+            visitor->getLocalObjectTriggers();
+
+    QJsonArray tempObjTriggerJsonArray;
+    for(SysOvrvObjTriggerPtr triggerPtr : objLocalTriggers)
+    {
+        this->visit(triggerPtr.data());
+        tempObjTriggerJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewObjJsonObject["ObjectTriggers"] =
+            tempObjTriggerJsonArray;
+
+    const QVector<ISysOvrvObjPtr> childObjects =
+            visitor->getChildObjects();
+    QJsonArray tempObjChildObjJsonArray;
+
+    for(ISysOvrvObjPtr childObjPtr : childObjects)
+    {
+        this->visit(childObjPtr.data());
+        tempObjChildObjJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewObjJsonObject["ObjectChildObjects"] =
+            tempObjChildObjJsonArray;
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjJsonObject)
+                );
+}
+
+void JsonOutParser::visit(ISysOverviewObjectManager *visitor)
+{
+    QJsonObject tempISysOverviewObjManagerJsonObject;
+    const ISysOverviewObjectManager::ObjectType objManagerType =
+            visitor->getType();
+
+    tempISysOverviewObjManagerJsonObject["ObjectManagerType"] =
+            static_cast<const int>(objManagerType);
+
+    switch(objManagerType)
+    {
+    case ISysOverviewObjectManager::ShapeType:
+    {
+        QJsonObject tempSysOverviewObjectShapeManager;
+        try
+        {
+            SysOverviewObjectShapeManager *shapeManager =
+                    dynamic_cast<SysOverviewObjectShapeManager *>(visitor);
+
+            tempSysOverviewObjectShapeManager["ObjectShapeManager_Shape"] =
+                    static_cast<const int>(shapeManager->getShape());
+
+            SysOvrvObjColorManagerPtr colorManager =
+                    shapeManager->getColorManager();
+
+            this->visit(colorManager.get());
+
+            tempSysOverviewObjectShapeManager["ObjectShapeManager_ColorManager"] =
+                    currentJsonValuePtr->toObject();
+
+            tempISysOverviewObjManagerJsonObject["ShapeManager"] =
+                    tempSysOverviewObjectShapeManager;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    case ISysOverviewObjectManager::ImageType:
+    {
+        QJsonObject tempSysOverviewObjectImageManager;
+        try
+        {
+            SysOverviewObjectImageManager *imageManager =
+                    dynamic_cast<SysOverviewObjectImageManager *>(visitor);
+            QByteArray bytes;
+            QBuffer buffer(&bytes);
+            buffer.open(QIODevice::WriteOnly);
+            imageManager->getImage().save(&buffer, "PNG");
+
+            tempSysOverviewObjectImageManager["SerializedImagePNG"] =
+                    QString::fromLatin1(bytes.toBase64());
+
+            tempISysOverviewObjManagerJsonObject["ImageManager"] =
+                    tempSysOverviewObjectImageManager;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjManagerJsonObject)
+                );
+}
+
+void JsonOutParser::visit(ISysOverviewObjectColorManager *visitor)
+{
+    QJsonObject tempISysOverviewObjectColorManagerJsonObject;
+
+    tempISysOverviewObjectColorManagerJsonObject["BorderColor"] =
+            visitor->getBorderColor().name();
+    tempISysOverviewObjectColorManagerJsonObject["FillColor"] =
+            visitor->getFillColor().name();
+    tempISysOverviewObjectColorManagerJsonObject["Transparency"] =
+            static_cast<const double>(visitor->getTransparency());
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectColorManagerJsonObject)
+                );
+}
+
+void JsonOutParser::visit(ISysOverviewObjectResizeManager *visitor)
+{
+    QJsonObject tempISysOverviewObjectResizeManagerJsonObject;
+
+    tempISysOverviewObjectResizeManagerJsonObject["ResizeManagerType"] =
+            static_cast<const int>(visitor->getType());
+
+    tempISysOverviewObjectResizeManagerJsonObject["Width"] =
+            visitor->getSize().width();
+    tempISysOverviewObjectResizeManagerJsonObject["Height"] =
+            visitor->getSize().height();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectResizeManagerJsonObject)
+                );
+}
+
+void JsonOutParser::visit(SysOverviewTextLabel *visitor)
+{
+    QJsonObject tempISysOverviewTextLabelJsonObject;
+
+    tempISysOverviewTextLabelJsonObject["LabelText"] =
+            visitor->text();
+    tempISysOverviewTextLabelJsonObject["LabelPosition_X"] =
+            static_cast<const double>(visitor->x());
+    tempISysOverviewTextLabelJsonObject["LabelPosition_Y"] =
+            static_cast<const double>(visitor->y());
+
+    const QVector<SysOvrvLabelTriggerPtr> labelTriggers =
+            visitor->getTriggers();
+
+    QJsonArray labelTriggersJsonArray;
+    for(SysOvrvLabelTriggerPtr labelTriggerPtr : labelTriggers)
+    {
+        this->visit(labelTriggerPtr.data());
+        labelTriggersJsonArray.append(currentJsonValuePtr->toObject());
+    }
+
+    tempISysOverviewTextLabelJsonObject["LabelTriggers"] =
+            labelTriggersJsonArray;
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewTextLabelJsonObject)
+                );
+}
+
+#include "SysOverviewObjectColorTrigger.h"
+void JsonOutParser::visit(ISysOverviewObjectTrigger *visitor)
+{
+    QJsonObject tempISysOverviewObjectTriggerJsonObject;
+
+    const ISysOverviewObjectTrigger::TriggerType triggerType =
+            visitor->getTriggerType();
+
+    switch(triggerType)
+    {
+    case ISysOverviewObjectTrigger::TriggerType_ColorChangeTrigger:
+    {
+        try
+        {
+            SysOverviewObjectColorTrigger *colorChangeTrigger =
+                    dynamic_cast<SysOverviewObjectColorTrigger *>(visitor);
+
+            QJsonObject tempColorChangeTriggerJsonObject;
+
+            tempColorChangeTriggerJsonObject["TriggerColor"] =
+                    colorChangeTrigger->getTriggerColor().name();
+
+            tempColorChangeTriggerJsonObject["OriginalColor"] =
+                    colorChangeTrigger->getOriginalColor().name();
+
+            tempISysOverviewObjectTriggerJsonObject["ColorChangeTrigger"] =
+                    tempColorChangeTriggerJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    SysOvrvObjTriggerEvaluatorPtr triggerEvaluator =
+            visitor->getTriggerEvaluator();
+
+    this->visit(triggerEvaluator.get());
+
+    tempISysOverviewObjectTriggerJsonObject["TriggerEvaluator"] =
+            currentJsonValuePtr->toObject();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectTriggerJsonObject)
+                );
+}
+
+#include "SysOverviewLabelTextChangeTrigger.h"
+void JsonOutParser::visit(ISysOverviewLabelTrigger *visitor)
+{
+    QJsonObject tempISysOverviewObjectLableTriggerJsonObject;
+
+    const ISysOverviewLabelTrigger::TriggerType triggerType =
+            visitor->getTriggerType();
+
+    tempISysOverviewObjectLableTriggerJsonObject["TextLabelTriggerType"] =
+            static_cast<const int>(triggerType);
+
+    switch(triggerType)
+    {
+    case ISysOverviewLabelTrigger::TriggerType_TextChangeTrigger:
+    {
+        try
+        {
+            SysOverviewLabelTextChangeTrigger *textChangeTrigger =
+                    dynamic_cast<SysOverviewLabelTextChangeTrigger *>(visitor);
+
+            QJsonObject tempTextChangeTriggerJsonObject;
+
+            tempISysOverviewObjectLableTriggerJsonObject["TextChangeTrigger"] =
+                    tempTextChangeTriggerJsonObject;
+
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    SysOvrvObjTriggerEvaluatorPtr triggerEvaluator =
+            visitor->getTriggerEvaluator();
+
+    this->visit(triggerEvaluator.get());
+
+    tempISysOverviewObjectLableTriggerJsonObject["TriggerEvaluator"] =
+            currentJsonValuePtr->toObject();
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectLableTriggerJsonObject)
+                );
+}
+
+#include "SysOverviewObjectTriggerMsgTypeEvaluator.h"
+#include "SysOverviewObjectTriggerDSLEvaluator.h"
+void JsonOutParser::visit(ISysOverviewObjectTriggerEvaluator *visitor)
+{
+    QJsonObject tempISysOverviewObjectTriggerEvaluatorJsonObject;
+
+    const MessageTypeIdentifier msgType = visitor->getMsgType();
+
+    QJsonObject tempMsgTypeJsonObject;
+
+    tempMsgTypeJsonObject["MessageID"] =
+            static_cast<const int>(msgType.getID().getPrimitiveData());
+    tempMsgTypeJsonObject["MessageCode"] =
+            static_cast<const int>(msgType.getCode().getPrimitiveData());
+
+    tempISysOverviewObjectTriggerEvaluatorJsonObject["MsgType"] =
+            tempMsgTypeJsonObject;
+
+    const ISysOverviewObjectTriggerEvaluator::EvaluatorType type =
+            visitor->getType();
+
+    tempISysOverviewObjectTriggerEvaluatorJsonObject["TriggerEvaluatorType"] =
+            static_cast<const int>(type);
+
+
+    switch(type)
+    {
+    case ISysOverviewObjectTriggerEvaluator::EvaluatorType_MsgTypeEvaluator:
+    {
+        try
+        {
+            SysOverviewObjectTriggerMsgTypeEvaluator *msgTypeEvaluator =
+                    dynamic_cast<SysOverviewObjectTriggerMsgTypeEvaluator *>(visitor);
+            QJsonObject msgTypeEvaluatorJsonObject;
+
+            tempISysOverviewObjectTriggerEvaluatorJsonObject["MsgTypeEvaluator"] =
+                    msgTypeEvaluatorJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    case ISysOverviewObjectTriggerEvaluator::EvaluatorType_DSLEvaluator:
+    {
+        try
+        {
+            SysOverviewObjectTriggerDSLEvaluator *dslEvaluator =
+                    dynamic_cast<SysOverviewObjectTriggerDSLEvaluator *>(visitor);
+
+            QJsonObject dslEvalutorJsonObject;
+            dslEvalutorJsonObject["FormatString"] =
+                dslEvaluator->getFormatString();
+
+            tempISysOverviewObjectTriggerEvaluatorJsonObject["DSLEvaluator"] =
+                    dslEvalutorJsonObject;
+        }
+        catch(const std::exception e)
+        {
+            qDebug() << "Exception caught in " << __PRETTY_FUNCTION__ <<
+                        " -- " << e.what();
+        }
+    }
+        break;
+    case ISysOverviewObjectTriggerEvaluator::EvaluatorType_ParserEvaluator:
+    {
+//        ToDO
+          QJsonObject parserEvalutorJsonObject;
+
+          tempISysOverviewObjectTriggerEvaluatorJsonObject["ParserEvaluator"] =
+                   parserEvalutorJsonObject;
+    }
+        break;
+    }
+
+    currentJsonValuePtr = std::unique_ptr<QJsonValue>(
+            new QJsonValue(tempISysOverviewObjectTriggerEvaluatorJsonObject)
+                );
 }
 
 
-
-/* void JsonOutParser::visit(SysOvrvObject &visitor) */
+/* void JsonOutParser::visit(SysOvrvObject *visitor) */
 /* { */
 /* } */
 
-/* void JsonOutParser::visit(SysOvrvTextLabel &visitor) */
+/* void JsonOutParser::visit(SysOvrvTextLabel *visitor) */
 /* { */
 /* } */
 
-/* void JsonOutParser::visit(SysOvrvTrigger &visitor) */
+/* void JsonOutParser::visit(SysOvrvTrigger *visitor) */
 /* { */
 /* } */
 
-/* void JsonOutParser::visit(ErrLogModel &visitor) */
+/* void JsonOutParser::visit(ErrLogModel *visitor) */
 /* { */
 /* } */
 
-/* void JsonOutParser::visit(ErrorLogEntry &visitor) */
+/* void JsonOutParser::visit(ErrorLogEntry *visitor) */
 /* { */
 /* } */
 
@@ -363,47 +762,47 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 
 
 //////////////////////////////////////////////END/////////////////////////////
-/* void JsonOutParser::visit(IMsgStreamModel &visitor) */
+/* void JsonOutParser::visit(IMsgStreamModel *visitor) */
 /* { */
 /* } */
 
-/* void JsonOutParser::visit(IMsgStorage &visitor) */
+/* void JsonOutParser::visit(IMsgStorage *visitor) */
 /* { */
 /*     QJsonArray tempJsonArray; */
-/*     /1* tempJsonObject["IMsgStorageSaveLocation"] = QJsonValue(visitor.saveIMsgStorage(QString(""))); *1/ */
+/*     /1* tempJsonObject["IMsgStorageSaveLocation"] = QJsonValue(visitor->saveIMsgStorage(QString(""))); *1/ */
 /*     /1* currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); *1/ */
-/*     const int msgStorageSize = visitor.size(); */
+/*     const int msgStorageSize = visitor->size(); */
 /*     for(int i = 0; i < msgStorageSize; ++i) */
 /*     { */
-/*         IMsg msg = visitor.at(i); */
+/*         IMsg msg = visitor->at(i); */
 /*         msg.accept(this); */
 /*         tempJsonArray.append(*currentJsonValuePtr); */
 /*     } */
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); */
 /* } */
 
-/* void JsonOutParser::visit(TimestampedIMsgStorage &visitor) */
+/* void JsonOutParser::visit(TimestampedIMsgStorage *visitor) */
 /* { */
 /*     QJsonArray tempJsonArray; */
-/*     /1* tempJsonObject["IMsgStorageSaveLocation"] = QJsonValue(visitor.saveIMsgStorage(QString(""))); *1/ */
+/*     /1* tempJsonObject["IMsgStorageSaveLocation"] = QJsonValue(visitor->saveIMsgStorage(QString(""))); *1/ */
 /*     /1* currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); *1/ */
-/*     const int msgStorageSize = visitor.size(); */
+/*     const int msgStorageSize = visitor->size(); */
 /*     for(int i = 0; i < msgStorageSize; ++i) */
 /*     { */
-/*         TimestampedIMsg msg = visitor.at(i); */
+/*         TimestampedIMsg msg = visitor->at(i); */
 /*         msg.accept(this); */
 /*         tempJsonArray.append(*currentJsonValuePtr); */
 /*     } */
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); */
 /* } */
 
-/* /1* void JsonOutParser::visit(SendMessages &visitor) *1/ */
+/* /1* void JsonOutParser::visit(SendMessages *visitor) *1/ */
 /* /1* { *1/ */
 /* /1* } *1/ */
 
-/* void JsonOutParser::visit(SendIMsgPackageStore &visitor) */
+/* void JsonOutParser::visit(SendIMsgPackageStore *visitor) */
 /* { */
-/*     QVector<PrettyIMsg> prettyIMsgs = visitor.getIMsgPacket(); */
+/*     QVector<PrettyIMsg> prettyIMsgs = visitor->getIMsgPacket(); */
 /*     QJsonArray tempJsonArray; */
 /*     for(PrettyIMsg &prettyIMsg : prettyIMsgs) */
 /*     { */
@@ -413,15 +812,15 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); */
 /* } */
 
-/* void JsonOutParser::visit(IMsg &visitor) */
+/* void JsonOutParser::visit(IMsg *visitor) */
 /* { */
 /*     QJsonObject tempJsonObject; */
 /*     QJsonArray tempJsonDataArray; */
 
-/*     tempJsonObject["IMsgID"] = QJsonValue(static_cast<IMsgIDType::type>(visitor.getIMsgID())); */
-/*     tempJsonObject["IMsgCode"] = QJsonValue(static_cast<IMsgCodeType::type>(visitor.getIMsgCode())); */
+/*     tempJsonObject["IMsgID"] = QJsonValue(static_cast<IMsgIDType::type>(visitor->getIMsgID())); */
+/*     tempJsonObject["IMsgCode"] = QJsonValue(static_cast<IMsgCodeType::type>(visitor->getIMsgCode())); */
 
-/*     const IMsgDataType &tempIMsgData = visitor.getIMsgData(); */
+/*     const IMsgDataType &tempIMsgData = visitor->getIMsgData(); */
 /*     const int tempIMsgDataSize = tempIMsgData.size(); */
 /*     for(unsigned int i = 0; i < tempIMsgDataSize; ++i) */
 /*     { */
@@ -432,13 +831,13 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
 /* } */
 
-/* void JsonOutParser::visit(TimestampedIMsg &visitor) */
+/* void JsonOutParser::visit(TimestampedIMsg *visitor) */
 /* { */
-/*     IMsg originalIMsg = visitor.getOriginalIMsg(); */
+/*     IMsg originalIMsg = visitor->getOriginalIMsg(); */
 /*     originalIMsg.accept(this); */
 
 /*     QJsonObject tempJsonObject = currentJsonValuePtr->toObject(); */
-/*     tempJsonObject["IMsgTimestamp"] = visitor.getTimestamp().toString( */
+/*     tempJsonObject["IMsgTimestamp"] = visitor->getTimestamp().toString( */
 /*             QString("dd.MM.yyyy - hh:mm:ss.zzz") */
 /*             ); */
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>( */
@@ -446,138 +845,138 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 /*             ); */
 /* } */
 
-/* /1* void JsonOutParser::visit(MessageConfig &visitor) *1/ */
+/* /1* void JsonOutParser::visit(MessageConfig *visitor) *1/ */
 /* /1* { *1/ */
 /* /1* } *1/ */
 
-/* /1* void JsonOutParser::visit(IDModel &visitor) *1/ */
+/* /1* void JsonOutParser::visit(IDModel *visitor) *1/ */
 /* /1* { *1/ */
 /* /1*     QJsonArray tempJsonArray; *1/ */
-/* /1*     const int idModelSize = visitor.size(); *1/ */
+/* /1*     const int idModelSize = visitor->size(); *1/ */
 /* /1*     for(int i = 0; i < idModelSize; ++i) *1/ */
 /* /1*     { *1/ */
-/* /1*         IDMapping idMapping = visitor.at(i); *1/ */
+/* /1*         IDMapping idMapping = visitor->at(i); *1/ */
 /* /1*         idMapping.accept(this); *1/ */
 /* /1*         tempJsonArray.append(*currentJsonValuePtr); *1/ */
 /* /1*     } *1/ */
 /* /1*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); *1/ */
 /* /1* } *1/ */
 
-/* void JsonOutParser::visit(IMsgIDMapping &visitor) */
+/* void JsonOutParser::visit(IMsgIDMapping *visitor) */
 /* { */
 /*     QJsonObject tempJsonObject; */
 /*     tempJsonObject["IMsgIDMappingID"] = static_cast<int>( */
 /*             static_cast<IMsgIDType::type>( */
-/*                 visitor.getID() */
+/*                 visitor->getID() */
 /*                 ) */
 /*             ); */
-/*     tempJsonObject["IMsgIDMappingName"] = visitor.getPlainTextAlias(); */
-/*     tempJsonObject["IMsgIDMappingColor"] = visitor.getColorMappingresentation().name(); */
+/*     tempJsonObject["IMsgIDMappingName"] = visitor->getPlainTextAlias(); */
+/*     tempJsonObject["IMsgIDMappingColor"] = visitor->getColorMappingresentation().name(); */
 
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
 /* } */
 
-/* /1* void JsonOutParser::visit(IMsgTypeModel &visitor) *1/ */
+/* /1* void JsonOutParser::visit(IMsgTypeModel *visitor) *1/ */
 /* /1* { *1/ */
 /* /1*     QJsonArray tempJsonArray; *1/ */
-/* /1*     const int msgTypeModelSize = visitor.size(); *1/ */
+/* /1*     const int msgTypeModelSize = visitor->size(); *1/ */
 /* /1*     for(int i = 0; i < msgTypeModelSize; ++i) *1/ */
 /* /1*     { *1/ */
-/* /1*         IMsgTypeMapping msgTypeMapping = visitor.at(i); *1/ */
+/* /1*         IMsgTypeMapping msgTypeMapping = visitor->at(i); *1/ */
 /* /1*         msgTypeMapping.accept(this); *1/ */
 /* /1*         tempJsonArray.append(*currentJsonValuePtr); *1/ */
 /* /1*     } *1/ */
 /* /1*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); *1/ */
 /* /1* } *1/ */
 
-/* void JsonOutParser::visit(IMsgCodeMapping &visitor) */
+/* void JsonOutParser::visit(IMsgCodeMapping *visitor) */
 /* { */
 /*     QJsonObject tempJsonObject; */
 /*     tempJsonObject["IMsgCodeMappingCode"] = static_cast<int>( */
 /*             static_cast<IMsgCodeType::type>( */
-/*                 visitor.getCode() */
+/*                 visitor->getCode() */
 /*                 ) */
 /*             ); */
-/*     tempJsonObject["IMsgCodeMappingName"] = visitor.getPlainTextAlias(); */
-/*     /1* tempJsonObject["IMsgCodeMappingMessageFormat"] = visitor.getMessageFormat(); *1/ */
-/*     tempJsonObject["IMsgCodeMappingColor"] = visitor.getColorMappingresentation().name(); */
+/*     tempJsonObject["IMsgCodeMappingName"] = visitor->getPlainTextAlias(); */
+/*     /1* tempJsonObject["IMsgCodeMappingMessageFormat"] = visitor->getMessageFormat(); *1/ */
+/*     tempJsonObject["IMsgCodeMappingColor"] = visitor->getColorMappingresentation().name(); */
 
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
 /* } */
 
-/* void JsonOutParser::visit(IMsgDataMapping &visitor) */
+/* void JsonOutParser::visit(IMsgDataMapping *visitor) */
 /* { */
 /* } */
 
-/* /1* void JsonOutParser::visit(MessageFilter &visitor) *1/ */
+/* /1* void JsonOutParser::visit(MessageFilter *visitor) *1/ */
 /* /1* { *1/ */
 /* /1* } *1/ */
 
-/* void JsonOutParser::visit(FilterIDStore &visitor) */
+/* void JsonOutParser::visit(FilterIDStore *visitor) */
 /* { */
 /*     QJsonArray tempJsonArray; */
 
-/*     const int filterIDStoreSize = visitor.size(); */
+/*     const int filterIDStoreSize = visitor->size(); */
 /*     for(int i = 0; i < filterIDStoreSize; ++i) */
 /*     { */
 /*         QJsonObject tempJsonObject; */
-/*         tempJsonObject["FilterID"] = QJsonValue(static_cast<IMsgIDType::type>(visitor.at(i))); */
+/*         tempJsonObject["FilterID"] = QJsonValue(static_cast<IMsgIDType::type>(visitor->at(i))); */
 /*         tempJsonArray.append(tempJsonObject); */
 /*     } */
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); */
 /* } */
 
-/* void JsonOutParser::visit(FilterCodeStore &visitor) */
+/* void JsonOutParser::visit(FilterCodeStore *visitor) */
 /* { */
 /*     QJsonArray tempJsonArray; */
 
-/*     const int filterCodeStoreSize = visitor.size(); */
+/*     const int filterCodeStoreSize = visitor->size(); */
 /*     for(int i = 0; i < filterCodeStoreSize; ++i) */
 /*     { */
 /*         QJsonObject tempJsonObject; */
-/*         tempJsonObject["FilterCode"] = QJsonValue(static_cast<IMsgCodeType::type>(visitor.at(i))); */
+/*         tempJsonObject["FilterCode"] = QJsonValue(static_cast<IMsgCodeType::type>(visitor->at(i))); */
 /*         tempJsonArray.append(tempJsonObject); */
 /*     } */
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonArray)); */
 /* } */
 
-/* void JsonOutParser::visit(FilterTimestampStore &visitor) */
+/* void JsonOutParser::visit(FilterTimestampStore *visitor) */
 /* { */
 /*     QJsonObject tempJsonObject; */
-/*     tempJsonObject["FilterTimestampFrom"] = QJsonValue(visitor.getTimestampFilterFrom().toString("dd.MM.yyyy - hh:mm:ss.zzz")); */
-/*     tempJsonObject["FilterTimestampTo"] = QJsonValue(visitor.getTimestampFilterTo().toString("dd.MM.yyyy - hh:mm:ss.zzz")); */
+/*     tempJsonObject["FilterTimestampFrom"] = QJsonValue(visitor->getTimestampFilterFrom().toString("dd.MM.yyyy - hh:mm:ss.zzz")); */
+/*     tempJsonObject["FilterTimestampTo"] = QJsonValue(visitor->getTimestampFilterTo().toString("dd.MM.yyyy - hh:mm:ss.zzz")); */
 
 /*     currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
 /* } */
 
-/* /1* void JsonOutParser::visit(SystemOverview &visitor) *1/ */
+/* /1* void JsonOutParser::visit(SystemOverview *visitor) *1/ */
 /* /1* { *1/ */
 /* /1* } *1/ */
 
-/* void JsonOutParser::visit(SysOvrvObject &visitor) */
+/* void JsonOutParser::visit(SysOvrvObject *visitor) */
 /* { */
 /*     //QJsonObject tempJsonObject; */
-/*     //tempJsonObject["ObjName"] = visitor.getObjName(); */
-/*     //tempJsonObject["ObjShape"] = static_cast<int>(visitor.getShape()); */
+/*     //tempJsonObject["ObjName"] = visitor->getObjName(); */
+/*     //tempJsonObject["ObjShape"] = static_cast<int>(visitor->getShape()); */
 /* // */
-/*     //const QColor &objColor = visitor.getObjColor(); */
+/*     //const QColor &objColor = visitor->getObjColor(); */
 /*     //tempJsonObject["ObjColor"] = objColor.name(QColor::HexArgb); */
 /* // */
 /*     //QJsonObject objSizeJsonObj; */
-/*     //const QRectF &objBoundingRect = visitor.boundingRect(); */
+/*     //const QRectF &objBoundingRect = visitor->boundingRect(); */
 /*     //objSizeJsonObj["ObjWidth"] = static_cast<double>(objBoundingRect.width()); */
 /*     //objSizeJsonObj["ObjHeight"] = static_cast<double>(objBoundingRect.height()); */
 /*     //tempJsonObject["ObjSize"] = objSizeJsonObj; */
 /* // */
 /*     //OJsonObject objPosJsonObj; */
-/*     //objSizeJsonObj["XPos"] = static_cast<double>(visitor.x()); */
-/*     //objSizeJsonObj["YPos"] = static_cast<double>(visitor.y()); */
+/*     //objSizeJsonObj["XPos"] = static_cast<double>(visitor->x()); */
+/*     //objSizeJsonObj["YPos"] = static_cast<double>(visitor->y()); */
 /*     //tempJsonObject["ObjPos"] = objPosJsonObj; */
 /* // */
 /*     //QJsonArray objChildObjectsJsonArray; */
 /*     //OJsonArray objLabelsJsonArray; */
 /* // */
-/*     //QList<QGraphicsItem *> children = visitor.childItems(); */
+/*     //QList<QGraphicsItem *> children = visitor->childItems(); */
 /* // */
 /*     //for(QGraphicsItem *child : children) */
 /*     //{ */
@@ -603,7 +1002,7 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 /*     //currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
 /* } */
 
-/* void JsonOutParser::visit(SysOvrvTextLabel &visitor) */
+/* void JsonOutParser::visit(SysOvrvTextLabel *visitor) */
 /* { */
 /* //    QJsonObject tempJsonObject; */
 /* // */
@@ -612,19 +1011,19 @@ void JsonOutParser::visit(IMsgTimespanFilter &visitor)
 /*     //currentJsonValuePtr = std::unique_ptr<QJsonValue>(new QJsonValue(tempJsonObject)); */
 /* } */
 
-/* void JsonOutParser::visit(SysOvrvTrigger &visitor) */
+/* void JsonOutParser::visit(SysOvrvTrigger *visitor) */
 /* { */
 /* } */
 
-/* /1* void JsonOutParser::visit(ErrorLogView &visitor) *1/ */
+/* /1* void JsonOutParser::visit(ErrorLogView *visitor) *1/ */
 /* /1* { *1/ */
 /* /1* } *1/ */
 
-/* void JsonOutParser::visit(ErrLogModel &visitor) */
+/* void JsonOutParser::visit(ErrLogModel *visitor) */
 /* { */
 /* } */
 
-/* void JsonOutParser::visit(ErrorLogEntry &visitor) */
+/* void JsonOutParser::visit(ErrorLogEntry *visitor) */
 /* { */
 /* } */
 

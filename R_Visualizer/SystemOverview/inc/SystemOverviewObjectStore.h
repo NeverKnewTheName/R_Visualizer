@@ -12,6 +12,7 @@
 
 #include "ISystemOverviewObjectStore.h"
 
+
 /**
  * @brief The SystemOverviewObjectStore
  */
@@ -24,9 +25,14 @@ public:
             );
     virtual ~SystemOverviewObjectStore();
 
-    virtual void addSystemOverviewObject(ISysOverviewObject *object);
+    virtual void addSystemOverviewObject(ISysOvrvObjPtr object);
+    virtual ISysOvrvObjPtr getObj(const QString &objectName);
+    virtual void removeObj(const QString &objectName);
+    virtual QVector<ISysOvrvObjPtr> getObjects() const;
+
+    virtual void clear();
 private:
-    QHash<QString,ISysOverviewObject *> sysOverviewObjStore;
+    QHash<QString,ISysOvrvObjPtr> sysOverviewObjStore;
 
 };
 

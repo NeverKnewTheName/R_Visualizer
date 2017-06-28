@@ -70,6 +70,13 @@ public:
 private:
     Msg originalMsg;
     QDateTime msgTimestamp;
+
+    // IMsg interface
+public:
+    MessageTypeIdentifier getMsgType() const
+    {
+        return MessageTypeIdentifier(originalMsg.getMsgID(),originalMsg.getMsgCode());
+    }
 };
 
 Q_DECLARE_METATYPE(TimestampedMsg)

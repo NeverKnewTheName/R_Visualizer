@@ -61,6 +61,8 @@ public:
 
     virtual void clear();
 
+    virtual QVector<Msg> getMessagesAsVector() const;
+
 private:
     QVector<Msg> msgStorage;
 

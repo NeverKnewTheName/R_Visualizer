@@ -237,6 +237,13 @@ private:
     QColor msgIDColorRepresentation;
     QColor msgCodeColorRepresentation;
     QColor msgDataColor;
+
+    // IMsg interface
+public:
+    MessageTypeIdentifier getMsgType() const
+    {
+        return MessageTypeIdentifier(originalMsg.getMsgID(),originalMsg.getMsgCode());
+    }
 };
 
 /**

@@ -11,6 +11,7 @@
 #include <QObject>
 
 class IMsg;
+class Msg;
 
 class ISendMsgPackageStore;
 
@@ -41,11 +42,18 @@ public:
 
     virtual ISendMsgPackageStore *getStore() const = 0;
 
+    virtual int getSendDelay() const = 0;
+    virtual void setSendDelay(const int sendDelay) = 0;
+
 signals:
     void sgnl_sendMsg(const IMsg &msgToSend);
+    void sgnl_SendStdMsg(const Msg &msg);
     void sgnl_msgAppended();
     void sgnl_msgPrepended();
     void sgnl_msgRemoved();
+
+    void sgnl_SendingStarted();
+    void sgnl_SendingFinished();
 
 public slots:
     virtual void slt_appendMsg(const IMsg &msgToAppend)

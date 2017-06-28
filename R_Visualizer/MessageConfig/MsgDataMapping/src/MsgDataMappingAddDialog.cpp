@@ -119,6 +119,7 @@ void MsgDataMappingAddDialog::on_formatterPushButton_clicked()
                 ui->formatterPlainTextEdit->document()->toPlainText()
                 );
 
+    msgDataFormatStringEditor->setAttribute(Qt::WA_DeleteOnClose);
     msgDataFormatStringEditor->exec();
 }
 
@@ -131,5 +132,6 @@ void MsgDataMappingAddDialog::on_colorPickerPushButton_clicked()
             this,
             &MsgDataMappingAddDialog::slt_ColorSelected
             );
+    colorPicker->setAttribute(Qt::WA_DeleteOnClose);
     colorPicker->exec();
 }

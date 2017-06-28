@@ -121,7 +121,7 @@ void MsgCodeMappingStore::clear()
 
 void MsgCodeMappingStore::accept(FileParser *visitor)
 {
-    visitor->visit(*this);
+    visitor->visit(this);
 }
 
 QVector<MsgCodeType> MsgCodeMappingStore::getContainedMsgCodes() const

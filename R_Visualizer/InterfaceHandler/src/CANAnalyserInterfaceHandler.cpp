@@ -263,16 +263,19 @@ bool CANAnalyserInterfaceHandler::stopSession()
     return true;
 }
 
+//#define __DEBUG_CANINTERFACEHANDLER__
 bool CANAnalyserInterfaceHandler::sendMessage(const IMsg &msgToSend)
 {
     /////////DEBUG//////////
     
+#ifdef __DEBUG_CANINTERFACEHANDLER__
     emit sgnl_MessageReceived(
             TimestampedMsg(
                 msgToSend,
                 QDateTime::currentDateTime()
                 )
             );
+#endif /* __DEBUG_CANINTERFACEHANDLER__ */
     
     /////////DEBUG//////////
 
@@ -355,7 +358,7 @@ CAN_PacketPtr CANAnalyserInterfaceHandler::convertMsgToCANFrame(
 
     CAN_PacketPtr packet = CAN_PacketPtr(new Data_Packet());
     qSharedPointerDynamicCast<Data_Packet>(packet)->setFrame(canFrame);
-    
+
     return packet;
 }
 

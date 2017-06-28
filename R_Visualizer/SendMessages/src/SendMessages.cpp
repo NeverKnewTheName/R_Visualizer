@@ -5,6 +5,8 @@
 
 #include "IInterfaceHandler.h"
 
+#include "Msg.h"
+
 SendMessages::SendMessages(
         IInterfaceHandler *interfaceHandler,
         QObject *parent
@@ -45,6 +47,13 @@ void SendMessages::addSendMsgPackage(ISendMsgPackage *sendMsgPackage)
             this,
             &ISendMessages::slt_SendMessage
             );
+    connect(
+            sendMsgPackage,
+            &ISendMsgPackage::sgnl_SendStdMsg,
+                [=](const Msg &msg){
+                    interfaceHandler->sendMessage(msg);
+                }
+            );
 }
 
 void SendMessages::removeSendMsgPackage(ISendMsgPackage *sendMsgPackage)
@@ -53,6 +62,11 @@ void SendMessages::removeSendMsgPackage(ISendMsgPackage *sendMsgPackage)
 }
 
 void SendMessages::sendMessage(const IMsg &msgToSend)
+{
+    interfaceHandler->sendMessage(msgToSend);
+}
+
+void SendMessages::sendMessage(const Msg &msgToSend)
 {
     interfaceHandler->sendMessage(msgToSend);
 }

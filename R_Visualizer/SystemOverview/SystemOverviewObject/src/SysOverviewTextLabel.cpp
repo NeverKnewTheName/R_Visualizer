@@ -4,6 +4,12 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneHoverEvent>
 
+#include <QLineEdit>
+#include <QInputDialog>
+#include <QCursor>
+
+#include "ISystemOverviewObject.h"
+
 SysOverviewTextLabel::SysOverviewTextLabel(
         const QString &text,
         QGraphicsItem *parent
@@ -12,7 +18,17 @@ SysOverviewTextLabel::SysOverviewTextLabel(
     editable(false),
     doubleClicked(false)
 {
-    setFlag(QGraphicsItem::ItemIsFocusable);
+}
+
+SysOverviewTextLabel::SysOverviewTextLabel(
+        const SysOverviewTextLabel &copy
+        ) :
+    QGraphicsSimpleTextItem(copy.text(),copy.parentItem()),
+    editable(copy.editable),
+    doubleClicked(false)
+{
+    setEditable(copy.editable);
+    setPos(copy.pos());
 }
 
 SysOverviewTextLabel::~SysOverviewTextLabel()
@@ -22,8 +38,10 @@ SysOverviewTextLabel::~SysOverviewTextLabel()
 
 void SysOverviewTextLabel::setEditable(const bool enable)
 {
-    editable(enable);
+    editable = enable;
     setFlag(QGraphicsItem::ItemIsMovable,enable);
+    setFlag(QGraphicsItem::ItemIsFocusable,enable);
+    setFlag(QGraphicsItem::ItemIsSelectable,enable);
 }
 
 bool SysOverviewTextLabel::isEditable() const
@@ -31,14 +49,14 @@ bool SysOverviewTextLabel::isEditable() const
     return editable;
 }
 
-void SysOverviewTextLabel::textEdit()
+void SysOverviewTextLabel::textEdit(QWidget *widget)
 {
     if(editable)
     {
         bool ok;
         //ToDO... Find a way to open the dialog in the current position...
         QString inputText = QInputDialog::getText(
-                this->scene()->views().at(0)->parentWidget(),
+                widget,
                 QString("Object text"),
                 QString("Text:"),
                 QLineEdit::Normal,
@@ -51,6 +69,26 @@ void SysOverviewTextLabel::textEdit()
             setText(inputText);
         }
     }
+}
+
+void SysOverviewTextLabel::setLabelText(const QString &text)
+{
+    setText(text);
+}
+
+void SysOverviewTextLabel::trigger(const IMsg &msg)
+{
+
+}
+
+void SysOverviewTextLabel::addTrigger(SysOvrvLabelTriggerPtr trigger)
+{
+    labelTrigger.append(trigger);
+}
+
+QVector<SysOvrvLabelTriggerPtr> SysOverviewTextLabel::getTriggers()
+{
+    return labelTrigger;
 }
 
 
@@ -66,7 +104,7 @@ void SysOverviewTextLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(editable)
     {
         setCursor(QCursor(Qt::ClosedHandCursor));
-    {
+    }
 }
 
 void SysOverviewTextLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -77,7 +115,7 @@ void SysOverviewTextLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         setCursor(QCursor(Qt::OpenHandCursor));
         if(doubleClicked)
         {
-            textEdit();
+//            textEdit();
         }
     }
 
