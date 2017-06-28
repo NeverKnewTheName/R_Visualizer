@@ -24,45 +24,66 @@ QVector<Msg> CsvMsgPacketHandler::parseCsvMsgPacket(QString &csvMsgPacketString)
     QStringList msgsFromPacket = csvMsgPacketString.split("\n");
     QString codeLine = msgsFromPacket.at(0);
     msgsFromPacket.removeAt(0);
-    QString code = codeLine.split(";").at(0);
-
-    qDebug() << "RegEx extracted CODE: " << code.toInt(0, 16);
+    QStringList codeStringList = codeLine.split(";");
+    QString code = codeStringList.at(0);
 
     MsgDataType dataBytes;
+    dataBytes.append(MsgDataByteType(codeStringList.size()-1));
+    dataBytes.append(MsgDataByteType(msgsFromPacket.size()));
+    msgs.append(
+            Msg(
+                MsgIDType(0xFFu),
+                MsgCodeType(code.toInt(0,16)),
+                dataBytes
+                )
+            );
 
-    dataBytes.append(MsgDataByteType(0xd));
-    dataBytes.append(MsgDataByteType(0x84));
-    msgs.append(Msg(static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(code.toInt(0,16)), dataBytes));
+    int rowCntr = 0;
 
     for(auto &msg : msgsFromPacket )
     {
         // first line is code;
         // other lines contain: ID(2) - DATA(2)
         if(msg.isEmpty())
+        {
             continue;
+        }
+
+        rowCntr++;
         QStringList msgAsString = msg.split(";");
-        qDebug() << "msgAsString size: " << msgAsString.size();
         QString recvrIDString = msgAsString.at(0);
         unsigned int recvrID = recvrIDString.toInt();
-        qDebug() << "Receiver ID" << recvrID;
-        qDebug() << "Receiver ID HIGH" << ((recvrID >> 8) & 0xFFu );
-        qDebug() << "Recevier ID LOW" << (recvrID & 0xFFu);
-        QString dataHigh = msgAsString.at(1) + msgAsString.at(2) + msgAsString.at(3) + msgAsString.at(4) + msgAsString.at(5) + msgAsString.at(6) + msgAsString.at(7) + msgAsString.at(8);
-        qDebug() << "Data High: " << dataHigh << " - " << dataHigh.toInt(0,2);
-        QString dataLow = msgAsString.at(9) + msgAsString.at(10) + msgAsString.at(11) + msgAsString.at(12) + msgAsString.at(13);
-        qDebug() << "Data Low: " << dataLow << " - " << dataLow.toInt(0,2);
+
+        const int nrOfColumns = msgAsString.size() - 1; // -1 for the address
+
+        quint16 cell = 0;
+        for(int i = 1; i <= 16; ++i)
+        {
+            if(i < nrOfColumns)
+            {
+                cell |= msgAsString.at(i).toInt(0,10) << (16-i);
+            }
+        }
 
         dataBytes.clear();
         dataBytes.append(MsgDataByteType(((recvrID >> 8) & 0xFFu )));
         dataBytes.append(MsgDataByteType((recvrID & 0xFFu)));
-        dataBytes.append(MsgDataByteType(dataHigh.toInt(0,2)));
-        dataBytes.append(MsgDataByteType(dataLow.toInt(0,2)));
+        dataBytes.append(MsgDataByteType((cell >> 8) & 0xFFu));
+        dataBytes.append(MsgDataByteType(cell & 0xFFu));
 
-        qDebug() << "MsgData";
-        qDebug() << "RecvID LOW:" << static_cast<QString>(dataBytes.at(0));
-        qDebug() << "RecvID HIGH:" << static_cast<QString>(dataBytes.at(1));
-        msgs.append(Msg(static_cast<MsgIDType>(0xFFu), static_cast<MsgCodeType>(0x0B), dataBytes));
+        msgs.append(
+                Msg(
+                    MsgIDType(0xFFu),
+                    MsgCodeType(0x0B),
+                    dataBytes
+                    )
+                );
     }
+
+    MsgDataType msgDataFirstRow = msgs.at(0).getMsgData();
+    msgDataFirstRow.replace(1,MsgDataByteType(rowCntr));
+    msgs[0].setMsgData(msgDataFirstRow);
+
     return msgs;
 }
 
